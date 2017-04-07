@@ -1597,10 +1597,64 @@ body.page-index {
     width: 100%;
     content: "";
     clear: both; }
+  .page-index .section-search.sf-landing {
+    height: auto; }
+    .page-index .section-search.sf-landing .search-form {
+      width: 100%;
+      height: auto;
+      background: transparent;
+      background-color: #ffffff;
+      border: 1px solid #ddd; }
+      .page-index .section-search.sf-landing .search-form .tab-header nav ul li.active a {
+        color: #1daee4;
+        background: #fff; }
+        .page-index .section-search.sf-landing .search-form .tab-header nav ul li.active a:before {
+          background-image: url(/Assets/images/search-tab-sprite-blue.png); }
+      .page-index .section-search.sf-landing .search-form .tab-content {
+        color: #6a6a6a;
+        padding: 25px 30px;
+        letter-spacing: 0; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-hotel .col-sm-6 {
+          padding: 0 15px; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-hotel .col-sm-6:first-child {
+            border-right: 1px solid #ddd; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .col-sm-6 {
+          padding: 0 15px; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .col-sm-6:last-child {
+            border-left: 1px solid #ddd; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight label {
+          margin: 0; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .switch-destination {
+          margin: 2px 0; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group {
+          margin: 0; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-destination, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-date, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-class, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-passenger, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-type {
+            margin-bottom: 10px; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-date > div:first-child {
+            padding-right: 5px; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-date > div:last-child {
+            padding-left: 5px; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-passenger > div:first-child {
+            padding-right: 4px; }
+          .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-group.flight-passenger > div:last-child {
+            padding-left: 4px; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-type {
+          margin: 0; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .switch-destination {
+          background: url(/Assets/images/switch-destination-blue.png) center center no-repeat;
+          background-size: cover; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-departure, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-return, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-oneway, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-return, .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-oneway {
+          padding: 10px 15px; }
+        .page-index .section-search.sf-landing .search-form .tab-content .tab-flight .form-flight-return.disabled {
+          cursor: not-allowed;
+          color: #6a6a6a;
+          background-color: #fff;
+          opacity: 0.3;
+          border-color: #ccc; }
   .page-index .section-search .search-form {
     width: 320px;
     height: 520px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     position: relative;
     z-index: 3; }
     .page-index .section-search .search-form .tab-header {
@@ -3089,6 +3143,9 @@ body.page-index {
   .page-index .section-flight-to .flight-to-content .ft-bottom {
     background: #f0f0f0;
     padding: 10px; }
+
+.page-index.section-search-form {
+  margin-bottom: 100px; }
 
 /*Normalize Fullcalendar*/
 tr:first-child > td > .fc-day-grid-event {

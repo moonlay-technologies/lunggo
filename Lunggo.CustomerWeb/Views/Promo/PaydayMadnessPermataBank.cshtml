@@ -5,12 +5,18 @@
 }
 
 @section AdditionalCSS{
-    <!-- additional CSS -->
     <link href="/Assets/css/promo.css" rel="stylesheet" />
 }
 
 @section AdditionalJS{
-    <!-- additional Angular JS-->
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
+}
+
+@section PageJS{
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/travorama20/js/homeController.js"></script>
 }
 
 <div class="promo-btn">
@@ -21,7 +27,7 @@
             <div class="content-banner normal-txt">
                 <div class="promo-desc">
                     Yeay payday time! Saatnya memanjakan diri bersama keluarga atau sahabat dengan menginap di hotel-hotel terbaik pilihan kamu.<br />
-                    Nikmati diskon 15% maksimal Rp 150.000 untuk setiap reservasi kamar hotel di Indonesia dan luar negeri dengan menggunakan metode pembayaran transfer bank melalui ATM Bank Permata. 
+                    Nikmati diskon 15% maksimal Rp 150.000 untuk setiap reservasi kamar hotel di Indonesia dan luar negeri dengan menggunakan metode pembayaran transfer bank melalui ATM Bank Permata.
                 </div>
                 <div class="booking">
                     <div class="bold-title">Periode Booking:</div>
@@ -59,4 +65,5 @@
             </div>
         </div>
     </div>
+    @Html.Partial("/Views/Shared/Desktop/_SearchFormHome.cshtml")
 </div>

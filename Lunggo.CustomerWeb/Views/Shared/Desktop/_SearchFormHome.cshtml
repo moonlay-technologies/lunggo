@@ -1,0 +1,237 @@
+﻿<div class="page-index section-search-form">
+    <div class="section-search sf-landing">
+        <div class="container">
+            <div class="search-form">
+                <header class="tab-header clearfix">
+                    <nav>
+                        <ul>
+                            <li class="flight @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")"><a data-toggle="tab" id="#plane" ng-click="showForm('flight')">Pesawat</a></li>
+                            <li class="hotel @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")"><a data-toggle="tab" id="#hotel" ng-click="showForm('hotel')">Hotel</a></li>
+                            @*<li class="activity" data-toggle="tooltip" data-placement="bottom" title="Coming soon!"><a href="#">Activity</a></li>*@
+                        </ul>
+                    </nav>
+                </header>
+                <section class="tab-content">
+                    <div class="tab-flight tab-pane clearfix @(ViewBag.IndexType == null || ViewBag.IndexType == "flight" ? "active" : "")" id="plane">
+                        <form class="form form-horizontal form-flight" action="id/Flight/" method="GET" autocomplete="off">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group flight-destination">
+                                        <div class="col-xs-5" style="width: 45.833335%">
+                                            <input type="text" class="form-flight-origin form-flight-location form-control" value="" placeholder="Kota Asal" />
+                                        </div>
+                                        <div class="text-center col-xs-1">
+                                            <span class="switch-destination"></span>
+                                        </div>
+                                        <div class="col-xs-5" style="width: 45.833335%">
+                                            <input type="text" class="form-flight-destination form-flight-location form-control" value="" placeholder="Kota Tujuan" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group flight-type">
+                                        <div class="col-xs-6">
+                                            <label>
+                                                <input type="radio" name="flightType" class="form-flight-type" value="return" />
+                                                <span>Pulang Pergi</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <label>
+                                                <input type="radio" name="flightType" class="form-flight-type" value="oneWay" checked />
+                                                <span>Sekali Jalan</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group flight-date">
+                                        <div class="col-xs-6">
+                                            <div class="form-flight-departure">
+                                                <div class="sm-txt">Tanggal Keberangkatan</div>
+                                                <span class="date">28</span>
+                                                <span class="month">Okt</span>
+                                                <span class="year">2015</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <div class="form-flight-return disabled">
+                                                <div class="sm-txt">Tanggal Pulang</div>
+                                                <span class="date">28</span>
+                                                <span class="month">Okt</span>
+                                                <span class="year">2015</span>
+                                            </div>
+                                            <div class="form-flight-oneway">
+                                                <div class="xs-txt">Tanggal Pulang</div>
+                                                <h5>SEKALI JALAN</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group flight-class">
+                                        <div class="col-xs-12">
+                                            <div class="form-control text-center form-flight-class">
+                                                <span class="">Kelas Ekonomi</span>
+                                                <div class="option">
+                                                    <span class="economy" data-value="y">Kelas Ekonomi</span>
+                                                    <span class="business" data-value="c">Kelas Bisnis</span>
+                                                    <span class="first" data-value="f">Kelas Utama</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group flight-passenger">
+                                        <div class="col-xs-4">
+                                            <div class="form-flight-passenger adult" data-toggle="tooltip" data-placement="left" title="Tidak boleh kosong">
+                                                <h5 class="passenger-input adult">1</h5>
+                                                <div class="">
+                                                    Dewasa<br />(&gt;12th)
+                                                </div>
+                                                <div class="option">
+                                                    <span>1</span>
+                                                    <span>2</span>
+                                                    <span>3</span>
+                                                    <span>4</span>
+                                                    <span>5</span>
+                                                    <span>6</span>
+                                                    <span>7</span>
+                                                    <span>8</span>
+                                                    <span>9</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-flight-passenger child">
+                                                <h5 class="passenger-input child">0</h5>
+                                                <div class="">
+                                                    Anak<br />(2-12th)
+                                                </div>
+                                                <div class="option">
+                                                    <span>0</span>
+                                                    <span>1</span>
+                                                    <span>2</span>
+                                                    <span>3</span>
+                                                    <span>4</span>
+                                                    <span>5</span>
+                                                    <span>6</span>
+                                                    <span>7</span>
+                                                    <span>8</span>
+                                                    <span>9</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="form-flight-passenger infant" data-toggle="tooltip" data-placement="right" title="Tidak boleh lebih dari jumlah penumpang dewasa">
+                                                <h5 class="passenger-input infant">0</h5>
+                                                <div class="">
+                                                    Bayi<br />(&lt;2th)
+                                                </div>
+                                                <div class="option">
+                                                    <span>0</span>
+                                                    <span>1</span>
+                                                    <span>2</span>
+                                                    <span>3</span>
+                                                    <span>4</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group flight-submit">
+                                        <div class="col-xs-12" style="margin-top: 20px">
+                                            <input type="text" name="info" value="" class="hidden" />
+                                            <input type="submit" class="btn btn-yellow block flight-submit-button md-txt lg-btn" value="CARI" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div><!-- .tab-flight -->
+                    <div class="tab-hotel tab-pane clearfix @(ViewBag.IndexType != null && ViewBag.IndexType == "hotel" ? "active" : "")" id="hotel">
+                        <div>
+                            <form class="form form-horizontal form-hotel page-hotel" ng-submit="hotel.searchHotel()" autocomplete="off">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group hotel-location ">
+                                            <div class="col-xs-12">
+                                                <input type="text" name="hotelLocation" value="" id="inputLocationHotel"
+                                                       class="form-hotel-location form-control" placeholder="Kota, Wilayah atau Nama Hotel"
+                                                       ng-model="hotelSearch.locationDisplay" ng-click="view.showHotelSearch = true" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group hotel-date">
+                                            <div class="col-xs-12">
+                                                <div class="form-hotel-checkin text-center">
+                                                    <span class="">Tanggal Check in</span>
+                                                    <div class="date-hotel">{{hotelSearch.checkinDateDisplay}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group hotel-room-night">
+                                            <div class="col-xs-6 dropdown-container">
+                                                <div class="form-control form-hotel-night clearfix">
+                                                    <div class="col-4"><span class=" normal-txt">Malam</span></div>
+                                                    <div class="col-6 input-hotel">{{hotelSearch.nightCount}}</div>
+                                                    <div class="option" ng-model="hotelSearch.nightCount">
+                                                        <span data-value="" ng-repeat="nightCount in hotelSearch.nightrange track by $index"
+                                                              ng-click="hotelSearch.nightCount = nightCount">{{nightCount}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 dropdown-container">
+                                                <div class="form-control form-hotel-room clearfix">
+                                                    <div class="col-4"><span class=" normal-txt">Jumlah Kamar</span></div>
+                                                    <div class="col-6 input-hotel">{{hotelSearch.roomCount}}</div>
+                                                    <div class="option" ng-model="hotelSearch.roomCount">
+                                                        <span data-value="" ng-repeat="roomCount in hotelSearch.roomrange track by $index"
+                                                              ng-click="hotelSearch.roomCount = roomCount">{{roomCount}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12" ng-show="hotelSearch.searchinghotel">
+                                            Sedang melakukan pencarian...
+                                        </div>
+                                        <div class="hotel-submit" style="margin-top: 30px">
+                                            <input type="submit" name="hotelSubmit" value="CARI" class="btn btn-yellow block form-control md-txt lg-btn" />
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group hotel-detail clearfix">
+                                            <div class="col-xs-12">Rincian Jumlah Tamu</div>
+                                            <div class="col-xs-6 total-adult clearfix">
+                                                <div class="col-half title">Jumlah Dewasa</div>
+                                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalAdult}}</span>
+                                            </div>
+                                            <div class="col-xs-6 total-child clearfix">
+                                                <div class="col-half title">Jumlah Anak</div>
+                                                <span class="text-right semibold-txt col-half total">{{hotelSearch.totalChildren}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- .tab-hotel -->
+                    <div class="tab-activity hidden">
+                        <hgroup>
+                            <h2>Temukan Banyak<br /><b>Aktifitas Menarik</b><br />Yang Bisa Anda<br />Lakukan</h2>
+                            <h4>Ribuan Aktifitas di 20+ Tempat Tujuan<br />(Domestik &amp; Internasional)</h4>
+                        </hgroup>
+                        <hr />
+                        <h3><b>Tour &amp; Activity</b> Booking</h3>
+                        <form class="form form-activity">
+                            <div class="form-group">
+                                <input type="text" name="activityLocation" value="" placeholder="Kota, Wilayah atau Aktifitas" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="activitySubmit" value="CARI" class="btn btn-yellow block form-control md-txt lg-btn" />
+                            </div>
+                        </form>
+                    </div><!-- .tab-activity -->
+                </section>
+            </div><!-- .search-form -->
+            @Html.Partial("/Views/Shared/Desktop/_SearchCalendarHotel.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_SearchCalendar.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_SearchHotel.cshtml")
+            @Html.Partial("/Views/Shared/Desktop/_ChildrenAgeForm.cshtml")
+        </div>
+    </div>
+</div>

@@ -12,10 +12,66 @@ body.page-index {margin-bottom: 0;}
     .section-search {height:520px; position:relative;
         &>.container {position:relative;}
         &:before, &:after {@include clearfix();}
-
+        &.sf-landing {
+            height: auto;
+            .search-form {
+                width: 100%;
+                height: auto;
+                background: rgba(0, 0, 0, 0);
+                background-color: #ffffff;
+                border: 1px solid #ddd;
+                .tab-header nav ul li.active a {
+                    color: #1daee4;
+                    background: #fff;
+                    &:before {background-image: url(/Assets/images/search-tab-sprite-blue.png);
+                    }
+                }
+                .tab-content {
+                    color: #6a6a6a;
+                    padding: 25px 30px;
+                    letter-spacing: 0;
+                    .tab-hotel {
+                        .col-sm-6 {
+                            padding: 0 15px;
+                            &:first-child {border-right: 1px solid #ddd;}
+                        }
+                    }
+                    .tab-flight {
+                        .col-sm-6 {
+                            padding: 0 15px;
+                            &:last-child {border-left: 1px solid #ddd;}
+                        }
+                        label {margin: 0}
+                        .switch-destination {margin: 2px 0}
+                        .form-group {
+                            margin: 0;
+                            &.flight-destination, &.flight-date, &.flight-class, &.flight-passenger, &.flight-type {margin-bottom: 10px;}
+                            &.flight-date > div {
+                                &:first-child {padding-right: 5px;}
+                                &:last-child {padding-left: 5px;}
+                            } 
+                            &.flight-passenger > div {
+                                &:first-child {padding-right: 4px;}
+                                &:last-child {padding-left: 4px;}
+                            }
+                        }
+                        .form-flight-type {margin: 0;}
+                        .switch-destination {background: url(/Assets/images/switch-destination-blue.png) center center no-repeat; background-size: cover;}
+                        .form-flight-departure, .form-flight-return, .form-flight-oneway {padding: 10px 15px;}
+                        .form-flight-return.disabled {
+                            cursor: not-allowed;
+                            color: #6a6a6a;
+                            background-color: #fff;
+                            opacity: 0.3;
+                            border-color: #ccc;
+                        }
+                    }
+                }
+            }
+        }
         
         // search form
-        .search-form {width:320px; height:520px; background:rgba(0, 0, 0, 0.5); position:relative; z-index:3;
+        .search-form {width:320px; height:520px; background:rgba(0, 0, 0, 0.7); position:relative; z-index:3;
             .tab-header {height:auto;
                 nav {
                     ul {margin:0; padding:0;
@@ -397,11 +453,7 @@ body.page-index {margin-bottom: 0;}
             }
         }
     }
-
-    .holiday {
-            color: red !important;
-
-        }
+    .holiday {color: red !important;}
     //*****
     // section reason
     .section-reason {position:relative; overflow:hidden;
@@ -1174,6 +1226,7 @@ body.page-index {margin-bottom: 0;}
             }
         }
     }
+    &.section-search-form {margin-bottom: 100px;}
 }
 
 /*Normalize Fullcalendar*/

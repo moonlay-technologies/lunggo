@@ -935,6 +935,7 @@
     <Content Include="Assets\images\search-form-switch-flight.png" />
     <Content Include="Assets\images\search-form-switch-hotel.png" />
     <Content Include="Assets\images\search-hotel-bg.png" />
+    <Content Include="Assets\images\search-tab-sprite-blue.png" />
     <Content Include="Assets\images\search-tab-sprite.png" />
     <Content Include="Assets\images\search.png" />
     <Content Include="Assets\images\section-arrow-left.png" />
@@ -952,10 +953,12 @@
     <Content Include="Assets\images\social-twitter.png" />
     <Content Include="Assets\images\sprite-arrow.png" />
     <Content Include="Assets\images\ssl-image.png" />
+    <Content Include="Assets\images\star-white.png" />
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
     <Content Include="Assets\images\swim.png" />
+    <Content Include="Assets\images\switch-destination-blue.png" />
     <Content Include="Assets\images\switch-destination.png" />
     <Content Include="Assets\images\tag-green.png" />
     <Content Include="Assets\images\tag-orange.png" />
@@ -1722,6 +1725,7 @@
     <Content Include="Views\Shared\Desktop\_AirlineMenu.cshtml" />
     <Content Include="Views\Shared\Desktop\_AirlinePage.cshtml" />
     <Content Include="Views\TravoramaSEO\FlightTo.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SearchFormHome.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

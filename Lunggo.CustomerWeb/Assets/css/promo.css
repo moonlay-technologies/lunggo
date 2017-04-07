@@ -29,7 +29,7 @@ body.page-promo.promo-btn-mobile-app {
     background-size: cover;
     min-height: 520px; }
   .page-promo .bottom-section {
-    margin: 40px 0 60px; }
+    margin: 40px 0; }
     .page-promo .bottom-section > .container {
       max-width: none;
       padding: 0 6px; }
