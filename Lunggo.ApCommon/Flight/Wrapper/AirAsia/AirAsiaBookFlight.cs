@@ -51,6 +51,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 //    };
                 //}
                 //bookInfo.Itinerary = revalidateResult.NewItinerary;
+                var timeSw = Stopwatch.StartNew();
                 var client = CreateAgentClient();
                 string origin, dest, coreFareId;
                 DateTime date;
@@ -140,7 +141,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 //hidden = string.Join("", hidden, "IDR");
 
                 // [POST] Search Flight
-
+                Thread.Sleep(10000);
                 var date2 = date.AddDays(1);
                 var postData =
                     @"__EVENTTARGET=" +
@@ -165,7 +166,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_ADT=" + adultCount +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_CHD=" + childCount +
                     @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListPassengerType_INFANT=" + infantCount +
-                    @"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListSearchBy=columnView" +
+                    //@"&ControlGroupSearchView%24AvailabilitySearchInputSearchView%24DropDownListSearchBy=columnView" +
                     @"&ControlGroupSearchView%24ButtonSubmit=Search" +
                     @"&__VIEWSTATEGENERATOR=05F9A2B0";
 
@@ -191,7 +192,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 var usedFareId = (coreFareId.Split('@')[0]).Replace(":", "%3A");
                 searchRequest =
@@ -203,10 +204,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchResponse = client.Execute(searchRequest);
                 var html1 = (CQ)searchResponse.Content;
 
+                Thread.Sleep(60000);
                 //// [POST] Select Flight
                 var currencies = html1[".black1.total-currency"].ToList()[0].InnerText;
                 hidden = String.Join("", hidden, currencies);
-
                 postData =
                     @"__EVENTTARGET=" +
                     @"&__EVENTARGUMENT=" +
@@ -240,6 +241,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var selectRequest = new RestRequest("Select.aspx", Method.POST);
                 selectRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                Debug.Print("Masuk Sini");
                 var selectResponse = client.Execute(selectRequest);
 
                 if ((selectResponse.ResponseUri != null && selectResponse.ResponseUri.AbsolutePath != "/Traveler.aspx") ||
@@ -259,7 +261,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 var getVS = selectResponse.Content;
                 var vs = (CQ)getVS;
@@ -272,7 +274,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var isitoken = token[0].GetAttribute("value");
                 // [POST] Input Data
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 postData =
                     @"__EVENTTARGET=CONTROLGROUP_OUTERTRAVELER%24CONTROLGROUPTRAVELER%24LinkButtonSkipToSeatMap" +
@@ -387,7 +389,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
                     
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 // [POST] Select Seat
 
@@ -427,7 +429,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 //Get Payment
                 var url = @"/Payment.aspx";
@@ -471,7 +473,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var flight = FlightService.GetInstance();
                     for (int index = 0; index < jlhSegment.Count; index++)
                     {
-                        var splitflightDetail = flightDet[index].InnerHTML.Trim().Split(' ');//(new string[] { "  " }, StringSplitOptions.None);
+                        var splitflightDetail = flightDet[index].InnerHTML.Trim().Split(' ');
                         var splitDept = flightDept[index].InnerHTML.Trim().Split(',');
                         var deptTime = DateTime.ParseExact(splitDept[1].Trim() + " " + splitDept[0].Trim(), format, provider);
                         var splitArr = flightArr[index].InnerHTML.Trim().Split(',');
@@ -606,7 +608,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 ezPayRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var ezPayResponse = client.Execute(ezPayRequest);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 // SELECT HOLD (PAYMENT)
 
@@ -630,7 +632,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var paymentResponse = client.Execute(paymentRequest);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 var whileCounter = 0;
                 while (paymentResponse.StatusCode == HttpStatusCode.Forbidden && whileCounter < 10)
@@ -674,7 +676,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                 ezPayResponse = client.Execute(ezPayRequest);
 
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
 
                 // [POST] Select Hold
 
@@ -788,6 +790,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     var timeLimitTime = TimeSpan.Parse(timeLimitTimeText, CultureInfo.InvariantCulture);
                     var timeLimit = timeLimitDate.Add(timeLimitTime);
                     var timeLimitFinal = timeLimit.AddHours(-7);
+                    timeSw.Stop();
+                    Debug.Print("Done. (" + timeSw.ElapsedMilliseconds / 1000 + " s)");
                     return new BookFlightResult
                     {
                         IsSuccess = true,

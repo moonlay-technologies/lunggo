@@ -64,8 +64,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             {
                 var url = "SJ-Eticket/login.php?action=in";
                 var postData =
-                    "username=" + _userName +
-                    "&password=" + _password +
+                    "UserLogin=" + _userName +
+                    "&PassLogin=" + _password +
                     "&Submit=Log+In" +
                     "&actions=LOGIN";
                 var request = new RestRequest(url, Method.POST);
