@@ -204,7 +204,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchResponse = client.Execute(searchRequest);
                 var html1 = (CQ)searchResponse.Content;
 
-                Thread.Sleep(120000);
+                Thread.Sleep(60000);
                 //// [POST] Select Flight
                 var currencies = html1[".black1.total-currency"].ToList()[0].InnerText;
                 hidden = String.Join("", hidden, currencies);
