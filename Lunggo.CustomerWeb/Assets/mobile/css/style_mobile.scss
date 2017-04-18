@@ -413,6 +413,21 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             margin: 0 20px;
         }
     }
+    .site-footer-cs {
+        text-align:center;
+        h3 {
+            img {
+                width:30px;
+                filter: invert(100%);
+            }
+        }
+        h4 {
+            img {
+                width:25px;
+                filter: invert(100%);
+            }
+        }
+    }
 }
 
 // *****

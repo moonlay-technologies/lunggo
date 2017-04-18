@@ -661,6 +661,7 @@
     <Content Include="Assets\images\cimb-clicks.jpg" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
+    <Content Include="Assets\images\cs-icon.png" />
     <Content Include="Assets\images\default-banner-2.jpg" />
     <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />

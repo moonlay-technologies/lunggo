@@ -476,6 +476,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       font-size: 10px;
       color: #878787;
       margin: 0 20px; }
+  .site-footer .site-footer-cs {
+    text-align: center; }
+    .site-footer .site-footer-cs h3 img {
+      width: 30px;
+      filter: invert(100%); }
+    .site-footer .site-footer-cs h4 img {
+      width: 25px;
+      filter: invert(100%); }
 
 .popup__wrapper {
   background: rgba(0, 0, 0, 0.7);

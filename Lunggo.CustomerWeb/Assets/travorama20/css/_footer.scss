@@ -23,7 +23,7 @@ including in this file :
     .menu-right {
 
         //*****
-        .row:first-child {padding-top:25px; padding-bottom:15px;
+        .row:first-child {padding-top:10px; padding-bottom:15px;
             .col-sm-4 {width:30%;}
             .col-sm-2 {width:15%;}
             .col-sm-6 {width:50%; position:relative;}
@@ -31,7 +31,7 @@ including in this file :
         .row + .row {margin-top:30px;}
 
         .call-center {margin-top:10px;
-            img {float:left; padding-right:10px; width:60px;}
+            img {float:left; padding-right:10px; width:70px;}
             p {margin-bottom:0;}
             h2 {margin:0; @extend .os-bold;}
         }

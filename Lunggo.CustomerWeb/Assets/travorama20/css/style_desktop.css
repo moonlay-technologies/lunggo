@@ -1479,7 +1479,7 @@ including in this file :
       margin-bottom: 15px;
       display: block; }
   .site-footer-menu .menu-right .row:first-child {
-    padding-top: 25px;
+    padding-top: 10px;
     padding-bottom: 15px; }
     .site-footer-menu .menu-right .row:first-child .col-sm-4 {
       width: 30%; }
@@ -1495,7 +1495,7 @@ including in this file :
     .site-footer-menu .menu-right .call-center img {
       float: left;
       padding-right: 10px;
-      width: 60px; }
+      width: 70px; }
     .site-footer-menu .menu-right .call-center p {
       margin-bottom: 0; }
     .site-footer-menu .menu-right .call-center h2 {
