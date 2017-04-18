@@ -188,7 +188,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "[AirAsia] Error in requesting at Search.aspx.Unexpected absolute path response or status code ||" + searchResponse.Content }
+                        ErrorMessages = new List<string> { "[AirAsia] Error in requesting at Search.aspx.Unexpected absolute path response or status code || " + searchResponse.StatusCode + " " + searchResponse.ResponseUri + " || " + searchResponse.Content }
                     };
                 }
 
@@ -256,7 +256,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
-                        ErrorMessages = new List<string> { "[AirAsia] Error in requesting at Select.aspx. Unexpected absolute path response or status code || " + selectResponse.Content }
+                        ErrorMessages = new List<string> { "[AirAsia] Error in requesting at Select.aspx. Unexpected absolute path response or status code || " + selectResponse.StatusCode + " " + selectResponse.ResponseUri + " || " + selectResponse.Content }
 
                     };
                 }
@@ -380,11 +380,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> { FlightError.InvalidInputData },
+                        Errors = new List<FlightError> {FlightError.InvalidInputData},
                         ErrorMessages = new List<string>
                         {
-                            "[AirAsia] Error while requesting at Traveler.aspx. Unexpected absolute path response or status code || " + 
-                            ((CQ) travelerResponse.Content)["#errorSectionContent"]
+                            "[AirAsia] Error while requesting at Traveler.aspx. Unexpected absolute path response or status code || " + travelerResponse.StatusCode + " " + travelerResponse.ResponseUri + " || " + ((CQ) travelerResponse.Content)["#errorSectionContent"]
                         }
                     };
                 }
@@ -424,7 +423,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[AirAsia] Error while requesting at UnitMap.aspx. Unexpected absolute path response or status code || " + unitMapResponse.Content }
+                        ErrorMessages = new List<string> { "[AirAsia] Error while requesting at UnitMap.aspx. Unexpected absolute path response or status code || " + unitMapResponse.StatusCode + " " + unitMapResponse.ResponseUri + " || " + unitMapResponse.Content }
                     };
                 }
                 
@@ -665,7 +664,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             BookingStatus = BookingStatus.Failed
                         },
                         Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                        ErrorMessages = new List<string> { "[AirAsia] Error while select hold payment. Unexpected absolute path response or status code || " + paymentResponse.Content }
+                        ErrorMessages = new List<string> { "[AirAsia] Error while select hold payment. Unexpected absolute path response or status code " + paymentResponse.StatusCode + " " + paymentResponse.ResponseUri + " || " + paymentResponse.Content }
                     };
                 }
                     
@@ -766,7 +765,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 BookingStatus = BookingStatus.Failed
                             },
                             Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                            ErrorMessages = new List<string> { "[AirAsia] Failed to get booking id || " + waitResponse.Content }
+                            ErrorMessages = new List<string> { "[AirAsia] Failed to get booking id || " + waitResponse.StatusCode + " " + waitResponse.ResponseUri + " || " + waitResponse.Content }
                         };
                     }
                     else
