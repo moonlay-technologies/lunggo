@@ -70,7 +70,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     coreFareId = splittedFareId[11];
                     var splitcoreFareId = coreFareId.Split('~').ToList();
                     int index;
-                    if (splitcoreFareId.Count > 16)
+                    if (splitcoreFareId.Count <= 16)
+                    {
+                        origin = splitcoreFareId[11];
+                        dest = splitcoreFareId[13];
+                        
+                    }
+                    else if (splitcoreFareId.Count <= 24)
                     {
                         index = 11;
                         origin = splitcoreFareId[index];
@@ -78,8 +84,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     }
                     else
                     {
-                        origin = splitcoreFareId[11];
-                        dest = splitcoreFareId[13];
+                        origin = splitcoreFareId[18];
+                        dest = splitcoreFareId[28];
                     }
                 }
                 catch 
@@ -184,6 +190,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                    @"&date_picker=" + date2.Year + "-" + date2.Month + "-" + date2.Day +
                    @"&pageToken=";
 
+                
                 selectRequest.AddParameter("application/x-www-form-urlencoded", selectPostData, ParameterType.RequestBody);
                 var selectResponse = client.Execute(selectRequest);
 
