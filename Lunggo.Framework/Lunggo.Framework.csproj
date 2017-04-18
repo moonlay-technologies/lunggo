@@ -235,6 +235,7 @@
     <Compile Include="BlobStorage\BlobStorageClient.cs" />
     <Compile Include="Exceptions\FileAlreadyExistException.cs" />
     <Compile Include="HtmlTemplate\HtmlTemplateClient.cs" />
+    <Compile Include="Log\LogAttachment.cs" />
     <Compile Include="Log\LogClient.cs" />
     <Compile Include="Log\LogService.cs" />
     <Compile Include="Log\SlackLogClient.cs" />

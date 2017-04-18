@@ -50,13 +50,14 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                     + "\n*Environment :* " + env.ToUpper()
                     + "\n*Exception :* "
                     + e.Message
-                    + "\n*Stack Trace :* \n"
-                    + e.StackTrace
-                    + "\n*Request :* \n"
-                    + requestString
                     + "\n*Platform :* "
                     + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
-                    env == "production" ? "#logging-prod" : "#logging-dev");
+                    env == "production" ? "#logging-prod" : "#logging-dev",
+                    new List<LogAttachment>
+                    {
+                        new LogAttachment("STACK TRACE", e.StackTrace),
+                        new LogAttachment("REQUEST", requestString)
+                    });
             return e.GetType() == typeof(JsonReaderException)
                 ? ErrorInvalidJson()
                 : Error500();

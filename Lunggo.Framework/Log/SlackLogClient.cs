@@ -42,7 +42,18 @@ namespace Lunggo.Framework.Log
 
             internal override void Post(string text, string recipient)
             {
-                var msg = new SlackMessage { Text = text, Channel = recipient};
+                var msg = new SlackMessage {Text = text, Channel = recipient};
+                _client.Post(msg);
+            }
+
+            internal override void Post(string text, string recipient, List<LogAttachment> attachments)
+            {
+                var msg = new SlackMessage
+                {
+                    Text = text,
+                    Channel = recipient,
+                    Attachments = attachments.Select(a => new SlackAttachment {Title = a.Title, Text = a.Text}).ToList()
+                };
                 _client.Post(msg);
             }
         }

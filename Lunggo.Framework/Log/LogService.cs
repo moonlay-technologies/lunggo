@@ -40,5 +40,10 @@ namespace Lunggo.Framework.Log
         {
             Client.Post(text, recipient);
         }
+
+        public void Post(string text, string recipient, List<LogAttachment> attachments)
+        {
+            Client.Post(text, recipient, attachments);
+        }
     }
 }

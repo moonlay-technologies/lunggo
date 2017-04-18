@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
@@ -33,17 +34,16 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                         log.Post(
                             "```Booking API Log```"
                             + "\n`*Environment :* " + env.ToUpper()
-                            + "\n*REQUEST :*\n"
-                            + request.Serialize()
-                            + "\n*RESPONSE :*\n"
-                            + apiResponse.Serialize()
-                            + "\n*LOGIC RESPONSE :*\n"
-                            + bookServiceResponse.Serialize()
                             + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-                            + "\n*Itinerary :* \n"
-                            + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize(),
-                            env == "production" ? "#logging-prod" : "#logging-dev");
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                            env == "production" ? "#logging-prod" : "#logging-dev",
+                            new List<LogAttachment>
+                            {
+                                new LogAttachment("REQUEST", request.Serialize()),
+                                new LogAttachment("RESPONSE", apiResponse.Serialize()),
+                                new LogAttachment("LOGIC RESPONSE", bookServiceResponse.Serialize()),
+                                new LogAttachment("ITINERARY", FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize())
+                            });
                 }
                 return apiResponse;
             }
