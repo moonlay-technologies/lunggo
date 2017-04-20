@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -59,19 +60,28 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 
         private static bool IsValid(FlightBookApiRequest request)
         {
-            return
-                request != null &&
-                request.LanguageCode != null &&
-                request.Contact != null &&
-                request.Contact.Title != Title.Undefined &&
-                request.Contact.Name != null &&
-                request.Contact.Phone != null &&
-                request.Contact.Email != null &&
-                request.Contact.CountryCallingCode != null &&
-                request.Passengers != null &&
-                request.Passengers.TrueForAll(p => p.Name != null) &&
-                request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
-                request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
+            try
+            {
+                return
+                    request != null &&
+                    !string.IsNullOrEmpty(request.Token) &&
+                    !string.IsNullOrEmpty(request.LanguageCode) &&
+                    request.Contact != null &&
+                    request.Contact.Title != Title.Undefined &&
+                    !string.IsNullOrEmpty(request.Contact.Name) &&
+                    !string.IsNullOrEmpty(request.Contact.Phone) &&
+                    new MailAddress(request.Contact.Email) != null &&
+                    !string.IsNullOrEmpty(request.Contact.CountryCallingCode) &&
+                    request.Passengers != null &&
+                    request.Passengers.Any() &&
+                    request.Passengers.TrueForAll(p => !string.IsNullOrEmpty(p.Name)) &&
+                    request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
+                    request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static FlightBookApiResponse AssembleApiResponse(BookFlightOutput bookServiceResponse, bool test)

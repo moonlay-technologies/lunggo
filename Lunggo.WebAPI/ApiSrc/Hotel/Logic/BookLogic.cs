@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using System.Net.Mail;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -61,11 +65,29 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
 
         private static bool IsValid(HotelBookApiRequest request)
         {
-            return
-                request != null &&
-                request.Contact != null &&
-                request.Passengers != null &&
-                request.Token != null;
+            try
+            {
+                return
+                    request != null &&
+                    !string.IsNullOrEmpty(request.Token) &&
+                    !string.IsNullOrEmpty(request.LanguageCode) &&
+                    request.Contact != null &&
+                    request.Contact.Title != Title.Undefined &&
+                    !string.IsNullOrEmpty(request.Contact.Name) &&
+                    !string.IsNullOrEmpty(request.Contact.Phone) &&
+                    !string.IsNullOrEmpty(request.Contact.Email) &&
+                    new MailAddress(request.Contact.Email) != null &&
+                    !string.IsNullOrEmpty(request.Contact.CountryCallingCode) &&
+                    request.Passengers != null;
+                //request.Passengers.Any() &&
+                //request.Passengers.TrueForAll(p => !string.IsNullOrEmpty(p.Name)) &&
+                //request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
+                //request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private static BookHotelInput PreprocessServiceRequest(HotelBookApiRequest request)
