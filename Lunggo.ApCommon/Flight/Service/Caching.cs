@@ -492,7 +492,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             if (cacheObject.IsNullOrEmpty)
             {
-                return new FlightItinerary();
+                return null;
             }
 
             var itins = cacheObject.DeconvertTo<List<FlightItinerary>>();
