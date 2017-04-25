@@ -6,7 +6,7 @@ using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
-    public static partial class FlightLogic
+    public  partial class FlightLogic
     {
         public static FlightRulesApiResponse GetRules(FlightRulesApiRequest request)
         {

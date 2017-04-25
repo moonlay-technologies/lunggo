@@ -218,7 +218,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var fareRequest = new RestRequest(url, Method.GET);
                         fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
-                        var itinHtml = (CQ)client.Execute(fareRequest).Content;
+
+                        var response2 = client.Execute(fareRequest); 
+                        var itinHtml = (CQ) response2.Content;
                         var price =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
                         var breakdownPrice = itinHtml["[data-accordion-id='priceFareTaxesFeesContent0']"].Single().ChildElements.ToList();
@@ -232,11 +234,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             var iIdx = conditions.ChildCount > 0 ? 2 : 1;
                             adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2]);
                             if (conditions.ChildCount > 0)
-                                childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                                childPrice =
+                                    decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
                             if (conditions.InfantCount > 0)
-                                infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                                infantPrice =
+                                    decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
                         }
-                        catch { }
+                        catch
+                        {
+                            return new SearchFlightResult
+                            {
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "[AirAsia] " + "Failed to Breakdown Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId) + " respponse " }
+                            };
+                        }
                         var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0,3);
                         var itinHtmlText = itinHtml.Text();
                         var isPscIncluded = itinHtmlText.Contains("Pajak Bandara") ||

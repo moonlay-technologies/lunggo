@@ -4,7 +4,7 @@ using Lunggo.WebAPI.ApiSrc.Common.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
-    public static partial class FlightLogic
+    public  partial class FlightLogic
     {
         public static ApiResponseBase ExpireReservations()
         {

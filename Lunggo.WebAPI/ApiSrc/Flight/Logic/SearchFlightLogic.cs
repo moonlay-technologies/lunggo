@@ -5,14 +5,15 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
+using Lunggo.Framework.Pattern;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
-    public static partial class FlightLogic
+    public partial class FlightLogic : SingletonBase<FlightLogic>
     {
-        public static ApiResponseBase SearchFlights(FlightSearchApiRequest request)
+        public  ApiResponseBase SearchFlights(FlightSearchApiRequest request)
         {
             if (IsValid(request))
             {

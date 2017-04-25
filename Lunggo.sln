@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69CEAB4B-DEF1-41E6-A599-D9794769FC31}"
 	ProjectSection(SolutionItems) = preProject
@@ -70,6 +70,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.Webjob.HotelContentWrapper", "Lunggo.Webjob.HotelContentWrapper\Lunggo.Webjob.HotelContentWrapper.csproj", "{187B9F46-5CE1-4DBC-A778-BBDC54F9F458}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.PriceUpdater", "Lunggo.WebJob.PriceUpdater\Lunggo.WebJob.PriceUpdater.csproj", "{1B2FF2EC-6D5B-4797-A2C0-EAE62DC77525}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebAPI.Tests", "Lunggo.WebAPI.Tests\Lunggo.WebAPI.Tests.csproj", "{12CE7182-6921-4374-94F7-E48CEC775A85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -632,6 +634,26 @@ Global
 		{1B2FF2EC-6D5B-4797-A2C0-EAE62DC77525}.Release-x64|ARM.ActiveCfg = Release|Any CPU
 		{1B2FF2EC-6D5B-4797-A2C0-EAE62DC77525}.Release-x64|x64.ActiveCfg = Release|Any CPU
 		{1B2FF2EC-6D5B-4797-A2C0-EAE62DC77525}.Release-x64|x86.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug-x64|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug-x64|Any CPU.Build.0 = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug-x64|ARM.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug-x64|x64.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Debug-x64|x86.ActiveCfg = Debug|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release|ARM.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release|x64.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release|x86.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release-x64|Any CPU.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release-x64|Any CPU.Build.0 = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release-x64|ARM.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release-x64|x64.ActiveCfg = Release|Any CPU
+		{12CE7182-6921-4374-94F7-E48CEC775A85}.Release-x64|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

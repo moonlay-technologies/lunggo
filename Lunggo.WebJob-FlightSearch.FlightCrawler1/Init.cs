@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 
@@ -16,6 +17,7 @@ namespace Lunggo.WebJob.FlightCrawler
             InitRedisService();
             InitQueueService();
             InitFlightService();
+            InitLogService();
         }
 
         private static void InitRedisService()
@@ -62,6 +64,13 @@ namespace Lunggo.WebJob.FlightCrawler
             var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
             var database = DbService.GetInstance();
             database.Init(connString);
+        }
+
+        public static void InitLogService()
+        {
+            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var log = LogService.GetInstance();
+            log.Init(webhookUrl);
         }
     }
 }

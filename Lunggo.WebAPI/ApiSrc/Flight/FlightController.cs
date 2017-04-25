@@ -24,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
                     SearchId = searchId,
                     Progress = progress
                 };
-                var apiResponse = FlightLogic.SearchFlights(request);
+                var apiResponse = FlightLogic.GetInstance().SearchFlights(request);
                 return apiResponse;
             }
             catch (Exception e)

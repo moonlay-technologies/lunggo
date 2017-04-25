@@ -9,6 +9,8 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Web;
 using Lunggo.Framework.Extension;
 using RestSharp;
@@ -34,6 +36,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         Itineraries = new List<FlightItinerary>()
                     };
 
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 // WAIT
                 var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();
@@ -58,10 +62,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var htmlRespon = searchResponse.Content;
 
                 if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
-                    return new SearchFlightResult { 
+                {
+                    log.Post("[Citilink Search] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path", "#logging-dev");
+                    return new SearchFlightResult
+                    {
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
                         ErrorMessages = new List<string> { "[Citilink] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path || " + searchResponse.Content }
                     };
+                }
 
                 try
                 {
@@ -305,6 +313,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
                 catch(Exception e)
                 {
+                    log.Post("[Citilink Search] Error While process data to get Flight List", "#logging-dev");
                     return new SearchFlightResult
                     {
                         IsSuccess = false,

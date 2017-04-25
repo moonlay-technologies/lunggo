@@ -263,6 +263,9 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
@@ -270,11 +273,20 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler3\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Garuda.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -291,6 +303,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\lionAir.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\log.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\mystifly.properties">
@@ -319,6 +334,9 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\general.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\HotelLocation.csv" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\lionAir.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\mystifly.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\redis.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\sriwijaya.properties" />
@@ -941,7 +959,9 @@
     </Content>
     <None Include="HtmlTemplate\FlightEticket.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Config\NewFolder1\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -140,6 +140,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx");
                 Thread.Sleep(3000);
                 var searchResponse2 = client.Execute(searchRequest2);
+                //TODO remove this
+                var searchResponseTemp = searchResponse2;
 
                 //GET PAGE ONLINE BOOKING (PAGE MILIH PESAWAT)
                 const string url3 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
@@ -193,6 +195,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
                 client.FollowRedirects = false;
                 var searchResponse4 = client.Execute(searchRequest4);
+                //TODO remove this
+               searchResponseTemp = searchResponse4;
 
                 // GET THE PAGE OF FLIGHTS (ONLINE BOOKING)
 
@@ -449,7 +453,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         // POST SEBELUM PAGE PASSENGER
                         const string url7 = @"LionAirAgentsIBE/Step2Availability.aspx";
-                        var searchRequest7 = new RestRequest(url7, Method.POST);
+                        var searchRequest7 = new RestRequest(url7, Method.POST)  ;
                         searchRequest7.AddHeader("Accept-Encoding", "gzip, deflate");
                         searchRequest7.AddHeader("Accept",
                             "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*///*;q=0.8");
@@ -463,6 +467,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             ParameterType.RequestBody);
                         //Thread.Sleep(1000);
                         var searchResponse7 = client.Execute(searchRequest7);
+                        //TODO remove this
+                        searchResponseTemp = searchResponse7;
 
                         // GET PAGE DATA Passenger
                         const string url8 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
@@ -971,6 +977,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                             ParameterType.RequestBody);
                                     Thread.Sleep(3000);
                                     var searchResponsPriceAcceptance = client.Execute(searchRequestPriceAcceptance);
+                                    //TODO remove this
+                                    searchResponseTemp = searchResponsPriceAcceptance;
                                 }
                             }
                             // kalau harga setelah dipilih di page yg banyak radio button beda dengan yg pertama
@@ -1045,6 +1053,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
                             Thread.Sleep(3000);
                             var searchResponse9 = client.Execute(searchRequest9);
+                            //TODO remove this
+                            searchResponseTemp = searchResponse9;
 
                             const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                             var searchRequest10 = new RestRequest(url10, Method.GET);
@@ -1085,7 +1095,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "https://agent.lionair.co.id/LionAirAgentsIBE/Step3.aspx");
                             Thread.Sleep(3000);
                             var searchResponse9 = client.Execute(searchRequest9);
-
+                            //TODO remove this
+                            searchResponseTemp = searchResponse9;
                             const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                             var searchRequest10 = new RestRequest(url10, Method.GET);
                             searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
@@ -1167,7 +1178,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx?" + accountId);
                 Thread.Sleep(1000);
                 var searchResponse15 = client.Execute(searchRequest15);
-
+                //TODO remove this
+                var searchResponseTemp = searchResponse15;
                 //GET PAGE DEFAULT(HOME)
 
                 const string url16 = @"/LionAirAgentsPortal/Default.aspx";
