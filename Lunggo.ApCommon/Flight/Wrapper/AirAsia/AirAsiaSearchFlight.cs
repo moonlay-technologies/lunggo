@@ -13,6 +13,8 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
+using Lunggo.Framework.Log;
 using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
@@ -38,6 +40,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         IsSuccess = true,
                         Itineraries = new List<FlightItinerary>()
                     };
+
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+
+                log.Post("[Air Asia Test] This is a test", "#logging-dev");
 
                 var client = CreateCustomerClient();
 
@@ -159,18 +166,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                         var html = searchResponse.Content;
 
-                        //if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" &&
-                        //    (searchResponse.StatusCode == HttpStatusCode.OK ||
-                        //     searchResponse.StatusCode == HttpStatusCode.Redirect))
-                        //    return new SearchFlightResult
-                        //    {
-                        //        Errors = new List<FlightError> {FlightError.InvalidInputData},
-                        //        ErrorMessages =
-                        //            new List<string>
-                        //            {
-                        //                "[AirAsia] Error while requesting at Flight/Select. Unexpected response path or status code"
-                        //            }
-                        //    };
+                        if (searchResponse.ResponseUri.AbsolutePath != "/Flight/Select" &&
+                            (searchResponse.StatusCode == HttpStatusCode.OK ||
+                             searchResponse.StatusCode == HttpStatusCode.Redirect))
+                        {
+                            log.Post("[Airasia Search] Error while requesting at Flight/Select. Unexpected RensponseUri absolute path", "#logging-dev");
+                        }
                         searchedHtml = html;
                         stillWaiting = html.Length < 1000 || html.Contains("welcome") || html.Contains("<h1>403</h1>") || html.Contains("Kesalahan");
                         searchRetryCount++;
@@ -218,7 +219,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
                         var fareRequest = new RestRequest(url, Method.GET);
                         fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
-                        var itinHtml = (CQ)client.Execute(fareRequest).Content;
+                        var response2 = client.Execute(fareRequest);
+                        var itinHtml = (CQ)response2.Content;
+                        if (response2.ResponseUri.AbsolutePath != "/Flight/PriceItinerary" && 
+                            (response2.StatusCode == HttpStatusCode.OK ||
+                             response2.StatusCode == HttpStatusCode.Redirect))
+                        {
+                            log.Post("[Airasia Search] Error while requesting atFlight/PriceItinerary. Unexpected RensponseUri absolute path", "#logging-dev");
+                        }
                         var price =
                             decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
                         var breakdownPrice = itinHtml["[data-accordion-id='priceFareTaxesFeesContent0']"].Single().ChildElements.ToList();
@@ -493,6 +501,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch(Exception e)
                 {
+                    log.Post("[Airasia Search] Error while processing data flight", "#logging-dev");
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },

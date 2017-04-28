@@ -448,7 +448,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     };
 
                 }
-                    
+
+                //TODO Batas Test Booking
                 // WAIT
 
                 var waitUrl = "Wait.aspx";

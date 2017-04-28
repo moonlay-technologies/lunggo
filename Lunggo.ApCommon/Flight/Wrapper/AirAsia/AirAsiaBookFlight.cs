@@ -668,8 +668,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         ErrorMessages = new List<string> { "[AirAsia] Error while select hold payment. Unexpected absolute path response or status code || " + paymentResponse.Content }
                     };
                 }
-                    
 
+                //TODO Batas Test Booking
                 Thread.Sleep(1000);
 
                 // EZPay

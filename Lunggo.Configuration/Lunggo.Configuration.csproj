@@ -263,6 +263,9 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
@@ -270,11 +273,18 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler2\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler3\Garuda.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler3\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler4\Garuda.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\log.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -293,6 +303,7 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\lionAir.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\log.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler5\mystifly.properties">
       <SubType>Designer</SubType>
     </None>
@@ -319,6 +330,9 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\general.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\HotelLocation.csv" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\lionAir.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\mystifly.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\redis.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler6\sriwijaya.properties" />

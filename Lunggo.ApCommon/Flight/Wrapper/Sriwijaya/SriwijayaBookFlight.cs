@@ -455,6 +455,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     ("prosesBookingDirect." + DateTime.Now.Day.ToString("d2") + DateTime.Now.Month.ToString("d2") + tahun2dgt + (((DateTime.Now.Hour + 11) % 12) + 1) + DateTime.Now.Minute + ":prosesBookingDirect").Base64Encode();
                 var encode2 = encode1.Base64Encode();
 
+                //TODO Batas Test Booking
+
                 url = "SJ-Eticket/application/menu_others.php?reffNo=" + encode2;
                 var bookRequest = new RestRequest(url, Method.POST);
                 bookRequest.AddParameter("application/x-www-form-urlencoded", bookingParams, ParameterType.RequestBody);

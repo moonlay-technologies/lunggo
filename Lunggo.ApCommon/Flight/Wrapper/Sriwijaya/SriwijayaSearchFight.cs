@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
 
@@ -50,6 +53,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         Itineraries = new List<FlightItinerary>()
                     };
 
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+
+                log.Post("[Sriwijaya Test] This is a test", "#logging-dev");
+
                 var trip0 = conditions.Trips[0];
                 trip0.OriginAirport = trip0.OriginAirport == "JKT" ? "CGK" : trip0.OriginAirport;
                 trip0.DestinationAirport = trip0.DestinationAirport == "JKT" ? "CGK" : trip0.DestinationAirport;
@@ -65,6 +73,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 rq0.AddHeader("Accept-Encoding", "gzip, deflate, sdch, br");
                 rq0.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 var searchResponse0 = client.Execute(rq0);
+                if (searchResponse0.ResponseUri.AbsolutePath != "/SJ/" &&
+                           (searchResponse0.StatusCode == HttpStatusCode.OK ||
+                            searchResponse0.StatusCode == HttpStatusCode.Redirect))
+                {
+                    log.Post("[Sriwijaya Air Search] Error while requesting at /SJ. Unexpected RensponseUri absolute path", "#logging-dev");
+                }
                 var htmlPageHome = (CQ) searchResponse0.Content;
                 var gibberishValue = htmlPageHome["#searchFlightForm_ #cityDetail"].Val();
                 var encodedValue = HttpUtility.UrlEncode(gibberishValue);
@@ -87,6 +101,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 getDataRq.AddHeader("Accept", "*/*");
                 getDataRq.AddParameter("application/x-www-form-urlencoded", postdata0, ParameterType.RequestBody);
                 var getDataSearchResponse = client.Execute(getDataRq);
+                if (getDataSearchResponse.ResponseUri.AbsolutePath != "/SJ/Flights/getData" &&
+                           (getDataSearchResponse.StatusCode == HttpStatusCode.OK ||
+                            getDataSearchResponse.StatusCode == HttpStatusCode.Redirect))
+                {
+                    log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights/getData. Unexpected RensponseUri absolute path", "#logging-dev");
+                }
                 var encodedGetDataResponse = HttpUtility.UrlEncode(getDataSearchResponse.Content);
 
                 var flightUrl = "/SJ/Flights";
@@ -95,6 +115,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 flightRq.AddHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
                 flightRq.AddParameter("application/x-www-form-urlencoded", "param=" + encodedGetDataResponse, ParameterType.RequestBody);
                 var flightResponse = client.Execute(flightRq);
+                if (flightResponse.ResponseUri.AbsolutePath != "/SJ/Flights" &&
+                           (flightResponse.StatusCode == HttpStatusCode.OK ||
+                            flightResponse.StatusCode == HttpStatusCode.Redirect))
+                {
+                    log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights. Unexpected RensponseUri absolute path", "#logging-dev");
+                }
                 var flightContent = (CQ) flightResponse.Content;
 
                 var listFlight = flightContent[".booking-item"];
@@ -217,6 +243,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                         getSummaryRq.AddParameter("application/x-www-form-urlencoded", postdataRsv,
                             ParameterType.RequestBody);
                         var getSummaryResponse = client.Execute(getSummaryRq);
+                        if (getSummaryResponse.ResponseUri.AbsolutePath != "/SJ/Flights/detail_price_view" &&
+                           (getSummaryResponse.StatusCode == HttpStatusCode.OK ||
+                            getSummaryResponse.StatusCode == HttpStatusCode.Redirect))
+                        {
+                            log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights/detail_price_view. Unexpected RensponseUri absolute path", "#logging-dev");
+                        }
                         var summaryPrice = (CQ) getSummaryResponse.Content;
 
                         var adultp = summaryPrice[".col-md-12:first-child tr:first-child tr:last-child td:nth-child(3) font"][0].
@@ -339,6 +371,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
                 catch(Exception e)
                 {
+                    log.Post("[Sriwijaya Air Search] Error while processing data flight. Unexpected RensponseUri absolute path", "#logging-dev");
                     return new SearchFlightResult
                     {
                         IsSuccess = false,
