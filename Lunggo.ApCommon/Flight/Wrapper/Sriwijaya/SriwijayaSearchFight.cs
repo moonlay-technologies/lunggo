@@ -56,7 +56,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
-                log.Post("[Sriwijaya Test] This is a test", "#logging-dev");
+                //log.Post("[Sriwijaya Test] This is a test", "#logging-dev");
 
                 var trip0 = conditions.Trips[0];
                 trip0.OriginAirport = trip0.OriginAirport == "JKT" ? "CGK" : trip0.OriginAirport;

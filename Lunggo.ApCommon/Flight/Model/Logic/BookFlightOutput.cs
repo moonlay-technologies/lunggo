@@ -12,6 +12,7 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public decimal? NewPrice { get; set; }
         public string RsvNo { get; set; }
         public DateTime TimeLimit { get; set; }
+        public bool Test { get; set; }
     }
 
     public class BookResult

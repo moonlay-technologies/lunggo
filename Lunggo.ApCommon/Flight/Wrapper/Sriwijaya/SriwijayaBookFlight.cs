@@ -456,6 +456,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var encode2 = encode1.Base64Encode();
 
                 //TODO Batas Test Booking
+                if (bookInfo.Test)
+                {
+                    return new BookFlightResult
+                    {
+                        IsSuccess = true,
+                        IsValid = true,
+                    };
+                }
 
                 url = "SJ-Eticket/application/menu_others.php?reffNo=" + encode2;
                 var bookRequest = new RestRequest(url, Method.POST);

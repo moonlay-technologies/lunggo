@@ -1152,6 +1152,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         }
 
                         //TODO Batas Test Booking
+                        if (bookInfo.Test)
+                        {
+                            return new BookFlightResult
+                            {
+                                IsSuccess = true,
+                                Status = new BookingStatusInfo
+                                {
+                                    BookingStatus = BookingStatus.Booked
+                                },
+                                IsValid = true,
+
+                            };
+                        }
 
                         if (newPrice.Length == 0)
                         {

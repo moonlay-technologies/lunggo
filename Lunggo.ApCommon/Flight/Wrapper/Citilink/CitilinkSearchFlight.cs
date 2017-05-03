@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
-                log.Post("[Citilink Test] This is a test", "#logging-dev");
+                //log.Post("[Citilink Test] This is a test", "#logging-dev");
                 // WAIT
                 var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();

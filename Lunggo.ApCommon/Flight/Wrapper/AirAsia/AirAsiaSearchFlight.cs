@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
-                log.Post("[Air Asia Test] This is a test", "#logging-dev");
+                //log.Post("[Air Asia Test] This is a test", "#logging-dev");
 
                 var client = CreateCustomerClient();
 

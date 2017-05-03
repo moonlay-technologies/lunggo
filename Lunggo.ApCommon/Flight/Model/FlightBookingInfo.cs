@@ -8,5 +8,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public FlightItinerary Itinerary { get; set; }
         public List<Pax> Passengers { get; set; }
         public Contact Contact { get; set; }
+        public bool Test { get; set; }
     }
 }

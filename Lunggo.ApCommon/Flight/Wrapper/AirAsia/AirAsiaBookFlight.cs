@@ -670,6 +670,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
 
                 //TODO Batas Test Booking
+                if (bookInfo.Test)
+                {
+                    return new BookFlightResult
+                    {
+                        IsSuccess = true,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Booked
+                        },
+                        IsValid = true,
+                        
+                    };
+                }
                 Thread.Sleep(1000);
 
                 // EZPay

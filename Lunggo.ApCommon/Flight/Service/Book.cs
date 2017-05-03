@@ -40,6 +40,27 @@ namespace Lunggo.ApCommon.Flight.Service
             UpdateItineraries(itins, bookResults);
             SaveItinerariesToCache(itins, input.Token);
 
+            if (input.Test)
+            {
+                var isValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
+                if (isValid)
+                {
+                    return new BookFlightOutput
+                    {
+                        IsSuccess = true,
+                        IsValid = true,
+                    };
+                }
+                else
+                {
+                    return new BookFlightOutput
+                    {
+                        IsSuccess = false,
+                        IsValid = false,
+                    };
+                }
+            }
+
             output.IsValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
             if (output.IsValid)
             {
@@ -149,7 +170,8 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 Itinerary = itin,
                 Contact = input.Contact,
-                Passengers = input.Passengers
+                Passengers = input.Passengers,
+                Test = input.Test
             };
             var response = BookFlightInternal(bookInfo);
             var bookResult = new BookResult();
@@ -160,6 +182,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
                 RoundFinalAndLocalPrice(newItin);
                 itin = newItin;
+            }
+            if (bookInfo.Test)
+            {
+                return new BookResult
+                {
+                    IsSuccess = response.IsSuccess
+                };
             }
             if (response.IsSuccess)
             {
@@ -193,6 +222,8 @@ namespace Lunggo.ApCommon.Flight.Service
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
             var result = supplier.BookFlight(bookInfo);
+            if (bookInfo.Test)
+                return result;
             //Auto Retry Book
             var trial = 0;
             while (trial < 3 && result.Errors != null)
