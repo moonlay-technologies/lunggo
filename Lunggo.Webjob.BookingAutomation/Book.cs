@@ -45,7 +45,7 @@ namespace Lunggo.WebJob.BookingAutomation
                     Name = "Handoko Mulyani",
                     Title = Title.Mister,
                     Phone = "853603412",
-                    Email = "test@travorama.com",
+                    Email = "test@book.com",
                     CountryCallingCode = "62"
                 }
             };

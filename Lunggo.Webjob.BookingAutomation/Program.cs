@@ -23,9 +23,10 @@ namespace Lunggo.WebJob.BookingAutomation
         private static void Main(string[] args)
         {
             Init();
+            Console.Write("Starting Booking Automation : ");
             for (var index = 1; index <= 100; index++)
             {
-                Console.Write("Day : "+ index);
+                
                 DateTime searchDate = DateTime.Now.AddDays(index);
                 var searchDay = searchDate.Day < 10 ? "0" + searchDate.Day : searchDate.Day.ToString();
                 var searchMonth = searchDate.Month < 10 ? "0" + searchDate.Month : searchDate.Month.ToString();
