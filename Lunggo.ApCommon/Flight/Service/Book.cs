@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -24,6 +25,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
+            
             var output = new BookFlightOutput();
             var itins = GetItinerariesFromCache(input.Token);
 
@@ -51,14 +53,11 @@ namespace Lunggo.ApCommon.Flight.Service
                         IsValid = true,
                     };
                 }
-                else
+                return new BookFlightOutput
                 {
-                    return new BookFlightOutput
-                    {
-                        IsSuccess = false,
-                        IsValid = false,
-                    };
-                }
+                    IsSuccess = false,
+                    IsValid = false,
+                };
             }
 
             output.IsValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
@@ -214,6 +213,14 @@ namespace Lunggo.ApCommon.Flight.Service
                 IsPriceChanged = response.IsPriceChanged,
                 NewPrice = response.NewPrice
             };
+            bookResult.Deposit = response.Deposit.GetValueOrDefault();
+            //TODO Check Deposit Here
+            if (bookResult.Deposit > 0 && bookResult.Deposit < 4500000)
+            {
+                //Send Email with data
+                var message = bookInfo.Itinerary.Supplier + "^" + bookResult.Deposit + "^" + itin.Price.Supplier;
+                SendDepositWarningNotif(message);
+            }
             return bookResult;
         }
 
@@ -248,6 +255,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
                 }
+                result.Deposit = supplier.GetDeposit();
             }
             return result;
         }

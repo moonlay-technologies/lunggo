@@ -20,5 +20,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public bool IsSuccess { get; set; }
         public RevalidateFlightOutputSet RevalidateSet { get; set; }
         public DateTime TimeLimit { get; set; }
+        public decimal Deposit { get; set; }
     }
 }

@@ -18,6 +18,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
     internal partial class LionAirWrapper
     {
+        internal override decimal GetDeposit()
+        {
+            return Client.GetCurrentBalance();
+        }
         private partial class LionAirClientHandler
         {
             public decimal GetCurrentBalance()

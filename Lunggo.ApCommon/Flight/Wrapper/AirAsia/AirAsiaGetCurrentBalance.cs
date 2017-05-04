@@ -26,6 +26,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {
     internal partial class AirAsiaWrapper
     {
+        internal override decimal GetDeposit()
+        {
+            return Client.GetCurrentBalance();
+        }
         private partial class AirAsiaClientHandler
         {
             public decimal GetCurrentBalance()

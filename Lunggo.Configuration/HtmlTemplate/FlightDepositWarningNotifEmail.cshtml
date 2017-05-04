@@ -1,0 +1,20 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@using Microsoft.Office.Interop.Excel
+@model Lunggo.ApCommon.Flight.Model.FlightDepositWarning;
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+<head>
+    <title>
+        Flight Deposit Warning
+    </title>
+</head>
+<body>
+    <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>Flight Agent: @Model.Suppplier</p>
+    <p>Booking Price: @Model.Message</p>
+    <p>Current Deposit : <b>@Model.CurrentDeposit</b></p>
+    
+</body>
+</html>

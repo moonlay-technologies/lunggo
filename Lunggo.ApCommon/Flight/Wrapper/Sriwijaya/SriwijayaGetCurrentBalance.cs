@@ -18,6 +18,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
     internal partial class SriwijayaWrapper
     {
+        internal override decimal GetDeposit()
+        {
+            return Client.GetCurrentBalance();
+        }
         private partial class SriwijayaClientHandler
         {
             public decimal GetCurrentBalance()
@@ -29,7 +33,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 var url = "SJ-Eticket/login.php?action=in";
                 var postData =
                     "username=" + _userName +
-                    "&password=" + _password +
+                    "&PassLogin=" + _password +
                     "&Submit=Log+In" +
                     "&actions=LOGIN";
                 var request = new RestRequest(url, Method.POST);
@@ -40,7 +44,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 
                 var searchedHtml = (CQ)html;
                 var data = searchedHtml[".userDeposit"].Text();
+                if (string.IsNullOrEmpty(data))
+                    return balance;
                 var stringDeposit = data.Split(':');
+                if (stringDeposit.Length < 1)
+                    return balance;
                 var deposit = stringDeposit[1].Replace("IDR", "").Replace(",", "").Trim();
                 if (deposit != null || deposit != "")
                 {
