@@ -18,6 +18,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using Supplier = Lunggo.ApCommon.Flight.Constant.Supplier;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -215,9 +216,10 @@ namespace Lunggo.ApCommon.Flight.Service
             };
             bookResult.Deposit = response.Deposit.GetValueOrDefault();
             //TODO Check Deposit Here
-            if (bookResult.Deposit > 0 && bookResult.Deposit < 4500000)
+            //Send Email with data
+            
+            if (bookResult.Deposit > 0 && bookResult.Deposit < 3000000)
             {
-                //Send Email with data
                 var message = bookInfo.Itinerary.Supplier + "^" + bookResult.Deposit + "^" + itin.Price.Supplier;
                 SendDepositWarningNotif(message);
             }
@@ -228,6 +230,26 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
+            //FOR TESTING ONLY
+            //var result = new BookFlightResult();
+            //var Airasia = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.AirAsia).Select(entry => entry.Value).Single();
+            //var Citilink = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Citilink).Select(entry => entry.Value).Single();
+            //var LionAir = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.LionAir).Select(entry => entry.Value).Single();
+            //var Sriwijaya = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Sriwijaya).Select(entry => entry.Value).Single();
+            
+            //var CitilinkDeposit = Citilink.GetDeposit();
+            //var LionAirDeposit = LionAir.GetDeposit();
+            //var SriwijayaDeposit = Sriwijaya.GetDeposit();
+
+            
+            //var temp2 = CitilinkDeposit;
+            //var temp3 = LionAirDeposit;
+            //var temp4 = SriwijayaDeposit;
+
+            //result.Deposit = 0;
+            //var AirasiaDeposit = Airasia.GetDeposit();
+            //var temp1 = AirasiaDeposit;
+            //return result;
             var result = supplier.BookFlight(bookInfo);
             if (bookInfo.Test)
                 return result;
@@ -238,7 +260,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 result = supplier.BookFlight(bookInfo);
                 trial++;
             }
-         
+
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
             {

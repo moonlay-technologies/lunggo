@@ -26,16 +26,16 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             decimal localPrice = 0;
             decimal currentDeposit = 0;
             var supplier = splitMessage[0];
-            if (string.IsNullOrEmpty(splitMessage[1]))
+            if (!string.IsNullOrEmpty(splitMessage[1]))
             {
-                localPrice = decimal.Parse(splitMessage[1]);
+                currentDeposit = decimal.Parse(splitMessage[1]);
             }
-            if (string.IsNullOrEmpty(splitMessage[2]))
+            if (!string.IsNullOrEmpty(splitMessage[2]))
             {
-                currentDeposit = decimal.Parse(splitMessage[2]);
+                localPrice = decimal.Parse(splitMessage[2]);
             }
 
-            Console.WriteLine("Processing Flight Deposit Warning Notif Email ...");
+            Console.WriteLine("Processing Flight Deposit Warning Notif Email For " + splitMessage[0] + " ...");
 
             sw.Reset();
 
@@ -49,9 +49,10 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { "deposit.warning@travelmadezy.com" },
+                RecipientList = new[] { "deposit.warning@travelmadezy.com" }, //deposit.warning@travelmadezy.com
                 Subject = envPrefix + env == "production" ? "Deposit Warning :  " + supplier : "[TEST] Deposit Warning" + supplier,
                 FromMail = "booking@travorama.com",
+                BccList = new[] { "maillog.travorama@gmail.com" },
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");

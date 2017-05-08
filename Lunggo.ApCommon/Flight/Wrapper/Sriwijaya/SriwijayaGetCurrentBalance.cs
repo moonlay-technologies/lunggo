@@ -28,11 +28,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             {
                 decimal balance = 0;
                 var client = CreateAgentClient();
-                Login(client);
+                //Login(client);
 
                 var url = "SJ-Eticket/login.php?action=in";
                 var postData =
-                    "username=" + _userName +
+                    "UserLogin=" + _userName +
                     "&PassLogin=" + _password +
                     "&Submit=Log+In" +
                     "&actions=LOGIN";
@@ -40,9 +40,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 request.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                 var response = client.Execute(request);
                 var temp = response.ResponseUri.AbsoluteUri.Contains("/SJ-Eticket/application/index.php");
-                var html = response.Content;
+                var loginResult = response.Content;
 
-                var searchedHtml = (CQ)html;
+                var searchedHtml = (CQ)loginResult;
                 var data = searchedHtml[".userDeposit"].Text();
                 if (string.IsNullOrEmpty(data))
                     return balance;

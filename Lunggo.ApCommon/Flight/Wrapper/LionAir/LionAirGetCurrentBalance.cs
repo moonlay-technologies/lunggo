@@ -44,6 +44,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 {
                     balance = decimal.Parse(currentDeposit);
                 }
+                var startind = userId.IndexOf("consID");
+                var cid = userId.SubstringBetween(startind, userId.Length);
+                LogOut(cid, client);
                 return balance;
             }
         }
