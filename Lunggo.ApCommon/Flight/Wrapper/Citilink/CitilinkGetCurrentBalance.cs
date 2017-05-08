@@ -18,6 +18,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
     internal partial class CitilinkWrapper
     {
+        internal override decimal GetDeposit()
+        {
+            return Client.GetCurrentBalance();
+        }
         private partial class CitilinkClientHandler
         {
             public decimal GetCurrentBalance()

@@ -192,7 +192,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
 
                 var usedFareId = (coreFareId.Split('@')[0]).Replace(":", "%3A");
                 searchRequest =
@@ -204,7 +204,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchResponse = client.Execute(searchRequest);
                 var html1 = (CQ)searchResponse.Content;
 
-                Thread.Sleep(60000);
+                Thread.Sleep(100000);
                 //// [POST] Select Flight
                 var currencies = html1[".black1.total-currency"].ToList()[0].InnerText;
                 hidden = String.Join("", hidden, currencies);

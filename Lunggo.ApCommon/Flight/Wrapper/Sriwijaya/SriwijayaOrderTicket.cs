@@ -44,10 +44,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 Login(clientx);
                 try
                 {
-                    log.Post("[Sriwijaya] Check Booking Id. Url : SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId, "#logging-issueflight");
-                    var url = "SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId;
+
+                    log.Post("[Sriwijaya] Check Booking Id. Url : SJ-Eticket/application/?action=CheckBCode", "#logging-issueflight");
+                    var url = "SJ-Eticket/application/?action=CheckBCode";
+                    var submitRequest1 = new RestRequest(url, Method.POST);
+                    var postData = //reffNo=XBTGQQ&Submit=Go
+                        "reffNo=" + bookingId +
+                        "&Submit=Go";
+                    submitRequest1.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var submitResponse1 = clientx.Execute(submitRequest1);
+
+                    url = "SJ-Eticket/application/?action=CheckBCode";
+                    var submitRequest2 = new RestRequest(url, Method.POST);
+                    postData = //reffNo=XBTGQQ&action=CheckBCode&step=STEP2
+                        "reffNo=" + bookingId +
+                        "&action=CheckBCode" +
+                        "&step=STEP2";
+                    submitRequest2.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
+                    var submitResponse2 = clientx.Execute(submitRequest2);
+                    
+                    url = "SJ-Eticket/application/?action=CheckBCode";
                     var submitRequest = new RestRequest(url, Method.POST);
-                    var postData =
+                    postData = //Submit=Issue&action=ticketing&reffNo=ZEdsamEyVjBhVzVuT2xoQ1ZFZFJVVHBUVkVWUU1nPT0%3D
                         "Submit=Issue" +
                         "&action=ticketing" +
                         "&reffNo="+ encode2 +"%3D";
@@ -55,9 +73,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var submitResponse = clientx.Execute(submitRequest);
 
                     log.Post("[Sriwijaya] Post Booking Id. Url : SJ-Eticket/application/?", "#logging-issueflight");
-                    url = "SJ-Eticket/application/?";
+                    url = "SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId;
                     var checkRequest = new RestRequest(url, Method.POST);
-                    postData =
+                    postData = //reffNo=XBTGQQ&action=CheckBCode&step=STEP2
                         "reffNo=" + bookingId +
                         "&action=CheckBCode" +
                         "&step=STEP2";
@@ -135,12 +153,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             };
                         default:
                             Logout(clientx);
-                            if (issueTrial < 3)
-                            {
-                                Debug.Print("issueTrial : " + issueTrial);
-                                issueTrial += 1;
-                                Client.OrderTicket(bookingId);
-                            }
                             return new IssueTicketResult
                             {
                                 CurrentBalance = GetCurrentBalance(),

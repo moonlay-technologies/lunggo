@@ -214,24 +214,43 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 var passRequest = new RestRequest(passUrl, Method.POST);
                 var passPostData =
-                    @"CONTROLGROUPPASSENGER$ButtonSubmit=Continue" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$DropDownListCountry=" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$DropDownListStateProvince=" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$DropDownListTitle=MR" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxAddressLine1=Jl. Jend Sudirman Kav. 52-53" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxAddressLine2=Equity Tower, 25th Floor" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxAddressLine3=SCBD Lot 9" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxCity=Jakarta Selatan" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxEmailAddress=dwi.agustina@travelmadezy.com" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxFax=021-29035099" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxFirstName=Yoga" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxHomePhone=" + bookInfo.Contact.CountryCallingCode + bookInfo.Contact.Phone +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxLastName=Sukma" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxMiddleName=Dwi" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxPostalCode=zip/postal" +
-                    @"&CONTROLGROUPPASSENGER$ContactInputPassengerView$TextBoxWorkPhone=085728755848" +
-                    @"&CONTROLGROUPPASSENGER$ItineraryDistributionInputPassengerView$Distribution=2" +
-                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$RadioButtonInsurance=No";
+                    @"__EVENTTARGET=" +
+                    @"&__EVENTARGUMENT=" +
+                    @"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFR0NPTlRST0xHUk9VUFBBU1NFTkdFUiRQYXNzZW5nZXJJbnB1dFZpZXdQYXNzZW5nZXJWaWV3JENoZWNrQm94SW5zdXJhbmNlBUFDT05UUk9MR1JPVVBQQVNTRU5HRVIkUGFzc2VuZ2VySW5wdXRWaWV3UGFzc2VuZ2VyVmlldyRDaGVja0JveFBNSdyEEzFRd8wxFzhO4NwRln1a8cAL" +
+                    @"&pageToken=" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$DropDownListTitle=MR" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxFirstName=Yoga" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxMiddleName=Dwi" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxLastName=Sukma" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxAddressLine2=Equity Tower, 25th Floor" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxAddressLine1=Jl. Jend Sudirman Kav. 52-53" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxAddressLine3=SCBD Lot 9" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxCity=Jakarta Selatan" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$DropDownListCountry=" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxPostalCode=zip/postal" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxWorkPhone=0811351793" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxHomePhone=085360343300"+
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxFax=021-29035099" +
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$RadioButtonInsurance=No"+
+                    @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView$TextBoxEmailAddress=dwi.agustina@travelmadezy.com";
+                    //@"CONTROLGROUPPASSENGER$ButtonSubmit=Continue" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$ContactInputPassengerView%24DropDownListCountry=" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$DropDownListStateProvince=" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$DropDownListTitle=MR" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxAddressLine1=Jl. Jend Sudirman Kav. 52-53" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxAddressLine2=Equity Tower, 25th Floor" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxAddressLine3=SCBD Lot 9" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxCity=Jakarta Selatan" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxEmailAddress=dwi.agustina@travelmadezy.com" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxFax=021-29035099" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxFirstName=Yoga" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxHomePhone=" + bookInfo.Contact.CountryCallingCode + bookInfo.Contact.Phone +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxLastName=Sukma" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxMiddleName=Dwi" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxPostalCode=zip/postal" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$$ContactInputPassengerView$TextBoxWorkPhone=085728755848" +
+                    ////@"&CONTROLGROUPPASSENGER$ItineraryDistributionInputPassengerView$Distribution=2" +
+                    //@"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$RadioButtonInsurance=No";
                 int i = 0;
                 foreach (var passenger in bookInfo.Passengers.Where(p => p.Type == PaxType.Adult))
                 {
@@ -240,18 +259,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "=" + title +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxFirstName_" + i + "=" + passenger.FirstName +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxLastName_" + i + "=" + passenger.LastName +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "=middle" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListGender_" + i + "=1" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListNationality_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateDay_" + i + "=1" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateMonth_" + i + "=1" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateYear_" + i + "=1970" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentType0_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxDocumentNumber0_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentCountry0_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateDay0_" + i + "=1" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateMonth0_" + i + "=1" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateYear0_" + i + "=" + date.Year +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentType0_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxDocumentNumber0_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "=middle";
+                        @"&CONTROLGROUPPASSENGER$ButtonSubmit=Continue";
 
                     i++;
                 }
@@ -262,18 +283,20 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListTitle_" + i + "=" + title +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxFirstName_" + i + "=" + passenger.FirstName +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxLastName_" + i + "=" + passenger.LastName +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "=middle" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListGender_" + i + "=1" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListNationality_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateDay_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Day +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateMonth_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Month +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListBirthDateYear_" + i + "=" + passenger.DateOfBirth.GetValueOrDefault().Year +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentType0_" + i + "=" +
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxDocumentNumber0_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentCountry0_" + i + "=" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateDay0_" + i + "=1" +
                         @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateMonth0_" + i + "=1" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateYear0_" + i + "=" + date.Year +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentType0_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListNationality_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListResidentCountry_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxDocumentNumber0_" + i + "=" +
-                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$TextBoxMiddleName_" + i + "=middle";
+                        @"&CONTROLGROUPPASSENGER$PassengerInputViewPassengerView$DropDownListDocumentDateYear0_" + i + "=" + date.Year;
+
                     i++;
                 }
                 i = 0;
@@ -294,11 +317,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     i++;
                 }
 
-                passPostData +=
-                    @"&__EVENTARGUMENT=" +
-                    @"&__EVENTTARGET=" +
-                    //@"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFR0NPTlRST0xHUk9VUFBBU1NFTkdFUiRQYXNzZW5nZXJJbnB1dFZpZXdQYXNzZW5nZXJWaWV3JENoZWNrQm94SW5zdXJhbmNlBUFDT05UUk9MR1JPVVBQQVNTRU5HRVIkUGFzc2VuZ2VySW5wdXRWaWV3UGFzc2VuZ2VyVmlldyRDaGVja0JveFBNSXZkWh6Cdtm1mad5oP+7VGz2nQKe
-                    @"&pageToken=";
+                //passPostData +=
+                //    @"&__EVENTARGUMENT=" +
+                //    @"&__EVENTTARGET=" +
+                //    //@"&__VIEWSTATE=/wEPDwUBMGQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgIFR0NPTlRST0xHUk9VUFBBU1NFTkdFUiRQYXNzZW5nZXJJbnB1dFZpZXdQYXNzZW5nZXJWaWV3JENoZWNrQm94SW5zdXJhbmNlBUFDT05UUk9MR1JPVVBQQVNTRU5HRVIkUGFzc2VuZ2VySW5wdXRWaWV3UGFzc2VuZ2VyVmlldyRDaGVja0JveFBNSXZkWh6Cdtm1mad5oP+7VGz2nQKe
+                //    @"&pageToken=";
 
                 passRequest.AddParameter("application/x-www-form-urlencoded", passPostData, ParameterType.RequestBody);
                 var passResponse = client.Execute(passRequest);
