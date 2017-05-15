@@ -8,5 +8,6 @@
         internal bool IsPriceChanged { get; set; }
         internal FlightItinerary NewItinerary { get; set; }
         internal decimal? NewPrice { get; set; }
+        internal decimal? Deposit { get; set; }
     }
 }

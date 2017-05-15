@@ -185,7 +185,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
                     Thread.Sleep(3000);
                     var confirmationContent = searchResponse11.Content;
-                    log.Post("[Lion Air] Response Confirmation, Get Booking Ref from here.  \n*RESPONSE :*\n " + searchResponse11.Content + " Booking ID: " + bookingId, "#logging-issueflight");
+                    //log.Post("[Lion Air] Response Confirmation, Get Booking Ref from here.  \n*RESPONSE :*\n " + searchResponse11.Content + " Booking ID: " + bookingId, "#logging-issueflight");
                     var html11 = (CQ)confirmationContent;
                     var booking = html11["#RelocHighlight"];
                     var bookingRef = booking.Children().ToList()[0].GetAttribute("id");

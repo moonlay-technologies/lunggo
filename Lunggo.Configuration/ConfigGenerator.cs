@@ -74,7 +74,8 @@ namespace Lunggo.Configuration
                 "CloudApp.EticketHandler",
                 "WebJob.BankTransferChecking",
                 "WebJob.HotelContentWrapper",
-                "CloudApp.CaptchaReader"
+                "CloudApp.CaptchaReader",
+                "WebJob.BookingAutomation"
             };
             Console.WriteLine("####################Starting Configuration Generation");
             Console.WriteLine("####################Configuration for below projects will be generated : \n");
@@ -462,7 +463,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler3", 
                 "WebJob-FlightSearch.FlightCrawler4",
                 "WebJob-FlightSearch.FlightCrawler5",
-                "WebJob-FlightSearch.FlightCrawler6"
+                "WebJob-FlightSearch.FlightCrawler6",
             };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }

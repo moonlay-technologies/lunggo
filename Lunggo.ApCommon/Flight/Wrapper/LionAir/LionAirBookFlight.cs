@@ -99,7 +99,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         ErrorMessages = errorMessages
                     };
                 }
-                   
+
                 // [GET] Search Flight
 
                 var client = CreateAgentClient();
@@ -123,8 +123,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         {
                             BookingStatus = BookingStatus.Failed
                         },
-                        Errors = new List<FlightError> {FlightError.TechnicalError},
-                        ErrorMessages = new List<string> {errorMessage}
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { errorMessage }
                     };
                 }
 
@@ -140,6 +140,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx");
                 Thread.Sleep(3000);
                 var searchResponse2 = client.Execute(searchRequest2);
+                if ((searchResponse2.ResponseUri != null && searchResponse2.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse2.StatusCode != HttpStatusCode.OK &&
+                     searchResponse2.StatusCode != HttpStatusCode.Found && searchResponse2.StatusCode != HttpStatusCode.Redirect ))
+                {
+                    LogOut(cid, client);
+                    TurnInUsername(userName);
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Lion Air] Error in requesting searchRequest2 at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                    };
+                }
+                var tempSearchResponse = searchResponse2;
 
                 //GET PAGE ONLINE BOOKING (PAGE MILIH PESAWAT)
                 const string url3 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
@@ -151,6 +169,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     "https://agent.lionair.co.id/LionAirAgentsPortal/Agents/Welcome.aspx");
                 Thread.Sleep(3000);
                 var searchResponse3 = client.Execute(searchRequest3);
+                if ((searchResponse3.ResponseUri != null && searchResponse3.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse3.StatusCode != HttpStatusCode.OK &&
+                     searchResponse3.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse3.StatusCode != HttpStatusCode.Found))
+                {
+                    LogOut(cid, client);
+                    TurnInUsername(userName);
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Lion Air] Error in requesting searchRequest3 at Get Page Online Booking (Choosing Flight) in /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                    };
+                }
                 //var vs = new CQ();
                 var html3 = searchResponse3.Content;
                 var vs = (CQ)html3;
@@ -193,7 +229,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
                 client.FollowRedirects = false;
                 var searchResponse4 = client.Execute(searchRequest4);
-
+                if ((searchResponse4.ResponseUri != null && searchResponse4.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/Step1.aspx") ||
+                    (searchResponse4.StatusCode != HttpStatusCode.OK &&
+                     searchResponse4.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse4.StatusCode != HttpStatusCode.Found))
+                {
+                    LogOut(cid, client);
+                    TurnInUsername(userName);
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Lion Air] Error in searchRequest4 Posting for Page Available Flights And Price at LionAirAgentsIBE/Step1.aspx.Unexpected absolute path response or status code." }
+                    };
+                }
+                tempSearchResponse = searchResponse4;
                 // GET THE PAGE OF FLIGHTS (ONLINE BOOKING)
 
                 const string url5 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
@@ -206,6 +260,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 searchRequest5.AddHeader("Referer", "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
                 Thread.Sleep(3000);
                 var searchResponse5 = client.Execute(searchRequest5);
+                if ((searchResponse5.ResponseUri != null && searchResponse5.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse5.StatusCode != HttpStatusCode.OK &&
+                     searchResponse5.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse5.StatusCode != HttpStatusCode.Found))
+                {
+                    LogOut(cid, client);
+                    TurnInUsername(userName);
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Lion Air] Error in searchRequest5 GET THE PAGE OF FLIGHTS (ONLINE BOOKING) at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                    };
+                }
                 var html5 = searchResponse5.Content;
 
                 var pageFlight = (CQ)html5;
@@ -343,6 +415,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
                     else
                     {
+                        LogOut(cid, client);
+                        TurnInUsername(userName);
                         return new BookFlightResult
                         {
                             IsSuccess = false,
@@ -437,6 +511,23 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             ParameterType.RequestBody);
                         //Thread.Sleep(1000);
                         var searchResponse6 = client.Execute(searchRequest6);
+                        if ((searchResponse6.ResponseUri != null && searchResponse6.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/Step2Availability.aspx") ||
+                    (searchResponse6.StatusCode != HttpStatusCode.OK &&
+                     searchResponse6.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse6.StatusCode != HttpStatusCode.Found))
+                        {
+
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Status = new BookingStatusInfo
+                                {
+                                    BookingStatus = BookingStatus.Failed
+                                },
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "[Lion Air] Error searchRequest6 in getting price at LionAirAgentsIBE/Step2Availability.aspx.Unexpected absolute path response or status code." }
+                            };
+                        }
                         var html6 = searchResponse6.Content;
                         var pagePrice = (CQ)html6;
                         var revalidateFare = pagePrice["#tdAmtTotal"].Text();
@@ -463,7 +554,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             ParameterType.RequestBody);
                         //Thread.Sleep(1000);
                         var searchResponse7 = client.Execute(searchRequest7);
-
+                        if ((searchResponse7.ResponseUri != null && searchResponse7.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/Step2Availability.aspx") ||
+                    (searchResponse7.StatusCode != HttpStatusCode.OK &&
+                     searchResponse7.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse7.StatusCode != HttpStatusCode.Found))
+                        {
+                            LogOut(cid, client);
+                            TurnInUsername(userName);
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Status = new BookingStatusInfo
+                                {
+                                    BookingStatus = BookingStatus.Failed
+                                },
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "[Lion Air] Error searchRequest7 in requesting before page Passenger at LionAirAgentsIBE/Step2Availability.aspx.Unexpected absolute path response or status code." }
+                            };
+                        }
+                        tempSearchResponse = searchResponse7;
                         // GET PAGE DATA Passenger
                         const string url8 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                         var searchRequest8 = new RestRequest(url8, Method.GET);
@@ -476,6 +585,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
                         //Thread.Sleep(1000);
                         var searchResponse8 = client.Execute(searchRequest8);
+                        if ((searchResponse8.ResponseUri != null && searchResponse8.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse8.StatusCode != HttpStatusCode.OK &&
+                     searchResponse8.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse8.StatusCode != HttpStatusCode.Found))
+                        {
+                            LogOut(cid, client);
+                            TurnInUsername(userName);
+                            return new BookFlightResult
+                            {
+                                IsSuccess = false,
+                                Status = new BookingStatusInfo
+                                {
+                                    BookingStatus = BookingStatus.Failed
+                                },
+                                Errors = new List<FlightError> { FlightError.TechnicalError },
+                                ErrorMessages = new List<string> { "[Lion Air] Error in searchRequest8 Getting Page Data Passenger at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                            };
+                        }
                         var html8 = searchResponse8.Content;
 
                         var pageBooking = (CQ)html8;
@@ -620,6 +747,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.LionAir);
                         if (!currencyList.TryGetValue(agentcurr, out currclass))
                         {
+                            LogOut(cid, client);
+                            TurnInUsername(userName);
                             return new BookFlightResult
                             {
                                 IsSuccess = false,
@@ -971,6 +1100,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                             ParameterType.RequestBody);
                                     Thread.Sleep(3000);
                                     var searchResponsPriceAcceptance = client.Execute(searchRequestPriceAcceptance);
+                                    tempSearchResponse = searchResponsPriceAcceptance;
                                 }
                             }
                             // kalau harga setelah dipilih di page yg banyak radio button beda dengan yg pertama
@@ -1021,6 +1151,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             };
                         }
 
+                        //TODO Batas Test Booking
+                        if (bookInfo.Test)
+                        {
+                            return new BookFlightResult
+                            {
+                                IsSuccess = true,
+                                Status = new BookingStatusInfo
+                                {
+                                    BookingStatus = BookingStatus.Booked
+                                },
+                                IsValid = true,
+
+                            };
+                        }
+
                         if (newPrice.Length == 0)
                         {
                             // Kalau normal2 aja
@@ -1045,6 +1190,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
                             Thread.Sleep(3000);
                             var searchResponse9 = client.Execute(searchRequest9);
+                            if ((searchResponse9.ResponseUri != null && searchResponse9.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse9.StatusCode != HttpStatusCode.OK &&
+                     searchResponse9.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse9.StatusCode != HttpStatusCode.Found))
+                            {
+                                LogOut(cid, client);
+                                TurnInUsername(userName);
+                                return new BookFlightResult
+                                {
+                                    IsSuccess = false,
+                                    Status = new BookingStatusInfo
+                                    {
+                                        BookingStatus = BookingStatus.Failed
+                                    },
+                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    ErrorMessages = new List<string> { "[Lion Air] Error in searchRequest9 requesting in request9 at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                                };
+                            }
+                            tempSearchResponse = searchResponse9;
 
                             const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                             var searchRequest10 = new RestRequest(url10, Method.GET);
@@ -1057,6 +1221,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
                             Thread.Sleep(3000);
                             var searchResponse10 = client.Execute(searchRequest10);
+                            if ((searchResponse10.ResponseUri != null && searchResponse10.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse10.StatusCode != HttpStatusCode.OK &&
+                     searchResponse10.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse10.StatusCode != HttpStatusCode.Found))
+                            {
+                                LogOut(cid, client);
+                                TurnInUsername(userName);
+                                return new BookFlightResult
+                                {
+                                    IsSuccess = false,
+                                    Status = new BookingStatusInfo
+                                    {
+                                        BookingStatus = BookingStatus.Failed
+                                    },
+                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    ErrorMessages = new List<string> { "[Lion Air] Error searchRequest10 in requesting in request10 at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                                };
+                            }
                             var html10 = searchResponse10.Content;
                             var bookingData = (CQ)html10;
 
@@ -1085,7 +1267,26 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "https://agent.lionair.co.id/LionAirAgentsIBE/Step3.aspx");
                             Thread.Sleep(3000);
                             var searchResponse9 = client.Execute(searchRequest9);
+                            if ((searchResponse9.ResponseUri != null && searchResponse9.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse9.StatusCode != HttpStatusCode.OK &&
+                     searchResponse9.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse9.StatusCode != HttpStatusCode.Found))
+                            {
+                                LogOut(cid, client);
+                                TurnInUsername(userName);
 
+                                return new BookFlightResult
+                                {
+                                    IsSuccess = false,
+                                    Status = new BookingStatusInfo
+                                    {
+                                        BookingStatus = BookingStatus.Failed
+                                    },
+                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    ErrorMessages = new List<string> { "[Lion Air] Error searchRequest9 in requesting in request9 at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                                };
+                            }
+                            tempSearchResponse = searchResponse9;
                             const string url10 = @"/LionAirAgentsIBE/OnlineBooking.aspx";
                             var searchRequest10 = new RestRequest(url10, Method.GET);
                             searchRequest10.AddHeader("Accept-Encoding", "gzip, deflate, sdch");
@@ -1097,6 +1298,24 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                                 "https://agent.lionair.co.id/LionAirAgentsIBE/Step3.aspx");
                             Thread.Sleep(3000);
                             var searchResponse10 = client.Execute(searchRequest10);
+                            if ((searchResponse10.ResponseUri != null && searchResponse10.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/OnlineBooking.aspx") ||
+                    (searchResponse10.StatusCode != HttpStatusCode.OK &&
+                     searchResponse10.StatusCode != HttpStatusCode.Redirect &&
+                     searchResponse10.StatusCode != HttpStatusCode.Found))
+                            {
+                                LogOut(cid, client);
+                                TurnInUsername(userName);
+                                return new BookFlightResult
+                                {
+                                    IsSuccess = false,
+                                    Status = new BookingStatusInfo
+                                    {
+                                        BookingStatus = BookingStatus.Failed
+                                    },
+                                    Errors = new List<FlightError> { FlightError.TechnicalError },
+                                    ErrorMessages = new List<string> { "[Lion Air] Error searchRequest10 in requesting in request1 fot getting booking time limeit at /LionAirAgentsIBE/OnlineBooking.aspx.Unexpected absolute path response or status code." }
+                                };
+                            }
                             var html10 = searchResponse10.Content;
                             var bookingData = (CQ)html10;
 

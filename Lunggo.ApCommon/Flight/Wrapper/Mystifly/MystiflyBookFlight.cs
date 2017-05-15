@@ -17,6 +17,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {
     internal partial class MystiflyWrapper
     {
+        internal override decimal GetDeposit()
+        {
+            return 0;
+        }
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
             RevalidateConditions conditions = new RevalidateConditions

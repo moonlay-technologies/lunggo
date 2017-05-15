@@ -20,6 +20,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper
         internal abstract IssueTicketResult OrderTicket(string bookingId, bool canHold);
         internal abstract GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions);
         internal abstract Currency CurrencyGetter(string currencyName);
+        internal abstract decimal GetDeposit();
         internal abstract List<BookingStatusInfo> GetBookingStatus();
 
         protected static void CommonInputCheck(List<Pax> passengers, DateTime departureDate, out List<string> messages)

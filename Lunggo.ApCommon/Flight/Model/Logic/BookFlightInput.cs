@@ -11,5 +11,6 @@ namespace Lunggo.ApCommon.Flight.Model.Logic
         public string Token { get; set; }
         public List<Pax> Passengers { get; set; }
         public Contact Contact { get; set; }
+        public bool Test { get; set; }
     }
 }

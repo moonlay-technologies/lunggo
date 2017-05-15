@@ -93,6 +93,13 @@ namespace Lunggo.ApCommon.Flight.Service
             queue.AddMessage(new CloudQueueMessage(rsvNo));
         }
 
+        public void SendDepositWarningNotif(string message)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("FlightDepositWarningNotifEmail");
+            queue.AddMessage(new CloudQueueMessage(message));
+        }
+
         public void SendIssueTimeoutNotifToDeveloper(string rsvNo)
         {
             var queueService = QueueService.GetInstance();

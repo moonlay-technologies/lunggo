@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
@@ -17,6 +18,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using Supplier = Lunggo.ApCommon.Flight.Constant.Supplier;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -24,6 +26,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
+            
             var output = new BookFlightOutput();
             var itins = GetItinerariesFromCache(input.Token);
 
@@ -39,6 +42,24 @@ namespace Lunggo.ApCommon.Flight.Service
             var bookResults = BookItineraries(itins, input, output);
             UpdateItineraries(itins, bookResults);
             SaveItinerariesToCache(itins, input.Token);
+
+            if (input.Test)
+            {
+                var isValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
+                if (isValid)
+                {
+                    return new BookFlightOutput
+                    {
+                        IsSuccess = true,
+                        IsValid = true,
+                    };
+                }
+                return new BookFlightOutput
+                {
+                    IsSuccess = false,
+                    IsValid = false,
+                };
+            }
 
             output.IsValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
             if (output.IsValid)
@@ -149,7 +170,8 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 Itinerary = itin,
                 Contact = input.Contact,
-                Passengers = input.Passengers
+                Passengers = input.Passengers,
+                Test = input.Test
             };
             var response = BookFlightInternal(bookInfo);
             var bookResult = new BookResult();
@@ -160,6 +182,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 newItin.Price.CalculateFinalAndLocal(itin.Price.LocalCurrency);
                 RoundFinalAndLocalPrice(newItin);
                 itin = newItin;
+            }
+            if (bookInfo.Test)
+            {
+                return new BookResult
+                {
+                    IsSuccess = response.IsSuccess
+                };
             }
             if (response.IsSuccess)
             {
@@ -185,6 +214,15 @@ namespace Lunggo.ApCommon.Flight.Service
                 IsPriceChanged = response.IsPriceChanged,
                 NewPrice = response.NewPrice
             };
+            bookResult.Deposit = response.Deposit.GetValueOrDefault();
+            //TODO Check Deposit Here
+            //Send Email with data
+            
+            if (bookResult.Deposit > 0 && bookResult.Deposit < 3000000)
+            {
+                var message = bookInfo.Itinerary.Supplier + "^" + bookResult.Deposit + "^" + itin.Price.Supplier;
+                SendDepositWarningNotif(message);
+            }
             return bookResult;
         }
 
@@ -192,7 +230,29 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
+            //FOR TESTING ONLY
+            //var result = new BookFlightResult();
+            //var Airasia = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.AirAsia).Select(entry => entry.Value).Single();
+            //var Citilink = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Citilink).Select(entry => entry.Value).Single();
+            //var LionAir = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.LionAir).Select(entry => entry.Value).Single();
+            //var Sriwijaya = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Sriwijaya).Select(entry => entry.Value).Single();
+            
+            //var CitilinkDeposit = Citilink.GetDeposit();
+            //var LionAirDeposit = LionAir.GetDeposit();
+            //var SriwijayaDeposit = Sriwijaya.GetDeposit();
+
+            
+            //var temp2 = CitilinkDeposit;
+            //var temp3 = LionAirDeposit;
+            //var temp4 = SriwijayaDeposit;
+
+            //result.Deposit = 0;
+            //var AirasiaDeposit = Airasia.GetDeposit();
+            //var temp1 = AirasiaDeposit;
+            //return result;
             var result = supplier.BookFlight(bookInfo);
+            if (bookInfo.Test)
+                return result;
             //Auto Retry Book
             var trial = 0;
             while (trial < 3 && result.Errors != null)
@@ -200,7 +260,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 result = supplier.BookFlight(bookInfo);
                 trial++;
             }
-         
+
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
             if (result.Status != null)
             {
@@ -217,6 +277,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
                 }
+                result.Deposit = supplier.GetDeposit();
             }
             return result;
         }

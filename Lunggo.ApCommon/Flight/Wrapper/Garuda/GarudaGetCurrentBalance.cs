@@ -18,6 +18,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 {
     internal partial class GarudaWrapper
     {
+        internal override decimal GetDeposit()
+        {
+            return Client.GetCurrentBalance();
+        }
         private partial class GarudaClientHandler
         {
             public decimal GetCurrentBalance()
