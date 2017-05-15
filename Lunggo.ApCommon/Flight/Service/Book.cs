@@ -202,7 +202,7 @@ namespace Lunggo.ApCommon.Flight.Service
             }
          
             var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
-            if (result.Status != null)
+            if (result.Status != null && !result.IsSuccess)
             {
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit
                     ? defaultTimeout
@@ -211,7 +211,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     result.IsSuccess = false;
                     result.Status.BookingStatus = BookingStatus.Failed;
-                    result.AddError(FlightError.FareIdNoLongerValid, "Time limit too short.");
+                    result.AddError(FlightError.FareIdNoLongerValid, "Time limit too short." + result.Status.TimeLimit);
                 }
                 else
                 {
