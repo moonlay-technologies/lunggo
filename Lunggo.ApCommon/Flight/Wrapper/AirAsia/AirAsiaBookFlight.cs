@@ -141,6 +141,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 //hidden = string.Join("", hidden, "IDR");
 
                 // [POST] Search Flight
+                
                 Thread.Sleep(10000);
                 var date2 = date.AddDays(1);
                 var postData =
@@ -192,7 +193,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     };
                 }
 
-                Thread.Sleep(5000);
+                Thread.Sleep(3000);
 
                 var usedFareId = (coreFareId.Split('@')[0]).Replace(":", "%3A");
                 searchRequest =
@@ -204,7 +205,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 searchResponse = client.Execute(searchRequest);
                 var html1 = (CQ)searchResponse.Content;
 
-                Thread.Sleep(100000);
+                Thread.Sleep(3000);
                 //// [POST] Select Flight
                 var currencies = html1[".black1.total-currency"].ToList()[0].InnerText;
                 hidden = String.Join("", hidden, currencies);
@@ -237,7 +238,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     @"&ControlGroupSelectView%24SpecialNeedsInputSelectView%24RadioButtonWCHYESNO=RadioButtonWCHNO" +
                     @"&ControlGroupSelectView%24ButtonSubmit=Continue" +
                     @"&__VIEWSTATEGENERATOR=C8F924D9";
-
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                 var selectRequest = new RestRequest("Select.aspx", Method.POST);
                 selectRequest.AddHeader("Referer", "https://booking2.airasia.com/Select.aspx");
                 selectRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);

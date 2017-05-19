@@ -7,15 +7,18 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.SharedModel;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using RestSharp;
+using StackExchange.Redis;
 
 namespace Lunggo.WebJob.BookingAutomation
 {
     public partial class Program
     {
-        public static bool BookFlight(string token)
+        public static bool BookFlight(string token, string supplierName)
         {
             var trial = 0;
             bool success = false;
@@ -54,12 +57,11 @@ namespace Lunggo.WebJob.BookingAutomation
             {
                 var request = new RestRequest("v1/flight/book", Method.POST);
                 request.AddHeader("Authorization", "Bearer " + _accessToken);
-                //request.AddJsonBody(bookRequest);
                 var requestJson = JsonExtension.Serialize(bookRequest);
                 request.AddParameter("text/json", requestJson, ParameterType.RequestBody);
                 var bookResponse = _client.Execute(request);
                 var responseData = JsonExtension.Deserialize<FlightBookApiResponse>(bookResponse.Content);
-                //var bookResponse = _client.Execute<FlightBookApiResponse>(request);
+                SaveBookingLogToStorage(supplierName, responseData);
                 if (bookResponse.StatusCode == HttpStatusCode.OK)
                 {
                     if (bookResponse != null && bookResponse.StatusCode == HttpStatusCode.OK)
@@ -95,6 +97,6 @@ namespace Lunggo.WebJob.BookingAutomation
 
             }
             return success;
-        }
+        }  
     }
 }

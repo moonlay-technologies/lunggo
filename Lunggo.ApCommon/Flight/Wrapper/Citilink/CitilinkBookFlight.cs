@@ -386,6 +386,21 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     };
                 }
 
+                //TODO Batas Test Booking
+                if (bookInfo.Test)
+                {
+                    return new BookFlightResult
+                    {
+                        IsSuccess = true,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Booked
+                        },
+                        IsValid = true,
+
+                    };
+                }
+
                 /*Buat dapat Info Itinerary dan Harga*/
                 var getPaymenturl = @"Payment.aspx";
                 var paymentGetRequest = new RestRequest(getPaymenturl, Method.GET);
@@ -472,20 +487,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 }
 
-                //TODO Batas Test Booking
-                if (bookInfo.Test)
-                {
-                    return new BookFlightResult
-                    {
-                        IsSuccess = true,
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Booked
-                        },
-                        IsValid = true,
-
-                    };
-                }
+                
                 // WAIT
 
                 var waitUrl = "Wait.aspx";
