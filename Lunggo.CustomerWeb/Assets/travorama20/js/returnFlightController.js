@@ -691,7 +691,10 @@ app.controller('returnFlightController', [
             return function(flight) {
                 if (targetScope.flightFilter.airline.touched == false) {
                     return flight;
-                } else {
+                }else if (targetScope.flightFilter.airline.value < 1) {
+                    return flight;
+                }
+                else {
                     for (var i in flight.AirlinesTag) {
                         if (targetScope.flightFilter.airline.value.indexOf(flight.AirlinesTag[i]) != -1) {
                             return flight;
@@ -757,9 +760,12 @@ app.controller('returnFlightController', [
                     $('.' + targetFlight + '-price-slider-max').trigger('input');
                 },
                 slide: function (event, ui) {
+                    var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
                     $('.' + targetFlight + '-price-slider-min').val(ui.values[0]);
+                    targetScope.flightFilter.price.current[0] = ui.values[0];
                     $('.' + targetFlight + '-price-slider-min').trigger('input');
                     $('.' + targetFlight + '-price-slider-max').val(ui.values[1]);
+                    targetScope.flightFilter.price.current[1] = ui.values[1];
                     $('.' + targetFlight + '-price-slider-max').trigger('input');
                 }
             });
@@ -770,6 +776,7 @@ app.controller('returnFlightController', [
 
         $scope.staticFilter = function (targetFlight) {
             // activate time slider
+            var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
             $('.' + targetFlight + '-departure-slider').slider({
                 range: true,
                 min: 0, max: 24, step: 1, values: [0, 24],
@@ -781,8 +788,10 @@ app.controller('returnFlightController', [
                 },
                 slide: function (event, ui) {
                     $('.' + targetFlight + '-departure-slider-min').val(ui.values[0]);
+                    targetScope.flightFilter.time.departure[0] = ui.values[0];
                     $('.' + targetFlight + '-departure-slider-min').trigger('input');
                     $('.' + targetFlight + '-departure-slider-max').val(ui.values[1]);
+                    targetScope.flightFilter.time.departure[1] = ui.values[1];
                     $('.' + targetFlight + '-departure-slider-max').trigger('input');
                 }
             });
@@ -797,8 +806,10 @@ app.controller('returnFlightController', [
                 },
                 slide: function (event, ui) {
                     $('.' + targetFlight + '-arrival-slider-min').val(ui.values[0]);
+                    targetScope.flightFilter.time.arrival[0] = ui.values[0];
                     $('.' + targetFlight + '-arrival-slider-min').trigger('input');
                     $('.' + targetFlight + '-arrival-slider-max').val(ui.values[1]);
+                    targetScope.flightFilter.time.arrival[1] = ui.values[1];
                     $('.' + targetFlight + '-arrival-slider-max').trigger('input');
                 }
             });
@@ -874,9 +885,12 @@ app.controller('returnFlightController', [
                     $('.' + targetFlight + '-price-slider-max').trigger('input');
                 },
                 slide: function (event, ui) {
+                    var targetScope = (targetFlight == 'departure' ? $scope.departureFlightConfig : $scope.returnFlightConfig);
                     $('.' + targetFlight + '-price-slider-min').val(ui.values[0]);
+                    targetScope.flightFilter.price.current[0] = ui.values[0];
                     $('.' + targetFlight + '-price-slider-min').trigger('input');
                     $('.' + targetFlight + '-price-slider-max').val(ui.values[1]);
+                    targetScope.flightFilter.price.current[1] = ui.values[1];
                     $('.' + targetFlight + '-price-slider-max').trigger('input');
                 }
             });
@@ -922,6 +936,7 @@ app.controller('returnFlightController', [
                         if (targetScope.progress < 100) {
                             targetScope.finalProgress = targetScope.progress; // change this
                             $scope.departureFlightConfig.finalProgress = targetScope.progress;
+
                         }
 
                         targetScope.progress = returnData.data.progress;

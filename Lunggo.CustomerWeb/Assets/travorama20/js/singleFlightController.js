@@ -372,6 +372,7 @@ app.controller('singleFlightController', [
             airlinesList: [],
             airlines: [],
             selected: [],
+            noneSelected: false,
             pure: true
         };
         $scope.checkAirline = function () {
@@ -397,7 +398,11 @@ app.controller('singleFlightController', [
         $scope.airlineFilter = function (flight) {
             if ($scope.airlineFilterParam.pure == true) {
                 return flight;
-            } else {
+            }
+            else if ($scope.airlineFilterParam.selected.length < 1) {
+                return flight;
+            }
+            else {
                 for (var i = 0; i < flight.AirlinesTag.length; i++) {
                     if ($scope.airlineFilterParam.selected.indexOf(flight.AirlinesTag[i]) != -1) {
                         return flight;
@@ -714,7 +719,9 @@ app.controller('singleFlightController', [
                 slide: function (event, ui) {
                     $('.price-slider-min').val(ui.values[0]);
                     $('.price-slider-min').trigger('input');
+                    $scope.priceFilterParam.current[0] = ui.values[0];
                     $('.price-slider-max').val(ui.values[1]);
+                    $scope.priceFilterParam.current[1] = ui.values[1];
                     $('.price-slider-max').trigger('input');
                 }
             });
@@ -731,8 +738,10 @@ app.controller('singleFlightController', [
                 },
                 slide: function (event, ui) {
                     $('.departure-slider-min').val(ui.values[0]);
+                    $scope.timeFilterParam.departure[0] = ui.values[0];
                     $('.departure-slider-min').trigger('input');
                     $('.departure-slider-max').val(ui.values[1]);
+                    $scope.timeFilterParam.departure[1] = ui.values[1];
                     $('.departure-slider-max').trigger('input');
                 }
             });
@@ -747,8 +756,10 @@ app.controller('singleFlightController', [
                 },
                 slide: function (event, ui) {
                     $('.arrival-slider-min').val(ui.values[0]);
+                    $scope.timeFilterParam.arrival[0] = ui.values[0];
                     $('.arrival-slider-min').trigger('input');
                     $('.arrival-slider-max').val(ui.values[1]);
+                    $scope.timeFilterParam.arrival[1] = ui.values[1];
                     $('.arrival-slider-max').trigger('input');
                 }
             });
