@@ -44,7 +44,6 @@ namespace Lunggo.WebJob.BookingAutomation
                             }
 
                             progress = responseData.Progress.GetValueOrDefault();
-                            Debug.Print("Progress = " + progress);
                         }
                     }
                     if (searchResponse.StatusCode == HttpStatusCode.Unauthorized)

@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.SharedModel;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using RestSharp;
+using StackExchange.Redis;
 
 
 namespace Lunggo.WebJob.BookingAutomation
@@ -19,15 +23,18 @@ namespace Lunggo.WebJob.BookingAutomation
         private static string _apiUrl;
         private static string _accessToken;
         private static RestClient _client;
+        private  static Dictionary<int, string> FlightSuppliers;
+        public static bool isFirst;
 
         private static void Main(string[] args)
         {
             Init();
             Console.Write("Starting Booking Automation : ");
-            for (var index = 1; index <= 100; index++)
+            for (var index = 6; index <= 100; index++)
             {
-                
+
                 DateTime searchDate = DateTime.Now.AddDays(index);
+                SaveDateSearch(searchDate.Date.ToString());
                 var searchDay = searchDate.Day < 10 ? "0" + searchDate.Day : searchDate.Day.ToString();
                 var searchMonth = searchDate.Month < 10 ? "0" + searchDate.Month : searchDate.Month.ToString();
                 var searchYear = searchDate.Year.ToString().Substring(searchDate.Year.ToString().Length - 2);
@@ -48,9 +55,14 @@ namespace Lunggo.WebJob.BookingAutomation
                         if (tokenSelect != null)
                         {
                             //Do Book
-                            var isBookSucceed = BookFlight(tokenSelect);
+                            Console.WriteLine("Supplier : "+ FlightSuppliers[i]);
+                            var isBookSucceed = BookFlight(tokenSelect, FlightSuppliers[i]);
                             var test = isBookSucceed;
                         }
+                    }
+                    else
+                    {
+                        FlightUnavailable(FlightSuppliers[i]);
                     }
                 }
             }
@@ -70,6 +82,7 @@ namespace Lunggo.WebJob.BookingAutomation
             flights[2] = new List<int>();
             flights[3] = new List<int>();
             flights[4] = new List<int>();
+
             foreach (var item in flightList)
             {
                 //Mistifly
@@ -121,7 +134,7 @@ namespace Lunggo.WebJob.BookingAutomation
             {
                 _accessToken = response.Data.AccessToken;
             }
-
         }
+
     }
 }

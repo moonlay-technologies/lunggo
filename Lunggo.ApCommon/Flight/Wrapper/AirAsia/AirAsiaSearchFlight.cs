@@ -34,134 +34,138 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
         {
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
-                if (conditions.Trips.Count > 1)
-                    return new SearchFlightResult
-                    {
-                        IsSuccess = true,
-                        Itineraries = new List<FlightItinerary>()
-                    };
-
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-
-                //log.Post("[Air Asia Test] This is a test", "#logging-dev");
-
-                var client = CreateCustomerClient();
-
-                // Airport Generalizing
-                var trip0 = new FlightTrip
+                try
                 {
-                    OriginAirport = conditions.Trips[0].OriginAirport,
-                    DestinationAirport = conditions.Trips[0].DestinationAirport,
-                    DepartureDate = conditions.Trips[0].DepartureDate
-                };
-                if (trip0.OriginAirport == "JKT")
-                    trip0.OriginAirport = "CGK";
-                if (trip0.DestinationAirport == "JKT")
-                    trip0.DestinationAirport = "CGK";
-                if (trip0.OriginAirport == "SHA")
-                    trip0.OriginAirport = "PVG";
-                if (trip0.DestinationAirport == "SHA")
-                    trip0.DestinationAirport = "PVG";
-                if (trip0.OriginAirport == "BKK")
-                    trip0.OriginAirport = "DMK";
-                if (trip0.DestinationAirport == "BKK")
-                    trip0.DestinationAirport = "DMK";
+                    if (conditions.Trips.Count > 1)
+                        return new SearchFlightResult
+                        {
+                            IsSuccess = true,
+                            Itineraries = new List<FlightItinerary>()
+                        };
 
-                // [GET] Search Flight
-                var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
-                CQ searchedHtml;
-                CQ availableFares;
-                CQ flightTable;
-                string mataUang;
+                    
+                    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
-                switch (originCountry)
-                {
-                    case "ID":
-                        mataUang = "IDR";
-                        break;
-                    case "MY":
-                        mataUang = "MYR";
-                        break;
-                    case "SG":
-                        mataUang = "SGD";
-                        break;
-                    case "TH":
-                        mataUang = "THB";
-                        break;
-                    case "SA":
-                        mataUang = "SAR";
-                        break;
-                    case "AU":
-                        mataUang = "AUD";
-                        break;
-                    case "BN":
-                        mataUang = "BWD";
-                        break;
-                    case "CN":
-                        mataUang = "CNY";
-                        break;
-                    case "PH":
-                        mataUang = "PHP";
-                        break;
-                    case "HK":
-                        mataUang = "HKD";
-                        break;
-                    case "IN":
-                        mataUang = "INR";
-                        break;
-                    case "JP":
-                        mataUang = "JPY";
-                        break;
-                    case "KR":
-                        mataUang = "KRW";
-                        break;
-                    case "MO":
-                        mataUang = "MOP";
-                        break;
-                    case "NP":
-                        mataUang = "NPR";
-                        break;
-                    case "OM":
-                        mataUang = "OMR";
-                        break;
-                    case "NZ":
-                        mataUang = "NZD";
-                        break;
-                    case "TW":
-                        mataUang = "TWD";
-                        break;
-                    case "LK":
-                        mataUang = "LKR";
-                        break;
-                    default:
-                        mataUang = "USD";
-                        break;
-                }
+                    //log.Post("[Air Asia Test] This is a test", "#logging-dev");
 
-                //if (originCountry == "ID")
-                {
+                    var client = CreateCustomerClient();
+
+                    // Airport Generalizing
+                    var trip0 = new FlightTrip
+                    {
+                        OriginAirport = conditions.Trips[0].OriginAirport,
+                        DestinationAirport = conditions.Trips[0].DestinationAirport,
+                        DepartureDate = conditions.Trips[0].DepartureDate
+                    };
+                    if (trip0.OriginAirport == "JKT")
+                        trip0.OriginAirport = "CGK";
+                    if (trip0.DestinationAirport == "JKT")
+                        trip0.DestinationAirport = "CGK";
+                    if (trip0.OriginAirport == "SHA")
+                        trip0.OriginAirport = "PVG";
+                    if (trip0.DestinationAirport == "SHA")
+                        trip0.DestinationAirport = "PVG";
+                    if (trip0.OriginAirport == "BKK")
+                        trip0.OriginAirport = "DMK";
+                    if (trip0.DestinationAirport == "BKK")
+                        trip0.DestinationAirport = "DMK";
+
+                    // [GET] Search Flight
+                    var originCountry = FlightService.GetInstance().GetAirportCountryCode(trip0.OriginAirport);
+                    CQ searchedHtml;
+                    CQ availableFares;
+                    CQ flightTable;
+                    string mataUang;
+
+                    switch (originCountry)
+                    {
+                        case "ID":
+                            mataUang = "IDR";
+                            break;
+                        case "MY":
+                            mataUang = "MYR";
+                            break;
+                        case "SG":
+                            mataUang = "SGD";
+                            break;
+                        case "TH":
+                            mataUang = "THB";
+                            break;
+                        case "SA":
+                            mataUang = "SAR";
+                            break;
+                        case "AU":
+                            mataUang = "AUD";
+                            break;
+                        case "BN":
+                            mataUang = "BWD";
+                            break;
+                        case "CN":
+                            mataUang = "CNY";
+                            break;
+                        case "PH":
+                            mataUang = "PHP";
+                            break;
+                        case "HK":
+                            mataUang = "HKD";
+                            break;
+                        case "IN":
+                            mataUang = "INR";
+                            break;
+                        case "JP":
+                            mataUang = "JPY";
+                            break;
+                        case "KR":
+                            mataUang = "KRW";
+                            break;
+                        case "MO":
+                            mataUang = "MOP";
+                            break;
+                        case "NP":
+                            mataUang = "NPR";
+                            break;
+                        case "OM":
+                            mataUang = "OMR";
+                            break;
+                        case "NZ":
+                            mataUang = "NZD";
+                            break;
+                        case "TW":
+                            mataUang = "TWD";
+                            break;
+                        case "LK":
+                            mataUang = "LKR";
+                            break;
+                        default:
+                            mataUang = "USD";
+                            break;
+                    }
+
+                    //if (originCountry == "ID")
+                    //{
                     string url = @"Flight/Select";
                     var searchRequest = new RestRequest(url, Method.GET);
                     //searchRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
                     searchRequest.AddQueryParameter("o1", trip0.OriginAirport);
                     searchRequest.AddQueryParameter("d1", trip0.DestinationAirport);
-                    searchRequest.AddQueryParameter("culture", "id-ID");
+                    //searchRequest.AddQueryParameter("culture", "id-ID");
                     searchRequest.AddQueryParameter("dd1", trip0.DepartureDate.ToString("yyyy-MM-dd"));
-                    searchRequest.AddQueryParameter("r", "true");
+                    //searchRequest.AddQueryParameter("r", "true");
                     searchRequest.AddQueryParameter("ADT", conditions.AdultCount.ToString(CultureInfo.InvariantCulture));
                     searchRequest.AddQueryParameter("CHD", conditions.ChildCount.ToString(CultureInfo.InvariantCulture));
                     searchRequest.AddQueryParameter("inl", conditions.InfantCount.ToString(CultureInfo.InvariantCulture));
-                    searchRequest.AddQueryParameter("s", "true");
+                    searchRequest.AddQueryParameter("s", "false");
                     searchRequest.AddQueryParameter("mon", "true");
                     searchRequest.AddQueryParameter("cc", mataUang);
-                    searchRequest.AddQueryParameter("c", "false");
-
+                    //searchRequest.AddQueryParameter("c", "false");
+                    //GET /Flight/Select?o1=CGK&d1=DPS&dd1=2017-05-24&ADT=1&CHD=0&inl=0&s=false&mon=true&cc=IDR HTTP/1.1
                     var searchRetryCount = 0;
                     var stillWaiting = true;
 
                     do
                     {
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                         var searchResponse = client.Execute(searchRequest);
 
                         var html = searchResponse.Content;
@@ -180,142 +184,142 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     } while (stillWaiting && searchRetryCount < 25);
                     availableFares = searchedHtml[".radio-markets"];
                     flightTable = searchedHtml[".avail-table-detail-table"];
-                }
+                    //}
 
-                //else
-                //{
-                //    return new SearchFlightResult
-                //    {
-                //        IsSuccess = true,
-                //        Itineraries = new List<FlightItinerary>()
-                //    };
-                //}
+                    //else
+                    //{
+                    //    return new SearchFlightResult
+                    //    {
+                    //        IsSuccess = true,
+                    //        Itineraries = new List<FlightItinerary>()
+                    //    };
+                    //}
 
-                // [Scrape]
+                    // [Scrape]
 
-                try
-                {
-                    List<string> fareIds;
-                    switch (conditions.CabinClass)
+                    try
                     {
-                        case CabinClass.Economy:
-                            fareIds = availableFares.Where(dom => dom.Id.Last() == '0').Select(dom => dom.Value).ToList();
-                            break;
-                        case CabinClass.Business:
-                            fareIds = availableFares.Where(dom => dom.Id.Last() == '1').Select(dom => dom.Value).ToList();
-                            break;
-                        default:
-                            fareIds = new List<string>();
-                            break;
-                    }
-                    
-                    var itins = new List<FlightItinerary>();
-                    var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." +
-                                       trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." +
-                                       conditions.ChildCount + "." + conditions.InfantCount + "." +
-                                       FlightService.GetInstance().ParseCabinClass(conditions.CabinClass) + ".";
-                    foreach (var fareId in fareIds)
-                    {
-                        var url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
-                        var fareRequest = new RestRequest(url, Method.GET);
-                        fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
-                        var response2 = client.Execute(fareRequest);
-                        var itinHtml = (CQ)response2.Content;
-                        if (response2.ResponseUri.AbsolutePath != "/Flight/PriceItinerary" && 
-                            (response2.StatusCode == HttpStatusCode.OK ||
-                             response2.StatusCode == HttpStatusCode.Redirect))
+                        List<string> fareIds;
+                        switch (conditions.CabinClass)
                         {
-                            log.Post("[Airasia Search] Error while requesting atFlight/PriceItinerary. Unexpected RensponseUri absolute path", "#logging-dev");
+                            case CabinClass.Economy:
+                                fareIds = availableFares.Where(dom => dom.Id.Last() == '0').Select(dom => dom.Value).ToList();
+                                break;
+                            case CabinClass.Business:
+                                fareIds = availableFares.Where(dom => dom.Id.Last() == '1').Select(dom => dom.Value).ToList();
+                                break;
+                            default:
+                                fareIds = new List<string>();
+                                break;
                         }
-                        var price =
-                            decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
-                        var breakdownPrice = itinHtml["[data-accordion-id='priceFareTaxesFeesContent0']"].Single().ChildElements.ToList();
-                        var adultPrice = 0M;
-                        var childPrice = 0M;
-                        var infantPrice = 0M;
-                        try
+
+                        var itins = new List<FlightItinerary>();
+                        var fareIdPrefix = trip0.OriginAirport + "." + trip0.DestinationAirport + "." +
+                                           trip0.DepartureDate.ToString("dd.MM.yyyy") + "." + conditions.AdultCount + "." +
+                                           conditions.ChildCount + "." + conditions.InfantCount + "." +
+                                           FlightService.GetInstance().ParseCabinClass(conditions.CabinClass) + ".";
+                        foreach (var fareId in fareIds)
                         {
-                            var x = breakdownPrice[0].LastElementChild;
-                            var y = x.InnerText.Trim();
-                            var iIdx = conditions.ChildCount > 0 ? 2 : 1;
-                            adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2]);
-                            if (conditions.ChildCount > 0)
-                                childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
-                            if (conditions.InfantCount > 0)
-                                infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
-                        }
-                        catch { }
-                        var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0,3);
-                        var itinHtmlText = itinHtml.Text();
-                        var isPscIncluded = itinHtmlText.Contains("Pajak Bandara") ||
-                                            itinHtmlText.Contains("Biaya Layanan Penumpang") ||
-                                            itinHtmlText.Contains("Airport Tax") ||
-                                            itinHtmlText.Contains("Passenger Service Fee");
-                        var segmentFareIds = fareId.Split('|').Last().Split('^');
-                        var segments = new List<FlightSegment>();
-                        var stops = Regex.Matches(fareId, "THRU").Count;
-                        
-                        foreach (var segmentFareId in segmentFareIds)
-                        {
-                            var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
-                            var segmentStop = 0;
-                            if (splittedSegmentFareId[splittedSegmentFareId.Length - 1].Length != 0)
+                            url = @"Flight/PriceItinerary?SellKeys%5B%5D=" + HttpUtility.UrlEncode(fareId);
+                            var fareRequest = new RestRequest(url, Method.GET);
+                            fareRequest.AddHeader("Referer", "http://www.airasia.com/id/id/home.page?cid=1");
+                            var response2 = client.Execute(fareRequest);
+                            var itinHtml = (CQ)response2.Content;
+                            if (response2.ResponseUri.AbsolutePath != "/Flight/PriceItinerary" &&
+                                (response2.StatusCode == HttpStatusCode.OK ||
+                                 response2.StatusCode == HttpStatusCode.Redirect))
                             {
-                                segmentStop = stops;
+                                log.Post("[Airasia Search] Error while requesting atFlight/PriceItinerary. Unexpected RensponseUri absolute path", "#logging-dev");
                             }
-                            var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(FlightService.GetInstance().GetAirportTimeZone(splittedSegmentFareId[4])));
-                            var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(FlightService.GetInstance().GetAirportTimeZone(splittedSegmentFareId[6])));
-                            var duration = arrTime - deptTime;
-
-                            var baggage = GetBaggage(splittedSegmentFareId[4], splittedSegmentFareId[6]);
-                            var isBaggageIncluded = false;
-
-                            if (baggage != null)
+                            var price =
+                                decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
+                            var breakdownPrice = itinHtml["[data-accordion-id='priceFareTaxesFeesContent0']"].Single().ChildElements.ToList();
+                            var adultPrice = 0M;
+                            var childPrice = 0M;
+                            var infantPrice = 0M;
+                            try
                             {
-                                isBaggageIncluded = true;
+                                var x = breakdownPrice[0].LastElementChild;
+                                var y = x.InnerText.Trim();
+                                var iIdx = conditions.ChildCount > 0 ? 2 : 1;
+                                adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                                if (conditions.ChildCount > 0)
+                                    childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                                if (conditions.InfantCount > 0)
+                                    infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
+                            }
+                            catch { }
+                            var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0, 3);
+                            var itinHtmlText = itinHtml.Text();
+                            var isPscIncluded = itinHtmlText.Contains("Pajak Bandara") ||
+                                                itinHtmlText.Contains("Biaya Layanan Penumpang") ||
+                                                itinHtmlText.Contains("Airport Tax") ||
+                                                itinHtmlText.Contains("Passenger Service Fee");
+                            var segmentFareIds = fareId.Split('|').Last().Split('^');
+                            var segments = new List<FlightSegment>();
+                            var stops = Regex.Matches(fareId, "THRU").Count;
+
+                            foreach (var segmentFareId in segmentFareIds)
+                            {
+                                var splittedSegmentFareId = segmentFareId.Split('~').ToArray();
+                                var segmentStop = 0;
+                                if (splittedSegmentFareId[splittedSegmentFareId.Length - 1].Length != 0)
+                                {
+                                    segmentStop = stops;
+                                }
+                                var deptTime = DateTime.Parse(splittedSegmentFareId[5]).AddHours(-(FlightService.GetInstance().GetAirportTimeZone(splittedSegmentFareId[4])));
+                                var arrTime = DateTime.Parse(splittedSegmentFareId[7]).AddHours(-(FlightService.GetInstance().GetAirportTimeZone(splittedSegmentFareId[6])));
+                                var duration = arrTime - deptTime;
+
+                                var baggage = GetBaggage(splittedSegmentFareId[4], splittedSegmentFareId[6]);
+                                var isBaggageIncluded = false;
+
+                                if (baggage != null)
+                                {
+                                    isBaggageIncluded = true;
+                                }
+
+                                segments.Add(new FlightSegment
+                                {
+                                    AirlineCode = splittedSegmentFareId[0],
+                                    FlightNumber = splittedSegmentFareId[1].Trim(),
+                                    CabinClass = conditions.CabinClass,
+                                    AirlineType = AirlineType.Lcc,
+                                    Rbd = fareId.Split('~')[1],
+                                    DepartureAirport = splittedSegmentFareId[4],
+                                    DepartureTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[5]), DateTimeKind.Utc),
+                                    ArrivalAirport = splittedSegmentFareId[6],
+                                    ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
+                                    OperatingAirlineCode = splittedSegmentFareId[0],
+                                    Duration = duration,
+                                    StopQuantity = 0,
+                                    IsMealIncluded = false,
+                                    IsPscIncluded = isPscIncluded,
+                                    BaggageCapacity = baggage,
+                                    IsBaggageIncluded = isBaggageIncluded
+                                });
                             }
 
-                            segments.Add(new FlightSegment
+                            var itin = new FlightItinerary
                             {
-                                AirlineCode = splittedSegmentFareId[0],
-                                FlightNumber = splittedSegmentFareId[1].Trim(),
-                                CabinClass = conditions.CabinClass,
-                                AirlineType = AirlineType.Lcc,
-                                Rbd = fareId.Split('~')[1],
-                                DepartureAirport = splittedSegmentFareId[4],
-                                DepartureTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[5]), DateTimeKind.Utc),
-                                ArrivalAirport = splittedSegmentFareId[6],
-                                ArrivalTime = DateTime.SpecifyKind(DateTime.Parse(splittedSegmentFareId[7]), DateTimeKind.Utc),
-                                OperatingAirlineCode = splittedSegmentFareId[0],
-                                Duration =  duration,
-                                StopQuantity = 0,
-                                IsMealIncluded = false,
-                                IsPscIncluded = isPscIncluded,
-                                BaggageCapacity = baggage,
-                                IsBaggageIncluded = isBaggageIncluded
-                            });
-                        }
-
-                        var itin = new FlightItinerary
-                        {
-                            AdultCount = conditions.AdultCount,
-                            ChildCount = conditions.ChildCount,
-                            InfantCount = conditions.InfantCount,
-                            CanHold = true,
-                            FareType = FareType.Published,
-                            RequireBirthDate = true,
-                            RequirePassport = RequirePassport(segments),
-                            RequireSameCheckIn = false,
-                            RequireNationality = true,
-                            RequestedCabinClass = CabinClass.Economy,
-                            TripType = TripType.OneWay,
-                            Supplier = Supplier.AirAsia,
-                            Price = new Price(),
-                            AdultPricePortion = adultPrice * conditions.AdultCount / price,
-                            ChildPricePortion = childPrice * conditions.ChildCount / price,
-                            InfantPricePortion = infantPrice * conditions.InfantCount / price,
-                            FareId = fareIdPrefix + price.ToString("0") + "." + fareId,
-                            Trips = new List<FlightTrip>
+                                AdultCount = conditions.AdultCount,
+                                ChildCount = conditions.ChildCount,
+                                InfantCount = conditions.InfantCount,
+                                CanHold = true,
+                                FareType = FareType.Published,
+                                RequireBirthDate = true,
+                                RequirePassport = RequirePassport(segments),
+                                RequireSameCheckIn = false,
+                                RequireNationality = true,
+                                RequestedCabinClass = CabinClass.Economy,
+                                TripType = TripType.OneWay,
+                                Supplier = Supplier.AirAsia,
+                                Price = new Price(),
+                                AdultPricePortion = adultPrice * conditions.AdultCount / price,
+                                ChildPricePortion = childPrice * conditions.ChildCount / price,
+                                InfantPricePortion = infantPrice * conditions.InfantCount / price,
+                                FareId = fareIdPrefix + price.ToString("0") + "." + fareId,
+                                Trips = new List<FlightTrip>
                             {
                                 new FlightTrip
                                 {
@@ -325,94 +329,94 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                     Segments = segments
                                 }
                             }
-                        };
-
-                        Currency curr;
-
-                       var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.AirAsia);
-                        if (!currencyList.TryGetValue(currency, out curr))
-                        {
-                            return new SearchFlightResult
-                            {
-                                IsSuccess = true,
-                                Itineraries = new List<FlightItinerary>()
                             };
-                        }
-                        itin.Price.SetSupplier(price, new Currency(currency, Payment.Constant.Supplier.AirAsia));
-                        //itins.Add(itin);
 
-                        //ambil row2nya (.fare-light-row)
-                        var m = fareIds.IndexOf(fareId);
-                        var rows = flightTable[m].ChildElements.ToList()[0].ChildElements.ToList();
-                        //cek apa jumlah rownya sama dengan segmen
-                        if (rows.Count > segments.Count)
-                        {
-                            for (var x = 1; x < rows.Count - 1; x++)
+                            Currency curr;
+
+                            var currencyList = Currency.GetAllCurrencies(Payment.Constant.Supplier.AirAsia);
+                            if (!currencyList.TryGetValue(currency, out curr))
                             {
-                                //ambil data kode airport nya dan jamnya
-                                var deptArpt =
-                                    rows[x].ChildElements.ToList()[1].
-                                        ChildElements.ToList()[0].
-                                            ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
-                                var arrvArpt =
-                                    rows[x].ChildElements.ToList()[3].
-                                        ChildElements.ToList()[0].
-                                            ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
-
-                                DateTime depTimeStop;
-                                DateTime arrTimeStop;
-
-                                if (deptArpt == segments.ElementAt(0).ArrivalAirport)
+                                return new SearchFlightResult
                                 {
-                                    //STOP ADA DI SEGMEN 2
-                                    var arrvHrAtStop = rows[x].ChildElements.ToList()[3].
+                                    IsSuccess = true,
+                                    Itineraries = new List<FlightItinerary>()
+                                };
+                            }
+                            itin.Price.SetSupplier(price, new Currency(currency, Payment.Constant.Supplier.AirAsia));
+                            //itins.Add(itin);
+
+                            //ambil row2nya (.fare-light-row)
+                            var m = fareIds.IndexOf(fareId);
+                            var rows = flightTable[m].ChildElements.ToList()[0].ChildElements.ToList();
+                            //cek apa jumlah rownya sama dengan segmen
+                            if (rows.Count > segments.Count)
+                            {
+                                for (var x = 1; x < rows.Count - 1; x++)
+                                {
+                                    //ambil data kode airport nya dan jamnya
+                                    var deptArpt =
+                                        rows[x].ChildElements.ToList()[1].
                                             ChildElements.ToList()[0].
-                                                ChildElements.ToList()[0].InnerHTML;
-                                    var deptHrAtStop = rows[x + 1].ChildElements.ToList()[1].
+                                                ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
+                                    var arrvArpt =
+                                        rows[x].ChildElements.ToList()[3].
                                             ChildElements.ToList()[0].
-                                                ChildElements.ToList()[0].InnerHTML;
+                                                ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
 
-                                    var jambrg = segments.ElementAt(1).DepartureTime.Hour;
-                                    var jamdtg = Convert.ToInt32(arrvHrAtStop.Split(':')[0]);
+                                    DateTime depTimeStop;
+                                    DateTime arrTimeStop;
 
-                                    if (jambrg > jamdtg)
+                                    if (deptArpt == segments.ElementAt(0).ArrivalAirport)
                                     {
-                                        //Kedatangan di stop udah beda hari dgn keberangkatan segmen
-                                        var w = segments.ElementAt(1).DepartureTime.AddDays(1);
-                                        arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
-                                    else
-                                    {
-                                        var w = segments.ElementAt(1).DepartureTime;
-                                        arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
+                                        //STOP ADA DI SEGMEN 2
+                                        var arrvHrAtStop = rows[x].ChildElements.ToList()[3].
+                                                ChildElements.ToList()[0].
+                                                    ChildElements.ToList()[0].InnerHTML;
+                                        var deptHrAtStop = rows[x + 1].ChildElements.ToList()[1].
+                                                ChildElements.ToList()[0].
+                                                    ChildElements.ToList()[0].InnerHTML;
 
-                                    jambrg = Convert.ToInt32(deptHrAtStop.Split(':')[0]);
-                                    jamdtg = segments.ElementAt(1).ArrivalTime.Hour;
+                                        var jambrg = segments.ElementAt(1).DepartureTime.Hour;
+                                        var jamdtg = Convert.ToInt32(arrvHrAtStop.Split(':')[0]);
 
-                                    if (jambrg > jamdtg)
-                                    {
-                                        //Kedatangan di segmen1 udah beda hari dgn keberangkatan di stop
-                                        var w = segments.ElementAt(1).ArrivalTime.AddDays(-1);
-                                        depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
-                                    else
-                                    {
-                                        var w = segments.ElementAt(1).ArrivalTime;
-                                        depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
+                                        if (jambrg > jamdtg)
+                                        {
+                                            //Kedatangan di stop udah beda hari dgn keberangkatan segmen
+                                            var w = segments.ElementAt(1).DepartureTime.AddDays(1);
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var w = segments.ElementAt(1).DepartureTime;
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
 
-                                    var durationAtStop = depTimeStop - arrTimeStop;
+                                        jambrg = Convert.ToInt32(deptHrAtStop.Split(':')[0]);
+                                        jamdtg = segments.ElementAt(1).ArrivalTime.Hour;
 
-                                    var segmentStops = new List<FlightStop>
+                                        if (jambrg > jamdtg)
+                                        {
+                                            //Kedatangan di segmen1 udah beda hari dgn keberangkatan di stop
+                                            var w = segments.ElementAt(1).ArrivalTime.AddDays(-1);
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var w = segments.ElementAt(1).ArrivalTime;
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+
+                                        var durationAtStop = depTimeStop - arrTimeStop;
+
+                                        var segmentStops = new List<FlightStop>
                                     {
                                         new FlightStop
                                         {
@@ -422,61 +426,61 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                             DepartureTime = depTimeStop                        
                                         }
                                     };
-                                    itin.Trips[0].Segments.ElementAt(1).Stops = segmentStops;
+                                        itin.Trips[0].Segments.ElementAt(1).Stops = segmentStops;
 
-                                }
+                                    }
 
-                                if (arrvArpt == segments.ElementAt(0).ArrivalAirport)
+                                    if (arrvArpt == segments.ElementAt(0).ArrivalAirport)
+                                    {
+                                        //STOP ADA DI SEGMEN 1
+                                        var arrvHrAtStop = rows[x - 1].ChildElements.ToList()[3].
+                                                 ChildElements.ToList()[0].
+                                                     ChildElements.ToList()[0].InnerHTML;
+                                        var deptHrAtStop = rows[x].ChildElements.ToList()[1].
+                                                ChildElements.ToList()[0].
+                                                    ChildElements.ToList()[0].InnerHTML;
+
+                                        var jambrg = segments.ElementAt(0).DepartureTime.Hour;
+                                        var jamdtg = Convert.ToInt32(arrvHrAtStop.Split(':')[0]);
+
+                                        if (jambrg > jamdtg)
                                         {
-                                    //STOP ADA DI SEGMEN 1
-                                    var arrvHrAtStop = rows[x - 1].ChildElements.ToList()[3].
-                                             ChildElements.ToList()[0].
-                                                 ChildElements.ToList()[0].InnerHTML;
-                                    var deptHrAtStop = rows[x].ChildElements.ToList()[1].
-                                            ChildElements.ToList()[0].
-                                                ChildElements.ToList()[0].InnerHTML;
+                                            //Kedatangan di stop udah beda hari dgn keberangkatan segmen
+                                            var w = segments.ElementAt(0).DepartureTime.AddDays(1);
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var w = segments.ElementAt(0).DepartureTime;
+                                            arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
 
-                                    var jambrg = segments.ElementAt(0).DepartureTime.Hour;
-                                    var jamdtg = Convert.ToInt32(arrvHrAtStop.Split(':')[0]);
+                                        jambrg = Convert.ToInt32(deptHrAtStop.Split(':')[0]);
+                                        jamdtg = segments.ElementAt(0).ArrivalTime.Hour;
 
-                                    if (jambrg > jamdtg)
-                                    {
-                                        //Kedatangan di stop udah beda hari dgn keberangkatan segmen
-                                        var w = segments.ElementAt(0).DepartureTime.AddDays(1);
-                                        arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
-                                    else
-                                    {
-                                        var w = segments.ElementAt(0).DepartureTime;
-                                        arrTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(arrvHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
-                        
-                                    jambrg = Convert.ToInt32(deptHrAtStop.Split(':')[0]);
-                                    jamdtg = segments.ElementAt(0).ArrivalTime.Hour;
+                                        if (jambrg > jamdtg)
+                                        {
 
-                                    if (jambrg > jamdtg)
-                                    {
+                                            var w = segments.ElementAt(0).ArrivalTime.AddDays(-1);
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
+                                        else
+                                        {
+                                            var w = segments.ElementAt(0).ArrivalTime;
+                                            depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[0]),
+                                                Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
+                                        }
 
-                                        var w = segments.ElementAt(0).ArrivalTime.AddDays(-1);
-                                        depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
-                                    else
-                                    {
-                                        var w = segments.ElementAt(0).ArrivalTime;
-                                        depTimeStop = DateTime.SpecifyKind(new DateTime(w.Year, w.Month, w.Day,
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[0]),
-                                            Convert.ToInt32(deptHrAtStop.Split(':')[1]), 0), DateTimeKind.Utc);
-                                    }
+                                        var durationAtStop = depTimeStop - arrTimeStop;
 
-                                    var durationAtStop = depTimeStop - arrTimeStop;
-
-                                    var segmentStops = new List<FlightStop>
+                                        var segmentStops = new List<FlightStop>
                                     {
                                         new FlightStop
                                         {
@@ -486,26 +490,36 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                             DepartureTime = depTimeStop
                                         }
                                     };
-                                    itin.Trips[0].Segments.ElementAt(0).Stops = segmentStops;
+                                        itin.Trips[0].Segments.ElementAt(0).Stops = segmentStops;
+                                    }
                                 }
                             }
+                            itins.Add(itin);
                         }
-                        itins.Add(itin);
+
+                        return new SearchFlightResult
+                        {
+                            IsSuccess = true,
+                            Itineraries = itins.Where(itin => itin.Price.SupplierCurrency.Rate != 0).ToList()
+                        };
                     }
-                    
-                    return new SearchFlightResult
+                    catch (Exception e)
                     {
-                        IsSuccess = true,
-                        Itineraries = itins.Where(itin => itin.Price.SupplierCurrency.Rate != 0).ToList()
-                    };
+                        log.Post("[Airasia Search] Error while processing data flight. Error  Message:  "+ e.Message, "#logging-dev");
+                        return new SearchFlightResult
+                        {
+                            Errors = new List<FlightError> { FlightError.TechnicalError },
+                            ErrorMessages = new List<string> { "[AirAsia] " + e.Message }
+                        };
+                    }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                    log.Post("[Airasia Search] Error while processing data flight", "#logging-dev");
+                    log.Post("[Airasia Search] Error while processing data flight. Error  Message:  " + e.Message, "#logging-dev");
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "[AirAsia] " + e.Message }
+                        ErrorMessages = new List<string> { "[AirAsia Search] " + e.Message }
                     };
                 }
             }
