@@ -165,7 +165,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 
                     do
                     {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
                         var searchResponse = client.Execute(searchRequest);
 
                         var html = searchResponse.Content;

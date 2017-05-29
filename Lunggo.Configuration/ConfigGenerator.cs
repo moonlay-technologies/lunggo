@@ -20,7 +20,7 @@ namespace Lunggo.Configuration
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.Production;
         private const bool DeployHtmlTemplate = true;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
@@ -71,6 +71,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler4", 
                 "WebJob-FlightSearch.FlightCrawler5",
                 "WebJob-FlightSearch.FlightCrawler6",
+                "WebJob-FlightSearch.FlightCrawler7",
                 "CloudApp.EticketHandler",
                 "WebJob.BankTransferChecking",
                 "WebJob.HotelContentWrapper",
@@ -464,6 +465,7 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler4",
                 "WebJob-FlightSearch.FlightCrawler5",
                 "WebJob-FlightSearch.FlightCrawler6",
+                "WebJob-FlightSearch.FlightCrawler7",
             };
             SaveRootFile("App.Debug.config", fileContent, projectList);
         }
@@ -491,7 +493,8 @@ namespace Lunggo.Configuration
                 "WebJob-FlightSearch.FlightCrawler3",
                 "WebJob-FlightSearch.FlightCrawler4",
                 "WebJob-FlightSearch.FlightCrawler5",
-                "WebJob-FlightSearch.FlightCrawler6"
+                "WebJob-FlightSearch.FlightCrawler6",
+                "WebJob-FlightSearch.FlightCrawler7"
             };
             SaveRootFile("App.Release.config", fileContent, projectList);
         }

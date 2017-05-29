@@ -141,6 +141,7 @@
     <None Include="Config\BackendWeb\redis.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\BackendWeb\tiket.properties" />
     <None Include="Config\BackendWeb\veritrans.properties" />
     <None Include="Config\BackendWeb\zendesk.properties" />
     <None Include="Config\CloudApp.CaptchaReader\airAsia.properties">
@@ -174,11 +175,13 @@
     <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\CloudApp.CaptchaReader\tiket.properties" />
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
     <None Include="Config\CloudApp.EticketHandler\hotel.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CloudApp.EticketHandler\sendGrid.properties" />
+    <None Include="Config\CloudApp.EticketHandler\tiket.properties" />
     <None Include="Config\Common\Airline.csv" />
     <None Include="Config\Common\Airport.csv" />
     <None Include="Config\Common\Country.csv" />
@@ -223,9 +226,39 @@
     </None>
     <None Include="Config\CustomerWeb\sendGrid.properties" />
     <None Include="Config\CustomerWeb\sriwijaya.properties" />
+    <None Include="Config\CustomerWeb\tiket.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\tiket.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\airAsia.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\Airline.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\Airport.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\azureStorage.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\citilink.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\Country.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\db.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\flight.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\Garuda.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\general.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\HotelLocation.csv" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\lionAir.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\log.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\mystifly.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\redis.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\sriwijaya.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler7\tiket.properties" />
+    <None Include="Config\WebJob.BankTransferChecking\tiket.properties" />
     <None Include="Config\WebJob.BookingAutomation\api.properties" />
     <None Include="Config\WebJob.BookingAutomation\azureStorage.properties" />
     <None Include="Config\WebJob.BookingAutomation\general.properties" />
@@ -564,12 +597,18 @@
     </None>
     <None Include="Config\WebJob.CurrencyCrawler\veritrans.properties" />
     <None Include="Config\WebJob.CurrencyCrawler\zendesk.properties" />
+    <None Include="Config\WebJob.FlightCrawlScheduler\tiket.properties" />
     <None Include="Config\WebJob.FlightProcessor\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightProcessor\tiket.properties" />
+    <None Include="Config\WebJob.HotelContentWrapper\tiket.properties" />
     <None Include="Config\WebJob.HotelProcessor\log.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.HotelProcessor\tiket.properties" />
+    <None Include="Config\WebJob.MystiflyQueueHandler\tiket.properties" />
+    <None Include="Config\WebJob.PriceIdentifierGenerator\tiket.properties" />
     <None Include="Config\WebJob.PriceUpdater\airAsia.properties">
       <SubType>Designer</SubType>
     </None>
@@ -611,6 +650,7 @@
     <None Include="Config\WebJob.PriceUpdater\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.PriceUpdater\tiket.properties" />
     <None Include="Config\WebJob.PriceUpdater\veritrans.properties" />
     <None Include="Config\WebJob.PriceUpdater\zendesk.properties" />
     <None Include="Config\WebJob.HotelContentWrapper\airAsia.properties" />

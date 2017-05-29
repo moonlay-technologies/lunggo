@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Wrapper.Tiket.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
@@ -30,44 +33,67 @@ namespace Lunggo.WebJob.BookingAutomation
         {
             Init();
             Console.Write("Starting Booking Automation : ");
-            for (var index = 6; index <= 100; index++)
-            {
+            var data = GetToken();
+            var temp = data;
+            Console.WriteLine("OK");
+            //for (var index = 6; index <= 100; index++)
+            //{
 
-                DateTime searchDate = DateTime.Now.AddDays(index);
-                SaveDateSearch(searchDate.Date.ToString());
-                var searchDay = searchDate.Day < 10 ? "0" + searchDate.Day : searchDate.Day.ToString();
-                var searchMonth = searchDate.Month < 10 ? "0" + searchDate.Month : searchDate.Month.ToString();
-                var searchYear = searchDate.Year.ToString().Substring(searchDate.Year.ToString().Length - 2);
-                var searchId = "CGKDPS" + searchDay + searchMonth + searchYear + "-100y";
-                var flightList = SearchFlight(searchId);
-                var flights = ClassifyFlightList(flightList);
-                for (var i = 0; i < flights.Length; i++)
-                {
-                    if (flights[i] != null && flights[i].Count != 0)
-                    {
-                        //Get One by Random
-                        Random rand = new Random();
-                        int randomFlight = rand.Next(0, flights[i].Count);
-                        var selectedRegId = flights[i].ElementAtOrDefault(randomFlight);
+            //    DateTime searchDate = DateTime.Now.AddDays(index);
+            //    SaveDateSearch(searchDate.Date.ToString());
+            //    var searchDay = searchDate.Day < 10 ? "0" + searchDate.Day : searchDate.Day.ToString();
+            //    var searchMonth = searchDate.Month < 10 ? "0" + searchDate.Month : searchDate.Month.ToString();
+            //    var searchYear = searchDate.Year.ToString().Substring(searchDate.Year.ToString().Length - 2);
+            //    var searchId = "CGKDPS" + searchDay + searchMonth + searchYear + "-100y";
+            //    var flightList = SearchFlight(searchId);
+            //    var flights = ClassifyFlightList(flightList);
+            //    for (var i = 0; i < flights.Length; i++)
+            //    {
+            //        if (flights[i] != null && flights[i].Count != 0)
+            //        {
+            //            //Get One by Random
+            //            Random rand = new Random();
+            //            int randomFlight = rand.Next(0, flights[i].Count);
+            //            var selectedRegId = flights[i].ElementAtOrDefault(randomFlight);
 
-                        //Do Select Here
-                        var tokenSelect = SelectFlight(searchId, selectedRegId);
-                        if (tokenSelect != null)
-                        {
-                            //Do Book
-                            Console.WriteLine("Supplier : "+ FlightSuppliers[i]);
-                            var isBookSucceed = BookFlight(tokenSelect, FlightSuppliers[i]);
-                            var test = isBookSucceed;
-                        }
-                    }
-                    else
-                    {
-                        FlightUnavailable(FlightSuppliers[i]);
-                    }
-                }
-            }
+            //            //Do Select Here
+            //            var tokenSelect = SelectFlight(searchId, selectedRegId);
+            //            if (tokenSelect != null)
+            //            {
+            //                //Do Book
+            //                Console.WriteLine("Supplier : "+ FlightSuppliers[i]);
+            //                var isBookSucceed = BookFlight(tokenSelect, FlightSuppliers[i]);
+            //                var test = isBookSucceed;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            FlightUnavailable(FlightSuppliers[i]);
+            //        }
+            //    }
+            //}
 
         }
+
+        public static RestClient CreateTiketClient()
+        {
+            var client = new RestClient("http://api-sandbox.tiket.com");
+            client.CookieContainer = new CookieContainer();
+            return client;
+        }
+
+        public  static string GetToken()
+        {
+            var client = CreateTiketClient();
+            var url = "/apiv1/payexpress?method=getToken&secretkey=" + "31b5f2614bba57d0bb9c31e78c62fb43&output=json";
+            var request = new RestRequest(url, Method.GET);
+            var response = client.Execute(request);
+            var responseToken = JsonExtension.Deserialize<GetTokenResponse>(response.Content);
+            if (responseToken == null)
+                return null;
+            return responseToken.Token;
+        }
+        
 
         public static List<int>[] ClassifyFlightList(List<FlightItineraryForDisplay> flightList)
         {

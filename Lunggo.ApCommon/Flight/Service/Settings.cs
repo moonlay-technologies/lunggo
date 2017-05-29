@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Flight.Wrapper.Garuda;
 using Lunggo.ApCommon.Flight.Wrapper.LionAir;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
+using Lunggo.ApCommon.Flight.Wrapper.Tiket;
 using Lunggo.ApCommon.Product.Service;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
@@ -30,6 +31,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly SriwijayaWrapper SriwijayaWrapper = SriwijayaWrapper.GetInstance();
         private static readonly LionAirWrapper LionAirWrapper = LionAirWrapper.GetInstance();
         private static readonly GarudaWrapper GarudaWrapper = GarudaWrapper.GetInstance();
+        private static readonly TiketWrapper TiketWrapper = TiketWrapper.GetInstance();
         private static readonly Dictionary<int, FlightSupplierWrapperBase> Suppliers = new Dictionary<int, FlightSupplierWrapperBase>()
         {
             { 1, MystiflyWrapper},
@@ -38,6 +40,7 @@ namespace Lunggo.ApCommon.Flight.Service
             { 4, SriwijayaWrapper},
             { 5, LionAirWrapper},
             //{ 6, GarudaWrapper}
+            { 7, TiketWrapper},
         };
 
         private FlightService()
