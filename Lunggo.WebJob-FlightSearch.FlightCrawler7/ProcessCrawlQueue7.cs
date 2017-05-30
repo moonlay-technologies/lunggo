@@ -16,7 +16,7 @@ namespace Lunggo.WebJob.FlightCrawler
             var searchTimeOut = DateTime.Parse(searchId.Split('|')[1]);
             Console.WriteLine("Searching for " + searchParam + " from supplier 7...");
             var sw = Stopwatch.StartNew();
-            flight.CommenceSearchFlight(searchParam, 2, searchTimeOut);
+            flight.CommenceSearchFlight(searchParam, 7, searchTimeOut);
             sw.Stop();
             Console.WriteLine("Done searching " + searchParam + " from supplier 7. (" + sw.ElapsedMilliseconds / 1000 + " s)");
         }

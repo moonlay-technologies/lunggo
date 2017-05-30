@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             internal SearchFlightResult SearchFlight(SearchFlightConditions conditions)
             {
                 GetToken();
+                var temp = conditions;
                 var result = new SearchResponse();
                 result = DoSearchFlight(conditions);
                 if (CheckUpdate(conditions))
@@ -33,7 +35,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 }
                 if(result == null)
                     return new SearchFlightResult();
-
+                var segments = new List<FlightSegment>();
                 //TODO Maping data hasil search ke Search Flght Result
                 return  new SearchFlightResult();
             }
@@ -41,7 +43,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             private static SearchResponse DoSearchFlight(SearchFlightConditions conditions)
             {
                 var client = CreateTiketClient();
-                var url = "/search/flight?d=CGK&a=DPS&date=20179-0-25&ret_date=2017-09-30&adult=1&child=0&infant=0&token="+ token +"&v=3&output=json";
+
+                var url = "/search/flight?d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd")+ "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&token=" + token + "&v=3&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var responseSearch = JsonExtension.Deserialize<SearchResponse>(response.Content);
@@ -51,7 +54,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             private static bool CheckUpdate(SearchFlightConditions conditions)
             {
                 var client = CreateTiketClient();
-                var url = "https://api-sandbox.tiket.com/ajax/mCheckFlightUpdated?token="+token+"&d=CGK&a=DPS&date=2014-05-30&adult=1&child=0&infant=0&time=134078435&output=json";
+                var url = "/ajax/mCheckFlightUpdated?token=" + token + "&d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd") + "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&time=134078435&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var responseSearch = JsonExtension.Deserialize<UpdateSearchResponse>(response.Content);

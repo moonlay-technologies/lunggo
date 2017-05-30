@@ -39,6 +39,11 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
+            string searchId = "CGKDPS250517-100y|5/25/2017 10:04:33 AM";
+            var flight = FlightService.GetInstance();
+            var searchParam = searchId.Split('|')[0];
+            var searchTimeOut = DateTime.Parse(searchId.Split('|')[1]);
+            flight.CommenceSearchFlight(searchParam, 7, searchTimeOut);
             //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");
             //Console.WriteLine("Done");
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput

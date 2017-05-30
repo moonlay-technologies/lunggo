@@ -7,13 +7,16 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
 {
-    public class GetTokenResponse
+    public class TiketBaseResponse
     {
         [JsonProperty("diagnostic", NullValueHandling = NullValueHandling.Ignore)]
         public Diagnostic Diagnostic { get; set; }
 
         [JsonProperty("login_status", NullValueHandling = NullValueHandling.Ignore)]
         public string LoginStatus { get; set; }
+
+        [JsonProperty("output_type", NullValueHandling = NullValueHandling.Ignore)]
+        public string OutputType { get; set; }
 
         [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
         public string Token { get; set; }

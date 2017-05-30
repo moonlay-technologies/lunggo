@@ -7,11 +7,8 @@ using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
 {
-    public class SearchResponse
+    public class SearchResponse : TiketBaseResponse
     {
-        [JsonProperty("diagnostic", NullValueHandling = NullValueHandling.Ignore)]
-        public Diagnostic Diagnostic { get; set; }
-
         [JsonProperty("departures", NullValueHandling = NullValueHandling.Ignore)]
         public Departure Departures { get; set; }
     }

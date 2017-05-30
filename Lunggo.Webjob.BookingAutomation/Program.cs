@@ -88,7 +88,7 @@ namespace Lunggo.WebJob.BookingAutomation
             var url = "/apiv1/payexpress?method=getToken&secretkey=" + "31b5f2614bba57d0bb9c31e78c62fb43&output=json";
             var request = new RestRequest(url, Method.GET);
             var response = client.Execute(request);
-            var responseToken = JsonExtension.Deserialize<GetTokenResponse>(response.Content);
+            var responseToken = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
             if (responseToken == null)
                 return null;
             return responseToken.Token;

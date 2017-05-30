@@ -54,10 +54,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             public static void GetToken()
             {
                 var client = CreateTiketClient();
-                var url = "/apiv1/payexpress?method=getToken&secretkey=" + sharedSecret;
+                var url = "/apiv1/payexpress?method=getToken&secretkey=" + sharedSecret + "&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
-                var responseToken = JsonExtension.Deserialize<GetTokenResponse>(response.Content);
+                var responseToken = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
                 if (responseToken == null)
                     //Do something
                     token = null;
