@@ -631,7 +631,6 @@
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page.jpg" />
-    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-promo-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider.jpg" />
     <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page-mobile.jpg" />
@@ -1520,6 +1519,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %283%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging %286%29.pubxml" />
