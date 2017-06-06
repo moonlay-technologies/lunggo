@@ -581,6 +581,47 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
+        private void SaveTiketTokenToCache(string token, string itinCacheId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "tokenItinerary:" + itinCacheId;
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    redisDb.StringSet(redisKey, token, TimeSpan.FromMinutes(timeout));
+                    return;
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
+
+        public string GetTiketTokenInCache(string itinCacheId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "tokenItinerary:" + itinCacheId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var token = redisDb.StringGet(redisKey);
+                    return token;
+                }
+                catch
+                {
+
+                }
+            }
+            return null;
+        }
+
         private void SaveCombosToCache(List<Combo> combos, string searchId, int supplierIndex)
         {
             var redisService = RedisService.GetInstance();

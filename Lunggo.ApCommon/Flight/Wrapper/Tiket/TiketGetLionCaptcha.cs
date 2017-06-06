@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var response = client.Execute(request);
                 var captchaData = JsonExtension.Deserialize<GetLionCaptcha>(response.Content);
                 var temp = captchaData;
-
+                return captchaData;
                 Console.WriteLine("Fisnihed Get Lion Captcha Data");
                 //Operate Data which useful for Order Data
             }

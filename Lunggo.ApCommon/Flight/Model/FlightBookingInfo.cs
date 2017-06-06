@@ -9,5 +9,6 @@ namespace Lunggo.ApCommon.Flight.Model
         public List<Pax> Passengers { get; set; }
         public Contact Contact { get; set; }
         public bool Test { get; set; }
+        public string Token { get; set; }
     }
 }

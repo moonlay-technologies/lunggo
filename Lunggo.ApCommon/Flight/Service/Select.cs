@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Context;
+using RestSharp.Validation;
 
 namespace Lunggo.ApCommon.Flight.Service
 {
@@ -13,6 +14,7 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SelectFlightOutput SelectFlight(SelectFlightInput input)
         {
+            string tiketToken;
             if (input.RegisterNumbers == null || input.RegisterNumbers.Count == 0)
                 return new SelectFlightOutput
                 {
@@ -22,8 +24,14 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (ParseTripType(input.SearchId) == TripType.OneWay)
             {
-                var token = QuarantineItinerary(input.SearchId, input.RegisterNumbers[0], 0);
+                var token = QuarantineItinerary(input.SearchId, input.RegisterNumbers[0], 0, out tiketToken);
                 var bundledToken = BundleFlight(new List<string> { token });
+                if(!string.IsNullOrEmpty(tiketToken))
+                
+                //if only supplier was Tiket.Com
+                SaveTiketTokenToCache(tiketToken, bundledToken);
+                var temp = GetTiketTokenInCache(bundledToken);
+                
                 return new SelectFlightOutput
                 {
                     IsSuccess = true,
@@ -69,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
             });
             if (matchedCombo != null)
             {
-                var token = QuarantineItinerary(input.SearchId, matchedCombo.BundledRegister, 0);
+                var token = QuarantineItinerary(input.SearchId, matchedCombo.BundledRegister, 0, out tiketToken);
                 var bundledToken = BundleFlight(new List<string> { token });
                 return new SelectFlightOutput
                 {
@@ -103,26 +111,64 @@ namespace Lunggo.ApCommon.Flight.Service
             return newToken;
         }
 
-        private string QuarantineItinerary(string searchId, int registerNumber, int partNumber)
+        private string QuarantineItinerary(string searchId, int registerNumber, int partNumber, out string tiketToken)
         {
+            tiketToken = null;
             var itinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itin = GetItineraryFromSearchCache(searchId, registerNumber, partNumber);
 
             if (itin == null)
                 return null;
 
+            if (itin.Supplier == Supplier.Tiket)
+            {
+                var flightData = TiketWrapper.SelectFlight(itin.FareId, itin.Trips[0].DepartureDate);
+                if (flightData != null && flightData.Required != null)
+                {
+                    var requireData = flightData.Required;
+                    if (requireData.Passportnationalitya1 != null && requireData.Passportnationalitya1.Mandatory == 1)
+                    {
+                        itin.RequirePassport = true;
+                        //itin.RequireNationality = true;
+                    }
+                    itin.RequireNationality = true;
+                    if (requireData.Birthdatea1 != null && requireData.Birthdatea1.Mandatory == 1)
+                    {
+                        itin.RequireBirthDate = true;
+                    }
+
+                    if (requireData.DeptCheckinBaggage != null)
+                    {
+                        if (requireData.DeptCheckinBaggage.Resource != null &&
+                            requireData.DeptCheckinBaggage.Resource.Count != 0)
+                        {
+                            var capacityData =
+                                requireData.DeptCheckinBaggage.Resource.FirstOrDefault(x => x.Name.Contains("(+ IDR 0,00)"));
+                            if (capacityData != null)
+                            {
+                                itin.Trips[0].Segments[0].BaggageCapacity = capacityData.Id;
+                            }
+
+                        }
+                    }
+                    
+                    tiketToken = flightData.Token;
+                }
+            }
+
             var currencies = GetCurrencyStatesFromCache(searchId);
             var localCurrency = currencies[OnlineContext.GetActiveCurrencyCode()];
             itin.Price.CalculateFinalAndLocal(localCurrency);
             RoundFinalAndLocalPrice(itin);
-
+            
             SaveItineraryToCache(itin, itinCacheId);
             return itinCacheId;
         }
 
         private List<string> QuarantineItineraries(string searchId, IEnumerable<int> registerNumbers)
         {
-            return registerNumbers.Select((reg, idx) => QuarantineItinerary(searchId, reg, idx+1)).ToList();
+            string tiketToken;
+            return registerNumbers.Select((reg, idx) => QuarantineItinerary(searchId, reg, idx+1, out tiketToken)).ToList();
         }
     }
 }

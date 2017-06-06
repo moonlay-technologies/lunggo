@@ -41,12 +41,31 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
         public Details Birthdatea1 { get; set; }
         [JsonProperty("passportnationalitya1", NullValueHandling = NullValueHandling.Ignore)]
         public Details Passportnationalitya1 { get; set; }
+        [JsonProperty("dcheckinbaggagea11", NullValueHandling = NullValueHandling.Ignore)]
+        public BaggageCapacity DeptCheckinBaggage { get; set; }
     }
 
     public class Details
     {
         [JsonProperty("mandatory", NullValueHandling = NullValueHandling.Ignore)]
-        public string Mandatory { get; set; }
+        public int Mandatory { get; set; }
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
+        [JsonProperty("example", NullValueHandling = NullValueHandling.Ignore)]
+        public string Example { get; set; }
+        [JsonProperty("FieldText", NullValueHandling = NullValueHandling.Ignore)]
+        public string FieldText { get; set; }
+        [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
+        public string Category { get; set; }
+        //[JsonProperty("resource", NullValueHandling = NullValueHandling.Ignore)]
+        //public List<Resource> Resource { get; set; }
+    }
+
+
+    public class BaggageCapacity
+    {
+        [JsonProperty("mandatory", NullValueHandling = NullValueHandling.Ignore)]
+        public int Mandatory { get; set; }
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
         [JsonProperty("example", NullValueHandling = NullValueHandling.Ignore)]
@@ -79,8 +98,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
         public string FieldText { get; set; }
         [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
         public string Category { get; set; }
-        [JsonProperty("resource", NullValueHandling = NullValueHandling.Ignore)]
-        public string Resource { get; set; }
+        //[JsonProperty("resource", NullValueHandling = NullValueHandling.Ignore)]
+        //public string Resource { get; set; }
     }
 
 }

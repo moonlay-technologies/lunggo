@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
         [JsonProperty("order_id", NullValueHandling = NullValueHandling.Ignore)]
         public string Order_id { get; set; }
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public Data Data { get; set; }
+        public List<Data> Data { get; set; }
         [JsonProperty("total", NullValueHandling = NullValueHandling.Ignore)]
         public int Total { get; set; }
         [JsonProperty("total_tax", NullValueHandling = NullValueHandling.Ignore)]
@@ -39,6 +39,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
     {
         [JsonProperty("expire", NullValueHandling = NullValueHandling.Ignore)]
         public int expire { get; set; }
+        [JsonProperty("order_expire_datetime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime order_expire_datetime { get; set; }
         [JsonProperty("uri", NullValueHandling = NullValueHandling.Ignore)]
         public string uri { get; set; }
         [JsonProperty("order_detail_id", NullValueHandling = NullValueHandling.Ignore)]

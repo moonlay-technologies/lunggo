@@ -20,6 +20,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
 
         [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
         public string Token { get; set; }
+        [JsonProperty("next_checkout_uri", NullValueHandling = NullValueHandling.Ignore)]
+        public string NextCheckout { get; set; }
     }
 
     public class Diagnostic
