@@ -92,13 +92,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                                 ? "0"
                                 : item.DurationMinute.Replace("m", string.Empty);
 
-                            var segment = new FlightSegment
+                           var segment = new FlightSegment
                             {
                                 AirlineCode = item.Flight_Number.Split('-')[0],
                                 FlightNumber = item.Flight_Number.Split('-')[1],
                                 CabinClass = conditions.CabinClass,
                                 AirlineType = AirlineType.Lcc,
-                                Rbd = item.Class,
+                                Rbd = (!string.IsNullOrEmpty(item.Class) && item.Class.Length > 1) ? null : item.Class,
                                 DepartureAirport = item.DepartureCity,
                                 DepartureTime = DateTime.SpecifyKind(DateTime.Parse(item.DepartureDate), DateTimeKind.Utc),
                                 ArrivalAirport = item.ArrivalCity,

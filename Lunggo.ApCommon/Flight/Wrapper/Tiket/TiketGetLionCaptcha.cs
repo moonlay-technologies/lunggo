@@ -14,17 +14,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
     {
         private partial class TiketClientHandler
         {
-            internal GetLionCaptcha GetLionCaptcha()
+            internal GetLionCaptcha GetLionCaptcha(string _token)
             {
                 var client = CreateTiketClient();
-                var url = "/flight_api/getLionCaptcha?token=" + token + "&output=json";
+                var url = "/flight_api/getLionCaptcha?token=" + _token + "&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var captchaData = JsonExtension.Deserialize<GetLionCaptcha>(response.Content);
-                var temp = captchaData;
                 return captchaData;
-                Console.WriteLine("Fisnihed Get Lion Captcha Data");
-                //Operate Data which useful for Order Data
+
             }
         }
     }

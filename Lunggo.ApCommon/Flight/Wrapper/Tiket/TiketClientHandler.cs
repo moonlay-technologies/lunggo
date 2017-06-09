@@ -22,6 +22,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             private static string basePath;
             private static string sharedSecret;
             private static string token;
+            private static string confirmKey;
 
 
             private TiketClientHandler()
@@ -40,13 +41,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 {
                     basePath = ConfigManager.GetInstance().GetConfigValue("tiket", "apiUrl");
                     sharedSecret = ConfigManager.GetInstance().GetConfigValue("tiket", "apiSecret");
+                    confirmKey = ConfigManager.GetInstance().GetConfigValue("tiket", "apiConfirmKey");
                     _isInitialized = true;
                 }
             }
 
             public static RestClient CreateTiketClient()
             {
-                var client = new RestClient("http://api-sandbox.tiket.com");
+                var client = new RestClient(basePath);
                 client.CookieContainer = new CookieContainer();
                 return client;
             }

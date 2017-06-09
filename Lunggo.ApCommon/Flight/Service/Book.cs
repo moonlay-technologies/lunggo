@@ -80,6 +80,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
                 ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit);
 
+                //Save Token for issue
+
                 //DeleteItinerariesFromCache(input.Token);
 
                 // DEVELOPMENT PURPOSE
@@ -231,26 +233,6 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            //FOR TESTING ONLY
-            //var result = new BookFlightResult();
-            //var Airasia = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.AirAsia).Select(entry => entry.Value).Single();
-            //var Citilink = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Citilink).Select(entry => entry.Value).Single();
-            //var LionAir = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.LionAir).Select(entry => entry.Value).Single();
-            //var Sriwijaya = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Sriwijaya).Select(entry => entry.Value).Single();
-            
-            //var CitilinkDeposit = Citilink.GetDeposit();
-            //var LionAirDeposit = LionAir.GetDeposit();
-            //var SriwijayaDeposit = Sriwijaya.GetDeposit();
-
-            
-            //var temp2 = CitilinkDeposit;
-            //var temp3 = LionAirDeposit;
-            //var temp4 = SriwijayaDeposit;
-
-            //result.Deposit = 0;
-            //var AirasiaDeposit = Airasia.GetDeposit();
-            //var temp1 = AirasiaDeposit;
-            //return result;
             var result = supplier.BookFlight(bookInfo);
             if (bookInfo.Test)
                 return result;
@@ -279,6 +261,15 @@ namespace Lunggo.ApCommon.Flight.Service
                     result.Status.TimeLimit = result.Status.TimeLimit.AddMinutes(-10);
                 }
                 result.Deposit = supplier.GetDeposit();
+
+                if (bookInfo.Itinerary.Supplier == Supplier.Tiket)
+                {
+                    result.Status.TimeLimit = DateTime.UtcNow.AddMinutes(60);
+                    SaveTokenBookingToCache(bookInfo.Token, result.Status.BookingId, result.Status.TimeLimit);
+                    //TODO Test Only, soon deleted
+                    GetTokenBookingToCache(result.Status.BookingId);
+
+                }
             }
             return result;
         }

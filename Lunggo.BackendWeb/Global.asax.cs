@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Constant;
@@ -25,6 +26,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
+using Supplier = Lunggo.ApCommon.Flight.Constant.Supplier;
 
 namespace Lunggo.BackendWeb
 {
@@ -39,11 +41,17 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
-            string searchId = "CGKDPS250517-100y|5/25/2017 10:04:33 AM";
-            var flight = FlightService.GetInstance();
-            var searchParam = searchId.Split('|')[0];
-            var searchTimeOut = DateTime.Parse(searchId.Split('|')[1]);
-            flight.CommenceSearchFlight(searchParam, 7, searchTimeOut);
+
+            var result = FlightService.GetInstance().IssueTicketInternal(new IssueTicketInfo
+            {
+                
+                BookingId = "33443206",
+                CanHold = true,
+                Supplier = Supplier.Tiket
+
+            });
+            var test = result;
+            Console.WriteLine("OKE");
             //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");
             //Console.WriteLine("Done");
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput

@@ -22,6 +22,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
         public string Token { get; set; }
         [JsonProperty("next_checkout_uri", NullValueHandling = NullValueHandling.Ignore)]
         public string NextCheckout { get; set; }
+        [JsonProperty("orderId", NullValueHandling = NullValueHandling.Ignore)]
+        public string OrderId { get; set; }
+        [JsonProperty("grand_total", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal GrandTotal { get; set; }
+        [JsonProperty("results", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Deposit { get; set; }
     }
 
     public class Diagnostic

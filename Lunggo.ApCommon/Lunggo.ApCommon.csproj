@@ -235,7 +235,8 @@
     <Compile Include="Flight\Model\FlightReservation.cs" />
     <Compile Include="Flight\Model\FlightReservationSearch.cs" />
     <Compile Include="Flight\Model\FlightRsvRule.cs" />
-    <Compile Include="Flight\Wrapper\Tiket\TiketCheckout.cs" />
+    <Compile Include="Flight\Wrapper\Tiket\TiketGetCurrentBalance.cs" />
+    <Compile Include="Flight\Wrapper\Tiket\TiketOrderTicket.cs" />
     <Compile Include="Flight\Wrapper\Tiket\TiketGetLionCaptcha.cs" />
     <Compile Include="Flight\Wrapper\Tiket\Model\AddOrderRequest.cs" />
     <Compile Include="Flight\Wrapper\Tiket\Model\OrderResponse.cs" />

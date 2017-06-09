@@ -28,6 +28,19 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
         {
             internal BookFlightResult AddOrder(FlightBookingInfo bookInfo)
             {
+                var isLion = false;
+                var lionSessionId = "";
+                var lionCaptcha = "";
+                if (bookInfo.Itinerary.Trips[0].Segments[0].AirlineCode.Equals("JT"))
+                {
+                    isLion = true;
+                    var lionData = GetLionCaptcha(bookInfo.Token);
+                    if (lionData != null)
+                    {
+                        lionSessionId = lionData.Lionsessionid;
+                        lionCaptcha = lionData.Lioncaptcha;
+                    } 
+                }
                 var adults = bookInfo.Passengers.Where(x => x.Type == PaxType.Adult).ToList();
                 var childs = bookInfo.Passengers.Where(x => x.Type == PaxType.Child).ToList();
                 var infants = bookInfo.Passengers.Where(x => x.Type == PaxType.Infant).ToList();
@@ -62,6 +75,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
 
                 request.AddQueryParameter("token", bookInfo.Token);
                 request.AddQueryParameter("flight_id", bookInfo.Itinerary.FareId);
+
+                if (isLion)
+                {
+                    request.AddQueryParameter("lioncaptcha", lionCaptcha);
+                    request.AddQueryParameter("lionsessionid", lionSessionId);
+                }
+
                 request.AddQueryParameter("child", bookInfo.Passengers.Count(x => x.Type == PaxType.Child).ToString());
                 request.AddQueryParameter("adult", bookInfo.Passengers.Count(x => x.Type == PaxType.Adult).ToString());
                 request.AddQueryParameter("infant", bookInfo.Passengers.Count(x => x.Type == PaxType.Infant).ToString());
@@ -81,10 +101,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         generateId += 1;
                         request.AddQueryParameter("firstnamea" + i, adult.FirstName);
                         request.AddQueryParameter("lastnamea" + i, adult.LastName);
-                        request.AddQueryParameter("birthdatea" + i, adult.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                        if (bookInfo.Itinerary.RequireBirthDate)
+                        {
+                            request.AddQueryParameter("birthdatea" + i, adult.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                        }
+                        
                         request.AddQueryParameter("titlea" + i, GetTitle(adult.Title));
                         request.AddQueryParameter("ida" + i, generateId.ToString());
-                        request.AddQueryParameter("passportnationalitya" + i, adult.Nationality);
+                        if (bookInfo.Itinerary.RequireNationality)
+                        {
+                            request.AddQueryParameter("passportnationalitya" + i, adult.Nationality);
+                        }
                         if (!string.IsNullOrEmpty(bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity))
                         {
                             request.AddQueryParameter("dcheckinbaggagea1" + i, bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity);
@@ -103,7 +130,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         request.AddQueryParameter("lastnamec" + i, child.LastName);
                         request.AddQueryParameter("idc" + i, generateId.ToString());
                         request.AddQueryParameter("titlec" + i, GetTitle(child.Title));
-                        request.AddQueryParameter("birthdatei" + i, child.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                        if (bookInfo.Itinerary.RequireBirthDate)
+                        {
+                            request.AddQueryParameter("birthdatec" + i, child.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                        }
+                        if (bookInfo.Itinerary.RequireNationality)
+                        {
+                            request.AddQueryParameter("passportnationalityc" + i, child.Nationality);
+                        }
+                        
                     }
 
                     i++;
@@ -120,7 +155,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         request.AddQueryParameter("titlei" + i, GetTitle(infant.Title));
                         request.AddQueryParameter("parenti" + i, infant.FirstName);
                         request.AddQueryParameter("idi" + i, generateId.ToString());
-                        request.AddQueryParameter("birthdatei1", infants.Take(1).FirstOrDefault().DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                        if (bookInfo.Itinerary.RequireBirthDate)
+                        {
+                            request.AddQueryParameter("birthdatei" + i, infant.DateOfBirth.Value.ToString("yyyy-MM-dd"));
+                        }
+                        if (bookInfo.Itinerary.RequireNationality)
+                        {
+                            request.AddQueryParameter("passportnationalityi" + i, infant.Nationality);
+                        }
+                        
                     }
 
                     i++;
@@ -207,10 +250,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             return new RevalidateFareResult();
         }
 
-        internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
-        {
-            return new IssueTicketResult();
-        }
 
         internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
         {
@@ -220,11 +259,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
         internal override Currency CurrencyGetter(string currency)
         {
             return new Currency(currency, Supplier.Sriwijaya);
-        }
-
-        internal override decimal GetDeposit()
-        {
-            return 0;
         }
 
         internal override List<BookingStatusInfo> GetBookingStatus()
