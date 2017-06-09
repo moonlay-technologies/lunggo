@@ -20,13 +20,93 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
     {
         internal override BookFlightResult BookFlight(FlightBookingInfo bookInfo)
         {
-            return Client.AddOrder(bookInfo);
+            return Client.BookFlight(bookInfo);
         }
 
 
         private partial class TiketClientHandler
         {
-            internal BookFlightResult AddOrder(FlightBookingInfo bookInfo)
+            internal BookFlightResult BookFlight(FlightBookingInfo bookInfo)
+            {
+
+                var bookResult = new BookFlightResult();
+
+                //Step 1 : Add Order
+                var addOrderResponse = AddOrder(bookInfo);
+                if(addOrderResponse == null)
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Tiket] Failed to Add Order" }
+                    };
+
+                //Step 2 : Order
+                var orderResult = Order(token);
+                if (orderResult == null)
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Tiket] Failed to Order" }
+                    };
+                
+                bookResult = new BookFlightResult
+                    {
+                        IsSuccess = true,
+                        IsValid = true,
+                        IsItineraryChanged = false,
+                        IsPriceChanged = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Booked,
+                            BookingId = orderResult.Myorder == null ? "" : orderResult.Myorder.Order_id,
+                            TimeLimit = orderResult.Myorder.Data[0].order_expire_datetime
+                        }
+                    };
+
+                //Step 3 : Checkout Request
+                var checkoutResponse = CheckoutPage(token, orderResult.Myorder.Order_id);
+                if (checkoutResponse == null)
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Tiket] Failed to Checkout Page Request" }
+                    };
+
+                //Step 4 : Checkout Page Customer
+                var checkoutCustResponse = CheckoutPageCustomer(token);
+                if (checkoutCustResponse == null)
+                    return new BookFlightResult
+                    {
+                        IsSuccess = false,
+                        Status = new BookingStatusInfo
+                        {
+                            BookingStatus = BookingStatus.Failed
+                        },
+                        Errors = new List<FlightError> { FlightError.TechnicalError },
+                        ErrorMessages = new List<string> { "[Tiket] Failed to Checkout Page Request" }
+                    };
+
+
+                return bookResult;
+            }
+
+
+            internal TiketBaseResponse AddOrder(FlightBookingInfo bookInfo)
             {
                 var isLion = false;
                 var lionSessionId = "";
@@ -171,48 +251,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 }
 
                 var response = client.Execute(request);
-                var AddOrderResponse = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
+
+                var addOrderResponse = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
                 
-                if (AddOrderResponse == null && (AddOrderResponse.Diagnostic.Status != "200"))
-                    return new BookFlightResult
-                    {
-                        IsSuccess = false,
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "[Tiket] Error While Requesting API Add Order" }
-                    };
+                if (addOrderResponse == null && (addOrderResponse.Diagnostic.Status != "200"))
+                    return null;
 
-                var orderResult = Order(token);
-                if (orderResult == null && orderResult.Diagnostic.Status != "200")
-                    return new BookFlightResult
-                    {
-                        IsSuccess = false,
-                        Status = new BookingStatusInfo
-                        {
-                            BookingStatus = BookingStatus.Failed
-                        },
-                        Errors = new List<FlightError> { FlightError.TechnicalError },
-                        ErrorMessages = new List<string> { "[Tiket] Failed to Order" }
-                    };
-
-                Console.WriteLine("Fisnihed Add Order");
-                //TODO Operate the data from Order Result
-                return new BookFlightResult
-                {
-                    IsSuccess = true,
-                    IsValid = true,
-                    IsItineraryChanged = false,
-                    IsPriceChanged = false,
-                    Status = new BookingStatusInfo
-                    {
-                        BookingStatus = BookingStatus.Booked,
-                        BookingId = orderResult.Myorder == null ? "" : orderResult.Myorder.Order_id,
-                        TimeLimit = orderResult.Myorder.Data[0].order_expire_datetime
-                    }
-                };
+                return addOrderResponse;
 
             }
 
@@ -223,6 +268,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var orderResponse = JsonExtension.Deserialize<OrderResponse>(response.Content);
+                if (orderResponse == null && orderResponse.Diagnostic.Status != "200")
+                    return null;
                 return orderResponse;
             }
 
@@ -242,6 +289,40 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         break;
                 }
                 return titleTostring;
+            }
+
+            //step 1
+            internal TiketBaseResponse CheckoutPage(string _token, string orderId)
+            {
+                var client = CreateTiketClient();
+                var url = "order/checkout/" + orderId + "/IDR?token=" + _token + "&output=json";
+                var request = new RestRequest(url, Method.GET);
+                var response = client.Execute(request);
+                var flightData = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
+                if (flightData == null && flightData.Diagnostic.Status != "200")
+                    return null;
+                return flightData;
+            }
+
+            //step2
+            internal TiketBaseResponse CheckoutPageCustomer(string _token)
+            {
+                var client = CreateTiketClient();
+                var url = "/checkout/checkout_customer";
+                var request = new RestRequest(url, Method.GET);
+                request.AddQueryParameter("token", _token);
+                request.AddQueryParameter("salutation", "Mr");
+                request.AddQueryParameter("firstName", "Suheri");
+                request.AddQueryParameter("lastName", "Marpaung");
+                request.AddQueryParameter("emailAddress", "suheri@travelmadezy.com");
+                request.AddQueryParameter("phone", "%2B85360343300");
+                request.AddQueryParameter("saveContinue", "2");
+                request.AddQueryParameter("output", "json");
+                var response = client.Execute(request);
+                var flightData = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
+                if (flightData == null && flightData.Diagnostic.Status != "200")
+                    return null;
+                return flightData;
             }
         }
 

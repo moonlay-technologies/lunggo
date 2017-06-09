@@ -16,67 +16,47 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
     {
         internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            var token = FlightService.GetInstance().GetTokenBookingToCache(bookingId);
-            var step1 = Client.CheckoutPage(token, bookingId);
-            var step2 = Client.CheckoutPageCustomer(token);
-            var step3 = Client.CheckoutPageUsingDeposit(token);
-            var confirmResponse = Client.ConfirmTransaction(token, bookingId);
-            if (confirmResponse.Diagnostic.Status != "200")
-                return new IssueTicketResult
-                {
-                    BookingId = bookingId,
-                    IsSuccess = false,
-                    IsInstantIssuance = false,
-                    Errors = new List<FlightError> { FlightError.FailedOnSupplier },
-                    ErrorMessages = new List<string> { "[Tiket] Error while request Confirm Pay" }
-                };
-
-            return new IssueTicketResult
-            {
-                BookingId = bookingId,
-                IsSuccess = true,
-                IsInstantIssuance = true
-            };
+            return Client.OrderTicket(bookingId);
         }
 
         private partial class TiketClientHandler
         {
-            //step 1
-            internal TiketBaseResponse CheckoutPage(string _token, string orderId)
+            internal IssueTicketResult OrderTicket(string bookingId)
             {
-                var client = CreateTiketClient();
-                var url = "order/checkout/" + orderId + "/IDR?token=" + _token + "&output=json";
-                var request = new RestRequest(url, Method.GET);
-                var response = client.Execute(request);
-                var flightData = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
-                var temp = flightData;
-                if (flightData.Diagnostic.Status != "200")
-                    return null;
-                return flightData;
-            }
+                var token = FlightService.GetInstance().GetTokenBookingToCache(bookingId);
 
-            //step2
-            internal TiketBaseResponse CheckoutPageCustomer(string _token)
-            {
-                var client = CreateTiketClient();
-                var url = "/checkout/checkout_customer";
-                var request = new RestRequest(url, Method.GET);
-                request.AddQueryParameter("token", _token);
-                request.AddQueryParameter("salutation", "Mr");
-                request.AddQueryParameter("firstName", "Suheri");
-                request.AddQueryParameter("lastName", "Marpaung");
-                request.AddQueryParameter("emailAddress", "suheri@travelmadezy.com");
-                request.AddQueryParameter("phone", "%2B85360343300");
-                request.AddQueryParameter("saveContinue", "2");
-                request.AddQueryParameter("output", "json");
-                var response = client.Execute(request);
-                var flightData = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
-                var temp = flightData;
-                if (flightData.Diagnostic.Status != "200")
-                    return null;
-                return flightData;
-            }
+                //Step 1 : Checkout Payment Using Deposit
+                var step1 = Client.CheckoutPageUsingDeposit(token);
+                if (step1 == null)
+                    return new IssueTicketResult
+                    {
+                        BookingId = bookingId,
+                        IsSuccess = false,
+                        IsInstantIssuance = false,
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "[Tiket] Error while request Checkout Page Using Deposit" }
+                    };
 
+                //Step 2 : Confirmation Transaction
+                var confirmResponse = Client.ConfirmTransaction(token, bookingId);
+                if (confirmResponse == null)
+                    return new IssueTicketResult
+                    {
+                        BookingId = bookingId,
+                        IsSuccess = false,
+                        IsInstantIssuance = false,
+                        Errors = new List<FlightError> { FlightError.FailedOnSupplier },
+                        ErrorMessages = new List<string> { "[Tiket] Error while request Confirm Pay" }
+                    };
+
+                return new IssueTicketResult
+                {
+                    BookingId = bookingId,
+                    IsSuccess = true,
+                    IsInstantIssuance = true
+                };
+            }
+            
             //Step3
             internal TiketBaseResponse CheckoutPageUsingDeposit(string _token)
             {
@@ -85,8 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var flightData = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
-                var temp = flightData;
-                if (flightData.Diagnostic.Status != "200")
+                if (flightData == null && flightData.Diagnostic.Status != "200")
                     return null;
                 return flightData;
             }
@@ -108,7 +87,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 request.AddQueryParameter("output", "json");
                 var response = client.Execute(request);
                 var confirmResponse = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
-                if (confirmResponse.Diagnostic.Status != "200")
+                if (confirmResponse == null && confirmResponse.Diagnostic.Status != "200")
                     return null;
                 return confirmResponse;
             }
