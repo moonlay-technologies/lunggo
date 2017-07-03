@@ -111,11 +111,16 @@
                 var param = searchParam(hotelSearch);
                 $log.debug(param);
                 if (param != false) {
-                    hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/\s+/g, '-');
-                    hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/[^0-9a-zA-Z-]/gi, '');
-
-                    hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/\s+/g, '-');
-                    hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/[^0-9a-zA-Z-]/gi, '');
+                    
+                    if (hotelSearch.urlData.country != null && hotelSearch.urlData.country.length > 0) {
+                        hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/\s+/g, '-');
+                        hotelSearch.urlData.country = hotelSearch.urlData.country.replace(/[^0-9a-zA-Z-]/gi, '');
+                    }
+                    
+                    if (hotelSearch.urlData.destination != null && hotelSearch.urlData.destination.length > 0) {
+                        hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/\s+/g, '-');
+                        hotelSearch.urlData.destination = hotelSearch.urlData.destination.replace(/[^0-9a-zA-Z-]/gi, '');
+                    }
 
                     if (hotelSearch.urlData.zone != null && hotelSearch.urlData.zone.length > 0) {
                         hotelSearch.urlData.zone = hotelSearch.urlData.zone.replace(/\s+/g, '-');

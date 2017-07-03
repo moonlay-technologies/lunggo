@@ -17,6 +17,7 @@ using Lunggo.Framework.Context;
 using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Hotel.Constant;
+using Supplier = Lunggo.ApCommon.Hotel.Constant.Supplier;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {
@@ -129,6 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         DestinationCode = hotelResponse.destinationCode,
                         StarRating = hotelResponse.categoryCode,
                         Review = hotelResponse.reviews,
+                        Supplier = Supplier.HotelBeds,
                         CheckInDate = condition.CheckIn,
                         CheckOutDate = condition.Checkout,
                         Rooms = hotelResponse.rooms == null ? null : hotelResponse.rooms.Select(roomApi => new HotelRoom

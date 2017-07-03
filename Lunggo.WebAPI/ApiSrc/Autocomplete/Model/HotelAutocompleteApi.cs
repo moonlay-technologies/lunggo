@@ -20,5 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
         public string Zone { get; set; }
         [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
         public string Area { get; set; }
+        [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]
+        public string Value { get; set; }
     }
 }

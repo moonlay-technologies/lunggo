@@ -20,8 +20,11 @@
                                      'star star-5': hotel.starRating == 5}">
                 </div>
                 <div class="location">
-                    <div><span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.address)}}</span> {{toTitleCase(hotel.area)}}</div>
-                    <span ng-show="hotel.area == null || hotel.area.length < 1">{{toTitleCase(hotel.city)}}<span ng-show="hotel.postalCd != null || hotel.postalCd.length > 0"> {{hotel.postalCd}}</span></span>
+                    <div>
+                        <span ng-show="(hotel.zone == null && hotel.zone.length < 1  && hotel.zone == '')">{{toTitleCase(hotel.address)}}</span>
+                        <span ng-show="hotel.area != null && hotel.area.length > 1 && hotel.area != '' ">{{toTitleCase(hotel.area)}}<span ng-show="hotel.destinationName != null || hotel.destinationName.length > 0">, {{hotel.destinationName}}</span></span>
+                        <span ng-show="hotel.zone != null && hotel.zone.length > 1 && hotel.zone != ''">{{toTitleCase(hotel.zone)}}<span ng-show="hotel.destinationName != null || hotel.destinationName.length > 0">, {{hotel.destinationName}}</span></span>
+                    </div>
                 </div>
 
                 @*=================== ini review row ================*@

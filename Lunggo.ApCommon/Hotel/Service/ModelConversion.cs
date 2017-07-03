@@ -174,6 +174,60 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hotel;
         }
 
+        /*Tiket*/
+        internal List<HotelDetailForDisplay> ConvertToTiketHotelDetailForDisplay(List<HotelDetail> hotelDetails)
+        {
+            if (hotelDetails == null)
+                return null;
+            var convertedHotels = new List<HotelDetailForDisplay>();
+            foreach (var hotelDetail in hotelDetails)
+            {
+                var hotel = new HotelDetailForDisplay
+                {
+                    HotelCode = hotelDetail.HotelCode,
+                    HotelName = hotelDetail.HotelName,
+                    HotelUri = hotelDetail.HotelUri,
+                    Address = hotelDetail.Address,
+                    City = hotelDetail.City,
+                    CountryName = hotelDetail.CountryCode,
+                    DestinationName = hotelDetail.DestinationName,
+                    AreaName = hotelDetail.AreaCode,
+                    ZoneName = hotelDetail.ZoneCode,
+                    StarRating = hotelDetail.StarCode,
+                    MainImage = hotelDetail.PhotoPrimary,
+                    OriginalTotalFare = hotelDetail.OriginalCheapestTotalFare,
+                    OriginalCheapestFare = hotelDetail.OriginalCheapestFare,
+                    OriginalCheapestTotalFare = hotelDetail.OriginalCheapestTotalFare,
+                    NetTotalFare = hotelDetail.NetCheapestTotalFare,
+                    NetCheapestFare = hotelDetail.NetCheapestFare,
+                    NetCheapestTotalFare = hotelDetail.NetCheapestTotalFare,
+                    IsWifiAccessAvailable = hotelDetail.WifiAccess,
+                    IsRestaurantAvailable = false,
+                    CheckInDate = hotelDetail.CheckInDate,
+                    CheckOutDate = hotelDetail.CheckOutDate,
+                    NightCount = hotelDetail.NightCount,
+                    SpecialRequest = hotelDetail.SpecialRequest,
+                    SupplierVat = hotelDetail.SupplierVat,
+                    SupplierName = hotelDetail.SupplierName,
+                    BookingReference = hotelDetail.BookingReference,
+                    ClientReference = hotelDetail.ClientReference,
+                    PhonesNumbers = hotelDetail.PhonesNumbers,
+                    PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode,
+                    Latitude = hotelDetail.Latitude == 0 ? null : hotelDetail.Latitude,
+                    Longitude = hotelDetail.Longitude == 0 ? null : hotelDetail.Longitude
+                };
+                if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
+                {
+                    hotel.ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2
+                        ? GetZoneNameFromDict(hotelDetail.ZoneCode)
+                        : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode);
+                }
+                convertedHotels.Add(hotel);
+            };
+            return convertedHotels.ToList();
+        }
+
+        /*HotelBeds*/
         internal List<HotelDetailForDisplay> ConvertToHotelDetailForDisplay(List<HotelDetail> hotelDetails)
         {
             if (hotelDetails == null)

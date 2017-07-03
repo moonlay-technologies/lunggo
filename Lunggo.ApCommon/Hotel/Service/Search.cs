@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Wrapper.Tiket;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
@@ -59,67 +61,83 @@ namespace Lunggo.ApCommon.Hotel.Service
                     SearchId = getSearchDataFromCache.SearchId,
                     DestinationName = getSearchDataFromCache.DestinationName,
                     FilteredHotelCount = getSearchDataFromCache.HotelDetails.Count,
-                    HotelDetailLists = ConvertToHotelDetailForDisplay(firstPage),
+                    HotelDetailLists = ConvertToTiketHotelDetailForDisplay(firstPage),
                     Page = input.Page,
                     PerPage = input.PerPage,
                     PageCount = totalPage,
                     ReturnedHotelCount = firstPage.Count,
                     TotalHotelCount = getSearchDataFromCache.HotelDetails.Count,
                     HotelFilterDisplayInfo = getSearchDataFromCache.HotelFilterDisplayInfo,
-                    MaxPrice = getSearchDataFromCache.MaxPrice,
+                    MaxPrice = getSearchDataFromCache.MaxPrice, 
                     MinPrice = getSearchDataFromCache.MinPrice,
                     ExpiryTime = GetSearchHotelResultExpiry(getSearchDataFromCache.SearchId)
                 };
             }
-            //Guid generatedSearchId = Guid.NewGuid();
-            var hotelBedsClient = new HotelBedsSearchHotel();
+            
             var allCurrency = Currency.GetAllCurrencies();
             SaveAllCurrencyToCache(searchId, allCurrency);
             var request = new SearchHotelCondition();
-            var detailDestination = GetLocationById(input.Location);
+            
+            
+            /*Comment this for hotelbeds*/
+            //var hotelBedsClient = new HotelBedsSearchHotel();
+            //var detailDestination = GetLocationById(input.Location);
+            //if (input.HotelCode != 0)
+            //{
+            //    request.Occupancies = input.Occupancies;
+            //    request.HotelCode = input.HotelCode;
+            //    request.CheckIn = input.CheckIn;
+            //    request.Nights = input.Nights;
+            //    request.Checkout = input.CheckIn.AddDays(input.Nights);
+            //    request.SearchId = searchId;
+            //}
+            //else
+            //{
+            //    request.CheckIn = input.CheckIn;
+            //    request.Checkout = input.CheckIn.AddDays(input.Nights);
+            //    request.Nights = input.Nights;
+            //    request.Occupancies = input.Occupancies;
+            //    request.SearchId = searchId;
 
-            if (input.HotelCode != 0)
-            {
-                request.Occupancies = input.Occupancies;
-                request.HotelCode = input.HotelCode;
-                request.CheckIn = input.CheckIn;
-                request.Nights = input.Nights;
-                request.Checkout = input.CheckIn.AddDays(input.Nights);
-                request.SearchId = searchId;
-            }
-            else
-            {
-                request.CheckIn = input.CheckIn;
-                request.Checkout = input.CheckIn.AddDays(input.Nights);
-                request.Nights = input.Nights;
-                request.Occupancies = input.Occupancies;
-                request.SearchId = searchId;
+            //    switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
+            //    {
+            //        case AutocompleteType.Zone:
+            //            request.Zone = detailDestination.Code;
+            //            break;
+            //        case AutocompleteType.Destination:
+            //            request.Destination = detailDestination.Code;
+            //            break;
+            //        case AutocompleteType.Area:
+            //            request.Area = detailDestination.Code;
+            //            break;
+            //        case AutocompleteType.Hotel:
+            //            request.HotelCode = int.Parse(detailDestination.Code);
+            //            break;
+                        
+            //    };
+            //}
 
-                switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
-                {
-                    case AutocompleteType.Zone:
-                        request.Zone = detailDestination.Code;
-                        break;
-                    case AutocompleteType.Destination:
-                        request.Destination = detailDestination.Code;
-                        break;
-                    case AutocompleteType.Area:
-                        request.Area = detailDestination.Code;
-                        break;
-                    case AutocompleteType.Hotel:
-                        request.HotelCode = int.Parse(detailDestination.Code);
-                        break;
-
-                };
-            }
+            /*Tiket Request*/
+            var client = new TiketSearchHotel();
+            
+            request.Occupancies = input.Occupancies;
+            request.CheckIn = input.CheckIn;
+            request.Nights = input.Nights;
+            request.Checkout = input.CheckIn.AddDays(input.Nights);
+            request.SearchId = searchId;
+            request.Destination = input.Location;
 
             var swAv = Stopwatch.StartNew();
             var realOccupancies = request.Occupancies;
             request.Occupancies = PreProcessOccupancies(request.Occupancies);
-            var result = hotelBedsClient.SearchHotel(request);
+            /*HotelBeds*/
+            //var result = hotelBedsClient.SearchHotel(request);
+            
+            /*Tiket*/
+            var result = client.SearchHotel(request);
             result.Occupancies = realOccupancies;
             swAv.Stop();
-            Debug.Print("AVAIALABILITY:" + swAv.Elapsed.ToString());
+            Debug.Print("AVAILABILITY:" + swAv.Elapsed.ToString());
             result.SearchId = searchId;
 
 
@@ -132,7 +150,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                         TotalHotelCount = 0,
                         FilteredHotelCount = 0
                     };
-            //result.HotelDetails = FilterSearchRoomByCapacity(result.HotelDetails, input.Occupancies);
             if (result.HotelDetails.Count == 0)
                 return new SearchHotelOutput()
                 {
@@ -142,39 +159,39 @@ namespace Lunggo.ApCommon.Hotel.Service
                     TotalHotelCount = 0,
                     FilteredHotelCount = 0
                 };
-            var swPr = Stopwatch.StartNew();
-            AddPriceMargin(result.HotelDetails);
-            swPr.Stop();
-            Debug.Print("PRIMARGIN:" + swPr.Elapsed.ToString());
+            //var swPr = Stopwatch.StartNew();
+            //AddPriceMargin(result.HotelDetails);
+            //swPr.Stop();
+            //Debug.Print("PRIMARGIN:" + swPr.Elapsed.ToString());
             var dict = new Dictionary<int, HotelDetailsBase>();
             var details = new HotelDetailsBase();
-            //GetHotelDetailByLocation(request.Destination);
-            switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
-            {
-                case AutocompleteType.Zone:
-                    dict = GetHotelDetailByLocation(request.Zone);
-                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
-                    result.DestinationName = detailDestination.Zone + ", " + detailDestination.Destination + ", " + detailDestination.Country;
-                    break;
-                case AutocompleteType.Destination:
-                    dict = GetHotelDetailByLocation(request.Destination);
-                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
-                    result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
-                    break;
-                case AutocompleteType.Area:
-                    dict = GetHotelDetailByLocation(request.Area);
-                    result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
-                    result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
-                    break;
-                case AutocompleteType.Hotel:
-                    details = GetHotelDetailFromDb(request.HotelCode);
-                    result.HotelDetails = ApplyHotelDetails(details, result.HotelDetails);
-                    result.DestinationName = details.HotelName + ", " +detailDestination.Destination + ", " + detailDestination.Country;
-                    break;
-            };
+
+            //switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
+            //{
+            //    case AutocompleteType.Zone:
+            //        dict = GetHotelDetailByLocation(request.Zone);
+            //        result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+            //        result.DestinationName = detailDestination.Zone + ", " + detailDestination.Destination + ", " + detailDestination.Country;
+            //        break;
+            //    case AutocompleteType.Destination:
+            //        dict = GetHotelDetailByLocation(request.Destination);
+            //        result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+            //        result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
+            //        break;
+            //    case AutocompleteType.Area:
+            //        dict = GetHotelDetailByLocation(request.Area);
+            //        result.HotelDetails = ApplyHotelDetails(dict, result.HotelDetails);
+            //        result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
+            //        break;
+            //    case AutocompleteType.Hotel:
+            //        details = GetHotelDetailFromDb(request.HotelCode);
+            //        result.HotelDetails = ApplyHotelDetails(details, result.HotelDetails);
+            //        result.DestinationName = details.HotelName + ", " +detailDestination.Destination + ", " + detailDestination.Country;
+            //        break;
+            //};
             
-            result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
-            //SetLowestPriceToCache();
+            //result.HotelDetails = AddDetailInfoForSearchResult(result.HotelDetails);
+
             if (result.HotelDetails == null || result.HotelDetails.Count == 0)
                 return new SearchHotelOutput
                 {
@@ -185,10 +202,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     FilteredHotelCount = 0
                 };
 
-            result.HotelFilterDisplayInfo = SetHotelFilterDisplayInfo(result.HotelDetails, AutocompleteTypeCd.Mnemonic(detailDestination.Type));
+            result.HotelFilterDisplayInfo = TiketSetFilter(result.HotelDetails);
             result.MaxPrice = result.HotelDetails.Max(x => x.NetCheapestFare);
             result.MinPrice = result.HotelDetails.Min(x => x.NetCheapestFare);
-            //result.DestinationName = detailDestination.Destination;
 
             //REMEMBER TO UNCOMMENT THIS
             Task.Run(() => SaveSearchResultintoDatabaseToCache(result.SearchId, result));
@@ -201,20 +217,20 @@ namespace Lunggo.ApCommon.Hotel.Service
             input.PerPage = input.PerPage != 0 ? input.PerPage : 100;
             int pageCount = (int)Math.Ceiling((decimal)result.HotelDetails.Count / input.PerPage);
             firstPageHotelDetails = SetPagination(firstPageHotelDetails, input.Page, input.PerPage);
-            //AddDetailInfoForDisplayHotel(firstPageHotelDetails);
-            var searchType = detailDestination.Type.ToString();
-            var searchIds = detailDestination.Code + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + result.MinPrice;
+
+            var searchType = "Location";//detailDestination.Type.ToString();
+            var searchIds = result.DestinationName + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + result.MinPrice;//detailDestination.Code + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + result.MinPrice;
             var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("HotelPriceCalendar");
             var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
             priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
-            //SetLowestPriceToCache(input.CheckIn, input.Nights, detailDestination.Code, result.MinPrice);
+
             return new SearchHotelOutput
             {
                 IsSuccess = true,
                 SearchId = result.SearchId,
                 DestinationName = result.DestinationName,
                 FilteredHotelCount = result.HotelDetails.Count,
-                HotelDetailLists = ConvertToHotelDetailForDisplay(firstPageHotelDetails),
+                HotelDetailLists = ConvertToTiketHotelDetailForDisplay(firstPageHotelDetails),
                 Page = input.Page,
                 PerPage = input.PerPage,
                 PageCount = pageCount,
@@ -271,13 +287,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             pageCount = (int)Math.Ceiling((decimal)hotels.Count / input.PerPage);
             var displayHotel = SetPagination(hotels, input.Page, input.PerPage);
 
-            //AddDetailInfoForDisplayHotel(hotels);
-
             return new SearchHotelOutput
             {
                 SearchId = searchResult.SearchId,
                 DestinationName = searchResult.DestinationName,
-                HotelDetailLists = hotels.Count > 0 ? ConvertToHotelDetailForDisplay(displayHotel) : null,
+                HotelDetailLists = hotels.Count > 0 ? ConvertToTiketHotelDetailForDisplay(displayHotel) : null,
                 Page = input.Page,
                 PerPage = input.PerPage,
                 PageCount = pageCount,
@@ -330,7 +344,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             {
                                 Errors = new List<HotelError> { HotelError.RateKeyNotFound },
                                 IsSuccess = false,
-                                ErrorMessages = new List<string> { "Rate Key Not Found!" }
+                                ErrorMessages = new List<string> { "Result Hotel is null or empty || the room is null or empty" }
                             };
 
             AddPriceMargin(results.HotelDetails);
@@ -375,7 +389,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("hotelpricecalendar");
             var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
             priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
-            //SetLowestPriceToCache(input.CheckIn, input.Nights, Convert.ToString(input.HotelCode), results.MinPrice);
+
             return new SearchHotelOutput
             {
                 IsSuccess = true,

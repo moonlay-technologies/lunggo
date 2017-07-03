@@ -6,6 +6,8 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Model
     {
         [JsonProperty("locationId", NullValueHandling = NullValueHandling.Ignore)]
         public long LocationId { get; set; }
+        [JsonProperty("locationId", NullValueHandling = NullValueHandling.Ignore)]
+        public long LocationTiketId { get; set; }
         [JsonProperty("locationName", NullValueHandling = NullValueHandling.Ignore)]
         public string LocationName { get; set; }
         [JsonProperty("regionName", NullValueHandling = NullValueHandling.Ignore)]

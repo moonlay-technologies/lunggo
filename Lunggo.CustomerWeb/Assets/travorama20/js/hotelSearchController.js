@@ -9,7 +9,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
             if (Cookies.get('hotelLocation')) {
                 $scope.hotelSearch.location = Cookies.get('hotelLocation');
             } else {
-                $scope.hotelSearch.location = 1316553;
+                $scope.hotelSearch.location = 'Bali'; //$scope.hotelSearch.location = 1316553;
             }
             if (Cookies.get('urlCountry')) {
                 $scope.hotelSearch.urlData.country = Cookies.get('urlCountry');

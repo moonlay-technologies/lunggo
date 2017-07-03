@@ -98,6 +98,79 @@ namespace Lunggo.ApCommon.Hotel.Service
             return sortedHotel;
         }
 
+        //Tiket Set Filter
+        public HotelFilterDisplayInfo TiketSetFilter(List<HotelDetail> hotels)
+        {
+            var filter = new HotelFilterDisplayInfo();
+            var zoneDict = new Dictionary<string, ZoneFilterInfo>();
+            var areaDict = new Dictionary<string, AreaFilterInfo>();
+            var starDict = new Dictionary<int, StarFilterInfo>();
+            try
+            {
+                foreach (var hotelDetail in hotels)
+                {
+                    if (!(zoneDict.ContainsKey(hotelDetail.ZoneCode)))
+                    {
+                        zoneDict.Add(hotelDetail.ZoneCode, new ZoneFilterInfo
+                        {
+                            Code = hotelDetail.ZoneCode,
+                            Count = 1,
+                            Name = hotelDetail.ZoneCode
+                        });
+                    }
+                    else
+                    {
+                        zoneDict[hotelDetail.ZoneCode].Count += 1;
+                    }
+
+                    if (!(starDict.ContainsKey(hotelDetail.StarCode)))
+                    {
+                        starDict.Add(hotelDetail.StarCode, new StarFilterInfo
+                        {
+                            Code = hotelDetail.StarCode,
+                            Count = 1,
+                        });
+                    }
+                    else
+                    {
+                        starDict[hotelDetail.StarCode].Count += 1;
+                    }
+
+                    filter.ZoneFilter = new List<ZoneFilterInfo>();
+                    filter.StarFilter = new List<StarFilterInfo>();
+                    foreach (var zone in zoneDict.Keys)
+                    {
+                        if (!string.IsNullOrEmpty(zoneDict[zone].Name))
+                        {
+                            filter.ZoneFilter.Add(new ZoneFilterInfo
+                            {
+                                Code = zoneDict[zone].Code,
+                                Count = zoneDict[zone].Count,
+                                Name = zoneDict[zone].Name,
+                            });
+                        }
+                    }
+
+                    foreach (var key in starDict.Keys)
+                    {
+                        filter.StarFilter.Add(new StarFilterInfo
+                        {
+                            Code = starDict[key].Code,
+                            Count = starDict[key].Count
+                        });
+                    }
+                }
+                
+            }
+            catch (Exception e)
+            {
+                Debug.Print(e.Message);
+            }
+
+            return filter;
+            
+        }
+
         //Set Filter Info
         public HotelFilterDisplayInfo SetHotelFilterDisplayInfo(List<HotelDetail> hotels, AutocompleteType searchLocationType)
         {

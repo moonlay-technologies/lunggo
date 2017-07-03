@@ -102,6 +102,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int NightCount { get; set; }
         [JsonProperty("policy", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Policy { get; set; }
+        [JsonProperty("hotelUri", NullValueHandling = NullValueHandling.Ignore)]
+        public string HotelUri { get; set; }
     }
 
     public class HotelDetailsBase
@@ -109,6 +111,8 @@ namespace Lunggo.ApCommon.Hotel.Model
 
         [JsonProperty("hotelCd", NullValueHandling = NullValueHandling.Ignore)]
         public int HotelCode { get; set; }
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public string Id { get; set; }
         [JsonProperty("hotelName", NullValueHandling = NullValueHandling.Ignore)]
         public string HotelName { get; set; }
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
@@ -182,6 +186,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         [JsonProperty("clientReference", NullValueHandling = NullValueHandling.Ignore)]
         public string ClientReference { get; set; }
 
+        [JsonProperty("supplier", NullValueHandling = NullValueHandling.Ignore)]
+        public Constant.Supplier Supplier { get; set; }
+
     }
 
     public class POI
@@ -250,6 +257,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal NetCheapestTotalFare { get; set; }
         [JsonProperty("originalCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal OriginalCheapestTotalFare { get; set; }
+        [JsonProperty("photoPrimary", NullValueHandling = NullValueHandling.Ignore)]
+        public string PhotoPrimary { get; set; }
+        [JsonProperty("hotelUri", NullValueHandling = NullValueHandling.Ignore)]
+        public string HotelUri { get; set; }
     }
 
     public class Segment
