@@ -306,7 +306,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //    origin: Cookies.get('origin') ? Cookies.get('origin') : 'JKT',
     //    destination: Cookies.get('destination') ? Cookies.get('destination') : 'DPS',
     //    originCity: Cookies.get('originCity') ? Cookies.get('originCity') : 'Jakarta',
-    //    destinationCity: Cookies.get('destinationCity') ? Cookies.get('destinationCity') : 'Denpasar (Bali)',
+    //    destinationCity: Cookies.get('destinationCity') ? Cookies.get('destinationCity') : 'Denpasar / Bali',
     //    month: bulan,
     //    year: tahun,
     //}
