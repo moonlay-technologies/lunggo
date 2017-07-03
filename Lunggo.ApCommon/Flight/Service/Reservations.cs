@@ -84,10 +84,10 @@ namespace Lunggo.ApCommon.Flight.Service
             return rsvs.Select(ConvertToReservationForDisplay).Where(r => r.RsvDisplayStatus != RsvDisplayStatus.Expired).ToList();
         }
 
-        public List<FlightReservationForDisplay> SearchReservations(FlightReservationSearch search)
+        public List<FlightReservation> SearchReservations(FlightReservationSearch search)
         {
             var rsvs = GetSearchReservationsFromDb(search);
-            return rsvs.Select(ConvertToReservationForDisplay).ToList();
+            return rsvs.ToList();
         }
 
         public void ExpireReservationWhenTimeout(string rsvNo, DateTime timeLimit)
