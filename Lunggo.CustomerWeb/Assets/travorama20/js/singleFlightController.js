@@ -115,7 +115,7 @@ app.controller('singleFlightController', [
             };
 
             $('body').removeClass('no-scroll');
-        }
+        }   
 
         // close notice
         $scope.closeNotice = function () {

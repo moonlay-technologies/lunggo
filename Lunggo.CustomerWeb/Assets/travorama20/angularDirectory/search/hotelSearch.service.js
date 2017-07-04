@@ -1,5 +1,7 @@
-﻿app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout', 'dateTimeService',
-  function ($log, $resource, $timeout, dateTimeService) {
+﻿app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout',
+  function ($log, $resource, $timeout) {
+// app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout', 'dateTimeService',
+  // function ($log, $resource, $timeout, dateTimeService) {
     var factory = {};
 
     factory.resource = $resource(HotelSearchConfig.Url,
@@ -609,7 +611,7 @@
                 var target;
                 var chosenDate = new Date(date);
                 $(target + ' .date').html(('0' + chosenDate.getDate()).slice(-2));
-                $(target + ' .month').html(dateTimeService.translateMonth(chosenDate.getMonth()));
+                $(target + ' .month').html(translateMonth(chosenDate.getMonth()));
                 $(target + ' .year').html(chosenDate.getFullYear());
                 $('.search-calendar-hotel').hide();
                 $log.debug("checkout date = " + scope.hotelSearch.checkoutDate);
