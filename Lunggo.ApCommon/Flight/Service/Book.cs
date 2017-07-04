@@ -232,26 +232,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
-            //FOR TESTING ONLY
-            //var result = new BookFlightResult();
-            //var Airasia = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.AirAsia).Select(entry => entry.Value).Single();
-            //var Citilink = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Citilink).Select(entry => entry.Value).Single();
-            //var LionAir = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.LionAir).Select(entry => entry.Value).Single();
-            //var Sriwijaya = Suppliers.Where(entry => entry.Value.SupplierName == Supplier.Sriwijaya).Select(entry => entry.Value).Single();
-            
-            //var CitilinkDeposit = Citilink.GetDeposit();
-            //var LionAirDeposit = LionAir.GetDeposit();
-            //var SriwijayaDeposit = Sriwijaya.GetDeposit();
 
-            
-            //var temp2 = CitilinkDeposit;
-            //var temp3 = LionAirDeposit;
-            //var temp4 = SriwijayaDeposit;
-
-            //result.Deposit = 0;
-            //var AirasiaDeposit = Airasia.GetDeposit();
-            //var temp1 = AirasiaDeposit;
-            //return result;
             var result = supplier.BookFlight(bookInfo);
             if (bookInfo.Test)
                 return result;
