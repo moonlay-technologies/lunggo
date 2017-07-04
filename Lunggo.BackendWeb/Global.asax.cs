@@ -17,6 +17,7 @@ using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
+using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
@@ -42,15 +43,33 @@ namespace Lunggo.BackendWeb
 
             AppInitializer.Init();
 
-            var result = FlightService.GetInstance().IssueTicketInternal(new IssueTicketInfo
+            var tiketClient = new TiketClientHandler();
+            var token = tiketClient.GetToken();
+            var searchClient = new TiketSearchHotel();
+            var request = new SearchHotelCondition
             {
-
-                BookingId = "33443273",
-                CanHold = true,
-                Supplier = Supplier.Tiket
-
-            });
-            var test = result;
+                AdultCount = 1,
+                Destination = "Jakarta",
+                CheckIn = new DateTime(2017, 7, 7),
+                Checkout = new DateTime(2017, 7, 8),
+                Nights = 1,
+                ChildCount = 0,
+                SearchId = "TEST!@#$%^&*(",
+                Occupancies = new List<Occupancy>
+                {
+                    new Occupancy
+                    {
+                        AdultCount = 1,
+                        ChildCount = 0,
+                        RoomCount = 1,
+                    }
+                },
+                Rooms = 1,
+            };
+            var searchResult = searchClient.SearchHotel(request);
+            var detailClient = new TiketHotelDetail();
+            var resultDetail = detailClient.GetHotelDetail(searchResult.HotelDetails[1].HotelUri, token);
+            var temp = resultDetail;
             Console.WriteLine("OKE");
             //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");
             //Console.WriteLine("Done");

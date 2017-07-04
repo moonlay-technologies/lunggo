@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
 {
     public class TiketSearchHotel
     {
-        internal SearchHotelResult SearchHotel(SearchHotelCondition condition)
+        public SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
             int totalPage = 0;
             var result = new SearchHotelResult();
@@ -75,8 +75,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
 
             totalPage = searchResponse.Pagination.LastPage;
             //var hotels = new HotelDetail();
-            var lang = OnlineContext.GetActiveLanguageCode();
-            var allCurrencies = HotelService.GetInstance().GetAllCurrenciesFromCache(condition.SearchId);
+            //var lang = OnlineContext.GetActiveLanguageCode();
+            //var allCurrencies = HotelService.GetInstance().GetAllCurrenciesFromCache(condition.SearchId);
             // Mapping data response into search result
             foreach (var data in searchResponse.Results.Result)
             {
@@ -132,6 +132,5 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
 
             return new SearchHotelResult();
         }
-        
     }
 }

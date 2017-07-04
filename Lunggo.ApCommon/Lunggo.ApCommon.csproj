@@ -438,7 +438,9 @@
     <Compile Include="Hotel\Wrapper\Tiket\Model\HotelSearchResponse.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\Model\TiketAutoCompleteResponse.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\Model\TiketBaseResponse.cs" />
+    <Compile Include="Hotel\Wrapper\Tiket\Model\TiketCheckoutCustomerResponse.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\Model\TiketHotelDetailResponse.cs" />
+    <Compile Include="Hotel\Wrapper\Tiket\Model\TiketHotelOrderResponse.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\TiketAutoComplete.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\TiketClientHandler.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\TiketHotelDetail.cs" />
