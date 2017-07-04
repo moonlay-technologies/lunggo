@@ -29,11 +29,11 @@ if (typeof (angular) == 'object') {
                     { transformResponse: transform }
                 ).
                 success(function (data, status) {
-                    console.log("Request succeeded");
+                    // console.log("Request succeeded");
                     callback(data);
                 }).
                 error(function (data, status) {
-                    console.log("Request failed " + status);
+                    // console.log("Request failed " + status);
                 });
             }
         };
@@ -42,7 +42,7 @@ if (typeof (angular) == 'object') {
     var SOURCE_FILE = "/Config/application.properties";
 
     xmlTransform = function (data) {
-        console.log("transform data");
+        // console.log("transform data");a
         var x2js = new X2JS();
         var json = x2js.xml_str2json(data);
         return json.guitars.guitar;
@@ -118,7 +118,6 @@ function subscribeFormFunctions() {
 
         if ($('form.subscribe-form input.subscribe-email').val()) {
             var emailValue = $('form.subscribe-form input.subscribe-email').val();
-            console.log('email validation : ' + validateEmail(emailValue));
             if (validateEmail(emailValue)) {
                 SubscribeConfig.email = emailValue;
             } else {
@@ -174,7 +173,7 @@ function subscribeFormFunctions() {
 }
 
 function newsletterFormFunctions() {
-    console.log('Saving data');
+    // console.log('Saving data');
 }
 $(document).ready(function () {
     $('form.form-newsletter input[type="submit"]').click(function (evt) {
@@ -184,11 +183,9 @@ $(document).ready(function () {
     function validateNewsletterForm() {
         $('form.form-newsletter input[type="submit"]').prop('disabled', true);
         email = $('form.form-newsletter input.input-type').val();
-        console.log('Masuk Sini');
-
+        
         if ($('form.form-newsletter input.input-type').val()) {
             var emailValue = $('form.form-newsletter input.input-type').val();
-            console.log('email validation : ' + validateEmail(emailValue));
             if (validateEmail(emailValue)) {
                 email = emailValue;
                 submitNewsletterForm();
@@ -223,8 +220,6 @@ $(document).ready(function () {
             data: JSON.stringify({ "email": email, "name": subscriberName }),
             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
         }).done(function (returnData) {
-            console.log('done');
-            console.log(returnData);
             if (returnData.IsSuccess) {
                 $('.page-newsletter').hide();
                 div.style.display = "block";
@@ -245,9 +240,7 @@ $(document).ready(function () {
                         close.style.display = "none";
                     });
                 }
-                else 
-                    console.log('failed');
-                }
+            }
         }).error(function () {
             trial++;
             if (refreshAuthAccess() && trial < 4) //refresh cookie
@@ -628,23 +621,12 @@ function flightFormSearchFunctions() {
     });
 
     // The user choose one of recommendation in location lists
-    // TODO: REDUNDANT#1 with another function in this file
     $('.section-search .search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
         evt.preventDefault();
+        var dataPlace = $('.section-search .search-location').attr('data-place')
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).text();
-        if ($('.section-search .search-location').attr('data-place') == 'origin') {
-            FlightSearchConfig.flightForm.origin = locationCode;
-            FlightSearchConfig.flightForm.originCity = locationCity;
-            $('.form-flight-origin').val($(this).text() + ' (' + locationCode + ')');
-            $('.flight-submit-button').removeClass('disabled');
-        } else {
-            FlightSearchConfig.flightForm.destination = locationCode;
-            FlightSearchConfig.flightForm.destinationCity = locationCity;
-            $('.form-flight-destination').val($(this).text() + ' (' + locationCode + ')');
-            $('.flight-submit-button').removeClass('disabled');
-        }
-        hideLocation();
+        updateLocation( dataPlace, locationCode, locationCity);
     });
 
     // on swap target
@@ -682,8 +664,6 @@ function flightFormSearchFunctions() {
         $('.section-search autocomplete-pre .text-loading').show();
         if (typeof (FlightSearchConfig.autocomplete.cache[keyword]) != "undefined") {
             FlightSearchConfig.autocomplete.result = FlightSearchConfig.autocomplete.cache[keyword];
-            console.log('from cache : ');
-            console.log(FlightSearchConfig.autocomplete.result);
             generateSearchResult(FlightSearchConfig.autocomplete.result);
             if (FlightSearchConfig.autocomplete.result.length > 0) {
                 $('.section-search .autocomplete-no-result').hide();
@@ -704,7 +684,6 @@ function flightFormSearchFunctions() {
                 FlightSearchConfig.autocomplete.loading = false;
                 FlightSearchConfig.autocomplete.result = returnData.airports;
                 FlightSearchConfig.autocomplete.cache[keyword] = returnData.airports;
-                console.log(returnData);
                 generateSearchResult(FlightSearchConfig.autocomplete.result);
                 if (returnData.airports.length > 0) {
                     $('.section-search .autocomplete-no-result').hide();
@@ -731,23 +710,29 @@ function flightFormSearchFunctions() {
         }
     }
 
-    // The user select one location from search result
-    // TODO: REDUNDANT#1 with another function in this file
-    $('.section-search .autocomplete-result ul').on('click', 'li', function () {
-        var locationCode = $(this).attr('data-code');
-        var locationCity = $(this).attr('data-city');
-        if ($('.section-search .search-location').attr('data-place') == 'origin') {
+    // REDUNDANT#1 same function used in homeController. consider to move this function to be accessed globally accross Controllers / js
+    // Update location text in form textbox and attributes in FlightSearchConfig.flightForm
+    // dataPlace: "origin" || "";   validates the location type: origin or destination
+    function updateLocation( dataPlace, locationCode, locationCity){
+        if (dataPlace == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
             FlightSearchConfig.flightForm.originCity = locationCity;
             $('.form-flight-origin').val(locationCity + ' (' + locationCode + ')');
-            $('.flight-submit-button').removeClass('disabled');
         } else {
             FlightSearchConfig.flightForm.destination = locationCode;
             FlightSearchConfig.flightForm.destinationCity = locationCity;
             $('.form-flight-destination').val(locationCity + ' (' + locationCode + ')');
-            $('.flight-submit-button').removeClass('disabled');
         }
+        $('.flight-submit-button').removeClass('disabled');
         hideLocation();
+    }
+    
+    // The user select one location from search result
+    $('.section-search .autocomplete-result ul').on('click', 'li', function () {
+        var dataPlace = $('.section-search .search-location').attr('data-place');
+        var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).attr('data-city');
+        updateLocation( dataPlace, locationCode, locationCity);
     });
 
     // on keypress on form flight search
@@ -842,7 +827,6 @@ function flightFormSearchFunctions() {
         numberOfMonths: 2,
         onSelect: function (data) {
             data = data.substring(3, 5) + "/" + data.substring(0, 2) + "/" + data.substring(6, 10);
-            console.log(data);
             var target;
             var chosenDate = new Date(data);
             if ($('.search-calendar').attr('data-date') == 'departure') {
@@ -1113,8 +1097,6 @@ function flightFormSearchFunctions() {
     });
 
     $('.passenger-input').keyup(function () {
-        console.log($(this).val());
-        console.log(FlightSearchConfig.flightForm.passenger);
         if ($(this).hasClass('adult')) {
             if ($(this).val() < 1) {
                 $(this).val(1);
@@ -1184,14 +1166,15 @@ function flightFormSearchFunctions() {
     }
 
     function generateFlightSearchParam() {
-        var departureDate = (('0' + FlightSearchConfig.flightForm.departureDate.getDate()).slice(-2) + ('0' + (FlightSearchConfig.flightForm.departureDate.getMonth() + 1)).slice(-2) + FlightSearchConfig.flightForm.departureDate.getFullYear().toString().substr(2, 2));
-        var returnDate = (('0' + FlightSearchConfig.flightForm.returnDate.getDate()).slice(-2) + ('0' + (FlightSearchConfig.flightForm.returnDate.getMonth() + 1)).slice(-2) + FlightSearchConfig.flightForm.returnDate.getFullYear().toString().substr(2, 2));
-        var departureParam = FlightSearchConfig.flightForm.origin + FlightSearchConfig.flightForm.destination + departureDate;
-        var returnParam = FlightSearchConfig.flightForm.destination + FlightSearchConfig.flightForm.origin + returnDate;
-        var passengerParam = FlightSearchConfig.flightForm.passenger.adult.toString() + FlightSearchConfig.flightForm.passenger.child.toString() + FlightSearchConfig.flightForm.passenger.infant.toString() + FlightSearchConfig.flightForm.cabin;
+        var flightForm = FlightSearchConfig.flightForm;
+        var departureDate = (('0' + flightForm.departureDate.getDate()).slice(-2) + ('0' + (flightForm.departureDate.getMonth() + 1)).slice(-2) + flightForm.departureDate.getFullYear().toString().substr(2, 2));
+        var returnDate = (('0' + flightForm.returnDate.getDate()).slice(-2) + ('0' + (flightForm.returnDate.getMonth() + 1)).slice(-2) + flightForm.returnDate.getFullYear().toString().substr(2, 2));
+        var departureParam = flightForm.origin + flightForm.destination + departureDate;
+        var returnParam = flightForm.destination + flightForm.origin + returnDate;
+        var passengerParam = flightForm.passenger.adult.toString() + flightForm.passenger.child.toString() + flightForm.passenger.infant.toString() + flightForm.cabin;
         var flightSearchParam;
         // generate flight search param
-        if (FlightSearchConfig.flightForm.type == 'return') {
+        if (flightForm.type == 'return') {
             flightSearchParam = departureParam + '~' + returnParam + '-' + passengerParam;
         } else {
             flightSearchParam = departureParam + '-' + passengerParam;
@@ -1205,7 +1188,6 @@ function flightFormSearchFunctions() {
             FlightSearchConfig.flightForm.origin + '-' + FlightSearchConfig.flightForm.destination + '/' + flightSearchParam;
         $('.form-flight').attr("action", "id/tiket-pesawat/cari/" + urlLink);
         gotoFlightSearch(urlLink);
-        //console.log(flightSearchParam);
         //$('.form-flight').submit();
     }
 
@@ -1294,7 +1276,7 @@ function goTop() {
 //    });
 //}
 
-function priceSilder() {
+function priceSlider() {
     jQuery(document).ready(function ($) {
         $('.slider-wrapper').slick({
             autoplay: false,

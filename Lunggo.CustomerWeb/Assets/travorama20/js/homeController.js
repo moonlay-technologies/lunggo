@@ -533,14 +533,19 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     });
 
     $('#submitCalendar').on('click', function () {
-        var month_year = $('#month-year-select').val();
-        var arr = month_year.split("-");
-
-        var newDate = new Date(arr[0], arr[1], '01');
-        $('#pc-datepicker').fullCalendar('gotoDate', newDate);
-        if ($scope.selectedPopularDestination.origin != '' && $scope.selectedPopularDestination.destination != '') {
-            $scope.hasSearched = true;
-            $scope.getFlightPrice(parseInt(arr[1]) + 1, parseInt(arr[0]));
+        var origin = $scope.selectedPopularDestination.origin;
+        var destination = $scope.selectedPopularDestination.destination;
+        if (origin != '' && destination != '') {
+            if (origin == destination){
+                alert("Kota Asal dan Tujuan Tidak Boleh Sama");
+            } else {
+                var month_year = $('#month-year-select').val();
+                var arr = month_year.split("-");
+                var newDate = new Date(arr[0], arr[1], '01');
+                $('#pc-datepicker').fullCalendar('gotoDate', newDate);
+                $scope.hasSearched = true;
+                $scope.getFlightPrice(parseInt(arr[1]) + 1, parseInt(arr[0]));
+            }
         }
     });
     
@@ -639,29 +644,56 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         }
     }
 
+
+    // $('.location-choice .autocomplete-result ul').on('click', 'li', function () {
+    //     var locationCode = $(this).attr('data-code');
+    //     var locationCity = $(this).attr('data-city');
+    //     if ($('.location-choice .search-location').attr('data-place') == 'asal') {
+    //         if (locationCity != $scope.selectedPopularDestination.destinationCity) {
+    //             $scope.selectedPopularDestination.origin = locationCode;
+    //             $scope.selectedPopularDestination.originCity = locationCity;
+    //             $('body input[name="searchFrom"]').val(locationCity + ' (' + locationCode + ')');
+    //         } else {
+    //             alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+    //         }
+    //     } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
+    //         if (locationCity != $scope.selectedPopularDestination.originCity) {
+    //             $scope.selectedPopularDestination.destination = locationCode;
+    //             $scope.selectedPopularDestination.destinationCity = locationCity;
+    //             $('body input[name="searchTo"]').val(locationCity + ' (' + locationCode + ')');
+    //         } else {
+    //             alert('Kota Asal dan Tujuan Tidak Boleh Sama');
+    //         }
+    //     }
+    //     hideLocation();
+    // });
+
+
+    // REDUNDANT#1 same function used in homeController. consider to move this function to be accessed globally accross Controllers / js
+    // Update location text in form textbox and attributes in FlightSearchConfig.flightForm
+    // dataPlace: "origin" || "";   validates the location type: origin or destination
+    function updateLocation( dataPlace, locationCode, locationCity){
+        if (dataPlace == 'asal') {
+            $scope.selectedPopularDestination.origin = locationCode;
+            $scope.selectedPopularDestination.originCity = locationCity;
+            $('body input[name="searchFrom"]').val(locationCity + ' (' + locationCode + ')');
+        } else {
+            $scope.selectedPopularDestination.destination = locationCode;
+            $scope.selectedPopularDestination.destinationCity = locationCity;
+            $('body input[name="searchTo"]').val(locationCity + ' (' + locationCode + ')');
+        }
+        $('.flight-submit-button').removeClass('disabled');
+        hideLocation();
+    }
+    
+    // The user select one location from search result
     $('.location-choice .autocomplete-result ul').on('click', 'li', function () {
+        var dataPlace = $('.location-choice .search-location').attr('data-place');
         var locationCode = $(this).attr('data-code');
         var locationCity = $(this).attr('data-city');
-        if ($('.location-choice .search-location').attr('data-place') == 'asal') {
-            if (locationCity != $scope.selectedPopularDestination.destinationCity) {
-                $scope.selectedPopularDestination.origin = locationCode;
-                $scope.selectedPopularDestination.originCity = locationCity;
-                $('body input[name="searchFrom"]').val(locationCity + ' (' + locationCode + ')');
-            } else {
-                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-            }
-        } else if ($('.location-choice .search-location').attr('data-place') == 'tujuan') {
-            if (locationCity != $scope.selectedPopularDestination.originCity) {
-                $scope.selectedPopularDestination.destination = locationCode;
-                $scope.selectedPopularDestination.destinationCity = locationCity;
-                $('body input[name="searchTo"]').val(locationCity + ' (' + locationCode + ')');
-            } else {
-                alert('Kota Asal dan Tujuan Tidak Boleh Sama');
-            }
-        }
-        hideLocation();
-        console.log("BERHASIL");
+        updateLocation( dataPlace, locationCode, locationCity);
     });
+
 
     // flight recommendation
     $('.location-choice .search-location .location-recommend .nav-click.prev').click(function (evt) {
@@ -683,6 +715,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
         $('.location-choice .search-location .location-recommend .tab-content>div').removeClass('active');
         $('.location-choice .search-location .location-recommend .tab-content>div.' + showClass).addClass('active');
     });
+
+/*
     $('.location-choice .search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
         evt.preventDefault();
         var locationCode = $(this).attr('data-code');
@@ -707,6 +741,16 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             }
         }
         hideLocation();
+    });
+*/
+
+    // The user select one location from popular destination
+    $('.location-choice .search-location .location-recommend .tab-content a').click(function (evt, sharedProperties) {
+        evt.preventDefault();
+        var dataPlace = $('.location-choice .search-location').attr('data-place');
+        var locationCode = $(this).attr('data-code');
+        var locationCity = $(this).text();
+        updateLocation( dataPlace, locationCode, locationCity);
     });
 }]);
 
