@@ -1,7 +1,8 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
 
-    var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+    // var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+    var app = angular.module('travoramaMobile', ['ngResource']);
 
     // root scope
     app.run(function ($rootScope, $log) {

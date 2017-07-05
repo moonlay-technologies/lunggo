@@ -22,28 +22,19 @@
     <!-- stylesheets -->
     @*<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>*@
     <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" /> -->
 
     @if (IsSectionDefined("AdditionalCSS"))
     {
         @RenderSection("AdditionalCSS");
     }
 
-    @section AdditionalCSS{
-        <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
-    }
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/moment.min.js"></script>
-    <script src="/Assets/js/moment-with-locales.min.js"></script>
-    <script src="/Assets/js/xml2json.min.js"></script>
+    <!-- <script src="/Assets/js/angular.min.js"></script> -->
+    <!-- <script src="/Assets/js/angular-route.min.js"></script> -->
+    <!-- <script src="/Assets/js/angular-animate.min.js"></script> -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
-    @section AdditionalJS{
-        <!-- additional Angular JS-->
-        <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
-        <script src="/Assets/js/js.cookie.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    }
 
     @section PageJS{
         <script>
@@ -122,9 +113,9 @@
 
     <!--********************-->
     <!-- Javascripts -->
-    <script src="/Assets/js/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script src="/Assets/js/bootstrap.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
     <script src="/Config/JsConfig.js"></script>
 
     @if (IsSectionDefined("AdditionalJS"))
@@ -132,10 +123,14 @@
         @RenderSection("AdditionalJS");
     }
 
+    <script src="/Assets/js/moment.min.js"></script>
+    <script src="/Assets/js/moment-with-locales.min.js"></script>
+    <script src="/Assets/js/xml2json.min.js"></script>
     <script src="/Assets/travorama20/js/travorama20.js"></script>
     <script src="/Assets/travorama20/js/app.config.js"></script>
-
     <script src="/Assets/travorama20/js/accountController.js"></script>
+    <!-- <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script> -->
+    <script src="/Assets/js/js.cookie.js"></script>
 
 
     @if (IsSectionDefined("PageJS"))
@@ -157,6 +152,5 @@
             }
         });
     </script>
-
 </body>
 </html>

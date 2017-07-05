@@ -168,9 +168,9 @@
                 }
             }
 
-        }).error(function (returnData) {
-
-        });
+        })
+        // .fail(function (returnData) {
+        // });
     };
    
     factory.highlightDays = function (date) {

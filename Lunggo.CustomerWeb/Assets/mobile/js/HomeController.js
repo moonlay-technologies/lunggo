@@ -221,32 +221,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //=============== hotel end ======================
     //=============== Price Calendar, populate cheapest price for destinations ======================
 
-    //$scope.returnMonth = function (val) {
-    //    if (val == '0')
-    //        return "Januari";
-    //    else if (val == '1')
-    //        return "Februari";
-    //    else if (val == '2')
-    //        return "Maret";
-    //    else if (val == '3')
-    //        return "April";
-    //    else if (val == '4')
-    //        return "Mei";
-    //    else if (val == '5')
-    //        return "Juni";
-    //    else if (val == '6')
-    //        return "Juli";
-    //    else if (val == '7')
-    //        return "Agustus";
-    //    else if (val == '8')
-    //        return "September";
-    //    else if (val == '9')
-    //        return "Oktober";
-    //    else if (val == '10')
-    //        return "November";
-    //    else if (val == '11')
-    //        return "Desember";
-    //}
     //var todayDate = new Date();
     //var bulan = todayDate.getMonth();
     //var tahun = parseInt(todayDate.getFullYear());

@@ -767,6 +767,7 @@ app.controller('singleFlightController', [
             }
         }
 
+        //REDUNDANT#MONTH
         $scope.returnMonth = function (val) {
             if (val == '1' || val == '01')
                 return "Jan";
