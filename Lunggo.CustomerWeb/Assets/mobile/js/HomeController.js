@@ -942,6 +942,14 @@ jQuery(document).ready(function ($) {
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });
 
+    $('.carousel-inner-mobile').slick({
+        autoplay: false,
+        autoplaySpeed: 2800,
+        dots: false,
+        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+    });
+
     $('.pop-hotel').hover(function () {
         $(this).find('.view-hotel').slideToggle('fast');
     });

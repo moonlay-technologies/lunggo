@@ -1,0 +1,72 @@
+﻿@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.Title = "Terbangin Hemat (Terbang & Nginap Hemat)";
+    ViewBag.BodyClass = "page-promo promo-mobile promo-btn-mobile";
+    ViewBag.AngularController = "PromoController";
+}
+
+@section AdditionalCSS {
+    <link href="/Assets/css/promo.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/js/bootstrap.js"></script>
+}
+
+@section PageJS{
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/PromoController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+}
+
+<div class="promo-btn">
+    <div class="mini-banner">
+        <a href="/"><img class="img-promo" src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
+    </div>
+    <div class="tab-promo">
+        <ul class="nav nav-tabs tab-detail">
+            <li class="col-xs-6 active">
+                <a data-toggle="tab" href="#tnc-promo">Syarat & Ketentuan</a>
+            </li>
+            <li class="col-xs-6">
+                <a data-toggle="tab" href="#how-to">Cara Mendapatkan <br />Program Promo</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tnc-promo" class="tab-pane active">
+                <div class="container-page">
+                    <div class="section-title text-center">Syarat & <span class="blue-text">Ketentuan</span></div>
+                    <div class="tnc">
+                        <ol class="list-number">
+                            <li>Berlaku untuk pembayaran menggunakan Kartu Debit dan Kartu Kredit BTN.</li>
+                            <li>Periode booking <span class="os-bold blue-text">1 Februari - 31 Maret 2017</span> untuk periode inap kapan saja.</li>
+                            <li>Periode terbang dan inap kapan saja.</li>
+                            <li>Diskon sebesar 10% (maks Rp 300.000) dengan minimum transaksi Rp 1.500.000.</li>
+                            <li>Berlaku untuk semua rute maskapai Lion Air, Wings Air, Batik Air, Air Asia, Sriwijaya Air, Nam Air dan Citilink.</li>
+                            <li>Berlaku untuk semua hotel di seluruh dunia.</li>
+                            <li>Satu Card Holder hanya bisa bertransaksi 1 kali setiap harinya.</li>
+                            <li>Program tidak dapat digabungkan dengan voucher dan promo lainnya.</li>
+                            <li>Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</li>
+                            <li>Harga diluar promo Travorama.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="how-to" class="tab-pane">
+                <div class="container-page">
+                    <div class="section-title text-center">Cara Mendapatkan <br /><span class="blue-text">Program Promo</span></div>
+                    <div class="how-to">
+                        <ol class="list-number">
+                            <li>Cari dan pesan tiket pesawat atau kamar hotel melalui situs atau aplikasi Travorama.</li>
+                            <li>Pilih metode pembayaran kartu kredit.</li>
+                            <li>Isi detail Kartu Debit atau Kartu Kredit BTN sesuai instruksi.</li>
+                            <li>Harga akan otomatis terpotong sesuai program promo.</li>
+                            <li>Selesaikan proses pembayaran.</li>
+                            <li>E-tiket atau e-voucher akan dikirimkan ke alamat email Anda.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
