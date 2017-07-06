@@ -48,7 +48,7 @@ namespace Lunggo.BackendWeb.Controllers
                 RsvDateYear = year
             });
 
-            ViewBag.MonthTotal = rsv.Sum(r => r.Payment.Status == PaymentStatus.Settled ? r.Payment.FinalPrice : 0);
+            ViewBag.MonthTotal = rsv.Sum(r => r.Payment.Status == PaymentStatus.Settled ? r.Payment.FinalPriceIdr : 0);
 
             if (hideExpired.GetValueOrDefault())
                 rsv = rsv.Where(r => r.Payment.Status != PaymentStatus.Expired).ToList();
