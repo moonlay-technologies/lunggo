@@ -1,6 +1,7 @@
 ﻿// home controller
-app.controller('hotelSearchController', ['$scope', '$log', '$window', '$http', '$resource', '$timeout', '$interval','hotelSearchSvc',
-function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSearchSvc) {
+app.controller('hotelSearchController',
+  ['$scope', '$log', '$window', '$http', '$timeout', '$interval','hotelSearchSvc',
+  function ($scope, $log, $window, $http, $timeout, $interval, hotelSearchSvc) {
 
     $(document).ready(function () {
 

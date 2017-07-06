@@ -745,8 +745,9 @@ app.controller('singleFlightController', [
                 }).done(function (returnData) {
                     $scope.listPrices = returnData.listDatesAndPrices;
                     $scope.initWeek();
-                }).error(function (returnData) {
-                });
+                })
+                // .fail(function (returnData) {
+                // });
             }
         }
         

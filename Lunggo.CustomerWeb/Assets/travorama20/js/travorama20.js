@@ -1,11 +1,12 @@
-﻿
+﻿//// currently unsuppported feature from javascript ES6
+// import {translateMonth} from 'services/dateTimeService';
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
 if (typeof (angular) == 'object') {
     var app = angular.module('travorama', ['ngResource']);
-    // var app = angular.module('travorama', ['ngRoute', 'ngResource']);
 
     app.service('flightParam', function () {
         var param = {
@@ -78,160 +79,6 @@ function getParam(name) {
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
-// subscribe form functions
-function validateEmail(email) {
-    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return re.test(email);
-}
-function subscribeFormFunctions() {
-    SubscribeConfig.email = '';
-    SubscribeConfig.name = '';
-
-    $('form.subscribe-form input[type="submit"]').click(function (evt) {
-        evt.preventDefault();
-        validateForm();
-    });
-    function validateForm() {
-        $('form.subscribe-form input[type="submit"]').prop('disabled', true);
-        $('form.subscribe-form input[type="submit"]').val('LOADING');
-        SubscribeConfig.email = $('form.subscribe-form input.subscribe-email').val();
-        SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
-
-        if ($('form.subscribe-form input.subscribe-email').val()) {
-            var emailValue = $('form.subscribe-form input.subscribe-email').val();
-            if (validateEmail(emailValue)) {
-                SubscribeConfig.email = emailValue;
-            } else {
-                SubscribeConfig.email = '';
-                alert('Alamat email tidak valid');
-            }
-        } else {
-            $('form.subscribe-form input.subscribe-email').attr('placeholder', 'Mohon masukan Alamat Email Anda');
-            $('form.subscribe-form input.subscribe-email').parent().addClass('has-error');
-        }
-
-        if ($('form.subscribe-form input.subscribe-name').val()) {
-            SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
-        } else {
-            $('form.subscribe-form input.subscribe-name').attr('placeholder', 'Mohon masukan Nama Anda');
-            $('form.subscribe-form input.subscribe-name').parent().addClass('has-error');
-        }
-
-        if (SubscribeConfig.name && SubscribeConfig.email) {
-            submitForm();
-        } else {
-            recheckForm();
-        }
-
-    }
-
-    function recheckForm() {
-        SubscribeConfig.email = '';
-        SubscribeConfig.name = '';
-        $('form.subscribe-form input[type="submit"]').removeProp('disabled');
-        $('form.subscribe-form input[type="submit"]').val('DAFTAR');
-    }
-
-    function submitForm() {
-        if (trial > 3) {
-            trial = 0;
-        }
-        $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled', true);
-        $.ajax({
-            url: SubscribeConfig.Url,
-            method: 'POST',
-            data: JSON.stringify({ "email": SubscribeConfig.email, "name": SubscribeConfig.name }),
-            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-        }).done(function (returnData) {
-            $('.subscribe-before').hide();
-            $('.subscribe-after').show();
-        }).error(function (returnData) {
-            trial++;
-            if (refreshAuthAccess() && trial < 4) //refresh cookie
-                submitForm();
-        });
-    }
-}
-
-function newsletterFormFunctions() {
-    // console.log('Saving data');
-}
-$(document).ready(function () {
-    $('form.form-newsletter input[type="submit"]').click(function (evt) {
-        validateNewsletterForm();
-    });
-
-    function validateNewsletterForm() {
-        $('form.form-newsletter input[type="submit"]').prop('disabled', true);
-        email = $('form.form-newsletter input.input-type').val();
-        
-        if ($('form.form-newsletter input.input-type').val()) {
-            var emailValue = $('form.form-newsletter input.input-type').val();
-            if (validateEmail(emailValue)) {
-                email = emailValue;
-                submitNewsletterForm();
-            } else {
-                email = '';
-                alert('Alamat email tidak valid');
-                recheckForm();
-            }
-        } else {
-            $('form.form-newsletter input.input-type').attr('placeholder', 'Mohon masukan Alamat Email Anda');
-            $('form.form-newsletter input.input-type').parent().addClass('has-error');
-            recheckForm();
-        }
-    }
-
-    function recheckForm() {
-        $('form.form-newsletter input[type="submit"]').removeProp('disabled');
-        $('form.form-newsletter input[type="submit"]').val('DAFTAR');
-    }
-
-    function submitNewsletterForm() {
-        if (trial > 3) {
-            trial = 0;
-        }
-        $('form.form-newsletter .input-type').prop('disabled', true);
-        email = $('form.form-newsletter input.input-type').val();
-        var div = document.getElementById("thankyou");
-        subscriberName = 'subscriber';
-        $.ajax({
-            url: SubscribeConfig.Url,
-            method: 'POST',
-            data: JSON.stringify({ "email": email, "name": subscriberName }),
-            headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-        }).done(function (returnData) {
-            if (returnData.IsSuccess) {
-                $('.page-newsletter').hide();
-                div.style.display = "block";
-                $('.close-popup').click(function (e) {
-                    e.preventDefault();
-                    div.style.display = "none";
-                });
-            }
-            else {
-                var normalflow = document.getElementById("normalflow");
-                var memberexist = document.getElementById("memberexist");
-                if (returnData.IsMemberExist) {
-                    normalflow.style.display = "none";
-                    memberexist.style.display = "block";
-                    var close = document.getElementById("newsletter");
-                    $('.close-member').click(function (e) {
-                        e.preventDefault();
-                        close.style.display = "none";
-                    });
-                }
-            }
-        }).error(function () {
-            trial++;
-            if (refreshAuthAccess() && trial < 4) //refresh cookie
-            {
-                submitNewsletterForm();
-            }
-        });
-    }
-});
 
 function getAnonymousFirstAccess() {
     var status = 0;
@@ -417,75 +264,6 @@ var flightPageSearchFormParam = {
         infant: 0
     }
 };
-
-//********************
-// index page functions
-function indexPageFunctions() {
-    flightFormSearchFunctions();
-
-    $(document).ready(function () {
-        changeTheme(indexPageDestination);
-    });
-    // change header background
-    function changeTheme(location) {
-        location = location.toLowerCase();
-        var backgroundImage = "";
-        var locationCode = '';
-        if (location.length > 0) {
-            switch (location) {
-                case "jakarta":
-                    backgroundImage = '/Assets/images/campaign/jakarta.jpg';
-                    location = 'Jakarta';
-                    locationCode = 'CGK';
-                    break;
-                case "bandung":
-                    backgroundImage = '/Assets/images/campaign/bandung.jpg';
-                    location = 'Bandung';
-                    locationCode = 'BDO';
-                    break;
-                case "surabaya":
-                    backgroundImage = '/Assets/images/campaign/surabaya.jpg';
-                    location = 'Surabaya';
-                    locationCode = 'SUB';
-                    break;
-                case "yogyakarta":
-                    backgroundImage = '/Assets/images/campaign/yogyakarta.jpg';
-                    location = 'Yogyakarta';
-                    locationCode = 'JOG';
-                    break;
-                case "bali":
-                    backgroundImage = '/Assets/images/campaign/bali.jpg';
-                    location = 'Denpasar';
-                    locationCode = 'DPS';
-                    break;
-                case "singapore":
-                    backgroundImage = '/Assets/images/campaign/singapore.jpg';
-                    location = 'Singapore';
-                    locationCode = 'SIN';
-                    break;
-                case "malaysia":
-                    backgroundImage = '/Assets/images/campaign/malaysia.jpg';
-                    location = 'Malaysia';
-                    locationCode = 'KUL';
-                    break;
-                case "hong kong":
-                    backgroundImage = '/Assets/images/campaign/hongkong.jpg';
-                    location = 'Hong Kong';
-                    locationCode = 'HKG';
-                    break;
-            }
-
-            // change value on HTML
-            $('.form-flight-destination').val(location + ' (' + locationCode + ')');
-            $('.slider').css('background-image', 'url(' + backgroundImage + ')');
-            FlightSearchConfig.flightForm.destination = locationCode;
-            $('html,  body').stop().animate({
-                scrollTop: 0
-            });
-        }
-    }
-}
-
 
 //********************
 // static page functions
@@ -676,7 +454,7 @@ function flightFormSearchFunctions() {
                     $('.section-search .autocomplete-result').hide();
                     $('.section-search .autocomplete-no-result').show();
                 }
-            }).error(function (returnData) {
+            }).fail(function (returnData) {
                 trial++;
                 if (refreshAuthAccess() && trial < 4) //refresh cookie
                 {
@@ -1225,6 +1003,11 @@ function goTop() {
     });
 }
 
+
+//// ===============================================
+//// currently unimplemented codes
+//// ===============================================
+
 //function changeMainTab() {
 //    jQuery(document).ready(function ($) {
 //        $('body .menu-main li').click(function() {
@@ -1259,14 +1042,91 @@ function goTop() {
 //    });
 //}
 
-function priceSlider() {
-    jQuery(document).ready(function ($) {
-        $('.slider-wrapper').slick({
-            autoplay: false,
-            dots: false,
-            speed: 700,
-            prevArrow: '<button type="button" class="slick-prev"></button>',
-            nextArrow: '<button type="button" class="slick-next"></button>'
-        });
-    });
-}
+// function priceSlider() {
+//     jQuery(document).ready(function ($) {
+//         $('.slider-wrapper').slick({
+//             autoplay: false,
+//             dots: false,
+//             speed: 700,
+//             prevArrow: '<button type="button" class="slick-prev"></button>',
+//             nextArrow: '<button type="button" class="slick-next"></button>'
+//         });
+//     });
+// }
+
+//// form-newsletter
+// $(document).ready(function () {
+    // $('form.form-newsletter input[type="submit"]').click(function (evt) {
+    //     validateNewsletterForm();
+    // });
+
+    // function validateNewsletterForm() {
+    //     $('form.form-newsletter input[type="submit"]').prop('disabled', true);
+    //     email = $('form.form-newsletter input.input-type').val();
+        
+    //     if ($('form.form-newsletter input.input-type').val()) {
+    //         var emailValue = $('form.form-newsletter input.input-type').val();
+    //         if (validateEmail(emailValue)) {
+    //             email = emailValue;
+    //             submitNewsletterForm();
+    //         } else {
+    //             email = '';
+    //             alert('Alamat email tidak valid');
+    //             recheckForm();
+    //         }
+    //     } else {
+    //         $('form.form-newsletter input.input-type').attr('placeholder', 'Mohon masukan Alamat Email Anda');
+    //         $('form.form-newsletter input.input-type').parent().addClass('has-error');
+    //         recheckForm();
+    //     }
+    // }
+
+    // function recheckForm() {
+    //     $('form.form-newsletter input[type="submit"]').removeProp('disabled');
+    //     $('form.form-newsletter input[type="submit"]').val('DAFTAR');
+    // }
+
+    // function submitNewsletterForm() {
+    //     if (trial > 3) {
+    //         trial = 0;
+    //     }
+    //     $('form.form-newsletter .input-type').prop('disabled', true);
+    //     email = $('form.form-newsletter input.input-type').val();
+    //     var div = document.getElementById("thankyou");
+    //     subscriberName = 'subscriber';
+    //     $.ajax({
+    //         url: SubscribeConfig.Url,
+    //         method: 'POST',
+    //         data: JSON.stringify({ "email": email, "name": subscriberName }),
+    //         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+    //     }).done(function (returnData) {
+    //         if (returnData.IsSuccess) {
+    //             $('.page-newsletter').hide();
+    //             div.style.display = "block";
+    //             $('.close-popup').click(function (e) {
+    //                 e.preventDefault();
+    //                 div.style.display = "none";
+    //             });
+    //         }
+    //         else {
+    //             var normalflow = document.getElementById("normalflow");
+    //             var memberexist = document.getElementById("memberexist");
+    //             if (returnData.IsMemberExist) {
+    //                 normalflow.style.display = "none";
+    //                 memberexist.style.display = "block";
+    //                 var close = document.getElementById("newsletter");
+    //                 $('.close-member').click(function (e) {
+    //                     e.preventDefault();
+    //                     close.style.display = "none";
+    //                 });
+    //             }
+    //         }
+    //     }).fail(function () {
+    //         trial++;
+    //         if (refreshAuthAccess() && trial < 4) //refresh cookie
+    //         {
+    //             submitNewsletterForm();
+    //         }
+    //     });
+    // }
+// });

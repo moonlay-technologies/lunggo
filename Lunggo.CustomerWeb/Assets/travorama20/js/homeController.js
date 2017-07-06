@@ -1,6 +1,5 @@
-﻿// home controller
-// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
+﻿app.controller('homeController', ['$scope', '$log', '$http', '$location', '$timeout', 'hotelSearchSvc',
+  function ($scope, $log, $http, $location, $timeout, hotelSearchSvc) {
     $(document).ready(function () {
         if (Cookies.get('hotelLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
@@ -330,7 +329,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                         $scope.priceHotel.Surabaya.CheapestPrice = cheapestPrice;
                     }
                 } else {}
-            }).error(function () {});
+            })
+            // .fail(function () {});
         }
     }
     
@@ -380,7 +380,8 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                         pricelist.push(returnData.listDatesAndPrices[x].price);
                     }
                 } else {}
-            }).error(function (returnData) {});
+            })
+            // .fail(function (returnData) {});
         }
     }
 
@@ -602,7 +603,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 $('.location-choice .autocomplete-result').hide();
                 $('.location-choice .autocomplete-no-result').show();
             }
-        }).error(function () {
+        }).fail(function () {
             trial++;
             if (refreshAuthAccess() && trial < 4)
             {

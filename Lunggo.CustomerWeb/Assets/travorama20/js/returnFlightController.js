@@ -1129,8 +1129,9 @@ app.controller('returnFlightController', [
                         $scope.initWeek('return');
                     }
                     
-                }).error(function (returnData) {
-                });
+                })
+                // .fail(function (returnData) {
+                // });
             }
         }
 
