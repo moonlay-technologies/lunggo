@@ -279,4 +279,16 @@
             <a href="#" target="_blank" style="width: 80%; background-color: green"></a>
         </div>
     </div>
+
+    <!-- overlays -->
+        <!-- overlay date picker -->
+        @Html.Partial("/Views/Shared/Mobile/_DatePickerForm.cshtml")
+        <!-- overlay airport selector -->
+        @Html.Partial("/Views/Shared/Mobile/_AirportSelectForm.cshtml")
+        <!-- overlay passenger picker -->
+        @Html.Partial("/Views/Shared/Mobile/_PassengerPickerForm.cshtml")
+        <!-- overlay hotel selector -->
+        @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
+        <!-- overlay hotel date -->
+        @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
 </div><!-- .page-loading -->
