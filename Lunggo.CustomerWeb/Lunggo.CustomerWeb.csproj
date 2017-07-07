@@ -1688,6 +1688,9 @@
     <Content Include="Views\Shared\Desktop\_PopularFlight.cshtml" />
     <Content Include="Views\Shared\Desktop\_PriceSlider.cshtml" />
     <Content Include="Views\Shared\Desktop\_PriceSliderReturn.cshtml" />
+    <Content Include="Views\Shared\Mobile\_AirportSelectForm.cshtml" />
+    <Content Include="Views\Shared\Mobile\_DatePickerForm.cshtml" />
+    <Content Include="Views\Shared\Mobile\_PassengerPickerForm.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016.mobile.cshtml" />
     <Content Include="Views\Promo\Harbolnas2016WebView.cshtml" />

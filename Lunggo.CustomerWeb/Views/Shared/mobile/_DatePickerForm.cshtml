@@ -1,0 +1,36 @@
+<!-- overlay date picker -->
+<div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--departure" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-departure') }">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            Pilih Tanggal Keberangkatan
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="overlay-selector">
+            <div class="overlay-selector__body">
+                <div class="calendar-container">
+                    <div class="ui-datepicker departure-date"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!-- .overlay--datepicker-->
+<!-- overlay date picker -->
+<div class="overlay overlay--theme--blue overlay--datepicker overlay--datepicker--return" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'datepicker-return') }">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            Pilih Tanggal Kepulangan
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="overlay-selector">
+            <div class="overlay-selector__body">
+                <div class="calendar-container">
+                    <div class="ui-datepicker return-date" id="returnDate"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!-- .overlay--datepicker-->

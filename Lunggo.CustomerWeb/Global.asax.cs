@@ -33,9 +33,9 @@ namespace Lunggo.CustomerWeb
             var path = httpRequest.Url.PathAndQuery;
             var userAgent = httpRequest.UserAgent;
             var browserDetectionService = BrowserDetectionService.GetInstance();
-            var isAndroidOrIphone = browserDetectionService.IsRequestFromAndroidOrIphone(userAgent);
-            var isOnMobilePage = host == mobileUrl;
-            if (!isOnMobilePage && isAndroidOrIphone)
+            var isSmartphone = browserDetectionService.IsRequestFromSmartphone(userAgent);
+            var isOnMobilePage = host == mobileUrl || host == "192.168.0.139";
+            if (!isOnMobilePage && isSmartphone)
             {
                 string redirectTo = "http://" + mobileUrl + path;
 

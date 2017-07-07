@@ -8,6 +8,22 @@
 /* mixins */
 /*--------------------*/
 /*Font Family*/
+
+@font-face {
+  font-family: 'Myriad Bold';
+  src: url("../../fonts/MyriadPro-BoldCond.otf");
+  }
+
+@font-face {
+  font-family: 'Myriad';
+  src: url("../../fonts/MyriadPro-Regular.otf");
+  }
+
+@font-face {
+  font-family: 'Raleway';
+  src: url("../../fonts/Raleway-SemiBold.ttf");
+  }
+
 @font-face {
   font-family: 'Open Sans';
   src: url("../../fonts/OpenSans-Semibold.eot");
@@ -43,6 +59,9 @@
 .bold-txt {
   font-family: 'Open Sans';
   font-weight: 700; }
+
+.bold-txt-new {
+  font-family: 'Myriad Bold'; }
 
 /*--------------------*/
 @media only screen and (min-width: 400px) {
@@ -2024,13 +2043,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .carousel-inner ul.slick-dots {
       display: block;
       position: absolute;
-      bottom: 15px;
-      text-align: right;
+      bottom: 0;
+      text-align: center;
       width: 100%;
       list-style: none;
       margin: 0;
       padding: 0;
-      padding-right: 5%; }
+      padding-right: 0; }
       .page.page-home .carousel-inner ul.slick-dots > li {
         display: inline-block;
         list-style: none; }
@@ -5993,3 +6012,153 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page-hotel .rh-table .cols-value {
       padding: 10px 0;
       height: 60px; }
+    .group-kategori {
+        background: #eef0f3;
+        padding: 10px 16px;
+    }
+    .btn-flight {
+        background: #fff;
+        -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+         -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+        box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .partner {
+        background: #eef0f3;
+       padding-bottom: 10px;
+    }
+    .img-partner img { width: 100%;}
+    .title-btn span { font-weight: 400;}
+    .konten-download-apps {
+        background: url(/Assets/mobile/images/bg-konten-download-apps.jpg);
+        text-align: center;
+        padding: 10px 20px;
+        padding-bottom: 20px;
+    }
+    .title-download-apps {
+        margin-bottom: 10px;
+        font-family: 'Myriad';
+    }
+    .title-download-apps h3 {
+        font-size: 26px;
+        text-transform: uppercase;
+    }
+    .title-download-apps span {
+        font-weight: bold;
+    }
+    .align-right {
+        text-align: right;
+    }
+    .align-left {
+        text-align: left;
+    }
+    .contact-mobile {
+        background: #303030;
+        padding: 20px 0;
+        padding-bottom: 70px;
+    }
+    .list-sosmed ul {
+        padding: 0;
+    }
+    .list-sosmed li {
+        display: inline-block;
+        margin: 0 3px;
+    }
+    .list-sosmed {
+        text-align: center;
+    }
+    .list-sosmed img {
+        width: 70%;
+    }
+    .no-contact {
+        color: #fff;
+        margin-top: 15px;
+    }
+    .logo-cs {
+        text-align: right;
+    }
+    .logo-cs img {
+        width: 42%;
+    }
+    .info-customer {
+       line-height: 1.5;
+    }
+    .info-customer h3 {
+        margin: 0;
+        margin-top: 7px;
+        margin-bottom: 3px;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    .info-customer span {
+        font-size: 12px;
+    }
+    .sticky-banner {
+        position: fixed;
+        bottom: 0;
+    }
+    .sticky-banner img {
+        width: 100%;
+    }
+    .slider-mobile {
+        padding-bottom: 0px;
+    }
+    .carousel-inner-mobile {
+        border: none !important;
+    }
+    .info-promo {
+        padding: 15px;
+        color: #717171;
+    }
+    .judul-promo {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #000;
+    }
+    .more-info {
+        margin-top: 15px;
+    }
+    .more-info a {
+        color: #197bc6;
+        text-decoration: underline;
+    }
+    .detail-promo {
+        margin-top: 20px;
+    }
+    .box-promo {
+        border: 1px solid #b3b3b3;
+        padding: 10px 25px;
+        margin-top: 10px;
+    }
+    .judul-box-promo {
+        font-size:14px;
+        margin-bottom: 3px;
+        color: #000;
+    }
+    .gambar-box-promo img {
+        width: 50%;
+    }
+    .btn-book {
+        text-align: center;
+        margin-top: 20px;
+        font-family: 'Raleway'
+        
+    }
+    .btn-book a { color: #000; font-weight: 700;}
+    .book-now {
+        background: #ffd632;
+        width: 200px;
+        padding: 16px; 0;
+        margin: 0 auto;
+        border: 1px solid #ebb600;
+        border-radius: 5px;
+    }
+    .judul-rekomendasi-hotel {
+        padding: 0 15px;
+    }
+    .box-rekomendasi-hotel {
+        border-top: 1px solid #b3b3b3;
+        border-bottom: 1px solid #b3b3b3;
+        padding: 10px 20px;
+    }
