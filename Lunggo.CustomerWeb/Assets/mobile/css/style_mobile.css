@@ -456,7 +456,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #efefef;
   color: #000000;
   width: 100%;
-  padding: 15px 0;
+  /*padding: 15px 0;*/
   /*z-index: -1;*/
   position: relative; }
   .site-footer .site-footer-menu nav {
@@ -6009,6 +6009,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background: #eef0f3;
         padding: 10px 16px;
     }
+    .group-kategori a {
+        color: #000;
+    }
+    .group-kategori span {
+        color:#717171
+    }
     .btn-flight {
         background: #fff;
         -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
@@ -6147,11 +6153,136 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border: 1px solid #ebb600;
         border-radius: 5px;
     }
+    .rekomendasi-hotel {
+        color: #000;
+        margin-top: 20px;
+    }
     .judul-rekomendasi-hotel {
         padding: 0 15px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
     .box-rekomendasi-hotel {
-        border-top: 1px solid #b3b3b3;
-        border-bottom: 1px solid #b3b3b3;
-        padding: 10px 20px;
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 10px 15px;
+        margin-bottom: 10px;
     }
+    .image-hotel {
+        background: #ffd632;
+        border: 1px solid #ebb600;
+        border-radius: 5px;
+        width: 120px;
+        height: 100px;
+        padding: 0;
+    }
+    .image-hotel img {
+        width: 100%;
+    }
+    .desc-hotel {
+        padding-left: 20px;
+    }
+    .nama-hotel {
+        font-size: 14px;
+        font-weight: bold;
+    }
+    .rating-stars {
+        margin-top: 5px;
+    }
+    .separator-mobile {
+        width: 100%;
+        height: 1px;
+        display: block;
+        background: #cccccc;
+        margin: 10px 0;
+    }
+    .harga-room {
+        font-size: 18px;
+        color: #2face6;
+        font-weight: bold;
+    }
+    .harga-room span {
+        color: #000;
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .btn-pesan {
+        text-align: center;
+        margin-top: 10px;
+        font-family: 'Raleway';
+    }
+    .btn-pesan a { color: #000; font-weight: 700; font-size: 11px;}
+    .order-now {
+        background: #ffd632;
+        width: 130px;
+        padding: 10px; 0;
+        border: 1px solid #ebb600;
+        border-radius: 5px;
+    }
+    .syarat-ketentuan {
+        margin-top: 30px;
+    }
+    .container-list-ketentuan {
+        margin: 10px 0;
+    }
+    .isi-syarat-ketentuan {
+        background: #eef0f3;
+        padding: 10px 15px;
+    }
+    .list-number-mobile {
+        background: #2fb4e6;
+        text-align: center;
+        color: #fff;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        padding: 4px;
+    }
+    .info-ketentuan {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+    .langkah-promo {
+        margin-top: 30px;
+    }
+    .slider-promo {
+        background: #eef0f3;
+    }
+    .subscribe-mobile {
+        position: relative;
+        background: #2fb4e6;
+        color: #fff;
+        text-align: center;
+        padding: 20px 30px;
+        margin-top: 45px;
+    }
+    .judul-subscribe {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .form-control-mobile {
+        border-radius: 3px !important;
+        text-align: center;
+    }
+    .btn-subscribe {
+        background: transparent;
+        border: solid 2px #fff;
+        border-radius: 3px;
+        text-align: center;
+        width: 150px;
+        margin: 0 auto;
+        padding: 10px 0;
+    }
+    .btn-subscribe a {
+        color: #fff;
+        font-weight: bold;
+    }
+    .bg-subscribe {
+        position: absolute;
+        width: 133px;
+        left: 2px;
+        top: -35px;
+    }
+    .no-padding { padding: 0;}
