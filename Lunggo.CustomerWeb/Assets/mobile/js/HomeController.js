@@ -903,7 +903,7 @@ jQuery(document).ready(function ($) {
     $('.carousel-inner').slick({
         autoplay: true,
         autoplaySpeed: 2800,
-        dots: true,
+        dots: false,
         prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });

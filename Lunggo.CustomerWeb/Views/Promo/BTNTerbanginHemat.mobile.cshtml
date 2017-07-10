@@ -7,16 +7,25 @@
 
 @section AdditionalCSS {
     <link href="/Assets/css/promo.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
 @section AdditionalJS {
     <script src="/Assets/js/bootstrap.js"></script>
+    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Assets/vendor/slick/slick.min.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
 }
 
 @section PageJS{
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/PromoController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/mobile/js/HomeController.js"></script>
 }
 
 <div class="promo-btn">
@@ -52,9 +61,115 @@
     </div>
     <div class="rekomendasi-hotel">
         <div class="judul-rekomendasi-hotel">Rekomendasi Hotel</div>
-        <div class="box-rekomendasi-hotel">
-            <div class="col-xs-4"><img src="" /></div>
-            <div class="col-xs-8"><img src="" /></div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png"/></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span/> / room / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN SEKARANG</div></a>
+                </div>
+            </div>
+        </div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png" /></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span /> / room / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN SEKARANG</div></a>
+                </div>
+            </div>
+        </div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png" /></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span /> / room / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN SEKARANG</div></a>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="syarat-ketentuan">
+        <div class="judul-rekomendasi-hotel clearfix">
+            <div class="col-xs-10 no-padding">Syarat & Ketentuan</div>
+            <div class="col-xs-2 align-right"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
+        </div>
+        <div class="isi-syarat-ketentuan clearfix">
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">1</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Diskon sebesar 15% (Maks. Rp 150.000). Tanpa minimum transaksi.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">2</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk pemesanan setiap tanggal 25, 26 dan 27 setiap bulan.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">3</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Periode terbang dan inap kapan saja.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">4</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk semua hotel di dalam dan luar negeri.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">5</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk pembayaran menggunakan bank transfer supported by Permata Bank.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">6</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk pemesanan melalui situs Travorama.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">7</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Program promo hanya dapat digunakan satu kali per hari untuk satu user.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">8</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Program tidak dapat digabungkan dengan voucher dan promo lainnya.</div>
+            </div>
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-2 list-number-mobile">9</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</div>
+            </div>
+        </div>
+    </div>
+    <div class="langkah-promo">
+        <div class="judul-rekomendasi-hotel clearfix">
+            <div class="col-xs-10 no-padding">6 Langkah Dapatkan Promo</div>
+            <div class="col-xs-2 align-right"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
+        </div>
+        <div class="carousel-inner-mobile slider-promo" role="listbox">
+            <div class="item">
+                <img src="/Assets/mobile/images/slider-promo.png" alt="" />
+            </div>
+        </div>
+    </div>
+    <div class="subscribe-mobile">
+        <img class="bg-subscribe" src="/Assets/mobile/images/bg-subscribe.png" />
+        <div class="judul-subscribe">Subscribe now!</div>
+        <div class="container-form-subscribe">
+            <div class="">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control form-control-mobile" id="exampleInputEmail1" placeholder="Masukkan Nama Anda">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control form-control-mobile" id="exampleInputEmail1" placeholder="Masukkan Alamat Email">
+                    </div>
+                    <div class="btn-subscribe"><a href="#">SUBSCRIBE</a></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 </div>
