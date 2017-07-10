@@ -702,7 +702,7 @@ if (typeof (angular) == 'object') {
         $rootScope.getCookies = function() {
             $(document).ready(function () {
 
-                $.getScript("js.cookie.js", function () { });
+                $.getScript("/Assets/js/js.cookie.js", function () { });
                 if (Cookies.get('origin')) {
                     $rootScope.FlightSearchForm.AirportOrigin.Code = Cookies.get('origin');
                 } else {
@@ -736,13 +736,17 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date();
                 }
 
-                if (Cookies.get('return')) {
-                    if (new Date(Cookies.get('return')) < new Date())
-                        $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                var defaultReturnDaySpan = 3;   // set default return date to 3 days from today
+                var returnDate = moment().locale("id").add(defaultReturnDaySpan, 'days').format("ddd, DD MMM YYYY");
+                var returnCookie = Cookies.get('return');
+                if (returnCookie) {
+                    if (new Date(returnCookie) < new Date()){
+                        $rootScope.FlightSearchForm.ReturnDate = returnDate;
+                    }
                     else
-                    $rootScope.FlightSearchForm.ReturnDate = new Date(Cookies.get('return'));
+                        $rootScope.FlightSearchForm.ReturnDate = new Date(returnCookie);
                 } else {
-                    $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                    $rootScope.FlightSearchForm.ReturnDate = returnDate;
                 }
 
                 if (Cookies.get('type')) {

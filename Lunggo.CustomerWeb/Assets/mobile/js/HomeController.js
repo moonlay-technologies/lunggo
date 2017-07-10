@@ -81,7 +81,6 @@
             $scope.hotelSearch.roomCount = 1;
         }
         var x = Cookies.getJSON('hotelSearchOccupancies');
-        console.log(x);
         if (Cookies.getJSON('hotelSearchOccupancies')) {
             $scope.hotelSearch.occupancies = Cookies.getJSON('hotelSearchOccupancies');
         } else {
@@ -711,7 +710,6 @@
     //        }
     //    }
     //    hideLocation();
-    //    console.log("BERHASIL");
     //});
 
     //// flight recommendation

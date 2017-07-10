@@ -466,13 +466,19 @@ function flightFormSearchFunctions() {
     function generateSearchResult(list) {
         $('.section-search .autocomplete-result ul').empty();
         for (var i = 0 ; i < list.length; i++) {
-            $('.section-search .autocomplete-result ul').append('<li data-code="' + list[i].code + '" data-city="' + list[i].city + '">' + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country + '</li>');
+            $('.section-search .autocomplete-result ul').append(
+                '<li data-code="' + list[i].code + '" data-city="' + list[i].city + '">'
+                + list[i].city + ' (' + list[i].code + '), ' + list[i].name + ', ' + list[i].country
+                + '</li>'
+            );
         }
     }
 
-    // REDUNDANT#1 same function used in homeController. consider to move this function to be accessed globally accross Controllers / js
-    // Update location text in form textbox and attributes in FlightSearchConfig.flightForm
-    // dataPlace: "origin" || "";   validates the location type: origin or destination
+    //// REDUNDANT#1 same function used in homeController. consider to move this function
+    //// to be accessed globally accross Controllers / js.
+    /* Update location text in form textbox and attributes in FlightSearchConfig.flightForm
+     * dataPlace: "origin" || "";   validates the location type: origin or destination
+     */
     function updateLocation( dataPlace, locationCode, locationCity){
         if (dataPlace == 'origin') {
             FlightSearchConfig.flightForm.origin = locationCode;
@@ -777,13 +783,16 @@ function flightFormSearchFunctions() {
         $('.section-search .search-location').attr('data-place', place);
         $('.section-search .search-location').attr('id', place);
         $('.section-search .search-location').show();
-        hideCalendar();
+        $('.search-calendar').hide();
     }
 
     function hideLocation() {
         $('.section-search .search-location').hide();
     }
-    $('.section-search .close-location').click(function () { hideLocation(); });
+    
+    $('.section-search .close-location').click( function () {
+        hideLocation();
+    });
 
     // show and hide search calendar
     function showCalendar(target) {
@@ -800,10 +809,10 @@ function flightFormSearchFunctions() {
         $('.search-calendar').show();
         hideLocation();
     }
-    function hideCalendar() {
+    
+    $('.close-calendar').click(function () {
         $('.search-calendar').hide();
-    }
-    $('.close-calendar').click(function () { hideCalendar(); });
+    });
 
     // validate passenger
     $('.form-flight-passenger').click(function (evt) {

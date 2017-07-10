@@ -1281,9 +1281,12 @@
     <Content Include="Assets\travorama20\js\hotelDetailController.js" />
     <Content Include="Assets\travorama20\js\HotelMap.js" />
     <Content Include="Assets\travorama20\js\hotelSearchController.js" />
+    <Content Include="Assets\travorama20\js\pagejs\index-page.js" />
+    <Content Include="Assets\travorama20\js\partial\subscriptionForm.js" />
     <Content Include="Assets\travorama20\js\paymentController.js" />
     <Content Include="Assets\travorama20\js\PromoController.js" />
     <Content Include="Assets\travorama20\js\returnFlightController.js" />
+    <Content Include="Assets\travorama20\js\services\dateTimeService.js" />
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\ThankyouController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />

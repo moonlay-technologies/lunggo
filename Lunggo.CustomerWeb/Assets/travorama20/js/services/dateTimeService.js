@@ -1,12 +1,16 @@
 //// angular service
 // app.service('dateTimeService', function() {
 
-//// translate month from number to formatted month
-function translateMonth (monthNumb, format = "Mmm", startNumb = 0) {
-	//// if startNumb is undefined, assumed index 0 = January
-	
-	// just in case the browser dont support ES6 default parameter feature. this will be removed later
+
+/* translate month from number to formatted month
+ * if startNumb is undefined, assumed monthNumb 0 = January
+ */	
+//// new ES6 function syntax, use this instead when ES6 is fully supported in IE and Safari Mobile
+// function translateMonth (monthNumb, format = "Mmm", startNumb = 0) {
+function translateMonth (monthNumb, format, startNumb) {
+	//// Will be removed later after ES6
 	startNumb = (typeof startNumb !== 'undefined') ? startNumb : 0;
+	format = (typeof format !== 'undefined') ? format : "Mmm";
 	
 	monthNumb = parseInt(monthNumb);
 	monthNumb += startNumb;
