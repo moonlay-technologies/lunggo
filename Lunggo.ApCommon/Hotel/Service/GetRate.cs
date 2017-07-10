@@ -35,13 +35,17 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void SetRegIdsAndTnc(List<HotelRoom> rooms, DateTime checkinDateTime, int hotelCd)
         {
+            //foreach (var room in rooms)
+            //{
+            //    foreach (var rate in room.Rates)
+            //    {
+            //        rate.RegsId = EncryptRegsId(hotelCd, room.RoomCode, rate.RateKey);
+            //    }
+            //}
+
             foreach (var room in rooms)
             {
-                foreach (var rate in room.Rates)
-                {
-                    rate.RegsId = EncryptRegsId(hotelCd, room.RoomCode, rate.RateKey);
-                    
-                }
+                room.SingleRate.RegsId = EncryptRegsId(hotelCd, room.RoomCode, room.SingleRate.RateKey);
             }
         }
         public string EncryptRegsId(int hotelCode, string roomCode, string rateKey)

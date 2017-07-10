@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
     {
 
         [JsonProperty("myorder", NullValueHandling = NullValueHandling.Ignore)]
-        public string MyOrder { get; set; }
+        public MyOrder MyOrder { get; set; }
     }
 
     public class MyOrder

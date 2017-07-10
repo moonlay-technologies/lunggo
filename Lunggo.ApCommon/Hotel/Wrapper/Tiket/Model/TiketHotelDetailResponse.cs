@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("primaryPhotos", NullValueHandling = NullValueHandling.Ignore)]
         public string PrimaryPhotos { get; set; }
         [JsonProperty("breadcrumb", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Breadcrumb> Breadcrumb { get; set; }
+        public Breadcrumb Breadcrumb { get; set; }
         [JsonProperty("results", NullValueHandling = NullValueHandling.Ignore)]
         public ResultHotelDetail Results { get; set; }
         [JsonProperty("addinfos", NullValueHandling = NullValueHandling.Ignore)]
@@ -87,9 +87,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
         [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
-        public double Latitude { get; set; }
+        public decimal Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
-        public double Longitude { get; set; }
+        public decimal Longitude { get; set; }
     }
 
     public class ResultHotelDetail
@@ -111,7 +111,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("room_id", NullValueHandling = NullValueHandling.Ignore)]
         public string room_id { get; set; }
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
-        public string Currenechy { get; set; }
+        public string Currency { get; set; }
         [JsonProperty("with_breakfasts", NullValueHandling = NullValueHandling.Ignore)]
         public string WithBreakfasts { get; set; }
         [JsonProperty("all_photo_room", NullValueHandling = NullValueHandling.Ignore)]
@@ -126,6 +126,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         public decimal Price { get; set; }
         [JsonProperty("bookUri", NullValueHandling = NullValueHandling.Ignore)]
         public string BookUri { get; set; }
+        [JsonProperty("refund_policy", NullValueHandling = NullValueHandling.Ignore)]
+        public string RefundPolicy { get; set; }
         [JsonProperty("room_facility", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> RoomFacility { get; set; }
         [JsonProperty("room_description", NullValueHandling = NullValueHandling.Ignore)]
@@ -176,6 +178,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
 
     public class Breadcrumb
     {
+        [JsonProperty("business_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string BusinessId { get; set; }
         [JsonProperty("business_uri", NullValueHandling = NullValueHandling.Ignore)]
         public string BusinessUri { get; set; }
         [JsonProperty("business_name", NullValueHandling = NullValueHandling.Ignore)]

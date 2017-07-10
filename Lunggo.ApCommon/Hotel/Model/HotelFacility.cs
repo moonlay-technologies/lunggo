@@ -40,6 +40,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public bool IsFree;
         [JsonProperty("isAvailable", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsAvailable;
-
+        [JsonProperty("facilityName", NullValueHandling = NullValueHandling.Ignore)]
+        public string FacilityName;
     }
 }

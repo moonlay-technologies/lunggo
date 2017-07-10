@@ -55,6 +55,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string characteristicCd { get; set; }
         [JsonProperty("paxCapacity", NullValueHandling = NullValueHandling.Ignore)]
         public int PaxCapacity { get; set; }
+        [JsonProperty("roomDescription", NullValueHandling = NullValueHandling.Ignore)]
+        public string RoomDescription { get; set; }
+        [JsonProperty("roomAvailable", NullValueHandling = NullValueHandling.Ignore)]
+        public int RoomAvailable { get; set; }
     }
 
     public class RoomComplete

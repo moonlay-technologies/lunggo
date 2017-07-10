@@ -9,6 +9,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     public class AvailableRatesInput
     {
         public int HotelCode { get; set; }
+        public string SearchId { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }

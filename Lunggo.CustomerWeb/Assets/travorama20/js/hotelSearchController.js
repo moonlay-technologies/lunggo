@@ -428,12 +428,12 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
 
     // *************************** GO TO DETAIL HOTEL **************************
 
-    $scope.GotoDetailHotel = function (hotel) {
-        var url = $scope.getUrlHotelDetail(hotel);
+    $scope.GotoDetailHotel = function (hotel, searchId) {
+        var url = $scope.getUrlHotelDetail(hotel, searchId);
         $window.open(url); 
     }
 
-    $scope.getUrlHotelDetail = function(hotel) {
+    $scope.getUrlHotelDetail = function(hotel, searchId) {
         var hotelName = hotel.hotelName;
         hotelName = hotelName.replace(/\s+/g, '-');
         hotelName = hotelName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
@@ -443,7 +443,7 @@ function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSea
         destinationName = destinationName.replace(/[^0-9a-zA-Z-]/gi, '').toLowerCase();
         //$log.debug('redirect to detail hotel with hotelCd: ' + hotel.hotelCd);
         var url = '/id/hotel/' + hotel.country + '/' + destinationName +
-            '/' + hotelName + '-' + hotel.hotelCd + "/?" + $scope.searchParam; 
+           '/' + hotelName + '.' + hotel.hotelCd + "." + searchId + "/?" + $scope.searchParam;
 
         return url;
     }

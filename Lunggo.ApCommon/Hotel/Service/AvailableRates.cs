@@ -7,7 +7,10 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
+using Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -15,42 +18,82 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public AvailableRatesOutput GetAvailableRates(AvailableRatesInput input)
         {
-            var occupancies = PreProcessOccupancies(input.Occupancies);
+            //var occupancies = PreProcessOccupancies(input.Occupancies);
+            var hotelSearchResult = GetSearchHotelResultFromCache(input.SearchId);
+            //SetHotelFullFacilityCode(hotelDetail);
+            if (hotelSearchResult == null)
+                return new AvailableRatesOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.TechnicalError },
+                    ErrorMessages = new List<string> { "Search Id is not vaild" }
+                };
+
+            //Find Hotel Uri based on HotelCode
+            var hotel = hotelSearchResult.HotelDetails.SingleOrDefault(x => x.HotelCode == input.HotelCode);
+            if (hotel == null)
+                return new AvailableRatesOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.TechnicalError },
+                    ErrorMessages = new List<string> { "Hotel Code is not valid" }
+                };
+
             Guid generatedSearchId = Guid.NewGuid();
-            var hotelBedsClient = new HotelBedsSearchHotel();
+            //var hotelBedsClient = new HotelBedsSearchHotel();
             var allCurrency = Currency.GetAllCurrencies();
             SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
-            var request = new SearchHotelCondition();
+            //var request = new SearchHotelCondition();
             if (input.HotelCode != 0)
             {
-                request.Occupancies = occupancies;
-                request.HotelCode = input.HotelCode;
-                request.CheckIn = input.CheckIn;
-                request.Nights = input.Nights;
-                request.Checkout = input.CheckIn.AddDays(input.Nights);
-                request.SearchId = generatedSearchId.ToString();
-                var realOccupancies = input.Occupancies;
-                var result = hotelBedsClient.SearchHotel(request);
-                AddPriceMargin(result.HotelDetails);
-                result.Occupancies = realOccupancies;
-                if (result.HotelDetails == null)
-                {
+                var detailClient = new TiketHotelDetail();
+                var resultDetail = detailClient.GetHotelDetail(hotel.HotelUri);
+                if (resultDetail == null)
                     return new AvailableRatesOutput
                     {
-                        IsSuccess = true,
-                        Total = 0
+                        IsSuccess = false,
+                        Errors = new List<HotelError> { HotelError.TechnicalError },
+                        ErrorMessages = new List<string> { "Hotel Code is not vaild" }
                     };
-                }
-                var rooms = ProcessRoomFromSearchResult(result);
+
+                var rooms = ProcessRoomFromTiketHotelDetail(resultDetail, input);
                 SaveAvailableRateToCache(generatedSearchId.ToString(), rooms);
                 return new AvailableRatesOutput
                 {
                     Id = generatedSearchId.ToString(),
                     IsSuccess = true,
                     Total = rooms.Count,
-                    Rooms = ConvertToHotelRoomsForDisplay(rooms),
+                    Rooms = ConvertToTiketHotelRoomsForDisplay(rooms),
                     ExpiryTime = GetAvailableRatesExpiry(generatedSearchId.ToString())
                 };
+                //request.Occupancies = occupancies;
+                //request.HotelCode = input.HotelCode;
+                //request.CheckIn = input.CheckIn;
+                //request.Nights = input.Nights;
+                //request.Checkout = input.CheckIn.AddDays(input.Nights);
+                //request.SearchId = generatedSearchId.ToString();
+                //var realOccupancies = input.Occupancies;
+                //var result = hotelBedsClient.SearchHotel(request);
+                //AddPriceMargin(result.HotelDetails);
+                //result.Occupancies = realOccupancies;
+                //if (result.HotelDetails == null)
+                //{
+                //    return new AvailableRatesOutput
+                //    {
+                //        IsSuccess = true,
+                //        Total = 0
+                //    };
+                //}
+                //var rooms = ProcessRoomFromSearchResult(result);
+                //SaveAvailableRateToCache(generatedSearchId.ToString(), rooms);
+                //return new AvailableRatesOutput
+                //{
+                //    Id = generatedSearchId.ToString(),
+                //    IsSuccess = true,
+                //    Total = rooms.Count,
+                //    Rooms = ConvertToHotelRoomsForDisplay(rooms),
+                //    ExpiryTime = GetAvailableRatesExpiry(generatedSearchId.ToString())
+                //};
             }
             return new AvailableRatesOutput
             {
@@ -58,6 +101,57 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Errors = new List<HotelError> { HotelError.TechnicalError},
                 ErrorMessages = new List<string> {"Hotel Code is not vaild"}
             };
+        }
+
+
+        public List<HotelRoom> ProcessRoomFromTiketHotelDetail(TiketHotelDetailResponse result, AvailableRatesInput input)
+        {
+            var roomList = new List<HotelRoom>();
+            if (result.Results == null || result.Results.RoomDetail == null)
+                return null;
+
+            foreach (var room in result.Results.RoomDetail)
+            {
+                var singleRoom = new HotelRoom
+                {
+                    RoomCode = room.room_id,
+                    Images = room.PhotoRooms,
+                    RoomName = room.room_name,
+                    RoomAvailable = room.RoomAvailable,
+
+                    RoomDescription = room.RoomDescription,
+                    SingleRate = new HotelRate
+                    {
+                        RateKey = room.Id,
+                        NightCount = input.Nights,
+                        RateCount = 1,
+                        Price = new Price
+                        {
+                            Supplier = room.Price,
+                            Local = room.Price
+                        },
+                        Cancellation = new List<Cancellation>()
+                    }
+                };
+                //singleRoom.Facilities = new List<HotelRoomFacilities>();
+                //foreach (var item in room.RoomFacility)
+                //{
+                //    var singleFacility = new HotelRoomFacilities
+                //    {
+                        
+                //    };
+                //}
+                singleRoom.SingleRate.Cancellation.Add(new Cancellation
+                {
+                    Description = room.RefundPolicy
+                });
+                roomList.Add(singleRoom);
+            }
+
+            SetRegIdsAndTnc(roomList, input.CheckIn, input.HotelCode);
+            //var rooms = new List<HotelRoom>();
+            // rooms = SetRoomPerRate(singleHotel.Rooms);
+            return roomList;
         }
 
         public List<HotelRoom> ProcessRoomFromSearchResult(SearchHotelResult result)
@@ -84,7 +178,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var roomList = new List<HotelRoom>();
             foreach (var room in hotelRoom)
             {
-
                 foreach (var rate in room.Rates)
                 {
                     var singleRoom = new HotelRoom
@@ -101,9 +194,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     roomList.Add(singleRoom);
                 }
             }
+
             return roomList;
         }
-
-        
     }
 }

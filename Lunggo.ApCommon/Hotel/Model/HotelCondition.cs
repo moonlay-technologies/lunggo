@@ -45,6 +45,19 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal Price { get; set; }
     }
 
+    public class HotelBookInfo
+    {
+        public int Nights { get; set; }
+        public DateTime CheckIn { get; set; }
+        public DateTime Checkout { get; set; }
+        public int Rooms { get; set; }
+        public int AdultCount { get; set; }
+        public int ChildCount { get; set; }
+        public string RoomId { get; set; }
+        public string HotelName { get; set; }
+        public string Token { get; set; }
+    }
+
     public class HotelIssueInfo
     {
         public string RsvNo { get; set; }

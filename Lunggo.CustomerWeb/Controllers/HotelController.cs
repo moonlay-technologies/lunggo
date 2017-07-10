@@ -42,7 +42,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     location = destination;
                 }
-                
+
                 var client = new RestClient(source);
                 string url = @"/v1/autocomplete/hotel//" + location;
                 var searchRequest = new RestRequest(url, Method.GET);
@@ -82,7 +82,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var nextDate = nextMonthDate.AddDays(1);
                 var newquery = "info=Location." + locationId + "." + nextMonthDate.Year + "-" +
                          nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" +
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
@@ -158,7 +158,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var nextDate = tomorrowDate.AddDays(1);
                 var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
                          tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" +
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
@@ -171,48 +171,84 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/hotel/{country}/{destination}/{hotelParam}")]
         public ActionResult DetailHotel(String hotelParam)
         {
-            var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            //DateTime checkin = new DateTime();
+            //DateTime checkout = new DateTime();
+            //int nights = 0;
+            //int adultCount = 0;
+            //int childCount = 0;
+            //int room = 0;
 
-            var hotelCd = Convert.ToInt32(hotelParam.Split('-').Last());
+            var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var queryString = Request.Url.Query;
+            var getUrl = Request.Url;
+            var ssss = getUrl;
+            //if (queryString != null)
+            //{
+            //    var splitParam = queryString.Split(new string[] { "%7C" }, StringSplitOptions.None);
+            //    var splitSearchDate = splitParam[0].Split('.');
+            //    checkin = Convert.ToDateTime(splitSearchDate[2]);
+            //    checkout = Convert.ToDateTime(splitSearchDate[3]);
+            //    nights = Convert.ToInt32(splitSearchDate[4]);
+            //    room = Convert.ToInt32(splitSearchDate[5]);
+            //    var temp = splitSearchDate.Last();
+            //    adultCount = Convert.ToInt32(temp.Split('~').First());
+            //    childCount = Convert.ToInt32(temp.Split('~')[1]);
+            //    if (splitParam.Length > 1)
+            //    {
+            //        for (var i = 1; i < splitParam.Length; i++)
+            //        {
+            //            var splitData = splitParam[i].Split('~');
+            //            adultCount +=Convert.ToInt32(splitData.First());
+            //            childCount += Convert.ToInt32(splitData[1]);
+            //        }
+            //    }
+            //}
+
+            var hotelParamSplit = hotelParam.Split('.');
+            var hotelName = hotelParamSplit.First();
+            var searchId = hotelParamSplit.Last();
+            var hotelCd = Convert.ToInt32(hotelParamSplit[1]);
             var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
             {
-                HotelCode = hotelCd
+                HotelCode = hotelCd,
+                HotelName = hotelName,
+                SearchId = searchId
             }).HotelDetail;
 
-            var client = new RestClient(source);
-            string url = @"/v1/autocomplete/hotel//" + hotelDetail.DestinationName;
-            var searchRequest = new RestRequest(url, Method.GET);
-            var searchResponse = client.Execute(searchRequest);
-            var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
-            long locationId = 0;
-            var selected = data.Autocompletes.Where(r => r.Type == "Destination").ToList();
-            if (selected.Count > 0)
-        {
-                locationId = selected[0].Id;
-            }
+            //var client = new RestClient(source);
+            //string url = @"/v1/autocomplete/hotel//" + hotelDetail.DestinationName;
+            //var searchRequest = new RestRequest(url, Method.GET);
+            //var searchResponse = client.Execute(searchRequest);
+            //var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
+            //long locationId = 0;
+            //var selected = data.Autocompletes.Where(r => r.Type == "Destination").ToList();
+            //if (selected.Count > 0)
+            //{
+            //    locationId = selected[0].Id;
+            //}
 
             if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
             {
                 var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
-                
-            return View(new HotelDetailModel.HotelDetail
-            {
-                HotelCode = hotelCd,
-                    //SearchId = searchId,
+
+                return View(new HotelDetailModel.HotelDetail
+                {
+                    HotelCode = hotelCd,
+                    SearchId = searchId,
                     SearchParam = searchParam,
                     HotelDetailData = hotelDetail
-            });
-        }
+                });
+            }
 
             var nextMonthDate = DateTime.Today.AddMonths(1);
             var nextDate = nextMonthDate.AddDays(1);
-            var searchParams = "Location." + locationId + "." + nextMonthDate.Year + "-" + nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2") +
+            var searchParams = "Location." + hotelDetail.DestinationName + "." + nextMonthDate.Year + "-" + nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2") +
                                "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
-                    
+
             return View(new HotelDetailModel.HotelDetail
             {
                 HotelCode = hotelCd,
-                //SearchId = searchId,
+                SearchId = searchId,
                 SearchParam = searchParams,
                 HotelDetailData = hotelDetail
             });
@@ -255,7 +291,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     });
                 }
             }
-                return RedirectToAction("Index", "Index");
+            return RedirectToAction("Index", "Index");
         }
 
         [HttpPost]
@@ -301,7 +337,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-        
+
 
         #region Helpers
 

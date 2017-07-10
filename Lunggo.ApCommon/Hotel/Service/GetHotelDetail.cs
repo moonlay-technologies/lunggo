@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
+using Lunggo.ApCommon.Flight.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
+using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
 using Lunggo.Framework.Documents;
 using Microsoft.Azure.Documents;
+using Supplier = Lunggo.ApCommon.Hotel.Constant.Supplier;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -17,10 +20,9 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public GetHotelDetailOutput GetHotelDetail(GetHotelDetailInput input)
         {
-            var hotelDetail = GetHotelDetailFromDb(input.HotelCode);
-            SetHotelFullFacilityCode(hotelDetail);
-            //decimal originalPrice, netFare;
-            if (hotelDetail == null)
+            var hotelSearchResult = GetSearchHotelResultFromCache(input.SearchId);
+            //SetHotelFullFacilityCode(hotelDetail);
+            if (hotelSearchResult == null)
                 return new GetHotelDetailOutput
                 {
                     IsSuccess = false,
@@ -28,47 +30,71 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> { "SearchID no longer valid" }
                 };
 
-            //bool searchIdExpired = false;
+            //Find Hotel Uri based on HotelCode
+            var hotel = hotelSearchResult.HotelDetails.SingleOrDefault(x => x.HotelCode == input.HotelCode);
+            if (hotel == null)
+                return new GetHotelDetailOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                    ErrorMessages = new List<string> { "SearchID no longer valid" }
+                };
 
-            hotelDetail.DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name;
-            //if (SetDetailFromSearchResult(ref hotelDetail, input.SearchId, out originalPrice, out netFare) == searchIdExpired) {
-            //    return new GetHotelDetailOutput
-            //    {
-            //        IsSuccess = false,
-            //        Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
-            //        ErrorMessages = new List<string> { "SearchID no longer valid" }
-            //    };
-            //};
-           
-            //hotelDetail.Rooms = SetRoomPerRate(hotelDetail.Rooms);
-            //hotelDetail.Rooms = FilterRoomByCapacity(hotelDetail.Rooms);
-            //if (hotelDetail.Rooms.Count != 0)
-            //{
-            //    foreach (var room in hotelDetail.Rooms)
-            //    {
-            //        var cid = room.SingleRate.RateKey != null ? room.SingleRate.RateKey.Split('|')[0] : room.SingleRate.RegsId.Split('|')[0];
-            //        var checkInDate = new DateTime(Convert.ToInt32(cid.Substring(0, 4)),
-            //             Convert.ToInt32(cid.Substring(4, 2)), Convert.ToInt32(cid.Substring(6, 2)));
-            //        room.SingleRate.TermAndCondition = GetRateCommentFromTableStorage(room.SingleRate.RateCommentsId,
-            //            checkInDate).Select(x => x.Description).ToList();
-            //    }
-            //}
+            //Call Api Get Hotel Detail
+            var detailClient = new TiketHotelDetail();
+            var resultDetail = detailClient.GetHotelDetail(hotel.HotelUri);
+            if (resultDetail == null)
+                return new GetHotelDetailOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.SearchIdNoLongerValid },
+                    ErrorMessages = new List<string> { "SearchID no longer valid" }
+                };
+
+            var hotelDetail = new HotelDetailsBase
+            {
+                SearchId = input.SearchId,
+                DestinationName = hotelSearchResult.DestinationName,
+                StarCode = resultDetail.Breadcrumb == null ? 0 : resultDetail.Breadcrumb.StarRating,
+                Supplier = Supplier.Tiket,
+                Longitude = resultDetail.General == null ? 0 : resultDetail.General.Longitude,
+                Latitude = resultDetail.General == null ? 0 : resultDetail.General.Latitude,
+                Address = resultDetail.General == null ? null : resultDetail.General.Address,
+                HotelCode = resultDetail.Breadcrumb == null ? 0 : int.Parse(resultDetail.Breadcrumb.BusinessId),
+                HotelName = resultDetail.Breadcrumb == null ? null : resultDetail.Breadcrumb.BusinessName,
+                City = resultDetail.Breadcrumb == null ? null : resultDetail.Breadcrumb.CityName,
+                ZoneCode = resultDetail.Breadcrumb == null ? null : (resultDetail.Breadcrumb.KecamatanName ?? resultDetail.Breadcrumb.KelurahanName),
+                ImageUrl = resultDetail.Photos == null ? null : resultDetail.Photos.Photo.Select(x=> new Image
+                {
+                    Path = x.FileName,
+                    Type = x.PhotoType
+                }).ToList(),
+                PrimaryPhoto = resultDetail.PrimaryPhotos,
+                CheckInDate = hotelSearchResult.CheckIn,
+                CheckOutDate = hotelSearchResult.CheckOut,
+                CountryCode = resultDetail.Breadcrumb == null ? null : resultDetail.Breadcrumb.CountryName,
+                Facilities = resultDetail.AvailFacilities == null ? null : resultDetail.AvailFacilities.AvailFacility.Select(x=> new HotelFacility
+                {
+                    FullFacilityCode = x.FacilityType,
+                    FacilityName = x.FacilityName
+                }).ToList(),
+            };
+            hotelDetail.Description = new List<HotelDescriptions>();
+            hotelDetail.Description.Add(new HotelDescriptions
+            {
+                Description = resultDetail.General == null ? null : resultDetail.General.Description,
+                languageCode = "IND"
+            });
             
             return new GetHotelDetailOutput
             {
                 IsSuccess = true,
-                HotelDetail = ConvertToHotelDetailOnlyForDisplay(hotelDetail)
-                //HotelDetail = ConvertToHotelDetailsBaseForDisplay(hotelDetail,originalPrice,netFare)
+                HotelDetail = ConvertToTiketHotelDetailOnlyForDisplay(hotelDetail)
             };
         }
 
         public HotelDetailsBase GetHotelDetailFromDb (int hotelCode)
         {
-            /*Technologies using DocDB*/
-            //var document = DocumentService.GetInstance();
-            //return document.Retrieve<HotelDetailsBase>("HotelDetail:"+hotelCode);
-
-            /*Technpologies using TableStorage*/
             return GetHotelDetailFromTableStorage(hotelCode);
         }
 
@@ -86,7 +112,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (searchResulthotel == null)
                 hotel = null;
             hotel.Rooms = searchResulthotel.Rooms;
-            //hotel.DestinationName = searchResultData.DestinationName; //pindah ke main method Get Hotel Details
 
             if (hotel.ImageUrl != null)
             {
@@ -113,64 +138,5 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }    
             }
         }
-        //public List<HotelRoom> SetRoomPerRate(List<HotelRoom> hotelRoom)
-        //{
-        //    var roomList = new List<HotelRoom>();
-        //    foreach (var room in hotelRoom)
-        //    {
-
-        //        foreach (var rate in room.Rates)
-        //        {
-        //            var singleRoom = new HotelRoom
-        //            {
-        //                RoomCode = room.RoomCode,
-        //                RoomName = room.RoomName,
-        //                Type = room.Type,
-        //                TypeName = room.TypeName,
-        //                Images = room.Images,
-        //                Facilities = room.Facilities,
-        //                characteristicCd = room.characteristicCd,
-        //                SingleRate = rate
-        //            };
-        //            roomList.Add(singleRoom);
-        //        }
-        //    }
-        //    return roomList;
-        //}
-
-        //public List<HotelRoom> FilterRoomByCapacity(List<HotelRoom> rooms)
-        //{
-        //    var maxPax = 0;
-        //    var maxAdult = 0;
-        //    var maxChild = 0;
-        //    var roomList = new List<HotelRoom>();
-        //    //Take Max Pax first
-        //    foreach (var room in rooms)
-        //    {
-        //        var totalPax = room.SingleRate.AdultCount + room.SingleRate.ChildCount;
-        //        if (maxPax == 0)
-        //        {
-        //            maxPax = totalPax;
-        //            maxAdult = room.SingleRate.AdultCount;
-        //            maxChild = room.SingleRate.ChildCount;
-        //        }
-        //        if (totalPax > maxPax)
-        //        {
-        //            maxPax = totalPax;
-        //            maxAdult = room.SingleRate.AdultCount;
-        //            maxChild = room.SingleRate.ChildCount;
-        //        }
-        //    }
-
-        //    foreach (var room in rooms)
-        //    {
-        //        if (room.SingleRate.AdultCount == maxAdult && room.SingleRate.ChildCount == maxChild)
-        //        {
-        //            roomList.Add(room);
-        //        }
-        //    }
-        //    return roomList;
-        //} 
-
     }
 }

@@ -188,6 +188,8 @@ namespace Lunggo.ApCommon.Hotel.Model
 
         [JsonProperty("supplier", NullValueHandling = NullValueHandling.Ignore)]
         public Constant.Supplier Supplier { get; set; }
+        [JsonProperty("primaryPhoto", NullValueHandling = NullValueHandling.Ignore)]
+        public string PrimaryPhoto { get; set; }
 
     }
 

@@ -63,7 +63,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.init = function (model) {
         $log.debug(model);
        
-        //$scope.searchId = model.searchId;
+        $scope.searchId = model.searchId;
         $scope.searchParam = model.searchParam;
         var mydata = $scope.searchParam.split('.');
         var cekin = mydata[2];
@@ -72,6 +72,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         var roomcount = mydata[5];
         var occupancies = mydata[6].split('|');
         var totalOcc = occupancies.length;
+
         $scope.hotelCode = model.hotelCd;
 
         $scope.searchParamObject = {
@@ -309,18 +310,19 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     var setSingleRoom = function(rooms) {
         var singleRoom = [];
         for (var i = 0; i < rooms.length; i++) {
-            for (var j = 0; j < rooms[i].rates.length; j++) {
-                singleRoom.push({
-                    "roomCode": rooms[i].roomCode,
-                    "roomName": rooms[i].roomName,
-                    "Type": rooms[i].Type,
-                    "TypeName": rooms[i].TypeName,
-                    "roomImages": rooms[i].roomImages,
-                    "facilityCode": rooms[i].facilityCode,
-                    "characteristic": rooms[i].characteristic,
-                    "rate": rooms[i].rates[j]
-                });
-            }
+            singleRoom.push({
+                "roomCode": rooms[i].roomCode,
+                "roomName": rooms[i].roomName,
+                "Type": rooms[i].Type,
+                "TypeName": rooms[i].TypeName,
+                "roomImages": rooms[i].roomImages,
+                "facilityCode": rooms[i].facilityCode,
+                "characteristic": rooms[i].characteristic,
+                "rate": rooms[i].rate
+            });
+            //for (var j = 0; j < rooms[i].rate.length; j++) {
+                
+            //}
         }
 
         return singleRoom;
@@ -521,7 +523,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             "nights": nightCount,
             "checkIn": newcheckIn,
             "checkout": newcheckOut,
-            "occupancies": occupancies.slice(0, totalOcc)
+            "occupancies": occupancies.slice(0, totalOcc),
+            "searchId":$scope.searchId
             }).$promise.then(function(data) {
             $scope.searchDone = true;
             $scope.hideRoomDetail = false;

@@ -68,7 +68,7 @@ namespace Lunggo.BackendWeb
             };
             var searchResult = searchClient.SearchHotel(request);
             var detailClient = new TiketHotelDetail();
-            var resultDetail = detailClient.GetHotelDetail(searchResult.HotelDetails[1].HotelUri, token);
+            var resultDetail = detailClient.GetHotelDetail(searchResult.HotelDetails[1].HotelUri);
             var temp = resultDetail;
             Console.WriteLine("OKE");
             //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");

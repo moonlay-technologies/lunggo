@@ -134,5 +134,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal FeePercentage { get; set; }
         [JsonProperty("startTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime StartTime { get; set; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
     }
 }
