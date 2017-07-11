@@ -1588,7 +1588,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .form-wrapper {
       margin: 0 0 15px;
       min-height: 100%;
-      background: none;
+      /*background: none;*/
       border: 0; }
       .page.page-home .form-container .form-wrapper h1 {
         text-align: center;
@@ -1672,6 +1672,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form .form__visitor p.form-control,
       .page.page-home .form-container .form-wrapper form .form__visitor select.form-control,
       .page.page-home .form-container .form-wrapper form .form__room p, .page.page-home .form-container .form-wrapper form .form__room p.form-control, .page.page-home .form-container .form-wrapper form .form__room select.form-control {
+        position: relative;
         -webkit-appearance: none;
         -moz-appearance: none;
         font-size: 13px;
@@ -1926,10 +1927,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         vertical-align: middle;
         position: absolute;
         left: 0;
+        top: 0;
         width: 47px;
         height: 52px;
         background-image: url(/Assets/mobile/images/find.png);
-        margin-left: 12px; }
+        margin-left: -28px; }
       .page.page-home .form-container .form-wrapper form.hotel-form p.form-date:before {
         background-size: 40%;
         background-repeat: no-repeat;
@@ -1937,11 +1939,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: inline-block;
         vertical-align: middle;
         position: absolute;
-        left: 0;
+        left: 0px;
         width: 47px;
         height: 46px;
         background-image: url(/Assets/mobile/images/date.png);
-        margin-left: 12px; }
+        margin-left: -28px; }
       .page.page-home .form-container .form-wrapper form.hotel-form p.form-time .duration-title {
         float: left;
         margin-top: 10px; }
@@ -6025,10 +6027,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .btn-flight {
         background: #fff;
         -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
-         -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
         box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
         padding: 10px;
         margin-bottom: 10px;
+    }
+    .accordion-content {
+      -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+      -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+      box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+      background-color: white;
     }
     .partner {
         background: #eef0f3;
