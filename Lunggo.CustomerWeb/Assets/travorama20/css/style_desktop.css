@@ -154,7 +154,7 @@ span.close {
 
 .btn.btn-yellow {
   background: #ffd632;
-  border: 2px solid #ebb600;
+  border: 1px solid #ebb600;
   color: #4f3500;
   height: auto; }
   .btn.btn-yellow.lg-btn {
@@ -205,6 +205,13 @@ span.close {
   background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
   padding-bottom: 30px;
   margin-bottom: 45px; }
+
+.section-titles.stripe {
+  font-weight: 600;
+  background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
+  padding-bottom: 30px;
+  margin-bottom: 25px; }
+
   .section-title.stripe.small-stripe {
     background-image: url(/Assets/images/yellow-stripe-small.png); }
   .section-title.stripe span {
@@ -1346,20 +1353,14 @@ file : /Assets/travorama20/css/_header.scss
     .site-header .menu-top nav {
       float: right;
       background: #1daee4;
-      padding: 5px 12px;
-      -webkit-border-bottom-right-radius: 2px;
-      -webkit-border-bottom-left-radius: 2px;
-      -moz-border-radius-bottomright: 2px;
-      -moz-border-radius-bottomleft: 2px;
-      border-bottom-right-radius: 2px;
-      border-bottom-left-radius: 2px; }
+      padding: 7px }
       .site-header .menu-top nav ul {
         padding: 0;
         margin: 0; }
         .site-header .menu-top nav ul li {
           display: inline;
-          padding: 0 5px;
-          font-size: 12px; }
+          padding: 0 10px;
+          font-size: 10px; }
           .site-header .menu-top nav ul li a {
             color: #fff; }
         .site-header .menu-top nav ul li + li {
@@ -2689,12 +2690,15 @@ body.page-index {
   margin-right: 20px; }
   .page-index .section-calendar-price .price-calendar .search-map {
     position: relative;
-    background: #f0f0f0;
+    background: #f6f6f6;
     padding: 15px 5px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
-    border-radius: 2px; }
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);}
     .page-index .section-calendar-price .price-calendar .search-map .location-choice .search-location {
       border: 1px solid #ccc; }
     .page-index .section-calendar-price .price-calendar .search-map .search-location {
@@ -2729,7 +2733,9 @@ body.page-index {
     .page-index .section-calendar-price .price-calendar .search-map .btn-calendar {
       padding: 8px 0;
       margin-bottom: 0 !important;
-      width: 100%; }
+      width: 100%;
+        margin-top: 15px;
+    }
     .page-index .section-calendar-price .price-calendar .search-map .select-calendar {
       font-size: 12px;
       line-height: 100%;
@@ -2757,8 +2763,11 @@ body.page-index {
       -ms-border-radius: 2px;
       border-radius: 2px;
       line-height: 100%;
-      height: 41px;
-      cursor: pointer; }
+      height: 40px;
+      cursor: pointer;
+      border: 1px solid #e2e2e2 !important;
+      color: #6a6a6a;
+    }
       .page-index .section-calendar-price .price-calendar .search-map .select-my:after {
         content: '';
         display: block;
@@ -9159,3 +9168,39 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-campaign.campaign-2016-calendar .step img {
   border: 2px solid #1daee4; }
+.top-contact {
+    background: #198db8 !important;
+    width: 140px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 400;
+    padding: 1px 12px !important;
+}
+.top-contact  span {
+    font-weight: bold;
+    font-size: 10px;
+}
+.img-contact { float: left; margin-right: 5px;}
+.pilih-tujuan {
+    background: #f6f6f6;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+}
+.container-form-location {
+    margin-bottom: 15px;
+}
+.label-form-location {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.map-input {
+    width: 100% !important;
+    height: 40px !important;
+    border: 1px solid #e2e2e2 !important;
+    color: #6a6a6a;
+}
+.search-map {
+    width: 300px;
+}
