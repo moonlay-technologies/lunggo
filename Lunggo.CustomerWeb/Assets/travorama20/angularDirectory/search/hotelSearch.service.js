@@ -361,9 +361,7 @@
                     scope.autocompleteLoading = true;
                     scope.showPopularDestinations = false;
                     scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function(data) {
-                            console.log('before timeout')
                         $timeout(function() {
-                            console.log('after timeout')
                             scope.autocompleteLoading = false;
                             if (data.hotelAutocomplete != null) {
                                 scope.showPopularDestinations = false;
@@ -396,6 +394,7 @@
         });
 
         //autocomplete mobile
+        // scope.$watch('hotelSearch.locationDisplay', function (newValue) {
         scope.getLocation = function (newValue) {
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
@@ -403,9 +402,7 @@
                     scope.autocompletePre = false;
                     scope.autocompleteLoading = true;
                     scope.hotelSearch.autocompleteResource.get({ prefix: newValue }).$promise.then(function(data) {
-                        console.log("before timeout (getlocation)")
                         $timeout(function() {
-                            console.log("after timeout (getlocation)")
                             scope.autocompleteLoading = false;
                             if (data.hotelAutocomplete != null) {
                                 scope.showPopularDestinations = false;
@@ -436,8 +433,7 @@
             }
             
         };
-
-        console.log("initialization autocompleteResource")
+        
         scope.hotelSearch.autocompleteResource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
             { prefix: '@prefix' },
             {
