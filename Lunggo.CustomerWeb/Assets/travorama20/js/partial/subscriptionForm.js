@@ -55,12 +55,13 @@ function recheckForm() {
     SubscribeConfig.email = '';
     SubscribeConfig.name = '';
     $('form.subscribe-form input[type="submit"]').removeProp('disabled');
-    $('form.subscribe-form input[type="submit"]').val('DAFTAR');
+    // $('form.subscribe-form input[type="submit"]').val('DAFTAR');
 }
 
+var subscriptionTrial = 0;
 function submitForm() {
-    if (trial > 3) {
-        trial = 0;
+    if (subscriptionTrial > 3) {
+        subscriptionTrial = 0;
     }
     $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled', true);
     $.ajax({
@@ -72,8 +73,8 @@ function submitForm() {
         $('.subscribe-before').hide();
         $('.subscribe-after').show();
     }).fail(function (returnData) {
-        trial++;
-        if (refreshAuthAccess() && trial < 4) //refresh cookie
+        subscriptionTrial++;
+        if (refreshAuthAccess() && subscriptionTrial < 4) //refresh cookie
             submitForm();
     });
 }
