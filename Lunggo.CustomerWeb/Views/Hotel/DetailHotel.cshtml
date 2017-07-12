@@ -425,9 +425,9 @@
                                         <div class="blue-txt md-txt" style="text-transform: capitalize"><b>{{room.roomName}}</b></div>
                                         <div class="facility"></div>
                                             <div class="max-people" ng-if="room.rate.breakdowns[0].board != 'RO'">Termasuk Sarapan</div>
-                                        <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
-                                        <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
-                                        <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
+                                        @*<div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>*@
+                                        <div ng-show="room.rate.cancellation != null && room.rate.cancellation.length > 0">Kebijakan Pembatalan Berlaku </div>
+                                        @*<div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>*@
                                         <div class="info-room">
                                             <span class="info-icon italic-txt">i</span>
                                             <span class="blue-txt sm-txt">Info Kamar</span>
@@ -485,16 +485,19 @@
                                             <li class="hd-point" ng-show="room.rate.cancellation != null && room.rate.cancellation.length > 0">
                                                 <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
                                                 <div class="hd-txt">
-                                                    <ul class="blue-list" style="margin-bottom: 0;">
+                                                    @*<ul class="blue-list" style="margin-bottom: 0;">
                                                         <li ng-show="room.rate.isFreeCancel">
                                                             Gratis pembatalan sebelum tanggal <span style="color:#1daee4">{{setHoursToWIB(room.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
                                                         </li>
-                                                    </ul>
+                                                    </ul>*@
                                                     <ul class="blue-list">
                                                         <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
-                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">{{(cancellation.feePercentage *100).toFixed(0)}}%</span>.
+                                                            {{cancellation.description}}
                                                         </li>
+                                                        @*Pembatalan setelah tanggal
+                                                        <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
+                                                        akan dikenakan biaya pembatalan sebesar
+                                                        <span style="color:#ff7200">{{(cancellation.feePercentage *100).toFixed(0)}}%</span>.*@
                                                     </ul>
                                                 </div>
                                             </li>

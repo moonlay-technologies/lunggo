@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                     HotelCode = data.hotel_id,
                     Address = data.address,
                     DestinationName = data.Province,
-                    ZoneCode = data.Kecamatan,
+                    ZoneCode = (string.IsNullOrEmpty(data.Kecamatan) || data.Kecamatan == " ") ? condition.Destination : data.Kecamatan,
                     AreaCode = data.Kelurahan,
                     PhotoPrimary = data.PhotoPrimary,
                     StarRating = data.Rating,

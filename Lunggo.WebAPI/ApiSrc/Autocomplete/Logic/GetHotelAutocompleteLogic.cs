@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
 using Lunggo.WebAPI.ApiSrc.Autocomplete.Model;
+using ServiceStack.Text;
 
 namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
 {
@@ -37,12 +38,31 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
             {
                 result.CountLocation = result.CountLocation.Replace("Hotel", "").Trim();
                 var numHotel = int.Parse(result.CountLocation);
+                var searchType = "";
+                result.Category = result.Category.ToLower();
+                
+                if (result.Category.Contains("kota"))
+                {
+                    searchType = "Zone";
+                }
+                else if (result.Category.Contains("area"))
+                {
+                    searchType = "Area";
+                }
+                else if (result.Category.Contains("hotel"))
+                {
+                    searchType = "Hotel";
+                }
+                else
+                {
+                    searchType = "Destination";
+                }
                 var singleLocation = new HotelAutocompleteApi
                 {
                     Id = result.Value,//result.Id,
                     Name = result.LabelLocation,
                     Country = result.CountryId,
-                    Type = result.Category,
+                    Type = searchType,
                     NumOfHotels = numHotel,
                     Value = result.Value
                 };

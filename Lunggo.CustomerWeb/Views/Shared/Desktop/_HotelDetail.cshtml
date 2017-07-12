@@ -200,17 +200,18 @@
                     <div class="rh-cancel clearfix">
                         <div class="rh-title blue-txt bold-txt">Ketentuan Pembatalan</div>
                         <ul class="blue-list">
-                            @if (rate.IsFreeCancel)
+                            @*@if (rate.IsFreeCancel)
                             {
                                 <li>
                                     Gratis pembatalan sebelum tanggal @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB.
                                 </li>
-                            }
+                            }*@
                             @foreach (var policy in rate.Cancellation)
                             {
                                 <li>
-                                    Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
+                                    @policy.Description
                                 </li>
+                                @*Pembatalan setelah tanggal @policy.StartTime.AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID")) WIB akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />*@
                             }
                         </ul>
                     </div>

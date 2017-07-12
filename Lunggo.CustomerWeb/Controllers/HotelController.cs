@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
@@ -230,7 +231,14 @@ namespace Lunggo.CustomerWeb.Controllers
             if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
             {
                 var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
-
+                var temp = new HotelDetailModel.HotelDetail
+                {
+                    HotelCode = hotelCd,
+                    SearchId = searchId,
+                    SearchParam = searchParam,
+                    HotelDetailData = hotelDetail
+                };
+    
                 return View(new HotelDetailModel.HotelDetail
                 {
                     HotelCode = hotelCd,

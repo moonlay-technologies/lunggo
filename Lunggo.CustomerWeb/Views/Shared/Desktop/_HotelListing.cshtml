@@ -21,9 +21,9 @@
                 </div>
                 <div class="location">
                     <div>
-                        <span ng-show="(hotel.zone == null && hotel.zone.length < 1  && hotel.zone == '')">{{toTitleCase(hotel.address)}}</span>
-                        <span ng-show="hotel.area != null && hotel.area.length > 1 && hotel.area != '' ">{{toTitleCase(hotel.area)}}<span ng-show="hotel.destinationName != null || hotel.destinationName.length > 0">, {{hotel.destinationName}}</span></span>
-                        <span ng-show="hotel.zone != null && hotel.zone.length > 1 && hotel.zone != ''">{{toTitleCase(hotel.zone)}}<span ng-show="hotel.destinationName != null || hotel.destinationName.length > 0">, {{hotel.destinationName}}</span></span>
+                        <span>{{toTitleCase(hotel.zone)}} Zone</span>
+                        <span ng-show="hotel.zone == null || hotel.zone == ''">{{toTitleCase(hotel.area)}} Area</span>
+                        <span ng-show="hotel.area == null && hotel.zone == null">{{toTitleCase(hotel.address)}} Test</span>
                     </div>
                 </div>
 

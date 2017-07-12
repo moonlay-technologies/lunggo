@@ -587,10 +587,10 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
                         });
                     });
 
-                    var cekin = $scope.hotel.rooms[0].rates[0].regsId.split(',')[2].split('|')[0];
-                    var cekout = $scope.hotel.rooms[0].rates[0].regsId.split(',')[2].split('|')[1];
-                    $scope.hotel.checkinDate = new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
-                    $scope.hotel.checkoutDate = new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
+                    //var cekin = $scope.hotel.rooms[0].rates[0].regsId.split(',')[2].split('|')[0];
+                    //var cekout = $scope.hotel.rooms[0].rates[0].regsId.split(',')[2].split('|')[1];
+                    $scope.hotel.checkinDate = newcheckIn;//new Date(parseInt(cekin.substring(0, 4)), parseInt(cekin.substring(4, 6)) - 1, parseInt(cekin.substring(6, 8)));
+                    $scope.hotel.checkoutDate = newcheckOut;//new Date(parseInt(cekout.substring(0, 4)), parseInt(cekout.substring(4, 6)) - 1, parseInt(cekout.substring(6, 8)));
                     $scope.hotel.nightCount = (new Date($scope.hotel.checkoutDate) - new Date($scope.hotel.checkinDate)) / (3600 * 24 * 1000);
 
                     if ($scope.isFirstLoad) {

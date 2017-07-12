@@ -130,7 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             Supplier = room.Price,
                             Local = room.Price
                         },
-                        Cancellation = new List<Cancellation>()
+                        Cancellation = ProcessCancellation(room.RefundPolicy)
                     }
                 };
                 //singleRoom.Facilities = new List<HotelRoomFacilities>();
@@ -141,10 +141,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                         
                 //    };
                 //}
-                singleRoom.SingleRate.Cancellation.Add(new Cancellation
-                {
-                    Description = room.RefundPolicy
-                });
+                //singleRoom.SingleRate.Cancellation.Add(new Cancellation
+                //{
+                //    Description = room.RefundPolicy
+                //});
                 roomList.Add(singleRoom);
             }
 
@@ -153,6 +153,44 @@ namespace Lunggo.ApCommon.Hotel.Service
             // rooms = SetRoomPerRate(singleHotel.Rooms);
             return roomList;
         }
+
+        public List<Cancellation> ProcessCancellation(string refundPolicy)
+        {
+            var cancellationList = new List<Cancellation>();
+            if (string.IsNullOrEmpty(refundPolicy) || refundPolicy == " ")
+                return null;
+            var temp = refundPolicy.Split(new string[] { "<br/><br/>" }, StringSplitOptions.None);
+            foreach (var x in temp)
+            {
+                var splitPolicy = x.Split(':');
+                if (splitPolicy.Length > 1)
+                {
+                    var splitItem = splitPolicy[1].Split(new string[] {"<br/>"}, StringSplitOptions.None);
+                    foreach (var item in splitItem)
+                    {
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            cancellationList.Add(new Cancellation
+                            {
+                                Description = item
+                            });    
+                        }
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrEmpty(x))
+                    {
+                        cancellationList.Add(new Cancellation
+                        {
+                            Description = x
+                        });
+                    }
+                }
+            }
+            return cancellationList;
+
+        } 
 
         public List<HotelRoom> ProcessRoomFromSearchResult(SearchHotelResult result)
         {

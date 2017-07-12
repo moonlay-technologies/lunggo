@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 City = hotelDetail.City,
                 ZoneName = hotelDetail.ZoneCode,
                 StarRating = hotelDetail.StarCode,
-                ImageUrl = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Select(x=>x.Path).ToList() : null,
+                ImageUrl = ConvertToLargeImage(hotelDetail.ImageUrl),
                 MainImage = hotelDetail.PrimaryPhoto,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
@@ -114,7 +114,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Description = hotelDetail.Description == null ? null : hotelDetail.Description.Where(x => x.languageCode.Equals("IND"))
                                 .Select(x => x.Description).SingleOrDefault(),
             };
+
             return convertedHotel;
+        }
+
+        internal List<string> ConvertToLargeImage(List<Image> images)
+        {
+            if (images == null)
+                return null;
+            return images.Select(x => x.Path.Replace(".s.", ".l.")).ToList();
         }
 
         internal HotelDetailForDisplay ConvertToHotelDetailOnlyForDisplay(HotelDetailsBase hotelDetail)
@@ -253,12 +261,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Latitude = hotelDetail.Latitude == 0 ? null : hotelDetail.Latitude,
                     Longitude = hotelDetail.Longitude == 0 ? null : hotelDetail.Longitude
                 };
-                if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
-                {
-                    hotel.ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2
-                        ? GetZoneNameFromDict(hotelDetail.ZoneCode)
-                        : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode);
-                }
+                //if (!string.IsNullOrEmpty(hotelDetail.ZoneCode))
+                //{
+                //    hotel.ZoneName = hotelDetail.ZoneCode.Split('-').Length == 2
+                //        ? GetZoneNameFromDict(hotelDetail.ZoneCode)
+                //        : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode);
+                //}
                 convertedHotels.Add(hotel);
             };
             return convertedHotels.ToList();
@@ -736,6 +744,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var result = new HotelRateForDisplay
             {
                 Type = rate.Type,
+                Cancellation = rate.Cancellation,
                 //TypeDescription = GetHotelRoomRateTypeId(rate.Type),
                 Class = rate.Class,
                 //ClassDescription = GetHotelRoomRateClassId(rate.Class),

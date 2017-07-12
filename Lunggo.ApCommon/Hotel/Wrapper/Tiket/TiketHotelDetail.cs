@@ -21,7 +21,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             if (searchResponse == null && searchResponse.Diagnostic.Status != "200")
                 return null;
 
-
             return searchResponse;   
         }
 
