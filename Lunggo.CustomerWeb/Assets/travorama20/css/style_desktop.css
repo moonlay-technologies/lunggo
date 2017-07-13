@@ -13,6 +13,15 @@ file : /Assets/travorama20/css/travorama20.scss
 /*--------------------*/
 /*Font Family*/
 @font-face {
+  font-family: 'Myriad Bold';
+  src: url("../../fonts/MyriadPro-BoldCond.otf");
+  }
+
+@font-face {
+  font-family: 'Myriad';
+  src: url("../../fonts/MyriadPro-Regular.otf");
+  }
+@font-face {
   font-family: 'Open Sans';
   src: url("../../fonts/OpenSans-Semibold.eot");
   src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
@@ -1468,7 +1477,8 @@ including in this file :
   width: 100%;
   /*bottom:152px; position: absolute;*/ }
   .site-footer-menu ul {
-    padding-left: 16px; }
+    padding-left: 0;
+    list-style: none; }
   .site-footer-menu a {
     color: #fff; }
   .site-footer-menu .menu-left {
@@ -2257,7 +2267,7 @@ body.page-index {
     max-width: none; }
 
 .page-index .section-popular {
-  padding-top: 10px; }
+  padding-top: 10px;  margin-bottom: 50px;}
   .page-index .section-popular > .container {
     max-width: none; }
   .page-index .section-popular .popular-left {
@@ -2414,11 +2424,10 @@ body.page-index {
           margin-left: -17px; }
 
 .page-index .section-subscribe {
-  color: #18a5db;
-  background: #d4e5ef;
-  padding: 3px 0;
-  margin-top: 80px;
-  height: 120px; }
+    background: url(/Assets/images/bg-subscribe-desktop.jpg);
+    height: 250px; 
+    margin-bottom: 30px;
+}
   .page-index .section-subscribe .container {
     position: relative; }
   .page-index .section-subscribe .subscribe-bg {
@@ -2640,8 +2649,7 @@ body.page-index {
 
 .page-index .section-calendar-price > .container {
   padding: 40px 0;
-  max-width: none !important;
-  border-bottom: 1px solid #ccc; }
+  max-width: none !important; }
   .page-index .section-calendar-price > .container .price-calendar > div:first-child, .page-index .section-calendar-price > .container .popular-flight > div:first-child {
     margin-bottom: 15px; }
 
@@ -2685,7 +2693,6 @@ body.page-index {
     padding: 10px 20px; }
 
 .page-index .section-calendar-price .price-calendar {
-  min-height: 600px;
   max-height: 660px;
   margin-right: 20px; }
   .page-index .section-calendar-price .price-calendar .search-map {
@@ -9204,3 +9211,100 @@ file : /Assets/travorama20/css/_page_password.scss
 .search-map {
     width: 300px;
 }
+.info-subscribe {
+    font-family: 'Myriad Bold';
+    font-size: 36px;
+    margin-left: 125px;
+    margin-top: 48px;
+    line-height: 0.5;
+}
+.info-subscribe p {
+    text-transform: uppercase;
+}
+.info-subscribe span {
+    font-family: 'Myriad';
+    font-size: 14px;
+}
+.btn-download { margin-top: 20px;}
+.btn-1 img{
+    width: 125px;
+    margin-right: 15px;
+}
+.container-calendar {
+    margin-top: 50px;
+}
+.center-call img {
+    float: left;
+    width:50px;
+    margin-right: 10px;
+}
+.list-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+.web-banner ul li {
+    font-size: 12px;
+}
+.social-link-desktop {
+    margin-top: 16px;
+}
+.social-link-desktop a img {
+    width: 40px !important;
+    margin-right: 10px;
+}
+.footer-middle {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+.payment-banner {
+    margin-top: 15px;
+}
+.payment-banner p {
+    font-size: 14px;
+}
+.payment-banner img {
+    width: 520px;
+}
+.mail-subscribe {
+    position: relative;
+}
+.mail-subscribe img {
+    width: 275px;
+}
+.form-subscribe-desktop {
+    position: absolute;
+    top: 82px;
+    left: 40px;
+}
+.form-subscribe-desktop a:hover {
+    text-decoration: none;
+}
+.form-control-desktop-subscribe {
+    border-radius: 5px !important;
+    height: 35px !important;
+    width: 197px !important;
+    text-align: center;
+    font-size: 10px !important;
+    -webkit-box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
+    -moz-box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
+    box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
+}
+.btn-subscribe-desktop {
+    background: #ffd632;
+    border: 1px solid #ebb600;
+    width: 110px;
+    padding: 7px 0;
+    text-align: center;
+    border-radius: 5px;
+    color: #7a7a7a;
+    margin: 0 auto;
+    margin-top: -10px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+.copyright  {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 10px;
+} 
