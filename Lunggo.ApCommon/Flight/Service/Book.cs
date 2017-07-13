@@ -210,12 +210,7 @@ namespace Lunggo.ApCommon.Flight.Service
             };
 
             if (bookInfo.Test)
-            {
-                return new BookResult
-                {
-                    IsSuccess = response.IsSuccess
-                };
-            }
+                return bookResult;
 
             //Check Deposit
             bookResult.Deposit = response.Deposit.GetValueOrDefault();
