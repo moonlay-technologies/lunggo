@@ -1568,22 +1568,6 @@ including in this file :
           margin-right: 25px;
           display: inline-block; }
 
-/* site-footer */
-.site-footer {
-  background: #111;
-  color: #fff;
-  padding: 15px 0;
-  width: 100%;
-  /*position: absolute; bottom:0;*/ }
-  .site-footer .social-link {
-    padding: 15px 0; }
-    .site-footer .social-link img {
-      width: 40px; }
-    .site-footer .social-link a {
-      margin-left: 3px; }
-    .site-footer .social-link a + a {
-      margin-left: 10px; }
-
 .footer-main-container {
   bottom: 0; }
 
@@ -9290,6 +9274,7 @@ file : /Assets/travorama20/css/_page_password.scss
     box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
 }
 .btn-subscribe-desktop {
+    display: block;
     background: #ffd632;
     border: 1px solid #ebb600;
     width: 110px;

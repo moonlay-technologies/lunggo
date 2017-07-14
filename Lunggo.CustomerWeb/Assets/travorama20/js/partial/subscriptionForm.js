@@ -15,53 +15,101 @@ function validateEmail (email) {
 
 $('form.subscribe-form input[type="submit"]').click(function (evt) {
     evt.preventDefault();
-    validateForm();
-});
 
-function validateForm() {
-    $('form.subscribe-form input[type="submit"]').prop('disabled', true);
-    $('form.subscribe-form input[type="submit"]').val('LOADING');
-    SubscribeConfig.email = $('form.subscribe-form input.subscribe-email').val();
-    SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
+    //// change submit button's state
+    var originInputValue = $(this).val();
+    $(this).val('LOADING');
+    $(this).prop('disabled', true);
 
-    if ($('form.subscribe-form input.subscribe-email').val()) {
-        var emailValue = $('form.subscribe-form input.subscribe-email').val();
-        if (validateEmail(emailValue)) {
-            SubscribeConfig.email = emailValue;
-        } else {
-            SubscribeConfig.email = '';
-            alert('Alamat email tidak valid');
-        }
-    } else {
-        $('form.subscribe-form input.subscribe-email').attr('placeholder', 'Mohon masukan Alamat Email Anda');
-        $('form.subscribe-form input.subscribe-email').parent().addClass('has-error');
+    //// prepare form data
+    var data = {};
+    data.email = {
+        inputDOM : $('form.subscribe-form input.subscribe-email'),
+        required : "Mohon masukan Alamat Email Anda",
+        invalid : "Alamat email tidak valid",
+        validationRule : 'email'
     }
-
-    if ($('form.subscribe-form input.subscribe-name').val()) {
-        SubscribeConfig.name = $('form.subscribe-form input.subscribe-name').val();
-    } else {
-        $('form.subscribe-form input.subscribe-name').attr('placeholder', 'Mohon masukan Nama Anda');
-        $('form.subscribe-form input.subscribe-name').parent().addClass('has-error');
+    data.name = {
+        inputDOM : $('form.subscribe-form input.subscribe-name')
     }
-
-    if (SubscribeConfig.name && SubscribeConfig.email) {
+    
+    //// validation
+    // if (SubscribeConfig.name && SubscribeConfig.email) {
+    // if (SubscribeConfig.email) {
+    var validation = validateForm(data); //return true || error data
+    
+    if (validation === true) {
         submitForm();
+        console.log('submitForm')
     } else {
         recheckForm();
+        $(this).prop('disabled', false);
+        $(this).val(originInputValue);
+        ///TODO buat liat validationnya return object required-invalid kyk apa
+        console.log(validation);
     }
+});
+
+/*  Validate Form data
+ *  will return (boolean) true, or (Array) errors
+ */
+function validateForm(data) {
+    // if ($('form.subscribe-form input.subscribe-email').val()) {
+    //     var emailValue = $('form.subscribe-form input.subscribe-email').val();
+    //     if (validateEmail(emailValue)) {
+    //         SubscribeConfig.email = emailValue;
+    //     } else {
+    //         SubscribeConfig.email = '';
+    //         alert('Alamat email tidak valid');
+    //     }
+    // } else {
+    //     $('form.subscribe-form input.subscribe-email').attr('placeholder', 'Mohon masukan Alamat Email Anda');
+    //     $('form.subscribe-form input.subscribe-email').parent().addClass('has-error');
+    // }
+
+    var required = [], invalid = [];
+    for (var key in data){
+        var val = data[key].val || data[key].inputDOM.val(); // get input value. if not specified in data, get $(input).val()
+        if (val) {
+            switch (data[key].validationRule){
+                case "email":
+                    if (validateEmail(val)) {
+                        //TODO GANTI
+                        SubscribeConfig[key] = val;
+                    } else {
+                        //TODO GANTI
+                        SubscribeConfig[key] = '';
+                        // alert("Alamat email tidak valid");
+                        alert(data[key].invalid || "invalid " + key);
+                        invalid.push(key);
+                        // return false;
+                    }
+                    break;
+                // case "password": break;
+                default: break;
+            }
+            //TODO GANTI
+            SubscribeConfig[key] = val;
+        } else if (data[key].required) {
+            data[key].inputDOM.attr('placeholder', data[key].required || "Mohon masukan "+key+" Anda");
+            data[key].inputDOM.parent().addClass('has-error');
+            required.push(key);
+            // return false;
+        } //// else means the data is absent BUT not required (nullable); Proceed to the next data
+    }
+    return (required.length || invalid.length) ? {required,invalid} : true;
 }
 
 function recheckForm() {
     SubscribeConfig.email = '';
     SubscribeConfig.name = '';
-    $('form.subscribe-form input[type="submit"]').removeProp('disabled');
-    $('form.subscribe-form input[type="submit"]').val('DAFTAR');
 }
 
 function submitForm() {
     if (trial > 3) {
         trial = 0;
     }
+    //TODO TO BE REMOVED
     $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled', true);
     $.ajax({
         url: SubscribeConfig.Url,
