@@ -94,7 +94,7 @@ img {
 
 .page-loaded {
   display: block; }
-
+.row {margin:0}
 .no-scroll {
   overflow: hidden; }
 
@@ -6055,7 +6055,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-family: 'Myriad';
     }
     .title-download-apps h3 {
-        font-size: 26px;
+        font-size: 25px;
         text-transform: uppercase;
     }
     .title-download-apps span {
@@ -6070,7 +6070,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .contact-mobile {
         background: #303030;
         padding: 20px 0;
-        padding-bottom: 70px;
+        height: 180px;
     }
     .list-sosmed ul {
         padding: 0;
@@ -6087,26 +6087,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .no-contact {
         color: #fff;
-        margin-top: 15px;
+        margin-top: 22px;
     }
     .logo-cs {
         text-align: right;
     }
     .logo-cs img {
-        width: 42%;
+        width: 70px;
     }
     .info-customer {
-       line-height: 1.5;
+       line-height: 1.2;
+       padding-left: 0px;
     }
     .info-customer h3 {
         margin: 0;
         margin-top: 7px;
         margin-bottom: 3px;
         font-weight: 700;
-        font-size: 18px;
+        font-size: 15px;
     }
     .info-customer span {
-        font-size: 12px;
+        font-size: 10px;
     }
     .sticky-banner {
         position: fixed;
@@ -6115,6 +6116,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .sticky-banner img {
         width: 100%;
+        opacity: 1;
     }
     .slider-mobile {
         padding-bottom: 0px;
@@ -6189,8 +6191,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background: #ffd632;
         border: 1px solid #ebb600;
         border-radius: 5px;
-        width: 120px;
-        height: 100px;
         padding: 0;
     }
     .image-hotel img {
@@ -6200,7 +6200,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding-left: 20px;
     }
     .nama-hotel {
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
     }
     .rating-stars {
@@ -6211,16 +6211,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         height: 1px;
         display: block;
         background: #cccccc;
-        margin: 10px 0;
+        margin: 5px 0;
     }
     .harga-room {
-        font-size: 18px;
+        font-size: 15px;
         color: #2face6;
         font-weight: bold;
     }
     .harga-room span {
         color: #000;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: 400;
     }
     .btn-pesan {
@@ -6228,13 +6228,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-top: 10px;
         font-family: 'Raleway';
     }
-    .btn-pesan a { color: #000; font-weight: 700; font-size: 11px;}
+    .btn-pesan a { color: #000; font-weight: 700; font-size: 10px;}
     .order-now {
         background: #ffd632;
-        width: 130px;
-        padding: 10px; 0;
+        width: 90px;
+        padding: 5px;
         border: 1px solid #ebb600;
-        border-radius: 5px;
+        border-radius: 3px;
     }
     .syarat-ketentuan {
         margin-top: 30px;
@@ -6299,6 +6299,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         position: absolute;
         width: 133px;
         left: 2px;
-        top: -35px;
+        top: -34px;
     }
     .no-padding { padding: 0;}
+    .copyright-mobile {
+        text-align: center;
+        background: #303030;
+        padding: 0 20px;
+        color:#fff;
+        font-size: 10px;
+        padding-bottom: 10px;
+    }

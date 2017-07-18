@@ -16,7 +16,19 @@ namespace Lunggo.CustomerWeb
             filters.Add(new LanguageFilterAttribute());
             //filters.Add(new DeviceDetectionFilterAttribute());
             AddBasicAuthenticationFilterAttribute(filters);
-                GlobalFilters.Filters.Add(new RequireHttpsProductionAttribute());
+            GlobalFilters.Filters.Add(new RequireHttpsProductionAttribute());
+            GlobalFilters.Filters.Add(new PlatformFilter());
+        }
+
+        public class PlatformFilter : ActionFilterAttribute
+        {
+            public override void OnResultExecuting(ResultExecutingContext filterContext)
+            {
+                var data = filterContext.HttpContext.Request.Headers["X-Platform"];
+                filterContext.Controller.ViewBag.Platform = data;
+                filterContext.Controller.ViewBag.ClientId = data;
+                filterContext.Controller.ViewBag.ClientSecret = data;
+            }
         }
 
         private static HandleErrorAttribute CreateGlobalErrorHandler()

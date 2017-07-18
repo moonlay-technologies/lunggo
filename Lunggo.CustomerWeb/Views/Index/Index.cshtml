@@ -334,96 +334,11 @@
             </div>
         </div><!-- .slider -->
     }
-
 </section><!-- .section-search -->
-<section class="section-calendar-price">
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-8">
-                <div class="price-calendar">
-                    <div class="md-txt os-bold">Tiket Pesawat Termurah Setiap Hari</div>
-                    <div class="search-map">
-                        <div class="row normal-txt semibold-txt">
-                            <div class="col-xs-7">
-                                <div class="col-xs-6" id="searchFrom">Dari</div>
-                                <div class="col-xs-6" id="searchTo">Ke</div>
-                            </div>
-                            <div class="col-xs-5">
-                                <div class="col-xs-12">Bulan</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="search-input col-xs-7">
-                                <div class="col-xs-6 map-input">
-                                    <input type="text" name="searchFrom">
-                                </div>
-                                <div class="col-xs-6 map-input">
-                                    <input type="text" name="searchTo">
-                                </div>
-                            </div>
-                            <div class="col-xs-5">
-                                <div class="col-xs-8">
-                                    <select id="month-year-select" class="hidden">
-                                        <option value="" id="smonth0"></option>
-                                        <option value="" id="smonth1"></option>
-                                        <option value="" id="smonth2"></option>
-                                        <option value="" id="smonth3"></option>
-                                        <option value="" id="smonth4"></option>
-                                        <option value="" id="smonth5"></option>
-                                        <option value="" id="smonth6"></option>
-                                        <option value="" id="smonth7"></option>
-                                        <option value="" id="smonth8"></option>
-                                        <option value="" id="smonth9"></option>
-                                        <option value="" id="smonth10"></option>
-                                        <option value="" id="smonth11"></option>
-                                        <option value="" id="smonth12"></option>
-                                    </select>
-                                    <div class="dropdown form-control clearfix select-my">
-                                        <div class="selected-my"></div>
-                                        <div class=" option" id="month-year">
-                                            <div id="month0"></div>
-                                            <div id="month1"></div>
-                                            <div id="month2"></div>
-                                            <div id="month3"></div>
-                                            <div id="month4"></div>
-                                            <div id="month5"></div>
-                                            <div id="month6"></div>
-                                            <div id="month7"></div>
-                                            <div id="month8"></div>
-                                            <div id="month9"></div>
-                                            <div id="month10"></div>
-                                            <div id="month11"></div>
-                                            <div id="month12"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-4">
-                                    <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="location-choice">
-                            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
-                        </div>
-                    </div>
-                    <div id="pc-datepicker"></div>
-                </div>
-            </div>
-            <div class="col-xs-4">
-                @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
-            </div>
-        </div>
-    </div>
-</section>
-<section class="section-popular">
-    <div class="container">
-        @Html.Partial("/Views/Shared/Desktop/_PopularHotel.cshtml")
-    </div>
-</section>
 <section class="section-why">
     <div class="container text-center">
-        <div class="xlg-txt"><span class="os-regular">Mengapa memilih</span> <span class="os-bold blue-txt">Travorama?</span></div>
+        <div class="section-titles stripe xlg-txt">Mengapa memilih <span class="os-bold blue-txt">Travorama?</span></div>
         <div class="row">
             <div class="col-xs-4">
                 <div class="sw-img sw-disc"></div>
@@ -459,51 +374,120 @@
             </div>
         </div>
     </div>
+</section><!-- .section-why -->
+
+<section class="section-why">
+    <div class="container text-center">
+        <div class="section-titles stripe xlg-txt">Partner <span class="os-bold blue-txt">Maskapai</span></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div><img src="assets/images/partner-desktop.png"</div>
+                <div><img src="assets/images/partner-desktop1.png"></div>
+            </div>
+        </div>
+    </div>
 </section>
-<section class="section-subscribe">
+
+<section class="section-calendar-price">
     <div class="container">
-
-        <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
-
-        <div class="row subscribe-after">
-            <div class="col-xs-10 col-xs-offset-2">
-                <div>
-                    <h2><b>Terima Kasih Telah Mendaftar di Newsletter Kami</b></h2>
+        <div class="section-titles stripe xlg-txt text-center ">Cari Tanggal <span class="os-bold blue-txt">Termurah</span></div>
+        <div class="row container-calendar">
+            <div class="col-xs-5">
+                <div class="price-calendar">
+                    <div class="search-map">
+                        <div class="row normal-txt semibold-txt">
+                            <div class="col-xs-12 container-form-location">
+                                <div class="col-xs-12 label-form-location" id="searchFrom">Dari</div>
+                                <div class="col-xs-12">
+                                    <input class="map-input" type="text" name="searchFrom">
+                                </div>
+                            </div>
+                            <div class="col-xs-12 container-form-location">
+                                <div class="col-xs-12 label-form-location" id="searchTo">Ke</div>
+                                <div class="col-xs-12">
+                                    <input class="map-input" type="text" name="searchTo">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 label-form-location">Bulan</div>
+                                <div class="col-xs-12">
+                                    <select id="month-year-select" class="hidden">
+                                        <option value="" id="smonth0"></option>
+                                        <option value="" id="smonth1"></option>
+                                        <option value="" id="smonth2"></option>
+                                        <option value="" id="smonth3"></option>
+                                        <option value="" id="smonth4"></option>
+                                        <option value="" id="smonth5"></option>
+                                        <option value="" id="smonth6"></option>
+                                        <option value="" id="smonth7"></option>
+                                        <option value="" id="smonth8"></option>
+                                        <option value="" id="smonth9"></option>
+                                        <option value="" id="smonth10"></option>
+                                        <option value="" id="smonth11"></option>
+                                        <option value="" id="smonth12"></option>
+                                    </select>
+                                    <div class="dropdown form-control clearfix select-my">
+                                        <div class="selected-my"></div>
+                                        <div class=" option" id="month-year">
+                                            <div id="month0"></div>
+                                            <div id="month1"></div>
+                                            <div id="month2"></div>
+                                            <div id="month3"></div>
+                                            <div id="month4"></div>
+                                            <div id="month5"></div>
+                                            <div id="month6"></div>
+                                            <div id="month7"></div>
+                                            <div id="month8"></div>
+                                            <div id="month9"></div>
+                                            <div id="month10"></div>
+                                            <div id="month11"></div>
+                                            <div id="month12"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 ">
+                                    <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="location-choice">
+                            @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
+                        </div>
+                    </div>
+                    <!--<div id="pc-datepicker"></div> -->
                 </div>
             </div>
-        </div>
-
-        <div class="row subscribe-before">
             <div class="col-xs-7">
-                <h2>Jadilah yang pertama tahu mengenai tujuan perjalanan serta promo penerbangan terkini!</h2>
+                <div id="pc-datepicker"></div>
             </div>
-            <div class="col-xs-5">
-                <form class="form subscribe-form">
-                    <div class="form-group">
-                        <input type="text" name="address" value="" class="subscribe-email form-control" placeholder="Alamat E-mail Anda" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="name" value="" class="subscribe-name form-control" placeholder="Nama Anda" />
-                        <input type="submit" class="btn btn-yellow sm-btn" value="MEMBERSHIP" />
-                    </div>
-                </form>
-            </div>
-        </div>
 
+        </div>
+    </div>
+</section>
+
+<section class="section-subscribe">
+    <div class="container">
+        <div class="info-subscribe">
+            <p>Booking Tiket Mudah & Cepat</p>
+            <span>Rasakan kemudahan booking tiket di HP Anda<br />dengan download GRATIS Travorama Mobile App</span>
+            <div class="btn-download">
+                <div class="btn-1">
+                    <a href="https://play.google.com/store/apps/details?id=com.travorama&amp;hl=en"><img src="Assets/images/googlePlay.png" /></a>
+                    <a href="https://appsto.re/id/N8Dgeb.i"><img src="Assets/images/appStore.png" /></a>
+                </div>
+            </div>
+        </div>  
     </div>
 </section><!-- .section-subscribe -->
 
-<section class="section-payment">
-    <div class="container text-center">
-
-        <h2 class="section-title stripe text-center xlg-txt">MENERIMA <span>PEMBAYARAN</span> MELALUI</h2>
-
-        <p class="text-center">
-            <img src="/Assets/images/payment-method.jpg" alt="Visa and Master Card, ATM Bersama, CIMB Clicks" />
-        </p>
-
+<section class="section-popular">
+    <div class="container">
+        @Html.Partial("/Views/Shared/Desktop/_PopularHotel.cshtml")
     </div>
-</section><!-- .section-payment -->
+</section>
+
+
+
 @*// location
     ViewBag.LocationData = new Dictionary<string, string>
     ();

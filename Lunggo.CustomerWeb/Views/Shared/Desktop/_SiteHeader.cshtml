@@ -1,110 +1,100 @@
 ﻿@using Lunggo.ApCommon.Identity.Users
 
 <section ng-controller="siteHeaderController">
+    <header class="site-header">
+        <div class="container">
+            <div class="row" style="display: flex">
+                <div class="col-xs-3">
+                    <a href="/" class="site-logo" style="height: 100%"><img src="/Assets/images/travorama20/travorama-logo.png" alt="TRAVORAMA" /></a>
+                </div>
     @if (ViewBag.SiteHeader == "checkout")
     {
-        <header class="site-header">
-
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-xs-3">
-                        <a href="/" class="site-logo"><img src="/Assets/images/travorama20/travorama-logo.png" alt="TRAVORAMA" /></a>
-                    </div>
-                    <div class="col-xs-7 col-xs-offset-2">
-
-                        <div class="header-ssl">
-                            <div class="image-wrapper">
-                                <img src="/Assets/images/ssl-image.png" alt="SSL Secured" />
-                            </div>
-                            <p>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</p>
+                <div class="col-xs-7 col-xs-offset-2">
+                    <div class="header-ssl">
+                        <div class="image-wrapper">
+                            <img src="/Assets/images/ssl-image.png" alt="SSL Secured" />
                         </div>
-
+                        <p>Travorama selalu mementingkan keamanan transaksi Anda. Semua transaksi melalui Travorama.com dijamin 100% aman.</p>
                     </div>
                 </div>
-
-            </div>
-
-        </header>
     <!-- .site-header -->
     }
     else
     {
-        <header class="site-header">
+                <div class="col-xs-9">
+                    <div class="menu-top">
+                        <nav> 
+                            <ul>
+                                
+                                <li class="check-order"><a href="/id/howtoorder">Bantuan</a></li>
+                                <li class="check-order"><a href="/id/Home/CekPemesanan">Cek Pemesanan</a></li>
 
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-xs-3">
-                        <a href="/" class="site-logo"><img src="/Assets/images/travorama20/travorama-logo.png" alt="TRAVORAMA" /></a>
+                                @*<li class="currency-select hidden"><a href="#">IDR <span class="caret"></span></a></li>
+                                <li class="language-select dropdown-wrapper hidden">
+                                    <a href="#" data-trigger="dropdown"><img src="/Assets/images/flag-indonesia.png" alt="Indonesia" /> <span class="caret"></span></a>
+                                    <div class="dropdown-content flag-select">
+                                        <ul>
+                                            <li><a href="@Html.IdLangSwitcherUrl()"><img src="/Assets/images/flag-indonesia.png" alt="Bahasa" /></a></li>
+                                            <li><a href="@Html.EnLangSwitcherUrl()"><img src="/Assets/images/flag-britain.png" alt="English" /></a></li>
+                                        </ul>
+                                    </div>
+                                </li>*@
+                            </ul>
+                        </nav>
+                        <nav class="top-contact">
+                            <ul>
+                                <div class="img-contact"><img src="/Assets/images/cs-desktop.png" alt="Bahasa" /></div>
+                                <div class="no-contact">Call Center <br /><span>0855-7467-9737</span></div>
+                            </ul>
+                        </nav>
                     </div>
-                    <div class="col-xs-9">
-                        <div class="menu-top">
+                    <div class="menu-bottom page-loading" ng-class="{'page-loaded' : pageLoaded}">
+                        <div class="menu-side">
                             <nav>
                                 <ul>
-                                    <li class="check-order"><a href="/id/Home/CekPemesanan">Cek Pemesanan</a></li>
-                                    @*<li class="currency-select hidden"><a href="#">IDR <span class="caret"></span></a></li>
-                                    <li class="language-select dropdown-wrapper hidden">
-                                        <a href="#" data-trigger="dropdown"><img src="/Assets/images/flag-indonesia.png" alt="Indonesia" /> <span class="caret"></span></a>
-                                        <div class="dropdown-content flag-select">
-                                            <ul>
-                                                <li><a href="@Html.IdLangSwitcherUrl()"><img src="/Assets/images/flag-indonesia.png" alt="Bahasa" /></a></li>
-                                                <li><a href="@Html.EnLangSwitcherUrl()"><img src="/Assets/images/flag-britain.png" alt="English" /></a></li>
+                                    <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
+                                    <li class="dropdown-wrapper">
+                                        <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length > 0"> {{name}} <span class="caret"></span></a>
+                                        <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length == 0"> {{email}} <span class="caret"></span></a>
+                                        <div ng-if="!isLogin">
+                                            <ul >
+                                                <li>
+                                                    <a href="@("/id/Account/Login?returnUrl" + Context.Request.Url.PathAndQuery)">
+                                                        Masuk
+                                                    </a>
+                                                </li>
+                                                <li><a href="/id/Account/Register">Daftar</a></li>
                                             </ul>
                                         </div>
-                                    </li>*@
+                                        <div class="dropdown-content my-account" ng-if="isLogin">
+                                            <ul>
+                                                <li><a href="/id/Account/OrderHistory/#profile">Profil Saya</a></li>
+                                                <li><a href="/id/Account/OrderHistory/#order">Pesanan Saya</a></li>
+                                                <li><a href="" ng-click="logout.getLogout()">Keluar</a></li>
+                                            </ul>
+
+                                        </div>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
-                        <div class="menu-bottom page-loading" ng-class="{'page-loaded' : pageLoaded}">
-                            <div class="menu-side">
-                                <nav>
-                                    <ul>
-                                        <li class="hidden"><a href="#">Scratchpad <span class="caret"></span></a></li>
-                                        <li class="dropdown-wrapper">
-                                            <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length > 0"> {{name}} <span class="caret"></span></a>
-                                            <a href="#" data-trigger="dropdown" ng-show="isLogin && name.length == 0"> {{email}} <span class="caret"></span></a>
-                                            <div ng-if="!isLogin">
-                                                <ul >
-                                                    <li>
-                                                        <a href="@("/id/Account/Login?returnUrl" + Context.Request.Url.PathAndQuery)">
-                                                            Masuk
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="/id/Account/Register">Daftar</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="dropdown-content my-account" ng-if="isLogin">
-                                                <ul>
-                                                    <li><a href="/id/Account/OrderHistory/#profile">Profil Saya</a></li>
-                                                    <li><a href="/id/Account/OrderHistory/#order">Pesanan Saya</a></li>
-                                                    <li><a href="" ng-click="logout.getLogout()">Keluar</a></li>
-                                                </ul>
-
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                            <div class="menu-main pull-left">
-                                <nav>
-                                    <ul>
-                                        <li id="header-flight"><a href="/tiket-pesawat">PESAWAT</a></li>
-                                        <li id="header-hotel"><a href="/hotel">HOTEL</a></li>
-                                        @*<li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
-                        <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
-                        <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@
-                                    </ul>
-                                </nav>
-                            </div>
+                        <div class="menu-main pull-left">
+                            <nav>
+                                <ul>
+                                    <li id="header-flight"><a href="/tiket-pesawat">PESAWAT</a></li>
+                                    <li id="header-hotel"><a href="/hotel">HOTEL</a></li>
+                                    @*<li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">HOTEL</a></li>
+                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">TOUR &amp; ACTIVITY</a></li>
+                    <li class="hidden"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Coming soon!">PROMOTION</a></li>*@
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
 
-            </div>
-
-        </header>
     <!-- .site-header -->
     }
-
+            </div>
+        </div>
+    </header>
 </section>

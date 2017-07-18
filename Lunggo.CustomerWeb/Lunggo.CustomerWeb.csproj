@@ -561,6 +561,7 @@
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
     <Content Include="Assets\images\asita-logo.png" />
+    <Content Include="Assets\images\asita.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
@@ -581,6 +582,7 @@
     <Content Include="Assets\images\benefit\news.png" />
     <Content Include="Assets\images\benefit\refund.png" />
     <Content Include="Assets\images\bersama-prima-alto.jpg" />
+    <Content Include="Assets\images\bg-subscribe-desktop.jpg" />
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
@@ -660,6 +662,7 @@
     <Content Include="Assets\images\cimb-clicks.jpg" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
+    <Content Include="Assets\images\cs-desktop.png" />
     <Content Include="Assets\images\cs-icon.png" />
     <Content Include="Assets\images\default-banner-2.jpg" />
     <Content Include="Assets\images\default-banner.jpg" />
@@ -747,6 +750,7 @@
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
+    <Content Include="Assets\images\harga.jpg" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
     <Content Include="Assets\images\header-bg.jpg" />
@@ -797,6 +801,7 @@
     <Content Include="Assets\images\howtopay-2.jpg" />
     <Content Include="Assets\images\howtopay-3.jpg" />
     <Content Include="Assets\images\howtopay-header.jpg" />
+    <Content Include="Assets\images\iata.png" />
     <Content Include="Assets\images\idr-sprite.png" />
     <Content Include="Assets\images\index\popular-flight-bali.jpg" />
     <Content Include="Assets\images\index\popular-flight-jakarta.jpg" />
@@ -810,6 +815,8 @@
     <Content Include="Assets\images\index\popular-hotel-yogyakarta.jpg" />
     <Content Include="Assets\images\infant-icon.png" />
     <Content Include="Assets\images\instagram-icon.png" />
+    <Content Include="Assets\images\jaminan.jpg" />
+    <Content Include="Assets\images\kai.png" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
     <Content Include="Assets\images\load.gif" />
@@ -843,6 +850,8 @@
     <Content Include="Assets\images\order-flight-list-bg.png" />
     <Content Include="Assets\images\order-hotel-list-bg.png" />
     <Content Include="Assets\images\paperplane-icon.png" />
+    <Content Include="Assets\images\partner-desktop.png" />
+    <Content Include="Assets\images\partner-desktop1.png" />
     <Content Include="Assets\images\payment-atm.jpg" />
     <Content Include="Assets\images\payment-cc.jpg" />
     <Content Include="Assets\images\payment-credit.png" />
@@ -852,6 +861,7 @@
     <Content Include="Assets\images\payment-token.png" />
     <Content Include="Assets\images\payment-transfer.png" />
     <Content Include="Assets\images\payment-veritrans.png" />
+    <Content Include="Assets\images\payment.jpg" />
     <Content Include="Assets\images\penerbangan-pergi.jpg" />
     <Content Include="Assets\images\penerbangan-pulang.jpg" />
     <Content Include="Assets\images\peringatan.png" />
@@ -859,6 +869,7 @@
     <Content Include="Assets\images\permatabank.jpg" />
     <Content Include="Assets\images\phone-icon.png" />
     <Content Include="Assets\images\phone.png" />
+    <Content Include="Assets\images\pilihan.jpg" />
     <Content Include="Assets\images\pinpoint.png" />
     <Content Include="Assets\images\pinterest-icon.png" />
     <Content Include="Assets\images\plane-down.png" />
@@ -908,6 +919,7 @@
     <Content Include="Assets\images\reason-4-icon.png" />
     <Content Include="Assets\images\recommend-selector.png" />
     <Content Include="Assets\images\register-bg.jpg" />
+    <Content Include="Assets\images\rute.jpg" />
     <Content Include="Assets\images\sad-image.png" />
     <Content Include="Assets\images\sand-clock.png" />
     <Content Include="Assets\images\sandclock-yellow.png" />
@@ -936,12 +948,14 @@
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
+    <Content Include="Assets\images\subscribe-desktop.png" />
     <Content Include="Assets\images\swim.png" />
     <Content Include="Assets\images\switch-destination.png" />
     <Content Include="Assets\images\tag-green.png" />
     <Content Include="Assets\images\tag-orange.png" />
     <Content Include="Assets\images\tag-purple.png" />
     <Content Include="Assets\images\tag-red.png" />
+    <Content Include="Assets\images\tanpa.jpg" />
     <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
     <Content Include="Assets\images\travelmadezy-logo.jpg" />
@@ -949,6 +963,7 @@
     <Content Include="Assets\images\travorama-logo.png" />
     <Content Include="Assets\images\travorama-og.jpg" />
     <Content Include="Assets\images\travorama20\travorama-logo.png" />
+    <Content Include="Assets\images\tripadvisor.png" />
     <Content Include="Assets\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Assets\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Assets\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -975,6 +990,7 @@
     <Content Include="Assets\images\voucher\hotel.jpg" />
     <Content Include="Assets\images\voucher\phone-white.png" />
     <Content Include="Assets\images\voucher\travorama-white.png" />
+    <Content Include="Assets\images\waktu.jpg" />
     <Content Include="Assets\images\warning-image.png" />
     <Content Include="Assets\images\white-bg.png" />
     <Content Include="Assets\images\why-active.png" />

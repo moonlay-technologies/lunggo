@@ -54,16 +54,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 minPrice = listofPrices.Where(f => f > 0).Min();
                 var index = listofPrices.IndexOf(minPrice);
                 minDate = listofDates.ElementAt(index);
+                for (var ind = 0; ind < listofDates.Count; ind++)
+                {
+                    pairs.Add(listofDates.ElementAt(ind), listofPrices.ElementAt(ind));
+                }
             }
             else
             {
                 minPrice = -1;
                 minDate = "";
-            }
-            
-            for (var ind = 0; ind < listofDates.Count; ind++)
-            {
-                pairs.Add(listofDates.ElementAt(ind), listofPrices.ElementAt(ind));
             }
 
             return new LowestPrice
