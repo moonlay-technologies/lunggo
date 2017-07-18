@@ -263,8 +263,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Api\Views\web.config" />
-    <Content Include="Assets\bootstrap\bootstrap.css" />
-    <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\global-error.css" />
     <Content Include="Assets\css\global-error.min.css" />
@@ -1004,11 +1002,6 @@
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
     <Content Include="Assets\images\youtube-icon.png" />
-    <Content Include="Assets\js\angular-animate.min.js" />
-    <Content Include="Assets\js\angular-route.min.js" />
-    <Content Include="Assets\js\angular.min.js" />
-    <Content Include="Assets\js\bootstrap.js" />
-    <Content Include="Assets\js\bootstrap.min.js" />
     <Content Include="Assets\js\CryptoJS\components\aes-min.js" />
     <Content Include="Assets\js\CryptoJS\components\aes.js" />
     <Content Include="Assets\js\CryptoJS\components\cipher-core-min.js" />
@@ -1097,10 +1090,8 @@
     <Content Include="Assets\js\CryptoJS\rollups\sha384.js" />
     <Content Include="Assets\js\CryptoJS\rollups\sha512.js" />
     <Content Include="Assets\js\CryptoJS\rollups\tripledes.js" />
-    <Content Include="Assets\js\jquery-ui.min.js" />
     <Content Include="Assets\js\jquery.cookie.min.js" />
     <Content Include="Assets\js\jquery.countdown.min.js" />
-    <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\jquery.ui.datepicker-id.js" />
     <Content Include="Assets\js\jquery.ui.touch-punch.min.js" />
     <Content Include="Assets\js\js.cookie.js" />
@@ -1379,8 +1370,6 @@
     </Content>
     <Content Include="App_Code\ToTitleCase.cshtml" />
     <Content Include="App_Code\MsToTime.cshtml" />
-    <Content Include="Assets\bootstrap\bootstrap.css.map" />
-    <Content Include="Assets\bootstrap\bootstrap.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_background-variant.scss" />
     <Content Include="Assets\bootstrap\bootstrap\mixins\_border-radius.scss" />

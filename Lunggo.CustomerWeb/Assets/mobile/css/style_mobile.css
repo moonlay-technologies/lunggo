@@ -6117,6 +6117,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         position: fixed;
         bottom: 0;
         display: none; /*initially hidden*/
+        z-index: 1000;
     }
     .sticky-banner img {
         width: 100%;
