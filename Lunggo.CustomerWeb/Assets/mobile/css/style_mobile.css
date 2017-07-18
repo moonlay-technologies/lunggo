@@ -6070,7 +6070,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .contact-mobile {
         background: #303030;
         padding: 20px 0;
-        height: 180px;
+        /*height: 180px;*/
     }
     .list-sosmed ul {
         padding: 0;
@@ -6088,6 +6088,10 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .no-contact {
         color: #fff;
         margin-top: 22px;
+    }
+    .no-contact a{
+        color: #fff;
+        margin: 0px;
     }
     .logo-cs {
         text-align: right;

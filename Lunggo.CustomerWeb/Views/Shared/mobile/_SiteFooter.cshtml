@@ -1,31 +1,6 @@
 ﻿<footer class="site-footer">
-    
-    <div class="main-tab clearfix">
-        <div class="row konten-download-apps">
-            <div class="title-download-apps"><h3 class=" bold-txt-new">Booking Tiket Mudah & Cepat</h3> <span>Rasakan kemudahan booking tiket di HP Anda</span><br /><span>dengan mendownload GRATIS Travorama Mobile App</span></div>
-            <div class="col-xs-6 align-right"><a href="https://play.google.com/store/apps/details?id=com.travorama&amp;hl=en"><img src="/Assets/mobile/images/play-store.png" alt="Partner" /></a></div>
-            <div class="col-xs-6 align-left"><a href="https://appsto.re/id/N8Dgeb.i"><img src="/Assets/mobile/images/app-store.png" alt="Partner" /></a></div>
-        </div>
-    </div>
-    <div class="main-tab clearfix">
-        <div class="row contact-mobile">
-            <div class="list-sosmed">
-                <ul>
-                    <li><a href="https://www.facebook.com/travorama" target="_blank"><img src="/Assets/mobile/images/fb-mobile.png" alt="Facebook" /></a></li>
-                    <li><a href="https://twitter.com/travoramaid" target="_blank"><img src="/Assets/mobile/images/twitter-mobile.png" alt="Twitter" /></a></li>
-                    <li><a href="https://www.instagram.com/travorama/" target="_blank"><img src="/Assets/mobile/images/instagram-mobile.png" alt="Instagram" /></a></li>
-                </ul>
-            </div>
-            <div class="no-contact clearfix">
-                <div class="col-xs-5 logo-cs"><img src="/Assets/mobile/images/logo-cs.png" alt="Partner" /></div>
-                <div class="col-xs-7 info-customer">Customer Service <br /> <h3>0855 - 7467 - 9737</h3><span>Cs@travorama.com</span><br /><span>Senin - Jumat: 09.00-18.00</span></div>
-            </div>
-        </div>
-        <div class="copyright-mobile">
-            Copyright © 2017 Travel Madezy Internasional. All Rights Reserved
-        </div>
-    </div><!-- .site-footer-social -->
-    
+
+@if (ViewBag.Platform != "ios" && ViewBag.Platform != "android"){
     <!-- sticky banner -->
     <div class="sticky-banner">
         <div style="position: relative;">
@@ -36,4 +11,39 @@
         </div>
     </div>
 
+    <!-- footer -->
+    <div class="main-tab clearfix">
+        <div class="row konten-download-apps">
+            <div class="title-download-apps"><h3 class=" bold-txt-new">Booking Tiket Mudah & Cepat</h3> <span>Rasakan kemudahan booking tiket di HP Anda</span><br /><span>dengan mendownload GRATIS Travorama Mobile App</span></div>
+            <div class="col-xs-6 align-right"><a href="https://play.google.com/store/apps/details?id=com.travorama&amp;hl=en"><img src="/Assets/mobile/images/play-store.png" alt="Partner" /></a></div>
+            <div class="col-xs-6 align-left"><a href="https://appsto.re/id/N8Dgeb.i"><img src="/Assets/mobile/images/app-store.png" alt="Partner" /></a></div>
+        </div>
+    </div>
+}
+
+    <div class="main-tab clearfix">
+        <div class="row contact-mobile">
+
+        @if (ViewBag.Platform != "ios" && ViewBag.Platform != "android"){
+            <div class="list-sosmed">
+                <ul>
+                    <li><a href="https://www.facebook.com/travorama" target="_blank"><img src="/Assets/mobile/images/fb-mobile.png" alt="Facebook" /></a></li>
+                    <li><a href="https://twitter.com/travoramaid" target="_blank"><img src="/Assets/mobile/images/twitter-mobile.png" alt="Twitter" /></a></li>
+                    <li><a href="https://www.instagram.com/travorama/" target="_blank"><img src="/Assets/mobile/images/instagram-mobile.png" alt="Instagram" /></a></li>
+                </ul>
+            </div>
+        }
+
+            <div class="no-contact clearfix">
+                <div class="col-xs-5 logo-cs"><img src="/Assets/mobile/images/logo-cs.png" alt="Customer Service" /></div>
+                <div class="col-xs-7 info-customer">Customer Service <br />
+                <a href="tel:+6285574679737"><h3>0855 - 7467 - 9737</h3></a>
+                <span>Senin - Jumat: 09.00-18.00</span></div>
+                <h5><span><a href="mailto:cs@travorama.com">cs@travorama.com</a></span></h5>
+            </div>
+        </div>
+        <div class="copyright-mobile">
+            Copyright © 2017 Travel Madezy Internasional. All Rights Reserved
+        </div>
+    </div><!-- .site-footer-social -->
 </footer><!-- .site-footer -->

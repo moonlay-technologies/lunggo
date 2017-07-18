@@ -873,7 +873,7 @@ if (typeof (angular) == 'object') {
                         }
                     }
                 }
-            }).error(function (returnData) {});
+            }).fail(function (returnData) {});
         }
         
         function  highlight(date) {
