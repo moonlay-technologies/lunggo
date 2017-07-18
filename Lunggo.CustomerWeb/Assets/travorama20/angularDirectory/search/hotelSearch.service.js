@@ -394,6 +394,7 @@
         });
 
         //autocomplete mobile
+        // scope.$watch('hotelSearch.locationDisplay', function (newValue) {
         scope.getLocation = function (newValue) {
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
@@ -432,7 +433,7 @@
             }
             
         };
-
+        
         scope.hotelSearch.autocompleteResource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
             { prefix: '@prefix' },
             {

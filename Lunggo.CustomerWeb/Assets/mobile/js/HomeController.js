@@ -93,8 +93,6 @@
                 });
             }
         }
-
-
     });
     // ================= FLIGHT ========================
 
@@ -191,7 +189,7 @@
             PopularDestinations: hotelSearchSvc.PopularDestinations
         },
     }
-
+    
     $('.form-hotel-location').click(function () {
         $(this).select();
     });

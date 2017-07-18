@@ -54,30 +54,19 @@
                 siblings.find("div img, div span").show(accordionAnimationDuration);
 
                 $('html, body').animate({
+                    //// banyaknya pixel yang di scroll (ditutupin)
                     scrollTop: $("#accordion").offset().top - $("header").height()
+                    // scrollTop: $(this).offset().top - $("header").height() - 8
                 }, 500);
             }
 
             headerIcon.toggle(accordionAnimationDuration);
             $(this).find("div span").toggle(accordionAnimationDuration);
         });
-
-        //// dismiss sticky banner
-        $(".sticky-banner").click( function() {
-            $(".sticky-banner").slideUp();
-        });
-
-        $(document).ready( function() {
-            // $(".sticky-banner").hide(); //will be handled by CSS
-            //// show sticky banner after 2000ms
-            setTimeout( function(){
-                $(".sticky-banner").slideDown();
-            }, 2000);
-        });
     </script>
 }
 
-<div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" ng-init="getCookies()">
+<div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" >
     <div class="carousel-inner" role="listbox">
         @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
         {
@@ -108,7 +97,7 @@
                     <div class="col-xs-4"><img src="/Assets/mobile/images/btn-flight.png" alt="Flight" /></div>
                     <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Pesawat</h3><span>Lorem ipsum dolor sit amet</span></div>
                 </div>
-                <div class="form-wrapper">
+                <div class="accordion-content form-wrapper">
                     <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
                         <div class="top-form row">
                             <div class="col-xs-5">
