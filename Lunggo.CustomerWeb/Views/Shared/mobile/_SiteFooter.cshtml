@@ -1,6 +1,8 @@
-﻿<footer class="site-footer">
+﻿@using Lunggo.ApCommon.Product.Constant
 
-@if (ViewBag.Platform != "ios" && ViewBag.Platform != "android"){
+<footer class="site-footer">
+
+@if (ViewBag.Platform != PlatformType.IosApp && ViewBag.Platform != PlatformType.AndroidApp){
     <!-- sticky banner -->
     <div class="sticky-banner">
         <div style="position: relative;">
@@ -24,7 +26,7 @@
     <div class="main-tab clearfix">
         <div class="row contact-mobile">
 
-        @if (ViewBag.Platform != "ios" && ViewBag.Platform != "android"){
+        @if (ViewBag.Platform != PlatformType.IosApp && ViewBag.Platform != PlatformType.AndroidApp){
             <div class="list-sosmed">
                 <ul>
                     <li><a href="https://www.facebook.com/travorama" target="_blank"><img src="/Assets/mobile/images/fb-mobile.png" alt="Facebook" /></a></li>

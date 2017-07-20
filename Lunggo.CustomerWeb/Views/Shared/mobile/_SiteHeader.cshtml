@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.Users
+@using Lunggo.ApCommon.Product.Constant
 
 @section PageJS{
     <!-- angular controller -->
@@ -17,7 +18,7 @@
             TODO : benerin cara nampilin icon, jgn kyk gini!
         
         *@
-        @if (ViewBag.Platform == "ios"){
+        @if (ViewBag.Platform == PlatformType.IosApp){
         <a ng-click="window.history.back()" class="site-menu" style="background: url(/Assets/mobile/images/back-button.png) no-repeat;"></a>
         } else {
         <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
