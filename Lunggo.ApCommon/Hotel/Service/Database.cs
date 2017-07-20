@@ -265,7 +265,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelCountry = reservation.HotelDetails.CountryCode,
                     HotelDestination = reservation.HotelDetails.DestinationCode,
                     HotelZone =  reservation.HotelDetails.ZoneCode,
-                    HotelArea = reservation.HotelDetails.AreaCode
+                    HotelArea = reservation.HotelDetails.AreaCode,
+                    ClientReference = reservation.HotelDetails.ClientReference ?? null
                  };
 
                 HotelReservationDetailsTableRepo.GetInstance().Insert(conn, hotelRsvDetailsRecord);

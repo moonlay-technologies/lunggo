@@ -51,6 +51,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> { "SearchID no longer valid" }
                 };
 
+            Guid generatedSearchId = Guid.NewGuid();
+            var hotelDetailId = generatedSearchId.ToString();
+
             var hotelDetail = new HotelDetailsBase
             {
                 SearchId = input.SearchId,
@@ -70,14 +73,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Type = x.PhotoType
                 }).ToList(),
                 PrimaryPhoto = resultDetail.PrimaryPhotos,
+                HotelUri = hotel.HotelUri,
                 CheckInDate = hotelSearchResult.CheckIn,
                 CheckOutDate = hotelSearchResult.CheckOut,
+                NightCount = Convert.ToInt32((hotelSearchResult.CheckOut - hotelSearchResult.CheckIn).TotalDays),
                 CountryCode = resultDetail.Breadcrumb == null ? null : resultDetail.Breadcrumb.CountryName,
                 Facilities = resultDetail.AvailFacilities == null ? null : resultDetail.AvailFacilities.AvailFacility.Select(x=> new HotelFacility
                 {
                     FullFacilityCode = x.FacilityType,
                     FacilityName = x.FacilityName
                 }).ToList(),
+                TiketToken = resultDetail.Token
             };
             hotelDetail.Description = new List<HotelDescriptions>();
             hotelDetail.Description.Add(new HotelDescriptions
@@ -85,10 +91,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Description = resultDetail.General == null ? null : resultDetail.General.Description,
                 languageCode = "IND"
             });
+
+
+            SaveAvailableRateToCache(hotelDetailId, hotelDetail);
             
             return new GetHotelDetailOutput
             {
                 IsSuccess = true,
+                HotelDetailId = hotelDetailId,
                 HotelDetail = ConvertToTiketHotelDetailOnlyForDisplay(hotelDetail)
             };
         }

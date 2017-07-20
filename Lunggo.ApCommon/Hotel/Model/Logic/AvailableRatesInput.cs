@@ -10,6 +10,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
     {
         public int HotelCode { get; set; }
         public string SearchId { get; set; }
+        public string HotelDetailId { get; set; }
         public int Nights { get; set; }
         public DateTime CheckIn { get; set; }
         public DateTime Checkout { get; set; }

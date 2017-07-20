@@ -12,6 +12,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
         public bool IsPriceChanged { get; set; }
         public decimal? NewPrice { get; set; }
         public string RsvNo { get; set; }
+        public string OrderId { get; set; }
         public DateTime TimeLimit { get; set; }
     }
 }

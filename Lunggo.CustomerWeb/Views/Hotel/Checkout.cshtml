@@ -14,7 +14,8 @@
 
 @{
     //var rooms = new List<HotelRoomForDisplay>();
-    Model.HotelDetail.MainImage = "https://photos.hotelbeds.com/giata/" + Model.HotelDetail.MainImage;
+    Model.HotelDetail.MainImage = "" + Model.HotelDetail.MainImage;
+
     var night = (Model.HotelDetail.CheckOutDate - Model.HotelDetail.CheckInDate).Days;
     var sumAdult = 0;
     var sumChild = 0;

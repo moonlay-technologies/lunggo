@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         public HotelRoom GetRoom(GetRoomDetailInput roomDetailInput)
         {
             var searchResultData = GetAvailableRatesFromCache(roomDetailInput.SearchId);
-            var room = searchResultData.SingleOrDefault(p => p.RoomCode == roomDetailInput.RoomCode);
+            var room = searchResultData.Rooms.SingleOrDefault(p => p.RoomCode == roomDetailInput.RoomCode);
             return room ?? new HotelRoom();
         }
     }

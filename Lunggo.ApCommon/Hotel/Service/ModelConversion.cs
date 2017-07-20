@@ -46,18 +46,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = hotelDetail.HotelName,
                 Address = hotelDetail.Address,
                 City = hotelDetail.City,
-                ZoneName = string.IsNullOrEmpty(hotelDetail.ZoneCode)
-                        ? ""
-                        : hotelDetail.ZoneCode.Split('-').Length == 2 ?
-                    GetZoneNameFromDict(hotelDetail.ZoneCode) : GetZoneNameFromDict(hotelDetail.DestinationCode + "-" + hotelDetail.ZoneCode),
-                StarRating = Convert.ToInt32((hotelDetail.StarCode)),
+                ZoneName = hotelDetail.ZoneCode,
+                StarRating = hotelDetail.StarCode,
                 //ChainName = GetHotelChainDesc(hotelDetail.Chain),
-                AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
-                ImageUrl = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x => x.Type == "HAB").ToList().Select(y => y.Path).ToList() : null,
-                MainImage = hotelDetail.ImageUrl != null ? hotelDetail.ImageUrl.Where(x => x.Type == "GEN").Select(x => x.Path).FirstOrDefault() : null,
+                //AccomodationName = GetHotelAccomodationDescId(hotelDetail.AccomodationType),
+                ImageUrl = ConvertToLargeImage(hotelDetail.ImageUrl),
+                MainImage = hotelDetail.PrimaryPhoto,
                 IsRestaurantAvailable = hotelDetail.IsRestaurantAvailable,
                 IsWifiAccessAvailable = hotelDetail.WifiAccess,
-                Rooms = ConvertToHotelRoomsForDisplay(hotelDetail.Rooms),
+                Rooms = ConvertToTiketHotelRoomsForDisplay(hotelDetail.Rooms),
                 CheckInDate = hotelDetail.CheckInDate,
                 CheckOutDate = hotelDetail.CheckOutDate,
                 NightCount = hotelDetail.NightCount,
@@ -67,16 +64,24 @@ namespace Lunggo.ApCommon.Hotel.Service
                 BookingReference = hotelDetail.BookingReference,
                 ClientReference = hotelDetail.ClientReference,
                 PhonesNumbers = hotelDetail.PhonesNumbers,
-                CountryName = GetCountryNameFromDict(hotelDetail.CountryCode).Name,
-                DestinationName = GetDestinationNameFromDict(hotelDetail.DestinationCode).Name,
-                PostalCode = hotelDetail.PostalCode == "0" ? null : hotelDetail.PostalCode
+                CountryName = hotelDetail.CountryCode,
+                DestinationName = hotelDetail.DestinationCode,
+                PostalCode = hotelDetail.PostalCode
             };
-            convertedHotel.OriginalTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.OriginalTotalFare);
-            convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.NetTotalFare);
-            convertedHotel.OriginalCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalFare);
-            convertedHotel.NetCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetFare);
-            convertedHotel.OriginalCheapestTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalTotalFare);
-            convertedHotel.NetCheapestTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetTotalFare);
+
+            convertedHotel.OriginalTotalFare = convertedHotel.Rooms[0].Rates[0].Breakdowns[0].OriginalTotalFare;
+            convertedHotel.NetTotalFare = convertedHotel.Rooms[0].Rates[0].Breakdowns[0].NetTotalFare;
+            convertedHotel.OriginalCheapestFare = convertedHotel.Rooms[0].Rates[0].Breakdowns[0].OriginalFare;
+            convertedHotel.NetCheapestFare = convertedHotel.Rooms[0].Rates[0].Breakdowns[0].NetFare;
+            convertedHotel.OriginalCheapestTotalFare = convertedHotel.Rooms[0].Rates[0].Breakdowns[0].OriginalTotalFare;
+            convertedHotel.NetCheapestTotalFare = convertedHotel.Rooms[0].Rates[0].Breakdowns[0].NetTotalFare;
+
+            //convertedHotel.OriginalTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.OriginalTotalFare);
+            //convertedHotel.NetTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).SelectMany(r => r.Breakdowns).Sum(b => b.NetTotalFare);
+            //convertedHotel.OriginalCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalFare);
+            //convertedHotel.NetCheapestFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetFare);
+            //convertedHotel.OriginalCheapestTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].OriginalTotalFare);
+            //convertedHotel.NetCheapestTotalFare = convertedHotel.Rooms.SelectMany(r => r.Rates).Min(r => r.Breakdowns[0].NetTotalFare);
             return convertedHotel;
         }
 
@@ -597,7 +602,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Images = room.Images,
                     Facilities = room.Facilities,
                     SingleRate = ConvertTiketoSingleRateForDisplay(room.SingleRate),
-                    //Rates = ConvertToRatesForDisplay(room.Rates)
+                    Rates = ConvertToTiketRatesForDisplay(room.Rates)
                 }).ToList();
         }
 
@@ -671,6 +676,53 @@ namespace Lunggo.ApCommon.Hotel.Service
             var bundledRates = BundleRatesForDisplay(convertedRates);
 
             return bundledRates;
+        }
+
+        internal List<HotelRateForDisplay> ConvertToTiketRatesForDisplay(List<HotelRate> rates)
+        {
+            if (rates == null)
+                return new List<HotelRateForDisplay>();
+            var convertedRates = new List<HotelRateForDisplay>();
+            foreach (var rateDetail in rates)
+            {
+                var rate = new HotelRateForDisplay
+                {
+                    Type = rateDetail.Type,
+                    TypeDescription = rateDetail.Type,
+                    Class = rateDetail.Class,
+                    ClassDescription = rateDetail.Class,
+                    RegsId = rateDetail.RegsId,
+                    Breakdowns = new List<RateBreakdown>
+                    {
+                        new RateBreakdown
+                        {
+                            RateCount = rateDetail.RateCount,
+                            AdultCount = rateDetail.AdultCount,
+                            ChildCount = rateDetail.ChildCount,
+                            ChildrenAges = rateDetail.ChildrenAges,
+                            Board = rateDetail.Board,
+                            BoardDescription = rateDetail.Board,
+                        }
+                    },
+                    Cancellation = rateDetail.Cancellation,
+                    Allotment = rateDetail.Allotment,
+                    TimeLimit = rateDetail.TimeLimit,
+                    Offers = rateDetail.Offers,
+                    TermAndCondition = rateDetail.TermAndCondition
+                };
+                if (rateDetail.Price != null)
+                {
+                    //SetCancellationTime(rate, rateDetail);
+                    SetDisplayPriceTiketHotelRate(rate,rateDetail);
+                    //SetDisplayPriceHotelRate(rate, rateDetail);
+                }
+                convertedRates.Add(rate);
+            }
+            return convertedRates;
+
+            //var bundledRates = BundleRatesForDisplay(convertedRates);
+
+            //return bundledRates;
         }
 
         private List<HotelRateForDisplay> BundleRatesForDisplay(List<HotelRateForDisplay> rates)
@@ -838,19 +890,23 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void SetDisplayPriceHotelRate(HotelRateForDisplay rateDisplay, HotelRate rate)
         {
             rateDisplay.Breakdowns[0].NetTotalFare = rate.Price.Local;
+            rate.Price.OriginalIdr = rate.Price.Local;
+            rate.Price.FinalIdr = rate.Price.Local;
             rateDisplay.Breakdowns[0].OriginalTotalFare = rate.GetApparentOriginalPrice();
+            if (rate.RateCount == 0)
+                rate.RateCount = 1;
             rateDisplay.Breakdowns[0].NetFare = Math.Round((rateDisplay.Breakdowns[0].NetTotalFare / rate.RateCount) / rate.NightCount);
             rateDisplay.Breakdowns[0].OriginalFare = Math.Round((rateDisplay.Breakdowns[0].OriginalTotalFare / rate.RateCount) / rate.NightCount);
 
-            if (rateDisplay.Cancellation != null)
-            {
-                var margin = rate.Price.MarginNominal / rate.Price.Supplier;
-                foreach (var data in rateDisplay.Cancellation)
-                {
-                    data.Fee = Math.Round(data.Fee * (1 + margin));
-                    data.SingleFee = Math.Round((data.Fee / rate.RateCount / rate.NightCount));
-                }
-            }
+            //if (rateDisplay.Cancellation != null)
+            //{
+            //    var margin = rate.Price.MarginNominal / rate.Price.Supplier;
+            //    foreach (var data in rateDisplay.Cancellation)
+            //    {
+            //        data.Fee = Math.Round(data.Fee * (1 + margin));
+            //        data.SingleFee = Math.Round((data.Fee / rate.RateCount / rate.NightCount));
+            //    }
+            //}
         }
 
         public void SetDisplayPriceTiketHotelRate(HotelRateForDisplay rateDisplay, HotelRate rate)

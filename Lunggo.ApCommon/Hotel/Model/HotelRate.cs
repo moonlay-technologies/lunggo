@@ -88,6 +88,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal HotelSellingRate{ get; set; }
         public int Allotment { get; set; }
         public string RateCommentsId { get; set; }
+        public string BookingUri { get; set; }
         public List<string> TermAndCondition { get; set; }
 
         internal override decimal GetApparentOriginalPrice()
@@ -108,6 +109,7 @@ namespace Lunggo.ApCommon.Hotel.Model
                 var roundedOriginal = Math.Round(originalLocal / Price.LocalCurrency.RoundingOrder) * Price.LocalCurrency.RoundingOrder;
                 var adjuster = Price.LocalCurrency.RoundingOrder*RateCount*NightCount;
                 var adjustedOriginal = Math.Ceiling(roundedOriginal/adjuster)*adjuster;
+                var test = adjustedOriginal;
                 return adjustedOriginal;
             }
             

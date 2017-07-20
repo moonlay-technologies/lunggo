@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         public double Distance { get; set; }
         [JsonProperty("skey", NullValueHandling = NullValueHandling.Ignore)]
         public double Skey { get; set; }
-        [JsonProperty("countryid", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("country_id", NullValueHandling = NullValueHandling.Ignore)]
         public string CountryId { get; set; }
         [JsonProperty("label", NullValueHandling = NullValueHandling.Ignore)]
         public string Label { get; set; }

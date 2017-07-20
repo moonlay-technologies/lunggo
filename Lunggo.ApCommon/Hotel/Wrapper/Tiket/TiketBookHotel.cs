@@ -35,15 +35,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                 return new RevalidateHotelResult
                 {
                     IsValid = false,
-                    IsPriceChanged = false,
-
+                    IsPriceChanged = false
                 };
 
             bookResult = new RevalidateHotelResult
             {
-                IsValid = false,
+                IsValid = true,
                 IsPriceChanged = false,
-                RateKey = orderResult.MyOrder.OrderId
+                OrderId = orderResult.MyOrder.OrderId
             };
 
 
@@ -54,7 +53,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                 {
                     IsValid = false,
                     IsPriceChanged = false,
-
                 };
 
             //Step 4 : Checkout Page Customer
@@ -70,11 +68,11 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             return bookResult;
         }
 
-        public RevalidateHotelResult AddOrder(HotelBookInfo input)
+        public TiketHotelBaseResponse AddOrder(HotelBookInfo input)
         {
             var tiketClient = new TiketClientHandler();
             var client = tiketClient.CreateTiketClient();
-            var url = "https://api-sandbox.tiket.com/order/add/hotel";
+            var url = "/order/add/hotel";
             var request = new RestRequest(url, Method.GET);
             request.AddQueryParameter("startdate", input.CheckIn.ToString("yyyy-MM-dd"));
             request.AddQueryParameter("enddate", input.Checkout.ToString("yyyy-MM-dd"));
@@ -82,7 +80,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             request.AddQueryParameter("room", input.Rooms.ToString());
             request.AddQueryParameter("adult", input.AdultCount.ToString());
             request.AddQueryParameter("child", input.ChildCount.ToString());
-            request.AddQueryParameter("hotelname", input.HotelName);
+            //request.AddQueryParameter("hotelname", input.HotelName);
             request.AddQueryParameter("room_id", input.RoomId);
             request.AddQueryParameter("token", input.Token);
             request.AddQueryParameter("output", "json");
@@ -90,7 +88,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             var addOderResponse = JsonExtension.Deserialize<TiketHotelBaseResponse>(response.Content);
             if (addOderResponse == null && addOderResponse.Diagnostic.Status != "200")
                 return null;
-            return new RevalidateHotelResult();
+            return addOderResponse;
         }
 
         public TiketHotelOrderResponse Order(string token)
@@ -103,7 +101,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             var orderResponse = JsonExtension.Deserialize<TiketHotelOrderResponse>(response.Content);
             if (orderResponse == null && orderResponse.Diagnostic.Status != "200")
                 return null;
-            return new TiketHotelOrderResponse();
+            return orderResponse;
         }
 
         public TiketHotelBaseResponse CheckOutPage(string orderId, string token)

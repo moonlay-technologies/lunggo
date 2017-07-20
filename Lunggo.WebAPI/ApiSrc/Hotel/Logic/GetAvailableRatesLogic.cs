@@ -51,7 +51,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 CheckIn = request.CheckIn,
                 Checkout = request.Checkout,
                 Occupancies = request.Occupancies,
-                SearchId = request.SearchId
+                SearchId = request.SearchId,
+                HotelDetailId = request.HotelDetailId
             };
             availableRatesRequest.Occupancies.ForEach(o => o.ChildrenAges = o.ChildrenAges.Take(o.ChildCount).ToList());
             return availableRatesRequest;

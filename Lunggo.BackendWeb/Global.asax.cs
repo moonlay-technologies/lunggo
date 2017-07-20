@@ -42,34 +42,29 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
-
-            var tiketClient = new TiketClientHandler();
-            var token = tiketClient.GetToken();
-            var searchClient = new TiketSearchHotel();
-            var request = new SearchHotelCondition
+            var token = "";
+            var bookInfo = HotelService.GetInstance().GetSelectedHotelDetailsFromCache(token);
+            if (bookInfo == null || bookInfo.Rooms == null || bookInfo.Rooms.Count == 0)
             {
-                AdultCount = 1,
-                Destination = "Jakarta",
-                CheckIn = new DateTime(2017, 7, 7),
-                Checkout = new DateTime(2017, 7, 8),
-                Nights = 1,
-                ChildCount = 0,
-                SearchId = "TEST!@#$%^&*(",
-                Occupancies = new List<Occupancy>
-                {
-                    new Occupancy
-                    {
-                        AdultCount = 1,
-                        ChildCount = 0,
-                        RoomCount = 1,
-                    }
-                },
-                Rooms = 1,
+                Console.WriteLine("NULL");
+            }
+
+            var request = new HotelBookInfo
+            {
+                CheckIn = bookInfo.CheckInDate,
+                Checkout = bookInfo.CheckOutDate,
+                AdultCount = bookInfo.Rooms[0].Rates[0].AdultCount,
+                ChildCount = bookInfo.Rooms[0].Rates[0].ChildCount,
+                Nights = bookInfo.NightCount,
+                HotelName = bookInfo.HotelName,
+                Rooms = bookInfo.Rooms.Count,
+                RoomId = bookInfo.Rooms[0].RoomCode,
+                Token = bookInfo.TiketToken
             };
-            var searchResult = searchClient.SearchHotel(request);
-            var detailClient = new TiketHotelDetail();
-            var resultDetail = detailClient.GetHotelDetail(searchResult.HotelDetails[1].HotelUri);
-            var temp = resultDetail;
+
+            var client = new TiketBookHotel();
+            var response = client.BookHotel(request);
+            var temp = response;
             Console.WriteLine("OKE");
             //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");
             //Console.WriteLine("Done");

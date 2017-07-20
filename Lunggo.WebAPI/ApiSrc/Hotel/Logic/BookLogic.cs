@@ -24,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     ErrorCode = "ERHBOO01"
                 };
             var bookServiceRequest = PreprocessServiceRequest(request);
-            var bookServiceResponse = HotelService.GetInstance().BookHotel(bookServiceRequest);
+            var bookServiceResponse = HotelService.GetInstance().TiketBookHotel(bookServiceRequest);
             var apiResponse = AssembleApiResponse(bookServiceResponse);
                  
             if (apiResponse.TimeLimit <= DateTime.UtcNow)

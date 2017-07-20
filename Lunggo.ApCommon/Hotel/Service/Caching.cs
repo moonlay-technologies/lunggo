@@ -65,13 +65,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             return currencies;
         }
 
-        public void SaveAvailableRateToCache(string token, List<HotelRoom> rooms)
+        public void SaveAvailableRateToCache(string token, HotelDetailsBase hotel)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "HotelAvailableRates:" + token;
             var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout")); //TODO Change this
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var redisValue = rooms.ToCacheObject();
+            var redisValue = hotel.ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try
@@ -107,7 +107,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             return DateTime.UtcNow;
         }
 
-        public List<HotelRoom> GetAvailableRatesFromCache(string token)
+        public HotelDetailsBase GetAvailableRatesFromCache(string token)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "HotelAvailableRates:" + token;
@@ -118,15 +118,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                 try
                 {
                     cacheObject = redisDb.StringGet(redisKey);
-                    var availableRates = cacheObject.DeconvertTo<List<HotelRoom>>();
-                    return availableRates;
+                    var hotel = cacheObject.DeconvertTo<HotelDetailsBase>();
+                    return hotel;
                 }
                 catch
                 {
 
                 }
             }
-            return new List<HotelRoom>();
+            return new HotelDetailsBase();
 
         }
         public void SaveSelectedHotelDetailsToCache(string token, HotelDetailsBase hotel)

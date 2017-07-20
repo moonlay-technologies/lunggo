@@ -19,18 +19,19 @@ namespace Lunggo.ApCommon.Hotel.Service
         public AvailableRatesOutput GetAvailableRates(AvailableRatesInput input)
         {
             //var occupancies = PreProcessOccupancies(input.Occupancies);
-            var hotelSearchResult = GetSearchHotelResultFromCache(input.SearchId);
+            //var hotelSearchResult = GetSearchHotelResultFromCache(input.SearchId);
             //SetHotelFullFacilityCode(hotelDetail);
-            if (hotelSearchResult == null)
-                return new AvailableRatesOutput
-                {
-                    IsSuccess = false,
-                    Errors = new List<HotelError> { HotelError.TechnicalError },
-                    ErrorMessages = new List<string> { "Search Id is not vaild" }
-                };
+            //if (hotelSearchResult == null)
+            //    return new AvailableRatesOutput
+            //    {
+            //        IsSuccess = false,
+            //        Errors = new List<HotelError> { HotelError.TechnicalError },
+            //        ErrorMessages = new List<string> { "Search Id is not vaild" }
+            //    };
 
             //Find Hotel Uri based on HotelCode
-            var hotel = hotelSearchResult.HotelDetails.SingleOrDefault(x => x.HotelCode == input.HotelCode);
+            //var hotel = hotelSearchResult.HotelDetails.SingleOrDefault(x => x.HotelCode == input.HotelCode);
+            var hotel = GetAvailableRatesFromCache(input.HotelDetailId);
             if (hotel == null)
                 return new AvailableRatesOutput
                 {
@@ -39,10 +40,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> { "Hotel Code is not valid" }
                 };
 
-            Guid generatedSearchId = Guid.NewGuid();
+            //Guid generatedSearchId = Guid.NewGuid();
             //var hotelBedsClient = new HotelBedsSearchHotel();
             var allCurrency = Currency.GetAllCurrencies();
-            SaveAllCurrencyToCache(generatedSearchId.ToString(), allCurrency);
+            SaveAllCurrencyToCache(input.HotelDetailId, allCurrency);
             //var request = new SearchHotelCondition();
             if (input.HotelCode != 0)
             {
@@ -57,14 +58,15 @@ namespace Lunggo.ApCommon.Hotel.Service
                     };
 
                 var rooms = ProcessRoomFromTiketHotelDetail(resultDetail, input);
-                SaveAvailableRateToCache(generatedSearchId.ToString(), rooms);
+                hotel.Rooms = rooms;
+                SaveAvailableRateToCache(input.HotelDetailId, hotel);
                 return new AvailableRatesOutput
                 {
-                    Id = generatedSearchId.ToString(),
+                    Id = input.HotelDetailId,
                     IsSuccess = true,
-                    Total = rooms.Count,
-                    Rooms = ConvertToTiketHotelRoomsForDisplay(rooms),
-                    ExpiryTime = GetAvailableRatesExpiry(generatedSearchId.ToString())
+                    Total = rooms == null ? 0 : rooms.Count,
+                    Rooms = rooms == null ? null : ConvertToTiketHotelRoomsForDisplay(rooms),
+                    ExpiryTime = GetAvailableRatesExpiry(input.HotelDetailId)
                 };
                 //request.Occupancies = occupancies;
                 //request.HotelCode = input.HotelCode;
@@ -118,33 +120,24 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Images = room.PhotoRooms,
                     RoomName = room.room_name,
                     RoomAvailable = room.RoomAvailable,
-
+                    
                     RoomDescription = room.RoomDescription,
                     SingleRate = new HotelRate
                     {
                         RateKey = room.Id,
                         NightCount = input.Nights,
                         RateCount = 1,
+                        BookingUri = room.BookUri,
                         Price = new Price
                         {
                             Supplier = room.Price,
                             Local = room.Price
                         },
+                        PaymentType = PaymentTypeEnum.AT_WEB,
                         Cancellation = ProcessCancellation(room.RefundPolicy)
                     }
                 };
-                //singleRoom.Facilities = new List<HotelRoomFacilities>();
-                //foreach (var item in room.RoomFacility)
-                //{
-                //    var singleFacility = new HotelRoomFacilities
-                //    {
-                        
-                //    };
-                //}
-                //singleRoom.SingleRate.Cancellation.Add(new Cancellation
-                //{
-                //    Description = room.RefundPolicy
-                //});
+
                 roomList.Add(singleRoom);
             }
 

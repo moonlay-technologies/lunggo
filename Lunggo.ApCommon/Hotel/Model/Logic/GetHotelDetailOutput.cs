@@ -8,6 +8,7 @@ namespace Lunggo.ApCommon.Hotel.Model.Logic
 {
     public class GetHotelDetailOutput : ResultBase
     {
+        public string HotelDetailId { get; set; }
         public HotelDetailForDisplay HotelDetail { get; set; }
     }
 }

@@ -39,29 +39,44 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                 result.CountLocation = result.CountLocation.Replace("Hotel", "").Trim();
                 var numHotel = int.Parse(result.CountLocation);
                 var searchType = "";
-                result.Category = result.Category.ToLower();
-                
-                if (result.Category.Contains("kota"))
+                var _area = "";
+                var _destination = "";
+                var _zone = "";
+
+                result.Tipe = result.Tipe.ToLower();
+
+                if (result.Tipe.Contains("city_id"))
                 {
                     searchType = "Zone";
+                    _zone = result.Value;
                 }
-                else if (result.Category.Contains("area"))
+                else if (result.Tipe.Contains("area_id"))
                 {
                     searchType = "Area";
+                    var temp = result.LabelLocation.Split(',');
+                    if (temp.Length > 1)
+                    {
+                        _destination = temp[1].Trim();
+                    }
+                    _area = result.Value;
                 }
-                else if (result.Category.Contains("hotel"))
+                else if (result.Tipe.Contains("business_id"))
                 {
                     searchType = "Hotel";
                 }
                 else
                 {
                     searchType = "Destination";
+                    _destination = result.Value;
                 }
                 var singleLocation = new HotelAutocompleteApi
                 {
                     Id = result.Value,//result.Id,
                     Name = result.LabelLocation,
-                    Country = result.CountryId,
+                    Country = string.IsNullOrEmpty(result.CountryId) ? null : HotelService.GetInstance().GetHotelCountryName(result.CountryId.ToUpper()),
+                    Destination = string.IsNullOrEmpty(_destination) ? null : _destination,
+                    Zone = string.IsNullOrEmpty(_zone) ? null : _zone,
+                    Area = string.IsNullOrEmpty(_area) ? null : _area,
                     Type = searchType,
                     NumOfHotels = numHotel,
                     Value = result.Value

@@ -209,12 +209,12 @@ namespace Lunggo.CustomerWeb.Controllers
             var hotelName = hotelParamSplit.First();
             var searchId = hotelParamSplit.Last();
             var hotelCd = Convert.ToInt32(hotelParamSplit[1]);
-            var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
+            var result = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput
             {
                 HotelCode = hotelCd,
                 HotelName = hotelName,
                 SearchId = searchId
-            }).HotelDetail;
+            });
 
             //var client = new RestClient(source);
             //string url = @"/v1/autocomplete/hotel//" + hotelDetail.DestinationName;
@@ -231,26 +231,20 @@ namespace Lunggo.CustomerWeb.Controllers
             if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
             {
                 var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
-                var temp = new HotelDetailModel.HotelDetail
-                {
-                    HotelCode = hotelCd,
-                    SearchId = searchId,
-                    SearchParam = searchParam,
-                    HotelDetailData = hotelDetail
-                };
     
                 return View(new HotelDetailModel.HotelDetail
                 {
                     HotelCode = hotelCd,
                     SearchId = searchId,
                     SearchParam = searchParam,
-                    HotelDetailData = hotelDetail
+                    HotelDetailId = result.HotelDetailId,
+                    HotelDetailData = result.HotelDetail
                 });
             }
 
             var nextMonthDate = DateTime.Today.AddMonths(1);
             var nextDate = nextMonthDate.AddDays(1);
-            var searchParams = "Location." + hotelDetail.DestinationName + "." + nextMonthDate.Year + "-" + nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2") +
+            var searchParams = "Location." + result.HotelDetail.DestinationName + "." + nextMonthDate.Year + "-" + nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2") +
                                "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
 
             return View(new HotelDetailModel.HotelDetail
@@ -258,7 +252,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 HotelCode = hotelCd,
                 SearchId = searchId,
                 SearchParam = searchParams,
-                HotelDetailData = hotelDetail
+                HotelDetailData = result.HotelDetail
             });
         }
 

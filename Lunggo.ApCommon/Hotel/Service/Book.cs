@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
+using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
@@ -23,6 +24,51 @@ namespace Lunggo.ApCommon.Hotel.Service
 {
     public partial class HotelService
     {
+
+        public BookHotelOutput TiketBookHotel(BookHotelInput input)
+        {
+            var bookInfo = GetSelectedHotelDetailsFromCache(input.Token);
+            if (bookInfo == null || bookInfo.Rooms == null || bookInfo.Rooms.Count == 0)
+            {
+                return new BookHotelOutput
+                {
+                    IsValid = false
+                };
+            }
+
+            var request = new HotelBookInfo
+            {
+                CheckIn = bookInfo.CheckInDate,
+                Checkout = bookInfo.CheckOutDate,
+                AdultCount = bookInfo.Rooms[0].Rates[0].AdultCount,
+                ChildCount = bookInfo.Rooms[0].Rates[0].ChildCount,
+                Nights = bookInfo.NightCount,
+                HotelName = bookInfo.HotelName,
+                Rooms = bookInfo.Rooms.Count,
+                RoomId = bookInfo.Rooms[0].RoomCode,
+                Token = bookInfo.TiketToken
+            };
+
+            var client = new TiketBookHotel();
+            var response = client.BookHotel(request);
+            if(!response.IsValid)
+                return new BookHotelOutput
+                {
+                    IsPriceChanged = false,
+                    IsValid = false
+                };
+            var rsvDetail = CreateHotelReservation(input, bookInfo, response);
+            InsertHotelRsvToDb(rsvDetail);
+            ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
+            return new BookHotelOutput
+            {
+                IsPriceChanged = false,
+                IsValid = true,
+                RsvNo = rsvDetail.RsvNo,
+                TimeLimit = rsvDetail.Payment.TimeLimit
+            };
+
+        }
         public BookHotelOutput BookHotel(BookHotelInput input)
         {
             var bookInfo = GetSelectedHotelDetailsFromCache(input.Token);
@@ -81,6 +127,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = false
                 };
             }
+
 
             if (searchResult.HotelDetails.Any(hotel => hotel.Rooms == null || hotel.Rooms.Count == 0))
             {
@@ -185,7 +232,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsValid = true,
                     NewPrice = bookInfo.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Local))
                 };
-            var rsvDetail = CreateHotelReservation(input, bookInfo);
+            var rsvDetail = CreateHotelReservation(input, bookInfo, new RevalidateHotelResult());
             InsertHotelRsvToDb(rsvDetail);
             ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookHotelOutput
@@ -208,22 +255,22 @@ namespace Lunggo.ApCommon.Hotel.Service
             return hb.CheckRateHotel(revalidateInfo);
         }
 
-        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo)
+        private HotelReservation CreateHotelReservation(BookHotelInput input, HotelDetailsBase bookInfo, RevalidateHotelResult result)
         {
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Hotel);
 
-            var ciDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
-            var coDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
-            var checkindate = new DateTime(Convert.ToInt32(ciDate.Substring(0, 4)),
-                Convert.ToInt32(ciDate.Substring(4, 2)), Convert.ToInt32(ciDate.Substring(6, 2)));
-            var checkoutdate = new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
-                Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
+            //var ciDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[0];
+            //var coDate = bookInfo.Rooms[0].Rates[0].RateKey.Split('|')[1];
+            //var checkindate = new DateTime(Convert.ToInt32(ciDate.Substring(0, 4)),
+            //    Convert.ToInt32(ciDate.Substring(4, 2)), Convert.ToInt32(ciDate.Substring(6, 2)));
+            //var checkoutdate = new DateTime(Convert.ToInt32(coDate.Substring(0, 4)),
+            //    Convert.ToInt32(coDate.Substring(4, 2)), Convert.ToInt32(coDate.Substring(6, 2)));
 
             var hotelInfo = new HotelDetail
             {
                 AccomodationType = bookInfo.AccomodationType,
-                CheckInDate = checkindate,
-                CheckOutDate = checkoutdate,
+                CheckInDate = bookInfo.CheckInDate,
+                CheckOutDate = bookInfo.CheckOutDate,
                 City = bookInfo.City,
                 CountryCode = bookInfo.CountryCode,
                 DestinationCode = bookInfo.DestinationCode,
@@ -243,7 +290,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 PhonesNumbers = bookInfo.PhonesNumbers,
                 StarRating = bookInfo.StarRating,
                 AreaCode = bookInfo.AreaCode,
-                ZoneCode = bookInfo.ZoneCode
+                ZoneCode = bookInfo.ZoneCode,
+                ClientReference = result.OrderId
             };
 
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();

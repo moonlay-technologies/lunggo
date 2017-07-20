@@ -20,9 +20,13 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("order_id", NullValueHandling = NullValueHandling.Ignore)]
         public string OrderId { get; set; }
         [JsonProperty("data", NullValueHandling = NullValueHandling.Ignore)]
-        public string Data { get; set; }
+        public List<Data> Data { get; set; }
         [JsonProperty("total", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Total { get; set; }
+        [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Discount { get; set; }
+        [JsonProperty("discount_amount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal DiscountAmount { get; set; }
         [JsonProperty("total_tax", NullValueHandling = NullValueHandling.Ignore)]
         public decimal TotalTax { get; set; }
         [JsonProperty("total_without_tax", NullValueHandling = NullValueHandling.Ignore)]
@@ -33,10 +37,16 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
 
     public class Data
     {
+        [JsonProperty("business_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string BusinessId { get; set; }
         [JsonProperty("expire", NullValueHandling = NullValueHandling.Ignore)]
         public int Expire { get; set; }
         [JsonProperty("order_detail_id", NullValueHandling = NullValueHandling.Ignore)]
         public string OrderDetailId { get; set; }
+        [JsonProperty("order_detail_status", NullValueHandling = NullValueHandling.Ignore)]
+        public string OrderDetailStatus { get; set; }
+        [JsonProperty("order_expire_datetime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime OrderExpireDatetime{ get; set; }
         [JsonProperty("order_type", NullValueHandling = NullValueHandling.Ignore)]
         public string OrderType { get; set; }
         [JsonProperty("order_name", NullValueHandling = NullValueHandling.Ignore)]
@@ -54,7 +64,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("item_charge", NullValueHandling = NullValueHandling.Ignore)]
         public decimal ItemCharge { get; set; }
         [JsonProperty("subtotal_and_charge", NullValueHandling = NullValueHandling.Ignore)]
-        public int SubtotalCharge { get; set; }
+        public decimal SubtotalCharge { get; set; }
         [JsonProperty("delete_uri", NullValueHandling = NullValueHandling.Ignore)]
         public string DeleteUri { get; set; }
     }
@@ -66,18 +76,20 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("room_id", NullValueHandling = NullValueHandling.Ignore)]
         public string RoomId { get; set; }
         [JsonProperty("rooms", NullValueHandling = NullValueHandling.Ignore)]
-        public string Rooms { get; set; }
+        public int Rooms { get; set; }
         [JsonProperty("adult", NullValueHandling = NullValueHandling.Ignore)]
-        public string Adult { get; set; }
+        public int Adult { get; set; }
         [JsonProperty("child", NullValueHandling = NullValueHandling.Ignore)]
-        public string Child { get; set; }
+        public int Child { get; set; }
         [JsonProperty("startdate", NullValueHandling = NullValueHandling.Ignore)]
         public string StartDate { get; set; }
         [JsonProperty("enddate", NullValueHandling = NullValueHandling.Ignore)]
         public string EndDate { get; set; }
         [JsonProperty("nights", NullValueHandling = NullValueHandling.Ignore)]
-        public string Nights { get; set; }
+        public int Nights { get; set; }
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Price { get; set; }
+        [JsonProperty("price_per_night", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal PricePerNight { get; set; }
     }
 }

@@ -5,6 +5,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
     $scope.hotel = {};
     $scope.searchId = '';
     $scope.searchParam = '';
+    $scope.hotelDetailId = '';
     $scope.hotel.location = '';
     $scope.hotel.checkinDate = "";
     $scope.hotel.checkoutDate = "";
@@ -64,6 +65,7 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
         $log.debug(model);
        
         $scope.searchId = model.searchId;
+        $scope.hotelDetailId = model.hotelDetailId;
         $scope.searchParam = model.searchParam;
         var mydata = $scope.searchParam.split('.');
         var cekin = mydata[2];
@@ -524,7 +526,8 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
             "checkIn": newcheckIn,
             "checkout": newcheckOut,
             "occupancies": occupancies.slice(0, totalOcc),
-            "searchId":$scope.searchId
+            "searchId": $scope.searchId,
+            "hotelDetailId" : $scope.hotelDetailId
             }).$promise.then(function(data) {
             $scope.searchDone = true;
             $scope.hideRoomDetail = false;

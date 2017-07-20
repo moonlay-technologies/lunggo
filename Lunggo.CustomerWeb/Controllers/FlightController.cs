@@ -17,6 +17,7 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         //[DeviceDetectionFilter]
         [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
+
         public ActionResult Search(string searchId, string searchParam)
         {
             var search = new FlightSearchData

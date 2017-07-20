@@ -6,23 +6,23 @@
     var night = (Model.CheckOutDate - Model.CheckInDate).Days;
     var hotelImg = "";
     var roomImg = "";
-    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
+    var images = Model.ImageUrl; //HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
 
-    var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-    if (orDefault != null)
-    {
-        hotelImg = images == null
-            ? null
-            : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-    }
-    
-    var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-    if (firstOrDefault != null)
-    {
-        roomImg = images == null
-            ? null
-            : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-    }
+    hotelImg = Model.MainImage;//images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+    //if (orDefault != null)
+    //{
+    //    hotelImg = images == nullhotelbed
+    //        ? null
+    //        : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
+    //}
+
+    roomImg = Model.Rooms[0].Images.FirstOrDefault();//images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+    //if (firstOrDefault != null)
+    //{
+    //    roomImg = images == null
+    //        ? null
+    //        : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+    //}
 
     var totalRoom = 0;
     
