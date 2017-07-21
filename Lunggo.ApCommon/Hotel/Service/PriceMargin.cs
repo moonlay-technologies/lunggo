@@ -188,7 +188,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Convert.ToInt32(codate.Substring(6, 2)));
             var stayduration = (cekout - cekin).Days;
             var stayDurOk = !rule.StayDurations.Any() || rule.StayDurations.Contains(stayduration);
-            return stayDurOk ;
+            return stayDurOk;
         }
 
         private static bool HotelStarMatches(HotelRateRule rule, HotelDetail hotelDetail)

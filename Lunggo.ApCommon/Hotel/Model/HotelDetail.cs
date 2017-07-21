@@ -196,6 +196,10 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string PrimaryPhoto { get; set; }
         [JsonProperty("tiketToken", NullValueHandling = NullValueHandling.Ignore)]
         public string TiketToken { get; set; }
+        [JsonProperty("totalAdult", NullValueHandling = NullValueHandling.Ignore)]
+        public int TotalAdult { get; set; }
+        [JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
+        public int TotalChildren { get; set; }
 
     }
 
@@ -257,10 +261,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public decimal NetCheapestFare { get; set; }
         [JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Discount { get; set; }
-        [JsonProperty("totalAdult", NullValueHandling = NullValueHandling.Ignore)]
-        public int TotalAdult { get; set; }
-        [JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
-        public int TotalChildren { get; set; }
+        
         [JsonProperty("netCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
         public decimal NetCheapestTotalFare { get; set; }
         [JsonProperty("originalCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]

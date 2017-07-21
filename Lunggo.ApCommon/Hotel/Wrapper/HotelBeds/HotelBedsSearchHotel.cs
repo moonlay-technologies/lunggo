@@ -26,6 +26,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
         public SearchHotelResult SearchHotel(SearchHotelCondition condition)
         {
             //HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
+            PreprocessDestinationType(condition);
             var client = new HotelApiClient(HotelApiType.BookingApi);
             var avail = new Availability();
             if (condition.Destination != null || condition.Zone != null || condition.Area != null)
@@ -129,6 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                         ZoneCode = hotelResponse.destinationCode + '-' + hotelResponse.zoneCode.ToString(CultureInfo.InvariantCulture),
                         DestinationCode = hotelResponse.destinationCode,
                         StarRating = hotelResponse.categoryCode,
+                        StarCode = HotelService.GetInstance().GetSimpleCodeByCategoryCode(hotelResponse.categoryCode),
                         Review = hotelResponse.reviews,
                         Supplier = Supplier.HotelBeds,
                         CheckInDate = condition.CheckIn,
@@ -191,7 +193,65 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                 response.CheckIn = condition.CheckIn;
                 response.CheckOut = condition.Checkout;
             }
+
+            AppyHotelDetailInResult(response, condition.Location);
             return response;
+        }
+
+
+        public void PreprocessDestinationType(SearchHotelCondition condition)
+        {
+            var detailDestination = HotelService.GetInstance().GetLocationById(condition.Location);
+            switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
+            {
+                case AutocompleteType.Zone:
+                    condition.Zone = detailDestination.Code;
+                    break;
+                case AutocompleteType.Destination:
+                    condition.Destination = detailDestination.Code;
+                    break;
+                case AutocompleteType.Area:
+                    condition.Area = detailDestination.Code;
+                    break;
+                case AutocompleteType.Hotel:
+                    condition.HotelCode = int.Parse(detailDestination.Code);
+                    break;
+
+            };
+        }
+
+
+        public void AppyHotelDetailInResult(SearchHotelResult result, string location)
+        {
+            var dict = new Dictionary<int, HotelDetailsBase>();
+            var details = new HotelDetailsBase();
+            var hotelService = HotelService.GetInstance();
+            var detailDestination = HotelService.GetInstance().GetLocationById(location);
+            result.SearchType = detailDestination.Type;
+
+            switch (AutocompleteTypeCd.Mnemonic(detailDestination.Type))
+            {
+                case AutocompleteType.Zone:
+                    dict = hotelService.GetHotelDetailByLocation(detailDestination.Code);
+                    result.HotelDetails = hotelService.ApplyHotelDetails(dict, result.HotelDetails);
+                    result.DestinationName = detailDestination.Zone + ", " + detailDestination.Destination + ", " + detailDestination.Country;
+                    break;
+                case AutocompleteType.Destination:
+                    dict = hotelService.GetHotelDetailByLocation(detailDestination.Code);
+                    result.HotelDetails = hotelService.ApplyHotelDetails(dict, result.HotelDetails);
+                    result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
+                    break;
+                case AutocompleteType.Area:
+                    dict = hotelService.GetHotelDetailByLocation(detailDestination.Code);
+                    result.HotelDetails = hotelService.ApplyHotelDetails(dict, result.HotelDetails);
+                    result.DestinationName = detailDestination.Destination + ", " + detailDestination.Country;
+                    break;
+                case AutocompleteType.Hotel:
+                    details = hotelService.GetHotelDetailFromDb(int.Parse(detailDestination.Code));
+                    result.HotelDetails = hotelService.ApplyHotelDetails(details, result.HotelDetails);
+                    result.DestinationName = details.HotelName + ", " + detailDestination.Destination + ", " + detailDestination.Country;
+                    break;
+            };
         }
 
         private void DistinguishRoom(HotelDetail hotel)

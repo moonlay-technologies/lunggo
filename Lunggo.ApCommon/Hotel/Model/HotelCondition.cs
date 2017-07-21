@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Hotel.Model
     public class SearchHotelCondition
     {
         public string Destination { get; set; }
+        public string Location { get; set; }
         public string Zone { get; set; }
         public string Area { get; set; }
         public string Country { get; set; }
@@ -56,6 +57,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string RoomId { get; set; }
         public string HotelName { get; set; }
         public string Token { get; set; }
+        public string BookUri { get; set; }
     }
 
     public class HotelIssueInfo

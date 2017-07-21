@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             try
             {
                 var rsv = GetReservation(rsvNo);
-                rsv.HotelDetails.PostalCode = GetHotelDetailFromTableStorage(rsv.HotelDetails.HotelCode).PostalCode;
+                //rsv.HotelDetails.PostalCode = GetHotelDetailFromTableStorage(rsv.HotelDetails.HotelCode).PostalCode;
                 foreach (var r in rsv.HotelDetails.Rooms)
                 {
                     foreach (var rate in r.Rates)
@@ -56,8 +56,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         var checkOutDate = new DateTime(Convert.ToInt32(cod.Substring(0, 4)),
                             Convert.ToInt32(cod.Substring(4, 2)), Convert.ToInt32(cod.Substring(6, 2)));
                         rate.NightCount = Convert.ToInt32((checkOutDate - checkInDate).TotalDays);
-                        rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
-                        checkInDate).Select(x => x.Description).ToList();
+                        //rate.TermAndCondition = GetRateCommentFromTableStorage(rate.RateCommentsId,
+                        //checkInDate).Select(x => x.Description).ToList();
                     }
                 }
                 

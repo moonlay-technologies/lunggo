@@ -74,6 +74,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 }).ToList(),
                 PrimaryPhoto = resultDetail.PrimaryPhotos,
                 HotelUri = hotel.HotelUri,
+                TotalAdult = hotel.TotalAdult,
+                TotalChildren = hotel.TotalChildren,
                 CheckInDate = hotelSearchResult.CheckIn,
                 CheckOutDate = hotelSearchResult.CheckOut,
                 NightCount = Convert.ToInt32((hotelSearchResult.CheckOut - hotelSearchResult.CheckIn).TotalDays),

@@ -46,7 +46,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelName = bookInfo.HotelName,
                 Rooms = bookInfo.Rooms.Count,
                 RoomId = bookInfo.Rooms[0].RoomCode,
-                Token = bookInfo.TiketToken
+                Token = bookInfo.TiketToken,
+                BookUri = bookInfo.Rooms[0].Rates[0].BookingUri
             };
 
             var client = new TiketBookHotel();
@@ -284,6 +285,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 TotalChildren = input.Passengers.Count(p => p.Type == PaxType.Child),
                 SpecialRequest = input.SpecialRequest,
                 HotelName = bookInfo.HotelName,
+                PhotoPrimary = bookInfo.PrimaryPhoto,
                 HotelCode = bookInfo.HotelCode,
                 Rooms = bookInfo.Rooms,
                 Address = bookInfo.Address,

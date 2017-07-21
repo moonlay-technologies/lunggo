@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.Tiket;
 using Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -57,15 +58,48 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ErrorMessages = new List<string> { "Hotel Code is not vaild" }
                     };
 
-                var rooms = ProcessRoomFromTiketHotelDetail(resultDetail, input);
-                hotel.Rooms = rooms;
+                var rooms = ProcessRoomFromTiketHotelDetail(hotel,resultDetail, input);
+                var hotelDetail =  new HotelDetail
+                {
+                    SearchId = hotel.SearchId,
+                    DestinationName = hotel.DestinationName,
+                    StarCode = hotel.StarCode,
+                    Supplier = hotel.Supplier,
+                    Longitude = hotel.Longitude,
+                    Latitude = hotel.Latitude,
+                    Address = hotel.Address,
+                    HotelCode = hotel.HotelCode,
+                    HotelName = hotel.HotelName,
+                    City = hotel.City,
+                    ZoneCode =
+                        hotel.ZoneCode,
+                    ImageUrl = hotel.ImageUrl,
+                    PrimaryPhoto = hotel.PrimaryPhoto,
+                    HotelUri = hotel.HotelUri,
+                    CheckInDate = hotel.CheckInDate,
+                    CheckOutDate = hotel.CheckOutDate,
+                    NightCount = hotel.NightCount,
+                    CountryCode = hotel.CountryCode,
+                    Facilities =
+                        hotel.Facilities,
+                        TotalChildren = hotel.TotalChildren,
+                        TotalAdult =  hotel.TotalAdult,
+                    TiketToken = hotel.TiketToken,
+                    Description = hotel.Description
+                };
+                hotelDetail.Rooms = rooms;
+                var hotelList = new List<HotelDetail>();
+                hotelList.Add(hotelDetail);
+                
+                AddPriceMargin(hotelList);
+                hotel.Rooms = hotelDetail.Rooms;
                 SaveAvailableRateToCache(input.HotelDetailId, hotel);
                 return new AvailableRatesOutput
                 {
                     Id = input.HotelDetailId,
                     IsSuccess = true,
                     Total = rooms == null ? 0 : rooms.Count,
-                    Rooms = rooms == null ? null : ConvertToTiketHotelRoomsForDisplay(rooms),
+                    Rooms = rooms == null ? null : ConvertToTiketHotelRoomsForDisplay(hotel.Rooms),
                     ExpiryTime = GetAvailableRatesExpiry(input.HotelDetailId)
                 };
                 //request.Occupancies = occupancies;
@@ -106,12 +140,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         }
 
 
-        public List<HotelRoom> ProcessRoomFromTiketHotelDetail(TiketHotelDetailResponse result, AvailableRatesInput input)
+        public List<HotelRoom> ProcessRoomFromTiketHotelDetail(HotelDetailsBase hotel,TiketHotelDetailResponse result, AvailableRatesInput input)
         {
             var roomList = new List<HotelRoom>();
             if (result.Results == null || result.Results.RoomDetail == null)
                 return null;
-
+             var allCurrencies = HotelService.GetInstance().GetAllCurrenciesFromCache(input.HotelDetailId);
             foreach (var room in result.Results.RoomDetail)
             {
                 var singleRoom = new HotelRoom
@@ -120,24 +154,32 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Images = room.PhotoRooms,
                     RoomName = room.room_name,
                     RoomAvailable = room.RoomAvailable,
-                    
+                    Type = "SGL",
                     RoomDescription = room.RoomDescription,
                     SingleRate = new HotelRate
                     {
-                        RateKey = room.Id,
+                        RateKey = ConstructRateKey(hotel, room.Id),
+                        Board = "BB",
                         NightCount = input.Nights,
+                        AdultCount = hotel.TotalAdult,
+                        ChildCount = hotel.TotalChildren,
                         RateCount = 1,
                         BookingUri = room.BookUri,
-                        Price = new Price
-                        {
-                            Supplier = room.Price,
-                            Local = room.Price
-                        },
                         PaymentType = PaymentTypeEnum.AT_WEB,
-                        Cancellation = ProcessCancellation(room.RefundPolicy)
-                    }
+                        Cancellation = ProcessCancellation(room.RefundPolicy),
+                        Price = new Price()
+                    },
+                    Rates = new List<HotelRate>()
                 };
-
+                singleRoom.SingleRate.Price.SetSupplier(room.Price,
+                    result.Diagnostic.Currency != null
+                        ? allCurrencies[result.Diagnostic.Currency]
+                        : ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production"
+                            ? allCurrencies["IDR"]
+                            : room.Price < 10000
+                                ? allCurrencies["USD"]
+                                : allCurrencies["IDR"]);
+                singleRoom.Rates.Add(singleRoom.SingleRate);
                 roomList.Add(singleRoom);
             }
 
@@ -145,6 +187,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             //var rooms = new List<HotelRoom>();
             // rooms = SetRoomPerRate(singleHotel.Rooms);
             return roomList;
+        }
+
+
+        public string ConstructRateKey(HotelDetailsBase hotel, string roomId)
+        {
+            string rateKey = hotel.CheckInDate.ToString("yyyy") + "" + hotel.CheckInDate.ToString("MM") + "" + hotel.CheckInDate.ToString("dd") + "|"
+                             + hotel.CheckOutDate.ToString("yyyy") + "" + hotel.CheckOutDate.ToString("MM") + "" + hotel.CheckOutDate.ToString("dd") + "|"
+                             + "W|1|6914|DUS.ST|CG-TODOS|BB||" + hotel.NightCount + "~" + hotel.TotalAdult + "~" + hotel.TotalChildren + "||" + roomId;
+            return rateKey;
         }
 
         public List<Cancellation> ProcessCancellation(string refundPolicy)

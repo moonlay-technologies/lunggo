@@ -35,8 +35,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
         [JsonProperty("confirm", NullValueHandling = NullValueHandling.Ignore)]
         public string Confirm { get;set; }
 
+        [JsonProperty("error_msgs", NullValueHandling = NullValueHandling.Ignore)]
+        public string ErrorMessage { get;set; }
+
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
-        public string Currency { get;set; }
+        public string Currency { get; set; }
 
         [JsonProperty("elapsetime", NullValueHandling = NullValueHandling.Ignore)]
         public string ElapseTime { get;set; }

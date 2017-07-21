@@ -52,6 +52,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     {
                         HotelCode = hotelDetailRecord.HotelCd.GetValueOrDefault(),
                         HotelName = hotelDetailRecord.HotelName,
+                        PhotoPrimary = hotelDetailRecord.HotelImage,
                         CheckInDate = hotelDetailRecord.CheckInDate.GetValueOrDefault(),
                         CheckOutDate = hotelDetailRecord.CheckOutDate.GetValueOrDefault(),
                         TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
@@ -84,9 +85,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                         var hotelRoom = new HotelRoom
                         {
                             RoomCode = hotelRoomRecord.Code,
+                            RoomName = hotelRoomRecord.RoomName,
+                            Images = new List<string>(),
                             Type = hotelRoomRecord.Type,
                             Rates = new List<HotelRate>(),
                         };
+                        hotelRoom.Images.Add(hotelRoomRecord.RoomImage);
 
                         if (hotelRoom.RoomCode == null)
                             return null;
@@ -253,6 +257,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     CheckInDate = reservation.HotelDetails.CheckInDate,
                     CheckOutDate = reservation.HotelDetails.CheckOutDate,
                     HotelName = reservation.HotelDetails.HotelName,
+                    HotelImage = reservation.HotelDetails.PhotoPrimary,
                     HotelCd = reservation.HotelDetails.HotelCode,
                     InsertBy = "LunggoSystem",
                     InsertDate = DateTime.UtcNow,
@@ -279,6 +284,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Id = roomId,
                         Code = room.RoomCode,
                         Type = room.Type,
+                        RoomName = room.RoomName,
+                        RoomImage = room.Images == null ? null : room.Images.FirstOrDefault(),
                         DetailsId = hotelRsvDetailsRecord.Id,
                         InsertDate = DateTime.UtcNow,
                         InsertBy = "LunggoSystem",

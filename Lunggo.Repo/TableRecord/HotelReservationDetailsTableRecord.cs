@@ -47,7 +47,17 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("HotelName");
 		    }
 		}
-		public DateTime? CheckInDate
+
+        public String HotelImage
+        {
+            get { return _HotelImage; }
+            set
+            {
+                _HotelImage = value;
+                IncrementLog("HotelImage");
+            }
+        }
+        public DateTime? CheckInDate
 		{
 		    get { return _CheckInDate; }
 		    set
@@ -260,6 +270,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _RsvNo;
 		private int? _HotelCd;
 		private String _HotelName;
+		private String _HotelImage;
 		private DateTime? _CheckInDate;
 		private DateTime? _CheckOutDate;
 		private int? _AdultCount;
@@ -318,6 +329,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("HotelCd", false),
 				new ColumnMetadata("HotelName", false),
+                new ColumnMetadata("HotelImage", false),
 				new ColumnMetadata("CheckInDate", false),
 				new ColumnMetadata("CheckOutDate", false),
 				new ColumnMetadata("AdultCount", false),

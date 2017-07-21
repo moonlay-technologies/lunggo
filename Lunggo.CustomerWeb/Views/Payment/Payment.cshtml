@@ -32,21 +32,24 @@
         {
             var rsv = (Model.Reservation as HotelReservationForDisplay);
             night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
+            //images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
+            //var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            //if (orDefault != null)
+            //{
+            //    hotelImg = images == null
+            //        ? null
+            //        : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
+            //}
+            //var orDefault = rsv.HotelDetail.MainImage;
+            hotelImg = rsv.HotelDetail.MainImage;
+            roomImg = rsv.HotelDetail.Rooms[0].Images.FirstOrDefault();
+            //var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+            //if (firstOrDefault != null)
+            //{
+            //    roomImg = images == null
+            //        ? null
+            //        : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+            //}
             var rooms = rsv.HotelDetail.Rooms;
             rsvNo = Model.RsvNo;
             foreach (var room in rsv.HotelDetail.Rooms)

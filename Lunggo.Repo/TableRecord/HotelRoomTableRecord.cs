@@ -47,6 +47,26 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Type");
 		    }
 		}
+
+        public String RoomImage
+        {
+            get { return _RoomImage; }
+            set
+            {
+                _RoomImage = value;
+                IncrementLog("RoomImage");
+            }
+        }
+
+        public String RoomName
+        {
+            get { return _RoomName; }
+            set
+            {
+                _RoomName = value;
+                IncrementLog("RoomName");
+            }
+        }
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -107,6 +127,8 @@ namespace Lunggo.Repository.TableRecord
 		private long? _DetailsId;
 		private String _Code;
 		private String _Type;
+        private String _RoomImage;
+        private String _RoomName;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -148,6 +170,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("DetailsId", false),
 				new ColumnMetadata("Code", false),
 				new ColumnMetadata("Type", false),
+				new ColumnMetadata("RoomImage", false),
+				new ColumnMetadata("RoomName", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

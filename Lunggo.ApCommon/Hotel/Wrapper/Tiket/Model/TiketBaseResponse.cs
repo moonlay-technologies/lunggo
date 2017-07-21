@@ -33,6 +33,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
     {
         [JsonProperty("confirm", NullValueHandling = NullValueHandling.Ignore)]
         public string Confirm { get; set; }
+        [JsonProperty("error_msgs", NullValueHandling = NullValueHandling.Ignore)]
+        public string ErrorMessage { get; set; }
 
         [JsonProperty("currency", NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }

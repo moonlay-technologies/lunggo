@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Model;
+using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Extension;
 using RestSharp;
+using Price = Lunggo.ApCommon.Product.Model.Price;
 using Supplier = Lunggo.ApCommon.Hotel.Constant.Supplier;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
@@ -48,24 +52,26 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
 
 
 
-        public List<HotelDetail> DoSearchHotel(SearchHotelCondition condition,int page, out int totalPage)
+        public List<HotelDetail> DoSearchHotel(SearchHotelCondition condition, int page, out int totalPage)
         {
             totalPage = 0;
             var tiketClient = new TiketClientHandler();
             var client = tiketClient.CreateTiketClient();
             var token = tiketClient.GetToken();
             var url = "/search/hotel";
+            var adultCount = condition.Occupancies.Sum(x => x.AdultCount);
+            var childCount = condition.Occupancies.Sum(x => x.ChildCount);
             var request = new RestRequest(url, Method.GET);
             request.AddQueryParameter("token", token);
-            request.AddQueryParameter("q", condition.Destination);
+            request.AddQueryParameter("q", condition.Location);
             request.AddQueryParameter("startdate", condition.CheckIn.ToString("yyyy-MM-dd"));
             request.AddQueryParameter("night", condition.Nights.ToString());
             request.AddQueryParameter("enddate", condition.Checkout.ToString("yyyy-MM-dd"));
             request.AddQueryParameter("room", condition.Rooms.ToString());
             request.AddQueryParameter("offset", "50");
             request.AddQueryParameter("page", page.ToString());
-            request.AddQueryParameter("adult", condition.Occupancies[0].AdultCount.ToString());
-            request.AddQueryParameter("child", condition.Occupancies[0].ChildCount.ToString());
+            request.AddQueryParameter("adult", adultCount.ToString());
+            request.AddQueryParameter("child", childCount.ToString());
             request.AddQueryParameter("output", "json");
             var response = client.Execute(request);
             var searchResponse = JsonExtension.Deserialize<HotelSearchResponse>(response.Content);
@@ -75,8 +81,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
 
             totalPage = searchResponse.Pagination.LastPage;
             //var hotels = new HotelDetail();
-            //var lang = OnlineContext.GetActiveLanguageCode();
-            //var allCurrencies = HotelService.GetInstance().GetAllCurrenciesFromCache(condition.SearchId);
+            var lang = OnlineContext.GetActiveLanguageCode();
+            var allCurrencies = HotelService.GetInstance().GetAllCurrenciesFromCache(condition.SearchId);
             // Mapping data response into search result
             foreach (var data in searchResponse.Results.Result)
             {
@@ -91,7 +97,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                     HotelCode = data.hotel_id,
                     Address = data.address,
                     DestinationName = data.Province,
-                    ZoneCode = (string.IsNullOrEmpty(data.Kecamatan) || data.Kecamatan == " ") ? condition.Destination : data.Kecamatan,
+                    ZoneCode = (string.IsNullOrEmpty(data.Kecamatan) || data.Kecamatan == " ") ? condition.Location : data.Kecamatan,
                     AreaCode = data.Kelurahan,
                     PhotoPrimary = data.PhotoPrimary,
                     StarRating = data.Rating,
@@ -102,15 +108,47 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                     OriginalCheapestTotalFare = data.total_price,
                     NetCheapestTotalFare = data.total_price,
                     NightCount = condition.Nights,
-                    TotalAdult = condition.AdultCount,
-                    TotalChildren = condition.ChildCount,
+                    TotalAdult = adultCount,
+                    TotalChildren = childCount,
                     WifiAccess = !string.IsNullOrEmpty(data.Wifi),
                     StarCode = string.IsNullOrEmpty(data.StarRating) ? 0 : int.Parse(data.StarRating),
-                    HotelUri = data.BusinessUri
+                    HotelUri = data.BusinessUri,
+                    Rooms = new List<HotelRoom>()
                 };
+                var room = new HotelRoom
+                {
+                    Rates = new List<HotelRate>()
+                };
+                room.Rates.Add(new HotelRate
+                {
+                   AdultCount = adultCount,
+                   ChildCount = childCount,
+                   NightCount = condition.Nights,
+                   RateCount = 1,
+                   RateKey = ConstructRateKey(condition),
+                    Price = new Price()
+                });
+                room.Rates[0].Price.SetSupplier(data.Price,
+                                    searchResponse.Diagnostic.Currency != null
+                                        ? allCurrencies[searchResponse.Diagnostic.Currency]
+                                        : ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production"
+                                            ? allCurrencies["IDR"]
+                                            : data.Price < 10000
+                                                ? allCurrencies["USD"]
+                                                : allCurrencies["IDR"]);
+
+                hotel.Rooms.Add(room);
                 hotels.Add(hotel);
             }
             return hotels;
+        }
+
+        public string ConstructRateKey(SearchHotelCondition condition)
+        {
+            string rateKey = condition.CheckIn.ToString("yyyy") + "" + condition.CheckIn.ToString("MM") + "" + condition.CheckIn.ToString("dd") + "|" 
+                             + condition.Checkout.ToString("yyyy") + "" + condition.Checkout.ToString("MM") + "" + condition.Checkout.ToString("dd") + "|" 
+                             + "W|1|6914|DUS.ST|CG-TODOS|BB||" + condition.Nights + "~" + condition.AdultCount + "~" + condition.ChildCount + "||N@D4EF2AC67207410FB2DB7DAEB33FCA13";
+            return rateKey;
         }
 
 
