@@ -88,128 +88,129 @@
             <a href="http://onelink.to/travoramaapp"><img src="/Assets/images/banner/download-app.jpg" alt="Download Applikasi Travorama!" /></a>
         </div>
     </div>
+
+    <!-- accordion -->
     <div class="main-tab clearfix">
         <div class="row group-kategori" id="accordion">
-            <!-- <a href="#"> -->
-                <div class="col-xs-12 btn-flight">
-                    <div class="col-xs-4"><img src="/Assets/mobile/images/btn-flight.png" alt="Flight" /></div>
-                    <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Pesawat</h3><span>Lorem ipsum dolor sit amet</span></div>
-                </div>
-                <div class="accordion-content form-wrapper">
-                    <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
-                        <div class="top-form row">
-                            <div class="col-xs-5">
-                                <div class="form-group form__origin">
-                                    <div class="title-destination">Asal</div>
-                                    <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
-                                        <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
-                                    </p>
+            <div class="col-xs-12 btn-flight">
+                <div class="col-xs-4"><img src="/Assets/mobile/images/btn-flight.png" alt="Flight" /></div>
+                <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Pesawat</h3><span>Lorem ipsum dolor sit amet</span></div>
+            </div>
+            <div class="accordion-content form-wrapper">
+                <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+                    <div class="top-form row">
+                        <div class="col-xs-5">
+                            <div class="form-group form__origin">
+                                <div class="title-destination">Asal</div>
+                                <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('departure'); PageConfig.SetOverlay('airport-select')">
+                                    <span class="code-airport">{{FlightSearchForm.AirportOrigin.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportOrigin.City}}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="flip-container" ng-click="flip()">
+                                <a class="flip"><span class="icon-flip"></span></a>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group form__destination">
+                                <div class="title-destination">Tujuan</div>
+                                <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
+                                    <span class="code-airport">{{FlightSearchForm.AirportDestination.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportDestination.City}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="middle-form">
+                        <div class="form-group form__departure">
+                            <span class="icon-pp"></span>
+                            <div class="field-container">
+                                <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' ', 'form-index'); PageConfig.SetOverlay('datepicker-departure')">
+                                    Berangkat <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
+                                </p>
+                            </div>
+                            <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
+                        </div>
+                        <div class="form-group form__roundtrip">
+                            <span class="icon-return"></span>
+                            <div class="field-container">
+                                <p class="os-bold">Pulang Pergi ?</p>
+                                <label class="switch">
+                                    <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false" ng-click="DatePicker.SetDefaultReturnDate(val)"
+                                           id="flightType">
+                                    <div class="slider round"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group form__return" ng-show="val">
+                            <span class="icon-pp"></span>
+                            <div class="field-container">
+                                <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' ', 'form-index'); PageConfig.SetOverlay('datepicker-return')">
+                                    Kembali <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
+                                    <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group form__flightclass">
+                            <span class="icon-fc"></span>
+                            <div class="field-container">
+                                <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
+                                    <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
+                                </select>
+                                <span class="arrow"></span>
+                            </div>
+                        </div>
+                        <div class="form-group form__passenger clearfix">
+                            <div class="col-custom-logo icon-adult"></div>
+                            <div class="field-container form-adult col-custom-field">
+                                <div class="field-wrapper">
+                                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
                                 </div>
                             </div>
-                            <div class="col-xs-2">
-                                <div class="flip-container" ng-click="flip()">
-                                    <a class="flip"><span class="icon-flip"></span></a>
+                            <div class="col-custom-logo icon-child"></div>
+                            <div class="field-container form-child col-custom-field">
+                                <div class="field-wrapper">
+                                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}} Anak</p>
                                 </div>
                             </div>
-                            <div class="col-xs-5">
-                                <div class="form-group form__destination">
-                                    <div class="title-destination">Tujuan</div>
-                                    <p class="form-control" ng-click="FlightSearchForm.AutoComplete.Reset('return'); PageConfig.SetOverlay('airport-select')">
-                                        <span class="code-airport">{{FlightSearchForm.AirportDestination.Code}}</span><br /><span class="city">{{FlightSearchForm.AirportDestination.City}}</span>
-                                    </p>
+                            <div class="col-custom-logo icon-infant"></div>
+                            <div class="field-container form-infant col-custom-field">
+                                <div class="field-wrapper">
+                                    <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}} Bayi</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="middle-form">
-                            <div class="form-group form__departure">
-                                <span class="icon-pp"></span>
-                                <div class="field-container">
-                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'departure'}, ' ', 'form-index'); PageConfig.SetOverlay('datepicker-departure')">
-                                        Berangkat <span>{{FlightSearchForm.DepartureDate | date : 'EEE, dd MMM yyyy'}}</span>
-                                    </p>
-                                </div>
-                                <input type="text" value="" ng-model="FlightSearchForm.DepartureDate" class="flight-search-form-departure hidden" />
-                            </div>
-                            <div class="form-group form__roundtrip">
-                                <span class="icon-return"></span>
-                                <div class="field-container">
-                                    <p class="os-bold">Pulang Pergi ?</p>
-                                    <label class="switch">
-                                        <input type="checkbox" ng-model="val" ng-true-value="true" ng-false-value="false" ng-click="DatePicker.SetDefaultReturnDate(val)"
-                                               id="flightType">
-                                        <div class="slider round"></div>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group form__return" ng-show="val">
-                                <span class="icon-pp"></span>
-                                <div class="field-container">
-                                    <p class="form-control" ng-click="DatePicker.SetOption({Target : 'return'}, ' ', 'form-index'); PageConfig.SetOverlay('datepicker-return')">
-                                        Kembali <span>{{FlightSearchForm.ReturnDate | date : 'EEE, dd MMM yyyy'}}</span>
-                                        <input type="text" value="" ng-model="FlightSearchForm.ReturnDate" class="flight-search-form-return hidden" />
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="form-group form__flightclass">
-                                <span class="icon-fc"></span>
-                                <div class="field-container">
-                                    <select class="form-control" name="cabinclass" ng-model="FlightSearchForm.Cabin" ng-init="FlightSearchForm.Cabin = flightclass[0].value">
-                                        <option ng-repeat="cabin in flightclass" value="{{cabin.value}}">{{cabin.name}}</option>
-                                    </select>
-                                    <span class="arrow"></span>
-                                </div>
-                            </div>
-                            <div class="form-group form__passenger clearfix">
-                                <div class="col-custom-logo icon-adult"></div>
-                                <div class="field-container form-adult col-custom-field">
-                                    <div class="field-wrapper">
-                                        <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('adult'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[0]}} Dewasa</p>
-                                    </div>
-                                </div>
-                                <div class="col-custom-logo icon-child"></div>
-                                <div class="field-container form-child col-custom-field">
-                                    <div class="field-wrapper">
-                                        <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('children'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[1]}} Anak</p>
-                                    </div>
-                                </div>
-                                <div class="col-custom-logo icon-infant"></div>
-                                <div class="field-container form-infant col-custom-field">
-                                    <div class="field-wrapper">
-                                        <p class="form-control" ng-click="FlightSearchForm.PassengerPicker.Reset('infant'); PageConfig.SetOverlay('passenger-select')">{{FlightSearchForm.Passenger[2]}} Bayi</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group form__submit">
-                            <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI PENERBANGAN</button>
-                        </div>
-                    </form><!-- .flight-form -->
-                </div><!-- .form-wrapper -->
+                    </div>
+                    <div class="form-group form__submit">
+                        <button class="btn btn-yellow btn-block btn-lg btnSubmit">CARI PENERBANGAN</button>
+                    </div>
+                </form><!-- .flight-form -->
+            </div><!-- .form-wrapper -->
 
-            <!-- </a> -->
-            <!-- <a href="#"> -->
-                <div class="col-xs-12 btn-flight">
-                    <div class="col-xs-4"><img src="/Assets/mobile/images/btn-hotel.png" alt="Hotel" /></div>
-                    <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Hotel</h3><span>Lorem ipsum dolor sit amet</span></div>
-                </div>
-                <div class="form-wrapper">
-                    @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
-                    {
-                        IsHotelSearch = false
-                    })
-                </div>
-            <!-- </a> -->
-            <!-- <a href="#"> -->
-                <div class="col-xs-12 btn-flight">
-                    <div class="col-xs-4"><img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" /></div>
-                    <div class="col-xs-8 title-btn"><h3 class=" bold-txt">Promo</h3><span>Lorem ipsum dolor sit amet</span></div>
-                </div>
-                <div>
-                    <p>content promo</p>
-                </div>
-            <!-- </a> -->
+            <div class="col-xs-12 btn-flight">
+                <div class="col-xs-4"><img src="/Assets/mobile/images/btn-hotel.png" alt="Hotel" /></div>
+                <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Hotel</h3><span>Lorem ipsum dolor sit amet</span></div>
+            </div>
+            <div class="form-wrapper">
+                @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
+                {
+                    IsHotelSearch = false
+                })
+            </div>
+            <div class="col-xs-12 btn-flight">
+                <div class="col-xs-4"><img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" /></div>
+                <div class="col-xs-8 title-btn"><h3 class=" bold-txt">Promo</h3><span>Lorem ipsum dolor sit amet</span></div>
+            </div>
+            <div>
+                <!--TODO-->
+                <p>content promo</p>
+            </div>
         </div>  
     </div>
+
+@if (ViewBag.Platform != PlatformType.IosApp && ViewBag.Platform != PlatformType.AndroidApp){
+
+    <!-- Intro content -->
     <div class="main-tab slider-mobile clearfix">
         <div class="row">
             <h2 class="section-title stripe text-center xlg-txt">Mengapa Memilih <span>Travorama</span></h2>
@@ -235,6 +236,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Partners -->
     <div class="main-tab clearfix">
         <div class="row partner">
             <h2 class="section-title stripe text-center xlg-txt">Partner <span>Maskapai</span></h2>
@@ -248,7 +251,9 @@
         </div>
     </div>
 
-@if (ViewBag.Platform != PlatformType.IosApp && ViewBag.Platform != PlatformType.AndroidApp){
+    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+} else {
+    @* TODO: Footer with 'iPhone-like' menu-tab *@
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 }
     <!-- overlays -->
