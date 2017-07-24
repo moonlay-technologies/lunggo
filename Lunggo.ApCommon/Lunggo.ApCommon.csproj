@@ -445,6 +445,7 @@
     <Compile Include="Hotel\Wrapper\Tiket\TiketBookHotel.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\TiketClientHandler.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\TiketHotelDetail.cs" />
+    <Compile Include="Hotel\Wrapper\Tiket\TiketIssueHotel.cs" />
     <Compile Include="Hotel\Wrapper\Tiket\TiketSearchHotel.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />

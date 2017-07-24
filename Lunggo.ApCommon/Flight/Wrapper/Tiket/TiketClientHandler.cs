@@ -35,6 +35,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 return ClientInstance;
             }
 
+
             internal void Init()
             {
                 if (!_isInitialized)
