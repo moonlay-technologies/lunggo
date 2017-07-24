@@ -1,4 +1,4 @@
-﻿@using Lunggo.CustomerWeb.Models
+@using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Config
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
@@ -248,8 +248,9 @@
         </div>
     </div>
 
+@if (ViewBag.Platform != PlatformType.IosApp && ViewBag.Platform != PlatformType.AndroidApp){
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
-
+}
     <!-- overlays -->
         <!-- overlay date picker -->
         @Html.Partial("/Views/Shared/Mobile/_DatePickerForm.cshtml")
