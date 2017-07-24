@@ -6113,6 +6113,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .info-customer span {
         font-size: 10px;
     }
+    .sticky-menu {
+        position: fixed;
+        bottom: 0;
+        z-index: 1000;
+    }
     .sticky-banner {
         position: fixed;
         bottom: 0;
