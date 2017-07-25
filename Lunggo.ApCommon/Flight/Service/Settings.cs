@@ -34,11 +34,11 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly TiketWrapper TiketWrapper = TiketWrapper.GetInstance();
         private static readonly Dictionary<int, FlightSupplierWrapperBase> Suppliers = new Dictionary<int, FlightSupplierWrapperBase>()
         {
-            { 1, MystiflyWrapper},
-            { 2, AirAsiaWrapper},
-            { 3, CitilinkWrapper},
-            { 4, SriwijayaWrapper},
-            { 5, LionAirWrapper},
+            //{ 1, MystiflyWrapper},
+            //{ 2, AirAsiaWrapper},
+            //{ 3, CitilinkWrapper},
+            //{ 4, SriwijayaWrapper},
+            //{ 5, LionAirWrapper},
             //{ 6, GarudaWrapper}
             { 7, TiketWrapper},
         };

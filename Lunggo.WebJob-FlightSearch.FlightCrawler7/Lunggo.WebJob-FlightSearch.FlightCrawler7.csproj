@@ -125,6 +125,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch - Web Deploy.pubxml" />
+    <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">

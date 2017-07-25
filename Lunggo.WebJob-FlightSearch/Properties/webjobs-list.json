@@ -18,6 +18,9 @@
         },
         {
             "filePath": "../Lunggo.WebJob-FlightSearch.FlightCrawler6/Lunggo.WebJob-FlightSearch.FlightCrawler6.csproj"
+        },
+        {
+            "filePath": "../Lunggo.WebJob-FlightSearch.FlightCrawler7/Lunggo.WebJob-FlightSearch.FlightCrawler7.csproj"
         }
     ]
 }
