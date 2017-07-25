@@ -291,7 +291,8 @@
                 @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
                 {
                     <div class="slider">
-                        <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
+                        <a href="/id/Promo/PaydayMadnessPermataBank">
+                        @* <!-- <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")"> --> *@
                             <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider.jpg" alt="Payday Madness Permata Bank" />
                         </a>
                     </div>
