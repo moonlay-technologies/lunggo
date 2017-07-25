@@ -419,6 +419,8 @@
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %285%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-api.pubxml" />
     <None Include="Web.Debug.config">

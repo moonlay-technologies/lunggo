@@ -263,6 +263,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Api\Views\web.config" />
+    <Content Include="Assets\bootstrap\bootstrap.css" />
+    <Content Include="Assets\bootstrap\bootstrap.min.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\global-error.css" />
     <Content Include="Assets\css\global-error.min.css" />
@@ -1539,6 +1541,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %286%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
@@ -1560,7 +1563,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Shared\Desktop\_LayoutDesktop.cshtml" />
-    <Content Include="Views\Shared\Desktop\_SiteFooter.cshtml" />
     <Content Include="Views\Shared\Desktop\_SiteFooterMenu.cshtml" />
     <Content Include="Views\Shared\Desktop\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\Desktop\_SearchLocation.cshtml" />
