@@ -11,6 +11,15 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("{langCode}/Promo/{name}")]
         public ActionResult Promo(string name)
         {
+            ViewBag.ImageSrc = "/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page-mobile.jpg";
+            ViewBag.ImageAlt = "Terbangin Hemat (Terbang & Nginap Hemat)";
+            ViewBag.PromoTitle = "Payday Madness";
+            ViewBag.PromoDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat.";
+            ViewBag.PeriodeBooking = "23 - 30 Juni 2017";
+            ViewBag.PeriodeInap = "Kapan Saja";
+
             switch (name.ToLower())
             {
                 case "onlinerevolution":

@@ -31,27 +31,24 @@
 
 <div class="promo-btn">
     <div class="mini-banner">
-        <a href="/"><img class="img-promo" src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
+        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrc" alt="@ViewBag.ImageAlt" /></a>
     </div>
     <div class="info-promo">
-        <div class="judul-promo bold-txt">Payday Madness</div>
-        <div class="desc-promo">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat. 
-        </div>
+        <div class="judul-promo bold-txt">@ViewBag.PromoTitle</div>
+        <div class="desc-promo">@ViewBag.PromoDescription</div>
         <div class="more-info"> Info Lengkapnya di <a class="bold-txt" href="#syarat-ketentuan">Syarat dan Ketentuan</a></div>
         <div class="detail-promo">
             <div class="box-promo clearfix">
                 <div class="col-xs-8 info-box-promo">
                     <div class="judul-box-promo bold-txt">Periode Booking</div>
-                    <div class="tanggal-box-promo">23 - 30 Juni 2017</div>
+                    <div class="tanggal-box-promo">@ViewBag.PeriodeBooking</div>
                 </div>
                 <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/ticket.png" /></div>
             </div>
             <div class="box-promo clearfix">
                 <div class="col-xs-8 info-box-promo">
                     <div class="judul-box-promo bold-txt">Periode Inap</div>
-                    <div class="tanggal-box-promo">Kapan Saja</div>
+                    <div class="tanggal-box-promo">@ViewBag.PeriodeInap</div>
                 </div>
                 <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/inap.png" /></div>
             </div>
