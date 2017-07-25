@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model;
 using Lunggo.Framework.Config;
@@ -18,7 +22,42 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
         private readonly string confirmKey = ConfigManager.GetInstance().GetConfigValue("tiket", "apiConfirmKey");
         public HotelIssueTicketResult IssueHotel(HotelIssueInfo hotelIssueInfo)
         {
-           return new HotelIssueTicketResult();
+            //var token = FlightService.GetInstance().GetTokenBookingToCache(hotelIssueInfo.RsvNo);
+            var token = "";
+            var bookingList = new List<string>();
+            bookingList.Add(hotelIssueInfo.BookingId);
+            //Step 1 : Checkout Payment Using Deposit
+            var step1 = CheckoutPageUsingDeposit(token);
+            if (step1 == null)
+                
+                return new HotelIssueTicketResult
+                {
+                    BookingId = new List<string>(),
+                    IsSuccess = false,
+                    IsInstantIssuance = false,
+                    Errors = new List<HotelError> { HotelError.FailedOnSupplier},
+                    ErrorMessages = new List<string> { "[Tiket] Error while request Checkout Page Using Deposit" }
+                };
+
+            //Step 2 : Confirmation Transaction
+            var confirmResponse = ConfirmTransaction(token, hotelIssueInfo.BookingId);
+            if (confirmResponse == null)
+                return new HotelIssueTicketResult
+                {
+                    BookingId = new List<string>(),
+                    IsSuccess = false,
+                    IsInstantIssuance = false,
+                    Errors = new List<HotelError> { HotelError.FailedOnSupplier },
+                    ErrorMessages = new List<string> { "[Tiket] Error while request Confirm Pay" }
+                };
+
+            return new HotelIssueTicketResult
+            {
+                BookingId = bookingList,
+                IsSuccess = true,
+                IsInstantIssuance = true
+            };
+
         }
 
         //Step1

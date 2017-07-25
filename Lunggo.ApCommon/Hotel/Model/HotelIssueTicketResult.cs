@@ -7,7 +7,7 @@ using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class HotelIssueTicketResult
+    public class HotelIssueTicketResult : ResultBase
     {
         public List<string> BookingId { get; set; }
         public string RsvNo { get; set; }
