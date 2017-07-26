@@ -6255,14 +6255,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background: #2fb4e6;
         text-align: center;
         color: #fff;
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
-        padding: 4px;
+        padding: 1px;
     }
     .info-ketentuan {
-        margin-left: 10px;
-        font-size: 14px;
+        font-size: 12px;
     }
     .langkah-promo {
         margin-top: 30px;
