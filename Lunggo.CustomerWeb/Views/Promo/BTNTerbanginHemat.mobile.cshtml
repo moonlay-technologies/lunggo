@@ -10,19 +10,12 @@
     <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
-@section AdditionalJS {
-    <script src="/Assets/js/bootstrap.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-    <script src="/Assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
-    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+@section PageJS{
     <script src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
     <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
-}
-
-@section PageJS{
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/PromoController.js"></script>
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
@@ -35,8 +28,8 @@
     </div>
     <div class="info-promo">
         <div class="judul-promo bold-txt">@ViewBag.PromoTitle</div>
-        <div class="desc-promo">@ViewBag.PromoDescription</div>
-        <div class="more-info"> Info Lengkapnya di <a class="bold-txt" href="#syarat-ketentuan">Syarat dan Ketentuan</a></div>
+        <div class="desc-promo"><p>@ViewBag.PromoDescription</p></div>
+        <div class="more-info">Info Lengkapnya di <a class="bold-txt" href="#syarat-ketentuan">Syarat dan Ketentuan</a></div>
         <div class="detail-promo">
             <div class="box-promo clearfix">
                 <div class="col-xs-8 info-box-promo">
@@ -100,42 +93,13 @@
             <div class="col-xs-2 align-right"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></div>
         </div>
         <div class="isi-syarat-ketentuan clearfix">
+        @for (var i = 0; i < ViewBag.Terms.Count; i++ )
+        {
             <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">1</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Diskon sebesar 15% (Maks. Rp 150.000). Tanpa minimum transaksi.</div>
+                <div class="col-xs-2 list-number-mobile">@(i+1)</div>
+                <div class="col-xs-10 info-ketentuan bold-txt">@ViewBag.Terms[i]</div>
             </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">2</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk pemesanan setiap tanggal 25, 26 dan 27 setiap bulan.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">3</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Periode terbang dan inap kapan saja.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">4</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk semua hotel di dalam dan luar negeri.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">5</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk pembayaran menggunakan bank transfer supported by Permata Bank.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">6</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Berlaku untuk pemesanan melalui situs Travorama.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">7</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Program promo hanya dapat digunakan satu kali per hari untuk satu user.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">8</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Program tidak dapat digabungkan dengan voucher dan promo lainnya.</div>
-            </div>
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-2 list-number-mobile">9</div>
-                <div class="col-xs-10 info-ketentuan bold-txt">Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</div>
-            </div>
+        }
         </div>
     </div>
     <div class="langkah-promo">
