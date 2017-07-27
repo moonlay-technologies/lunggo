@@ -584,6 +584,7 @@
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
+    <Content Include="Assets\images\buttons\back-btn.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-nav-sprite.png" />
@@ -776,6 +777,8 @@
     <Content Include="Assets\images\hotel\filter-hotel-map.png" />
     <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
     <Content Include="Assets\images\hotel\location-white.png" />
+    <Content Include="Assets\images\hotel\logo\mercure.png" />
+    <Content Include="Assets\images\hotel\logo\santika.svg" />
     <Content Include="Assets\images\hotel\markers-blue.png" />
     <Content Include="Assets\images\hotel\markers-red.png" />
     <Content Include="Assets\images\hotel\popular\bali.jpg" />
@@ -1709,6 +1712,8 @@
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
+    <Content Include="Views\common\partner-flight.cshtml" />
+    <Content Include="Views\common\partner-hotel.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
