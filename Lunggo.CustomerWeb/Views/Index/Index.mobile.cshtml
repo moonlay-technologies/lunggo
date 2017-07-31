@@ -1,5 +1,6 @@
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Product.Constant
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
@@ -251,7 +252,9 @@
     <div class="main-tab clearfix">
         <div class="row partner">
             <h2 class="section-title stripe text-center xlg-txt">Partner <span>Hotel</span></h2>
-            <div class="img-partner"><img src="/Assets/mobile/images/partner.png" alt="Partner" /></div>
+            <div class="img-partner">
+                @Html.Partial("/Views/common/partner-hotel.cshtml")
+            </div>
         </div>
     </div>
 
