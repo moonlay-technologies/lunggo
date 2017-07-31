@@ -9346,7 +9346,7 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 
 .content-right-payment {
-    padding-bottom: 15px;
+    padding-bottom: 10px;
     margin-bottom: 15px;
     border-bottom: 1px solid #ebebeb;
 }
@@ -9440,4 +9440,11 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .separator {
     height: 20px;
+}
+
+.data-penumpang {
+    
+}
+.data-penumpang p {
+    margin-bottom: 3px;
 }
