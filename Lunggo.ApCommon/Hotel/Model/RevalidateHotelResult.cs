@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Hotel.Model
 {
-    public class RevalidateHotelResult
+    public class RevalidateHotelResult : ResultBase
     {
         internal bool IsValid { get; set; }
         internal decimal? NewPrice { get; set; }

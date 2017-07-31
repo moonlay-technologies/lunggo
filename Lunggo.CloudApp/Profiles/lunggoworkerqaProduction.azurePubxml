@@ -9,14 +9,14 @@
     <AzureEnableRemoteDesktop>True</AzureEnableRemoteDesktop>
     <AzureEnableWebDeploy>False</AzureEnableWebDeploy>
     <AzureFallbackToDeleteAndRecreateIfUpgradeFails>False</AzureFallbackToDeleteAndRecreateIfUpgradeFails>
-    <AzureHostedServiceLabel>lunggoworkerqa</AzureHostedServiceLabel>
-    <AzureHostedServiceName>lunggoworkerqa</AzureHostedServiceName>
+    <AzureHostedServiceLabel>travorama-development</AzureHostedServiceLabel>
+    <AzureHostedServiceName>travorama-development</AzureHostedServiceName>
     <AzureEnableIntelliTrace>False</AzureEnableIntelliTrace>
     <AzureEnableProfiling>False</AzureEnableProfiling>
     <AzureServiceConfiguration>Cloud</AzureServiceConfiguration>
     <AzureSolutionConfiguration>Release</AzureSolutionConfiguration>
-    <AzureStorageAccountLabel>lunggostorageqa</AzureStorageAccountLabel>
-    <AzureStorageAccountName>lunggostorageqa</AzureStorageAccountName>
-    <AzureAppendTimestampToDeploymentLabel>True</AzureAppendTimestampToDeploymentLabel>
+    <AzureStorageAccountLabel>travoramaqa</AzureStorageAccountLabel>
+    <AzureStorageAccountName>travoramaqa</AzureStorageAccountName>
+    <AzureAppendTimestampToDeploymentLabel>False</AzureAppendTimestampToDeploymentLabel>
   </PropertyGroup>
 </Project>

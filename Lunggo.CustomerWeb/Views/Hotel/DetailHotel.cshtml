@@ -8,7 +8,7 @@
     var loc = Html.Raw(Model.HotelDetailData.HotelName) + ", " + Model.HotelDetailData.City;
     var hotelFac = new List<_Page_Views_Hotel_DetailHotel_cshtml.FacilityModel>();
     var hotelName = Model.HotelDetailData.HotelName;
-    var hotelAddress = Model.HotelDetailData.Address;
+    var hotelAddress = Model.HotelDetailData.Address.Replace("\n"," ");
     var lat = Model.HotelDetailData.Latitude;
     var lng = Model.HotelDetailData.Longitude;
 

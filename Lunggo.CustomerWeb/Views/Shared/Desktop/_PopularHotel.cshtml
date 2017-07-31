@@ -21,7 +21,7 @@
         var splittedDate = denpasar.CheapestDate.Split('/');
         var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
         var nextday = cheapestDate.AddDays(1);
-        dpsUrl = "/id/hotel/cari/Indonesia/Bali/?info=Location.1316553." + splittedDate[0] + "-" + splittedDate[1] + "-"
+        dpsUrl = "/id/hotel/cari/Indonesia/Bali/?info=Location.Bali." + splittedDate[0] + "-" + splittedDate[1] + "-"
                  + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
     }
     else
@@ -34,7 +34,7 @@
         var splittedDate = jakarta.CheapestDate.Split('/');
         var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
         var nextday = cheapestDate.AddDays(1);
-        jktUrl = "/id/hotel/cari/Indonesia/Jakarta/?info=Location.1390294." + splittedDate[0] + "-" + splittedDate[1] + "-"
+        jktUrl = "/id/hotel/cari/Indonesia/Jakarta/?info=Location.Jakarta." + splittedDate[0] + "-" + splittedDate[1] + "-"
                  + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
     }
     else
@@ -47,7 +47,7 @@
         var splittedDate = bandung.CheapestDate.Split('/');
         var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
         var nextday = cheapestDate.AddDays(1);
-        bdgUrl = "/id/hotel/cari/Indonesia/Bandung/?info=Location.1316847." + splittedDate[0] + "-" + splittedDate[1] + "-"
+        bdgUrl = "/id/hotel/cari/Indonesia/Bandung/?info=Location.Bandung." + splittedDate[0] + "-" + splittedDate[1] + "-"
                  + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
     }
     else
@@ -60,7 +60,7 @@
         var splittedDate = surabaya.CheapestDate.Split('/');
         var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
         var nextday = cheapestDate.AddDays(1);
-        subUrl = "/id/hotel/cari/Indonesia/Surabaya/?info=Location.1475138." + splittedDate[0] + "-" + splittedDate[1] + "-"
+        subUrl = "/id/hotel/cari/Indonesia/Surabaya/?info=Location.Surabaya." + splittedDate[0] + "-" + splittedDate[1] + "-"
                  + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
     }
     else
@@ -73,7 +73,7 @@
         var splittedDate = yogya.CheapestDate.Split('/');
         var cheapestDate = new DateTime(Convert.ToInt32(splittedDate[0].Substring(2, 2)), Convert.ToInt32(splittedDate[1]), Convert.ToInt32(splittedDate[2]));
         var nextday = cheapestDate.AddDays(1);
-        jogUrl = "/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.1391623." + splittedDate[0] + "-" + splittedDate[1] + "-"
+        jogUrl = "/id/hotel/cari/Indonesia/Yogyakarta/?info=Location.Yogyakarta." + splittedDate[0] + "-" + splittedDate[1] + "-"
                  + splittedDate[2] + "." + nextday.ToString("yyyy") + "-" + nextday.ToString("MM") + "-" + nextday.ToString("dd") + ".1.1.2~0";
     }
     else

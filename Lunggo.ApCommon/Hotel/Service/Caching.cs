@@ -275,6 +275,48 @@ namespace Lunggo.ApCommon.Hotel.Service
             //}
         }
 
+        private void SaveHotelTokenBookingToCache(string token, string boookingId, DateTime timelimit)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "hotelBookingToken:" + boookingId;
+            var timeout = DateTime.UtcNow.AddHours(7) - timelimit;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    redisDb.StringSet(redisKey, token, timeout);
+                    return;
+                }
+                catch
+                {
+
+                }
+            }
+
+        }
+
+        public string GetHotelTokenBookingToCache(string bookingId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "hotelBookingToken:" + bookingId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var token = redisDb.StringGet(redisKey);
+                    return token;
+                }
+                catch
+                {
+
+                }
+            }
+            return null;
+        }
+
+
         public DateTime? GetSearchedHotelDetailsExpiry(string searchId)
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)

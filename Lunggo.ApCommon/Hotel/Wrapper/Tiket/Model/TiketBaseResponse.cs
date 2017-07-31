@@ -22,6 +22,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
         [JsonProperty("token", NullValueHandling = NullValueHandling.Ignore)]
         public string Token { get; set; }
 
+        [JsonProperty("orderId", NullValueHandling = NullValueHandling.Ignore)]
+        public string OrderId { get; set; }
+
         [JsonProperty("next_checkout_uri", NullValueHandling = NullValueHandling.Ignore)]
         public string NextCheckoutUri { get; set; }
 

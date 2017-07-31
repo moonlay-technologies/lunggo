@@ -60,6 +60,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             var rsvDetail = CreateHotelReservation(input, bookInfo, response);
             InsertHotelRsvToDb(rsvDetail);
+            SaveHotelTokenBookingToCache(bookInfo.TiketToken, rsvDetail.RsvNo, response.TimeLimit);
+            GetHotelTokenBookingToCache(rsvDetail.RsvNo);
             ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookHotelOutput
             {
@@ -245,7 +247,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
         }
 
-        private RevalidateHotelResult CheckRate(string rateKey, decimal ratePrice)
+        public RevalidateHotelResult CheckRate(string rateKey, decimal ratePrice)
         {
             var hb = new HotelBedsCheckRate();
             var revalidateInfo = new HotelRevalidateInfo

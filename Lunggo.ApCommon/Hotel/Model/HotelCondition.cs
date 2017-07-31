@@ -64,10 +64,11 @@ namespace Lunggo.ApCommon.Hotel.Model
     {
         public string RsvNo { get; set; }
         public string BookingId { get; set; }
+        public string SearchId { get; set; }
         public List<Pax> Pax { get; set; }
-        public List<HotelRoom> Rooms { get; set; }
+        public HotelDetail Hotel { get; set; }
         public Contact Contact { get; set; }
-        public string SpecialRequest { get; set; }
+        public ReservationState State { get; set; }
     }
 
     public class HotelCancelBookingInfo

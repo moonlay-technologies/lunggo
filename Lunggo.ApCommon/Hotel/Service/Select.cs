@@ -132,7 +132,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
         }
 
-        private List<HotelRate> BundleRates(List<HotelRate> rates)
+        public List<HotelRate> BundleRates(List<HotelRate> rates)
         {
             var bundledRates = new List<HotelRate>();
 

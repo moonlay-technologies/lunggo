@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model;
+using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
@@ -22,12 +23,24 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
         private readonly string confirmKey = ConfigManager.GetInstance().GetConfigValue("tiket", "apiConfirmKey");
         public HotelIssueTicketResult IssueHotel(HotelIssueInfo hotelIssueInfo)
         {
-            //var token = FlightService.GetInstance().GetTokenBookingToCache(hotelIssueInfo.RsvNo);
-            var token = "";
+            //var token = HotelService.GetInstance().GetTokenBookingToCache(hotelIssueInfo.RsvNo);
+            var tokenBooking = HotelService.GetInstance().GetHotelTokenBookingToCache(hotelIssueInfo.RsvNo);
+            if (tokenBooking == null)
+            {
+                Console.WriteLine("Token not found");
+                return new HotelIssueTicketResult
+                {
+                    BookingId = new List<string>(),
+                    IsSuccess = false,
+                    IsInstantIssuance = false,
+                    Errors = new List<HotelError> { HotelError.TechnicalError},
+                    ErrorMessages = new List<string> { "[Tiket] Token is not Found From Redis" }
+                };
+            }
             var bookingList = new List<string>();
             bookingList.Add(hotelIssueInfo.BookingId);
             //Step 1 : Checkout Payment Using Deposit
-            var step1 = CheckoutPageUsingDeposit(token);
+            var step1 = CheckoutPageUsingDeposit(tokenBooking);
             if (step1 == null)
                 
                 return new HotelIssueTicketResult
@@ -40,7 +53,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                 };
 
             //Step 2 : Confirmation Transaction
-            var confirmResponse = ConfirmTransaction(token, hotelIssueInfo.BookingId);
+            var confirmResponse = ConfirmTransaction(tokenBooking, hotelIssueInfo.BookingId);
             if (confirmResponse == null)
                 return new HotelIssueTicketResult
                 {

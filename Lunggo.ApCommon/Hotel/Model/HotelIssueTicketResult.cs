@@ -14,6 +14,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string Status { get; set; }
         public bool IsInstantIssuance { get; set; }
         public bool IsSuccess { get; set; }
+        public bool IsPriceChanged { get; set; }
         public string SupplierName { get; set; }
         public string SupplierVat { get; set; }
         public string HotelPhone { get; set; }
