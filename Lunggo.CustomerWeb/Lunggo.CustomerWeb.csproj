@@ -587,6 +587,7 @@
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
+    <Content Include="Assets\images\buttons\back-btn.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-nav-sprite.png" />
@@ -779,6 +780,12 @@
     <Content Include="Assets\images\hotel\filter-hotel-map.png" />
     <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
     <Content Include="Assets\images\hotel\location-white.png" />
+    <Content Include="Assets\images\hotel\logo\aston.jpeg" />
+    <Content Include="Assets\images\hotel\logo\hotelsantika.svg" />
+    <Content Include="Assets\images\hotel\logo\mercure.png" />
+    <Content Include="Assets\images\hotel\logo\santika.svg" />
+    <Content Include="Assets\images\hotel\logo\sprite-partner-hotel.png" />
+    <Content Include="Assets\images\hotel\logo\swissbelhotel.jpeg" />
     <Content Include="Assets\images\hotel\markers-blue.png" />
     <Content Include="Assets\images\hotel\markers-red.png" />
     <Content Include="Assets\images\hotel\popular\bali.jpg" />
@@ -1743,6 +1750,8 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\common\partner-flight.cshtml" />
+    <Content Include="Views\common\partner-hotel.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

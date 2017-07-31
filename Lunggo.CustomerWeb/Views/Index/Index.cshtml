@@ -291,7 +291,7 @@
                 @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
                 {
                     <div class="slider">
-                        <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
+                        <a href="/id/Promo/PaydayMadnessPermataBank">
                             <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider.jpg" alt="Payday Madness Permata Bank" />
                         </a>
                     </div>
@@ -376,14 +376,25 @@
     </div>
 </section><!-- .section-why -->
 
+@* ga dipake
 <section class="section-why">
     <div class="container text-center">
         <div class="section-titles stripe xlg-txt">Partner <span class="os-bold blue-txt">Maskapai</span></div>
         <div class="row">
             <div class="col-xs-12">
-                <div><img src="assets/images/partner-desktop.png"</div>
-                <div><img src="assets/images/partner-desktop1.png"></div>
+                @Html.Partial("/Views/common/partner-flight.cshtml")
             </div>
+        </div>
+    </div>
+</section>
+*@
+
+<!-- Partners -->
+<section class="main-tab container clearfix">
+    <div class="row partner">
+        <h2 class="section-title stripe text-center xlg-txt">Partner <span>Maskapai</span></h2>
+        <div class="img-partner">
+            @Html.Partial("/Views/common/partner-flight.cshtml")
         </div>
     </div>
 </section>

@@ -6042,7 +6042,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background: #eef0f3;
        padding-bottom: 10px;
     }
-    .img-partner img { width: 100%;}
+    .img-partner img { height: 50px;}
     .title-btn span { font-weight: 400;}
     .konten-download-apps {
         background: url(/Assets/mobile/images/bg-konten-download-apps.jpg);
@@ -6112,6 +6112,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .info-customer span {
         font-size: 10px;
+    }
+    .sticky-menu {
+        position: fixed;
+        bottom: 0;
+        z-index: 1000;
     }
     .sticky-banner {
         position: fixed;
