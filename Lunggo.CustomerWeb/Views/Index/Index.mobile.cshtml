@@ -1,5 +1,6 @@
 @using Lunggo.CustomerWeb.Models
 @using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Product.Constant
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
@@ -16,22 +17,25 @@
 }
 
 @section AdditionalJS {
-
     <script src="/Config/JsConfig.js"></script>
-    <!-- jquery datepicker -->
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
-    @*<script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
-    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>*@
+    @*
+<!--
+    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>
+-->
+    *@
 }
 
 @section PageJS {
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/mobile/js/HomeController.js"></script>
     <script type="text/javascript">
+        
         //// jQuery accordion initialization
         var accordionAnimationDuration = 200;
         $("#accordion").accordion({
@@ -202,8 +206,7 @@
                 <div class="col-xs-8 title-btn"><h3 class=" bold-txt">Promo</h3><span>Lorem ipsum dolor sit amet</span></div>
             </div>
             <div>
-                <!--TODO-->
-                <p>content promo</p>
+                @Html.Partial("/Views/StaticPage/Promo.mobile.cshtml")
             </div>
         </div>  
     </div>
@@ -241,20 +244,27 @@
     <div class="main-tab clearfix">
         <div class="row partner">
             <h2 class="section-title stripe text-center xlg-txt">Partner <span>Maskapai</span></h2>
-            <div class="img-partner"><img src="/Assets/mobile/images/partner.png" alt="Partner" /></div>
-        </div>
-    </div>
-    <div class="main-tab clearfix">
-        <div class="row partner">
-            <h2 class="section-title stripe text-center xlg-txt">Partner <span>Hotel</span></h2>
-            <div class="img-partner"><img src="/Assets/mobile/images/partner.png" alt="Partner" /></div>
+            <div class="img-partner">
+                @Html.Partial("/Views/common/partner-flight.cshtml")
+            </div>
         </div>
     </div>
 
+    @* WIP
+    <div class="main-tab clearfix">
+        <div class="row partner">
+            <h2 class="section-title stripe text-center xlg-txt">Partner <span>Hotel</span></h2>
+            <div class="img-partner">
+                @Html.Partial("/Views/common/partner-hotel.cshtml")
+            </div>
+        </div>
+    </div>
+    *@
+
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 } else {
-    @* TODO: Footer with 'iPhone-like' menu-tab *@
-    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+    @* <!-- anything else will be an app --> *@
+    @Html.Partial("/Views/Shared/mobile/_SiteFooterApp.cshtml")
 }
     <!-- overlays -->
         <!-- overlay date picker -->
