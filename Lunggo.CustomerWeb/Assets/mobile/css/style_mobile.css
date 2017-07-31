@@ -6347,6 +6347,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   text-align: center;
 }
 
-.ui-accordion-content{
-  padding-top: 150px;
-}
+/*.ui-accordion-content-active{
+  padding-top: 20px;
+}*/
