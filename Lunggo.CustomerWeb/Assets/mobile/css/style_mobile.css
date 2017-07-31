@@ -1618,7 +1618,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-home .form-container .form-wrapper form span.city {
         margin: 0 auto; }
       .page.page-home .form-container .form-wrapper form span.code-airport {
-        font-size: 40px;
+        font-size: 28px;
         line-height: 44px;
         color: #000000; }
       .page.page-home .form-container .form-wrapper form span.city {
@@ -1749,7 +1749,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           text-align-last: right; }
       .page.page-home .form-container .form-wrapper form .flip-container {
         padding-top: 50px;
-        min-height: 104px; }
+        min-height: 104px;
+        text-align: center;
+      }
         .page.page-home .form-container .form-wrapper form .flip-container .flip {
           width: 35px;
           height: 37px;
@@ -1765,7 +1767,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 43px;
             height: 40px;
             margin-top: 7px;
-            margin-left: 5px;
+            left: 13px;
             content: ''; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
         float: right;
@@ -2323,7 +2325,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
       margin: 0 auto; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport {
-      font-size: 40px;
+      font-size: 28px;
       line-height: 44px;
       color: #000000; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
@@ -6042,6 +6044,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         background: #eef0f3;
        padding-bottom: 10px;
     }
+
+.img-partner {
+  text-align: center;
+}
+
     .img-partner img { height: 50px;}
     .title-btn span { font-weight: 400;}
     .konten-download-apps {
@@ -6319,3 +6326,27 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         font-size: 10px;
         padding-bottom: 10px;
     }
+
+#why-travorama {
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+#why-travorama img {
+  width: 50px;
+  margin: 0 auto;
+}
+
+#why-travorama h4 {
+  padding: 0 20px;
+  color: #1eafe4;
+}
+
+#why-travorama p {
+  padding: 0 20px;
+  text-align: center;
+}
+
+.ui-accordion-content{
+  padding-top: 150px;
+}

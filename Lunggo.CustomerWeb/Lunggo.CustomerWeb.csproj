@@ -635,6 +635,7 @@
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-promo-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider.jpg" />
     <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page-mobile.jpg" />

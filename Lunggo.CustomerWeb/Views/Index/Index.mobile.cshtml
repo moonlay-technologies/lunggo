@@ -57,9 +57,13 @@
 
                 $('html, body').animate({
                     //// banyaknya pixel yang di scroll (ditutupin)
-                    scrollTop: $("#accordion").offset().top - $("header").height()
-                    // scrollTop: $(this).offset().top - $("header").height() - 8
+                    // scrollTop: $("#accordion").offset().top - $("header").height()
+                    scrollTop: $(this).offset().top - $("header").height() - 8  //// untuk padding dgn header
                 }, 500);
+            } else {
+                $('html, body').animate({
+                    scrollTop: $("#accordion").offset().top - $("header").height()
+                }, 300);
             }
 
             headerIcon.toggle(accordionAnimationDuration);
@@ -98,7 +102,7 @@
         <div class="row group-kategori" id="accordion">
             <div class="col-xs-12 btn-flight">
                 <div class="col-xs-4"><img src="/Assets/mobile/images/btn-flight.png" alt="Flight" /></div>
-                <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Pesawat</h3><span>Lorem ipsum dolor sit amet</span></div>
+                <div class="col-xs-8 title-btn "><h4 class=" bold-txt">Pesawat</h4></div>
             </div>
             <div class="accordion-content form-wrapper">
                 <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
@@ -111,7 +115,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-2 no-padding">
                             <div class="flip-container" ng-click="flip()">
                                 <a class="flip"><span class="icon-flip"></span></a>
                             </div>
@@ -193,7 +197,7 @@
 
             <div class="col-xs-12 btn-flight">
                 <div class="col-xs-4"><img src="/Assets/mobile/images/btn-hotel.png" alt="Hotel" /></div>
-                <div class="col-xs-8 title-btn "><h3 class=" bold-txt">Hotel</h3><span>Lorem ipsum dolor sit amet</span></div>
+                <div class="col-xs-8 title-btn "><h4 class=" bold-txt">Hotel</h4></div>
             </div>
             <div class="form-wrapper">
                 @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
@@ -203,7 +207,7 @@
             </div>
             <div class="col-xs-12 btn-flight">
                 <div class="col-xs-4"><img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" /></div>
-                <div class="col-xs-8 title-btn"><h3 class=" bold-txt">Promo</h3><span>Lorem ipsum dolor sit amet</span></div>
+                <div class="col-xs-8 title-btn"><h4 class=" bold-txt">Promo</h4></div>
             </div>
             <div>
                 @Html.Partial("/Views/StaticPage/Promo.mobile.cshtml")
@@ -217,8 +221,41 @@
     <div class="main-tab slider-mobile clearfix">
         <div class="row">
             <h2 class="section-title stripe text-center xlg-txt">Mengapa Memilih <span>Travorama</span></h2>
-            <div class="carousel-inner-mobile" role="listbox">
+            <div id="why-travorama" class="carousel-inner-mobile" role="listbox">
                 <div class="item">
+                    <img src="/Assets/images/why-disc.png" alt="discount" />
+                    <h4>Harga Diskon Setiap Hari</h4>
+                    <p>Potongan harga untuk setiap transaksi di Travorama. Temukan harga bersaing dibandingkan Online Travel Agent lain.</p>
+
+                    
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-active.png" alt="" />
+                    <h4>Waktu Pembayaran Panjang</h4>
+                    <p>Waktu pembayaran tiket pesawat dan kamar hotel lebih panjang dibandingkan Online Travel Agent pada umumnya.</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-free.png" alt="" />
+                    <h4>Tanpa Biaya Tambahan</h4>
+                    <p>Harga yang tercantum adalah harga final, tanpa biaya tersembunyi.</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-long.png" alt="" />
+                    <h4>Rute Penerbangan Domestik & Internasional</h4>
+                    <p>Temukan 9000 rute penerbangan antar kota dan antar negara.</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-hotel.png" alt="" />
+                    <h4>Pilihan Hotel Maksimal</h4>
+                    <p>Terdapat 85.000 listing hotel di seluruh dunia.</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-trust.png" alt="" />
+                    <h4>Jaminan Pembayaran Online Aman & Mudah</h4>
+                    <p>Enkripsi Rapid SSL menjamin privasi dan keamanan saat melakukan transaksi online.</p>
+                </div>
+
+                <!-- <div class="item">
                     <img src="/Assets/images/harga.jpg" alt="" />
                 </div>
                 <div class="item">
@@ -235,7 +272,7 @@
                 </div>
                 <div class="item">
                     <img src="/Assets/images/jaminan.jpg" alt="" />
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -244,7 +281,7 @@
     <div class="main-tab clearfix">
         <div class="row partner">
             <h2 class="section-title stripe text-center xlg-txt">Partner <span>Maskapai</span></h2>
-            <div class="img-partner">
+            <div class="img-partner container">
                 @Html.Partial("/Views/common/partner-flight.cshtml")
             </div>
         </div>

@@ -9292,4 +9292,11 @@ file : /Assets/travorama20/css/_page_password.scss
     text-align: center;
     margin-top: 50px;
     font-size: 10px;
-} 
+}
+
+.img-partner {
+  text-align: center;
+}
+.img-partner img {
+    height: 50px
+}
