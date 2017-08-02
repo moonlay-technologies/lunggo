@@ -226,20 +226,20 @@
                 <div class="tab-hotel-price clearfix" ng-show="searchDone">
                     <div class="col-half bold-txt right-txt">
                         Tampilkan Harga :
-        </div>
-        <div class="tab-wrapper col-half">
-            <div class="tab-border clearfix">
-                <div class="col-6 tab-list active" href="#price-night" id="perRoom" ng-click="changeStatePrice('perRoom')">Per kamar, per malam</div>
-                <div class="col-4 tab-list" href="#price-total" id="total" ng-click="changeStatePrice('total')">Harga total</div>
+                    </div>
+                    <div class="tab-wrapper col-half">
+                        <div class="tab-border clearfix">
+                            <div class="col-6 tab-list active" href="#price-night" id="perRoom" ng-click="changeStatePrice('perRoom')">Per kamar, per malam</div>
+                            <div class="col-4 tab-list" href="#price-total" id="total" ng-click="changeStatePrice('total')">Harga total</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
+                 @Html.Partial("/Views/Shared/Desktop/_HotelListing.cshtml")
+                <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
+                    <img src="/Assets/images/load.gif" class="img-loading">
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-    @Html.Partial("/Views/Shared/Desktop/_HotelListing.cshtml")
-    <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
-        <img src="/Assets/images/load.gif" class="img-loading">
-    </div>
-</div>
 </div>
 </div>
 </div>
