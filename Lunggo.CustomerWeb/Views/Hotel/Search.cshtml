@@ -116,15 +116,29 @@
             </div>
             <div class="search-list-result clearfix">
                 <div class="col-left-result filter">
-                    <div class="view-map">
+                    <!-- <div class="view-map">
                         <a class="btn btn-blue big md-txt btn-view-map" id="mapUrl">Tampilkan Peta</a>
-                    </div>
+                    </div>-->
                     <div class="filter-container">
-                        <div class="header-filter">Filter Pencarian</div>
+                        <div class="bg-title bg-title-left"><b>Filter</b> Pencarian </div>
                         <div class="filter-group">
-                            <label class="filter-title">Nama Hotel</label>
-                            @*tra-on-enter="filterHotels()"*@
-                            <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" class="form-hotel-name form-control">
+                            <label class="filter-title">Urutkan Berdasarkan</label>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
+                                        <span class="radio"></span>
+                                        <span class="name">Harga Terendah</span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
+                                        <span class="radio"></span>
+                                        <span class="name">Harga Tertinggi</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- @*tra-on-enter="filterHotels()"*@
+                            <input type="text" ng-pattern="/^[a-zA-Z]*$/" ng-model="filter.nameFilter" class="form-hotel-name form-control">-->
                         </div>
                         <div class="filter-group">
                             <label class="filter-title">Harga Hotel</label>
@@ -181,68 +195,82 @@
                                     <span class="checkbox"></span>
                                     @*<input type="checkbox" name="check" class="check" value="false" ng-disabled="true" />*@
                                     <span class="name">{{facilityFilter.name}}</span>
-                            </label>
-                            <span class="city-hotel">{{facilityFilter.count}}</span>
+                                </label>
+                                <span class="city-hotel">{{facilityFilter.count}}</span>
+                            </div>
+                        </div>
+                        <div class="filter-group" ng-if="false">
+                            <label class="filter-title">Tipe Kamar</label>
+                            <div class="room">
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <span class="name">Single</span>
+                                </label>
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <span class="name">Twin</span>
+                                </label>
+                                <label class="sqr city-point">
+                                    <span class="checkbox"></span>
+                                    <input type="checkbox" name="check" class="check" value="false" />
+                                    <span class="name">King</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="filter-group" ng-if="false">
-                        <label class="filter-title">Tipe Kamar</label>
-                        <div class="room">
-                            <label class="sqr city-point">
-                                <span class="checkbox"></span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                                <span class="name">Single</span>
-                            </label>
-                            <label class="sqr city-point">
-                                <span class="checkbox"></span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                                <span class="name">Twin</span>
-                            </label>
-                            <label class="sqr city-point">
-                                <span class="checkbox"></span>
-                                <input type="checkbox" name="check" class="check" value="false" />
-                                <span class="name">King</span>
-                            </label>
+                </div>
+                <div class="col-right-result">
+                    <div class="search-list-hotel">
+                        <div class="row">
+                            <div class="col-xs-6 box-search-hotel">
+                                <input type="text" class="input-nama-hotel" placeholder="Cari  Hotel"/>
+                                <span class="glyphicon glyphicon-search search-icon" aria-hidden="true"></span>
+                            </div>
+                            <div class="col-xs-6">
+                                <select class="input-nama-hotel">
+                                    <option>Per kamar, per malam</option>
+                                    <option>Harga Total</option>
+                                </select>
+                            </div>
                         </div>
+                    </div>
+                    <!--<div class="sort clearfix" ng-show="totalHotelCount > 0">
+                            <div class="sort-l"><span class="bold-txt">Urut Berdasarkan :</span></div>
+                            <div class="sort-r">
+                                <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
+                                    <span class="radio"></span>
+                                    <span class="name">Harga Terendah</span>
+                                </label>
+                            </div>
+                            <div class="sort-r">
+                                <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
+                                    <span class="radio"></span>
+                                    <span class="name">Harga Tertinggi</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="tab-hotel-price clearfix" ng-show="searchDone">
+                            <div class="col-half bold-txt right-txt">
+                                Tampilkan Harga :
+                            </div>
+                            <div class="tab-wrapper col-half">
+                                <div class="tab-border clearfix">
+                                    <div class="col-6 tab-list active" href="#price-night" id="perRoom" ng-click="changeStatePrice('perRoom')">Per kamar, per malam</div>
+                                    <div class="col-4 tab-list" href="#price-total" id="total" ng-click="changeStatePrice('total')">Harga total</div>
+                                </div>
+                            </div>
+                        </div>-->
+                    <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
+                    @Html.Partial("/Views/Shared/Desktop/_HotelListing.cshtml")
+                    <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
+                        <img src="/Assets/images/load.gif" class="img-loading">
                     </div>
                 </div>
             </div>
-            <div class="col-right-result">
-                <div class="sort clearfix" ng-show="totalHotelCount > 0">
-                    <div class="sort-l"><span class="bold-txt">Urut Berdasarkan :</span></div>
-                    <div class="sort-r">
-                        <label class="round pointer" ng-class="{ active : sortBy == sortByType.ascendingPrice }" ng-click="changeSorting(sortByType.ascendingPrice)">
-                            <span class="radio"></span>
-                            <span class="name">Harga Terendah</span>
-                        </label>
-                    </div>
-                    <div class="sort-r">
-                        <label class="round pointer" ng-class="{ active : sortBy == sortByType.descendingPrice }" ng-click="changeSorting(sortByType.descendingPrice)">
-                            <span class="radio"></span>
-                            <span class="name">Harga Tertinggi</span>
-                        </label>
-                    </div>
-                </div>
-                <div class="tab-hotel-price clearfix" ng-show="searchDone">
-                    <div class="col-half bold-txt right-txt">
-                        Tampilkan Harga :
-                    </div>
-                    <div class="tab-wrapper col-half">
-                        <div class="tab-border clearfix">
-                            <div class="col-6 tab-list active" href="#price-night" id="perRoom" ng-click="changeStatePrice('perRoom')">Per kamar, per malam</div>
-                            <div class="col-4 tab-list" href="#price-total" id="total" ng-click="changeStatePrice('total')">Harga total</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center" ng-show="searchDone && returnedHotelCount == 0"><h3> Hotel tidak ditemukan, silakan ganti filter atau destinasi anda.</h3></div>
-                 @Html.Partial("/Views/Shared/Desktop/_HotelListing.cshtml")
-                <div ng-show="!searchDone" class="text-center" style="margin-top: 50%;">
-                    <img src="/Assets/images/load.gif" class="img-loading">
-                </div>
-            </div>
-</div>
-</div>
-</div>
+        </div>
+    </div>
 
 <div class="bookfailed-popup" ng-show="expired">
     <div class="overlay-content">
