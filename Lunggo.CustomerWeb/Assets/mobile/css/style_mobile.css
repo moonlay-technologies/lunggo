@@ -6040,16 +6040,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
       background-color: white;
     }
-    .partner {
-        background: #eef0f3;
-       padding-bottom: 10px;
-    }
-
-.img-partner {
-  text-align: center;
-}
-
-    .img-partner img { height: 50px;}
     .title-btn span { font-weight: 400;}
     .konten-download-apps {
         background: url(/Assets/mobile/images/bg-konten-download-apps.jpg);
