@@ -72,10 +72,10 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static decimal GetTransferFeeFromCache(string rsvNo)
+        private static decimal GetUniqueCodeFromCache(string rsvNo)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "transferFee:" + rsvNo;
+            var redisKey = "uniqueCode:" + rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var transferFee = new RedisValue();
             for (var i = 0; i < 3; i++)

@@ -128,6 +128,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DiscountNominal");
 		    }
 		}
+        public Decimal? Surcharge
+        {
+            get { return _Surcharge; }
+            set
+            {
+                _UniqueCode = value;
+                IncrementLog("Surcharge");
+            }
+        }
 		public Decimal? UniqueCode
 		{
 		    get { return _UniqueCode; }
@@ -269,6 +278,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _DiscountCode;
 		private Decimal? _OriginalPriceIdr;
 		private Decimal? _DiscountNominal;
+        private Decimal? _Surcharge;
 		private Decimal? _UniqueCode;
 		private Decimal? _FinalPriceIdr;
 		private Decimal? _PaidAmountIdr;
@@ -327,6 +337,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("DiscountCode", false),
 				new ColumnMetadata("OriginalPriceIdr", false),
 				new ColumnMetadata("DiscountNominal", false),
+                new ColumnMetadata("Surcharge", false),
 				new ColumnMetadata("UniqueCode", false),
 				new ColumnMetadata("FinalPriceIdr", false),
 				new ColumnMetadata("PaidAmountIdr", false),

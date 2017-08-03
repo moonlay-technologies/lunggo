@@ -183,11 +183,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 }              
             }
 
-            var transferFee = GetTransferFeeFromCache(rsvNo);
-            if (transferFee == 0M)
+            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+
+            var uniqueCode = GetUniqueCodeFromCache(rsvNo);
+            if (uniqueCode == 0M)
                 return paymentDetails;
 
-            paymentDetails.UniqueCode = transferFee;
+            paymentDetails.UniqueCode = uniqueCode;
             paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
@@ -265,6 +268,31 @@ namespace Lunggo.ApCommon.Payment.Service
                 default:
                     return PaymentMedium.Undefined;
             }
+        }
+
+        public List<Surcharge> GetSurchargeList()
+        {
+            var allSubMethods = Enum.GetValues(typeof(PaymentSubMethod)).Cast<PaymentSubMethod>().ToList();
+            var list = allSubMethods.Select(sub => new Surcharge
+            {
+                PaymentMethod = PaymentMethod.CreditCard,
+                PaymentSubMethod = sub,
+                Percentage = 2.5M,
+                Constant = 0
+            }).ToList();
+            return list;
+        }
+
+        public decimal GetSurchargeNominal(PaymentDetails payment)
+        {
+            var surchargeList = GetSurchargeList();
+            var surcharge =
+                surchargeList.SingleOrDefault(
+                    sur => payment.Method == sur.PaymentMethod && payment.SubMethod == sur.PaymentSubMethod);
+            return surcharge == null
+                ? 0
+                : (payment.OriginalPriceIdr - payment.DiscountNominal)*surcharge.Percentage/100 +
+                  surcharge.Constant;
         }
 
         private static void ProcessPayment(PaymentDetails paymentDetails, TransactionDetails transactionDetails, PaymentMethod method)
@@ -424,7 +452,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                uniqueCode = GetTransferFeeFromCache(rsvNo);
+                uniqueCode = GetUniqueCodeFromCache(rsvNo);
                 if (uniqueCode != 0M)
                 {
                     candidatePrice = finalPrice + uniqueCode;
