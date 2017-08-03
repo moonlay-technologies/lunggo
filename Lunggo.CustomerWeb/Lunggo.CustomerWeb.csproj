@@ -565,7 +565,6 @@
     <Content Include="Assets\images\asita.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
-    <Content Include="Assets\images\atm.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
@@ -588,6 +587,7 @@
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
+    <Content Include="Assets\images\buttons\back-btn.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-nav-sprite.png" />
@@ -635,6 +635,7 @@
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-slider.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-page.jpg" />
+    <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-promo-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider-mobile.jpg" />
     <Content Include="Assets\images\campaign\PaydayMadness\PaydayMadness-slider.jpg" />
     <Content Include="Assets\images\campaign\PaydayMegaDeals\PaydayMegaDeals-page-mobile.jpg" />
@@ -662,7 +663,6 @@
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks-transparan.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
-    <Content Include="Assets\images\cimb.jpg" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\cs-desktop.png" />
@@ -781,6 +781,11 @@
     <Content Include="Assets\images\hotel\filter-hotel-map.png" />
     <Content Include="Assets\images\hotel\hotel-dummy.jpg" />
     <Content Include="Assets\images\hotel\location-white.png" />
+    <Content Include="Assets\images\hotel\logo\aston.jpeg" />
+    <Content Include="Assets\images\hotel\logo\hotelsantika.svg" />
+    <Content Include="Assets\images\hotel\logo\mercure.png" />
+    <Content Include="Assets\images\hotel\logo\sprite-partner-hotel.png" />
+    <Content Include="Assets\images\hotel\logo\swissbelhotel.jpeg" />
     <Content Include="Assets\images\hotel\markers-blue.png" />
     <Content Include="Assets\images\hotel\markers-red.png" />
     <Content Include="Assets\images\hotel\popular\bali.jpg" />
@@ -820,7 +825,6 @@
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\jaminan.jpg" />
     <Content Include="Assets\images\kai.png" />
-    <Content Include="Assets\images\kredit.jpg" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
     <Content Include="Assets\images\load.gif" />
@@ -835,14 +839,12 @@
     <Content Include="Assets\images\lock-image.png" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
-    <Content Include="Assets\images\logo-garuda.jpg" />
     <Content Include="Assets\images\logo-promo.jpg" />
     <Content Include="Assets\images\logo-travorama-sm.png" />
     <Content Include="Assets\images\logo-travorama.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
-    <Content Include="Assets\images\mandiri.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\marker-calendar.png" />
@@ -1370,7 +1372,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Config\JsConfig.js" />
-    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Config\application.properties">
@@ -1749,15 +1750,14 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\StaticPage\Payment.cshtml" />
+    <Content Include="Views\common\partner-flight.cshtml" />
+    <Content Include="Views\common\partner-hotel.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
