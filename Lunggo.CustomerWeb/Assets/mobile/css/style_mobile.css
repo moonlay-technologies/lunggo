@@ -689,8 +689,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background-position: -44px 0; }
 
 .overlay.overlay--flight-filter .overlay__content, .overlay.overlay--hotel-filter .overlay__content, .overlay.overlay--flight-sort .overlay__content, .overlay.overlay--hotel-sort .overlay__content {
-  background: #878787;
-  color: #fff; }
+  background: #fff;
+  color: #000; }
 
 .overlay.overlay--hotel-map .overlay__content {
   background: #fff; }
@@ -4164,7 +4164,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   color: #000;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased;
-  background: #ffffff;
+  background: #fff;
   /*Fonts*/
   /*Custom Column*/
   /*Button*/
@@ -4724,7 +4724,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page-hotel .dh-list-, .page-hotel .hotel-list-container {
     padding: 0;
     margin: 0;
-    list-style: none; }
+    list-style: none;
+    margin-top: 20px;
+  }
     .page-hotel .dh-list- > li, .page-hotel .hotel-list-container > li {
       border-top: 1px solid #e9e9e9; }
       .page-hotel .dh-list- > li:first-child, .page-hotel .hotel-list-container > li:first-child {
@@ -4767,7 +4769,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   .page-hotel .top-content .hotel-summary {
     background-color: #2eb4e7;
     color: #fff;
-    position: relative; }
+    position: relative;
+      text-align: center;
+  }
     .page-hotel .top-content .hotel-summary:after {
       display: block;
       width: 100%;
@@ -6584,4 +6588,87 @@ container-rincian-penerbangan-modal {
 }
 .data-penumpang p {
     margin-bottom: 3px;
+}
+.summary-result-hotel {
+    padding: 14px 10px;
+}
+.ubah-pencarian {
+    background: #fff;
+    border-radius: 3px;
+    padding: 6px 1px;
+    color: #2eb4e7;
+    width: 120px;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+.hotel-sort-filter {
+    background: #fff;
+    border: 1px solid #e9e9e9;
+    text-align: center;
+    color: #292929;
+}
+.box-filter {
+    padding: 8px 0;
+    border-right: 1px solid #e9e9e9;
+}
+.separator-filter {
+    background: #e9e9e9;;
+    height: 10px;
+    width: 1px;
+}
+.no-border {
+    border: none !important;
+}
+
+.box-list-hotel {
+    background: #fff;
+    margin-bottom: 10px;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+}
+.info-list-hotel {
+    padding: 8px 5px 0 12px;
+}
+.judul-hotel {
+    
+}
+.judul-hotel h1 { 
+    font-size: 15px;
+    color: #353535;
+    margin-bottom: 7px;
+    font-weight: bold;
+    margin-top: 0;
+}
+.lokasi-hotel {
+    color: #5e5e5e;
+    font-size: 10px;
+}
+.bintang-hotel {
+    margin: 5px 0 5px 0;
+}
+.bintang-hotel img {
+    width: 25%;
+}
+.harga-list-hotel {
+
+}
+.harga-lama {
+    color: #7b7b7b;
+    text-decoration: line-through;
+    font-size: 10px;
+}
+.harga-baru {
+    color: #1daee4;
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+.separator-list-hotel-mobile {
+    margin: 5px 0;
+    background:#ebebeb;
+    height: 1px;
+    width: 100%;
+}
+.khusus-list-hotel {
+    background: #f9f9f9;
 }
