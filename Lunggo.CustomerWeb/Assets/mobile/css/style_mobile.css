@@ -6059,14 +6059,19 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
     .title-download-apps {
         margin-bottom: 10px;
-        font-family: 'Myriad';
     }
     .title-download-apps h3 {
-        font-size: 25px;
+        font-size: 19px;
         text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: -1px;
+         margin-top: 15px;
+        margin-bottom: 8px;
     }
     .title-download-apps span {
         font-weight: bold;
+        font-size: 11px;
+
     }
     .align-right {
         text-align: right;
@@ -6345,6 +6350,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 #why-travorama p {
   padding: 0 20px;
   text-align: center;
+}
+.icon-home-accordion img {
+    width: 80%;
+}
+.judul-btn-flight {
+    margin-top: 15px;
+    font-size: 17px;
 }
 
 /*.ui-accordion-content-active{
