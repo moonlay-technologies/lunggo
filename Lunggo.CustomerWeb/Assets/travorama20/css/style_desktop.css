@@ -9196,14 +9196,17 @@ file : /Assets/travorama20/css/_page_password.scss
     width: 300px;
 }
 .info-subscribe {
-    font-family: 'Myriad Bold';
     font-size: 36px;
     margin-left: 125px;
-    margin-top: 48px;
+    margin-top: 33px;
     line-height: 0.5;
 }
 .info-subscribe p {
     text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -2px;
+    font-size: 31px;
+    margin-bottom: 10px;
 }
 .info-subscribe span {
     font-family: 'Myriad';
@@ -9292,4 +9295,8 @@ file : /Assets/travorama20/css/_page_password.scss
     text-align: center;
     margin-top: 50px;
     font-size: 10px;
+}
+
+.img-partner img {
+    height: 50px
 }
