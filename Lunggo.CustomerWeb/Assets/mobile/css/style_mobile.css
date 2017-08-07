@@ -6353,6 +6353,75 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   padding-top: 20px;
 }*/
 
+.img-partner {
+  margin-bottom: 20px;
+}
+
 .img-partner img {
     height: 35px;
 }
+
+.partner {
+  padding: 0;
+}
+
+.partner-hotel {
+  background-size: 724.5px 25.2px;
+  height: 25.2px;}
+  .partner-hotel.aston-international {
+    background-position: 0 0;
+    width: 42.7px; }
+  .partner-hotel.ibis {
+    background-position: -42px 0;
+    width: 23.8px; }
+  .partner-hotel.ibis-styles {
+    background-position: -67.2px 0;
+    width: 23.8px; }
+  .partner-hotel.phmhospitality {
+    background-position: -91px 0;
+    width: 24.5px; }
+  .partner-hotel.topotel {
+    background-position: -126px 0;
+    width: 24.5px; }
+  .partner-hotel.swiss-belhotel-international {
+    background-position: -150.5px 0;
+    width: 22.4px; }
+  .partner-hotel.redplanet {
+    background-position: -174.3px 0;
+    width: 39.2px; }
+  .partner-hotel.best-western-international {
+    background-position: -214.9px 0;
+    width: 98.7px; }
+  .partner-hotel.dafam {
+    background-position: -238.7px 0;
+    width: 21.7px; }
+  .partner-hotel.primeplaza {
+    background-position: -260.4px 0;
+    width: 28px; }
+  .partner-hotel.tauzia-hotel-management {
+    background-position: -364px 0;
+    width: 20.3px; }
+  .partner-hotel.santika-indonesia-hotels-resorts {
+    background-position: -384.3px 0;
+    width: 37.8px; }
+  .partner-hotel.intiwhiz {
+    background-position: -421.4px 0;
+    width: 41.3px; }
+  .partner-hotel.maxone {
+    background-position: -465.5px 0;
+    width: 42px; }
+  .partner-hotel.mercure {
+    background-position: -508.2px 0;
+    width: 42px; }
+  .partner-hotel.horison {
+    background-position: -550.2px 0;
+    width: 42px; }
+  .partner-hotel.kagum {
+    background-position: -592.9px 0;
+    width: 42px; }
+  .partner-hotel.parador {
+    background-position: -634.9px 0;
+    width: 42px; }
+  .partner-hotel.mphg {
+    background-position: -678.3px 0px;
+    width: 42px; }

@@ -9297,6 +9297,75 @@ file : /Assets/travorama20/css/_page_password.scss
     font-size: 10px;
 }
 
+.img-partner {
+  margin-bottom: 40px;
+}
+
 .img-partner img {
     height: 50px
 }
+
+.partner {
+  padding: 20px 0px 15px;
+}
+
+.partner-hotel {
+  background-size: 1035px 36px;
+  height: 36px;}
+  .partner-hotel.aston-international {
+    background-position: 0 0;
+    width: 61px; }
+  .partner-hotel.ibis {
+    background-position: -60px 0;
+    width: 34px; }
+  .partner-hotel.ibis-styles {
+    background-position: -96px 0;
+    width: 34px; }
+  .partner-hotel.phmhospitality {
+    background-position: -130px 0;
+    width: 50px; }
+  .partner-hotel.topotel {
+    background-position: -180px 0;
+    width: 35px; }
+  .partner-hotel.swiss-belhotel-international {
+    background-position: -215px 0;
+    width: 32px; }
+  .partner-hotel.redplanet {
+    background-position: -249px 0;
+    width: 56px; }
+  .partner-hotel.best-western-international {
+    background-position: -307px 0;
+    width: 141px; }
+  .partner-hotel.dafam {
+    background-position: -341px 0;
+    width: 31px; }
+  .partner-hotel.primeplaza {
+    background-position: -372px 0;
+    width: 40px; }
+  .partner-hotel.tauzia-hotel-management {
+    background-position: -520px 0;
+    width: 29px; }
+  .partner-hotel.santika-indonesia-hotels-resorts {
+    background-position: -549px 0;
+    width: 54px; }
+  .partner-hotel.intiwhiz {
+    background-position: -602px 0;
+    width: 59px; }
+  .partner-hotel.maxone {
+    background-position: -665px 0;
+    width: 60px; }
+  .partner-hotel.mercure {
+    background-position: -726px 0;
+    width: 60px; }
+  .partner-hotel.horison {
+    background-position: -786px 0;
+    width: 60px; }
+  .partner-hotel.kagum {
+    background-position: -847px 0;
+    width: 60px; }
+  .partner-hotel.parador {
+    background-position: -907px 0;
+    width: 60px; }
+  .partner-hotel.mphg {
+    background-position: -969px 0px;
+    width: 60px; }
