@@ -68,6 +68,7 @@
 
             headerIcon.toggle(accordionAnimationDuration);
             $(this).find("div span").toggle(accordionAnimationDuration);
+            $(this).find(".notification").toggle(accordionAnimationDuration);
         });
     </script>
 }
@@ -207,18 +208,7 @@
                 })
             </div>
             <div class="col-xs-12 btn-flight">
-                
-                <div style="
-                    position: absolute;
-                    top: 15px;
-                    left: 30px;
-                    background: red;
-                    border-radius: 50%;
-                    width: 16px;
-                    height: 16px;
-                    text-align: center;">
-                        <span style="color: white;"><b>1</b></span>
-                </div>
+                <div class="notification"><span>1</span></div>
                 <div class="col-xs-4 icon-home-accordion">
                     <img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" />
                 </div>

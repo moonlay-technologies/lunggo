@@ -19,12 +19,14 @@
     font-size: 14px;
     margin: 35px 0 25px; }
   .travorama-mobileApp .mobileApp-top .app-download a.playstore-icon {
-    background: url("/Assets/images/campaign/MobileApp/play-store.png") no-repeat;
+    background: url("/Assets/images/buttons/google-play.png") no-repeat;
+    background-size: 134px 46px;
     width: 134px;
     height: 46px;
     display: inline-block; }
   .travorama-mobileApp .mobileApp-top .app-download a.appstore-icon {
-    background: url("/Assets/images/campaign/MobileApp/app-store.png") no-repeat;
+    background: url("/Assets/images/buttons/app-store.png") no-repeat;
+    background-size: 138px 46px;
     width: 138px;
     height: 46px;
     display: inline-block;

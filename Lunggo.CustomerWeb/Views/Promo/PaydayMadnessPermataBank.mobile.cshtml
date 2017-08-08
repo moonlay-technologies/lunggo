@@ -108,7 +108,7 @@
         {
             <div class="row container-list-ketentuan">
                 <div class="col-xs-1 list-number-mobile">@(i+1)</div>
-                <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.Terms[i]</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@Html.Raw(ViewBag.Terms[i])</div>
             </div>
         }
         </div>
@@ -118,7 +118,7 @@
         <div class="subscribe-before">
             <div class="judul-subscribe">Subscribe now!</div>
             <div class="container-form-subscribe">
-                <div class="">
+                <!-- <div class=""> -->
                     <form class="subscribe-form">
                         <div class="form-group">
                             <input type="text" class="form-control form-control-mobile subscribe-name" id="exampleInputEmail1" placeholder="Masukkan Nama Anda" name="name">
@@ -128,7 +128,7 @@
                         </div>
                         <input type="submit" class="btn-subscribe" value="SUBSCRIBE">
                     </form>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div class="subscribe-after" style="display: none; padding-top: 20px">

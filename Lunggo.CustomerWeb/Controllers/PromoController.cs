@@ -61,7 +61,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var termList = new List<string>();
 
                     termList.Add("Diskon sebesar 15% (Maks. Rp 150.000). Tanpa minimum transaksi");
-                    termList.Add("Berlaku untuk pemesanan setiap tanggal <span class=\"os-bold blue-txt\">25, 26 dan 27 setiap bulan</span>");
+                    termList.Add("Berlaku untuk pemesanan setiap tanggal <span class=\"os-bold blue-txt\">25, 26, dan 27</span> setiap bulan");
                     termList.Add("Periode terbang dan inap kapan saja");
                     termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
                     termList.Add("Berlaku untuk pembayaran menggunakan bank transfer supported by Permata Bank");

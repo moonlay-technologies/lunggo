@@ -117,39 +117,6 @@ span.close {
 .no-scroll {
   overflow: hidden; }
 
-.regular-txt {
-  font-family: 'Open Sans';
-  font-weight: 400; }
-
-.semibold-txt {
-  font-family: 'Open Sans';
-  font-weight: 600; }
-
-.bold-txt {
-  font-family: 'Open Sans';
-  font-weight: 700; }
-
-.darkgrey-txt {
-  color: #555555; }
-
-.blue-txt {
-  color: #1daee4; }
-  .blue-txt.bg {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 20px; }
-
-.grey-txt {
-  color: #999; }
-
-.green-txt {
-  color: #3a8e1b; }
-
-.orange-txt {
-  color: #ff7200; }
-
-.white-txt {
-  color: #ffffff; }
 
 /*Custom scrollbar*/
 .custom-scroll::-webkit-scrollbar, .page-index .search-location div.active::-webkit-scrollbar {
