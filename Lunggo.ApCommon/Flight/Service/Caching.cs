@@ -581,11 +581,11 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
-        private void SaveTiketTokenToCache(string token, string itinCacheId)
+        private void SaveTiketTokenToCache(string fareId, string token)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "tokenItinerary:" + itinCacheId;
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout"));
+            var redisKey = "tokenItinerary:" + fareId;
+            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "ItineraryCacheTimeout")) + 20;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -602,10 +602,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
         }
 
-        public string GetTiketTokenInCache(string itinCacheId)
+        public string GetTiketTokenInCache(string fareId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "tokenItinerary:" + itinCacheId;
+            var redisKey = "tokenItinerary:" + fareId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {

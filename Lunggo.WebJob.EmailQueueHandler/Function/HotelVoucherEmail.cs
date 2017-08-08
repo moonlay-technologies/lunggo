@@ -33,12 +33,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             var summary = JsonConvert.DeserializeObject<HotelReservationForDisplay>(summaryJson);
             var hotelCd = summary.HotelDetail.HotelCode;
-            var images = HotelService.GetInstance().GetHotelDetailFromDb(hotelCd).ImageUrl;
-            var firstOrDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-                summary.HotelDetail.MainImage = images == null
-                    ? null
-                    : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+            //var images = HotelService.GetInstance().GetHotelDetailFromDb(hotelCd).ImageUrl;
+            //var firstOrDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            //if (firstOrDefault != null)
+            //    summary.HotelDetail.MainImage = images == null
+            //        ? null
+            //        : "http://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
             sw.Stop();
             Console.WriteLine("Done Getting Required Files and Data from Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();

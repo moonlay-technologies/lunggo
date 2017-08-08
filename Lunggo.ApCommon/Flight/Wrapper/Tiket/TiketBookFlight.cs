@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
 
                 //Step 2 : Order
                 var orderResult = Order(token);
-                if (orderResult == null)
+                if (orderResult == null || orderResult.Myorder == null)
                     return new BookFlightResult
                     {
                         IsSuccess = false,
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         {
                             BookingStatus = BookingStatus.Booked,
                             BookingId = orderResult.Myorder == null ? "" : orderResult.Myorder.Order_id,
-                            TimeLimit = orderResult.Myorder.Data[0].order_expire_datetime
+                            TimeLimit = orderResult.Myorder == null ? new DateTime() : orderResult.Myorder.Data[0].order_expire_datetime
                         }
                     };
 
@@ -205,10 +205,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportissueddatea" + i, issueDate.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuinga" + i, adult.PassportCountry);
                         }
+                        i++;
                     }
-
-                    i++;
                 }
+
                 if ( childs != null && childs.Count != 0)
                 {
                     i = 1;
@@ -219,10 +219,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         request.AddQueryParameter("lastnamec" + i, child.LastName);
                         request.AddQueryParameter("idc" + i, generateId.ToString());
                         request.AddQueryParameter("titlec" + i, GetTitle(child.Title));
-                        if (bookInfo.Itinerary.RequireBirthDate)
-                        {
-                            request.AddQueryParameter("birthdatec" + i, child.DateOfBirth.Value.ToString("yyyy-MM-dd"));
-                        }
+                        request.AddQueryParameter("birthdatec" + i, child.DateOfBirth.Value.ToString("yyyy-MM-dd"));
                         //if (bookInfo.Itinerary.RequireNationality)
                         //{
                         //    request.AddQueryParameter("passportnationalityc" + i, child.Nationality);
@@ -241,10 +238,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportissuingc" + i, child.PassportCountry);
                             
                         }
-                        
-                    }
 
-                    i++;
+                        i++;
+                    }
                 }
 
                 if (infants != null && infants.Count != 0)
@@ -256,12 +252,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         request.AddQueryParameter("firstnamei" + i, infant.FirstName);
                         request.AddQueryParameter("lastnamei" + i, infant.LastName);
                         request.AddQueryParameter("titlei" + i, GetTitle(infant.Title));
-                        request.AddQueryParameter("parenti" + i, infant.FirstName);
+                        request.AddQueryParameter("parenti" + i, adults.First().FirstName);
                         request.AddQueryParameter("idi" + i, generateId.ToString());
-                        if (bookInfo.Itinerary.RequireBirthDate)
-                        {
-                            request.AddQueryParameter("birthdatei" + i, infant.DateOfBirth.Value.ToString("yyyy-MM-dd"));
-                        }
+                        request.AddQueryParameter("birthdatei" + i, infant.DateOfBirth.Value.ToString("yyyy-MM-dd"));
                         if (!string.IsNullOrEmpty(bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity))
                         {
                             request.AddQueryParameter("dcheckinbaggagei1" + i, bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity);
@@ -279,11 +272,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportissueddatei" + i, DateTime.Now.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuingi" + i, infant.PassportCountry);
                         }
-                        
+                        i++;
                     }
-
-                    i++;
-                    
                 }
 
                 var response = client.Execute(request);
@@ -368,11 +358,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
         }
 
 
-        internal override GetTripDetailsResult GetTripDetails(TripDetailsConditions conditions)
-        {
-            return new GetTripDetailsResult();
-        }
-
         internal override Currency CurrencyGetter(string currency)
         {
             return new Currency(currency, Supplier.Sriwijaya);
@@ -383,6 +368,5 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             throw new NotImplementedException();
         }
 
-        
     }
 }

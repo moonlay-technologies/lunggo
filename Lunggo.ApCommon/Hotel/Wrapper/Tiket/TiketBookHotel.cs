@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Extension;
 using RestSharp;
 
@@ -56,9 +57,19 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                     IsPriceChanged = false,
                 };
 
-            //Step 4 : Checkout Page Customer
-            var checkoutCustResponse = CheckoutCustomer(input.Token);
-            if (checkoutCustResponse == null)
+            //Step 4 : Checkout Login
+            var checkoutLogResponse = CheckoutLogin(input.Token);
+            if (checkoutLogResponse == null)
+                return new RevalidateHotelResult
+                {
+                    IsValid = false,
+                    IsPriceChanged = false,
+
+                };
+
+            //Step 5 : Checkout Page Customer
+            var checkoutCustResponse = CheckoutCustomer(input, orderResult.MyOrder.Data[0].OrderDetailId);
+            if (checkoutLogResponse == null)
                 return new RevalidateHotelResult
                 {
                     IsValid = false,
@@ -72,20 +83,9 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
         public TiketHotelBaseResponse AddOrder(HotelBookInfo input)
         {
             var tiketClient = new TiketClientHandler();
-            //var client = new RestClient(input.BookUri);
-            //client.CookieContainer = new CookieContainer();
             var url = input.BookUri.Split(new string[] { ".com" }, StringSplitOptions.None)[1];
             var client = tiketClient.CreateTiketClient();
-            //var url = "/order/add/hotel";
             var request = new RestRequest(url, Method.GET);
-            //request.AddQueryParameter("startdate", input.CheckIn.ToString("yyyy-MM-dd"));
-            //request.AddQueryParameter("enddate", input.Checkout.ToString("yyyy-MM-dd"));
-            //request.AddQueryParameter("night", input.Nights.ToString());
-            //request.AddQueryParameter("room", input.Rooms.ToString());
-            //request.AddQueryParameter("adult", input.AdultCount.ToString());
-            //request.AddQueryParameter("child", input.ChildCount.ToString());
-            ////request.AddQueryParameter("hotelname", input.HotelName);
-            //request.AddQueryParameter("room_id", input.RoomId);
             request.AddQueryParameter("token", input.Token);
             request.AddQueryParameter("output", "json");
             var response = client.Execute(request);
@@ -127,19 +127,67 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             return checkoutResponse;
         }
 
-        public TiketHotelBaseResponse CheckoutCustomer(string token)
+        public TiketHotelBaseResponse CheckoutLogin(string token)
         {
             var tiketClient = new TiketClientHandler();
             var client = tiketClient.CreateTiketClient();
             var url = "/checkout/checkout_customer";
             var request = new RestRequest(url, Method.GET);
             request.AddQueryParameter("token", token);
-            request.AddQueryParameter("salutation", "Mr");
-            request.AddQueryParameter("firstName", "Suheri");
-            request.AddQueryParameter("lastName", "Marpaung");
-            request.AddQueryParameter("emailAddress", "suheri@travelmadezy.com");
-            request.AddQueryParameter("phone", "%2B85360343300");
+            request.AddQueryParameter("salutation", "Mrs");
+            request.AddQueryParameter("firstName", "Dwi");
+            request.AddQueryParameter("lastName", "Agustina");
+            request.AddQueryParameter("emailAddress", "suheri@travelmadezy.com"); // Change this
+            request.AddQueryParameter("phone", "%2B85360343300"); //change this
             request.AddQueryParameter("saveContinue", "2");
+            request.AddQueryParameter("output", "json");
+            var response = client.Execute(request);
+            var responseCust = JsonExtension.Deserialize<TiketHotelBaseResponse>(response.Content);
+            if (responseCust == null && responseCust.Diagnostic.Status != "200")
+                return null;
+            if (responseCust.Diagnostic != null && responseCust.Diagnostic.ErrorMessage != null)
+                return null;
+            return responseCust;
+        }
+
+        public TiketHotelBaseResponse CheckoutCustomer(HotelBookInfo input, string detailOrderId)
+        {
+            var tiketClient = new TiketClientHandler();
+            var client = tiketClient.CreateTiketClient();
+            var url = "/checkout/checkout_customer";
+            var firstPax = input.Passengers.FirstOrDefault();
+            if (firstPax == null)
+                return null;
+            var request = new RestRequest(url, Method.GET);
+            
+            //Pax Data
+            request.AddQueryParameter("salutation", TitleCd.Mnemonic(firstPax.Title));
+            request.AddQueryParameter("firstName", firstPax.FirstName);
+            request.AddQueryParameter("lastName", firstPax.LastName); 
+            request.AddQueryParameter("phone", "%2B85360343311");
+
+            //Customer Data
+            request.AddQueryParameter("conSalutation", TitleCd.Mnemonic(firstPax.Title));
+            var contactName = input.Contact.Name.Split(' ');
+            if (contactName.Length > 2)
+            {
+                request.AddQueryParameter("conFirstName", contactName[0]);
+                var lastName = input.Contact.Name.Replace(contactName[0], "").Trim();
+                request.AddQueryParameter("conLastName", lastName);
+            }
+            else
+            {
+                request.AddQueryParameter("conFirstName", input.Contact.Name);
+                request.AddQueryParameter("conLastName", input.Contact.Name);
+            }
+            
+            request.AddQueryParameter("conEmailAddress", input.Contact.Email);
+            request.AddQueryParameter("conPhone", "%2B85360343322");
+
+            //Others
+            request.AddQueryParameter("token", input.Token);
+            request.AddQueryParameter("detailId", detailOrderId);
+            request.AddQueryParameter("country", "ID");
             request.AddQueryParameter("output", "json");
             var response = client.Execute(request);
             var responseCust = JsonExtension.Deserialize<TiketHotelBaseResponse>(response.Content);

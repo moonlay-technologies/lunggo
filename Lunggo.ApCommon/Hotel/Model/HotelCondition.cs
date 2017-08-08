@@ -58,6 +58,9 @@ namespace Lunggo.ApCommon.Hotel.Model
         public string HotelName { get; set; }
         public string Token { get; set; }
         public string BookUri { get; set; }
+        public List<Pax> Passengers { get; set; }
+        public Contact Contact { get; set; }
+        public string SpecialRequest { get; set; }
     }
 
     public class HotelIssueInfo

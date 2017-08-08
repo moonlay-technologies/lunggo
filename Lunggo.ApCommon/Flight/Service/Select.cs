@@ -14,7 +14,6 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SelectFlightOutput SelectFlight(SelectFlightInput input)
         {
-            string tiketToken;
             if (input.RegisterNumbers == null || input.RegisterNumbers.Count == 0)
                 return new SelectFlightOutput
                 {
@@ -24,13 +23,8 @@ namespace Lunggo.ApCommon.Flight.Service
 
             if (ParseTripType(input.SearchId) == TripType.OneWay)
             {
-                var token = QuarantineItinerary(input.SearchId, input.RegisterNumbers[0], 0, out tiketToken);
+                var token = QuarantineItinerary(input.SearchId, input.RegisterNumbers[0], 0);
                 var bundledToken = BundleFlight(new List<string> { token });
-                if(!string.IsNullOrEmpty(tiketToken))
-                
-                //if only supplier was Tiket.Com
-                SaveTiketTokenToCache(tiketToken, bundledToken);
-                var temp = GetTiketTokenInCache(bundledToken);
                 
                 return new SelectFlightOutput
                 {
@@ -77,7 +71,7 @@ namespace Lunggo.ApCommon.Flight.Service
             });
             if (matchedCombo != null)
             {
-                var token = QuarantineItinerary(input.SearchId, matchedCombo.BundledRegister, 0, out tiketToken);
+                var token = QuarantineItinerary(input.SearchId, matchedCombo.BundledRegister, 0);
                 var bundledToken = BundleFlight(new List<string> { token });
                 return new SelectFlightOutput
                 {
@@ -111,9 +105,8 @@ namespace Lunggo.ApCommon.Flight.Service
             return newToken;
         }
 
-        private string QuarantineItinerary(string searchId, int registerNumber, int partNumber, out string tiketToken)
+        private string QuarantineItinerary(string searchId, int registerNumber, int partNumber)
         {
-            tiketToken = null;
             var itinCacheId = FlightItineraryCacheIdSequence.GetInstance().GetNext().ToString(CultureInfo.InvariantCulture);
             var itin = GetItineraryFromSearchCache(searchId, registerNumber, partNumber);
 
@@ -151,8 +144,10 @@ namespace Lunggo.ApCommon.Flight.Service
 
                         }
                     }
-                    
-                    tiketToken = flightData.Token;
+                    itin.Token = flightData.Token;
+                    //TODO Save Token Here
+                    //SaveTiketTokenToCache(itin.FareId, flightData.Token);
+                    //tiketToken = flightData.Token;
                 }
             }
 
@@ -168,7 +163,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private List<string> QuarantineItineraries(string searchId, IEnumerable<int> registerNumbers)
         {
             string tiketToken;
-            return registerNumbers.Select((reg, idx) => QuarantineItinerary(searchId, reg, idx+1, out tiketToken)).ToList();
+            return registerNumbers.Select((reg, idx) => QuarantineItinerary(searchId, reg, idx+1)).ToList();
         }
     }
 }

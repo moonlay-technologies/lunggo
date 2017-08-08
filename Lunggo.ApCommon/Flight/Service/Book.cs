@@ -174,7 +174,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Contact = input.Contact,
                 Passengers = input.Passengers,
                 Test = input.Test,
-                Token = GetTiketTokenInCache(input.Token)
+                Token = itin.Token
             };
             var response = BookFlightInternal(bookInfo);
             var bookResult = new BookResult();

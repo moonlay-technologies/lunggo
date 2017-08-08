@@ -42,87 +42,17 @@ namespace Lunggo.BackendWeb
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AppInitializer.Init();
-            //var token = "";
-            //var bookInfo = HotelService.GetInstance().GetSelectedHotelDetailsFromCache(token);
-            //if (bookInfo == null || bookInfo.Rooms == null || bookInfo.Rooms.Count == 0)
-            //{
-            //    Console.WriteLine("NULL");
-            //}
 
-            //var request = new HotelBookInfo
+            //FlightService.GetInstance().CommenceIssueTicket(new IssueTicketInput
             //{
-            //    CheckIn = bookInfo.CheckInDate,
-            //    Checkout = bookInfo.CheckOutDate,
-            //    AdultCount = bookInfo.Rooms[0].Rates[0].AdultCount,
-            //    ChildCount = bookInfo.Rooms[0].Rates[0].ChildCount,
-            //    Nights = bookInfo.NightCount,
-            //    HotelName = bookInfo.HotelName,
-            //    Rooms = bookInfo.Rooms.Count,
-            //    RoomId = bookInfo.Rooms[0].RoomCode,
-            //    Token = bookInfo.TiketToken
-            //};
+            //    RsvNo = "157806538888"
+            //});
 
-            //var client = new TiketBookHotel();
-            //var response = client.BookHotel(request);
-            //var temp = response;
             HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             {
-                RsvNo = "256186563079"
+                RsvNo = "258886563179"
             });
             Console.WriteLine("OKE");
-            //FlightService.GetInstance().SendIssueTimeoutNotifToDeveloper("114336557879");
-            //Console.WriteLine("Done");
-            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            //{
-            //    RsvNo = "296406547890"
-            //});
-            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            //{
-            //    RsvNo = "296406547891"
-            //});
-
-            //HotelService.GetInstance().CancelHotelBooking(new HotelCancelBookingInput
-            //{
-            //    BookingId = "296406547891"
-            //});
-
-            //Console.WriteLine("Done");
-            //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromTableStorage(24408);
-            //var image1 = hotelDetail.ImageUrl.Where(u => u.Type == "GEN").Take(1).FirstOrDefault();
-            //var image2 = hotelDetail.ImageUrl.Where(u => u.Order == 1).Take(1).FirstOrDefault();
-            //Console.WriteLine("Done");
-
-            //HotelService.GetInstance().SaveHotelDetailByLocation();
-            //var x = HotelService.GetInstance().GetHotelDetailByLocation("JAV");
-            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            //{
-            //    RsvNo = "284796541379"
-            //});
-
-            //HotelService.GetInstance().Search(new SearchHotelInput
-            //{
-            //    Occupancies = new List<Occupancy>
-            //    {
-            //        new Occupancy
-            //        {
-            //            AdultCount = 1,
-            //            ChildCount = 2,
-            //            RoomCount = 1,
-            //            ChildrenAges = new List<int>{7,8}
-            //        },
-            //         new Occupancy
-            //        {
-            //            AdultCount = 2,
-            //            ChildCount = 0,
-            //            RoomCount = 2,
-            //        }
-            //    },
-            //    CheckIn = new DateTime(2017, 6, 23),
-            //    Nights = 2,
-            //    Location = 16151,
-            //    SearchHotelType = SearchHotelType.Location,
-
-            //});
         }
     }
 }

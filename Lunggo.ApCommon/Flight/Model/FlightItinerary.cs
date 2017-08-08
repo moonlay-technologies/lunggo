@@ -71,6 +71,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string SearchId { get; set; }
         public string FareId { get; set; }
         public string BookingId { get; set; }
+        public string Token { get; set; }
         public bool RequirePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
