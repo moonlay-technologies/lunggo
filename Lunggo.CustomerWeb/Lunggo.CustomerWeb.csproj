@@ -687,7 +687,6 @@
     <Content Include="Assets\images\airlines\ZL.png" />
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
-    <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down-grey.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
@@ -880,7 +879,6 @@
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\global-error.jpg" />
     <Content Include="Assets\images\go-top.png" />
-    <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
     <Content Include="Assets\images\harga.jpg" />
@@ -914,7 +912,6 @@
     <Content Include="Assets\images\hotel\logo\aston.jpeg" />
     <Content Include="Assets\images\hotel\logo\hotelsantika.svg" />
     <Content Include="Assets\images\hotel\logo\mercure.png" />
-    <Content Include="Assets\images\hotel\logo\santika.svg" />
     <Content Include="Assets\images\hotel\logo\sprite-partner-hotel.png" />
     <Content Include="Assets\images\hotel\logo\swissbelhotel.jpeg" />
     <Content Include="Assets\images\hotel\markers-blue.png" />
