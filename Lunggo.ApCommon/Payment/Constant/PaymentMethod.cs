@@ -26,7 +26,10 @@
         Undefined = 0,
         Mandiri = 1,
         BCA = 2,
-        Permata = 3
+        Permata = 3,
+        BNI = 4,
+        BRI = 5,
+        CIMB = 6
     }
 
     internal class PaymentMethodCd
@@ -125,6 +128,12 @@
                     return "Mandiri";
                 case PaymentSubMethod.Permata:
                     return "Permata";
+                case PaymentSubMethod.BNI:
+                    return "BNI";
+                case PaymentSubMethod.BRI:
+                    return "BRI";
+                case PaymentSubMethod.CIMB:
+                    return "CIMB";
                 default:
                     return null;
             }
@@ -140,6 +149,12 @@
                     return PaymentSubMethod.Mandiri;
                 case "Permata":
                     return PaymentSubMethod.Permata;
+                case "BNI":
+                    return PaymentSubMethod.BNI;
+                case "BRI":
+                    return PaymentSubMethod.BRI;
+                case "CIMB":
+                    return PaymentSubMethod.CIMB;
                 default:
                     return PaymentSubMethod.Undefined;
             }

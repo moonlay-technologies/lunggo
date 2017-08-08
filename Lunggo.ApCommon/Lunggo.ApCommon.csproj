@@ -138,6 +138,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -675,6 +676,13 @@
     <Compile Include="Payment\Service\ModelConversion.cs" />
     <Compile Include="Payment\Service\PaymentProcessor.cs" />
     <Compile Include="Payment\Service\ServiceSingleton.cs" />
+    <Compile Include="Payment\Wrapper\Nicepay\Model\Nicepay.cs" />
+    <Compile Include="Payment\Wrapper\Nicepay\NicepayClass.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Payment\Wrapper\Nicepay\NicepayConfig.cs" />
+    <Compile Include="Payment\Wrapper\Nicepay\NicepayWrapper.cs" />
+    <Compile Include="Payment\Wrapper\Nicepay\Requestor.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\Indomaret.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\MandiriEcash.cs" />
     <Compile Include="Payment\Wrapper\Veritrans\Model\IndosatDompetku.cs" />
