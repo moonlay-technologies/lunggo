@@ -149,8 +149,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                         return PaymentStatus.Challenged; //Reversal
                     case "2":
                         return PaymentStatus.Challenged; // Refund
-                    case "3":
-                        return PaymentStatus.Expired; //Unpaid/Expired
+                    case "3": // Unpaid/Expired
+                        return response.resultMsg.ToLower() == "unpaid" ? PaymentStatus.Pending : PaymentStatus.Expired;
                     case "4":
                         return PaymentStatus.Cancelled; //Cancelled
                     case "9":

@@ -20,6 +20,8 @@ public class NotificationResult
     public string instmntMon { get; set; }
     public string vacctValidTm { get; set; }
     public string status { get; set; }
+    public string vacctNo { get; set; }
+    public string bankCd { get; set; }
 }
 
 public class JsonResult

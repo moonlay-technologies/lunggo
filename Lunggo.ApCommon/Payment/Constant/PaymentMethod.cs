@@ -29,7 +29,9 @@
         Permata = 3,
         BNI = 4,
         BRI = 5,
-        CIMB = 6
+        CIMB = 6,
+        Maybank = 7,
+        Danamon = 8
     }
 
     internal class PaymentMethodCd
@@ -134,6 +136,10 @@
                     return "BRI";
                 case PaymentSubMethod.CIMB:
                     return "CIMB";
+                case PaymentSubMethod.Maybank:
+                    return "Maybank";
+                case PaymentSubMethod.Danamon:
+                    return "Danamon";
                 default:
                     return null;
             }
@@ -155,6 +161,10 @@
                     return PaymentSubMethod.BRI;
                 case "CIMB":
                     return PaymentSubMethod.CIMB;
+                case "Maybank":
+                    return PaymentSubMethod.Maybank;
+                case "Danamon":
+                    return PaymentSubMethod.Danamon;
                 default:
                     return PaymentSubMethod.Undefined;
             }
