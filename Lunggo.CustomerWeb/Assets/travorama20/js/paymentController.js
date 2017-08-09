@@ -69,7 +69,7 @@ app.controller('paymentController', [
         }, 1000);
         // ************************ CreditCard and BIN Discount *****************************
         $scope.CreditCard = {
-            TwoClickToken: 'false',
+            // TwoClickToken: 'false',
             Name: '',
             Month: '01',
             Year: 2016,
@@ -77,21 +77,15 @@ app.controller('paymentController', [
             Number: ''
         };
 
+        //// bin == Bank Identification Number, untuk identifikasi dari bank mana
         $scope.binDiscount = {
             amount: 0,
             displayName: '',
             status: '',
             reset: function (method) {
                 $scope.currentchoice = method;
-                if (method == 'cc') {
-                    if ($scope.binDiscount.amount != 0) {
-                        $scope.binDiscount.available = true;
-                    } else {
-                        $scope.binDiscount.available = false;
-                    }
-                } else {
-                    $scope.binDiscount.available = false;
-                }
+                ////  available = true if amount <> 0 AND method cc
+                $scope.binDiscount.available = $scope.binDiscount.amount != 0 && method == 'cc';
             },
             available: false,
             replaceDiscount: false,
@@ -100,17 +94,13 @@ app.controller('paymentController', [
             checking: false,
             text: '',
             tohex: function (str) {
-
                 var hex, i;
-
                 var result = "";
                 for (i = 0; i < str.length; i++) {
                     hex = str.charCodeAt(i).toString(16);
                     result += ("000" + hex).slice(-4);
                 }
-
                 return result;
-
             },
             check: function () {
                 if ($scope.trial > 3) {
@@ -160,8 +150,7 @@ app.controller('paymentController', [
                                 $scope.binDiscount.replaceDiscount = false;
                                 $scope.binDiscount.available = false;
                             }
-                        }
-                        else {
+                        } else {
                             $scope.binDiscount.amount = 0;
                             $scope.binDiscount.checked = true;
                             $scope.binDiscount.status = returnData.data.error;
@@ -196,15 +185,7 @@ app.controller('paymentController', [
             firstRequest : true,
             reset: function (method) {
                 $scope.currentchoice = method;
-                if (method == 'VA') {
-                    if ($scope.methodDiscount.amount != 0) {
-                        $scope.methodDiscount.available = true;
-                    } else {
-                        $scope.methodDiscount.available = false;
-                    }
-                } else {
-                    $scope.methodDiscount.available = false;
-                }
+                $scope.methodDiscount.available = $scope.methodDiscount.amount != 0 && method == 'VA';
             },
             available: false,
             replaceDiscount: false,
@@ -221,14 +202,9 @@ app.controller('paymentController', [
                         $scope.trial = 0;
                     }
                     //Check Authorization
-                    var authAccess = getAuthAccess();
                     $scope.methodDiscount.checking = true;
-                    var vouchercode;
-                    if ($scope.voucher.receive) {
-                        vouchercode = $scope.voucher.code;
-                    } else {
-                        vouchercode = '';
-                    }
+                    var vouchercode = ($scope.voucher.receive) ? $scope.voucher.code : '';
+                    var authAccess = getAuthAccess();
                     if (authAccess == 1 || authAccess == 2) {
                         $http({
                             method: 'POST',
@@ -238,13 +214,14 @@ app.controller('paymentController', [
                                 voucherCode: vouchercode
                             },
                             headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                        }).then(function(returnData) {
+                        }).then(function(result) {
                             $scope.methodDiscount.wait = false;
                             $scope.methodDiscount.firstRequest = false;
-                            if (returnData.data.status == 200) {
-                                if (returnData.data.isAvailable) {
-                                    $scope.methodDiscount.amount = returnData.data.amount;
-                                    $scope.methodDiscount.displayName = returnData.data.name;
+                            var data = result.data;
+                            if (data.status == 200) {
+                                if (data.isAvailable) {
+                                    $scope.methodDiscount.amount = data.amount;
+                                    $scope.methodDiscount.displayName = data.name;
                                     // get unique code for transfer payment
                                     $scope.methodDiscount.status = 'Success';
                                     if ($scope.methodDiscount.amount != 0) {
@@ -252,30 +229,25 @@ app.controller('paymentController', [
                                     }
                                     if ($scope.paymentMethod == 'VirtualAccount') {
                                         $scope.methodDiscount.available = true;
-                                        $scope.methodDiscount.replaceDiscount = returnData.data.replaceOriginalDiscount;
+                                        $scope.methodDiscount.replaceDiscount = data.replaceOriginalDiscount;
                                     } else {
                                         $scope.methodDiscount.available = false;
                                         $scope.methodDiscount.replaceDiscount = false;
                                     }
-
                                     $scope.binDiscount.replaceDiscount = false;
                                     $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
                                 } else {
                                     $scope.methodDiscount.amount = 0;
                                     $scope.methodDiscount.checked = true;
-                                    $scope.methodDiscount.status = returnData.data.error;
-                                    if (returnData.data.name != null) {
-                                        $scope.methodDiscount.text = 'Maaf, kuota promo ' + returnData.data.name + ' hari ini telah habis.';
-                                    } else {
-                                        $scope.methodDiscount.text = null;
-                                    }
+                                    $scope.methodDiscount.status = data.error;
+                                    $scope.methodDiscount.text = (data.name) ? 'Maaf, kuota promo ' + data.name + ' hari ini telah habis.' : null;
                                     $scope.methodDiscount.available = false;
                                     $scope.methodDiscount.replaceDiscount = false;
                                 }
                             } else {
                                 $scope.methodDiscount.amount = 0;
                                 $scope.methodDiscount.checked = true;
-                                $scope.methodDiscount.status = returnData.data.error;
+                                $scope.methodDiscount.status = data.error;
                                 $scope.methodDiscount.text = '';
                             }
                         }).catch(function() {
@@ -299,91 +271,10 @@ app.controller('paymentController', [
                         $scope.methodDiscount.firstRequest = false;
                     }
                 } else {
-                    if ($scope.methodDiscount.amount != 0) {
-                        $scope.methodDiscount.available = true;
-                    }
+                    $scope.methodDiscount.available = $scope.methodDiscount.amount != 0;
                 }
             }
         }
-
-        $scope.CreditCardPromo = {
-            Type: '',
-            Valid: false,
-            PromoName: '',
-            Amount: 0,
-            Check: function (creditCardNumber) {
-                if ($scope.paymentMethod == 'CreditCard') {
-                    if (creditCardNumber) {
-                        var firstNum = creditCardNumber.toString().charAt(0);
-                        var minOrder = 200000;
-                        var nowDate = new Date();
-                        var utcDate = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
-                        var jakartaDate = new Date(utcDate + (3600000 * 7));;
-                        var jakartaDay = jakartaDate.getDay();
-                        var endOfCampaign = new Date('31 March 2016');
-
-                        var creditCardString = creditCardNumber.toString();
-
-                        // check credit card type
-                        if (firstNum == 5) {
-                            $scope.CreditCardPromo.Type = 'mastercard';
-                        } else if (firstNum == 4) {
-                            $scope.CreditCardPromo.Type = 'visa';
-                        } else {
-                            $scope.CreditCardPromo.Type = '';
-                        }
-
-                        //**********
-                        // Danamon Sweet Valentine
-                        var valentineDate = new Date('14 February 2016');
-                        if (creditCardString.length > 5 && (jakartaDate.getDate() == valentineDate.getDate() && jakartaDate.getMonth() == valentineDate.getMonth())) {
-                            var danamonList = ['456798', '456799', '425857', '432449', '540731', '559228', '516634', '542260', '552239', '523983', '552338'];
-                            var creditCardString = creditCardString.substr(0, 6);
-
-                            // if Danamon Card
-                            if (danamonList.indexOf(creditCardString) > -1) {
-                                $scope.CreditCardPromo.PromoName = 'Danamon Sweet Valentine';
-                                $scope.CreditCardPromo.Valid = true;
-                                $scope.CreditCardPromo.Amount = Math.floor($scope.initialPrice * 14 / 100);
-                                // reset voucher
-                                $scope.voucher.amount = 0;
-                                $scope.voucher.checking = false;
-                                $scope.voucher.checked = false;
-                                $scope.voucher.confirmedCode = '';
-                            }
-                            return;
-                        }
-
-                        //**********
-                        // Wonderful Wednesday with Visa
-                        if (firstNum == 4 && $scope.initialPrice >= minOrder && jakartaDay == 3 && jakartaDate < endOfCampaign) {
-                            $scope.CreditCardPromo.PromoName = 'Wonderful Wednesday with Visa';
-                            $scope.CreditCardPromo.Type = 'visa';
-                            $scope.CreditCardPromo.Valid = true;
-                            $scope.CreditCardPromo.Amount = 50000;
-                            // reset voucher
-                            $scope.voucher.amount = 0;
-                            $scope.voucher.checking = false;
-                            $scope.voucher.checked = false;
-                            $scope.voucher.confirmedCode = '';
-                            return;
-                        }
-
-                        //**********
-                        // Reset
-                        $scope.CreditCardPromo.Valid = false;
-                        $scope.CreditCardPromo.Amount = 0;
-
-                    } else {
-                        $scope.CreditCardPromo.Valid = false;
-                        $scope.CreditCardPromo.Amount = 0;
-                    }
-                } else {
-                    $scope.CreditCardPromo.Valid = false;
-                    $scope.CreditCardPromo.Amount = 0;
-                }
-            }
-        };
 
         // ********************************** END *********************************************
 
@@ -526,9 +417,9 @@ app.controller('paymentController', [
         // ********************************** END *********************************************
 
         // ****************************** SELECT BANK *****************************************
-        $scope.selectBank = function(bank) {
-            $scope.submethod = bank;
-        }
+        // $scope.selectBank = function(bank) {
+        //     $scope.submethod = bank;
+        // }
 
         // ********************************** END *********************************************
         
@@ -569,20 +460,20 @@ app.controller('paymentController', [
                             var card = function() {
                                 var gross_amount = 0;
                                 if ($scope.voucher.confirmedCode) {
-                                    gross_amount = $scope.totalPrice - $scope.CreditCardPromo.Amount - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
+                                    gross_amount = $scope.totalPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
                                 } else {
                                     if ($scope.binDiscount.available) {
                                         if ($scope.binDiscount.replaceDiscount) {
-                                            gross_amount = $scope.originalPrice - $scope.CreditCardPromo.Amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                                            gross_amount = $scope.originalPrice + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
                                         } else {
-                                            gross_amount = $scope.totalPrice - $scope.CreditCardPromo.Amount + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                                            gross_amount = $scope.totalPrice + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
                                         }
                                     } else {
-                                        gross_amount = $scope.totalPrice - $scope.CreditCardPromo.Amount + $scope.UniqueCodePaymentConfig.UniqueCode;
+                                        gross_amount = $scope.totalPrice + $scope.UniqueCodePaymentConfig.UniqueCode;
                                     }
                                 }
                                 $log.debug("gross_amount = " + gross_amount);
-                            if ($scope.CreditCard.TwoClickToken == 'false') {
+                            // if ($scope.CreditCard.TwoClickToken == 'false') {
                                 $scope.pay.ccdata = true;
 
                                 return {
@@ -596,17 +487,17 @@ app.controller('paymentController', [
                                     'bank': 'mandiri',
                                     'gross_amount': gross_amount
                                 }
-                            } else {
-                                return {
-                                    'card_cvv': $scope.CreditCard.Cvv,
-                                    'token_id': $scope.CreditCard.TwoClickToken,
+                            // } else {
+                            //     return {
+                            //         'card_cvv': $scope.CreditCard.Cvv,
+                            //         'token_id': $scope.CreditCard.TwoClickToken,
 
-                                    'two_click': true,
-                                    'secure': true,
-                                    'bank': 'mandiri',
-                                    'gross_amount': gross_amount
-                                }
-                            }
+                            //         'two_click': true,
+                            //         'secure': true,
+                            //         'bank': 'mandiri',
+                            //         'gross_amount': gross_amount
+                            //     }
+                            // }
                         };
 
                         // run the veritrans function to check credit card
@@ -931,24 +822,6 @@ app.controller('paymentController', [
         
         // ********************************** END *********************************************
 
-        // ****************************** TRANSFER WINDOW *************************************
-
-        $scope.transferWindow = transferWindow;
-        $scope.rightNow = new Date();
-        $scope.rightNow = ($scope.rightNow.getHours() + '' + $scope.rightNow.getMinutes());
-        $scope.rightNow = parseInt($scope.rightNow);
-        $scope.transferWindowOpen = true;
-        if ($scope.rightNow >= parseInt($scope.transferWindow[0]) && $scope.rightNow <= parseInt($scope.transferWindow[1])) {
-            $scope.transferWindowOpen = true;
-        } else {
-            $scope.transferWindowOpen = false;
-        }
-        $log.debug($scope.rightNow);
-        $log.debug(parseInt($scope.transferWindow[0]));
-        $log.debug(parseInt($scope.transferWindow[1]));
-        $log.debug($scope.transferWindowOpen);
-
-        // ********************************** END *********************************************
 
         // ********************************** OTHERS ******************************************
 
@@ -1083,10 +956,7 @@ jQuery(document).ready(function ($) {
     $('input[name="PMInput"]').click(function () {
         var val = $(this).val();
         $('.selected-bank').hide();
-
-        var id = $('input[value="' + val + '"]').closest('.selected-bank');
-        $(id).show();
-
+        $('input[value="' + val + '"]').closest('.selected-bank').show();
         $('input[value="' + val + '"]').attr('checked', true);
     });
 
@@ -1094,14 +964,10 @@ jQuery(document).ready(function ($) {
     $('input[name="paymentMethod"]').click(function () {
         var val = $(this).val();
         $('.selected-bank').hide();
-
-        var id = $('input[value="' + val + '"]').closest('.selected-bank');
-        $(id).show();
-
+        $('input[value="' + val + '"]').closest('.selected-bank').show();
+        $('input[value="' + val + '"]').attr('checked', true);
         $('html, body').animate({
             scrollTop: $("#" + val).offset().top
         }, 700);
-
-        $('input[value="' + val + '"]').attr('checked', true);
     });
 })
