@@ -905,18 +905,6 @@ app.controller('checkoutController', [
             $log.debug($scope);
         }
 
-        //********************
-        // transfer window
-        $scope.transferWindow = transferWindow;
-        $scope.rightNow = new Date();
-        $scope.rightNow = ($scope.rightNow.getHours() + '' + $scope.rightNow.getMinutes());
-        $scope.rightNow = parseInt($scope.rightNow);
-        $scope.transferWindowOpen = true;
-        if ($scope.rightNow >= parseInt($scope.transferWindow[0]) && $scope.rightNow <= parseInt($scope.transferWindow[1])) {
-            $scope.transferWindowOpen = true;
-        } else {
-            $scope.transferWindowOpen = false;
-        }
 
         //************************* END ******************************
     }
