@@ -9294,15 +9294,17 @@ file : /Assets/travorama20/css/_page_password.scss
 } 
 
 .box-payment {
-    background:#fff;
     padding: 25px 20px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-    -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-    margin-bottom: 10px;
-
 }
+/* masih error: FIX click box untuk accordion kekecilan */
+/*
+.box-payment .row {
+    padding: 25px 20px;
+}
+
+.box-payment .accordion-content {
+    padding: 0px 20px;
+}*/
 
 .not-selected p {
     color: #afafaf;
@@ -9446,4 +9448,14 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 .data-penumpang p {
     margin-bottom: 3px;
+}
+
+
+.box-payment {
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
 }

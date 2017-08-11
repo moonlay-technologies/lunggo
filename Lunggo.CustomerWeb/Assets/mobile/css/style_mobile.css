@@ -6319,15 +6319,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding-bottom: 10px;
     }
 
+   /*.box-payment .row, .box-payment .accordion-content {*/
    .box-payment {
-    background:#fff;
     padding: 20px 15px;
-    border-radius: 3px;
-    -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-    -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-    margin-bottom: 10px;
-
 }
 
 .not-selected p {
@@ -6584,4 +6578,14 @@ container-rincian-penerbangan-modal {
 }
 .data-penumpang p {
     margin-bottom: 3px;
+}
+
+
+.box-payment {
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
 }
