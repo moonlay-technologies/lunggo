@@ -200,6 +200,8 @@ namespace Lunggo.ApCommon.Hotel.Model
         public int TotalAdult { get; set; }
         [JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
         public int TotalChildren { get; set; }
+        [JsonProperty("roomCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int RoomCount { get; set; }
 
     }
 

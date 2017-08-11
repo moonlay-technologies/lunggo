@@ -48,10 +48,10 @@ namespace Lunggo.BackendWeb
             //    RsvNo = "157806538888"
             //});
 
-            HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            {
-                RsvNo = "258886563179"
-            });
+            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
+            //{
+            //    RsvNo = "259696563279"
+            //});
             Console.WriteLine("OKE");
         }
     }

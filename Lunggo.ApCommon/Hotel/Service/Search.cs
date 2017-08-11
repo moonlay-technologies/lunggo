@@ -42,8 +42,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public SearchHotelOutput DoSearchByLocation(SearchHotelInput input)
         {
-            var occupancies = PreProcessOccupancies(input.Occupancies);
-            var searchId = GenerateSearchId(input, occupancies);
+            //var occupancies = PreProcessOccupancies(input.Occupancies);
+            var searchId = GenerateSearchId(input, input.Occupancies);
             var getSearchDataFromCache = GetSearchHotelResultFromCache(searchId);
             if (getSearchDataFromCache != null)
             {
@@ -101,8 +101,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
 
             var swAv = Stopwatch.StartNew();
-            var realOccupancies = request.Occupancies;
-            request.Occupancies = PreProcessOccupancies(request.Occupancies);
+            //var realOccupancies = request.Occupancies;
+            //request.Occupancies = PreProcessOccupancies(request.Occupancies);
 
             /*Tiket Request*/
             var client = new TiketSearchHotel();
@@ -113,7 +113,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             //var hotelBedsClient = new HotelBedsSearchHotel();
             //var result = hotelBedsClient.SearchHotel(request);
             
-            result.Occupancies = realOccupancies;
+            result.Occupancies = request.Occupancies;
             swAv.Stop();
             Debug.Print("AVAILABILITY:" + swAv.Elapsed.ToString());
             result.SearchId = searchId;
@@ -459,20 +459,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 generatedSearchId = generatedSearchId + "|" + occStringJoin;
             }
             return generatedSearchId;
-        }
-
-        public List<Occupancy> PreProcessOccupancies(List<Occupancy> paxData)
-        {
-            return new List<Occupancy>
-            {
-                new Occupancy
-                {
-                    RoomCount = paxData.Sum(d => d.RoomCount),
-                    AdultCount = paxData.Max(d => d.AdultCount),
-                    ChildCount = paxData.Max(d => d.ChildCount),
-                    ChildrenAges = paxData.SelectMany(d => d.ChildrenAges).Take(paxData.Max(d => d.ChildCount)).ToList()
-                }
-            };
         }
     }
 }

@@ -469,7 +469,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1665</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://api.local.travorama.com</IISUrl>
+          <IISUrl>http://localhost:1147</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

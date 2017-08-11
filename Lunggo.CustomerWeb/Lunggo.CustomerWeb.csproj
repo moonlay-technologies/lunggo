@@ -1336,6 +1336,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Config\JsConfig.js" />
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Config\application.properties">
@@ -1699,12 +1700,15 @@
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\StaticPage\HotelVoucher.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />

@@ -44,7 +44,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             {
                 IsValid = true,
                 IsPriceChanged = false,
-                OrderId = orderResult.MyOrder.OrderId
+                OrderId = orderResult.MyOrder.OrderId,
+                OrderDetailId = orderResult.MyOrder.Data.First().OrderDetailId
             };
 
 
@@ -138,7 +139,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             request.AddQueryParameter("firstName", "Dwi");
             request.AddQueryParameter("lastName", "Agustina");
             request.AddQueryParameter("emailAddress", "suheri@travelmadezy.com"); // Change this
-            request.AddQueryParameter("phone", "%2B85360343300"); //change this
+            request.AddQueryParameter("phone", "%2B811351793"); //change this
             request.AddQueryParameter("saveContinue", "2");
             request.AddQueryParameter("output", "json");
             var response = client.Execute(request);
@@ -163,8 +164,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             //Pax Data
             request.AddQueryParameter("salutation", TitleCd.Mnemonic(firstPax.Title));
             request.AddQueryParameter("firstName", firstPax.FirstName);
-            request.AddQueryParameter("lastName", firstPax.LastName); 
-            request.AddQueryParameter("phone", "%2B85360343311");
+            request.AddQueryParameter("lastName", firstPax.LastName);
+            request.AddQueryParameter("phone", "%2B811351793");
 
             //Customer Data
             request.AddQueryParameter("conSalutation", TitleCd.Mnemonic(firstPax.Title));
@@ -182,7 +183,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             }
             
             request.AddQueryParameter("conEmailAddress", input.Contact.Email);
-            request.AddQueryParameter("conPhone", "%2B85360343322");
+            request.AddQueryParameter("conPhone", "%2B"+ input.Contact.Phone.Substring(1));
 
             //Others
             request.AddQueryParameter("token", input.Token);

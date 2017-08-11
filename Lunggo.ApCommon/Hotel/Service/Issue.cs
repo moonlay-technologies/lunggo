@@ -156,6 +156,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             }
 
+            if (issueResult.SupplierVat == null)
+            {
+                issueResult.SupplierVat = rsvData.HotelDetails.SupplierVat;
+            }
             UpdateRsvStatusDb(rsvData.RsvNo, issueResult.IsSuccess ? RsvStatus.Completed : RsvStatus.Failed);
             UpdateRsvDetail(rsvData.RsvNo, "TKTD", rsvData.HotelDetails);
             UpdateReservationDetailsToDb(issueResult);

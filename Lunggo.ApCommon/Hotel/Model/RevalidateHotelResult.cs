@@ -13,6 +13,7 @@ namespace Lunggo.ApCommon.Hotel.Model
         internal bool IsPriceChanged { get; set; }
         internal string RateKey { get; set; }
         internal string OrderId { get; set; }
+        internal string OrderDetailId { get; set; }
         internal DateTime TimeLimit { get; set; }
     }
 }

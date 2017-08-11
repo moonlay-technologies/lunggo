@@ -18,20 +18,30 @@ namespace Lunggo.ApCommon.Hotel.Service
         public SelectHotelRoomOutput SelectHotelRoom (SelectHotelRoomInput input)
         {
             var hotel = GetAvailableRatesFromCache(input.SearchId);
-            foreach (var regsId in input.RegsIds)
-            {
-                var data = DecryptRegsId(regsId.RegId);
-                var room = hotel.Rooms.FirstOrDefault(x => x.RoomCode == data.RoomCode);
-                hotel.Rooms = new List<HotelRoom>();
-                hotel.Rooms.Add(room);
-                hotel.Rooms[0].Rates = new List<HotelRate>();
-                room.SingleRate.RateCount = regsId.RateCount;
-                room.SingleRate.NightCount = hotel.NightCount;
-                room.SingleRate.AdultCount = regsId.AdultCount;
-                room.SingleRate.ChildCount = regsId.ChildCount;
-                room.SingleRate.ChildrenAges = regsId.ChildrenAges;
-                hotel.Rooms[0].Rates.Add(room.SingleRate);
-            }
+            var firstRegId = input.RegsIds.FirstOrDefault();
+            if(firstRegId == null)
+                return new SelectHotelRoomOutput
+                {
+                    IsSuccess = false,
+                    Errors = new List<HotelError> { HotelError.RateKeyNotFound }
+                };
+
+            var data = DecryptRegsId(firstRegId.RegId);
+            var room = hotel.Rooms.FirstOrDefault(x => x.RoomCode == data.RoomCode);
+            hotel.Rooms = new List<HotelRoom>();
+            hotel.Rooms.Add(room);
+            hotel.Rooms[0].Rates = new List<HotelRate>();
+            room.SingleRate.RateCount = input.RegsIds.Sum(x=>x.RateCount);
+            room.SingleRate.NightCount = hotel.NightCount;
+            room.SingleRate.AdultCount = input.RegsIds.Sum(x => x.AdultCount);
+            room.SingleRate.ChildCount = input.RegsIds.Sum(x => x.ChildCount);
+            room.SingleRate.ChildrenAges = firstRegId.ChildrenAges;
+            hotel.Rooms[0].Rates.Add(room.SingleRate);
+
+            //foreach (var regsId in input.RegsIds)
+            //{
+                
+            //}
             //var hotelCd = Convert.ToInt32(input.RegsIds[0].RegId.Split('|')[4]);
             //var hotel = GetHotelDetailFromDb(hotelCd);
             //hotel.StarCode = GetSimpleCodeByCategoryCode(hotel.StarRating);

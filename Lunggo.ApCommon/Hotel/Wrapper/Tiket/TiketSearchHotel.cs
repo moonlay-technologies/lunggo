@@ -61,13 +61,14 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             var url = "/search/hotel";
             var adultCount = condition.Occupancies.Sum(x => x.AdultCount);
             var childCount = condition.Occupancies.Sum(x => x.ChildCount);
+            var roomCount = condition.Occupancies.Sum(x => x.RoomCount);
             var request = new RestRequest(url, Method.GET);
             request.AddQueryParameter("token", token);
             request.AddQueryParameter("q", condition.Location);
             request.AddQueryParameter("startdate", condition.CheckIn.ToString("yyyy-MM-dd"));
             request.AddQueryParameter("night", condition.Nights.ToString());
             request.AddQueryParameter("enddate", condition.Checkout.ToString("yyyy-MM-dd"));
-            request.AddQueryParameter("room", condition.Rooms.ToString());
+            request.AddQueryParameter("room", roomCount.ToString());
             request.AddQueryParameter("offset", "50");
             request.AddQueryParameter("page", page.ToString());
             request.AddQueryParameter("adult", adultCount.ToString());
@@ -166,7 +167,6 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             var searchResponse = JsonExtension.Deserialize<TiketHotelBaseResponse>(response.Content);
             if (searchResponse == null && searchResponse.Diagnostic.Status != "200")
                 return null;
-
 
             return new SearchHotelResult();
         }

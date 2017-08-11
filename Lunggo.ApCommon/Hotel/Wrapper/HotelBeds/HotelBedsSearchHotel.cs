@@ -27,6 +27,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
         {
             //HotelApiClient client = new HotelApiClient("p8zy585gmgtkjvvecb982azn", "QrwuWTNf8a", "https://api.test.hotelbeds.com/hotel-api");
             PreprocessDestinationType(condition);
+            condition.Occupancies = PreProcessOccupancies(condition.Occupancies);
             var client = new HotelApiClient(HotelApiType.BookingApi);
             var avail = new Availability();
             if (condition.Destination != null || condition.Zone != null || condition.Area != null)
@@ -251,6 +252,20 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                     result.HotelDetails = hotelService.ApplyHotelDetails(details, result.HotelDetails);
                     result.DestinationName = details.HotelName + ", " + detailDestination.Destination + ", " + detailDestination.Country;
                     break;
+            };
+        }
+
+        public List<Occupancy> PreProcessOccupancies(List<Occupancy> paxData)
+        {
+            return new List<Occupancy>
+            {
+                new Occupancy
+                {
+                    RoomCount = paxData.Sum(d => d.RoomCount),
+                    AdultCount = paxData.Max(d => d.AdultCount),
+                    ChildCount = paxData.Max(d => d.ChildCount),
+                    ChildrenAges = paxData.SelectMany(d => d.ChildrenAges).Take(paxData.Max(d => d.ChildCount)).ToList()
+                }
             };
         }
 

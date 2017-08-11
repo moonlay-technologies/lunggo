@@ -298,7 +298,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                 StarRating = bookInfo.StarRating,
                 AreaCode = bookInfo.AreaCode,
                 ZoneCode = bookInfo.ZoneCode,
-                ClientReference = result.OrderId
+                Latitude = bookInfo.Latitude,
+                Longitude = bookInfo.Longitude,
+                ClientReference = result.OrderId,
+                SupplierVat = result.OrderDetailId
             };
 
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();

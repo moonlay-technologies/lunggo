@@ -71,7 +71,9 @@ namespace Lunggo.ApCommon.Hotel.Service
                         CountryCode = hotelDetailRecord.HotelCountry,
                         DestinationCode = hotelDetailRecord.HotelDestination,
                         ZoneCode = hotelDetailRecord.HotelZone,
-                        AreaCode = hotelDetailRecord.HotelArea
+                        AreaCode = hotelDetailRecord.HotelArea,
+                        Latitude = hotelDetailRecord.Latitude,
+                        Longitude = hotelDetailRecord.Longitude
                     };
 
                     var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
@@ -271,7 +273,10 @@ namespace Lunggo.ApCommon.Hotel.Service
                     HotelDestination = reservation.HotelDetails.DestinationCode,
                     HotelZone =  reservation.HotelDetails.ZoneCode,
                     HotelArea = reservation.HotelDetails.AreaCode,
-                    ClientReference = reservation.HotelDetails.ClientReference ?? null
+                    Latitude = reservation.HotelDetails.Latitude,
+                    Longitude = reservation.HotelDetails.Longitude,
+                    ClientReference = reservation.HotelDetails.ClientReference ?? null,
+                    SupplierVat = reservation.HotelDetails.SupplierVat ?? null
                  };
 
                 HotelReservationDetailsTableRepo.GetInstance().Insert(conn, hotelRsvDetailsRecord);

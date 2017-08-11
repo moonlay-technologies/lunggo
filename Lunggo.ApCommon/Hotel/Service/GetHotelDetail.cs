@@ -76,6 +76,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelUri = hotel.HotelUri,
                 TotalAdult = hotel.TotalAdult,
                 TotalChildren = hotel.TotalChildren,
+                RoomCount = hotelSearchResult.Occupancies.Sum(x => x.RoomCount),
                 CheckInDate = hotelSearchResult.CheckIn,
                 CheckOutDate = hotelSearchResult.CheckOut,
                 NightCount = Convert.ToInt32((hotelSearchResult.CheckOut - hotelSearchResult.CheckIn).TotalDays),

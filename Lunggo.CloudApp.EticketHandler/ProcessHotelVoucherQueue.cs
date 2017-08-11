@@ -42,36 +42,39 @@ namespace Lunggo.CloudApp.EticketHandler
             converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.NoAdjustment;
             var reservation = hotelService.GetReservationForDisplay(rsvNo);
             var hotelCode = reservation.HotelDetail.HotelCode;
-            var hotelDetail = HotelService.GetInstance().GetHotelDetailFromDb(hotelCode);
-            reservation.HotelDetail.Latitude = hotelDetail.Latitude;
-            reservation.HotelDetail.Longitude = hotelDetail.Longitude;
-            reservation.HotelDetail.Facilities = hotelDetail.Facilities == null ? null : new HotelFacilityForDisplay {Other = hotelDetail.Facilities
-                    .Where(x => x.MustDisplay == true )
-                    .Select(x => (hotel.GetHotelFacilityDescId
-                        (Convert.ToInt32(x.FacilityGroupCode) * 1000 + Convert.ToInt32(x.FacilityCode)))).ToList()};
-            reservation.HotelDetail.IsWifiAccessAvailable = hotelDetail.Facilities != null &&
-                                                            ((hotelDetail.Facilities != null ||
-                                                              hotelDetail.Facilities.Count != 0) &&
-                                                             hotelDetail.Facilities.Any(
-                                                                 f =>
-                                                                     (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
-                                                                     ||
-                                                                     (f.FacilityGroupCode == 70 && f.FacilityCode == 550)));
-            reservation.HotelDetail.IsRestaurantAvailable = hotelDetail.Facilities != null &&
-                                                            ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
-                                                             hotelDetail.Facilities.Any(
-                                                                 f =>
-                                                                     (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
-                                                                     ||
-                                                                     (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
-                                                                     ||
-                                                                     (f.FacilityGroupCode == 75 && f.FacilityCode == 845)));
-            var images = hotelDetail.ImageUrl;
-            var firstOrDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-                reservation.HotelDetail.MainImage = images == null
-                    ? null
-                    : "http://photos.hotelbeds.com/giata/bigger/" + firstOrDefault.Path;
+            //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromDb(hotelCode);
+            //reservation.HotelDetail.Latitude = hotelDetail.Latitude;
+            //reservation.HotelDetail.Longitude = hotelDetail.Longitude;
+            //reservation.HotelDetail.Facilities = hotelDetail.Facilities == null ? null : new HotelFacilityForDisplay
+            //{
+            //    Other = hotelDetail.Facilities
+            //        .Where(x => x.MustDisplay == true)
+            //        .Select(x => (hotel.GetHotelFacilityDescId
+            //        (Convert.ToInt32(x.FacilityGroupCode) * 1000 + Convert.ToInt32(x.FacilityCode)))).ToList()
+            //};
+            //reservation.HotelDetail.IsWifiAccessAvailable = hotelDetail.Facilities != null &&
+            //                                                ((hotelDetail.Facilities != null ||
+            //                                                  hotelDetail.Facilities.Count != 0) &&
+            //                                                 hotelDetail.Facilities.Any(
+            //                                                     f =>
+            //                                                         (f.FacilityGroupCode == 60 && f.FacilityCode == 261)
+            //                                                         ||
+            //                                                         (f.FacilityGroupCode == 70 && f.FacilityCode == 550)));
+            //reservation.HotelDetail.IsRestaurantAvailable = hotelDetail.Facilities != null &&
+            //                                                ((hotelDetail.Facilities != null || hotelDetail.Facilities.Count != 0) &&
+            //                                                 hotelDetail.Facilities.Any(
+            //                                                     f =>
+            //                                                         (f.FacilityGroupCode == 71 && f.FacilityCode == 200)
+            //                                                         ||
+            //                                                         (f.FacilityGroupCode == 75 && f.FacilityCode == 840)
+            //                                                         ||
+            //                                                         (f.FacilityGroupCode == 75 && f.FacilityCode == 845)));
+            //var images = hotelDetail.ImageUrl;
+            //var firstOrDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+            //if (firstOrDefault != null)
+            //    reservation.HotelDetail.MainImage = images == null
+            //        ? null
+            //        : "http://photos.hotelbeds.com/giata/bigger/" + firstOrDefault.Path;
 
             reservation.HotelDetail.MapImage =
                 "https://maps.googleapis.com/maps/api/staticmap?center="+ reservation.HotelDetail.Latitude +",+"+ reservation.HotelDetail.Longitude+ "&zoom=16&scale=false&size=640x180&maptype=roadmap&key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&visual_refresh=true";

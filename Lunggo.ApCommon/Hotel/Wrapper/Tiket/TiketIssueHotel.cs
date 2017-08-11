@@ -67,6 +67,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
             return new HotelIssueTicketResult
             {
                 BookingId = bookingList,
+                BookingReference = hotelIssueInfo.BookingId,
+                ClientReference = hotelIssueInfo.BookingId,
                 IsSuccess = true,
                 IsInstantIssuance = true
             };

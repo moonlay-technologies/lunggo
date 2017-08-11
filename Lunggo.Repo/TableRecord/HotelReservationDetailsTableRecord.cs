@@ -38,6 +38,27 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("HotelCd");
 		    }
 		}
+
+        public decimal? Latitude
+        {
+            get { return _Latitude; }
+            set
+            {
+                _Latitude = value;
+                IncrementLog("Latitude");
+            }
+        }
+
+        public decimal? Longitude
+        {
+            get { return _Longitude; }
+            set
+            {
+                _Longitude = value;
+                IncrementLog("Longitude");
+            }
+        }
+
 		public String HotelName
 		{
 		    get { return _HotelName; }
@@ -269,6 +290,8 @@ namespace Lunggo.Repository.TableRecord
 		private long? _Id;
 		private String _RsvNo;
 		private int? _HotelCd;
+        private decimal? _Longitude;
+        private decimal? _Latitude;
 		private String _HotelName;
 		private String _HotelImage;
 		private DateTime? _CheckInDate;
@@ -328,6 +351,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Id", true),
 				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("HotelCd", false),
+                new ColumnMetadata("Latitude", false),
+                new ColumnMetadata("Longitude", false),
 				new ColumnMetadata("HotelName", false),
                 new ColumnMetadata("HotelImage", false),
 				new ColumnMetadata("CheckInDate", false),

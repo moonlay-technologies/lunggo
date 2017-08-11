@@ -163,7 +163,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         NightCount = input.Nights,
                         AdultCount = hotel.TotalAdult,
                         ChildCount = hotel.TotalChildren,
-                        RateCount = 1,
+                        RateCount = hotel.RoomCount,
                         BookingUri = room.BookUri,
                         PaymentType = PaymentTypeEnum.AT_WEB,
                         Cancellation = ProcessCancellation(room.RefundPolicy),
@@ -171,6 +171,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                     },
                     Rates = new List<HotelRate>()
                 };
+
+                /*
+                 * Harga Tiket merupakan harga satuan, jadi untuk mendapat harga total harus dikalikan
+                 * dengan jumlah kamar dan jumlah malam
+                 */
+                room.Price = room.Price*input.Nights*hotel.RoomCount;
+                
                 singleRoom.SingleRate.Price.SetSupplier(room.Price,
                     result.Diagnostic.Currency != null
                         ? allCurrencies[result.Diagnostic.Currency]
