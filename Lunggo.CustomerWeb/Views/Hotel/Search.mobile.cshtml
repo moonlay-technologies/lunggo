@@ -88,7 +88,7 @@
     </script>
 }
 
-<div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+<div class="travorama-hotel-mobile khusus-list-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
         @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
         {
@@ -96,11 +96,15 @@
             IsHotelSearch = false
         })
         <div class="hotel-sort-filter clearfix">
-            <div class="hotel-sort-filter-action">
-                <a id ="mapUrl">PETA</a>
-                <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
-                <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
+            <div class="row">
+                <div class="col-xs-6 box-filter">Filter</div>
+                <div class="col-xs-6 box-filter no-border">Sortir</div>
             </div>
+            <!--<div class="hotel-sort-filter-action">
+                    <a id ="mapUrl">PETA</a>
+                    <a ng-click="PageConfig.SetOverlay('hotel-filter')">FILTER</a>
+                    <a ng-click="PageConfig.SetOverlay('hotel-sort')">SORTIR</a>
+                </div>-->
         </div>
     </div>
     <div class="search-list" search-scroll>

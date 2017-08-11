@@ -234,12 +234,9 @@
 
         <div ng-app="travorama" @*ng-controller="paymentController"*@ ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
-                <div class="page__header">
-                    <h1 class="text-center section-title stripe">Metode <span>Pembayaran</span></h1>
 
-                </div>
                 <div class="page__body" id="step-4">
-                    <div class="summary summary--price">
+                    <!-- <div class="summary summary--price">
                         <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
                         <div class="summary__body">
 
@@ -286,169 +283,417 @@
                                 <dd ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
                             </dl>
                         </div><!-- .summary__body -->
-                    </div><!-- .summar--price -->
+                    <!--</div> --> <!-- .summar--price -->
 
-                    <div class="summary summary--voucher">
-                        <div class="container_new">
-                            <h4>Punya kupon Travorama?</h4>
-                            <p>Masukkan di sini</p>
+                   <!-- <div class="rincian-pesanan-hotel">
 
-                            <form class="form form-horizontal">
-                                <div class="form-group">
-                                    <input type="text" name="code" value="" class="form-control" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)" />
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher sudah digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Di bawah pembelian minimum</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH08'">Voucher tidak dapat digunakan untuk pesanan ini</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH09'">Voucher sudah digunakan</p>
-                                    <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher sudah habis</p>
-                                    <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
+                        <h3 class="lg-txt"><b>RINCIAN</b> PEMESANAN</h3>
+                        <div class="container-rincian-penerbangan">
+                            <div class="content-right-payment">
+                                <p><b>Sisa Waktu Pembayaran </b>00:00:00</p>
                                 </div>
+                            <div class="content-right-payment">
+                                <div class="row">
+                                    <div class="col-xs-12 img-hotel clear-left clear-right"><img src="https://photos.hotelbeds.com/giata/43/431483/431483a_hb_a_002.jpg" /></div>
+                                    <div class="col-xs-12 info-penerbangan clear-left clear-right">
+                                        <div class="detail-hotel">
+                                            <h3>Maven Gunung Sahari</h3>
+                                            <div class="star"></div>
+                                            <p>Jl. Gunung Sahari II No.6, RT.12/RW.7, Gn. Sahari Sel., Jakarta, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10610</p>
 
-                                <div class="form-group">
-                                    <div class="col-xs-6 col-xs-offset-6">
-                                        <input type="submit" value="CEK" class="btn btn-yellow form-control" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                                        <input type="submit" value="RESET" class="btn btn-yellow form-control" ng-click="voucher.reset()" ng-show="voucher.checked" />
                                     </div>
                                 </div>
-                            </form>
                         </div>
-                    </div><!-- .summary--voucher-->
+                            </div>
+                            <div class="content-right-payment">
+                                <div class="rincian-harga">
+                                    <p><b>Check in : </b><span>01 Agustus 2017</span></p>
+                                    <p><b>Check out : </b><span>02 Agustus 2017</span></p>
+                                    <p><b>Malam : </b><span>1 Malam</span></p>
+                                    <p><b>Kamar : </b><span>1 Kamar</span></p>
+                                    <p><b>Jenis Kamar : </b><span>1 Double Deluxe</span></p>
+                                    <p><b>Jumlah Tamu : </b><span>1 Dewasa</span></p>
+                                </div>
+                            </div>
+                            <div class="content-right-payment content-right-payment-edit">
+                                <div class="kode-voucher">
+                                    <a href="#">Punya kode Voucher ?</a>
+                                    <div class="form-group ">
+                                        <input type="text" class="form-control form-kode-voucher">
+                                    </div>
+                                </div>
+                                <div class="rincian-harga">
+                                    <p><b>Harga Kamar : </b><span>Rp 1.500.000</span></p>
+                                    <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
+                                    <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
+                                    <div class="total-harga">
+                                        <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>--> <!-- ini untuk rincian hotel-->
 
-                    <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
+                    <!-- rincian penerbangan-->
+                    <div class="rincian-pesanan-penerbangan">
+                        <div class="container-rincian-pesanan-penerbangan">
+                            <div class="info-reservasi-penerbangan">
+                                <div class="row">
+                                    <div class="col-xs-6">No. Reservasi: 123456</div>
+                                    <div class="col-xs-6 text-right">Sisa Waktu: 02:36:05</div>
+                                </div>  
+                            </div>
+                            <div class="jadwal-penerbangan">
+                                <div class="row">
+                                    <div class="col-xs-5 detail-airport clear-left"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
+                                    <div class="col-xs-2 logo-penerbangan clear-left clear-right"><img src="/Assets/mobile/images/rounded-garuda.png" /></div>
+                                    <div class="col-xs-5 detail-airport clear-right"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
+                                </div>
+                            </div>
+                            <div class="separator-jadwal-penerbangan"></div>
+                            <div class="jadwal-penerbangan">
+                                <div class="row">
+                                    <div class="col-xs-5 detail-airport clear-left"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
+                                    <div class="col-xs-2 logo-penerbangan clear-left clear-right"><img src="/Assets/mobile/images/rounded-garuda.png" /></div>
+                                    <div class="col-xs-5 detail-airport clear-right"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-biaya">
+                        <div class="row">
+                            <div class="col-xs-6 "><a data-toggle="modal" href="#myModal">Rincian Penerbangan</a></div>
+                            <div class="col-xs-6 text-right"><h3>Rp 1.376.761</h3></div>
+                        </div>  
+                    </div>
+                    <!-- end rincian penerbangan-->
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Rincian Penerbangan</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-rincian-penerbangan-modal"> <!-- start modal content-->
+                                        <div class="content-right-payment">
+                                            <p><b>Sisa Waktu Pembayaran </b>00:00:00</p>
+                                            <p><b>Nomor Reservasi : </b>12345678</p>
+                                        </div>
+                                        <div class="content-right-payment">
+                                            <p><b>Penumpang</b></p>
+                                            <div class="data-penumpang">
+                                                <p>1. Indra</p>
+                                            </div>
+                                        </div>
+                                        <div class="content-right-payment">
+                                            <div class="row">
+                                                <div class="col-xs-5 logo-maskapai"><img src="/Assets/images/logo-garuda.jpg" /></div>
+                                                <div class="col-xs-7 info-penerbangan">
+                                                    <div class="detail-airport-modal">
+                                                        <p>Keberangkatan</p>
+                                                        <h3>Jakarta (CGK) - Bali/Denpasar (DPS)</h3>
+                                                        <p>20 Jul 2017</p>
+                                                        <p>18:25 - 21.00</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="separator"></div>
+                                            <div class="row">
+                                                <div class="col-xs-5 logo-maskapai"><img src="/Assets/images/logo-garuda.jpg" /></div>
+                                                <div class="col-xs-7 info-penerbangan">
+                                                    <div class="detail-airport-modal">
+                                                        <p>Kepulangan</p>
+                                                        <h3>Jakarta (CGK) - Bali/Denpasar (DPS)</h3>
+                                                        <p>20 Jul 2017</p>
+                                                        <p>18:25 - 21.00</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="content-right-payment content-right-payment-edit">
+                                            <div class="kode-voucher">
+                                                <a href="#">Punya kode Voucher ?</a>
+                                                <div class="form-group ">
+                                                    <input type="text" class="form-control form-kode-voucher">
+                                                </div>
+                                            </div>
+                                            <div class="rincian-harga">
+                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
+                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
+                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
+                                                <div class="total-harga">
+                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> <!-- modal content-->
+                                </div> <!-- modal body-->
+                            </div>
+                        </div>
+                    </div> <!-- modal rincian perjalanan-->
 
                     <div class="summary summary--payment">
-                        <h3 class="summary__title"><b>METODE</b> PEMBAYARAN</h3>
-                        <div class="summary__body">
-                            <form name="paymentMethodForm">
-                                <label ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
-                                    <header>
-                                        <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.BankTransfer" ng-model="paymentMethod" />
-                                        </div>
-                                        <h5>Transfer Bank</h5>
-                                    </header>
-                                    <section>
-                                        <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Transfer" />
-                                    </section>
-                                </label>
-                                <label ng-click="binDiscount.reset('cc'); methodDiscount.reset('nVA')">
-                                    <header>
-                                        <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.CreditCard" ng-model="paymentMethod" ng-change="CreditCardPromo.Check(CreditCard.Number)" />
-                                        </div>
-                                        <h5>Kartu Kredit / Debit</h5>
-                                    </header>
-                                    <section>
-                                        <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
-                                    </section>
-                                </label>
-                                
-                                @{
-                                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                                }
-                                @if (env != "production" || (todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27))
-                                {
-                                    <label ng-click=" bindiscount.reset('ncc'); methodDiscount.check();  methodDiscount.reset('VA')" id="selectVA">
-                                        <header>
-                                            <div class="input-wrapper">
-                                                <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
-                                            </div>
-                                            <h5>Payday Madness</h5>
-                                        </header>
-                                        <section>
-                                            <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Permata" />
-                                        </section>
-                                    </label>
+                        <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
 
-                                }
-                                else
-                                {
-                                    <label ng-click=" bindiscount.reset('ncc')">
-                                        <header>
-                                            <div class="input-wrapper">
-                                                <input type="radio" name="paymentMethod" value="@PaymentMethod.VirtualAccount" ng-model="paymentMethod" />
+                        <div class="payment-wrapper">
+                            <div class="row">
+
+                                <div class="box-payment col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-5 clear-left"><img src="/Assets/images/atm.jpg" /></div>
+                                        <div class="col-xs-5 not-selected"><p>Bank Transfer</p></div>
+                                        </div>
+                                    <div class="separator-desktop"></div>
+                                    <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
+                                    <div class="row box-pilihan-bank">
+                                        <div class="col-xs-6 clear-left ">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                        <div class="col-xs-6  clear-left">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                        <div class="col-xs-6 clear-left ">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                        <div class="col-xs-6 clear-left">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <div class="rincian-harga-tambahan">
+                                        <div class="content-right-payment content-right-payment-edit">
+                                            <div class="kode-voucher">
+                                                <a href="#">Punya kode Voucher ?</a>
+                                                <div class="form-group ">
+                                                    <input type="text" class="form-control form-kode-voucher">
+                                                </div>
                                             </div>
-                                            <h5>Virtual Account</h5>
-                                        </header>
-                                        <section>
-                                            <img src="/Assets/images/bersama-prima-alto.jpg" alt="Virtual Account" />
-                                        </section>
-                                    </label>
-                                        
-                                }
+                                            <div class="rincian-harga">
+                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
+                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
+                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
+                                                <div class="total-harga">
+                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <div class="form-bayar">
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
+                                    </div>
+                                </div><!-- .payment -->
+                                
+                                <div class="box-payment col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-5 clear-left"><img src="/Assets/images/kredit.jpg" /></div>
+                                        <div class="col-xs-5 selected clear-left"><p>Kartu Kredit / Debit</p></div>
+                                        <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <h3 class="lg-txt"><b>DETAIL</b> KARTU KREDIT / DEBIT</h3>
+                                    <div class="form-kartu-kredit">
+                                        <div class="form-group">
+                                            <label>Nomor Kartu</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-6 clear-left">
+                                                <div class="form-group">
+                                                    <label>Kadaluarsa</label>
+                                                    <select class="form-control">
+                                                        <option>Bulan</option>
+                                                        <option>Januari</option>
+                                                        <option>Februari</option>
+                                                        <option>Maret</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6 clear-right">
+                                                <div class="form-group">
+                                                    <label>&nbsp;</label>
+                                                    <select class="form-control">
+                                                        <option>Tahun</option>
+                                                        <option>1</option>
+                                                        <option>2</option>
+                                                        <option>3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 clear-left clear-right">
+                                                <div class="form-group">
+                                                    <label>CVV Kartu</label>
+                                                    <input type="number" class="form-control" placeholder="xxx">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nama Pemegang Kartu</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <div class="rincian-harga-tambahan">
+                                        <div class="content-right-payment content-right-payment-edit">
+                                            <div class="kode-voucher">
+                                                <a href="#">Punya kode Voucher ?</a>
+                                                <div class="form-group ">
+                                                    <input type="text" class="form-control form-kode-voucher">
+                                                </div>
+                                            </div>
+                                            <div class="rincian-harga">
+                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
+                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
+                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
+                                                <div class="total-harga">
+                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <div class="form-bayar">
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
+                                            </div>
+                                </div><!-- .payment -->
+
+                                <div class="box-payment col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-5 clear-left"><img src="/Assets/images/atm.jpg" /></div>
+                                        <div class="col-xs-5 not-selected clear-left"><p>Virtual Account</p></div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
+                                    <div class="row box-pilihan-bank">
+                                        <div class="col-xs-6 clear-left">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                        <div class="col-xs-6 clear-left">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                        <div class="col-xs-6 clear-left">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                        <div class="col-xs-6 clear-left">
+                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                                        </div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <div class="rincian-harga-tambahan">
+                                        <div class="content-right-payment content-right-payment-edit">
+                                            <div class="kode-voucher">
+                                                <a href="#">Punya kode Voucher ?</a>
+                                                <div class="form-group ">
+                                                    <input type="text" class="form-control form-kode-voucher">
+                                                </div>
+                                            </div>
+                                            <div class="rincian-harga">
+                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
+                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
+                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
+                                                <div class="total-harga">
+                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <div class="form-bayar">
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
+                                            </div>
+                                </div><!-- .payment -->
                                  
-                                <label ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
-                                    <header>
-                                        <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.MandiriClickPay" ng-model="paymentMethod" />
+                                <div class="box-payment col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-4 clear-left"><img src="/Assets/images/mandiri.jpg" /></div>
+                                        <div class="col-xs-5 not-selected clear-left"><p>Mandiri Clickpay</p></div>
+                                    </div>
+                                    <div class="separator-desktop"></div>
+                                    <h3 class="lg-txt"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                                    <div class="form-kartu-kredit">
+                                        <div class="form-group">
+                                            <label>Nomor Kartu</label>
+                                            <input type="number" class="form-control">
                                         </div>
-                                        <h5>Mandiri ClickPay</h5>
-                                    </header>
-                                    <section>
-                                        <img src="/Assets/images/payment-mandiri.jpg" alt="Mandiri Clickpay" />
-                                    </section>
-                                </label>
-                                <label ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
-                                    <header>
-                                        <div class="input-wrapper">
-                                            <input type="radio" name="paymentMethod" value="@PaymentMethod.CimbClicks" ng-model="paymentMethod" />
+                                        <div class="how-to-pay-mandiri">
+                                            <p>Input Token Mandiri (diisi secara berurutan)</p>
+                                            <div class="row text-group">
+                                                <div class="col-xs-3 clear-left"><b>APPLI</b></div>
+                                                <div class="col-xs-9">: 3</div>
+                                            </div>
+                                            <div class="row text-group">
+                                                <div class="col-xs-3 clear-left"><b>Input 1</b></div>
+                                                <div class="col-xs-9">: Masukkan Nomor Kartu Terlebih Dahulu</div>
+                                            </div>
+                                            <div class="row text-group">
+                                                <div class="col-xs-3 clear-left"><b>Input 2</b></div>
+                                                <div class="col-xs-9">: 436271</div>
+                                            </div>
+                                            <div class="row text-group">
+                                                <div class="col-xs-3 clear-left"><b>Input 3</b></div>
+                                                <div class="col-xs-9">: 45796</div>
+                                            </div>
                                         </div>
-                                        <h5>CIMB Clicks</h5>
-                                    </header>
-                                    <section>
-                                        <img src="/Assets/images/cimb-clicks.jpg" alt="CIMB Niaga" />
-                                    </section>
-                                </label>
-                                <div class="notifcimb" ng-show="paymentMethod == '@PaymentMethod.CimbClicks'" id="CimbClicks">
-                                    <p>
-                                        Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.
-                                    </p>
-                                </div>
-                                <div class="selected-bank" id="BankTransfer">
-                                    <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
-                                    <label>
-                                        <header>
-                                            <div class="input-wrapper">
-                                                <input type="radio" name="SelectedBankBT" value="BankTransfer"/>
+                                        <div class="form-group">
+                                            <label>Respon Token Mandiri</label>
+                                            <input type="text" class="form-control" placeholder="xxxx">
+                                        </div>
+                                    </div>
+                                <div class="separator-desktop"></div>
+                                    <div class="rincian-harga-tambahan">
+                                        <div class="content-right-payment content-right-payment-edit">
+                                            <div class="kode-voucher">
+                                                <a href="#">Punya kode Voucher ?</a>
+                                                <div class="form-group ">
+                                                    <input type="text" class="form-control form-kode-voucher">
+                                                </div>
                                             </div>
-                                            <h5>Bank Mandiri</h5>
-                                        </header>
-                                        <section>
-                                            <img src="/Assets/images/mandiri.png" alt="Bank Mandiri" />
-                                        </section>
-                                    </label>
+                                            <div class="rincian-harga">
+                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
+                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
+                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
+                                                <div class="total-harga">
+                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
+                                        </div>
+                                        </div>
                                 </div>
-                                <div class="selected-bank" id="VirtualAccount">
-                                    <h3 class="widget-title">PILIHAN <b>BANK</b></h3>
-                                    <label>
-                                        <header>
-                                            <div class="input-wrapper">
-                                                <input type="radio" name="SelectedBankVA" value="VirtualAccount" />
                                             </div>
-                                            <h5>Bank Permata</h5>
-                                        </header>
-                                        <section>
-                                            <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Permata" />
-                                        </section>
-                                    </label>
-                                    @*<label>
-                                        <header>
-                                            <div class="input-wrapper">
-                                                <input type="radio" name="SelectedBank" value="VirtualAccount" />
-                                            </div>
-                                            <h5>Bank BCA</h5>
-                                        </header>
-                                        <section>
-                                            <img src="/Assets/images/bank-bca.png" alt="Bank BCA" />
-                                        </section>
-                                    </label>*@
+                                    <div class="separator-desktop"></div>
+                                    <div class="form-bayar">
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
                                 </div>
-                            </form>
-                        </div><!-- .summary__body -->
+                                </div><!-- .payment -->
+
+                                <div class="box-payment col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-4 clear-left"><img src="/Assets/images/cimb.jpg" /></div>
+                                        <div class="col-xs-5 not-selected"><p>CIMB Clicks</p></div>
+                                            </div>
+                                    <div class="separator-desktop"></div>
+                                    <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                                    <div class="form-bayar">
+                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
+                                            </div>
+                                </div><!-- .payment -->
+
+                                </div>
+
+                        </div><!-- .payment-wrapper -->
                     </div><!-- .summary--payment -->
                     @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
                     {
@@ -564,28 +809,7 @@
                         </div>
 
                     }
-                    <div class="widget countdown">
-                        <h3 class="widget-title"><b>SISA</b> WAKTU</h3>
-                        <div class="widget-content">
-                            <p>Sisa waktu Anda untuk melakukan pembayaran</p>
-                            <div class="timer">
-                                <div>
-                                    <h5 class="hour">00</h5>
-                                    <span>jam</span>
-                                </div>
-                                <div class="separator"><h5>:</h5></div>
-                                <div>
-                                    <h5 class="minute">00</h5>
-                                    <span>menit</span>
-                                </div>
-                                <div class="separator"><h5>:</h5></div>
-                                <div>
-                                    <h5 class="second">00</h5>
-                                    <span>detik</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- .widget.countdown -->
+                    
                     <br />
 
                     <div ng-show="notifCardLength" style="color:red">
@@ -595,32 +819,7 @@
 
                     <div class="step-button">
 
-                        <form name="finalForm" id="finalForm" ng-submit="pay.setPaymentMethod()">
 
-                            <div class="hidden">
-                                <input type="text" name="RsvNo" value="" ng-model="rsvNo" />
-                                <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
-                                <input type="text" name="Language" value="" ng-model="language" />
-
-                                <input type="text" name="Payment.Data0" id="vt-token" value="" ng-model="CreditCard.Token" />
-
-                                <p>Voucher Code</p>
-                                <input type="text" name="DiscountCode" value="" ng-model="voucher.confirmedCode" />
-
-                                <p>Payment Method</p>
-                                <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
-                            </div>
-
-                            <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="@Url.Action("Terms","staticpage")" target="_blank">syarat &amp; ketentuan</a> dan <a href="@Url.Action("Privacy","staticpage")" target="_blank">kebijakan privasi</a></p>
-                            <div class="form-group">
-                                <div class="col-xs-12" ng-show="methodDiscount.wait">
-                                    <img src="/Assets/images/load.gif" style="width: 8%;margin-left: 45%;margin-bottom: 8%;">
-                                </div>
-                                <button type="submit" class="btn btn-yellow form-control" ng-disabled="(checkoutForm.loading || !paymentMethod) || !creditCardForm.$valid || (paymentMethod == 'VirtualAccount' && methodDiscount.firstRequest)">BAYAR</button>
-                                
-                            </div>
-
-                        </form>
 
                         <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
                             <input type="text" name="RsvNo" value="" id="rsvno-input" />
@@ -859,3 +1058,9 @@
     @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }
+
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').focus()
+    })
+</script>
