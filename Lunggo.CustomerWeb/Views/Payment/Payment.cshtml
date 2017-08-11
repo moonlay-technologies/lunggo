@@ -281,13 +281,10 @@
                                                         <div class="nama-bank"><p><b>Bank Lainnya (Transfer Virtual Account)</b></p></div>
                                                     </div>
                                                 </div>
-                                                <div class="form-bayar">
-                                                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                    <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                </div>
+                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
                                             </div>
                                         </div><!-- /BANK TRANSFER -->
-                                        
+
                                         <!-- KARTU KREDIT / DEBIT -->
                                         <div class="box-payment col-xs-12">
                                             <div class="row">
@@ -360,12 +357,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-
-                                                <div class="form-bayar">
-                                                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                    <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                </div>
+                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
                                             </div>
 
                                         </div><!-- /KARTU KREDIT / DEBIT -->
@@ -459,10 +451,7 @@
                                                     @*<!-- name="mandiriToken" -->*@
                                                     </div>
                                                 </div>
-                                                <div class="form-bayar">
-                                                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                    <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                </div>
+                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
                                             </div>
                                         </div><!-- /MANDIRI CLICKPAY -->
                                         
@@ -475,10 +464,7 @@
                                             <div class="accordion-content">
                                                 <div class="separator-desktop"></div>
                                                 <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
-                                                <div class="form-bayar">
-                                                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                    <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                </div>
+                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
                                             </div>
                                         </div><!-- /CIMB CLICKS -->
 
