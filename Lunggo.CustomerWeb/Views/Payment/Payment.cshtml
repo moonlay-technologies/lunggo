@@ -253,13 +253,13 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-left">
-                            <!-- ******************** -->
+
                             <div class="content-step" id="step-4">
                                 <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
 
                                 <div class="payment-wrapper">
                                     <div class="row">
-                                        
+
                                         <!-- BANK TRANSFER -->
                                         <div class="box-payment col-xs-12">
                                             <div class="row">
@@ -272,16 +272,22 @@
                                                 <div class="separator-desktop"></div>
                                                 <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
                                                 <div class="row box-pilihan-bank">
-                                                    <div class="col-xs-3 ">
-                                                        <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Transfer Mandiri"></div>
+                                                    <div class="col-xs-3">
+                                                        <div class="img-bank">
+                                                            <img src="/Assets/images/mandiri.png" alt="Bank Transfer Mandiri"
+                                                                    ng-click="paymentMethod = @PaymentMethod.BankTransfer">
+                                                        </div>
                                                         <div class="nama-bank"><p><b>Transfer Bank Mandiri</b></p></div>
                                                     </div>
-                                                    <div class="col-xs-3 ">
-                                                        <div class="img-bank"><img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Lainnya"></div>
-                                                        <div class="nama-bank"><p><b>Bank Lainnya (Transfer Virtual Account)</b></p></div>
+                                                    <div class="col-xs-3">
+                                                        <div class="img-bank">
+                                                            <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Lainnya"
+                                                                    ng-click="paymentMethod = @PaymentMethod.VirtualAccount">
+                                                        </div>
+                                                        <div class="nama-bank"><p><b>Bank Lainnya (Virtual Account)</b></p></div>
                                                     </div>
                                                 </div>
-                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
+                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", @PaymentMethod.VirtualAccount)
                                             </div>
                                         </div><!-- /BANK TRANSFER -->
 
@@ -308,7 +314,7 @@
                                                         </div> --> *@
                                                     </div>
                                                     <div class="row">
-                                                        <div class="ccDate" ng-class="{'has-error' : dateOver}">
+                                                        <div class="ccDate" ng-class="{'has-error' : (dateOver || checkDate(CreditCard.Month, CreditCard.Year))}">
                                                             <div class="col-xs-4">
                                                                 <div class="form-group">
                                                                     <label>Kadaluarsa</label>
@@ -324,7 +330,7 @@
                                                                 <div class="form-group">
                                                                     <label>&nbsp;</label>
                                                                     <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
-                                                                        <option ng-selected="year  == 'Tahun'" ng-click="CreditCard.Year = year"
+                                                                        <option ng-selected="year == 'Tahun'" ng-click="CreditCard.Year = year"
                                                                                 value="{{year}}" ng-repeat="year in generateYear()">
                                                                             {{year}}
                                                                         </option>
@@ -336,30 +342,26 @@
                                                             <div class="form-group">
                                                                 <label>CVV Kartu</label>
                                                                 <input type="number" class="form-control"
-                                                                   placeholder="xxx" maxlength="3" ng-model="CreditCard.Cvv"
-                                                                   ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
+                                                                   placeholder="xxx" maxlength="3" ng-model="CreditCard.Cvv" />
+                                                                   <!-- ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div ng-show="dateOver" style="color:red">
                                                         Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
                                                     </div>
-                                                  @*<!-- <div ng-show="!checkNumber(CreditCard.Cvv)" style="color:red">
-                                                        CVV tidak boleh mengandung karakter selain angka
-                                                    </div> -->*@
                                                     <div class="form-group" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
                                                         <label>Nama Pemegang Kartu</label>
-                                                        <input type="text" class="form-control" ng-model="CreditCard.Name"
-                                                            required>
-                                                        <!-- @*  ng-required="paymentMethod == '@PaymentMethod.CreditCard'"  *@ -->
+                                                        <input type="text" class="form-control" ng-model="CreditCard.Name" required>
+                                                @* <!--     pattern="^[a-zA-Z ]+$"
+                                                            ng-required="paymentMethod == '@PaymentMethod.CreditCard'"  -->*@ 
                                                         <div ng-show="!checkName(CreditCard.Name)" style="color:red">
                                                             Nama tidak boleh mengandung karakter selain alfabet dan spasi
                                                         </div>
                                                     </div>
                                                 </div>
-                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
+                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CreditCard)
                                             </div>
-
                                         </div><!-- /KARTU KREDIT / DEBIT -->
                                         
                                         <!-- VIRTUAL ACCOUNT -->
@@ -410,9 +412,6 @@
                                                         <input type="number" class="form-control cc-number" maxlength="19"
                                                                 ng-model="MandiriClickPay.CardNo" />
                                                     </div>
-                                             @*<!-- <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
-                                                        Nomor kartu tidak boleh mengandung karakter selain angka
-                                                    </div> -->*@
                                                     <div class="how-to-pay-mandiri">
                                                         <p>Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></p>
                                                         <div class="row text-group">
@@ -451,7 +450,7 @@
                                                     @*<!-- name="mandiriToken" -->*@
                                                     </div>
                                                 </div>
-                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
+                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.MandiriClickPay)
                                             </div>
                                         </div><!-- /MANDIRI CLICKPAY -->
                                         
@@ -464,7 +463,7 @@
                                             <div class="accordion-content">
                                                 <div class="separator-desktop"></div>
                                                 <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
-                                                @{ Html.RenderPartial("/Views/Payment/partials/_payButton.cshtml"); }
+                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CimbClicks)
                                             </div>
                                         </div><!-- /CIMB CLICKS -->
 
@@ -684,7 +683,7 @@
             <div class="bookfailed-popup" ng-show="expired">
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
                         <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:10px;">
@@ -753,7 +752,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
@@ -768,7 +767,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Anda Belum Memilih Bank</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar</span></div>
@@ -782,7 +781,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Input yang Anda masukkan tidak valid. Silakan cek kembali.</span></div>
@@ -797,7 +796,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
@@ -815,7 +814,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
@@ -831,7 +830,7 @@
             <div class="bookfailed-popup" ng-show="pay.isPaying || pay.go">
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
                         <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
