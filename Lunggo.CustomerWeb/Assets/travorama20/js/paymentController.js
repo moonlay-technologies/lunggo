@@ -551,55 +551,73 @@ app.controller('paymentController', [
                 $scope.pay.isSuccess = false,
                 $scope.pay.checked = false;
                 $scope.pay.isPaying = false;
+                $scope.pay.postData = {
+                    rsvNo : $scope.rsvNo,
+                    discCd: $scope.voucher.confirmedCode
+                };
                 //generate payment data
                 switch ($scope.paymentMethod) {
                     case "BankTransfer":
                         if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
-                            $scope.PaymentData = '"method":"2", "submethod" : "1"' ;
+                            $scope.pay.postData.method = 2;
+                            $scope.pay.postData.submethod = 1;
                             $scope.pay.transfer = true;
                         }
                         break;
                     case "CreditCard":
                         var hash = CryptoJS.SHA512($scope.CreditCard.Number);
                         var hex = hash.toString(CryptoJS.enc.Hex);
-                        $scope.PaymentData = '"method":"1","creditCard":' + '{' + ' "tokenId":"'
-                            + $scope.CreditCard.Token + '","holderName":"' + $scope.CreditCard.Name
-                            + '","hashedPan":"' + hex + '","reqBinDiscount":"' + $scope.binDiscount.available + '"}';
+                        $scope.pay.postData.method = 1;
+                        $scope.pay.postData.creditCard = {
+                            tokenId : $scope.CreditCard.Token,
+                            holderName : $scope.CreditCard.Name,
+                            hashedPan : hex,
+                            reqBinDiscount : $scope.binDiscount.available
+                        };
                         break;
                     case "MandiriClickPay":
-                        var cardNoLast10 = $scope.MandiriClickPay.CardNo + "";
+                        var cardNoLast10 = $scope.MandiriClickPay.CardNo + ""; // gak ngerti ini buat apa ditambah "" , convert to string?
                         cardNoLast10 = cardNoLast10.substr(cardNoLast10.length - 10);
                         var rsvNoLast5 = $scope.rsvNo + "";
                         rsvNoLast5 = rsvNoLast5.substr(rsvNoLast5.length - 5);
                         var netprice = $scope.initialPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
-                        $scope.PaymentData = '"method":"3","mandiriClickPay":' + '{' + ' "cardNo":"'
-                            + $scope.MandiriClickPay.CardNo + '","token":"' + $scope.MandiriClickPay.Token
-                            + '","cardNoLast10":"' + cardNoLast10 + '","amount":"' + netprice + '","rsvNoLast5":"' + rsvNoLast5 + '"' + '}';
+                        $scope.pay.postData.mandiriClickPay = {
+                            cardNo : $scope.MandiriClickPay.CardNo,
+                            token : $scope.MandiriClickPay.Token,
+                            cardNoLast10 : cardNoLast10,
+                            amount : netprice,
+                            rsvNoLast5 : rsvNoLast5
+                        };
+                        $scope.pay.postData.method = 3;
                         $scope.pay.clickpay = true;
                         break;
                     case "CimbClicks":
-                        $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';
+                        $scope.pay.postData.method = 4;
+                        $scope.pay.postData.cimbClicks = {
+                            description : "Pembayaran melalui CimbClicks"
+                        };
                         break;
                     case "VirtualAccount":
-                        $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '},' + '"submethod" : "3"';
+                        $scope.pay.postData.method = 5;
+                        $scope.pay.postData.virtualAccount = {
+                            bank : "permata"
+                        };
+                        $scope.pay.postData.submethod = 3;
                         $scope.pay.virtualAccount = true;
                         break;
                     case "MandiriBillPayment":
-                        var label1 = "Payment for booking a flight";
-                        var value1 = "debt";
-                        $scope.PaymentData = '"method":"13","mandiriBillPayment":' + '{' + ' "label1":"' + label1 + '","value1":"' + value1 + '"' + '}';
+                        $scope.pay.postData.method = 13;
+                        $scope.pay.postData.mandiriBillPayment = {
+                            label1 : "Payment for booking a flight",
+                            value1 : "debt"
+                        };
                         break;
                 }
-                console.log('{"rsvNo" : "' + $scope.rsvNo + '", "discCd":"'
-                        + $scope.voucher.confirmedCode + '",' + $scope.PaymentData + '}')
-                $scope.pay.postData = JSON.parse('{"rsvNo" : "' + $scope.rsvNo + '", "discCd":"'
-                        + $scope.voucher.confirmedCode + '",' + $scope.PaymentData + '}');
                 if ($scope.paymentMethod != "BankTransfer" && $scope.paymentMethod != 'VirtualAccount'
                     || ($scope.redirectionUrl != null && $scope.redirectionUrl.length != 0)) {
                     $scope.pay.go = true;
                     $scope.pay.bayar();
                 }
-
             },
             close: function () {
                 $scope.pay.checked = false;
@@ -623,7 +641,7 @@ app.controller('paymentController', [
                 var authAccess = getAuthAccess();
                 if (authAccess == 1 || authAccess == 2) {
                     //send form
-                    console.log($scope.pay.postData); return;
+                    // console.log($scope.pay.postData); return;
                     $http({
                         method: 'POST',
                         url: $scope.pay.url,
