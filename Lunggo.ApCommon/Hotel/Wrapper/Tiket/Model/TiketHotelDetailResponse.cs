@@ -105,7 +105,8 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket.Model
 
         [JsonProperty("room_available", NullValueHandling = NullValueHandling.Ignore)]
         public int RoomAvailable { get; set; }
-
+        [JsonProperty("minimum_stays", NullValueHandling = NullValueHandling.Ignore)]
+        public int MinimumStays { get; set; }
         [JsonProperty("ext_source", NullValueHandling = NullValueHandling.Ignore)]
         public string ext_source { get; set; }
         [JsonProperty("room_id", NullValueHandling = NullValueHandling.Ignore)]

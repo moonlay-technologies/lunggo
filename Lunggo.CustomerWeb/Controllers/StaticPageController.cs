@@ -131,14 +131,14 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult HotelVoucher()
         {
-            var rsvNo = "256186563079";
+            var rsvNo = "260776534379";
             var hotel = HotelService.GetInstance();
             var hotelService = HotelService.GetInstance();
             var reservation = hotelService.GetReservationForDisplay(rsvNo);
-            var hotelCode = reservation.HotelDetail.HotelCode;
-            var hotelDetail = HotelService.GetInstance().GetHotelDetailFromDb(hotelCode);
-            reservation.HotelDetail.Latitude = hotelDetail.Latitude;
-            reservation.HotelDetail.Longitude = hotelDetail.Longitude;
+            //var hotelCode = reservation.HotelDetail.HotelCode;
+            //var hotelDetail = HotelService.GetInstance().GetHotelDetailFromDb(hotelCode);
+            //reservation.HotelDetail.Latitude = hotelDetail.Latitude;
+            //reservation.HotelDetail.Longitude = hotelDetail.Longitude;
             //reservation.HotelDetail.Facilities = hotelDetail.Facilities == null ? null : new HotelFacilityForDisplay
             //{
             //    Other = hotelDetail.Facilities
@@ -156,7 +156,7 @@ namespace Lunggo.CustomerWeb.Controllers
             //        : "http://photos.hotelbeds.com/giata/bigger/" + firstOrDefault.Path;
 
             reservation.HotelDetail.MapImage =
-                "https://maps.googleapis.com/maps/api/staticmap?center=" + reservation.HotelDetail.Latitude + ",+" + reservation.HotelDetail.Longitude + "&zoom=16&scale=false&size=640x180&maptype=roadmap&key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&visual_refresh=true";
+                "https://maps.googleapis.com/maps/api/staticmap?center=" + reservation.HotelDetail.Latitude + ",+" + reservation.HotelDetail.Longitude + "&zoom=16&scale=false&size=640x180&maptype=roadmap&key=AIzaSyDB5Q2rDgPx4255DWmEXFeMm3Zi4dRCHhI&visual_refresh=true";
 
             return View(reservation);
         }

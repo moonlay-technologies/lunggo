@@ -295,7 +295,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Rooms = bookInfo.Rooms,
                 Address = bookInfo.Address,
                 PhonesNumbers = bookInfo.PhonesNumbers,
-                StarRating = bookInfo.StarRating,
+                StarRating = string.IsNullOrEmpty(bookInfo.StarRating) ? bookInfo.StarCode.ToString() : bookInfo.StarRating,
                 AreaCode = bookInfo.AreaCode,
                 ZoneCode = bookInfo.ZoneCode,
                 Latitude = bookInfo.Latitude,

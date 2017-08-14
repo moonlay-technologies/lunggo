@@ -129,6 +129,12 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                    RateKey = ConstructRateKey(condition),
                     Price = new Price()
                 });
+
+                /*Harga dikali jumlah malam dan jumlah kamar*/
+                roomCount = roomCount == 0 ? 1 : roomCount;
+                condition.Nights = condition.Nights == 0 ? 1 : condition.Nights;
+                data.Price = data.Price*roomCount*condition.Nights;
+
                 room.Rates[0].Price.SetSupplier(data.Price,
                                     searchResponse.Diagnostic.Currency != null
                                         ? allCurrencies[searchResponse.Diagnostic.Currency]
