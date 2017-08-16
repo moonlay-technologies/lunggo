@@ -203,113 +203,145 @@
 
 }
 
-<div class="travorama-hotel-mobile" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
+<div class="travorama-hotel-mobile khusus-list-hotel" ng-init="init(@Newtonsoft.Json.JsonConvert.SerializeObject(Model))">
     <div class="top-content">
         @Html.Partial("/Views/Shared/Mobile/_Summary.cshtml", new HotelLocation
         {
-            Location = loc,IsHotelSearch = true
+            Location = loc,
+            IsHotelSearch = true
         })
-        <div class="hotel-detail-menu clearfix">
+        <div class="hotel-sort-filter clearfix">
+            <div class="row">
+                <div class="col-xs-6 box-filter"><a href="#" attr-link="#detail-menu"> Umum</a></div>
+                <div class="col-xs-6 box-filter no-border"><a href="#" attr-link="#spec-menu">Rincian</a></div>
+            </div>
+        </div>
+        <!--<div class="hotel-detail-menu clearfix">
             <div class="hotel-detail-menu-action">
                 <a href="#" attr-link="#detail-menu">UMUM</a>
                 <a href="#" attr-link="#spec-menu">RINCIAN</a>
             </div>
-        </div>
-        </div>
+        </div>-->
+    </div>
     <div class="detail-hotel-container">
         <div class="detail-tab detail-hotel" id="detail-menu">
             <div class="dh-slider">
                 @if (Model.HotelDetailData.ImageUrl != null)
                 {
                     if (Model.HotelDetailData.ImageUrl.Count >= 1)
-                     {
-                         <div class="item" @*ng-if="hotelImages.length >= 1"*@>
-                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[0]);"></div>
-                         </div>
-                     }
+                    {
+                        <div class="item" @*ng-if="hotelImages.length >= 1"*@>
+                            <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[0]);"></div>
+                        </div>
+                    }
 
                     if (Model.HotelDetailData.ImageUrl.Count >= 2)
-                     {
-                         <div class="item" @*ng-if="hotelImages.length >= 2"*@>
-                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[1]);"></div>
-                         </div>
-                     }
+                    {
+                        <div class="item" @*ng-if="hotelImages.length >= 2"*@>
+                            <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[1]);"></div>
+                        </div>
+                    }
 
                     if (Model.HotelDetailData.ImageUrl.Count >= 3)
-                     {
-                         <div class="item" @*ng-if="hotelImages.length >= 3"*@>
-                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[2]);"></div>
-                         </div>
-                     }
+                    {
+                        <div class="item" @*ng-if="hotelImages.length >= 3"*@>
+                            <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[2]);"></div>
+                        </div>
+                    }
 
                     if (Model.HotelDetailData.ImageUrl.Count >= 4)
-                     {
-                         <div class="item" @*ng-if="hotelImages.length >= 4"*@>
-                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[3]);"></div>
-                         </div>
-                     }
+                    {
+                        <div class="item" @*ng-if="hotelImages.length >= 4"*@>
+                            <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[3]);"></div>
+                        </div>
+                    }
 
                     if (Model.HotelDetailData.ImageUrl.Count >= 5)
-                     {
-                         <div class="item" @*ng-if="hotelImages.length >= 5"*@>
-                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[4]);"></div>
-                         </div>
-                     }
+                    {
+                        <div class="item" @*ng-if="hotelImages.length >= 5"*@>
+                            <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[4]);"></div>
+                        </div>
+                    }
 
                     if (Model.HotelDetailData.ImageUrl.Count >= 6)
-                     {
-                         <div class="item" @*ng-if="hotelImages.length >= 6"*@>
-                             <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[5]);"></div>
-                         </div>
-                     }
+                    {
+                        <div class="item" @*ng-if="hotelImages.length >= 6"*@>
+                            <div class="dh-img" style="background-image: url(@Model.HotelDetailData.ImageUrl[5]);"></div>
+                        </div>
+                    }
                 }
-                
+
             </div>
             <div class="dh-title">
-                <div class="dh-name lg-txt blue-txt bold-txt">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.HotelName)</div>
-                <div class="clearfix">
-                    @switch (Model.HotelDetailData.StarRating)
-                    {
-                        case 1:
-                            <div class="col-half"><span class="star"></span></div>
-                            break;
-                        case 2:
-                            <div class="col-half"><span class="star star-2"></span></div>
-                            break;
-                        case 3:
-                            <div class="col-half"><span class="star star-3"></span></div>
-                            break;
-                        case 4:
-                            <div class="col-half"><span class="star star-4"></span></div>
-                            break;
-                        case 5:
-                            <div class="col-half"><span class="star star-5"></span></div>
-                            break;
+                <div class="judul-detail-hotel">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.HotelName)</div>
+                <div class="location-detail-hotel">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.Address) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.AreaName) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.City) @Model.HotelDetailData.PostalCode, @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.CountryName)</div>
+                <div class="bintang-detail-hotel">
+                    <div class="gambar-bintang-mobile"><img src="/Assets/mobile/images/star.png"/></div>
+                    <!--@switch (Model.HotelDetailData.StarRating)
+                        {
+                            case 1:
+                                <div class="col-half"><span class="star"></span></div>
+                                break;
+                            case 2:
+                                <div class="col-half"><span class="star star-2"></span></div>
+                                break;
+                            case 3:
+                                <div class="col-half"><span class="star star-3"></span></div>
+                                break;
+                            case 4:
+                                <div class="col-half"><span class="star star-4"></span></div>
+                                break;
+                            case 5:
+                                <div class="col-half"><span class="star star-5"></span></div>
+                                break;
 
-                    }
-                    
-                    @*<div class="col-half share-group">
+                        }
+
+                        @*<div class="col-half share-group">
                         <a href="#" class="like"></a>
                         <a href="#" class="share"></a>
-                    </div>*@
+                    </div>*@-->
                 </div>
+                <div class="deskripsi-detail-hotel-mobile">
+                    Terletak di Cikarang, favehotel Jababeka menawarkan kamar-kamar yang apik, fasilitas rapat, 
+                    dan kolam renang outdoor yang besar. Wi-Fi gratis tersedia di seluruh area hotel. 
+                    Menampilkan warna-warna cerah dan lantai kayu, semua.. <a href=""><b>More hotel info</b></a>
+                </div>
+
+                <!--<div class="dh-name lg-txt blue-txt bold-txt">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.HotelName)</div>
+                -->
             </div>
-            <div class="dh-location sm-txt">
+            <!-- <div class="dh-location sm-txt">
                 @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.Address) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.AreaName) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.City) @Model.HotelDetailData.PostalCode, @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.CountryName)
-            </div>
-            
+            </div>-->
+
             <div class="map-hotel">
                 <div id="map"></div>
             </div>
-            
+
             <div ng-show="!searchDone" class="text-center" style="padding:30px;">
                 <img src="/Assets/images/load.gif" class="img-loading">
             </div>
             <div ng-show="noResults" class="dh-list-title bold-txt lg-txt darkgrey-txt">
                 Hasil pencarian kamar tidak ditemukan
             </div>
-
-            <div class="dh-listing result-title" ng-hide="!searchDone || noResults">
+            
+            <div class="container-pilihan-kamar">
+                <div class="box-pilihan-kamar">
+                    <div class="foto-detail-kamar">
+                        <div class="gradient-judul"></div>
+                        <div class="nama-kamar" >Double Deluxe Bed</div>
+                    </div>
+                    <div class="facility-kamar">
+                        <ul>
+                            <li>Cancellation Policy</li>
+                            <li>Max 2 Adults</li>
+                            <li>With Breakfast</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="dh-listing result-title" ng-hide="!searchDone || noResults">
                 <div class="dh-list-title bold-txt lg-txt darkgrey-txt">Informasi Kamar & Harga </div>
                 <div class="sm-txt darkgrey-txt bold-txt" style="padding: 15px; border-bottom: 1px solid #e9e9e9;">{{hotel.nightCount}} Malam ({{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
                 <ul class="dh-list-container">
@@ -355,10 +387,10 @@
                                 </div>
                                 <a href="#" class="blue-txt downline-txt sm-txt" ng-click="PageConfig.SetOverlay('detail-room'); seeRoomDetail(room)">Detail Info Kamar</a>
                                 @*<div class="facility">
-                                <span class="wifi"></span>
-                                <span class="meal"></span>
-                                <span class="ac"></span>
-                            </div>*@
+                                        <span class="wifi"></span>
+                                        <span class="meal"></span>
+                                        <span class="ac"></span>
+                                    </div>*@
                                 <a ng-click="bookRoom(room.rate)" class="checkout-btn btn btn-yellow small">PESAN</a>
                             </div>
                         </div>
@@ -372,10 +404,10 @@
                         <span class="less" ng-show="roomCount == maxRoomCount">Sebagian</span>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
-            
-        </div>
+
+    </div>
     <div class="detail-tab spec-hotel" id="spec-menu">
         @if (!string.IsNullOrEmpty(Model.HotelDetailData.Description))
         {
@@ -390,116 +422,116 @@
                 <a class="toggle"><span class="sh-open"></span><span class="sh-close"></span></a>
             </div>
         }
-     @if (hotelFac != null && hotelFac.Count > 0)
-     {
-         <div class="sh-facility">
-             <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
-             @*<div ng-show="loading" class="text-center">
+        @if (hotelFac != null && hotelFac.Count > 0)
+        {
+            <div class="sh-facility">
+                <div class="sh-title darkgrey-txt lg-txt bold-txt">Fasilitas Utama Hotel</div>
+                @*<div ng-show="loading" class="text-center">
                     <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
                     </div>*@
-             <div class="sh-list-facility grey-txt clearfix">
-                
-                 @foreach (var facility in hotelFac)
-                 {
-                     <div class="sh-row clearfix">
-                         <div class="col-2">
-                             @if (facility.FacilityGroup == "Umum")
-                             {
-                                 <div class="col-2 fac-general">
-                                 </div>
-                             }
-                             else if (facility.FacilityGroup == "Kesehatan")
-                             {
-                                 <div class="col-2 fac-health">
-                                 </div>
-                             }
-                             else if (facility.FacilityGroup == "Olah Raga")
-                             {
-                                 <div class="col-2 fac-sport">
-                                 </div>
-                             }
-                             else if (facility.FacilityGroup == "Bisnis")
-                             {
-                                 <div class="col-2 fac-business">
-                                 </div>
-                             }
-                             else if (facility.FacilityGroup == "Makanan")
-                             {
-                                 <div class="col-2 fac-meal">
-                                 </div>
-                             }
-                             else if (facility.FacilityGroup == "Hiburan")
-                             {
-                                 <div class="col-2 fac-ent">
-                                 </div>
-                             }
-                             else if (facility.FacilityGroup == "Lainnya")
-                             {
-                                 <div class="col-2 fac-other">
-                                 </div>
-                             }
-                         </div>
+                <div class="sh-list-facility grey-txt clearfix">
 
-                         <div class="col-8 clearfix">
-                             @foreach (var facilityList in facility.FacilityList)
-                             {
-                                 <ul class="col-half blue-list">
-                                     @foreach (var name in facilityList)
-                                     {
-                                         <li>@name</li>
-                                     }
-                                 </ul>
-                             }
-                                    
-                         </div>
-                     </div>
-                 }
-                 
-
-
-                 @*<ul class="col-half sh-list">
-                        <li class="bed-blue">Bed</li>
-                        <li class="meal-blue">Breakfast</li>
-                        <li class="bell-blue">Room Service</li>
-                        <li class="wifi-blue">Public WiFi</li>
-                        <li class="bed-blue">Bed</li>
-                        <li class="meal-grey">Breakfast</li>
-                        <li class="bell-grey">Room Service</li>
-                        <li class="wifi-grey">Public WiFi</li>
-                    </ul>
-                    <ul class="col-half sh-list">
-                        <li class="pool-blue">Swimming Pool</li>
-                        <li class="meal-blue">Breakfast</li>
-                        <li class="tv-blue">TV</li>
-                        <li class="car-blue">Hotel Car</li>
-                        <li class="ac-grey">AC</li>
-                        <li class="tv-blue">TV</li>
-                        <li class="car-blue">Hotel Car</li>
-                        <li class="ac-blue">AC</li>
-                    </ul>*@
-             </div>
-             * Fasilitas Berbayar
-         </div>
-     }
-     @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
-     {
-        <div class="sh-policy">
-            <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
-            <div ng-show="loading" class="text-center">
-                <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
-            </div>
-            <div class="sh-policy-txt darkgrey-txt">
-                <ul>
-                    @foreach (var pol in Model.HotelDetailData.Policy)
+                    @foreach (var facility in hotelFac)
                     {
-                        <li>@pol</li>
+                        <div class="sh-row clearfix">
+                            <div class="col-2">
+                                @if (facility.FacilityGroup == "Umum")
+                                {
+                                    <div class="col-2 fac-general">
+                                    </div>
+                                }
+                                else if (facility.FacilityGroup == "Kesehatan")
+                                {
+                                    <div class="col-2 fac-health">
+                                    </div>
+                                }
+                                else if (facility.FacilityGroup == "Olah Raga")
+                                {
+                                    <div class="col-2 fac-sport">
+                                    </div>
+                                }
+                                else if (facility.FacilityGroup == "Bisnis")
+                                {
+                                    <div class="col-2 fac-business">
+                                    </div>
+                                }
+                                else if (facility.FacilityGroup == "Makanan")
+                                {
+                                    <div class="col-2 fac-meal">
+                                    </div>
+                                }
+                                else if (facility.FacilityGroup == "Hiburan")
+                                {
+                                    <div class="col-2 fac-ent">
+                                    </div>
+                                }
+                                else if (facility.FacilityGroup == "Lainnya")
+                                {
+                                    <div class="col-2 fac-other">
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="col-8 clearfix">
+                                @foreach (var facilityList in facility.FacilityList)
+                                {
+                                    <ul class="col-half blue-list">
+                                        @foreach (var name in facilityList)
+                                        {
+                                            <li>@name</li>
+                                        }
+                                    </ul>
+                                }
+
+                            </div>
+                        </div>
                     }
-                    
-                </ul>
+
+
+
+                    @*<ul class="col-half sh-list">
+                            <li class="bed-blue">Bed</li>
+                            <li class="meal-blue">Breakfast</li>
+                            <li class="bell-blue">Room Service</li>
+                            <li class="wifi-blue">Public WiFi</li>
+                            <li class="bed-blue">Bed</li>
+                            <li class="meal-grey">Breakfast</li>
+                            <li class="bell-grey">Room Service</li>
+                            <li class="wifi-grey">Public WiFi</li>
+                        </ul>
+                        <ul class="col-half sh-list">
+                            <li class="pool-blue">Swimming Pool</li>
+                            <li class="meal-blue">Breakfast</li>
+                            <li class="tv-blue">TV</li>
+                            <li class="car-blue">Hotel Car</li>
+                            <li class="ac-grey">AC</li>
+                            <li class="tv-blue">TV</li>
+                            <li class="car-blue">Hotel Car</li>
+                            <li class="ac-blue">AC</li>
+                        </ul>*@
+                </div>
+                * Fasilitas Berbayar
             </div>
-        </div>
-     }
-        
+        }
+        @if (Model.HotelDetailData.Policy != null && Model.HotelDetailData.Policy.Count > 0)
+        {
+            <div class="sh-policy">
+                <div class="sh-title darkgrey-txt lg-txt bold-txt">Perlu Diingat</div>
+                <div ng-show="loading" class="text-center">
+                    <img src="/Assets/images/load.gif" style="width: 30px; height: 30px; margin-top: 5%;">
+                </div>
+                <div class="sh-policy-txt darkgrey-txt">
+                    <ul>
+                        @foreach (var pol in Model.HotelDetailData.Policy)
+                        {
+                            <li>@pol</li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        }
+
     </div>
     <div class="overlay overlay--theme--blue overlay--detail-room" ng-class="{ 'active' : (PageConfig.ActiveOverlay == 'detail-room') }">
         <header class="overlay__header">
@@ -557,18 +589,18 @@
                                 <div class="max-visitor" ng-show="selectedRoom.rate.breakdowns[0].board != 'RO'">Termasuk Sarapan</div>
                             </div>
                             <div class="price orange-txt">
-                                    <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.breakdowns[0].originalFare | number}}</div>
+                                <div class="underline-txt sm-txt">Rp {{selectedRoom.rate.breakdowns[0].originalFare | number}}</div>
                                 <a href="#" class="detail"></a>
-                                    <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.breakdowns[0].netFare | number}}</b></div>
+                                <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.breakdowns[0].netFare | number}}</b></div>
                                 <span class="xs-txt">(*Termasuk Pajak)</span>
                             </div>
                             <a ng-click="bookRoom(selectedRoom)" class="btn btn-yellow small">PESAN</a>
                         </div>
-                            <div class="dr-policy" ng-show="selectedRoom.rate.cancellation != null && selectedRoom.rate.cancellation.length > 0">
+                        <div class="dr-policy" ng-show="selectedRoom.rate.cancellation != null && selectedRoom.rate.cancellation.length > 0">
                             <div class="bold-txt lg-txt darkgrey-txt">Kebijakan Pembatalan</div>
                             <ul class="blue-list dr-txt darkgrey-txt">
                                 <li ng-show="selectedRoom.rate.isFreeCancel">
-                                        Gratis pembatalan sebelum <span style="color:#1daee4">{{setHoursToWIB(selectedRoom.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
+                                    Gratis pembatalan sebelum <span style="color:#1daee4">{{setHoursToWIB(selectedRoom.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
                                 </li>
                                 <li ng-repeat="cancellation in selectedRoom.rate.cancellation track by $index">
                                     Pembatalan setelah <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
@@ -577,11 +609,11 @@
                                 </li>
                             </ul>
                         </div>
-                            <div class="dr-info" ng-show="selectedRoom.rate.tnc != null && selectedRoom.rate.tnc.length > 0">
+                        <div class="dr-info" ng-show="selectedRoom.rate.tnc != null && selectedRoom.rate.tnc.length > 0">
                             <div class="bold-txt lg-txt darkgrey-txt">Info Kamar</div>
                             <ul class="blue-list dr-txt darkgrey-txt">
                                 <li ng-repeat="tnc in selectedRoom.rate.tnc">{{tnc}} <br /></li>
-                                </ul>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -589,10 +621,10 @@
         </section>
     </div>
 
-        @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
+    @Html.Partial("/Views/Shared/Mobile/_Autocomplete.cshtml")
 
-        <!-- overlay hotel date -->
-        @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
+    <!-- overlay hotel date -->
+    @Html.Partial("/Views/Shared/Mobile/_SelectCheckInDate.cshtml")
 
     <div class="popup__wrapper popup--revalidate" ng-class="{'active': booking}">
         <div class="popup">
@@ -626,7 +658,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="popup__wrapper" ng-class="{'active': expired}">
         <div class="popup">
             <header class="popup__header">

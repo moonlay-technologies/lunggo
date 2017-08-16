@@ -31,6 +31,11 @@
   font-weight: normal;
   font-style: normal; }
 
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url("../../fonts/OpenSans-Bold.ttf");
+  }
+
 /*--------------------*/
 /* font */
 .os-light, .page.page-home .form-container .form-wrapper form .form__destination .title-destination, .page.page-home .form-container .form-wrapper form .form__origin .title-destination, .page.page-home .form-container .form-wrapper form span.city, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__destination .title-destination, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form .form__origin .title-destination, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__destination .title-destination, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form .form__origin .title-destination, .page-hotel .overlay.overlay--hotel-form .overlay__content .form-wrapper form span.city {
@@ -5117,8 +5122,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             bottom: 0;
             border-radius: 2px; }
     .page-hotel .travorama-hotel-mobile .detail-hotel .dh-title {
-      padding: 20px 15px;
-      border-bottom: 1px solid #e9e9e9; }
+      padding:15px 15px;
+        text-align: center;
+    }
       .page-hotel .travorama-hotel-mobile .detail-hotel .dh-title .dh-name {
         margin-bottom: 12px; }
     .page-hotel .travorama-hotel-mobile .detail-hotel .dh-location {
@@ -6617,6 +6623,12 @@ container-rincian-penerbangan-modal {
     padding: 8px 0;
     border-right: 1px solid #e9e9e9;
 }
+.box-filter a {
+    color: inherit;
+}
+.box-filter a:focus {
+    text-decoration: none;
+}
 .separator-filter {
     background: #e9e9e9;;
     height: 10px;
@@ -6677,4 +6689,78 @@ container-rincian-penerbangan-modal {
 }
 .khusus-list-hotel {
     background: #f9f9f9;
+}
+.detail-hotel-container {
+    margin-top: 20px;
+}
+.judul-detail-hotel {
+    font-family: 'Open Sans Bold';
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.location-detail-hotel {
+    color: #636363;
+    font-size: 10px;
+    font-weight: 400;
+}
+.bintang-detail-hotel {
+    margin-top: 5px;
+}
+.deskripsi-detail-hotel-mobile {
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    padding: 10px 0;   
+    margin-top: 15px;
+    color: #616161;
+    font-size: 10px;
+}
+.deskripsi-detail-hotel-mobile a {
+    color: #ff7200;
+    line-height: 1.5;
+}
+.container-pilihan-kamar {
+    padding: 15px;
+     background: #f9f9f9;
+}
+.box-pilihan-kamar {
+    border: 1px solid #e9e9e9;
+    background: #fff;
+}
+.foto-detail-kamar {
+    position: relative;
+    background-image: url(/Assets/images/kamar-hotel.jpg);
+    background-size: cover;
+    height: 150px;
+    text-align: center;
+}
+.foto-detail-kamar img {
+    width:100%
+}
+.gradient-judul {
+    background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.5));
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    height: 150px;
+}
+.nama-kamar {
+    position: absolute;
+    color: #fff;
+    font-weight: bold;
+    bottom: 15px;
+    z-index: 1;
+    font-size: 18px;
+    width: 100%;
+}
+.facility-kamar {
+    margin: 10px 0;
+}
+.facility-kamar ul {
+    list-style-type: circle;
+}
+.facility-kamar li {
+    display: inline;
+    vertical-align: top;
+    list-style: disc inside;
 }
