@@ -459,7 +459,7 @@ public class NicepayClass : System.Web.UI.Page
         return RequestData;
     }
 
-    public void PrintError(string ErrorNo)
+    public string  PrintError(string ErrorNo)
     {
         string[,] getError = new string[1, 2];
 
@@ -584,7 +584,8 @@ public class NicepayClass : System.Web.UI.Page
              s2 = getError[i, 1];
         }
 
-        HttpContext.Current.Response.Redirect("~/ErrorCs.aspx?ErrorNo=" + s1 + "&ErrorMsg=" + s2);
+        return s1 + ", " + s2;
+        //HttpContext.Current.Response.Redirect("~/ErrorCs.aspx?ErrorNo=" + s1 + "&ErrorMsg=" + s2);
 
     }
 
