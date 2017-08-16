@@ -27,6 +27,10 @@ file : /Assets/travorama20/css/travorama20.scss
   src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
   font-weight: normal;
   font-style: normal; }
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url("../../fonts/OpenSans-Bold.ttf");
+  }
 
 /*--------------------*/
 /* font */
@@ -82,6 +86,10 @@ body {
 
 hr {
   border-top: 1px solid #ccc; }
+
+.row {
+    margin: 0 !important;
+}
 
 b, strong {
   font-weight: 700; }
@@ -2857,7 +2865,7 @@ body.page-index {
       background-image: url(/Assets/images/why-free.png);
       width: 54px; }
     .page-index .section-why .sw-img.sw-flight {
-      background-image: url(/Assets/images/why-long.png);
+      background-image: url(/Assets/images/why-pilihan.png);
       width: 54px; }
     .page-index .section-why .sw-img.sw-trust {
       background-image: url(/Assets/images/why-trust.png);
@@ -2866,8 +2874,8 @@ body.page-index {
       background-image: url(/Assets/images/why-hotel.png);
       width: 56px; }
     .page-index .section-why .sw-img.sw-active {
-      background-image: url(/Assets/images/why-active.png);
-      width: 69px; }
+      background-image: url(/Assets/images/why-percaya.png);
+      width: 56px; }
 
 /*Normalize Fullcalendar*/
 tr:first-child > td > .fc-day-grid-event {
@@ -6411,10 +6419,9 @@ file: /Assets/travorama20/css/_page_flight.scss
               margin-right: 10px; }
       .page-hotel .travorama-hotel .detail-hotel .room {
         padding: 20px 0 15px;
-        border-top: 1px solid #ccc;
         position: relative; }
         .page-hotel .travorama-hotel .detail-hotel .room .total-day {
-          text-align: right; }
+          text-align: left; }
         .page-hotel .travorama-hotel .detail-hotel .room .room-sort {
           font-weight: 700;
           text-align: center;
@@ -9302,6 +9309,11 @@ file : /Assets/travorama20/css/_page_password.scss
     height: 1px;
     width: 100%;
 }
+.separator-desktop-list-kamar {
+    background:#ebebeb;
+    height: 1px;
+    width: 100%;
+}
 
 .form-bayar {
     margin-top: 25px;
@@ -9413,7 +9425,12 @@ file : /Assets/travorama20/css/_page_password.scss
 .separator {
     height: 20px;
 }
-
+.clear-left {
+    padding-left: 0 !important;
+}
+.clear-right {
+    padding-right: 0 !important;
+}
 .data-penumpang {
     
 }
@@ -9474,7 +9491,7 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 .harga-baru {
     color: #1daee4;
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
     margin: 2px 0 10px 0;
     text-align: center
@@ -9576,3 +9593,154 @@ file : /Assets/travorama20/css/_page_password.scss
   .partner-hotel.mphg {
     background-position: -969px 0px;
     width: 60px; }
+  .judul-detail-hotel {}
+  .judul-detail-hotel h1 {
+      font-size: 30px;
+      margin-top: 10px;
+      font-family: 'Open Sans Bold';
+  }
+  .alamat-detail-hotel {
+      font-weight: lighter;
+      color: #2f2f2f;
+      font-size: 12px;
+  }
+  .container-detail-hotel {
+      background: #fff;
+      box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+      padding: 15px;
+  }
+  .right-konten {
+      padding-left: 15px;
+  }
+  .deskripsi-detail-hotel {}
+
+  .deskripsi-detail-hotel h3 {
+      font-family: 'Open Sans Bold';
+      font-size: 16px;
+      margin-top: 0px;
+  }
+  .deskripsi-detail-hotel p {
+      color: #616161;
+  }
+  .deskripsi-detail-hotel p span {
+      color: #ff7200;
+      font-weight: bold;
+  }
+  .fasilitas-detail-hotel {
+      margin-top: 25px;
+  }
+    .fasilitas-detail-hotel h3 {
+      font-family: 'Open Sans Bold';
+      font-size: 16px;
+      margin-top: 0px;
+  }
+  .fasilitas-detail-hotel p {
+      color: #616161;
+  }
+  .fasilitas-detail-hotel p span {
+
+  }
+
+  .map-detail-hotel {
+      border-top: 1px solid #ededed;
+      padding: 15px 0;
+      margin-top: 20px;
+  }
+  .sort-detail-hotel {
+      margin-top: 15px;
+  }
+  .box-list-kamar {
+    background: #fff;
+    -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    margin: 20px 0;
+}
+  .list-foto-kamar {
+      padding: 10px;
+      width: 17.66667% !important;
+  }
+  .list-foto-kamar img {
+      width: 100%;
+  }
+  .judul-kamar h1 { 
+    font-size: 18px;
+    color: #353535;
+    margin-bottom: 7px;
+    font-weight: bold;
+    margin-top: 0;
+}
+  .lokasi-kamar {
+    color: #5e5e5e;
+    font-size: 12px;
+}
+  .lokasi-kamar a {
+      color: #ff7200;
+  }
+  .lokasi-kamar a:hover {
+      text-decoration: none;
+      cursor: pointer;
+  }
+  .fac-kamar {
+      margin-top: 10px !important;
+  }
+.harga-list-kamar {
+    border-left: 1px solid #ededed;
+    padding: 30px 15px 35px 15px;
+    margin-left: 7.33333% !important;
+    width: 17.66667%;
+}
+.info-list-kamar {
+    padding: 15px 0 0 10px;
+    width: 57.33333%;
+}
+.detail-list-kamar {
+    padding: 10px;
+}
+.detail-list-kamar img {
+    width: 100%;
+}
+.list-fasilitas-hotel ul {
+    list-style: none;
+    padding: 0;
+}
+.kategori-fasilitas {
+    font-family: 'Open Sans Bold';
+    margin-bottom: 8px;
+    color: #5e5e5e;
+    font-size: 14px;
+}
+.more-info-detail-hotel {
+    margin-top: 20px;
+}
+.additional-info {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.tab-info-kamar {
+    margin-top: 15px;
+}
+.nav-tab-info-kamar>li.active>a {
+    color: #000;
+    font-family: 'Open Sans Bold';
+    border: none;
+    border-bottom: 2px solid #38b8e7 !important;
+}
+.nav-tab-info-kamar>li.active>a:hover {
+    border: none;
+}
+.nav-tab-info-kamar>li.active>a:focus {
+    border: none;
+}
+.nav-tab-info-kamar>li>a {
+    margin-right: 40px !important;
+    color: #949494;
+    font-size: 18px;
+}
+.nav-tab-info-kamar>li>a:hover {
+    background: #fff;
+    border-color: #fff #fff #ddd;
+}
+.nav>li>a {
+    padding-left: 0px !important;
+}
