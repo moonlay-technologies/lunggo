@@ -87,9 +87,9 @@ body {
 hr {
   border-top: 1px solid #ccc; }
 
-.row {
+/*.row {
     margin: 0 !important;
-}
+}*/
 
 b, strong {
   font-weight: 700; }
