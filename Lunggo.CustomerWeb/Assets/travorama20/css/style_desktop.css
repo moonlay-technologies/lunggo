@@ -9657,7 +9657,7 @@ file : /Assets/travorama20/css/_page_password.scss
     margin: 20px 0;
 }
   .list-foto-kamar {
-      padding: 10px;
+      padding: 10px 15px;
       width: 17.66667% !important;
   }
   .list-foto-kamar img {
