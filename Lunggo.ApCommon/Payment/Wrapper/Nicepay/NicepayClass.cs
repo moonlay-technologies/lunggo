@@ -9,7 +9,7 @@ using WebRequestor.System.Net;
 
 public class NicepayClass : System.Web.UI.Page
 {
-    public JsonResult CreateVA(NicepayModel Nicepay)
+    public NicepayResponse CreateVA(NicepayModel Nicepay)
     {
         string RequestType = "RequestVA";
 
@@ -66,11 +66,11 @@ public class NicepayClass : System.Web.UI.Page
         string Data = WebRequestPostHttp.Post_Http(SingleString, API_Url);
         JavaScriptSerializer JsonSerializer = new JavaScriptSerializer();
 
-        return JsonSerializer.Deserialize<JsonResult>(Data);
+        return JsonSerializer.Deserialize<NicepayResponse>(Data);
         
     }
 
-    public JsonResult ChargeCard(NicepayModel Nicepay)
+    public NicepayResponse ChargeCard(NicepayModel Nicepay)
     {
         string RequestType = "CredirCard";
         Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
@@ -126,7 +126,7 @@ public class NicepayClass : System.Web.UI.Page
         ResultString = ResultString.Remove(0, 4);
         JavaScriptSerializer JsonSerializer = new JavaScriptSerializer();
 
-        return JsonSerializer.Deserialize<JsonResult>(ResultString);
+        return JsonSerializer.Deserialize<NicepayResponse>(ResultString);
     }
 
     public NotificationResult ChargcheckPaymentStatuseCard(string tXid, string referenceNo, string amt)

@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
 {
     public class NicepayWrapper
     {
-        private JsonResult objResult = new JsonResult();
+        private NicepayResponse objResult = new NicepayResponse();
         private NicepayModel objNicepay = new NicepayModel();
         private NicepayClass objNicepayClass = new NicepayClass();
         private Data objData = new Data();
@@ -135,7 +135,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
             return payment;
         }
 
-        private PaymentStatus PaymentResult(JsonResult response)
+        private PaymentStatus PaymentResult(NicepayResponse response)
         {
             var paymentStatusResponse = objNicepayClass.ChargcheckPaymentStatuseCard(response.tXid,
                         response.referenceNo, response.amount);

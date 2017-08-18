@@ -24,7 +24,7 @@ public class NotificationResult
     public string bankCd { get; set; }
 }
 
-public class JsonResult
+public class NicepayResponse
 {
     public string resultCd { get; set; }
     public string amount { get; set; }
