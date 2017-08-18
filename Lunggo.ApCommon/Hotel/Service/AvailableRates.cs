@@ -159,7 +159,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     SingleRate = new HotelRate
                     {
                         RateKey = ConstructRateKey(hotel, room.Id),
-                        Board = "BB",
+                        Board = room.WithBreakfasts == "1" ? "BB" : "RO",
                         NightCount = input.Nights,
                         AdultCount = hotel.TotalAdult,
                         ChildCount = hotel.TotalChildren,

@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (images == null)
                 return null;
-            return images.Select(x => x.Path.Replace(".s.", ".l.")).ToList();
+            return images.Select(x => x.Path.Replace(".s", "").Replace(".m", "").Replace(".l", "")).ToList();
         }
 
         internal HotelDetailForDisplay ConvertToHotelDetailOnlyForDisplay(HotelDetailsBase hotelDetail)
@@ -741,7 +741,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             ChildCount = rateDetail.ChildCount,
                             ChildrenAges = rateDetail.ChildrenAges,
                             Board = rateDetail.Board,
-                            BoardDescription = rateDetail.Board,
+                            BoardDescription = GetHotelBoardDescId(rateDetail.Board),
                         }
                     },
                     Cancellation = rateDetail.Cancellation,
@@ -850,7 +850,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                         ChildCount = rate.ChildCount,
                         ChildrenAges = rate.ChildrenAges,
                         Board = rate.Board,
-                        //BoardDescription = GetHotelBoardDescId(rate.Board),
+                        BoardDescription = GetHotelBoardDescId(rate.Board),
                     }
                 },
                 Allotment = rate.Allotment,
