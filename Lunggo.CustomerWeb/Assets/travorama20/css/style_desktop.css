@@ -9293,33 +9293,33 @@ file : /Assets/travorama20/css/_page_password.scss
     font-size: 10px;
 } 
 
+.box-payment .row.ui-accordion-header {
+    padding: 25px 0px;
+}
 .box-payment {
-    padding: 25px 20px;
-}
-/* masih error: FIX click box untuk accordion kekecilan */
-/*
-.box-payment .row {
-    padding: 25px 20px;
-}
-
-.box-payment .accordion-content {
     padding: 0px 20px;
-}*/
+}
+.box-payment input[type="submit"] {
+    margin-bottom: 25px;
+}
 
-.not-selected p {
+
+
+
+.box-payment h4 {
     color: #afafaf;
     font-size: 15px;
     margin-top: 13px
 }
-
-.selected p {
+.box-payment .glyphicon-ok {
+    display: none;
+}
+.box-payment .ui-accordion-header-active h4 {
     color: #5d5d5d;
-    font-size: 15px;
-    margin-top: 13px;
     font-weight: bold;
 }
-
-.glyphicon-ok {
+.box-payment .ui-accordion-header-active .glyphicon-ok {
+    display: inline-block;
     color: #75b846;
     font-size: 16px;
     margin-top: 14px;
@@ -9370,6 +9370,33 @@ file : /Assets/travorama20/css/_page_password.scss
     margin-bottom: 1px;
     font-size: 12px;
 }
+
+.box-pilihan-bank {
+    text-align: center;
+    margin: 40px 0;
+}
+.nama-bank {
+    margin-top: 10px;
+    color: #484848;
+    font-size: 14px;
+}
+.data-penumpang p {
+    margin-bottom: 3px;
+}
+
+
+.box-payment {
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
+}
+
+
+/* PAYMENT PAGE */
+
 .kode-voucher a {
     text-decoration: underline;
     font-size: 13px;
@@ -9416,46 +9443,23 @@ file : /Assets/travorama20/css/_page_password.scss
     margin-bottom: 8px;
 }
 
-.box-pilihan-bank {
-    text-align: center;
-    margin: 40px 0;
-}
 .img-bank {
-    border-radius: 5px;
-    border: 2px solid #ebebeb;
     width: 110px;
     margin: 0 auto;
     padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ebebeb;
 }
-.img-bank:hover {
+/*.img-bank:hover {*/
+.img-bank.selected {
     border: 2px solid #0d91c3;
     }
-.nama-bank {
-    margin-top: 10px;
-    color: #484848;
-    font-size: 14px;
-}
 .img-hotel {
     margin-bottom: 5px;
 }
-
 .separator {
     height: 20px;
 }
 
-.data-penumpang {
-    
-}
-.data-penumpang p {
-    margin-bottom: 3px;
-}
 
-
-.box-payment {
-  background:#fff;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-  margin-bottom: 10px;
-}
+/*  */

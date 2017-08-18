@@ -6319,7 +6319,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         padding-bottom: 10px;
     }
 
-   /*.box-payment .row, .box-payment .accordion-content {*/
    .box-payment {
     padding: 20px 15px;
 }
@@ -6396,84 +6395,19 @@ container-rincian-penerbangan-modal {
 .info-reservasi-penerbangan {
     color: #fff;
 }
-.kode-voucher a {
-    text-decoration: underline;
-    font-size: 13px;
-    font-weight: bold;
-}
-.form-kode-voucher {
-    margin-top: 10px;
-}
-.rincian-harga p {
-    position: relative;
-    font-size: 13px;
-}
-.rincian-harga span {
-    position: absolute;
-    right: 0;
-}
-.diskon {
-    color:#31b5e6
-}
-.total-harga {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 3px solid #ebebeb;
-}
-
-.total-harga p {
-    font-size: 16px;
-}
-.total-harga span {
-    color: #0dc557;
-}
-
-.content-right-payment-edit {
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
-    border: none !important;
-}
-
-.how-to-pay-mandiri {
-    margin-bottom: 20px;
-}
-
-.text-group {
-    margin-bottom: 8px;
-}
 
 .box-pilihan-bank {
     text-align: center;
     margin: 30px 0 20px 10px;
-
 }
-.img-bank {
-    border-radius: 5px;
-    border: 2px solid #ebebeb;
-    width: 110px;
-    margin: 0 auto;
-    padding: 10px;
-}
-.img-bank:hover {
-    border: 2px solid #0d91c3;
-    }
 .nama-bank {
     margin-top: 7px;
     color: #484848;
     font-size: 12px;
 }
-.img-hotel {
-    margin-bottom: 5px;
-}
-
-.separator {
-    height: 20px;
-}
-
 .clear-left {
     padding-left: 0;
 }
-
 .clear-right {
     padding-right: 0;
 }
@@ -6500,10 +6434,6 @@ container-rincian-penerbangan-modal {
 
 .info-reservasi-penerbangan {
     font-weight: bold;
-}
-
-.jadwal-penerbangan {
-    
 }
 
 .detail-airport {
@@ -6589,3 +6519,74 @@ container-rincian-penerbangan-modal {
   box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
   margin-bottom: 10px;
 }
+
+
+/* PAYMENT PAGE */
+
+.kode-voucher a {
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: bold;
+}
+.form-kode-voucher {
+    margin-top: 10px;
+}
+.rincian-harga p {
+    position: relative;
+    font-size: 13px;
+}
+.rincian-harga span {
+    position: absolute;
+    right: 0;
+}
+.diskon {
+    color:#31b5e6
+}
+.total-harga {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 3px solid #ebebeb;
+}
+
+.total-harga p {
+    font-size: 16px;
+}
+.total-harga span {
+    color: #0dc557;
+}
+
+.content-right-payment-edit {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+
+.how-to-pay-mandiri {
+    margin-bottom: 20px;
+}
+
+.text-group {
+    margin-bottom: 8px;
+}
+
+.img-bank {
+    width: 110px;
+    margin: 0 auto;
+    padding: 10px;
+/*}
+.img-bank.selected {
+*/    border-radius: 5px;
+    border: 2px solid #ebebeb;
+}
+.img-bank:hover {
+    border: 2px solid #0d91c3;
+    }
+.img-hotel {
+    margin-bottom: 5px;
+}
+.separator {
+    height: 20px;
+}
+
+
+/*  */

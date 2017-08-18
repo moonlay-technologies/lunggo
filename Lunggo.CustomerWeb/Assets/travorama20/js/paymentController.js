@@ -841,7 +841,7 @@ app.controller('paymentController', [
         //// check if name only contains alphabetical, [space], or [null]
         $scope.checkName = function (name) {
             var re = /^[a-zA-Z ]+$/;
-            return (name == null || name.match(re));
+            return (name == null || name == "" || name.match(re));
         }
 
         //// check if input is a number or null
