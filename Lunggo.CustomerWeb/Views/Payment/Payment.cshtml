@@ -8,7 +8,7 @@
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
-@using Lunggo.ApCommon.Product.Model;
+@using Lunggo.ApCommon.Product.Model
 
 @{
 
@@ -93,7 +93,6 @@
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
-
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/jquery.countdown.min.js"></script>
@@ -134,57 +133,57 @@
         var totalpax = '';
         var nights = '';
         @if (Model.Reservation is FlightReservationForDisplay)
-            {
-                var reservation = Model.Reservation as FlightReservationForDisplay;
-                @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                                @:price = @reservation.Itinerary.NetTotalFare;
-                                @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                            }
-            else if (Model.Reservation is HotelReservationForDisplay)
-            {
-                var reservation = Model.Reservation as HotelReservationForDisplay;
-                @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                                @:price = @reservation.HotelDetail.NetTotalFare;
-                                @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-                            }
+        {
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
+            @:price = @reservation.Itinerary.NetTotalFare;
+            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+        }
+        else //if (Model.Reservation is HotelReservationForDisplay)
+        {
+            var reservation = Model.Reservation as HotelReservationForDisplay;
+            //// TODO: sering kena error di sini, not thrown
+            @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
+            @:price = @reservation.HotelDetail.NetTotalFare;
+            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
+        }
         var redirectionUrl;
-        @if (Model.Reservation.Payment.RedirectionUrl != null)
-            {
-                @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                            }
+        @if (Model.Reservation.Payment.RedirectionUrl != null) {
+            @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+        }
         @if (Model.Reservation is FlightReservationForDisplay)
+        {
+            @:var departureDate;
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            if (reservation.Itinerary.Trips != null)
             {
-                @:var departureDate;
-                var reservation = Model.Reservation as FlightReservationForDisplay;
-                if (reservation.Itinerary.Trips != null)
+                if (reservation.Itinerary.Trips.Count == 2)
                 {
-                    if (reservation.Itinerary.Trips.Count == 2)
-                    {
-                        @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                    }
-                    else
-                    {
-                        @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                    }
+                    @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
                 }
+                else
+                {
+                    @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
+                }
+            }
 
-                if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
-                {
-                    @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-                    @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
-                }
-                @:var gtmContentType = 'flight';
-                @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-                @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
-                @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
-                @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
-                @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
-                @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
-                @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
-                @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
-                @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
-                @:var gtmPurchaseCurrency = 'IDR';
-                @:var gtmPageName = 'payment';
+            if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+            {
+                @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+            }
+            @:var gtmContentType = 'flight';
+            @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+            @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+            @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
+            @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
+            @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
+            @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
+            @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
+            @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
+            @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPageName = 'payment';
         }
         @if (Model.Reservation is HotelReservationForDisplay)
         {
@@ -217,9 +216,7 @@
             phone: '@User.Identity.GetPhoneNumber()',
             email: '@User.Identity.GetEmail()'
         };
-
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
-
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
 
         var accordionAnimationDuration = 200;
@@ -230,28 +227,8 @@
             animate: accordionAnimationDuration
         });
         
-        //// Animate dom when opening / closing the accordion
+        //// Animate DOM when opening / closing the accordion
         $(".box-payment").click( function(){
-            /*
-            var headerIcon = $(this).find("div img");
-            //// if accordion is going to be expanded (headerIcon is still visible) 
-            if (headerIcon.is(":visible")){
-                //// show another section's headerIcon
-                var siblings = $(this).siblings(".btn-flight");
-                siblings.find("div img, div span").show(accordionAnimationDuration);
-
-                $('html, body').animate({
-                    //// banyaknya pixel yang di scroll (ditutupin)
-                    scrollTop: $("#accordion").offset().top - $("header").height()
-                    // scrollTop: $(this).offset().top - $("header").height() - 8
-                }, 500);
-            }
-
-            headerIcon.toggle(accordionAnimationDuration);
-            $(this).find("div span").toggle(accordionAnimationDuration);
-            
-            */
-
             //// scroll
             if( $(this).children(".ui-accordion-header").hasClass("ui-accordion-header-active") ) {
                 $('html, body').animate({
@@ -259,17 +236,13 @@
                     scrollTop: $(this).offset().top - $("header").height() - 8
                 }, 500);
             }
-            
             //// close all other accordion
             // $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
-
         });
-        
         $(".kode-voucher a").click( function() {
             $(this).next().toggle(200);
         });
     </script>
-
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
 }
@@ -283,246 +256,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-left">
-
-                            <div class="content-step" id="step-4">
-                                <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
-
-                                <div class="payment-wrapper">
-                                    <div class="row">
-
-                                        <!-- BANK TRANSFER -->
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
-                                                <div class="col-xs-6" ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
-                                                    <h4>Bank Transfer</h4>
-                                                </div>
-                                                <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                            </div>
-                                            <div class="accordion-content">
-                                                <div class="separator-desktop"></div>
-                                                <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
-                                                <div class="row box-pilihan-bank">
-                                                    <div class="col-xs-3">
-                                                        <div class="img-bank" ng-class="{ 'selected' : (paymentMethod == '@PaymentMethod.BankTransfer') }">
-                                                            <img src="/Assets/images/mandiri.png" alt="Bank Transfer Mandiri"
-                                                                    ng-click="paymentMethod = '@PaymentMethod.BankTransfer'">
-                                                        </div>
-                                                        <div class="nama-bank"><p><b>Transfer Bank Mandiri</b></p></div>
-                                                    </div>
-                                                    <div class="col-xs-3">
-                                                        <div class="img-bank" ng-class="{ 'selected' : (paymentMethod == '@PaymentMethod.VirtualAccount') }">
-                                                            <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Lainnya"
-                                                                    ng-click="paymentMethod = '@PaymentMethod.VirtualAccount'">
-                                                        </div>
-                                                        <div class="nama-bank"><p><b>Bank Lainnya (Virtual Account)</b></p></div>
-                                                    </div>
-                                                </div>
-                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.VirtualAccount)
-                                            </div>
-                                        </div><!-- /BANK TRANSFER -->
-
-                                        <!-- KARTU KREDIT / DEBIT -->
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/kredit.jpg" /></div>
-                                                <div class="col-xs-6"><h4>Kartu Kredit / Debit</h4></div>
-                                                <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                            </div>
-                                            <div class="accordion-content">
-                                                <div class="separator-desktop"></div>
-                                                <h3 class="lg-txt"><b>DETAIL</b> KARTU KREDIT / DEBIT</h3>
-                                                <div class="credit-card-form form-kartu-kredit">
-                                                    <div class="form-group">
-                                                        <label>Nomor Kartu</label>
-                                                        <input type="number" class="form-control cc-number" maxlength="19" ng-model="CreditCard.Number"
-                                                                ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }"
-                                                                required/>
-                                                        @*<!-- ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" 
-                                                                ng-blur="binDiscount.check()" 
-                                                        <div ng-show="binDiscount.text != ''" style="color:green">
-                                                            {{binDiscount.text}}
-                                                        </div> --> *@
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="ccDate" ng-class="{'has-error' : (dateOver || checkDate(CreditCard.Month, CreditCard.Year))}">
-                                                            <div class="col-xs-4">
-                                                                <div class="form-group">
-                                                                    <label>Kadaluarsa {{CreditCard.Month}}{{CreditCard.Year}}</label>
-                                                                    <select class="form-control" ng-model="CreditCard.Month" ng-init="month = 'Bulan'">
-                                                                        <option ng-selected="month.value == 0" ng-click="CreditCard.Month = month.value"
-                                                                                value="{{month.value}}" ng-repeat="month in months">
-                                                                            {{month.name}}
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xs-4">
-                                                                <div class="form-group">
-                                                                    <label>&nbsp;</label>
-                                                                    <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
-                                                                        <option ng-selected="year == 'Tahun'" ng-click="CreditCard.Year = year"
-                                                                                value="{{year}}" ng-repeat="year in generateYear()">
-                                                                            {{year}}
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xs-4">
-                                                            <div class="form-group">
-                                                                <label>CVV Kartu</label>
-                                                                <input type="number" class="form-control"
-                                                                   placeholder="xxx" maxlength="3" ng-model="CreditCard.Cvv" />
-                                                                   <!-- ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div ng-show="dateOver" style="color:red">
-                                                        Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
-                                                    </div>
-                                                    <div class="form-group" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
-                                                        <label>Nama Pemegang Kartu</label>
-                                                        <input type="text" class="form-control" ng-model="CreditCard.Name" required>
-                                                @* <!--     pattern="^[a-zA-Z ]+$"
-                                                            ng-required="paymentMethod == '@PaymentMethod.CreditCard'"  -->*@ 
-                                                        <div ng-show="!checkName(CreditCard.Name)" style="color:red">
-                                                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CreditCard)
-                                            </div>
-                                        </div><!-- /KARTU KREDIT / DEBIT -->
-                                        
-                                        <!-- VIRTUAL ACCOUNT -->
-                                        <!-- <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
-                                                <div class="col-xs-5 not-selected"><p>Virtual Account</p></div>
-                                            </div>
-                                            @* detail *@
-                                            <div class="separator-desktop"></div>
-                                            <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
-                                            <div class="row box-pilihan-bank">
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-bayar">
-                                                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                            </div>
-                                        </div> --><!-- /VIRTUAL ACCOUNT -->
-
-                                        <!-- MANDIRI CLICKPAY -->
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/mandiri.jpg" /></div>
-                                                <div class="col-xs-6"><h4>Mandiri Clickpay</h4></div>
-                                                <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                            </div>
-                                            <div class="accordion-content">
-                                                <div class="separator-desktop"></div>
-                                                <h3 class="lg-txt"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                                                <div class="form-kartu-kredit">
-                                                    <div class="form-group">
-                                                        <label>Nomor Kartu</label>
-                                                        <input type="number" class="form-control cc-number" maxlength="19"
-                                                                ng-model="MandiriClickPay.CardNo" />
-                                                    </div>
-                                                    <div class="how-to-pay-mandiri">
-                                                        <p>Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></p>
-                                                        <div class="row text-group">
-                                                            <div class="col-xs-2"><b>APPLI</b></div>
-                                                            <div class="col-xs-10">: 3</div>
-                                                        </div>
-                                                        <div class="row text-group">
-                                                            <div class="col-xs-2"><b>Input 1</b></div>
-                                                            <div class="col-xs-10">:
-                                                                <span ng-if="MandiriClickPay.CardNo.toString().length >= 12">
-                                                                <!-- <span ng-if="MandiriClickPay.CardNo.length >= 12"> -->
-                                                                    {{MandiriClickPay.CardNo | limitTo:-10}}
-                                                                </span>
-                                                                <span ng-if="MandiriClickPay.CardNo.toString().length < 12">
-                                                                    Masukkan nomor kartu terlebih dahulu
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row text-group">
-                                                            <div class="col-xs-2"><b>Input 2</b></div>
-                                                            <div class="col-xs-10">: 
-                                                                {{totalPrice - voucher.amount - CreditCardPromo.Amount
-                                                                 + UniqueCodePaymentConfig.UniqueCode}}
-                                                            </div>
-                                                        </div>
-                                                        <div class="row text-group">
-                                                            <div class="col-xs-2"><b>Input 3</b></div>
-                                                            <div class="col-xs-10">: 
-                                                                @Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Respon Token Mandiri</label>
-                                                        <input type="number" class="form-control cc-number" placeholder="xxxxxx"
-                                                           maxlength="6" ng-model="MandiriClickPay.Token" required />
-                                                    @*<!-- name="mandiriToken" -->*@
-                                                    </div>
-                                                </div>
-                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.MandiriClickPay)
-                                            </div>
-                                        </div><!-- /MANDIRI CLICKPAY -->
-                                        
-                                        <!-- CIMB CLICKS -->
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/cimb.jpg" /></div>
-                                                <div class="col-xs-6"><h4>CIMB Clicks</h4></div>
-                                                <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                            </div>
-                                            <div class="accordion-content">
-                                                <div class="separator-desktop"></div>
-                                                <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
-                                                @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CimbClicks)
-                                            </div>
-                                        </div><!-- /CIMB CLICKS -->
-
-
-                                        <div ng-show="notifCardLength" style="color:red">
-                                            Panjang digit kartu harus di antara 12-19 digit.
-                                        </div>
-
-                                    </div>
-
-                                </div><!-- .payment-wrapper -->
-
-                            </div><!-- .content.step#step-4 -->
-
-
+                            @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
                         </div>
                         <div class="col-right">
-                            
                             <h3 class="lg-txt">
                                 <b>RINCIAN </b>
-                        @if (Model.Reservation is FlightReservationForDisplay) {
-                                <span>PENERBANGAN</span>
-                        } else {
-                                <span>PEMESANAN</span>
-                        }
+                                @if (Model.Reservation is FlightReservationForDisplay)
+                                     { <span>PENERBANGAN</span> }
+                                else { <span>PEMESANAN</span> }
                             </h3>
                             <div class="container-rincian-penerbangan">
                                 <div class="content-right-payment">
@@ -553,7 +294,7 @@
                                                 <p>{{trips[0].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</p>
                                                 <p>{{trips[0].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
                                                     - {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
-                                                    <span>(+1 hari)</span></p>
+                                                    <span><!-- (+1 hari) --></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -573,7 +314,7 @@
                                                 <p>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</p>
                                                 <p>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
                                                     - {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
-                                                    <span>(+1 hari)</span></p>
+                                                    <span><!-- (+1 hari) --></span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -617,7 +358,6 @@
                                         <p><b>Malam : </b><span>@night Malam</span></p>
                                         <p><b>Kamar : </b><span>@totalRoom Kamar</span></p>
                                         <p><b>Jenis Kamar : </b><span>
-                                        <!-- 1 Double Deluxe -->
                                             @for (var i = 0; i < orderedRooms.Count; i++) {
                                                 if (i != orderedRooms.Count - 1) {
                                                     @orderedRooms[i].Item2<span> </span>
@@ -649,80 +389,8 @@
                                     </div>
                                 </div>
                         }
-                                <div class="content-right-payment content-right-payment-edit">
-                                    <div class="kode-voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
-                                        <a href="#">Punya kode Voucher ?</a>
-                                        <form name="voucherForm" class="form-group" style="display: none;">
-                                            <input type="text" name="code" class="form-control form-kode-voucher" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)">
-                                            <input type="submit" value="CEK" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-                                            <input type="submit" value="RESET" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.reset()" ng-show="voucher.checked" />
-                                            <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher tidak dapat digunakan</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Minimum Pembelian Voucher tidak memenuhi</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH08'">Voucher tidak dapat digunakan untuk pesanan ini</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH09'">Voucher sudah habis</p>
-                                            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
-                                        </form>
-                                    </div>
-                                    <div class="rincian-harga">
-                                        <p><b>Harga Tiket : </b><span>Rp {{originalPrice | number}}</span></p>
-                                        <p>
-                                            <b>Diskon Travorama : </b>
-                                            <span class="diskon" ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount)
-                                                && !voucher.confirmedCode)">- Rp {{originalPrice - totalPrice| number}}</span>
-                                            <span ng-if="(binDiscount.replaceDiscount || methodDiscount.replaceDiscount)
-                                                && !voucher.confirmedCode"> Rp 0</span>
-                                        </p>
-                                        <p ng-if="voucher.confirmedCode">
-                                            <b>{{voucher.displayName}} :</b>
-                                            <span class="diskon">- Rp {{voucher.amount | number}}</span>
-                                        </p>
-                                        <p ng-if="binDiscount.available && !voucher.confirmedCode" style="color: #1daee4">
-                                            <b>{{binDiscount.displayName}}</b>
-                                            <span class="diskon">- Rp {{binDiscount.amount | number}}</span>
-                                        </p>
-                                        <p ng-if="methodDiscount.available && !voucher.confirmedCode" style="color: #1daee4">
-                                            <b>{{methodDiscount.displayName}}</b>
-                                            <span class="diskon">- Rp {{methodDiscount.amount | number}}</span>
-                                        </p>
-                                        <p ng-if="CreditCardPromo.Valid">
-                                            <b>{{CreditCardPromo.PromoName}}</b>
-                                            <span class="diskon">- Rp {{CreditCardPromo.Amount | number}}</span>
-                                        </p>
-                                        <p>
-                                            <b>Kode Unik Pembayaran : </b><span>Rp {{UniqueCodePaymentConfig.UniqueCode}}</span>
-                                        </p>
-                                        <div class="total-harga">
-                                            <p>
-                                                <b>TOTAL</b>
-                                                <span ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">
-                                                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
-                                                </span>
-                                                <span ng-if="voucher.confirmedCode">
-                                                    Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
-                                                </span>
-                                                <span ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">
-                                                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
-                                                </span>
-                                                <span ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">
-                                                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
-                                                </span>
-                                                <span ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">
-                                                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
-                                                </span>
-                                                <span ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">
-                                                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
-                                                </span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                                @{Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");}
+                            </div>                            
                         </div>
                     </div>
                 </div>

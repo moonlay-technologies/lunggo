@@ -13,7 +13,7 @@
 @{
 
     var rsvNo = "";
-    var todayDate = new DateTime(2017, 3, 25);
+    var todayDate = new DateTime(2017, 3, 25);          //var todayDate = DateTime.Today;
     var orderedRooms = new List<Tuple<string, int>>();
     var totalAdult = 0;
     var totalChild = 0;
@@ -23,8 +23,10 @@
     var hotelImg = "";
     var roomImg = "";
     var listAges = new List<int>();
+    var pax = new List<PaxForDisplay>();
     try
     {
+        pax = Model.Reservation.Pax;
         if (Model.Reservation is HotelReservationForDisplay)
         {
             var rsv = (Model.Reservation as HotelReservationForDisplay);
@@ -66,12 +68,10 @@
                         }
                         listAges.AddRange(config.ChildrenAges);
                     }
-
                 }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
             }
         }
-
     }
     catch
     {
@@ -91,7 +91,6 @@
     <link href="/Assets/css/jquery-ui.min.css" rel="stylesheet" />
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/Assets/mobile/css/style_mobile.css">
 }
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -107,10 +106,8 @@
 @section PageJS{
     <script>
         var langCode = 'en';
-        var paymentTimeout = '';
         // development only start
-        paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
-        console.log("TIME OUT: "+ paymentTimeout);
+        var paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
         // countdown timer
         $('.timer').countdown(paymentTimeout, function(event) {
             $('.timer .hour').text(event.strftime('%H'));
@@ -124,7 +121,6 @@
         });
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
-        // messages
         var message = '@ViewBag.Message';
         // flight detail
         var rsvNo = @Model.RsvNo;
@@ -135,76 +131,75 @@
         var originalPrice = '';
         var nights = '';
         @if (Model.Reservation is FlightReservationForDisplay)
-    {
-        var reservation = Model.Reservation as FlightReservationForDisplay;
-        @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-        @:price = @reservation.Itinerary.NetTotalFare;
-        @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-    }
-    else
-    {
-        var reservation = Model.Reservation as HotelReservationForDisplay;
-        @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-        @:price = @reservation.HotelDetail.NetTotalFare;
-        @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-    }
+        {
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
+            @:price = @reservation.Itinerary.NetTotalFare;
+            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+        }
+        else //if (Model.Reservation is HotelReservationForDisplay)
+        {
+            var reservation = Model.Reservation as HotelReservationForDisplay;
+            @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
+            @:price = @reservation.HotelDetail.NetTotalFare;
+            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
+        }
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
-        @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-    }
-    
+            @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+        }
         @if (Model.Reservation is FlightReservationForDisplay)
-    {
-        @:var departureDate;
-        var reservation = Model.Reservation as FlightReservationForDisplay;
-        if (reservation.Itinerary.Trips != null)
         {
-            if (reservation.Itinerary.Trips.Count == 2)
+            @:var departureDate;
+            var reservation = Model.Reservation as FlightReservationForDisplay;
+            if (reservation.Itinerary.Trips != null)
             {
-                @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
+                if (reservation.Itinerary.Trips.Count == 2)
+                {
+                    @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
+                }
+                else
+                {
+                    @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
+                }
             }
-            else
-            {
-                @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-            }
-        }
 
-        if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
-        {
-            @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+            if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
+            {
+                @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+            }
+            @:var gtmContentType = 'flight';
+            @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+            @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+            @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
+            @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
+            @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
+            @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
+            @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
+            @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
+            @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPageName = 'payment';
         }
-        @:var gtmContentType = 'flight';
-        @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-        @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
-        @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
-        @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
-        @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
-        @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
-        @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
-        @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
-        @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
-        @:var gtmPurchaseCurrency = 'IDR';
-        @:var gtmPageName = 'payment';
-    }
         @if (Model.Reservation is HotelReservationForDisplay)
-    {
-        var hotel = Model.Reservation as HotelReservationForDisplay;
-        @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-        @:price = '@hotel.HotelDetail.NetTotalFare';
-        @:var gtmContentType = 'hotel';
-        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
-        @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
-        @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
-        @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
-        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-        @:var gtmNumAdults = @totalAdult;
-        @:var gtmNumChildren = @totalChild;
-        @:var gtmPurchaseCurrency = 'IDR';
-        @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
-        @:var gtmPageName = 'payment';
-    }
+        {
+            var hotel = Model.Reservation as HotelReservationForDisplay;
+            @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
+            @:price = '@hotel.HotelDetail.NetTotalFare';
+            @:var gtmContentType = 'hotel';
+            @:var gtmCity = '@hotel.HotelDetail.DestinationName';
+            @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
+            @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
+            @:var gtmCountry = '@hotel.HotelDetail.CountryName';
+            @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+            @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+            @:var gtmNumAdults = @totalAdult;
+            @:var gtmNumChildren = @totalChild;
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
+            @:var gtmPageName = 'payment';
+        }
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -213,13 +208,12 @@
         }
         var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
         var buyerInfo = {
-            fullname : '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-            countryCode : '@User.Identity.GetCountryCd()',
+            fullname: '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode: '@User.Identity.GetCountryCd()',
             phone: '@User.Identity.GetPhoneNumber()',
             email: '@User.Identity.GetEmail()'
         };
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
-
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
     </script>
     <!-- angular controller -->
@@ -235,213 +229,21 @@
             <section class="checkout-content">
 
                 <div class="page__body" id="step-4">
-                    <!-- <div class="summary summary--price">
-                        <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-                        <div class="summary__body">
+                    @{Html.RenderPartial("/Views/Payment/partials/_bookingDetail.mobile.html");}
 
-                            <dl>
-                                @if (Model.Reservation is FlightReservationForDisplay)
-                                {
-                                    <dt>Harga Tiket</dt>
-                                }
-                                @if (Model.Reservation is HotelReservationForDisplay)
-                                {
-                                    <dt>Harga Kamar</dt>
-                                }
-                                <dd><sup>Rp</sup> {{originalPrice | number}}</dd>
-                            </dl>
-                            <dl>
-                                <dt>Diskon Travorama</dt>
-                                <dd ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode)">- <sup>Rp</sup> {{originalPrice - totalPrice| number}}</dd>
-                                <dd ng-if="(binDiscount.replaceDiscount || methodDiscount.replaceDiscount) && !voucher.confirmedCode"> <sup>Rp</sup>- 0</dd>
-                            </dl>
-                            <dl ng-show="voucher.confirmedCode">
-                                <dt>{{voucher.displayName}}</dt>
-                                <dd><sup>Rp</sup>- {{voucher.amount| number}}</dd>
-                            </dl>
-                            <dl ng-show="binDiscount.available && !voucher.confirmedCode">
-                                <dt>{{binDiscount.displayName}}</dt>
-                                <dd><sup>Rp</sup>- {{binDiscount.amount | number}}</dd>
-                            </dl>
-                            <dl ng-show="methodDiscount.available && !voucher.confirmedCode">
-                                <dt>{{methodDiscount.displayName}}</dt>
-                                <dd><sup>Rp</sup>- {{methodDiscount.amount | number}}</dd>
-                            </dl>
-                            <dl>
-                                <dt>Kode Unik Pembayaran</dt>
-                                <dd><sup>Rp</sup> {{UniqueCodePaymentConfig.UniqueCode | number}}</dd>
-                            </dl>
-                            <dl class="total-price">
-                                <dt>Total</dt>
-                                @*<dd><sup>Rp</sup> {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>*@
-                                <dd ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
-                                <dd ng-if="voucher.confirmedCode">Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}</dd>
-                                <dd ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                <dd ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}</dd>
-                                <dd ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
-                                <dd ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}</dd>
-                            </dl>
-                        </div><!-- .summary__body -->
-                    <!--</div> --> <!-- .summar--price -->
-                    
-                    <div class="rincian-pesanan-hotel">
-                        <h3 class="lg-txt"><b>RINCIAN</b> PEMESANAN</h3>
-                        <div class="container-rincian-penerbangan">
-                            <div class="content-right-payment">
-                                <p><b>Sisa Waktu Pembayaran </b>00:00:00</p>
-                            </div>
-                            <div class="content-right-payment">
-                                <div class="row">
-                                    <div class="col-xs-12 img-hotel clear-left clear-right"><img src="https://photos.hotelbeds.com/giata/43/431483/431483a_hb_a_002.jpg" /></div>
-                                    <div class="col-xs-12 info-penerbangan clear-left clear-right">
-                                        <div class="detail-hotel">
-                                            <h3>Maven Gunung Sahari</h3>
-                                            <div class="star"></div>
-                                            <p>Jl. Gunung Sahari II No.6, RT.12/RW.7, Gn. Sahari Sel., Jakarta, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10610</p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="content-right-payment">
-                                <div class="rincian-harga">
-                                    <p><b>Check in : </b><span>01 Agustus 2017</span></p>
-                                    <p><b>Check out : </b><span>02 Agustus 2017</span></p>
-                                    <p><b>Malam : </b><span>1 Malam</span></p>
-                                    <p><b>Kamar : </b><span>1 Kamar</span></p>
-                                    <p><b>Jenis Kamar : </b><span>1 Double Deluxe</span></p>
-                                    <p><b>Jumlah Tamu : </b><span>1 Dewasa</span></p>
-                                </div>
-                            </div>
-                            <div class="content-right-payment content-right-payment-edit">
-                                <div class="kode-voucher">
-                                    <a href="#">Punya kode Voucher ?</a>
-                                    <div class="form-group ">
-                                        <input type="text" class="form-control form-kode-voucher">
-                                    </div>
-                                </div>
-                                <div class="rincian-harga">
-                                    <p><b>Harga Kamar : </b><span>Rp 1.500.000</span></p>
-                                    <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                    <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                    <div class="total-harga">
-                                        <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- ini untuk rincian hotel-->
-                    
-                    <!-- rincian penerbangan-->
-                    <div class="rincian-pesanan-penerbangan">
-                        <div class="container-rincian-pesanan-penerbangan">
-                            <div class="info-reservasi-penerbangan">
-                                <div class="row">
-                                    <div class="col-xs-6">No. Reservasi: 123456</div>
-                                    <div class="col-xs-6 text-right">Sisa Waktu: 02:36:05</div>
-                                </div>  
-                            </div>
-                            <div class="jadwal-penerbangan">
-                                <div class="row">
-                                    <div class="col-xs-5 detail-airport clear-left"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
-                                    <div class="col-xs-2 logo-penerbangan clear-left clear-right"><img src="/Assets/mobile/images/rounded-garuda.png" /></div>
-                                    <div class="col-xs-5 detail-airport clear-right"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
-                                </div>
-                            </div>
-                            <div class="separator-jadwal-penerbangan"></div>
-                            <div class="jadwal-penerbangan">
-                                <div class="row">
-                                    <div class="col-xs-5 detail-airport clear-left"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
-                                    <div class="col-xs-2 logo-penerbangan clear-left clear-right"><img src="/Assets/mobile/images/rounded-garuda.png" /></div>
-                                    <div class="col-xs-5 detail-airport clear-right"><h3>CGK</h3><span>20 Jul 2017 18.25</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="total-biaya">
-                        <div class="row">
-                            <div class="col-xs-6 "><a data-toggle="modal" href="#myModal">Rincian Penerbangan</a></div>
-                            <div class="col-xs-6 text-right"><h3>Rp 1.376.761</h3></div>
-                        </div>  
-                    </div>
-                    <!-- end rincian penerbangan-->
-                    
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Rincian Penerbangan</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container-rincian-penerbangan-modal"> <!-- start modal content-->
-                                        <div class="content-right-payment">
-                                            <p><b>Sisa Waktu Pembayaran </b>00:00:00</p>
-                                            <p><b>Nomor Reservasi : </b>12345678</p>
-                                        </div>
-                                        <div class="content-right-payment">
-                                            <p><b>Penumpang</b></p>
-                                            <div class="data-penumpang">
-                                                <p>1. Indra</p>
-                                            </div>
-                                        </div>
-                                        <div class="content-right-payment">
-                                            <div class="row">
-                                                <div class="col-xs-5 logo-maskapai"><img src="/Assets/images/logo-garuda.jpg" /></div>
-                                                <div class="col-xs-7 info-penerbangan">
-                                                    <div class="detail-airport-modal">
-                                                        <p>Keberangkatan</p>
-                                                        <h3>Jakarta (CGK) - Bali/Denpasar (DPS)</h3>
-                                                        <p>20 Jul 2017</p>
-                                                        <p>18:25 - 21.00</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="separator"></div>
-                                            <div class="row">
-                                                <div class="col-xs-5 logo-maskapai"><img src="/Assets/images/logo-garuda.jpg" /></div>
-                                                <div class="col-xs-7 info-penerbangan">
-                                                    <div class="detail-airport-modal">
-                                                        <p>Kepulangan</p>
-                                                        <h3>Jakarta (CGK) - Bali/Denpasar (DPS)</h3>
-                                                        <p>20 Jul 2017</p>
-                                                        <p>18:25 - 21.00</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="content-right-payment content-right-payment-edit">
-                                            <div class="kode-voucher">
-                                                <a href="#">Punya kode Voucher ?</a>
-                                                <div class="form-group ">
-                                                    <input type="text" class="form-control form-kode-voucher">
-                                                </div>
-                                            </div>
-                                            <div class="rincian-harga">
-                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
-                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                                <div class="total-harga">
-                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> <!-- modal content-->
-                                </div> <!-- modal body-->
-                            </div>
-                        </div>
-                    </div> <!-- modal rincian perjalanan-->
-
+                    <!-- ========================= PAYMENT METHOD ========================= -->
                     <div class="summary summary--payment">
                         <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
 
                         <div class="payment-wrapper">
                             <div class="row">
-
+                                <!-- BANK TRANSFER -->
                                 <div class="box-payment col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-5 clear-left"><img src="/Assets/images/atm.jpg" /></div>
-                                        <div class="col-xs-5 not-selected"><p>Bank Transfer</p></div>
+                                        <div class="col-xs-5 not-selected">
+                                            <p>Bank Transfer</p>
+                                        </div>
                                     </div>
                                     <div class="separator-desktop"></div>
                                     <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
@@ -451,14 +253,6 @@
                                             <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
                                         </div>
                                         <div class="col-xs-6  clear-left">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                        <div class="col-xs-6 clear-left ">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                        <div class="col-xs-6 clear-left">
                                             <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
                                             <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
                                         </div>
@@ -489,6 +283,7 @@
                                     </div>
                                 </div><!-- .payment -->
 
+                                <!-- KARTU KREDIT / DEBIT -->
                                 <div class="box-payment col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-5 clear-left"><img src="/Assets/images/kredit.jpg" /></div>
@@ -563,7 +358,8 @@
                                     </div>
                                 </div><!-- .payment -->
 
-                                <div class="box-payment col-xs-12">
+                            @*  <!-- VIRTUAL ACCOUNT -->
+                                <!-- <div class="box-payment col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-5 clear-left"><img src="/Assets/images/atm.jpg" /></div>
                                         <div class="col-xs-5 not-selected clear-left"><p>Virtual Account</p></div>
@@ -612,8 +408,9 @@
                                         <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
                                         <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
                                     </div>
-                                </div><!-- .payment -->
+                                </div> --><!-- .payment -->*@
 
+                                <!-- MANDIRI CLICKPAY -->
                                 <div class="box-payment col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-4 clear-left"><img src="/Assets/images/mandiri.jpg" /></div>
@@ -676,6 +473,7 @@
                                     </div>
                                 </div><!-- .payment -->
 
+                                <!-- CIMB CLICKS -->
                                 <div class="box-payment col-xs-12">
                                     <div class="row">
                                         <div class="col-xs-4 clear-left"><img src="/Assets/images/cimb.jpg" /></div>
@@ -693,8 +491,8 @@
 
                         </div><!-- .payment-wrapper -->
                     </div><!-- .summary--payment -->
-                    @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
-                    {
+                    
+                    <!-- tambah kredit kart baru -->
                         <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
 
                             <form name="creditCardForm" novalidate>
@@ -806,8 +604,6 @@
                             </div>
                         </div>
 
-                    }
-                    
                     <br />
 
                     <div ng-show="notifCardLength" style="color:red">
@@ -816,14 +612,6 @@
                     
 
                     <div class="step-button">
-
-                        
-
-                        <form action="" method="post" name="submitForm" id="rsvno" class="hidden">
-                            <input type="text" name="RsvNo" value="" id="rsvno-input" />
-                            <input type="text" name="PaymentUrl" value="" id="url-input" />
-                        </form>
-
                     </div>
                 </div>
             </section><!-- .checkout-content -->
