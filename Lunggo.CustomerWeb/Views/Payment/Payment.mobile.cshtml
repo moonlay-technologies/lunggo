@@ -8,10 +8,10 @@
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
+@using Lunggo.ApCommon.Product.Model
 @model Lunggo.CustomerWeb.Models.PaymentData
 
 @{
-
     var rsvNo = "";
     var todayDate = new DateTime(2017, 3, 25);          //var todayDate = DateTime.Today;
     var orderedRooms = new List<Tuple<string, int>>();
@@ -215,6 +215,34 @@
         };
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
+
+        var accordionAnimationDuration = 200;
+        $(".box-payment").accordion({
+            collapsible: true,
+            active: false,
+            heightStyle: "content",
+            animate: accordionAnimationDuration
+        });
+        
+        //// Animate DOM when opening / closing the accordion
+        $(".box-payment").click( function(){
+            //// scroll
+            if( $(this).children(".ui-accordion-header").hasClass("ui-accordion-header-active") ) {
+                $('html, body').animate({
+                    //// banyaknya pixel yang di scroll (ditutupin)
+                    scrollTop: $(this).offset().top - $("header").height() - 8
+                }, 500);
+            }
+            //// close all other accordion
+            // $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
+        });
+        $(".kode-voucher a").click( function() {
+            $(this).next().toggle(200);
+        });
+        
+        // $('#myModal').on('shown.bs.modal', function () {
+        //     $('#myInput').focus()
+        // })
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
@@ -228,268 +256,12 @@
         <div ng-app="travorama" @*ng-controller="paymentController"*@ ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
 
-                <div class="page__body" id="step-4">
-                    @{Html.RenderPartial("/Views/Payment/partials/_bookingDetail.mobile.html");}
+                <div class="page__body">
+                    @{Html.RenderPartial("/Views/Payment/partials/_bookingDetail.mobile.cshtml");}
 
                     <!-- ========================= PAYMENT METHOD ========================= -->
                     <div class="summary summary--payment">
-                        <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
-
-                        <div class="payment-wrapper">
-                            <div class="row">
-                                <!-- BANK TRANSFER -->
-                                <div class="box-payment col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-5 clear-left"><img src="/Assets/images/atm.jpg" /></div>
-                                        <div class="col-xs-5 not-selected">
-                                            <p>Bank Transfer</p>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
-                                    <div class="row box-pilihan-bank">
-                                        <div class="col-xs-6 clear-left ">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                        <div class="col-xs-6  clear-left">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="rincian-harga-tambahan">
-                                        <div class="content-right-payment content-right-payment-edit">
-                                            <div class="kode-voucher">
-                                                <a href="#">Punya kode Voucher ?</a>
-                                                <div class="form-group ">
-                                                    <input type="text" class="form-control form-kode-voucher">
-                                                </div>
-                                            </div>
-                                            <div class="rincian-harga">
-                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
-                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                                <div class="total-harga">
-                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="form-bayar">
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
-                                    </div>
-                                </div><!-- .payment -->
-
-                                <!-- KARTU KREDIT / DEBIT -->
-                                <div class="box-payment col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-5 clear-left"><img src="/Assets/images/kredit.jpg" /></div>
-                                        <div class="col-xs-5 selected clear-left"><p>Kartu Kredit / Debit</p></div>
-                                        <div class="col-xs-2 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <h3 class="lg-txt"><b>DETAIL</b> KARTU KREDIT / DEBIT</h3>
-                                    <div class="form-kartu-kredit">
-                                        <div class="form-group">
-                                            <label>Nomor Kartu</label>
-                                            <input type="number" class="form-control">
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xs-6 clear-left">
-                                                <div class="form-group">
-                                                    <label>Kadaluarsa</label>
-                                                    <select class="form-control">
-                                                        <option>Bulan</option>
-                                                        <option>Januari</option>
-                                                        <option>Februari</option>
-                                                        <option>Maret</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-6 clear-right">
-                                                <div class="form-group">
-                                                    <label>&nbsp;</label>
-                                                    <select class="form-control">
-                                                        <option>Tahun</option>
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 clear-left clear-right">
-                                                <div class="form-group">
-                                                    <label>CVV Kartu</label>
-                                                    <input type="number" class="form-control" placeholder="xxx">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nama Pemegang Kartu</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="rincian-harga-tambahan">
-                                        <div class="content-right-payment content-right-payment-edit">
-                                            <div class="kode-voucher">
-                                                <a href="#">Punya kode Voucher ?</a>
-                                                <div class="form-group ">
-                                                    <input type="text" class="form-control form-kode-voucher">
-                                                </div>
-                                            </div>
-                                            <div class="rincian-harga">
-                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
-                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                                <div class="total-harga">
-                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="form-bayar">
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
-                                    </div>
-                                </div><!-- .payment -->
-
-                            @*  <!-- VIRTUAL ACCOUNT -->
-                                <!-- <div class="box-payment col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-5 clear-left"><img src="/Assets/images/atm.jpg" /></div>
-                                        <div class="col-xs-5 not-selected clear-left"><p>Virtual Account</p></div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
-                                    <div class="row box-pilihan-bank">
-                                        <div class="col-xs-6 clear-left">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                        <div class="col-xs-6 clear-left">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                        <div class="col-xs-6 clear-left">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                        <div class="col-xs-6 clear-left">
-                                            <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                            <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="rincian-harga-tambahan">
-                                        <div class="content-right-payment content-right-payment-edit">
-                                            <div class="kode-voucher">
-                                                <a href="#">Punya kode Voucher ?</a>
-                                                <div class="form-group ">
-                                                    <input type="text" class="form-control form-kode-voucher">
-                                                </div>
-                                            </div>
-                                            <div class="rincian-harga">
-                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
-                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                                <div class="total-harga">
-                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="form-bayar">
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
-                                    </div>
-                                </div> --><!-- .payment -->*@
-
-                                <!-- MANDIRI CLICKPAY -->
-                                <div class="box-payment col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-4 clear-left"><img src="/Assets/images/mandiri.jpg" /></div>
-                                        <div class="col-xs-5 not-selected clear-left"><p>Mandiri Clickpay</p></div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <h3 class="lg-txt"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                                    <div class="form-kartu-kredit">
-                                        <div class="form-group">
-                                            <label>Nomor Kartu</label>
-                                            <input type="number" class="form-control">
-                                        </div>
-                                        <div class="how-to-pay-mandiri">
-                                            <p>Input Token Mandiri (diisi secara berurutan)</p>
-                                            <div class="row text-group">
-                                                <div class="col-xs-3 clear-left"><b>APPLI</b></div>
-                                                <div class="col-xs-9">: 3</div>
-                                            </div>
-                                            <div class="row text-group">
-                                                <div class="col-xs-3 clear-left"><b>Input 1</b></div>
-                                                <div class="col-xs-9">: Masukkan Nomor Kartu Terlebih Dahulu</div>
-                                            </div>
-                                            <div class="row text-group">
-                                                <div class="col-xs-3 clear-left"><b>Input 2</b></div>
-                                                <div class="col-xs-9">: 436271</div>
-                                            </div>
-                                            <div class="row text-group">
-                                                <div class="col-xs-3 clear-left"><b>Input 3</b></div>
-                                                <div class="col-xs-9">: 45796</div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Respon Token Mandiri</label>
-                                            <input type="text" class="form-control" placeholder="xxxx">
-                                        </div>
-                                    </div>
-                                <div class="separator-desktop"></div>
-                                    <div class="rincian-harga-tambahan">
-                                        <div class="content-right-payment content-right-payment-edit">
-                                            <div class="kode-voucher">
-                                                <a href="#">Punya kode Voucher ?</a>
-                                                <div class="form-group ">
-                                                    <input type="text" class="form-control form-kode-voucher">
-                                                </div>
-                                            </div>
-                                            <div class="rincian-harga">
-                                                <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
-                                                <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                                <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                                <div class="total-harga">
-                                                    <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <div class="form-bayar">
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
-                                    </div>
-                                </div><!-- .payment -->
-
-                                <!-- CIMB CLICKS -->
-                                <div class="box-payment col-xs-12">
-                                    <div class="row">
-                                        <div class="col-xs-4 clear-left"><img src="/Assets/images/cimb.jpg" /></div>
-                                        <div class="col-xs-5 not-selected"><p>CIMB Clicks</p></div>
-                                    </div>
-                                    <div class="separator-desktop"></div>
-                                    <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
-                                    <div class="form-bayar">
-                                        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12" value="BAYAR">
-                                    </div>
-                                </div><!-- .payment -->
-
-                            </div>
-
-                        </div><!-- .payment-wrapper -->
+                        @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
                     </div><!-- .summary--payment -->
                     
                     <!-- tambah kredit kart baru -->
@@ -844,9 +616,3 @@
     @:[Ini ceritanya page kalo input datanya ga bener]
         break;
 }
-
-<script>
-    $('#myModal').on('shown.bs.modal', function () {
-        $('#myInput').focus()
-    })
-</script>
