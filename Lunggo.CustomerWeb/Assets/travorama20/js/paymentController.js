@@ -838,16 +838,16 @@ app.controller('paymentController', [
             return hours + "j " + minutes + "m";
         }
 
-        //// check if name only contains alphabetical, [space], or [null]
+        //// check if name only contains alphabetical, [space], or null
         $scope.checkName = function (name) {
             var re = /^[a-zA-Z ]+$/;
-            return (name == null || name == "" || name.match(re));
+            return (name == null || name == "" || re.test(name));
         }
 
         //// check if input is a number or null
         $scope.checkNumber = function (number) {
             var re = /^[0-9]+$/;
-            return (number == "" || number == null || number.match(re))
+            return (number == "" || number == null || re.test(number))
         }
 
         $scope.ccValidation = function() {

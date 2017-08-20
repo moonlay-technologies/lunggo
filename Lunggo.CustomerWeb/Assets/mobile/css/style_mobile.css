@@ -3331,8 +3331,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   display: block;
   width: 100%;
   background: #fff;
-  color: #fff;
-  margin-bottom: 15px; }
+  color: #fff; }
   .page.page-checkout .summary.summary--payment label header {
     background: #36b6e7;
     position: relative; }
@@ -6320,26 +6319,28 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     }
 
    .box-payment {
-    padding: 20px 15px;
+    padding: 15px 0px;
 }
 
-.not-selected p {
+
+
+.box-payment h4 {
     color: #afafaf;
-    font-size: 12px;
-    margin-top: 6px
+    font-size: 13px;
+    margin-top: 7px;
 }
-
-.selected p {
+.box-payment .glyphicon-ok {
+    display: none;
+}
+.box-payment .ui-accordion-header-active h4 {
     color: #5d5d5d;
-    font-size: 12px;
-    margin-top: 6px;
     font-weight: bold;
 }
-
-.glyphicon-ok {
+.box-payment .ui-accordion-header-active .glyphicon-ok {
+    display: inline-block;
     color: #75b846;
     font-size: 16px;
-    margin-top: 10x;
+    margin-top: 14px;
 }
 
 .separator-desktop {
@@ -6364,7 +6365,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     color: #4b4b4c;
 }
 
-container-rincian-penerbangan-modal {
+.container-rincian-penerbangan-modal {
     padding: 10px;
     color: #4b4b4c;
 }
@@ -6398,7 +6399,7 @@ container-rincian-penerbangan-modal {
 
 .box-pilihan-bank {
     text-align: center;
-    margin: 30px 0 20px 10px;
+    margin: 30px 0px 20px;
 }
 .nama-bank {
     margin-top: 7px;
@@ -6570,7 +6571,7 @@ container-rincian-penerbangan-modal {
 }
 
 .img-bank {
-    width: 110px;
+    /*width: 110px;*/
     margin: 0 auto;
     padding: 10px;
 /*}
@@ -6587,6 +6588,15 @@ container-rincian-penerbangan-modal {
 .separator {
     height: 20px;
 }
+.col-xs-1 {
+  padding-left: 0px;
+}
+.box-payment .accordion-content {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding: 0px 12px;
+}
 
-
-/*  */
+.box-payment input[type="submit"] {
+    padding: 12px;
+}
