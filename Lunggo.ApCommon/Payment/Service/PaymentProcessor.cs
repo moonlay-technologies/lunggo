@@ -340,7 +340,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, PaymentMethod method)
         {
             var paymentResponse = new PaymentDetails();
-            if (method == PaymentMethod.VirtualAccount && payment.SubMethod != PaymentSubMethod.Permata)
+            if (method == PaymentMethod.VirtualAccount)
             {
                 var niceWrapper = new NicepayWrapper();
                 paymentResponse = niceWrapper.ProcessPayment(payment, transactionDetails, method);
