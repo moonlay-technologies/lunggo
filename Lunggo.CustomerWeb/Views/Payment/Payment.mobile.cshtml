@@ -190,7 +190,6 @@
                     @if (Model.Reservation is FlightReservationForDisplay) {
                         Html.RenderPartial("/Views/Payment/partials/_flightDetail.mobile.cshtml");
                     } else {
-
                         <h3 class="lg-txt">
                             <b>RINCIAN </b><span>PEMESANAN</span>
                         </h3>
@@ -213,128 +212,6 @@
                     <div class="summary summary--payment">
                         @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
                     </div><!-- .summary--payment -->
-                    
-                    <!-- tambah kredit kart baru -->
-                        <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.CreditCard'">
-
-                            <form name="creditCardForm" novalidate>
-                                <h3 id="CreditCard" class="no-spacing"><b>DETAIL </b>KARTU KREDIT/DEBIT</h3>
-
-                                <!-- credit card selector end -->
-                                <!-- new credit card start -->
-                                <div ng-if="CreditCard.TwoClickToken == 'false'">
-                                    <div class="form-group" ng-class="{'has-error' : !checkNumber(CreditCard.Number)}">
-                                        <label class="control-label">Nomor Kartu</label>
-                                        <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="CreditCard.Number" ng-blur="binDiscount.check()" ng-change="CreditCardPromo.Check(CreditCard.Number)" ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }" ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" />
-                                        <div ng-show="!checkNumber(CreditCard.Number)" style="color:red">
-                                            Nomor kartu tidak boleh mengandung karakter selain angka
-                                        </div>
-                                        <div ng-show="binDiscount.text != ''" style="color:green">
-                                            {{binDiscount.text}}
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-xs-4" ng-class="{'has-error' : dateOver}">
-                                                <label class="control-label">Kadaluarsa</label>
-                                                <select class="form-control" ng-model="CreditCard.Month" ng-init=" month = 'Bulan'">
-                                                    <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == 0"
-                                                            ng-click="CreditCard.Month = month.value">
-                                                        {{month.name}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4" ng-class="{'has-error' : dateOver}">
-                                                <label class="control-label">&nbsp;</label>
-                                                <select class="form-control" ng-model="CreditCard.Year" ng-init="year = 'Tahun'">
-                                                    <option value="{{year}}" ng-repeat="year in generateYear()" ng-selected="year  == 'Tahun'"
-                                                            ng-click="CreditCard.Year = year">
-                                                        {{year}}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            <div class="col-xs-4" ng-class="{'has-error' : !checkNumber(CreditCard.Cvv)}">
-                                                <label class="control-label">CVV Kartu</label>
-                                                <input type="password" value="" class="form-control" placeholder="XXX" maxlength="3" ng-model="CreditCard.Cvv" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                            </div>
-                                        </div>
-
-                                        <div ng-show="dateOver" style="color:red">
-                                            Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
-                                        </div>
-                                        <div ng-show="!checkNumber(CreditCard.Cvv)" style="color:red">
-                                            CVV tidak boleh mengandung karakter selain angka
-                                        </div>
-                                    </div>
-                                    <div class="form-group" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
-                                        <label class="control-label">Nama Pemegang Kartu</label>
-                                        <input type="text" value="" class="form-control" size="16" ng-model="CreditCard.Name" ng-required="paymentMethod == '@PaymentMethod.CreditCard'" />
-                                        <div ng-show="!checkName(CreditCard.Name)" style="color:red">
-                                            Nama tidak boleh mengandung karakter selain alfabet dan spasi
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- new credit card end -->
-
-                            </form>
-                        </div>
-                <!-- .credit-card-form -->
-                        <div class="credit-card-form" ng-show="paymentMethod == '@PaymentMethod.MandiriClickPay'">
-                            <div class="form-group">
-                                <h3 id="MandiriClickPay"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.CardNo)}">
-                                    <label class="control-label">Nomor Kartu</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="19" ng-model="MandiriClickPay.CardNo" />
-                                </div>
-                                <div ng-show="!checkNumber(MandiriClickPay.CardNo)" style="color:red">
-                                    Nomor kartu tidak boleh mengandung karakter selain angka
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label">Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></label>
-                                    <div class="form-mandiri-payment">
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">APPLI</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right">3</li>
-                                        </ul>
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">Input 1</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right" ng-if="MandiriClickPay.CardNo != null && MandiriClickPay.CardNo.length >= 12">{{MandiriClickPay.CardNo | limitTo:-10}}</li>
-                                            <li class="col-right" ng-if="MandiriClickPay.CardNo == null || MandiriClickPay.CardNo.length < 12">Masukkan Nomor Kartu Terlebih Dahulu</li>
-                                        </ul>
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">Input 2</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right">{{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode}}</li>
-                                        </ul>
-                                        <ul class="form-row clearfix">
-                                            <li class="col-left">Input 3</li>
-                                            <li class="col-middle">:</li>
-                                            <li class="col-right">@Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="form-group" ng-class="{'has-error' : !checkNumber(MandiriClickPay.Token)}">
-                                    <label class="control-label">Respon Token Mandiri</label>
-                                    <input type="text" value="" class="form-control cc-number" maxlength="6" placeholder="XXXXXX" ng-model="MandiriClickPay.Token" ng-required="paymentMethod == '@PaymentMethod.MandiriClickPay'" />
-                                </div>
-                                <div ng-show="!checkNumber(MandiriClickPay.Token)" style="color:red">
-                                    Respon token tidak boleh mengandung karakter selain angka
-                                </div>
-                            </div>
-                        </div>
-
-                    <br />
-
-                    <div ng-show="notifCardLength" style="color:red">
-                        Panjang digit kartu harus di antara 12-19 digit.
-                    </div>
-                    
-
-                    <div class="step-button">
-                    </div>
                 </div>
             </section><!-- .checkout-content -->
             <!-- Syarat & Ketentuan -->

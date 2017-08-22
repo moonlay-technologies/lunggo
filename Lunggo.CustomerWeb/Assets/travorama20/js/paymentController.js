@@ -1,12 +1,4 @@
-﻿app.filter('comma2decimal', [
-    function() { // should be altered to suit your needs
-        return function(input) {
-        var ret=(input)?input.toString().trim().replace(",","."):null;
-            return parseFloat(ret.toString());
-        };
-    }
-]);
-// travorama angular app - payment controller
+﻿// travorama angular app - payment controller
 app.controller('paymentController', [
     '$http', '$scope', '$location', '$log',function ($http, $scope, $location, $log) {
 
@@ -48,21 +40,21 @@ app.controller('paymentController', [
         $scope.randomYear = (date.getFullYear() + 2).toString();
         $scope.yearnow = date.getFullYear() + 2;
         $scope.dateOver = false;
-        $scope.months = [
-            { value: 0, name: 'Bulan' },
-            { value: 01, name: 'Januari' },
-            { value: 02, name: 'Februari' },
-            { value: 03, name: 'Maret' },
-            { value: 04, name: 'April' },
-            { value: 05, name: 'Mei' },
-            { value: 06, name: 'Juni' },
-            { value: 07, name: 'Juli' },
-            { value: 08, name: 'Agustus' },
-            { value: 09, name: 'September' },
-            { value: 10, name: 'Oktober' },
-            { value: 11, name: 'November' },
-            { value: 12, name: 'Desember' }
-        ];
+        // $scope.months = [
+        //     { value: 0, name: 'Bulan' },
+        //     { value: 01, name: 'Januari' },
+        //     { value: 02, name: 'Februari' },
+        //     { value: 03, name: 'Maret' },
+        //     { value: 04, name: 'April' },
+        //     { value: 05, name: 'Mei' },
+        //     { value: 06, name: 'Juni' },
+        //     { value: 07, name: 'Juli' },
+        //     { value: 08, name: 'Agustus' },
+        //     { value: 09, name: 'September' },
+        //     { value: 10, name: 'Oktober' },
+        //     { value: 11, name: 'November' },
+        //     { value: 12, name: 'Desember' }
+        // ];
 
         $scope.MandiriClickPay = {
             Token: '',

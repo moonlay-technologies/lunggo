@@ -18,7 +18,7 @@
         </form>
     </div>
     <div class="rincian-harga">
-        <p><b>Harga Tiket : </b><span>Rp {{(originalPrice | number) | comma2decimal}}</span></p>
+        <p><b>Harga Tiket : </b><span>Rp {{originalPrice | number}}</span></p>
         <p>
             <b>Diskon Travorama : </b>
             <span class="diskon" ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount)
