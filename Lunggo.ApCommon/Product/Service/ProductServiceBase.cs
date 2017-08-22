@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Lunggo.ApCommon.Flight.Constant;
+using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Product.Query;
+using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Pattern;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Product.Service
 {
@@ -24,6 +30,96 @@ namespace Lunggo.ApCommon.Product.Service
         //                type => (ProductType) type.GetProperty("Type").GetConstantValue(),
         //                type => type);
         //}
+
+
+        public static void SavePassenger(List<Pax> paxs, string email)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                foreach (var pax in paxs)
+                {
+                    var paxRecord = new SavedPassengerTableRecord
+                    {
+                        Email = email,
+                        TypeCd = PaxTypeCd.Mnemonic(pax.Type),
+                        GenderCd = GenderCd.Mnemonic(pax.Gender),
+                        TitleCd = TitleCd.Mnemonic(pax.Title),
+                        FirstName = pax.FirstName,
+                        LastName = pax.LastName,
+                        BirthDate = pax.DateOfBirth.HasValue ? pax.DateOfBirth.Value.ToUniversalTime() : (DateTime?)null,
+                        NationalityCd = pax.Nationality,
+                        PassportNumber = pax.PassportNumber,
+                        PassportExpiryDate = pax.PassportExpiryDate.HasValue ? pax.PassportExpiryDate.Value.ToUniversalTime() : (DateTime?)null,
+                        PassportCountryCd = pax.PassportCountry,
+                    };
+
+                    SavedPassengerTableRepo.GetInstance().Insert(conn, paxRecord);
+                }
+            }
+        }
+
+        public List<PaxForDisplay> GetSavedPassenger(string email)
+        {
+            try
+            {
+                var paxList = GetSavedPassengerFromDb(email);
+                return ConvertToPaxForDisplay(paxList);
+            }
+            catch
+            {
+                return null;
+            }
+            
+        } 
+
+        internal static List<Pax> GetSavedPassengerFromDb(string email)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var passengerRecords =
+                    GetSavedPassengerQuery.GetInstance().Execute(conn, new { Email = email }).ToList();
+                return passengerRecords.Select(record => new Pax
+                {
+                    Id = record.Id,
+                    Email = record.Email,
+                    Type = PaxTypeCd.Mnemonic(record.TypeCd),
+                    Title = TitleCd.Mnemonic(record.TitleCd),
+                    FirstName = record.FirstName,
+                    LastName = record.LastName,
+                    Gender = GenderCd.Mnemonic(record.GenderCd),
+                    DateOfBirth = record.BirthDate,
+                    Nationality = record.NationalityCd,
+                    PassportNumber = record.PassportNumber,
+                    PassportExpiryDate = record.PassportExpiryDate,
+                    PassportCountry = record.PassportCountryCd
+                }).ToList();
+            }
+        }
+
+        private static void UpdateDetailsToDb(List<Pax> paxList, string email)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                foreach (var pax in paxList)
+                {
+                    UpdateDetailsQuery.GetInstance().Execute(conn, new
+                    {
+                        Id = pax.Id,
+                        Email = email,
+                        TypeCd = PaxTypeCd.Mnemonic(pax.Type),
+                        GenderCd = GenderCd.Mnemonic(pax.Gender),
+                        TitleCd = TitleCd.Mnemonic(pax.Title),
+                        FirstName = pax.FirstName,
+                        LastName = pax.LastName,
+                        BirthDate = pax.DateOfBirth.HasValue ? pax.DateOfBirth.Value.ToUniversalTime() : (DateTime?)null,
+                        NationalityCd = pax.Nationality,
+                        PassportNumber = pax.PassportNumber,
+                        PassportExpiryDate = pax.PassportExpiryDate.HasValue ? pax.PassportExpiryDate.Value.ToUniversalTime() : (DateTime?)null,
+                        PassportCountryCd = pax.PassportCountry,
+                    });
+                }
+            }
+        }
 
         internal static Type GetService(ProductType type)
         {

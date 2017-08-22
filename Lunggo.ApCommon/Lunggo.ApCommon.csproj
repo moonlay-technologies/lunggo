@@ -708,6 +708,8 @@
     <Compile Include="Product\Model\RsvRuleBase.cs" />
     <Compile Include="Product\Model\UsedMargin.cs" />
     <Compile Include="Product\Query\GetAllOrderMarginsQuery.cs" />
+    <Compile Include="Product\Query\GetSavedPassengerQuery.cs" />
+    <Compile Include="Product\Query\UpdateSavedPassengerQuery.cs" />
     <Compile Include="Product\Service\ProductServiceBase.cs" />
     <Compile Include="Query\ContactUs.cs" />
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
