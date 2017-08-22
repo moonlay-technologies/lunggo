@@ -18,7 +18,7 @@
         </form>
     </div>
     <div class="rincian-harga">
-        <p><b>Harga Tiket : </b><span>Rp {{originalPrice | number}}</span></p>
+        <p><b>Harga Tiket : </b><span>Rp {{(originalPrice | number) | comma2decimal}}</span></p>
         <p>
             <b>Diskon Travorama : </b>
             <span class="diskon" ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount)
@@ -46,6 +46,7 @@
         <div class="total-harga">
             <p>
                 <b>TOTAL</b>
+                @* redundant di _flightDetail.mobile *@
                 <span ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">
                     Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
                 </span>

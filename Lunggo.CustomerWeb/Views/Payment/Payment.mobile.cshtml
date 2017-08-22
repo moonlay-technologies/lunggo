@@ -12,74 +12,6 @@
 @model Lunggo.CustomerWeb.Models.PaymentData
 
 @{
-    var rsvNo = "";
-    var todayDate = new DateTime(2017, 3, 25);          //var todayDate = DateTime.Today;
-    var orderedRooms = new List<Tuple<string, int>>();
-    var totalAdult = 0;
-    var totalChild = 0;
-    var totalRoom = 0;
-    var night = 0;
-    var images = new List<Image>();
-    var hotelImg = "";
-    var roomImg = "";
-    var listAges = new List<int>();
-    var pax = new List<PaxForDisplay>();
-    try
-    {
-        pax = Model.Reservation.Pax;
-        if (Model.Reservation is HotelReservationForDisplay)
-        {
-            var rsv = (Model.Reservation as HotelReservationForDisplay);
-            night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
-            var rooms = rsv.HotelDetail.Rooms;
-            rsvNo = Model.RsvNo;
-            foreach (var room in rsv.HotelDetail.Rooms)
-            {
-                var roomName = room.RoomName;
-                var sum = 0;
-
-                foreach (var rate in room.Rates)
-                {
-
-                    foreach (var config in rate.Breakdowns)
-                    {
-                        sum += config.RateCount;
-                        totalRoom += config.RateCount;
-                        totalAdult += config.AdultCount;
-                        totalChild += config.ChildCount;
-                        if (config.ChildCount <= 0)
-                        {
-                            continue;
-                        }
-                        listAges.AddRange(config.ChildrenAges);
-                    }
-                }
-                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-            }
-        }
-    }
-    catch
-    {
-        ViewBag.Message = "BookExpired";
-    }
-}
-
-@{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.BodyClass = "page page-checkout";
     ViewBag.AngularController = "paymentController";
@@ -194,8 +126,6 @@
             @:var gtmCountry = '@hotel.HotelDetail.CountryName';
             @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
             @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-            @:var gtmNumAdults = @totalAdult;
-            @:var gtmNumChildren = @totalChild;
             @:var gtmPurchaseCurrency = 'IDR';
             @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
             @:var gtmPageName = 'payment';
@@ -225,17 +155,21 @@
         });
         
         //// Animate DOM when opening / closing the accordion
-        $(".box-payment").click( function(){
+        $(".box-payment .ui-accordion-header").click( function(){
             //// scroll
-            if( $(this).children(".ui-accordion-header").hasClass("ui-accordion-header-active") ) {
+            if( $(this).hasClass("ui-accordion-header-active") ) {
                 $('html, body').animate({
                     //// banyaknya pixel yang di scroll (ditutupin)
                     scrollTop: $(this).offset().top - $("header").height() - 8
                 }, 500);
             }
-            //// close all other accordion
-            // $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
         });
+        //// close all other accordion
+        $(".box-payment").click( function(){
+            $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
+            $(".box-payment").not(this).find(".ui-accordion-header").removeClass("ui-accordion-header-active ui-state-active")
+        });
+
         $(".kode-voucher a").click( function() {
             $(this).next().toggle(200);
         });
@@ -253,8 +187,28 @@
             <section class="checkout-content">
 
                 <div class="page__body">
-                    @{Html.RenderPartial("/Views/Payment/partials/_bookingDetail.mobile.cshtml");}
+                    @if (Model.Reservation is FlightReservationForDisplay) {
+                        Html.RenderPartial("/Views/Payment/partials/_flightDetail.mobile.cshtml");
+                    } else {
 
+                        <h3 class="lg-txt">
+                            <b>RINCIAN </b><span>PEMESANAN</span>
+                        </h3>
+                        <div class="container-rincian-penerbangan">
+                            <div class="content-right-payment">
+                                <p class="timer">
+                                    <b>Sisa Waktu Pembayaran </b>
+                                    <span class="hour">00</span>
+                                    :
+                                    <span class="minute">00</span>
+                                    :
+                                    <span class="second">00</span>
+                                </p>
+                                <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
+                            </div>
+                            @{Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");}
+                        </div>
+                    }
                     <!-- ========================= PAYMENT METHOD ========================= -->
                     <div class="summary summary--payment">
                         @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}

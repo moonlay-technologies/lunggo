@@ -1,4 +1,12 @@
-﻿// travorama angular app - payment controller
+﻿app.filter('comma2decimal', [
+    function() { // should be altered to suit your needs
+        return function(input) {
+        var ret=(input)?input.toString().trim().replace(",","."):null;
+            return parseFloat(ret.toString());
+        };
+    }
+]);
+// travorama angular app - payment controller
 app.controller('paymentController', [
     '$http', '$scope', '$location', '$log',function ($http, $scope, $location, $log) {
 
@@ -862,9 +870,10 @@ app.controller('paymentController', [
         }
 
         $scope.checkDate = function (month, year) {
-
+            // console.log(month,year)
             if (month == '0' || month == 'Bulan' || year == 'Tahun') {
                 $scope.dateOver = true;
+                // console.log('a')
                 return false;
             }
             

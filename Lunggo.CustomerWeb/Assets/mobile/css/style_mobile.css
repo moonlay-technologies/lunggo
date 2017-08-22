@@ -6395,6 +6395,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 .info-reservasi-penerbangan {
     color: #fff;
+    font-size: 12px;
 }
 
 .box-pilihan-bank {
@@ -6433,15 +6434,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     
 }
 
-.info-reservasi-penerbangan {
-    font-weight: bold;
-}
-
-.detail-airport {
+.rincian-pesanan-penerbangan .detail-airport {
     color: #fff;
     text-align: center;
 }
-.detail-airport h3 {
+.rincian-pesanan-penerbangan .detail-airport h3 {
    color: #fff;
     font-weight: bold;
     font-size: 26px !important;
@@ -6475,9 +6472,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .logo-penerbangan {
     margin-top: 20px;
+    background-color: white;
+    border-radius: 50%;
 }
 .logo-penerbangan img {
     width: 100%;
+    padding: 7%;
+    /*max-width: 50px;
+    max-height: 50px;*/
 }
 .separator-jadwal-penerbangan {
     background: #f9f9f9;
@@ -6524,6 +6526,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 /* PAYMENT PAGE */
 
+.kode-voucher {
+    margin-bottom: 10px;
+}
 .kode-voucher a {
     text-decoration: underline;
     font-size: 13px;
@@ -6599,4 +6604,15 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .box-payment input[type="submit"] {
     padding: 12px;
+}
+
+.detail-airport h3 {
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.detail-airport p {
+    margin-bottom: 1px;
+    font-size: 12px;
 }

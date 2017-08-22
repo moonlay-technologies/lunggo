@@ -11,77 +11,6 @@
 @using Lunggo.ApCommon.Product.Model
 
 @{
-
-    var rsvNo = "";
-    var todayDate = new DateTime(2017, 3, 25);          //var todayDate = DateTime.Today;
-    var savedCreditCards = Model.SavedCreditCards;
-    var orderedRooms = new List<Tuple<string, int>>();
-    var totalpax = 0;
-    var totalAdult = 0;
-    var totalChild = 0;
-    var totalRoom = 0;
-    var night = 0;
-    var images = new List<Image>();
-    var hotelImg = "";
-    var roomImg = "";
-    var listAges = new List<int>();
-    var pax = new List<PaxForDisplay>();
-    try
-    {
-        pax = Model.Reservation.Pax;
-        if (Model.Reservation is HotelReservationForDisplay)
-        {
-            var hotelDetail = Model.Reservation.HotelDetail;
-            night = (hotelDetail.CheckOutDate - hotelDetail.CheckInDate).Days;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(hotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
-            var rooms = hotelDetail.Rooms;
-            rsvNo = Model.RsvNo;
-            foreach (var room in hotelDetail.Rooms)
-            {
-                var roomName = room.RoomName;
-                var sum = 0;
-
-                foreach (var rate in room.Rates)
-                {
-
-                    foreach (var config in rate.Breakdowns)
-                    {
-                        sum += config.RateCount;
-                        totalRoom += config.RateCount;
-                        totalAdult += config.AdultCount;
-                        totalChild += config.ChildCount;
-                        if (config.ChildCount <= 0)
-                        {
-                            continue;
-                        }
-                        listAges.AddRange(config.ChildrenAges);
-                    }
-                }
-                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-            }
-        }
-    }
-    catch
-    {
-        ViewBag.Message = "BookExpired";
-    }
-}
-
-@{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
     ViewBag.SiteHeader = "checkout";
@@ -197,8 +126,6 @@
             @:var gtmCountry = '@hotel.HotelDetail.CountryName';
             @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
             @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-            @:var gtmNumAdults = @totalAdult;
-            @:var gtmNumChildren = @totalChild;
             @:var gtmPurchaseCurrency = 'IDR';
             @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
             @:var gtmPageName = 'payment';
@@ -228,9 +155,9 @@
         });
         
         //// Animate DOM when opening / closing the accordion
-        $(".box-payment").click( function(){
+        $(".box-payment .ui-accordion-header").click( function(){
             //// scroll
-            if( $(this).children(".ui-accordion-header").hasClass("ui-accordion-header-active") ) {
+            if( $(this).hasClass("ui-accordion-header-active") ) {
                 $('html, body').animate({
                     //// banyaknya pixel yang di scroll (ditutupin)
                     scrollTop: $(this).offset().top - $("header").height() - 8
@@ -277,127 +204,20 @@
                                     </p>
                                     <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
                                 </div>
-                        @if (Model.Reservation is FlightReservationForDisplay) {
-                                <div class="content-right-payment">
-                                    <div class="row">
-                                        <div class="col-xs-4 logo-maskapai">
-                                            <img ng-src="{{trips[0].segments[0].airlineLogoUrl}}"
-                                                alt="{{trips[0].segments[0].airlineName}}" />
-                                        </div>
-                                        <div class="col-xs-8 info-penerbangan">
-                                            <div class="detail-airport">
-                                                <p ng-if="trips[1]">Keberangkatan</p>
-                                                <h3>{{trips[0].segments[0].departureCity}}
-                                                    ({{trips[0].segments[0].departure}})
-                                                    - {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalCity}}
-                                                    ({{trips[0].segments[ trips[0].segments.length - 1 ].arrival}})</h3>
-                                                <p>{{trips[0].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</p>
-                                                <p>{{trips[0].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
-                                                    - {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
-                                                    <span><!-- (+1 hari) --></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="separator"></div>
-                                    <div class="row" ng-if="trips[1]">
-                                        <div class="col-xs-4 logo-maskapai">
-                                            <img ng-src="{{trips[1].segments[0].airlineLogoUrl}}"
-                                                alt="{{trips[1].segments[0].airlineName}}" />
-                                        </div>
-                                        <div class="col-xs-8 info-penerbangan">
-                                            <div class="detail-airport">
-                                                <p>Kepulangan</p>
-                                                <h3>{{trips[1].segments[0].departureCity}}
-                                                    ({{trips[1].segments[0].departure}})
-                                                    - {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}}
-                                                    ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h3>
-                                                <p>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</p>
-                                                <p>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
-                                                    - {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
-                                                    <span><!-- (+1 hari) --></span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content-right-payment">
-                                    <p><b>Penumpang</b></p>
-                                    <div class="data-penumpang">
-                                        @for (int i=0; i < pax.Count; i++){
-                                            <p>@(i+1). @pax[i].Title @pax[i].Name</p>
-                                        }
-                                    </div>
-                                </div>
-                        } else {
-                                var hotelDetail = Model.Reservation.HotelDetail;
-                                <div class="content-right-payment">
-                                    <div class="row">
-                                        <div class="col-xs-12 img-hotel"><img src="@hotelImg" /></div>
-                                        <div class="col-xs-12 info-penerbangan">
-                                            <div class="detail-airport">
-                                                <h3>@ToTitleCase.ConvertToTitleCase(hotelDetail.HotelName)</h3>
-                                                @if     (hotelDetail.StarRating == 1) { <div class="star"></div> }
-                                                else if (hotelDetail.StarRating == 2) { <div class="star star-2"></div> }
-                                                else if (hotelDetail.StarRating == 3) { <div class="star star-3"></div> }
-                                                else if (hotelDetail.StarRating == 4) { <div class="star star-4"></div> }
-                                                else if (hotelDetail.StarRating == 5) { <div class="star star-5"></div> }
-                                                <p>@ToTitleCase.ConvertToTitleCase( hotelDetail.Address +" "+ hotelDetail.ZoneName + ", " +
-                                                    hotelDetail.DestinationName +" "+ hotelDetail.PostalCode +", "+ hotelDetail.CountryName )
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="content-right-payment">
-                                    <div class="rincian-harga">
-                                        <p><b>Check in : </b><span>
-                                            @hotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
-                                        </span></p>
-                                        <p><b>Check out : </b><span>
-                                            @hotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
-                                        </span></p>
-                                        <p><b>Malam : </b><span>@night Malam</span></p>
-                                        <p><b>Kamar : </b><span>@totalRoom Kamar</span></p>
-                                        <p><b>Jenis Kamar : </b><span>
-                                            @for (var i = 0; i < orderedRooms.Count; i++) {
-                                                if (i != orderedRooms.Count - 1) {
-                                                    @orderedRooms[i].Item2<span> </span>
-                                                    @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)<span>, </span>
-                                                } else {
-                                                    @orderedRooms[i].Item2<span> </span>
-                                                    @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)
-                                                }
-                                            }
-                                        </span></p>
-                                        <p>
-                                            <b>Jumlah Tamu : </b>
-                                            <span>
-                                                @totalAdult Dewasa @if (totalChild > 0) {
-                                                    <span>, @totalChild Anak </span>
-                                                    <span> (
-                                                        @for (var a = 0; a < listAges.Count; a++) {
-                                                            if (a != listAges.Count - 1) {
-                                                                @listAges[a]
-                                                                <span>Tahun, </span>
-                                                            } else {
-                                                                @listAges[a] <span>Tahun)</span>
-                                                            }
-                                                        }
-                                                    </span>
-                                                }
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                        }
+                                @if (Model.Reservation is FlightReservationForDisplay) {
+                                        Html.RenderPartial("/Views/Payment/partials/_flightDetail.cshtml");
+                                } else {
+                                        Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");
+                                }
                                 @{Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");}
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
             </section><!-- .checkout-content -->
 
             <div class="bookfailed-popup" ng-show="expired">
-                <div class=" overlay-content">
+                <div class="overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
                         <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
@@ -427,7 +247,6 @@
                                 <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
                                 <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran Virtual Account.</li>
                                 <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-
                             </ol>
                         </div>
                         <div class="row">
@@ -448,7 +267,7 @@
                         <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Virtual Account</span></div>
                         <div class="popup-list">
                             <ol>
-                                <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
+                                <li>Anda akan dikenakan biaya Rp 6.500 per transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
                                 <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
                             </ol>
                         </div>

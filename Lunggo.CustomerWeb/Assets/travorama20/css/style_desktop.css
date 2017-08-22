@@ -9397,6 +9397,9 @@ file : /Assets/travorama20/css/_page_password.scss
 
 /* PAYMENT PAGE */
 
+.kode-voucher {
+    margin-bottom: 10px;
+}
 .kode-voucher a {
     text-decoration: underline;
     font-size: 13px;
