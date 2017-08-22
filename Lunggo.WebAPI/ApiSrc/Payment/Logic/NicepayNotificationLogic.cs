@@ -14,17 +14,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
     {
         public static ApiResponseBase CheckPaymentNotification(NotificationResult notif)
         {
-            if (notif.resultCd != "0000")
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPMP01"
-                };
-            }
+            //if (notif.resultCd != "0000")
+            //{
+            //    return new ApiResponseBase
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERPPMP01"
+            //    };
+            //}
 
             var status = MapNicepayPaymentStatus(notif.status,notif.resultMsg);
-            var method = MapNicepayPaymentMethod(notif.payMethod);
+            var method = PaymentMethod.VirtualAccount; //MapNicepayPaymentMethod(notif.payMethod);
             var paymentInfo = new PaymentDetails
             {
                 Medium = PaymentMedium.Veritrans,

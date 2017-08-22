@@ -226,6 +226,7 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\WebAPI\api.properties" />
     <None Include="Config\WebJob.BookingAutomation\api.properties" />
     <None Include="Config\WebJob.BookingAutomation\azureStorage.properties" />
     <None Include="Config\WebJob.BookingAutomation\general.properties" />

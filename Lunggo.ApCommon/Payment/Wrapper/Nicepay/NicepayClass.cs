@@ -15,7 +15,7 @@ public class NicepayClass : System.Web.UI.Page
 
         Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
-        Nicepay.dbProcessUrl = NicepayConfig.NICEPAY_DBPROCESS_URL;
+        Nicepay.dbProcessUrl = NicepayConfig.GetDBProcessUrl();
         Nicepay.callBackUrl = NicepayConfig.NICEPAY_CALLBACK_URL;
         Nicepay.instmntMon = "1";
         Nicepay.instmntType = "1";

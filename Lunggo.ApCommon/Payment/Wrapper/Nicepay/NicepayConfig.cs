@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using Lunggo.Framework.Config;
 
 public class NicepayConfig
 {
     public const string NICEPAY_IMID = "IONPAYTEST"; // Merchant ID   // use VACCTCLOSE TO test cancel VA //IONPAYTEST for normal VA /// FIXOPEN001 for Fixclose register
     public const string NICEPAY_MERCHANT_KEY = "33F49GnCMS1mFYlGXisbUDzVf2ATWCl9k3R++d5hDd3Frmuos/XLx8XhXpe+LDYAbpGKZYSwtlyyLOtS/8aD7A==";
     public const string NICEPAY_CALLBACK_URL = "http://localhost/nicepay-sdk/result.html"; // Sett by merchant
-    public const string NICEPAY_DBPROCESS_URL = "https://travorama-qa-api.azurewebsites.net" + "/v1/payment/nicepay/paymentnotification";  // Sett by merchant
+    public static string NICEPAY_DBPROCESS_URL = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl") + "/v1/payment/nicepay/paymentnotification"; //"http://api.local.travorama.com/v1/payment/nicepay/paymentnotification" // Sett by merchant
     public const sbyte NICEPAY_TIMEOUT_CONNECT = 15;
 
     public const sbyte NICEPAY_TIMEOUT_READ = 25;
@@ -36,5 +37,11 @@ public class NicepayConfig
     public const sbyte NICEPAY_LOG_INFO = 5;
 
     public const sbyte NICEPAY_LOG_DEBUG = 7;
+
+
+    public static string  GetDBProcessUrl()
+    {
+        return NICEPAY_DBPROCESS_URL;
+    }
 
 }

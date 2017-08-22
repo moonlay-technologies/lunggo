@@ -141,6 +141,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
 
         //CallbackNotif Nicepay
+        [HttpPost]
         [Route("v1/payment/nicepay/paymentnotification")]
         public ApiResponseBase NicepayPaymentNotification()
         {
