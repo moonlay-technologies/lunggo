@@ -272,15 +272,15 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public List<Surcharge> GetSurchargeList()
         {
-            var allSubMethods = Enum.GetValues(typeof(PaymentSubMethod)).Cast<PaymentSubMethod>().ToList();
-            var list = allSubMethods.Select(sub => new Surcharge
+            return new List<Surcharge>()
             {
-                PaymentMethod = PaymentMethod.CreditCard,
-                PaymentSubMethod = sub,
-                Percentage = 2.5M,
-                Constant = 0
-            }).ToList();
-            return list;
+                new Surcharge
+                {
+                    PaymentMethod = PaymentMethod.CreditCard,
+                    Percentage = 2.5M,
+                    Constant = 0
+                }
+            };
         }
 
         public decimal GetSurchargeNominal(PaymentDetails payment)
@@ -288,7 +288,9 @@ namespace Lunggo.ApCommon.Payment.Service
             var surchargeList = GetSurchargeList();
             var surcharge =
                 surchargeList.SingleOrDefault(
-                    sur => payment.Method == sur.PaymentMethod && payment.SubMethod == sur.PaymentSubMethod);
+                    sur =>
+                        payment.Method == sur.PaymentMethod &&
+                        (sur.PaymentSubMethod == null || payment.SubMethod == sur.PaymentSubMethod));
             return surcharge == null
                 ? 0
                 : (payment.OriginalPriceIdr - payment.DiscountNominal)*surcharge.Percentage/100 +
