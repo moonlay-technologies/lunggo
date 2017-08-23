@@ -6168,9 +6168,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .detail-promo {
         margin-top: 20px;
     }
+    .gambar-box-promo {
+        
+    }
     .box-promo {
         border: 1px solid #b3b3b3;
-        padding: 10px 25px;
+        padding: 10px 5px;
         margin-top: 10px;
     }
     .judul-box-promo {
@@ -6179,7 +6182,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #000;
     }
     .gambar-box-promo img {
-        width: 50%;
+        width: 65%;
     }
     .btn-book {
         text-align: center;

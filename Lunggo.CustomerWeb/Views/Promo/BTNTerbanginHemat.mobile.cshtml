@@ -94,13 +94,17 @@
             </div>
         </div>
         <div class="isi-syarat-ketentuan clearfix">
-        @for (var i = 0; i < ViewBag.Terms.Count; i++ )
-        {
-            <div class="row container-list-ketentuan">
-                <div class="col-xs-1 list-number-mobile">@(i+1)</div>
-                <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.Terms[i]</div>
-            </div>
-        }
+            @if (ViewBag.Terms != null)
+            {
+                for (var i = 0; i < ViewBag.Terms.Count; i++)
+                {
+                    <div class="row container-list-ketentuan">
+                        <div class="col-xs-1 list-number-mobile">@(i + 1)</div>
+                        <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.Terms[i]</div>
+                    </div>
+                }
+            }
+            
         </div>
     </div>
     <div class="subscribe-mobile">
