@@ -9339,16 +9339,24 @@ file : /Assets/travorama20/css/_page_password.scss
 
 
 /*payment */
-.box-payment .row.ui-accordion-header {
-    padding: 25px 0px;
+
+.box-payment {
 }
 .box-payment {
-    padding: 0px 20px;
+  padding: 0px 20px;
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
+}
+.box-payment .row.ui-accordion-header {
+    padding: 25px 0px;
 }
 .box-payment input[type="submit"] {
     margin-bottom: 25px;
 }
-
 
 .box-payment h4 {
     color: #afafaf;
@@ -9428,19 +9436,6 @@ file : /Assets/travorama20/css/_page_password.scss
     margin-bottom: 3px;
 }
 
-
-.box-payment {
-  background:#fff;
-  border-radius: 3px;
-  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
-  margin-bottom: 10px;
-}
-
-
-/* PAYMENT PAGE */
-
 .kode-voucher {
     margin-bottom: 10px;
 }
@@ -9506,8 +9501,6 @@ file : /Assets/travorama20/css/_page_password.scss
 .separator {
     height: 20px;
 }
-
-
 .ccDate .form-group div {
   float: left;
 }
