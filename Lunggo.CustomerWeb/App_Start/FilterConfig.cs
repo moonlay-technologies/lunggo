@@ -6,6 +6,7 @@ using Lunggo.CustomerWeb.Attributes;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Product.Constant;
 
 namespace Lunggo.CustomerWeb
 {
@@ -27,7 +28,15 @@ namespace Lunggo.CustomerWeb
             {
                 var clientId = filterContext.HttpContext.Request.Headers["X-Client-ID"];
                 var clientSecret = filterContext.HttpContext.Request.Headers["X-Client-Secret"];
-                filterContext.Controller.ViewBag.Platform = Client.GetPlatformType(clientId);
+                if (clientId != null && clientId != "")
+                    filterContext.Controller.ViewBag.Platform = Client.GetPlatformType(clientId);
+                else
+                {
+                    var mobileUrl = ConfigManager.GetInstance().GetConfigValue("general", "mobileUrl");
+                    filterContext.Controller.ViewBag.Platform = (filterContext.HttpContext.Request.Url.Host == mobileUrl)
+                        ? PlatformType.MobileWebsite
+                        : PlatformType.DesktopWebsite;
+                }
                 filterContext.Controller.ViewBag.ClientId = clientId;
                 filterContext.Controller.ViewBag.ClientSecret = clientSecret;
             }

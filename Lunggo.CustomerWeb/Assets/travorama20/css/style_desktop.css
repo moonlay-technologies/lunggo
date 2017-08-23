@@ -9176,7 +9176,6 @@ file : /Assets/travorama20/css/_page_password.scss
     margin-bottom: 10px;
 }
 .info-subscribe span {
-    font-family: 'Myriad';
     font-size: 14px;
 }
 .btn-download { margin-top: 20px;}
@@ -9336,3 +9335,180 @@ file : /Assets/travorama20/css/_page_password.scss
   .partner-hotel.mphg {
     background-position: -969px 0px;
     width: 60px; }
+} 
+
+
+/*payment */
+.box-payment .row.ui-accordion-header {
+    padding: 25px 0px;
+}
+.box-payment {
+    padding: 0px 20px;
+}
+.box-payment input[type="submit"] {
+    margin-bottom: 25px;
+}
+
+
+.box-payment h4 {
+    color: #afafaf;
+    font-size: 15px;
+    margin-top: 13px
+}
+.box-payment .glyphicon-ok {
+    display: none;
+}
+.box-payment .ui-accordion-header-active h4 {
+    color: #5d5d5d;
+    font-weight: bold;
+}
+.box-payment .ui-accordion-header-active .glyphicon-ok {
+    display: inline-block;
+    color: #75b846;
+    font-size: 16px;
+    margin-top: 14px;
+}
+
+.separator-desktop {
+    margin: 20px 0;
+    background:#ebebeb;
+    height: 1px;
+    width: 100%;
+}
+
+.form-bayar {
+    margin-top: 25px;
+}
+
+.container-rincian-penerbangan {
+    background:#fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    padding: 15px;
+    color: #4b4b4c;
+}
+
+.content-right-payment {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+}
+.content-right-payment p {
+    font-size: 14px;
+}
+.logo-maskapai {
+    margin-top: 20px;
+}
+.detail-airport {
+     padding-left:10px;
+}
+.detail-airport h3 {
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.detail-airport p {
+    margin-bottom: 1px;
+    font-size: 12px;
+}
+
+.box-pilihan-bank {
+    text-align: center;
+    margin: 40px 0;
+}
+.nama-bank {
+    margin-top: 10px;
+    color: #484848;
+    font-size: 14px;
+}
+.data-penumpang p {
+    margin-bottom: 3px;
+}
+
+
+.box-payment {
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
+}
+
+
+/* PAYMENT PAGE */
+
+.kode-voucher {
+    margin-bottom: 10px;
+}
+.kode-voucher a {
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: bold;
+}
+.form-kode-voucher {
+    margin-top: 10px;
+}
+.rincian-harga p {
+    position: relative;
+    font-size: 13px;
+}
+.rincian-harga span {
+    position: absolute;
+    right: 0;
+}
+.diskon {
+    color:#31b5e6
+}
+.total-harga {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 3px solid #ebebeb;
+}
+
+.total-harga p {
+    font-size: 16px;
+}
+.total-harga span {
+    color: #0dc557;
+}
+
+.content-right-payment-edit {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+
+.how-to-pay-mandiri {
+    margin-bottom: 20px;
+}
+
+.text-group {
+    margin-bottom: 8px;
+}
+
+.img-bank {
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ebebeb;
+}
+/*.img-bank:hover {*/
+.img-bank.selected {
+    border: 2px solid #0d91c3;
+    }
+.img-hotel {
+    margin-bottom: 5px;
+}
+.separator {
+    height: 20px;
+}
+
+
+.ccDate .form-group div {
+  float: left;
+}
+/*  */

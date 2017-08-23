@@ -1,0 +1,37 @@
+<div class="step-button">
+    <form name="finalForm" id="finalForm" class="form-bayar" ng-submit="pay.setPaymentMethod()">
+        <div class="hidden">
+            <input type="text" name="RsvNo" ng-model="rsvNo" />
+            <input type="text" name="Payment.Currency" value="IDR" ng-model="currency" />
+            <input type="text" name="Language" ng-model="language" />
+            <p>Payment Method</p>
+            <input type="text" name="Payment.Method" ng-model="paymentMethod" />
+            <p>Voucher Code</p>
+            <input type="text" name="DiscountCode" ng-model="voucher.confirmedCode" />
+            <input type="text" name="Payment.Data0" id="vt-token" ng-model="CreditCard.Token" />
+        </div>
+        <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan
+        	<a href="@Url.Action("Terms","StaticPage")" target="_blank">syarat &amp; ketentuan</a>
+        	dan <a href="@Url.Action("Privacy","StaticPage")" target="_blank">kebijakan privasi</a>
+        </p>
+        <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12 col-md-4" id="payButton"
+        	value="{{ checkoutForm.loading? 'MEMPROSES' : 'BAYAR' }}"
+        	ng-disabled="checkoutForm.loading || (paymentMethod == 'VirtualAccount' && methodDiscount.firstRequest)"
+    		@if (Model != Lunggo.ApCommon.Payment.Constant.PaymentMethod.BankTransfer &&
+    			 Model != Lunggo.ApCommon.Payment.Constant.PaymentMethod.VirtualAccount)
+            {
+    			@Html.Raw("ng-click=\"paymentMethod = '");
+    			@Model
+    			@Html.Raw("'\"");
+    		}
+    		>
+		<div class="col-md-4" ng-show="methodDiscount.wait">
+            <img src="/Assets/images/load.gif" style="width: 10%; margin-left: 10%; margin-top: 8%;"> 
+        </div>
+    </form>
+
+    <form method="post" name="submitForm" id="rsvno" class="hidden">
+        <input type="text" name="RsvNo" id="rsvno-input" />
+        <input type="text" name="PaymentUrl" id="url-input" />
+    </form>
+</div>

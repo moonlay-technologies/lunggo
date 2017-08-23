@@ -1604,8 +1604,6 @@
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Flight\FlightSearchForm.cshtml" />
-    <Content Include="Views\Flight\Payment.cshtml" />
-    <Content Include="Views\Flight\Payment.mobile.cshtml" />
     <Content Include="Views\Flight\Search-Return.cshtml" />
     <Content Include="Views\Flight\Search-Return.mobile.cshtml" />
     <Content Include="Views\Flight\Search-Single.cshtml" />

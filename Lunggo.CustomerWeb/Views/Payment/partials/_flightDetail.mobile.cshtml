@@ -1,0 +1,123 @@
+@using Lunggo.ApCommon.Flight.Model
+
+<!-- rincian penerbangan-->
+<div class="rincian-pesanan-penerbangan">
+    <div class="container-rincian-pesanan-penerbangan">
+        <div class="info-reservasi-penerbangan">
+            <div class="row">
+                <div class="col-xs-6 clear-left clear-right">No. Reservasi: @Model.RsvNo</div>
+                <div class="col-xs-6 timer clear-left clear-right text-right">Sisa Waktu:<br>
+                    <span class="hour">00</span>
+                    :
+                    <span class="minute">00</span>
+                    :
+                    <span class="second">00</span>
+                </div>
+            </div>  
+        </div>
+        <div class="jadwal-penerbangan">
+            <div class="row">
+                <div class="col-xs-5 detail-airport clear-left">
+                    <h3>{{trips[0].segments[0].departure}}</h3>
+                    <span>
+                        {{trips[0].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}} 
+                        {{trips[0].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
+                    </span>
+                </div>
+                <div class="col-xs-2 logo-penerbangan clear-left clear-right">
+                    <img ng-src="{{trips[0].segments[0].airlineLogoUrl}}" alt="{{trips[0].segments[0].airlineName}}" />
+                </div>
+                <div class="col-xs-5 detail-airport clear-right">
+                    <h3>{{trips[0].segments[ trips[0].segments.length - 1 ].arrival}}</h3>
+                    <span>
+                        {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy':'UTC'}} 
+                        {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="separator-jadwal-penerbangan" ng-if="trips[1]"></div>
+
+        <div class="jadwal-penerbangan" ng-if="trips[1]">
+            <div class="row">
+                <div class="col-xs-5 detail-airport clear-left">
+                    <h3>{{trips[1].segments[0].departure}}</h3>
+                    <span>
+                        {{trips[1].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}} 
+                        {{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
+                    </span>
+                </div>
+                <div class="col-xs-2 logo-penerbangan clear-left clear-right">
+                    <img ng-src="{{trips[1].segments[0].airlineLogoUrl}}" alt="{{trips[1].segments[0].airlineName}}" />
+                </div>
+                <div class="col-xs-5 detail-airport clear-right">
+                    <h3>{{trips[1].segments[ trips[1].segments.length - 1 ].arrival}}</h3>
+                    <span>
+                        {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'dd MMM yyyy':'UTC'}} 
+                        {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="total-biaya">
+    <div class="row">
+        <div class="col-xs-6 "><a data-toggle="modal" href="#myModal">Rincian Penerbangan</a></div>
+        <div class="col-xs-6 text-right">
+            <h3>
+                <span ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">
+                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
+                </span>
+                <span ng-if="voucher.confirmedCode">
+                    Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
+                </span>
+                <span ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
+                </span>
+                <span ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
+                </span>
+                <span ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
+                </span>
+                <span ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
+                </span>
+            </h3>
+        </div>
+    </div>  
+</div>
+<!-- end rincian penerbangan-->
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Rincian Penerbangan</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-rincian-penerbangan-modal"> <!-- start modal content-->
+                    <div class="content-right-payment">
+                        <p class="timer">
+                            <b>Sisa Waktu Pembayaran </b>
+                            <span class="hour">00</span>
+                            :
+                            <span class="minute">00</span>
+                            :
+                            <span class="second">00</span>
+                        </p>
+                        <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
+                    </div>
+                    @{
+                        Html.RenderPartial("/Views/Payment/partials/_flightDetail.cshtml");
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                </div> <!-- modal content-->
+            </div> <!-- modal body-->
+        </div>
+    </div>
+</div> <!-- modal rincian perjalanan-->
