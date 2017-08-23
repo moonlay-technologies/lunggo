@@ -59,7 +59,6 @@
         var trips = '';
         var price = '';
         var originalPrice = '';
-        var totalpax = '';
         var nights = '';
         @if (Model.Reservation is FlightReservationForDisplay)
         {
@@ -71,7 +70,6 @@
         else //if (Model.Reservation is HotelReservationForDisplay)
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
-            //// TODO: sering kena error di sini, not thrown
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
             @:price = @reservation.HotelDetail.NetTotalFare;
             @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
@@ -163,9 +161,13 @@
                     scrollTop: $(this).offset().top - $("header").height() - 8
                 }, 500);
             }
-            //// close all other accordion
-            // $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
         });
+        //// close all other accordion
+        $(".box-payment").click( function(){
+            $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
+            $(".box-payment").not(this).find(".ui-accordion-header").removeClass("ui-accordion-header-active ui-state-active")
+        });
+
         $(".kode-voucher a").click( function() {
             $(this).next().toggle(200);
         });

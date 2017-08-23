@@ -6579,14 +6579,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     /*width: 110px;*/
     margin: 0 auto;
     padding: 10px;
-/*}
-.img-bank.selected {
-*/    border-radius: 5px;
+    border-radius: 5px;
     border: 2px solid #ebebeb;
 }
-.img-bank:hover {
-    border: 2px solid #0d91c3;
-    }
+.img-bank.selected {
+  border: 2px solid #0d91c3;
+}
+
 .img-hotel {
     margin-bottom: 5px;
 }
@@ -6615,4 +6614,8 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 .detail-airport p {
     margin-bottom: 1px;
     font-size: 12px;
+}
+
+.ccDate .form-group div {
+  float: left;
 }

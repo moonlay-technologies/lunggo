@@ -70,11 +70,11 @@ app.controller('paymentController', [
         // ************************ CreditCard and BIN Discount *****************************
         $scope.CreditCard = {
             // TwoClickToken: 'false',
+            Number: '',
             Name: '',
-            Month: '01',
-            Year: 2016,
-            Cvv: '',
-            Number: ''
+            Month: '',
+            Year: '',
+            Cvv: ''
         };
 
         //// bin == Bank Identification Number, untuk identifikasi dari bank mana
@@ -862,11 +862,9 @@ app.controller('paymentController', [
         }
 
         $scope.checkDate = function (month, year) {
-            // console.log(month,year)
-            if (month == '0' || month == 'Bulan' || year == 'Tahun') {
-                $scope.dateOver = true;
-                // console.log('a')
-                return false;
+            if (month == 0 || month == 'Bulan' || year == 'Tahun') {
+                $scope.dateOver = false;
+                return true;
             }
             
             var now = new Date();
@@ -874,16 +872,16 @@ app.controller('paymentController', [
             var yearNow = now.getFullYear();
 
             if (year > yearNow) {
+                $scope.dateOver = false;
                 return true;
             } else if (year == yearNow) {
-
                 if (month < monthNow + 1) {
                     $scope.dateOver = true;
                     return false;
                 } else {
+                    $scope.dateOver = false;
                     return true;
                 }
-
             } else {
                 $scope.dateOver = true;
                 return false;

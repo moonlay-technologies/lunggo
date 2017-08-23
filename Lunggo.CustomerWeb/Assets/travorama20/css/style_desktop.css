@@ -9447,7 +9447,6 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 
 .img-bank {
-    width: 110px;
     margin: 0 auto;
     padding: 10px;
     border-radius: 5px;
@@ -9465,4 +9464,7 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 
 
+.ccDate .form-group div {
+  float: left;
+}
 /*  */
