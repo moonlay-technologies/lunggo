@@ -12,7 +12,6 @@
 @using Lunggo.ApCommon.Product.Model
 
 @{
-    var SurchargeList = ViewBag.SurchargeList.Serialize();
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
     ViewBag.SiteHeader = "checkout";
@@ -37,7 +36,7 @@
 }
 @section PageJS{
     <script>
-        console.log(@SurchargeList);
+        var mdr = JSON.parse('@ViewBag.SurchargeList'.replace(/&quot;/g,'"'));
         var langCode = 'en';
         // development only start
         var paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
@@ -154,17 +153,7 @@
             heightStyle: "content",
             animate: accordionAnimationDuration
         });
-        
-        //// Animate DOM when opening / closing the accordion
-        $(".box-payment .ui-accordion-header").click( function(){
-            //// scroll
-            if( $(this).hasClass("ui-accordion-header-active") ) {
-                $('html, body').animate({
-                    //// banyaknya pixel yang di scroll (ditutupin)
-                    scrollTop: $(this).offset().top - $("header").height() - 8
-                }, 500);
-            }
-        });
+
         //// close all other accordion
         $(".box-payment").click( function(){
             $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);

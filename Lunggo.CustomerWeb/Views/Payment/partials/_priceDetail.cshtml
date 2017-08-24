@@ -28,19 +28,25 @@
         </p>
         <p ng-if="voucher.confirmedCode">
             <b>{{voucher.displayName}} :</b>
-            <span class="diskon">- Rp {{voucher.amount | number}}</span>
+            <span class="diskon">Rp -{{voucher.amount | number}}</span>
         </p>
         <p ng-if="binDiscount.available && !voucher.confirmedCode" style="color: #1daee4">
             <b>{{binDiscount.displayName}}</b>
-            <span class="diskon">- Rp {{binDiscount.amount | number}}</span>
+            <span class="diskon">Rp -{{binDiscount.amount | number}}</span>
         </p>
         <p ng-if="methodDiscount.available && !voucher.confirmedCode" style="color: #1daee4">
             <b>{{methodDiscount.displayName}}</b>
-            <span class="diskon">- Rp {{methodDiscount.amount | number}}</span>
+            <span class="diskon">Rp -{{methodDiscount.amount | number}}</span>
         </p>
         <p ng-if="CreditCardPromo.Valid">
             <b>{{CreditCardPromo.PromoName}}</b>
-            <span class="diskon">- Rp {{CreditCardPromo.Amount | number}}</span>
+            <span class="diskon">Rp -{{CreditCardPromo.Amount | number}}</span>
+        </p>
+        @* <p ng-if="getMdr()"> *@
+        <p>
+            <b>{{ getMdr() }} display name</b>
+            @* <b>{{mdr[paymentMethod].displayName}}</b> *@
+            <span>Rp {{(totalPrice - CreditCardPromo.Amount) * getMdr() | number:0}}</span>
         </p>
         <p><b>Kode Unik Pembayaran : </b><span>Rp {{UniqueCodePaymentConfig.UniqueCode}}</span></p>
         <div class="total-harga">

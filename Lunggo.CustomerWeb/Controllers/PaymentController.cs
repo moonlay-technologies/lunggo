@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Extension;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -37,6 +38,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     else
                         rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
 
+                    ViewBag.SurchargeList = JsonExtension.Serialize(PaymentService.GetInstance().GetSurchargeList());
                     return View(new PaymentData
                     {
                         RsvNo = rsvNo,
@@ -63,7 +65,6 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Payment")]
         public ActionResult PaymentPost(string rsvNo, string paymentUrl)
         {
-            ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList();
             var payment = PaymentService.GetInstance().GetPayment(rsvNo);
             var regId = GenerateId(rsvNo);
             if (payment.Method == PaymentMethod.BankTransfer ||
