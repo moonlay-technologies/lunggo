@@ -186,13 +186,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 RoundFinalAndLocalPrice(newItin);
                 itin = newItin;
             }
-            if (bookInfo.Test)
-            {
-                return new BookResult
-                {
-                    IsSuccess = response.IsSuccess
-                };
-            }
+            
             if (response.IsSuccess)
             {
                 bookResult.IsSuccess = true;
@@ -217,9 +211,12 @@ namespace Lunggo.ApCommon.Flight.Service
                 IsPriceChanged = response.IsPriceChanged,
                 NewPrice = response.NewPrice
             };
+
+            if (bookInfo.Test)
+                return bookResult;
+
+            //Check Deposit
             bookResult.Deposit = response.Deposit.GetValueOrDefault();
-            //TODO Check Deposit Here
-            //Send Email with data
             
             if (bookResult.Deposit > 0 && bookResult.Deposit < 3000000)
             {
@@ -233,6 +230,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
+
             var result = supplier.BookFlight(bookInfo);
             if (bookInfo.Test)
                 return result;

@@ -350,7 +350,7 @@
                                 @{
                                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                                 }
-                                @if (env != "production" || (Model.Reservation is HotelReservationForDisplay && todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27))
+                                @if (env != "production" || (todayDate.Year == 2017 && todayDate.Month >= 3 && todayDate.Month <= 8 && todayDate.Day >= 25 && todayDate.Day <= 27))
                                 {
                                     <label ng-click=" bindiscount.reset('ncc'); methodDiscount.check();  methodDiscount.reset('VA')" id="selectVA">
                                         <header>

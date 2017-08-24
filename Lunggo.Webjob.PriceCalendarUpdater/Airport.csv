@@ -1888,7 +1888,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 1887|DPK|Deer Park|DPK|Deer Park|US|United States|99
 1888|DPL|Dipolog|DPL|Dipolog|PH|Philippines|8
 1889|DPO|Devonport|DPO|Devonport|AU|Australia|10
-1890|DPS|Ngurah Rai Intl.|DPS|Denpasar (Bali)|ID|Indonesia|8
+1890|DPS|Ngurah Rai Intl.|DPS|Denpasar / Bali|ID|Indonesia|8
 1891|DPU|Dumpu|DPU|Dumpu|PG|Papua New Guinea|99
 1892|DQA|Daqing Saertu|DQA|Daqing|CN|China|99
 1893|DRA|Desert Rock|DRA|Mercury|US|United States|99
@@ -5287,7 +5287,7 @@ AirportId|AirportCode|AirportName|CityCode|CityName|CountryCode|CountryName|Time
 5287|NGC|North Rim|NGC|Grand Canyon|US|United States|99
 5288|NGD|Anegada|NGD|Anegada|VG|Virgin Islands|99
 5289|NGE|Ngaoundere|NGE|Ngaoundere|CM|Cameroon|1
-5290|NGI|Zürich-Klote|NGI|Ngau Island|FJ|Fiji|12
+5290|NGI|Z?rich-Klote|NGI|Ngau Island|FJ|Fiji|12
 5291|NGL|Ngala Airfield|NGL|Ngala|ZA|South Africa|99
 5292|NGM|Agana NAS|NGM|Agana|GU|Guam|99
 5293|NGN|Nargana|NGN|Nargana|PA|Panama|99

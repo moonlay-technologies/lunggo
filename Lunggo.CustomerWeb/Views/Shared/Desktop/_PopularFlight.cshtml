@@ -23,7 +23,7 @@
     }
     else
     {
-        dpsUrl = "/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS/JKTDPS";
+        dpsUrl = "/id/tiket-pesawat/cari/Jakarta-Denpasar-JKT-DPS";
     }
 
     if (jakarta.CheapestPrice > 0)
@@ -33,17 +33,17 @@
     }
     else
     {
-        jktUrl = "/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT/DPSJKT";
+        jktUrl = "/id/tiket-pesawat/cari/Denpasar-Jakarta-DPS-JKT";
     }
 
     if (medan.CheapestPrice > 0)
     {
-        var splittedDate = denpasar.CheapestDate.Split('/');
+        var splittedDate = medan.CheapestDate.Split('/');
         knoUrl = "/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO" + splittedDate[2] + splittedDate[1] + splittedDate[0].Substring(2, 2) + "-100y";
     }
     else
     {
-        knoUrl = "/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO/JKTKNO";
+        knoUrl = "/id/tiket-pesawat/cari/Jakarta-Medan-JKT-KNO";
     }
 
     if (surabaya.CheapestPrice > 0)
@@ -53,7 +53,7 @@
     }
     else
     {
-       subUrl = "/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB/JKTSUB";
+       subUrl = "/id/tiket-pesawat/cari/Jakarta-Surabaya-JKT-SUB";
     }
 
     if (yogya.CheapestPrice > 0)
@@ -63,7 +63,7 @@
     }
     else
     {
-        jogUrl = "/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG/JKTJOG";
+        jogUrl = "/id/tiket-pesawat/cari/Jakarta-Yogyakarta-JKT-JOG";
     }
 }
 <div class="popular-flight">

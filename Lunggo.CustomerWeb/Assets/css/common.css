@@ -1,0 +1,18 @@
+/*
+ * common CSS for desktop and mobile
+ *
+ */
+
+.img-partner {
+  text-align: center;
+}
+
+.partner {
+  background: #eef0f3;
+}
+
+.partner-hotel {
+  background: url(/Assets/images/hotel/logo/sprite-partner-hotel.png) no-repeat;
+  display: inline-block;
+  margin: 5px;
+}

@@ -1,6 +1,6 @@
 ﻿app.controller('hotelMapController', [
-    '$scope', '$log', '$window', '$http', '$resource', '$timeout', '$interval', 'hotelSearchSvc',
-    function ($scope, $log, $window, $http, $resource, $timeout, $interval, hotelSearchSvc) {
+    '$scope', '$log', '$window', '$http', '$timeout', '$interval', 'hotelSearchSvc',
+    function ($scope, $log, $window, $http, $timeout, $interval, hotelSearchSvc) {
 
         $scope.model = {};
         $scope.hotels = [];

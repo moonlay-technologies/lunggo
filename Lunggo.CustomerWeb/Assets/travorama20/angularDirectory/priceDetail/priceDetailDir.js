@@ -9,7 +9,7 @@ angular.module('travorama')
                 templateUrl: "/Assets/travorama20/angularDirectory/priceDetail/priceDetailTemplate.html",
                 controller: [
                     '$scope', function($scope) {
-                        console.log('masup dir controller');
+                        // console.log('masup dir controller');
                     }
                 ]
             };

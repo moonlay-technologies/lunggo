@@ -1,75 +1,97 @@
 ﻿<section class="site-footer-menu">
-
     <div class="container">
         <div class="row web-banner">
-            <div class="col-xs-3 menu-left">
-                <a href="/id/StaticPage/TravoramaMobileApp"></a>
-            </div>
-            <div class="col-xs-9 menu-right">
-                <div class="text-lg-banner">
-                    <a href="/id/StaticPage/TravoramaMobileApp">Booking Tiket Mudah & Cepat</a>
-                </div>
-                <div class="text-sm-banner">
-                    Rasakan kemudahan booking tiket di HP Anda dengan mendownload <b>GRATIS Travorama Mobile App</b>
-                </div>
-                <div class="banner-button">
-                    <a href="https://play.google.com/store/apps/details?id=com.travorama&hl=en" class="button btn-playstore"></a>
-                    <a href="https://appsto.re/id/N8Dgeb.i" class="button btn-appstore"></a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3 menu-left">
-                <img src="/Assets/images/travorama-logo.png" alt="Travorama" class="footer-logo" />
-                @*<a href="#" class="googlePlay"><img src="/Assets/images/googlePlay.png" /></a>
-                <a href="#" class="appStore"><img src="/Assets/images/appStore.png" /></a>*@
-            </div>
-            <div class="col-xs-9 menu-right">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="call-center">
-                            <h3>Customer Service</h3>
-                            <img src="/Assets/images/cs-icon.png" alt="Travorama Customer Service" />
-                            <h3>0855-7467-9737</h3>
-                            <h4><a href="mailto:cs@travorama.com">cs@travorama.com</a></h4>
-                            <h6>Senin - Jumat: 09:00 - 18:00</h6>
-                        </div>
-                    </div>
-                    @*<div class="col-xs-4">
-                        <div class="call-center">
-                            <img src="/Assets/images/phone-icon.png" alt="Travorama Call Center" />
-                            <p>Call Center:</p>
-                            <h2>1500 650</h2>
-                        </div>
-                    </div>*@
-                    <div class="col-xs-2">
-                        <div class="asita">
-                            <img src="/Assets/images/asita-logo.png" alt="ASITA" />
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="verisign"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4 menu-flight">
-                <p class="list-title">Tiket Pesawat Populer</p>
+            <div class="col-xs-3 menu-about">
+                <p class="list-title">Tentang Travorama</p>
                 <ul>
-                    <li><a href="/id/tiket-pesawat/cari/Surabaya-Bandung-SUB-BDO">Tiket Pesawat Surabaya-Bandung</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Makassar-JKT-MLG">Tiket Pesawat Jakarta-Makassar</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Malang-JKT-MLG">Tiket Pesawat Jakarta-Malang</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Lombok-JKT-LOP">Tiket Pesawat Jakarta-Lombok</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Semarang-JKT-SRG">Tiket Pesawat Jakarta-Semarang</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Palembang-JKT-PLM">Tiket Pesawat Jakarta-Palembang</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Balikpapan-JKT-BPN">Tiket Pesawat Jakarta-Balikpapan</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Kuala-Lumpur-JKT-KUL">Tiket Pesawat Jakarta-Kuala Lumpur</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Singapore-JKT-SIN">Tiket Pesawat Jakarta-Singapura</a></li>
-                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Hong-Kong-JKT-HKG">Tiket Pesawat Jakarta-Hong Kong</a></li>
+                    <li><a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a></li>
+                    <li><a href="@Url.Action("#","StaticPage")">About Us</a></li>
+                    <li><a href="@Url.Action("Contact","StaticPage")">Contact Us</a></li>
+                    <li><a href="@Url.Action("Question","StaticPage")">FAQs - Reward Point</a></li>
+                    <li><a href="http://travelmadezy.com" target="_blank">Karir</a></li>
                 </ul>
             </div>
-            <div class="col-xs-3 menu-hotel">
+            <div class="col-xs-3 menu-other">
+                <p class="list-title">Lainnya</p>
+                <ul>
+                    <li><a href="@Url.Action("Privacy","StaticPage")">Kebijakan Privasi</a></li>
+                    <li><a href="@Url.Action("#","StaticPage")">Daftarkan Activity Anda</a></li>
+                    <li><a href="@Url.Action("Terms","StaticPage")">Terms &amp; Condition</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-3">
+                <div class="center-call">
+                    <p class="list-title">Customer Service</p>
+                    <img src="/Assets/images/cs-icon.png" alt="Customer Service" />
+                    <h4>0855-7467-9737</h4>
+                    <h5><a href="mailto:cs@travorama.com">cs@travorama.com</a></h5>
+                    <h6>Senin - Jumat: 09:00 - 18:00</h6>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="sosmed-desktop">
+                    <p class="list-title">Follow Us On</p>
+                    <div class="social-link-desktop">
+                        <a href="https://www.facebook.com/travorama" target="_blank"><img src="/Assets/images/social-facebook.png" alt="facebook.com/travorama" /></a>
+                        <a href="https://twitter.com/travoramaid" target="_blank"><img src="/Assets/images/social-twitter.png" alt="twitter.com/travoramaid" /></a>
+                        <a href="https://instagram.com/travorama" target="_blank" ><img src="/Assets/images/social-instagram.png" alt="instagram.com/travorama" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="footer-middle clearfix">
+                <div class="col-xs-8">
+                    <div class="logo-footer">
+                        <img src="/Assets/images/asita.png" alt="ASITA">
+                    <!--
+                        <img src="/Assets/images/iata.png" alt="IATA">
+                        <img src="/Assets/images/kai.png" alt="KAI">
+                        <img src="/Assets/images/tripadvisor.png" alt="TRIPADVISOR"><br/>
+                    -->
+                        <div class="payment-banner">
+                            <p>Kami Menerima Pembayaran dari</p>
+                            <img src="/Assets/images/payment.jpg" alt="Visa Mastercard PermataBank virtual account">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="mail-subscribe">
+                        <img src="/Assets/images/subscribe-desktop.png" alt="yuk subscribe!">
+                        <div class="form-subscribe-desktop">
+                            <form class="subscribe-form">
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-desktop-subscribe subscribe-email" placeholder="Masukkan Email Anda">
+                                </div>
+                                <input type="submit" class="btn-subscribe-desktop" value="Subscribe">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 menu-flight">
+                <p class="list-title">Tiket Pesawat Populer</p>
+                <ul>
+                    <li><a href="/id/tiket-pesawat/cari/Surabaya-Bandung-SUB-BDO">Tiket murah Jakarta-Bali</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Makassar-JKT-MLG">Tiket murah Jakarta-Surabaya</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Singapore-JKT-SIN">Tiket murah Jakarta-Singapura</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Malang-JKT-MLG">Tiket murah Jakarta-Malang</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Singapore-JKT-SIN">Tiket murah Jakarta-Yogyakarta</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-3 menu-flight">
+                <p class="list-title">&nbsp;</p>
+                <ul>
+                    <li><a href="/id/tiket-pesawat/cari/Surabaya-Bandung-SUB-BDO">Tiket murah Jakarta-Bali</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Makassar-JKT-MLG">Tiket murah Jakarta-Surabaya</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Singapore-JKT-SIN">Tiket murah Jakarta-Singapura</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Malang-JKT-MLG">Tiket murah Jakarta-Malang</a></li>
+                    <li><a href="/id/tiket-pesawat/cari/Jakarta-Singapore-JKT-SIN">Tiket murah Jakarta-Yogyakarta</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-2 menu-hotel">
                 <p class="list-title">Hotel Populer</p>
                 <ul>
                     <li><a href="/id/hotel/cari/Indonesia/Solo">Hotel di Solo</a></li>
@@ -77,31 +99,31 @@
                     <li><a href="/id/hotel/cari/Indonesia/Bogor">Hotel di Bogor</a></li>
                     <li><a href="/id/hotel/cari/Indonesia/Medan">Hotel di Medan</a></li>
                     <li><a href="/id/hotel/cari/Indonesia/Palembang">Hotel di Palembang</a></li>
-                    <li><a href="/id/hotel/cari/Indonesia/Lombok">Hotel di Lombok</a></li>
-                    <li><a href="/id/hotel/cari/Malaysia/Kuala-Lumpur">Hotel di Kuala Lumpur</a></li>
-                    <li><a href="/id/hotel/cari/Hong-Kong/Hong-Kong">Hotel di Hong Kong</a></li>
-                    <li><a href="/id/hotel/cari/Thailand/Bangkok">Hotel di Bangkok</a></li>
-                    <li><a href="/id/hotel/cari/Singapura/Singapore">Hotel di Singapura</a></li>
                 </ul>
             </div>
-            <div class="col-xs-2 menu-about">
-                <p class="list-title">Tentang Travorama</p>
+            <div class="col-xs-2 menu-hotel">
+                <p class="list-title">&nbsp;</p>
                 <ul>
-                    <li><a href="@Url.Action("HowToOrder","StaticPage")">Cara Pesan</a></li>
-                    <li><a href="@Url.Action("HowToPay","StaticPage")">Cara Bayar</a></li>
-                    <li><a href="http://travelmadezy.com" target="_blank">Karir</a></li>
-                    <li><a href="@Url.Action("Contact","StaticPage")">Kontak Kami</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Solo">Hotel di Solo</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Malang">Hotel di Malang</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Bogor">Hotel di Bogor</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Medan">Hotel di Medan</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Palembang">Hotel di Palembang</a></li>
                 </ul>
             </div>
-            <div class="col-xs-3 menu-other">
-                <p class="list-title">Lainnya</p>
+            <div class="col-xs-2 menu-hotel">
+                <p class="list-title">&nbsp;</p>
                 <ul>
-                    <li><a href="@Url.Action("Terms","StaticPage")">Syarat &amp; Ketentuan</a></li>
-                    <li><a href="@Url.Action("Privacy","StaticPage")">Kebijakan Privasi</a></li>
-                    <li><a href="@Url.Action("Question","StaticPage")">FAQs</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Solo">Hotel di Solo</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Malang">Hotel di Malang</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Bogor">Hotel di Bogor</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Medan">Hotel di Medan</a></li>
+                    <li><a href="/id/hotel/cari/Indonesia/Palembang">Hotel di Palembang</a></li>
                 </ul>
             </div>
         </div>
+        <div class="copyright">
+            <p>Copyright &copy; @DateTime.Now.Year Travel Madezy Internasional. All Rights Reserved.</p>
+        </div>
     </div>
-
-</section><!-- .site-footer-menu -->
+</section>@* .site-footer-menu *@

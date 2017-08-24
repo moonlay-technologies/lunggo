@@ -1,7 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     @if (ViewBag.SiteHeader == "header-contact" || ViewBag.SiteHeader == "header-faq" || ViewBag.SiteHeader == "header-how-to")
@@ -20,48 +19,41 @@
     <title>@ViewBag.Title | Travorama : Promo tiket pesawat dan hotel murah</title>
 
     <!-- stylesheets -->
-    @*<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>*@
+    
+    @* <!-- sementara pake bootstrap di Assets karena ada bbrp code di custom di file bootstrap.min.css  -->*@
     <link href="/Assets/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    
+    	@*
+    <!-- <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" /> -->
+		*@
 
     @if (IsSectionDefined("AdditionalCSS"))
     {
         @RenderSection("AdditionalCSS");
     }
 
-    @section AdditionalCSS{
-        <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
-    }
-    <script src="/Assets/js/angular.min.js"></script>
-    <script src="/Assets/js/angular-route.min.js"></script>
-    <script src="/Assets/js/angular-animate.min.js"></script>
-    <script src="/Assets/js/moment.min.js"></script>
-    <script src="/Assets/js/moment-with-locales.min.js"></script>
-    <script src="/Assets/js/xml2json.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-resource.js"></script>
-    @section AdditionalJS{
-        <!-- additional Angular JS-->
-        <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
-        <script src="/Assets/js/js.cookie.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    }
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-resource.js"></script>
 
-    @section PageJS{
-        <script>
-            newsletterFormFunctions();
-        </script>
-    }
     @if (ViewBag.SiteHeader != "header-contact" && ViewBag.SiteHeader != "header-faq" && ViewBag.SiteHeader != "header-how-to" && ViewBag.SiteHeader != "header-global-error" && ViewBag.SiteHeader != "header-email")
     {
+        <link rel="stylesheet" href="/Assets/css/common.css">
         <link rel="stylesheet" href="/Assets/travorama20/css/style_desktop.css">
-    <!-- Start of Travel Madezy Zendesk Widget script -->
+        <!-- Start of Travel Madezy Zendesk Widget script -->
         <!-- Start of travorama Zendesk Widget script -->
-    <script>
-/*<![CDATA[*/window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (e) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { var e = this.createElement("script"); n && (this.domain = n), e.id = "js-iframe-async", e.src = "https://assets.zendesk.com/embeddable_framework/main.js", this.t = +new Date, this.zendeskHost = "travorama.zendesk.com", this.zEQueue = a, this.body.appendChild(e) }, o.write('<body onload="document._l();">'), o.close() }();
-        /*]]>*/</script>
-    <!-- End of travorama Zendesk Widget script -->
-    <!-- End of Travel Madezy Zendesk Widget script -->
-    <!-- Facebook Pixel Code -->
-        @*<script>
+        <script>
+        /*<![CDATA[*/
+        window.zEmbed || function (e, t) { var n, o, d, i, s, a = [], r = document.createElement("iframe"); window.zEmbed = function () { a.push(arguments) }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document; try { o = s } catch (e) { n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s } o.open()._l = function () { var e = this.createElement("script"); n && (this.domain = n), e.id = "js-iframe-async", e.src = "https://assets.zendesk.com/embeddable_framework/main.js", this.t = +new Date, this.zendeskHost = "travorama.zendesk.com", this.zEQueue = a, this.body.appendChild(e) }, o.write('<body onload="document._l();">'), o.close() }();
+        /*]]>*/
+        </script>
+        <!-- End of travorama Zendesk Widget script -->
+        <!-- End of Travel Madezy Zendesk Widget script -->
+
+        @*
+        <!-- Facebook Pixel Code -->
+        <script>
             !function (f, b, e, v, n, t, s) {
                 if (f.fbq) return;
                 n = f.fbq = function () {
@@ -88,9 +80,8 @@
             <img height="1" width="1" style="display: none"
                  src="https://www.facebook.com/tr?id=1500705246891176&ev=PageView&noscript=1" />
         </noscript>
-    <!-- End Facebook Pixel Code -->*@
+        <!-- End Facebook Pixel Code -->*@
     }
-
 </head>
 <body class="@ViewBag.BodyClass" @(ViewBag.AngularController != null ? "ng-app=travorama ng-controller=" + ViewBag.AngularController + " ng-class={'no-scroll':PageConfig.BodyNoScroll,'burger-shown':PageConfig.BurgerShown}" : "ng-app=travorama") ng-cloak>
     @Html.Partial("/Views/Shared/_googleTag.cshtml")
@@ -115,28 +106,31 @@
     {
         <div class="footer-main-container">
             @Html.Partial("/Views/Shared/Desktop/_SiteFooterMenu.cshtml")
-            @Html.Partial("/Views/Shared/Desktop/_SiteFooter.cshtml")
         </div>
     }
     @*</section>*@
 
     <!--********************-->
     <!-- Javascripts -->
-    <script src="/Assets/js/jquery.min.js"></script>
-    <script src="/Assets/js/bootstrap.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="/Config/JsConfig.js"></script>
+    <script src="/Assets/js/moment.min.js"></script>
+    <script src="/Assets/js/moment-with-locales.min.js"></script>
+    <script src="/Assets/js/xml2json.min.js"></script>
+
+    <script src="/Assets/travorama20/js/services/dateTimeService.js"></script>
+    <script src="/Assets/travorama20/js/travorama20.js"></script>
+    <script src="/Assets/travorama20/js/app.config.js"></script>
+    <script src="/Assets/travorama20/js/accountController.js"></script>
+    <!-- <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script> -->
+    <script src="/Assets/js/js.cookie.js"></script>
 
     @if (IsSectionDefined("AdditionalJS"))
     {
         @RenderSection("AdditionalJS");
     }
-
-    <script src="/Assets/travorama20/js/travorama20.js"></script>
-    <script src="/Assets/travorama20/js/app.config.js"></script>
-
-    <script src="/Assets/travorama20/js/accountController.js"></script>
-
 
     @if (IsSectionDefined("PageJS"))
     {
@@ -157,6 +151,5 @@
             }
         });
     </script>
-
 </body>
 </html>

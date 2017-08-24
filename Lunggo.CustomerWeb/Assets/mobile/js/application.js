@@ -1,8 +1,10 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
 
-    var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+    // var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+    var app = angular.module('travoramaMobile', ['ngResource']);
 
+    
     // root scope
     app.run(function ($rootScope, $log) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
@@ -530,7 +532,7 @@ if (typeof (angular) == 'object') {
                                     $('.autocomplete-result').hide();
                                     $('.autocomplete-no-result').show();
                                 }
-                            }).error(function () {
+                            }).fail(function () {
                                 trial++;
                                 if (refreshAuthAccess() && trial < 4) $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
                             });
@@ -697,11 +699,11 @@ if (typeof (angular) == 'object') {
                 );
             }
         }
+
         // Cookies
         $rootScope.getCookies = function() {
-            $(document).ready(function () {
-
-                $.getScript("js.cookie.js", function () { });
+            $.getScript("/Assets/js/js.cookie.js", function () {
+                $rootScope.$apply(function() {
                 if (Cookies.get('origin')) {
                     $rootScope.FlightSearchForm.AirportOrigin.Code = Cookies.get('origin');
                 } else {
@@ -735,13 +737,17 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date();
                 }
 
-                if (Cookies.get('return')) {
-                    if (new Date(Cookies.get('return')) < new Date())
-                        $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                var defaultReturnDaySpan = 3;   // set default return date to 3 days from today
+                var returnDate = moment().locale("id").add(defaultReturnDaySpan, 'days').format("ddd, DD MMM YYYY");
+                var returnCookie = Cookies.get('return');
+                if (returnCookie) {
+                    if (new Date(returnCookie) < new Date()){
+                        $rootScope.FlightSearchForm.ReturnDate = returnDate;
+                    }
                     else
-                    $rootScope.FlightSearchForm.ReturnDate = new Date(Cookies.get('return'));
+                        $rootScope.FlightSearchForm.ReturnDate = new Date(returnCookie);
                 } else {
-                    $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                    $rootScope.FlightSearchForm.ReturnDate = returnDate;
                 }
 
                 if (Cookies.get('type')) {
@@ -777,9 +783,11 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.Cabin = Cookies.get('cabin');
                 } else {
                     $rootScope.FlightSearchForm.Cabin = 'y';
-        }
+                }
+                });
             });
         }
+        $rootScope.getCookies();
 
         function setCookies() {
             Cookies.set('origin', $rootScope.FlightSearchForm.AirportOrigin.Code, { expires: 9999 });
@@ -865,7 +873,7 @@ if (typeof (angular) == 'object') {
                         }
                     }
                 }
-            }).error(function (returnData) {});
+            }).fail(function (returnData) {});
         }
         
         function  highlight(date) {
@@ -1168,4 +1176,17 @@ function accordionFunctions() {
 
 jQuery(document).ready(function($) {
     $('.ui-slider-handle').draggable();
-})
+
+
+    //// dismiss sticky banner
+    $(".sticky-banner").click( function() {
+        $(".sticky-banner").slideUp();
+    });
+
+    $(document).ready( function() {
+        //// show sticky banner after 2000ms
+        setTimeout( function(){
+            $(".sticky-banner").slideDown();
+        }, 2000);
+    });
+});

@@ -36,7 +36,7 @@ namespace Lunggo.CustomerWeb
             //InitLogger();
             InitFlightService();
             InitPaymentService();
-            //InitBrowserDetectionService();
+            InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
             InitHtmlTemplateService();
@@ -155,7 +155,7 @@ namespace Lunggo.CustomerWeb
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
             {
                 ContextCondition = context =>
-                                context.Request.Url.Host == mobileUrl
+                                context.Request.Url.Host == mobileUrl || context.Request.Url.Host == "192.168.0.139"
             });
             DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
         }

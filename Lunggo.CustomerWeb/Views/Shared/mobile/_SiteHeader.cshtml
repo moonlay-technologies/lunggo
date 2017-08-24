@@ -1,4 +1,5 @@
 ﻿@using Lunggo.ApCommon.Identity.Users
+@using Lunggo.ApCommon.Product.Constant
 
 @section PageJS{
     <!-- angular controller -->
@@ -12,29 +13,29 @@
 <header class="site-header" ng-controller="siteHeaderController">
 
     <div class="header-display">
+    @*
+
+        TODO : benerin cara nampilin icon, jgn kyk gini!
+    
+    *@
+    @if (ViewBag.Platform == PlatformType.IosApp){
+        <a ng-click="window.history.back()" class="site-menu" style="background: url(/Assets/images/buttons/back-btn.png) no-repeat;"></a>
+    } else {
         <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
+    }
         <a href="/">
             <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
         </a>
 
-        @if (ViewBag.CurrentPage == "home")
-        {
-            <a class="promo" href="/id/StaticPage/Promo">
-                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 31))
-                {
-                    <span class="number-promo">2</span>
-                }
-                else if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
-                {
-                    <span class="number-promo">1</span>
-                }
-                else
-                {
-                    <span class="number-promo"></span>
-                }
-            </a>
+@*
+    @if (ViewBag.CurrentPage == "home") {}
+        <!-- TODO: ganti jadi tombol "more" (...) -->
+        <a class="promo" href="/id/StaticPage/Promo">
+            <span class="number-promo">2</span>
+        </a> 
+*@
 
-        }
+
         @if (ViewBag.FlightSwap == "true")
         {
             <a class="flight-swap" ng-click="FlightFunctions.SwapFlight()"></a>
@@ -45,15 +46,15 @@
     <div class="burger-content" ng-class="{'active' : PageConfig.BurgerShown}">
         <div class="burger-content__header">
             @*<ul>
-                    <li class="site-logo">
-                        <a href="#">
-
-                        </a>
-                    </li>
-                    @*<li class="currency">
-                        <a href="#">IDR</a>
-                    </li>
-                </ul>*@
+                <li class="site-logo">
+                    <a href="#">
+                        
+                    </a>
+                </li>
+                @*<li class="currency">
+                    <a href="#">IDR</a>
+                </li>
+            </ul>*@
             <img src="/Assets/images/travorama-logo.png" alt="Alternate Text" style="width:40%;padding-top: 10px; margin-left: 13%" />
             <a class="burger-content__close" ng-click="PageConfig.ToggleBurger()">X</a>
         </div><!-- .border-content-header -->
@@ -73,7 +74,7 @@
                     <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
                         <a href="/id/Account/Logout">Keluar</a>
                     </li>
-
+                   
                 </section>
 
                 <section ng-if="!isLogin">

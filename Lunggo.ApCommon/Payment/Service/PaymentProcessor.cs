@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
+using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Database;
@@ -275,6 +276,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount || method == PaymentMethod.MandiriClickPay || method == PaymentMethod.CimbClicks || method == PaymentMethod.MandiriBillPayment)
             {
+                
                 var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, method);
                 if (method == PaymentMethod.VirtualAccount)
                 {
@@ -337,7 +339,17 @@ namespace Lunggo.ApCommon.Payment.Service
 
         private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, PaymentMethod method)
         {
-            var paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, method);
+            var paymentResponse = new PaymentDetails();
+            if (method == PaymentMethod.VirtualAccount)
+            {
+                var niceWrapper = new NicepayWrapper();
+                paymentResponse = niceWrapper.ProcessPayment(payment, transactionDetails, method);
+            }
+            else
+            {
+                paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, method);
+            }
+            
             return paymentResponse;
         }
 

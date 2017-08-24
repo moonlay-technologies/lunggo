@@ -338,6 +338,7 @@
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\NicepayNotificationLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\PayLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetUniqueCodeLogic.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiRequest.cs" />

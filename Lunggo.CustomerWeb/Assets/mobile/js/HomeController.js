@@ -1,6 +1,4 @@
-﻿// home controller
-// home controller
-app.controller('homeController', ['$scope', '$log', '$http', '$location', '$resource', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $resource, $timeout, hotelSearchSvc) {
+﻿app.controller('homeController', ['$scope', '$log', '$http', '$location', '$timeout', 'hotelSearchSvc', function ($scope, $log, $http, $location, $timeout, hotelSearchSvc) {
     $(document).ready(function () {
         if (Cookies.get('hotelLocationDisplay')) {
             $scope.hotelSearch.locationDisplay = Cookies.get('hotelLocationDisplay');
@@ -83,7 +81,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             $scope.hotelSearch.roomCount = 1;
         }
         var x = Cookies.getJSON('hotelSearchOccupancies');
-        console.log(x);
         if (Cookies.getJSON('hotelSearchOccupancies')) {
             $scope.hotelSearch.occupancies = Cookies.getJSON('hotelSearchOccupancies');
         } else {
@@ -96,8 +93,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
                 });
             }
         }
-
-
     });
     // ================= FLIGHT ========================
 
@@ -194,7 +189,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
             PopularDestinations: hotelSearchSvc.PopularDestinations
         },
     }
-
+    
     $('.form-hotel-location').click(function () {
         $(this).select();
     });
@@ -221,32 +216,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //=============== hotel end ======================
     //=============== Price Calendar, populate cheapest price for destinations ======================
 
-    //$scope.returnMonth = function (val) {
-    //    if (val == '0')
-    //        return "Januari";
-    //    else if (val == '1')
-    //        return "Februari";
-    //    else if (val == '2')
-    //        return "Maret";
-    //    else if (val == '3')
-    //        return "April";
-    //    else if (val == '4')
-    //        return "Mei";
-    //    else if (val == '5')
-    //        return "Juni";
-    //    else if (val == '6')
-    //        return "Juli";
-    //    else if (val == '7')
-    //        return "Agustus";
-    //    else if (val == '8')
-    //        return "September";
-    //    else if (val == '9')
-    //        return "Oktober";
-    //    else if (val == '10')
-    //        return "November";
-    //    else if (val == '11')
-    //        return "Desember";
-    //}
     //var todayDate = new Date();
     //var bulan = todayDate.getMonth();
     //var tahun = parseInt(todayDate.getFullYear());
@@ -306,7 +275,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //    origin: Cookies.get('origin') ? Cookies.get('origin') : 'JKT',
     //    destination: Cookies.get('destination') ? Cookies.get('destination') : 'DPS',
     //    originCity: Cookies.get('originCity') ? Cookies.get('originCity') : 'Jakarta',
-    //    destinationCity: Cookies.get('destinationCity') ? Cookies.get('destinationCity') : 'Denpasar (Bali)',
+    //    destinationCity: Cookies.get('destinationCity') ? Cookies.get('destinationCity') : 'Denpasar / Bali',
     //    month: bulan,
     //    year: tahun,
     //}
@@ -739,7 +708,6 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
     //        }
     //    }
     //    hideLocation();
-    //    console.log("BERHASIL");
     //});
 
     //// flight recommendation
@@ -933,7 +901,15 @@ jQuery(document).ready(function ($) {
     $('.carousel-inner').slick({
         autoplay: true,
         autoplaySpeed: 2800,
-        dots: true,
+        dots: false,
+        prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
+        nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
+    });
+
+    $('.carousel-inner-mobile').slick({
+        autoplay: false,
+        autoplaySpeed: 2800,
+        dots: false,
         prevArrow: '<button type="button" class="slick-prev hidden">Back</button>',
         nextArrow: '<button type="button" class="slick-next hidden">Next</button>'
     });

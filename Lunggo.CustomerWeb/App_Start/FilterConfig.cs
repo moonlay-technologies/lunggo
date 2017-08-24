@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Lunggo.CustomerWeb.Attributes;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
+using Lunggo.ApCommon.Identity.Auth;
 
 namespace Lunggo.CustomerWeb
 {
@@ -16,7 +17,20 @@ namespace Lunggo.CustomerWeb
             filters.Add(new LanguageFilterAttribute());
             //filters.Add(new DeviceDetectionFilterAttribute());
             AddBasicAuthenticationFilterAttribute(filters);
-                GlobalFilters.Filters.Add(new RequireHttpsProductionAttribute());
+            GlobalFilters.Filters.Add(new RequireHttpsProductionAttribute());
+            GlobalFilters.Filters.Add(new PlatformFilter());
+        }
+
+        public class PlatformFilter : ActionFilterAttribute
+        {
+            public override void OnResultExecuting(ResultExecutingContext filterContext)
+            {
+                var clientId = filterContext.HttpContext.Request.Headers["X-Client-ID"];
+                var clientSecret = filterContext.HttpContext.Request.Headers["X-Client-Secret"];
+                filterContext.Controller.ViewBag.Platform = Client.GetPlatformType(clientId);
+                filterContext.Controller.ViewBag.ClientId = clientId;
+                filterContext.Controller.ViewBag.ClientSecret = clientSecret;
+            }
         }
 
         private static HandleErrorAttribute CreateGlobalErrorHandler()

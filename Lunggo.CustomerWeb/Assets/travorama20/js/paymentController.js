@@ -22,6 +22,7 @@ app.controller('paymentController', [
         $scope.paymentMethod = ''; 
         $scope.trips = trips;
         $scope.submethod = '';
+        $scope.bankName = '';
         $scope.stepClass = '';
         $scope.redirectionUrl = redirectionUrl;
         $scope.expired = false;
@@ -526,8 +527,9 @@ app.controller('paymentController', [
         // ********************************** END *********************************************
 
         // ****************************** SELECT BANK *****************************************
-        $scope.selectBank = function(bank) {
-            $scope.submethod = bank;
+        $scope.selectBank = function(submethod, bank) {
+            $scope.submethod = submethod;
+            $scope.bankName = bank;
         }
 
         // ********************************** END *********************************************
@@ -708,7 +710,7 @@ app.controller('paymentController', [
                             $scope.PaymentData = '"method":"4","cimbClicks":' + '{' + ' "description":"Pembayaran melalui CimbClicks"' + '}';
                             break;
                         case "VirtualAccount":
-                            $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"permata"' + '},' + '"submethod" : "3"';
+                            $scope.PaymentData = '"method":"5","virtualAccount":' + '{' + ' "bank":"'+$scope.bankName+'"' + '},' + '"submethod" : "'+$scope.submethod+'"';
                             $scope.pay.virtualAccount = true;
                             break;
                         case "MandiriBillPayment":

@@ -259,7 +259,8 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler7\sriwijaya.properties" />
     <None Include="Config\WebJob-FlightSearch.FlightCrawler7\tiket.properties" />
     <None Include="Config\WebJob.BankTransferChecking\tiket.properties" />
-    <None Include="Config\WebJob.BookingAutomation\api.properties" />
+    <None Include="Config\WebAPI\api.properties" />
+	<None Include="Config\WebJob.BookingAutomation\api.properties" />
     <None Include="Config\WebJob.BookingAutomation\azureStorage.properties" />
     <None Include="Config\WebJob.BookingAutomation\general.properties" />
     <None Include="Config\WebAPI\deathbycaptcha.properties">

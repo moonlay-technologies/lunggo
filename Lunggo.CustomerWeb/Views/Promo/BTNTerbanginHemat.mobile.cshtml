@@ -7,66 +7,149 @@
 
 @section AdditionalCSS {
     <link href="/Assets/css/promo.css" rel="stylesheet" />
-}
-
-@section AdditionalJS {
-    <script src="/Assets/js/bootstrap.js"></script>
-}
-
-@section PageJS{
-    <!-- angular controller -->
-    <script src="/Assets/travorama20/js/PromoController.js"></script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
 }
 
 <div class="promo-btn">
     <div class="mini-banner">
-        <a href="/"><img class="img-promo" src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
+        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrc" alt="@ViewBag.ImageAlt" /></a>
     </div>
-    <div class="tab-promo">
-        <ul class="nav nav-tabs tab-detail">
-            <li class="col-xs-6 active">
-                <a data-toggle="tab" href="#tnc-promo">Syarat & Ketentuan</a>
-            </li>
-            <li class="col-xs-6">
-                <a data-toggle="tab" href="#how-to">Cara Mendapatkan <br />Program Promo</a>
-            </li>
-        </ul>
-        <div class="tab-content">
-            <div id="tnc-promo" class="tab-pane active">
-                <div class="container-page">
-                    <div class="section-title text-center">Syarat & <span class="blue-text">Ketentuan</span></div>
-                    <div class="tnc">
-                        <ol class="list-number">
-                            <li>Berlaku untuk pembayaran menggunakan Kartu Debit dan Kartu Kredit BTN.</li>
-                            <li>Periode booking <span class="os-bold blue-text">1 Februari - 31 Maret 2017</span> untuk periode inap kapan saja.</li>
-                            <li>Periode terbang dan inap kapan saja.</li>
-                            <li>Diskon sebesar 10% (maks Rp 300.000) dengan minimum transaksi Rp 1.500.000.</li>
-                            <li>Berlaku untuk semua rute maskapai Lion Air, Wings Air, Batik Air, Air Asia, Sriwijaya Air, Nam Air dan Citilink.</li>
-                            <li>Berlaku untuk semua hotel di seluruh dunia.</li>
-                            <li>Satu Card Holder hanya bisa bertransaksi 1 kali setiap harinya.</li>
-                            <li>Program tidak dapat digabungkan dengan voucher dan promo lainnya.</li>
-                            <li>Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</li>
-                            <li>Harga diluar promo Travorama.</li>
-                        </ol>
-                    </div>
+    <div class="info-promo">
+        <div class="judul-promo bold-txt">@ViewBag.PromoTitle</div>
+        <div class="desc-promo"><p>@ViewBag.PromoDescription</p></div>
+        <div class="more-info">Info Lengkapnya di <a class="bold-txt" id="syarat-ketentuan-btn">Syarat dan Ketentuan</a></div>
+        <div class="detail-promo">
+            <div class="box-promo clearfix">
+                <div class="col-xs-8 info-box-promo">
+                    <div class="judul-box-promo bold-txt">Periode Booking</div>
+                    <div class="tanggal-box-promo">@ViewBag.PeriodeBooking</div>
                 </div>
+                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/ticket.png" /></div>
             </div>
-            <div id="how-to" class="tab-pane">
-                <div class="container-page">
-                    <div class="section-title text-center">Cara Mendapatkan <br /><span class="blue-text">Program Promo</span></div>
-                    <div class="how-to">
-                        <ol class="list-number">
-                            <li>Cari dan pesan tiket pesawat atau kamar hotel melalui situs atau aplikasi Travorama.</li>
-                            <li>Pilih metode pembayaran kartu kredit.</li>
-                            <li>Isi detail Kartu Debit atau Kartu Kredit BTN sesuai instruksi.</li>
-                            <li>Harga akan otomatis terpotong sesuai program promo.</li>
-                            <li>Selesaikan proses pembayaran.</li>
-                            <li>E-tiket atau e-voucher akan dikirimkan ke alamat email Anda.</li>
-                        </ol>
-                    </div>
+            <div class="box-promo clearfix">
+                <div class="col-xs-8 info-box-promo">
+                    <div class="judul-box-promo bold-txt">Periode Terbang / Inap</div>
+                    <div class="tanggal-box-promo">@ViewBag.PeriodeInap</div>
+                </div>
+                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/inap.png" /></div>
+            </div>
+        </div>
+        <div class="btn-book">
+            <a href="/flight"><div class="book-now">BOOK NOW</div></a>
+        </div>
+    </div>
+
+    <!-- <div class="rekomendasi-hotel">
+        <div class="judul-rekomendasi-hotel">Rekomendasi Hotel</div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png"/></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span/> / night<span></div>
+            </div>
+        </div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png" /></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span /> / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN</div></a>
                 </div>
             </div>
         </div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png" /></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span /> / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN</div></a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="langkah-promo">
+        <div class="judul-rekomendasi-hotel clearfix">
+            <div class="col-xs-10 no-padding">6 Langkah Dapatkan Promo</div>
+            <!-- <div class="col-xs-2 align-right"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span></div> -->
+        </div>
+        <div class="carousel-inner-mobile slider-promo" role="listbox">
+            <div class="item">
+                <img src="/Assets/mobile/images/slider-promo.png" alt="" />
+            </div>
+        </div>
     </div>
+    <div class="syarat-ketentuan" id="syarat-ketentuan">
+        <div class="judul-rekomendasi-hotel clearfix">
+            <div class="col-xs-10 no-padding">Syarat & Ketentuan</div>
+            <div class="col-xs-2 align-right hide-content-btn">
+                <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </div>
+        </div>
+        <div class="isi-syarat-ketentuan clearfix">
+        @for (var i = 0; i < ViewBag.Terms.Count; i++ )
+        {
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-1 list-number-mobile">@(i+1)</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.Terms[i]</div>
+            </div>
+        }
+        </div>
+    </div>
+    <div class="subscribe-mobile">
+        <img class="bg-subscribe" src="/Assets/mobile/images/bg-subscribe.png" />
+        <div class="subscribe-before">
+            <div class="judul-subscribe">Subscribe now!</div>
+            <div class="container-form-subscribe">
+                <div class="">
+                    <form class="subscribe-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-mobile subscribe-name" id="exampleInputEmail1" placeholder="Masukkan Nama Anda" name="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-mobile subscribe-email" id="exampleInputEmail1" placeholder="Masukkan Alamat Email">
+                        </div>
+                        <input type="submit" class="btn-subscribe" value="SUBSCRIBE">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="subscribe-after" style="display: none; padding-top: 20px">
+            <div class="judul-subscribe">Terima Kasih Telah Mendaftar di Newsletter Kami</div>
+        </div>
+    </div>
+
+    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 </div>
+
+@section PageJS{
+    <script src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/PromoController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/mobile/js/HomeController.js"></script>
+    <script type="text/javascript">
+        $("#syarat-ketentuan-btn").click( function() {
+            $('html, body').animate({
+                //// value scrolltop = banyaknya pixel yang di scroll (ditutupin)
+                //// angka 8 untuk margin aja biar rapi
+                scrollTop: $("#syarat-ketentuan").offset().top - $("header").height() - 8
+            }, 500);
+        });
+        $(".hide-content-btn").click( function() {
+            //// hide the content element below
+            $(this).parent().next().hide(200);
+        })
+    </script>
+}

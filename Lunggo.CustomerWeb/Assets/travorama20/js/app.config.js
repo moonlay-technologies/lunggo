@@ -192,7 +192,7 @@ app.directive('traOnEnter', function () {
     };
 });
 
-app.factory('imageSvc', ['$log', '$resource', '$q', function ($log, $resource, $q) {
+app.factory('imageSvc', ['$log', '$q', function ($log, $q) {
     var factory = {};
     var _altImagePath = document.location.origin + '/Assets/travorama20/images/Hotel/no-hotel.png';
     var _isImage = function (src) {
