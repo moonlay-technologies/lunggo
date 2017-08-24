@@ -514,6 +514,7 @@
     <None Include="Config\WebJob-FlightSearch.FlightCrawler1\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.EmailQueueHandler\tiket.properties" />
     <None Include="Config\WebJob.FlightCrawlScheduler\airAsia.properties">
       <SubType>Designer</SubType>
     </None>

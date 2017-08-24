@@ -131,7 +131,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult HotelVoucher()
         {
-            var rsvNo = "260776534379";
+            var rsvNo = "259696563279";
             var hotel = HotelService.GetInstance();
             var hotelService = HotelService.GetInstance();
             var reservation = hotelService.GetReservationForDisplay(rsvNo);

@@ -50,7 +50,23 @@ namespace Lunggo.BackendWeb
 
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
             //{
-            //    RsvNo = "260776534379"
+            //    RsvNo = "263206563879"
+            //});
+
+            //HotelService.GetInstance().UpdateTest(new HotelIssueTicketResult
+            //{
+            //    BookingReference = "12345",
+            //    ClientReference = "45678",
+            //    SupplierVat = "6789",
+            //    IsSuccess = true,
+            //    IsInstantIssuance = true,
+            //    RsvNo = "263206563779"
+
+            //    //BookingReference = "43239172",
+            //    //ClientReference = "43239172",
+            //    //SupplierVat = "33447735",
+            //    //IsSuccess = true,
+            //    //IsInstantIssuance = true
             //});
             Console.WriteLine("OKE");
         }

@@ -69,10 +69,10 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.Tiket
                 BookingId = bookingList,
                 BookingReference = hotelIssueInfo.BookingId,
                 ClientReference = hotelIssueInfo.BookingId,
-                IsSuccess = true,
-                IsInstantIssuance = true
+                RsvNo = hotelIssueInfo.RsvNo,
+                Status = "CONFIRMED",
+                IsSuccess = true
             };
-
         }
 
         //Step1
