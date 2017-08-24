@@ -63,6 +63,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Payment")]
         public ActionResult PaymentPost(string rsvNo, string paymentUrl)
         {
+            ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList();
             var payment = PaymentService.GetInstance().GetPayment(rsvNo);
             var regId = GenerateId(rsvNo);
             if (payment.Method == PaymentMethod.BankTransfer ||

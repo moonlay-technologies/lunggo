@@ -11,7 +11,7 @@
 @model Lunggo.CustomerWeb.Models.PaymentData
 
 @{
-
+    var lemparLewatViewBag = ViewBag.SurchargeList.Serialize();
     var rsvNo = "";
     //var todayDate = DateTime.Today;
     var todayDate = new DateTime(2017, 3, 25);
