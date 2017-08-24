@@ -68,6 +68,7 @@
 
             headerIcon.toggle(accordionAnimationDuration);
             $(this).find("div span").toggle(accordionAnimationDuration);
+            $(this).find(".notification").toggle(accordionAnimationDuration);
         });
     </script>
 }
@@ -101,11 +102,12 @@
     <div class="main-tab clearfix">
         <div class="row group-kategori" id="accordion">
             <div class="col-xs-12 btn-flight">
-                <div class="col-xs-4"><img src="/Assets/mobile/images/btn-flight.png" alt="Flight" /></div>
-                <div class="col-xs-8 title-btn "><h4 class=" bold-txt">Pesawat</h4></div>
+                <div class="col-xs-4 icon-home-accordion"><img src="/Assets/mobile/images/btn-flight.png" alt="Flight" /></div>
+                <div class="col-xs-8 title-btn "><h4 class="judul-btn-flight bold-txt">Pesawat</h4></div>
             </div>
             <div class="accordion-content form-wrapper">
                 <form class="flight-form" name="flight-form" ng-submit="FlightSearchForm.Submit()" novalidate>
+                    
                     <div class="top-form row">
                         <div class="col-xs-5">
                             <div class="form-group form__origin">
@@ -196,8 +198,8 @@
             </div><!-- .form-wrapper -->
 
             <div class="col-xs-12 btn-flight">
-                <div class="col-xs-4"><img src="/Assets/mobile/images/btn-hotel.png" alt="Hotel" /></div>
-                <div class="col-xs-8 title-btn "><h4 class=" bold-txt">Hotel</h4></div>
+                <div class="col-xs-4 icon-home-accordion"><img src="/Assets/mobile/images/btn-hotel.png" alt="Hotel" /></div>
+                <div class="col-xs-8 title-btn "><h4 class="judul-btn-flight bold-txt">Hotel</h4></div>
             </div>
             <div class="form-wrapper">
                 @Html.Partial("/Views/Shared/Mobile/_SearchHotelForm.cshtml", new HotelLocation
@@ -206,8 +208,11 @@
                 })
             </div>
             <div class="col-xs-12 btn-flight">
-                <div class="col-xs-4"><img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" /></div>
-                <div class="col-xs-8 title-btn"><h4 class=" bold-txt">Promo</h4></div>
+                <div class="notification"><span>1</span></div>
+                <div class="col-xs-4 icon-home-accordion">
+                    <img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" />
+                </div>
+                <div class="col-xs-8 title-btn"><h4 class="judul-btn-flight bold-txt">Promo</h4></div>
             </div>
             <div>
                 @Html.Partial("/Views/StaticPage/Promo.mobile.cshtml")
@@ -278,25 +283,7 @@
     </div>
 
     <!-- Partners -->
-    <div class="main-tab clearfix">
-        <div class="row partner">
-            <h2 class="section-title stripe text-center xlg-txt">Partner <span>Maskapai</span></h2>
-            <div class="img-partner container">
-                @Html.Partial("/Views/common/partner-flight.cshtml")
-            </div>
-        </div>
-    </div>
-
-    @* WIP
-    <div class="main-tab clearfix">
-        <div class="row partner">
-            <h2 class="section-title stripe text-center xlg-txt">Partner <span>Hotel</span></h2>
-            <div class="img-partner">
-                @Html.Partial("/Views/common/partner-hotel.cshtml")
-            </div>
-        </div>
-    </div>
-    *@
+    @Html.Partial("/Views/common/partners.cshtml")
 
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 } else {

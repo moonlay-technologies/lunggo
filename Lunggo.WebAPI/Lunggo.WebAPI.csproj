@@ -407,6 +407,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %284%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api__staging2 %282%29.pubxml" />
@@ -463,7 +464,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1665</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://api.local.travorama.com</IISUrl>
+          <IISUrl>http://localhost:1147</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

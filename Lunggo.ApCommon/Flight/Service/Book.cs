@@ -40,12 +40,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 };
 
             var bookResults = BookItineraries(itins, input, output);
-            UpdateItineraries(itins, bookResults);
-            SaveItinerariesToCache(itins, input.Token);
-
             if (input.Test)
             {
-                var isValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
+                var isValid = bookResults.TrueForAll(result => result.IsSuccess);
                 if (isValid)
                 {
                     return new BookFlightOutput
@@ -60,6 +57,10 @@ namespace Lunggo.ApCommon.Flight.Service
                     IsValid = false,
                 };
             }
+
+            UpdateItineraries(itins, bookResults);
+            SaveItinerariesToCache(itins, input.Token);
+
 
             output.IsValid = bookResults.TrueForAll(result => result.IsSuccess || result.RevalidateSet.IsValid);
             if (output.IsValid)
@@ -183,9 +184,13 @@ namespace Lunggo.ApCommon.Flight.Service
                 RoundFinalAndLocalPrice(newItin);
                 itin = newItin;
             }
+
             
+
             if (response.IsSuccess)
             {
+                if (bookInfo.Test)
+                    return bookResult;
                 bookResult.IsSuccess = true;
                 itin.BookingId = response.Status.BookingId;
                 itin.BookingStatus = response.Status.BookingStatus;
@@ -194,6 +199,9 @@ namespace Lunggo.ApCommon.Flight.Service
             }
             else
             {
+                if (bookInfo.Test)
+                    return bookResult;
+
                 bookResult.IsSuccess = false;
                 if (response.Errors != null)
                     response.Errors.ForEach(output.AddError);
@@ -208,9 +216,6 @@ namespace Lunggo.ApCommon.Flight.Service
                 IsPriceChanged = response.IsPriceChanged,
                 NewPrice = response.NewPrice
             };
-
-            if (bookInfo.Test)
-                return bookResult;
 
             //Check Deposit
             bookResult.Deposit = response.Deposit.GetValueOrDefault();
