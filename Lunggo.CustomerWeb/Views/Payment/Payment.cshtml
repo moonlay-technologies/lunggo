@@ -152,16 +152,6 @@
             animate: accordionAnimationDuration
         });
         
-        //// Animate DOM when opening / closing the accordion
-        $(".box-payment .ui-accordion-header").click( function(){
-            //// scroll
-            if( $(this).hasClass("ui-accordion-header-active") ) {
-                $('html, body').animate({
-                    //// banyaknya pixel yang di scroll (ditutupin)
-                    scrollTop: $(this).offset().top - $("header").height() - 8
-                }, 500);
-            }
-        });
         //// close all other accordion
         $(".box-payment").click( function(){
             $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);

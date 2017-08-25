@@ -258,6 +258,7 @@ app.controller('paymentController', [
                 } else {
                     $scope.methodDiscount.available = $scope.methodDiscount.amount != 0;
                 }
+                console.log($scope.methodDiscount.amount)
             }
         }
 
@@ -894,10 +895,27 @@ app.controller('paymentController', [
             }
         },true);
         // ********************************** END *********************************************
-    }
-]);
+        
+        jQuery(document).ready(function ($) {
+            //// Animate DOM when opening / closing the accordion
+            $(".box-payment .row.ui-accordion-header").click( function(){
+                //// if this section is become expanded (active):
+                if( $(this).hasClass("ui-accordion-header-active") ) {
+                    //// scroll
+                    $('html, body').animate({
+                        //// banyaknya pixel yang di scroll (ditutupin)
+                        scrollTop: $(this).offset().top - $("header").height() - 8
+                    }, 500);
 
-// jQuery(document).ready(function ($) {
+                    //// change payment method (for MDR, etc.)
+                    $scope.paymentMethod = $(this).parent().data("paymentMethod");
+                }
+            });
+        });
+
+}]);
+
+
     // Payment Desktop
     // $('input[name="PMInput"]').click(function () {
     //     var val = $(this).val();
@@ -916,4 +934,3 @@ app.controller('paymentController', [
     //         scrollTop: $("#" + val).offset().top
     //     }, 700);
     // });
-// })

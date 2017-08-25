@@ -694,6 +694,7 @@
     <Content Include="Assets\images\asita.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
+    <Content Include="Assets\images\atm.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
@@ -792,6 +793,7 @@
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks-transparan.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
+    <Content Include="Assets\images\cimb.jpg" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\cs-desktop.png" />
@@ -953,6 +955,7 @@
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\jaminan.jpg" />
     <Content Include="Assets\images\kai.png" />
+    <Content Include="Assets\images\kredit.jpg" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
     <Content Include="Assets\images\load.gif" />
@@ -967,12 +970,14 @@
     <Content Include="Assets\images\lock-image.png" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
+    <Content Include="Assets\images\logo-garuda.jpg" />
     <Content Include="Assets\images\logo-promo.jpg" />
     <Content Include="Assets\images\logo-travorama-sm.png" />
     <Content Include="Assets\images\logo-travorama.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
+    <Content Include="Assets\images\mandiri.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\marker-calendar.png" />
@@ -1351,6 +1356,7 @@
     <Content Include="Assets\mobile\images\loading-new.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\logo-cs.png" />
+    <Content Include="Assets\mobile\images\logo-garuda.jpg" />
     <Content Include="Assets\mobile\images\logo-promo.jpg" />
     <Content Include="Assets\mobile\images\loop.png" />
     <Content Include="Assets\mobile\images\medals.png" />
@@ -1601,6 +1607,7 @@
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
     <Content Include="Views\common\partner-flight.cshtml" />
     <Content Include="Views\common\partner-hotel.cshtml" />
+    <Content Include="Views\common\partners.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Flight\FlightSearchForm.cshtml" />
@@ -1658,6 +1665,7 @@
     <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
     <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.cshtml" />
+    <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile - Copy.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
@@ -1695,6 +1703,7 @@
     <Content Include="Views\Shared\mobile\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\mobile\_SelectCheckInDate.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\mobile\_SiteFooterApp.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\_googleTag.cshtml" />
@@ -1747,9 +1756,13 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\common\partners.cshtml" />
-    <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile - Copy.cshtml" />
-    <Content Include="Views\Shared\mobile\_SiteFooterApp.cshtml" />
+    <Content Include="Views\Payment\partials\_flightDetail.cshtml" />
+    <Content Include="Views\Payment\partials\_flightDetail.mobile.cshtml" />
+    <Content Include="Views\Payment\partials\_hotelDetail.cshtml" />
+    <Content Include="Views\Payment\partials\_payButton.cshtml" />
+    <Content Include="Views\Payment\partials\_paymentMethods.cshtml" />
+    <Content Include="Views\Payment\partials\_paymentWrapperMobile%28buatjaga2%29.cshtml" />
+    <Content Include="Views\Payment\partials\_priceDetail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
