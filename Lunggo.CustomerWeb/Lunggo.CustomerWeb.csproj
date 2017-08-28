@@ -587,6 +587,8 @@
     <Content Include="Assets\images\bg-white.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
+    <Content Include="Assets\images\bni.png" />
+    <Content Include="Assets\images\bri.png" />
     <Content Include="Assets\images\buttons\back-btn.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
@@ -663,10 +665,12 @@
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks-transparan.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
+    <Content Include="Assets\images\cimbbank.png" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\cs-desktop.png" />
     <Content Include="Assets\images\cs-icon.png" />
+    <Content Include="Assets\images\danamon.png" />
     <Content Include="Assets\images\default-banner-2.jpg" />
     <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />
@@ -753,6 +757,7 @@
     <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
+    <Content Include="Assets\images\hanabank.png" />
     <Content Include="Assets\images\harga.jpg" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
@@ -850,6 +855,7 @@
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
+    <Content Include="Assets\images\maybank.png" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\mobile-sprite.png" />

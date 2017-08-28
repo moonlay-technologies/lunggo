@@ -363,6 +363,32 @@
                                     </div>
                                     <div class="row selected-bank" id="VirtualAccount">
                                         <div class="col-xs-12"><h3 class="lg-txt">PILIHAN <b>BANK</b></h3></div>
+                                        <div class="payment permata col-xs-4" ng-click="selectBank(1,'mandiri')">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
+                                                    </div>
+                                                    <h5>Bank Mandiri</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/mandiri.png" alt="Bank Mandiri">
+                                                </section>
+                                            </label>
+                                        </div>
+                                        <div class="payment permata col-xs-4" ng-click="selectBank(2,'bca')">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
+                                                    </div>
+                                                    <h5>Bank BCA</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/bank-bca.png" alt="Bank BCA">
+                                                </section>
+                                            </label>
+                                        </div>
                                         <div class="payment permata col-xs-4" ng-click="selectBank(3,'permata')">
                                             <label>
                                                 <header>
@@ -376,19 +402,6 @@
                                                 </section>
                                             </label>
                                         </div>
-                                        <div class="payment permata col-xs-4" ng-click="selectBank(2,'bca')">
-                                            <label>
-                                                <header>
-                                                    <div class="input-wrapper">
-                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
-                                                    </div>
-                                                    <h5>Bank BCA</h5>
-                                                </header>
-                                                <section>
-                                                    <img src="/Assets/images/bank-bca.png" alt="Bank Permata">
-                                                </section>
-                                            </label>
-                                        </div>
                                         <div class="payment permata col-xs-4" ng-click="selectBank(4, 'bni')">
                                             <label>
                                                 <header>
@@ -398,7 +411,7 @@
                                                     <h5>Bank BNI</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Permata">
+                                                    <img src="/Assets/images/bni.png" alt="Bank BNI">
                                                 </section>
                                             </label>
                                         </div>
@@ -411,7 +424,7 @@
                                                     <h5>Bank BRI</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Permata">
+                                                    <img src="/Assets/images/bri.png" alt="Bank BRI">
                                                 </section>
                                             </label>
                                         </div>
@@ -424,23 +437,50 @@
                                                     <h5>Bank CIMB</h5>
                                                 </header>
                                                 <section>
-                                                    <img src="/Assets/images/cimb-clicks.jpg" alt="Bank Permata">
+                                                    <img src="/Assets/images/cimbbank.png" alt="Bank CIMB">
                                                 </section>
                                             </label>
                                         </div>
-                                        @*<div class="payment bca col-xs-4">
+                                        <div class="payment permata col-xs-4" ng-click="selectBank(7, 'maybank')">
                                             <label>
                                                 <header>
                                                     <div class="input-wrapper">
-                                                            <input type="radio" name="SelectedBank" value="VirtualAccount">
+                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
                                                     </div>
-                                                        <h5>Bank BCA</h5>
+                                                    <h5>Bank BII Maybank</h5>
                                                 </header>
                                                 <section>
-                                                        <img src="/Assets/images/bank-bca.png" alt="Bank BCA">
+                                                    <img src="/Assets/images/maybank.png" alt="Bank BII Maybank">
                                                 </section>
                                             </label>
-                                            </div>*@
+                                        </div>
+                                        <div class="payment permata col-xs-4" ng-click="selectBank(8, 'danamon')">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
+                                                    </div>
+                                                    <h5>Bank Danamon</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/danamon.png" alt="Bank Danamon">
+                                                </section>
+                                            </label>
+                                        </div>
+                                        
+                                        <div class="payment permata col-xs-4" ng-click="selectBank(9, 'kebHanabank')">
+                                            <label>
+                                                <header>
+                                                    <div class="input-wrapper">
+                                                        <input type="radio" name="SelectedBankVA" value="VirtualAccount">
+                                                    </div>
+                                                    <h5>Bank KEB Hanabank</h5>
+                                                </header>
+                                                <section>
+                                                    <img src="/Assets/images/hanabank.png" alt="Bank KEB Hananbank">
+                                                </section>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div><!-- .payment-wrapper -->
                                 @if (!User.Identity.IsAuthenticated || (User.Identity.IsAuthenticated && true /*tambah kredit kart baru*/ ))
