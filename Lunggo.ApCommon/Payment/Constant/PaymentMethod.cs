@@ -31,7 +31,8 @@
         BRI = 5,
         CIMB = 6,
         Maybank = 7,
-        Danamon = 8
+        Danamon = 8,
+        KEBHana = 9
     }
 
     internal class PaymentMethodCd
@@ -140,6 +141,8 @@
                     return "Maybank";
                 case PaymentSubMethod.Danamon:
                     return "Danamon";
+                case PaymentSubMethod.KEBHana:
+                    return "KEBHana";
                 default:
                     return null;
             }
@@ -165,6 +168,8 @@
                     return PaymentSubMethod.Maybank;
                 case "Danamon":
                     return PaymentSubMethod.Danamon;
+                case "KEBHana":
+                    return PaymentSubMethod.KEBHana;
                 default:
                     return PaymentSubMethod.Undefined;
             }

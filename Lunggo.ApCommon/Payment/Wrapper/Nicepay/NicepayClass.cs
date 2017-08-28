@@ -374,8 +374,11 @@ public class NicepayClass : System.Web.UI.Page
             case "BRI":
                 bankCd = "BRIN";
                 break;
-            case "anamon":
+            case "Danamon":
                 bankCd = "BDMND";
+                break;
+            case "KEBHana":
+                bankCd = "HNBN";
                 break;
             default:
                 bankCd = "BCA";
