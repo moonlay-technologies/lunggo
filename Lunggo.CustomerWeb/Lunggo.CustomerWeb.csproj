@@ -1759,6 +1759,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\common\partner-flight.cshtml" />
     <Content Include="Views\common\partner-hotel.cshtml" />
+    <Content Include="Views\common\partners.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

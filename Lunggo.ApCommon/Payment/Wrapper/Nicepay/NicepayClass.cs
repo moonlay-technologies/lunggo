@@ -338,7 +338,7 @@ public class NicepayClass : System.Web.UI.Page
             case "BRIN":
                 BankName = "Bank BRI";
                 break;
-            case "BDMN":
+            case "BDIN":
                 BankName = "Bank Danamon";
                 break;
             default:
@@ -375,7 +375,7 @@ public class NicepayClass : System.Web.UI.Page
                 bankCd = "BRIN";
                 break;
             case "Danamon":
-                bankCd = "BDMND";
+                bankCd = "BDIN";
                 break;
             case "KEBHana":
                 bankCd = "HNBN";
