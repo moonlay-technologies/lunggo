@@ -911,7 +911,6 @@ app.controller('paymentController', [
         return a? a.Percentage/100 : null;
     }
 
-
     jQuery(document).ready(function ($) {
         //// Animate DOM when opening / closing the accordion
         $(".box-payment .row.ui-accordion-header").click( function(){

@@ -46,7 +46,7 @@
         <p>
             <b>{{ getMdr() }} display name</b>
             @* <b>{{mdr[paymentMethod].displayName}}</b> *@
-            <span>Rp {{(totalPrice - CreditCardPromo.Amount) * getMdr() | number:0}}</span>
+            <span>Rp {{(totalPrice - CreditCardPromo.Amount - voucher.amount ) * getMdr() | number:0}}</span>
         </p>
         <p><b>Kode Unik Pembayaran : </b><span>Rp {{UniqueCodePaymentConfig.UniqueCode}}</span></p>
         <div class="total-harga">
