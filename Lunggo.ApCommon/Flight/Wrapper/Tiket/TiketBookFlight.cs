@@ -188,10 +188,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         
                         request.AddQueryParameter("titlea" + i, GetTitle(adult.Title));
                         request.AddQueryParameter("ida" + i, generateId.ToString());
-                        //if (bookInfo.Itinerary.RequireNationality)
-                        //{
-                        //    request.AddQueryParameter("passportnationalitya" + i, adult.Nationality);
-                        //}
                         if (!string.IsNullOrEmpty(bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity))
                         {
                             request.AddQueryParameter("dcheckinbaggagea1" + i, bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity);
@@ -200,9 +196,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         {
                             request.AddQueryParameter("passportnoa" + i, adult.PassportNumber);
                             request.AddQueryParameter("passportExpiryDatea" + i, adult.PassportExpiryDate.Value.ToString("yyyy-MM-dd"));
-                            var issueDate = adult.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
+                            //var issueDate = adult.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalitya" + i, adult.PassportCountry);
-                            request.AddQueryParameter("passportissueddatea" + i, issueDate.ToString("yyyy-MM-dd"));
+                            request.AddQueryParameter("passportissueddatea" + i, adult.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuinga" + i, adult.PassportCountry);
                         }
                         i++;
@@ -220,10 +216,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         request.AddQueryParameter("idc" + i, generateId.ToString());
                         request.AddQueryParameter("titlec" + i, GetTitle(child.Title));
                         request.AddQueryParameter("birthdatec" + i, child.DateOfBirth.Value.ToString("yyyy-MM-dd"));
-                        //if (bookInfo.Itinerary.RequireNationality)
-                        //{
-                        //    request.AddQueryParameter("passportnationalityc" + i, child.Nationality);
-                        //}
+
                         if (!string.IsNullOrEmpty(bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity))
                         {
                             request.AddQueryParameter("dcheckinbaggagec1" + i, bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity);
@@ -232,9 +225,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         {
                             request.AddQueryParameter("passportnoc" + i, child.PassportNumber);
                             request.AddQueryParameter("passportExpiryDatec" + i, child.PassportExpiryDate.Value.ToString("yyyy-MM-dd"));
-                            var issueDate = child.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
+                            //var issueDate = child.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalityc" + i, child.PassportCountry);
-                            request.AddQueryParameter("passportissueddatec" + i, issueDate.ToString("yyyy-MM-dd"));
+                            request.AddQueryParameter("passportissueddatec" + i, child.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuingc" + i, child.PassportCountry);
                             
                         }
@@ -259,17 +252,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         {
                             request.AddQueryParameter("dcheckinbaggagei1" + i, bookInfo.Itinerary.Trips[0].Segments[0].BaggageCapacity);
                         }
-                        //if (bookInfo.Itinerary.RequireNationality)
-                        //{
-                        //    request.AddQueryParameter("passportnationalityi" + i, infant.Nationality);
-                        //}
+
                         if (bookInfo.Itinerary.RequirePassport)
                         {
                             request.AddQueryParameter("passportnoi" + i, infant.PassportNumber);
                             request.AddQueryParameter("passportExpiryDatei" + i, infant.PassportExpiryDate.Value.ToString("yyyy-MM-dd"));
-                            var issueDate = infant.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
+                            //var issueDate = infant.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalityi" + i, infant.PassportCountry);
-                            request.AddQueryParameter("passportissueddatei" + i, DateTime.Now.ToString("yyyy-MM-dd"));
+                            request.AddQueryParameter("passportissueddatei" + i, infant.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuingi" + i, infant.PassportCountry);
                         }
                         i++;

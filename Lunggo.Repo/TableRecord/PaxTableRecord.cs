@@ -101,6 +101,17 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PassportNumber");
 		    }
 		}
+
+        public DateTime? PassportCreatedDate
+        {
+            get { return _PassportCreatedDate; }
+            set
+            {
+                _PassportCreatedDate = value;
+                IncrementLog("PassportCreatedDate");
+            }
+        }
+
 		public DateTime? PassportExpiryDate
 		{
 		    get { return _PassportExpiryDate; }
@@ -186,6 +197,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _NationalityCd;
 		private String _PassportNumber;
 		private DateTime? _PassportExpiryDate;
+        private DateTime? _PassportCreatedDate;
 		private String _PassportCountryCd;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
@@ -234,6 +246,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("BirthDate", false),
 				new ColumnMetadata("NationalityCd", false),
 				new ColumnMetadata("PassportNumber", false),
+				new ColumnMetadata("PassportCreatedDate", false),
 				new ColumnMetadata("PassportExpiryDate", false),
 				new ColumnMetadata("PassportCountryCd", false),
 				new ColumnMetadata("InsertBy", false),

@@ -12,6 +12,7 @@
     var passengerCount = 0;
     var needBirthDate = false;
     var needPassport = false;
+    var needCreatedDatePassport = false;
     var needNationality = false;
     var token = "";
     var savedPassengers = Model.SavedPassengers;
@@ -24,6 +25,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate.GetValueOrDefault();
         needPassport = Model.Itinerary.RequirePassport.GetValueOrDefault();
+        needCreatedDatePassport = Model.Itinerary.RequireCreatedDatePassport.GetValueOrDefault();
         needNationality = Model.Itinerary.RequireNationality.GetValueOrDefault();
         token = Model.Token;
 
@@ -84,12 +86,14 @@
         var totalInfantFare = infantPassenger * infantFare;
         var infantTypeName = 'Bayi';
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
+        var createdDatePassportRequired = @Model.Itinerary.RequireCreatedDatePassport.ToString().ToLower();
         var idRequired = false;
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
         var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
         var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
         var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
+        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(-6)'; //AddMonths
+        var createdDatePassport = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
         var originalPrice = '@Model.Itinerary.OriginalTotalFare';
         var price = '@Model.Itinerary.NetTotalFare';
         // change current page
@@ -329,6 +333,36 @@
                                                         </select>
                                                     </div>
                                                 </div>
+                                                <!--Tanggal Terbit Passport-->
+                                                <div class="row" ng-if="createdDatePassportRequired">
+                                                    <div class="col-xs-12">
+                                                        <label class="control-label"><small>Tanggal Terbit Paspor</small></label>
+                                                        <div class="row">
+                                                            <div class="col-xs-4">
+                                                                <select class="form-control" name="passenger_{{$index}}_createdDate" ng-model="passenger.passport.created.date" ng-required="createdDatePassportRequired">
+                                                                    <option value="{{date}}" ng-repeat="date in dates(passenger.passport.created.month - 1, passenger.passport.created.year)"
+                                                                            ng-selected="date == 'Tanggal'">
+                                                                        {{date}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <select class="form-control" name="passenger_{{$index}}_createdMonth" ng-model="passenger.passport.created.month" ng-required="passportRequired" ng-change="validatePassport(passenger)">
+                                                                    <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'">{{month.name}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xs-4">
+                                                                <select class="form-control" name="passenger_{{$index}}_createdYear" ng-model="passenger.passport.created.year" ng-required="passportRequired" ng-change="validatePassport(passenger)">
+                                                                    <option value="{{year}}" ng-repeat="year in generateYear('createdPassport')" ng-selected="year == 'Tahun'">{{year}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div ng-show="invalidDate(passenger.passport.expire.date, passenger.passport.expire.month, passenger.passport.expire.year)" style="color: red">
+                                                                Tanggal Terbit paspor tidak valid.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Tanggal Terbit Passport-->
                                                 <div class="row">
                                                     <div class="col-xs-12">
                                                         <label class="control-label"><small>Tanggal Kadaluarsa Paspor</small></label>
@@ -357,6 +391,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <div class="form-group" ng-if="idRequired" ng-class="{'has-error': passengerForm_{{$index}}.idNumber.$invalid && passengerForm_{{$index}}.idNumber.$touched }">
                                                 <label class="control-label important">Nomor KTP / SIM</label>
@@ -463,6 +498,10 @@
                                             <div class="clearfix passenger-container" ng-if="passportRequired">
                                                 <div class="passenger-label col-2">Nomor Paspor</div>
                                                 <div class="passenger-data col-8">{{passenger.passport.number}}</div>
+                                            </div>
+                                            <div class="clearfix passenger-container" ng-if="createdDatePassportRequired">
+                                                <div class="passenger-label col-2">Tgl. Terbit Paspor</div>
+                                                <div class="passenger-data col-8">{{passenger.passport.created.date}} {{months[passenger.passport.created.month].name}} {{passenger.passport.created.year}}</div>
                                             </div>
                                             <div class="clearfix passenger-container" ng-if="passportRequired">
                                                 <div class="passenger-label col-2">Tgl. Kadaluarsa Paspor</div>

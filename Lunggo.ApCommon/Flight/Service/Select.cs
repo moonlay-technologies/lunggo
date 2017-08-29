@@ -119,11 +119,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 if (flightData != null && flightData.Required != null)
                 {
                     var requireData = flightData.Required;
-                    if (requireData.Passportnationalitya1 != null && requireData.Passportnationalitya1.Mandatory == 1)
-                    {
-                        itin.RequirePassport = true;
-                        //itin.RequireNationality = true;
-                    }
+                    //if (requireData.Passportnationalitya1 != null && requireData.Passportnationalitya1.Mandatory == 1)
+                    //{
+                    //    itin.RequirePassport = true;
+                    //    //itin.RequireNationality = true;
+                    //}
                     itin.RequireNationality = true;
                     if (requireData.Birthdatea1 != null && requireData.Birthdatea1.Mandatory == 1)
                     {

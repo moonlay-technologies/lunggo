@@ -19,6 +19,8 @@ namespace Lunggo.ApCommon.Product.Model
         public string Nationality { get; set; }
         [JsonProperty("passportNo", NullValueHandling = NullValueHandling.Ignore)]
         public string PassportNumber { get; set; }
+        [JsonProperty("passportCreatedDate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? PassportCreatedDate { get; set; }
         [JsonProperty("passportExp", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? PassportExpiryDate { get; set; }
         [JsonProperty("passportCountry", NullValueHandling = NullValueHandling.Ignore)]
@@ -35,7 +37,8 @@ namespace Lunggo.ApCommon.Product.Model
         public Gender Gender { get; set; }
         public string Nationality { get; set; }
         public string PassportNumber { get; set; }
-        public DateTime? PassportExpiryDate { get; set; }
+        public DateTime? PassportCreatedDate { get; set; }
+        public DateTime?PassportExpiryDate { get; set; }
         public string PassportCountry { get; set; }
     }
 }
