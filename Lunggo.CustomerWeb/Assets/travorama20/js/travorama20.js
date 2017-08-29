@@ -795,6 +795,9 @@ function flightFormSearchFunctions() {
     $('.form-flight-departure').click(function () {
         showCalendar('departure');
         $('.date-picker').datepicker('option', 'minDate', new Date());
+        var deptDate = new Date();
+        deptDate.setDate(deptDate.getDate() + 364);
+        $('.date-picker').datepicker('option', 'maxDate', deptDate);
     });
     $('.form-flight-return').click(function () {
         if (!$(this).hasClass('disabled')) {
@@ -803,6 +806,9 @@ function flightFormSearchFunctions() {
             } else {
                 $('.date-picker').datepicker('option', 'minDate', new Date());
             }
+            var retDate = new Date();
+            retDate.setDate(retDate.getDate() + 365);
+            $('.date-picker').datepicker('option', 'maxDate', retDate);
             showCalendar('return');
         }
     });

@@ -101,6 +101,7 @@ app.controller('homeController', ['$scope', '$log', '$http', '$location', '$reso
    // ================= FLIGHT ========================
 
     $scope.departureDate = moment().add(1, 'day').format('DDMMYY');
+
   
     //=============== hotel start ======================
     $scope.showPopularDestinations = false;
@@ -750,6 +751,9 @@ jQuery(document).ready(function ($) {
         $('.search-calendar-hotel').show();
         showCalendar();
         $('.hotel-date-picker').datepicker('option', 'minDate', new Date());
+        var myDate = new Date();
+        myDate.setDate(myDate.getDate() + 364);
+        $('.hotel-date-picker').datepicker('option', 'maxDate', myDate);
         evt.stopPropagation();
         $('.search-hotel').show();
         $('.search-hotel, .select-age .option, .form-hotel-night .option, .form-hotel-room .option, .form-child-age').hide();
