@@ -65,6 +65,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 decimal? originalPriceIdr = null;
                 string discountCode = null;
                 decimal? discountNominal = null;
+                decimal? surcharge = null;
                 decimal? uniqueCode = null;
                 decimal? finalPriceIdr = null;
                 decimal? paidAmountIdr = null;
@@ -101,6 +102,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     discountCode = payment.DiscountCode;
                 if (payment.DiscountNominal != 0)
                     discountNominal = payment.DiscountNominal;
+                if (payment.Surcharge != 0)
+                    surcharge = payment.Surcharge;
                 if (payment.UniqueCode != 0)
                     uniqueCode = payment.UniqueCode;
                 if (payment.FinalPriceIdr != 0)
@@ -131,6 +134,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     OriginalPriceIdr = originalPriceIdr,
                     DiscountCode = discountCode,
                     DiscountNominal = discountNominal,
+                    Surcharge = surcharge,
                     UniqueCode = uniqueCode,
                     FinalPriceIdr = finalPriceIdr,
                     LocalCurrencyCd = localCurrency != null ? localCurrency.Symbol : null,

@@ -53,7 +53,6 @@
                         <div class="form-group col-xs-12">
                             <label>Nomor Kartu</label>
                             <input type="number" class="form-control cc-number" maxlength="19" ng-model="CreditCard.Number"
-                                    ng-class="{'visa' : (CreditCardPromo.Type == 'visa') , 'mastercard' : (CreditCardPromo.Type == 'mastercard') }"
                                     required/>
                             @*<!-- ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" 
                                     ng-blur="binDiscount.check()" 
@@ -126,8 +125,8 @@
             </div><!-- /KARTU KREDIT / DEBIT -->
             
         @*  <!-- VIRTUAL ACCOUNT -->
-            <!-- <div class="box-payment col-xs-12">
-                <div class="row">
+            <!-- <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.VirtualAccount">
+                <div class="row" ng-click="setMdr('@PaymentMethod.VirtualAccount')">
                     <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
                     <div class="col-xs-5 not-selected"><p>Virtual Account</p></div>
                 </div>
@@ -197,8 +196,7 @@
                             <div class="row text-group">
                                 <div class="col-xs-3 clear-left"><b>Input 2</b></div>
                                 <div class="col-xs-9">: 
-                                    {{totalPrice - voucher.amount - CreditCardPromo.Amount
-                                     + UniqueCodePaymentConfig.UniqueCode}}
+                                    {{totalPrice - voucher.amount + UniqueCodePaymentConfig.UniqueCode}}
                                 </div>
                             </div>
                             <div class="row text-group">

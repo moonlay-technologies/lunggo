@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Payment.Query
         {
             return "SELECT Id, MediumCd, MethodCd, StatusCd, Time, TimeLimit, " +
                    "Account, Url, ExternalId, DiscountCode, OriginalPrice, " +
-                   "DiscountNominal, UniqueCode, FinalPrice, PaidAmount, " +
+                   "DiscountNominal, Surcharge, UniqueCode, FinalPrice, PaidAmount, " +
                    "LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount," +
                    "InvoiceNo " +
                    "FROM Payment " +
