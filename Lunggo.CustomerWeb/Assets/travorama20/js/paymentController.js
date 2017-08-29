@@ -8,7 +8,6 @@ app.controller('paymentController', [
 
     angular.element(document).ready(function () {
         $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo);
-        
     });
     
     $scope.currentPage = 4;
@@ -33,7 +32,7 @@ app.controller('paymentController', [
     $scope.currentchoice = '';
     $scope.loggedIn = loggedIn;
     $scope.initialPrice = price;
-    $scope.totalPrice = price;
+    $scope.totalPrice =  Math.round(price);
     $scope.notifCardLength = false;
     $scope.originalPrice = originalPrice;
     $scope.buyerInfo = {};
@@ -171,6 +170,7 @@ app.controller('paymentController', [
         firstRequest : true,
         reset: function (method) {
             $scope.currentchoice = method;
+            ////  available = true if amount <> 0 AND method va
             $scope.methodDiscount.available = $scope.methodDiscount.amount != 0 && method == 'VA';
         },
         available: false,
@@ -184,9 +184,7 @@ app.controller('paymentController', [
             $scope.currentchoice = 'VA';
             if ($scope.methodDiscount.firstRequest) {
                 $scope.methodDiscount.wait = true;
-                if ($scope.trial > 3) {
-                    $scope.trial = 0;
-                }
+                if ($scope.trial > 3) $scope.trial = 0;
                 //Check Authorization
                 $scope.methodDiscount.checking = true;
                 var vouchercode = ($scope.voucher.receive) ? $scope.voucher.code : '';
@@ -439,20 +437,20 @@ app.controller('paymentController', [
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
                     var card = function() {
                         $scope.pay.ccdata = true;
-                        var gross_amount = 0;
-                        if ($scope.voucher.confirmedCode) {
-                            gross_amount = $scope.totalPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
-                        } else {
-                            if ($scope.binDiscount.available) {
-                                if ($scope.binDiscount.replaceDiscount) {
-                                    gross_amount = $scope.originalPrice + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
-                                } else {
-                                    gross_amount = $scope.totalPrice + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
-                                }
-                            } else {
-                                gross_amount = $scope.totalPrice + $scope.UniqueCodePaymentConfig.UniqueCode;
-                            }
-                        }
+                        var gross_amount = $scope.totalPrice - $scope.voucher.amount +
+                                $scope.UniqueCodePaymentConfig.UniqueCode + $scope.getMdr();
+                        // if ($scope.voucher.confirmedCode) {
+                        // } else {
+                            // if ($scope.binDiscount.available) {
+                            //     if ($scope.binDiscount.replaceDiscount) {
+                            //         gross_amount = $scope.originalPrice + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                            //     } else {
+                            //         gross_amount = $scope.totalPrice + $scope.UniqueCodePaymentConfig.UniqueCode - $scope.binDiscount.amount;
+                            //     }
+                            // } else {
+                                // gross_amount = $scope.totalPrice + $scope.UniqueCodePaymentConfig.UniqueCode;
+                            // }
+                        // }
                         // if ($scope.CreditCard.TwoClickToken == 'false') {
                         return {
                             'card_number': ccNumber,
@@ -482,7 +480,6 @@ app.controller('paymentController', [
                             // success 3d secure or success normal
                             //close 3d secure dialog if any
                             closeDialog();
-
                             // store token data in input #token_id and then submit form to merchant server
                             $("#vt-token").val(response.token_id);
                             $scope.CreditCard.Token = response.token_id;
@@ -551,7 +548,8 @@ app.controller('paymentController', [
                     }
                     break;
                 case "CreditCard":
-                    var hash = CryptoJS.SHA512($scope.CreditCard.Number);
+                    console.log($scope.CreditCard.Number);
+                    var hash = CryptoJS.SHA512($scope.CreditCard.Number.toString());
                     var hex = hash.toString(CryptoJS.enc.Hex);
                     $scope.pay.postData.method = 1;
                     $scope.pay.postData.creditCard = {
@@ -905,11 +903,19 @@ app.controller('paymentController', [
             case 'VirtualAccount': method=2; break;
         }
         function select ( obj ) {
-          return obj.PaymentMethod == method;
+            return obj.PaymentMethod == method;
         }
         var a = mdr.filter(select)[0];
-        return a? a.Percentage/100 : null;
+        ///// TODO : include discount
+        let price = $scope.totalPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
+        return a? Math.ceil(price * a.Percentage/100) : 0;
     }
+
+    // $scope.getFinalPrice = function (price) {
+    //     return ($scope.paymentMethod == 'CreditCard') ?
+    //         (console.log(price + $scope.getMdr()), price + $scope.getMdr()) :
+    //         (console.log(price),price);
+    // }
 
     jQuery(document).ready(function ($) {
         //// Animate DOM when opening / closing the accordion

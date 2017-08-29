@@ -1,5 +1,5 @@
 <div class="content-right-payment content-right-payment-edit">
-    <div class="kode-voucher" ng-class="{'hide' : CreditCardPromo.Valid}">
+    <div class="kode-voucher">
         <a href="#">Punya kode Voucher ?</a>
         <form name="voucherForm" class="form-group" style="display: none;">
             <input type="text" name="code" class="form-control form-kode-voucher" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)">
@@ -38,39 +38,36 @@
             <b>{{methodDiscount.displayName}}</b>
             <span class="diskon">Rp -{{methodDiscount.amount | number}}</span>
         </p>
-        <p ng-if="CreditCardPromo.Valid">
-            <b>{{CreditCardPromo.PromoName}}</b>
-            <span class="diskon">Rp -{{CreditCardPromo.Amount | number}}</span>
-        </p>
-        @* <p ng-if="getMdr()"> *@
-        <p>
-            <b>{{ getMdr() }} display name</b>
-            @* <b>{{mdr[paymentMethod].displayName}}</b> *@
-            <span>Rp {{(totalPrice - CreditCardPromo.Amount - voucher.amount ) * getMdr() | number:0}}</span>
-        </p>
         <p><b>Kode Unik Pembayaran : </b><span>Rp {{UniqueCodePaymentConfig.UniqueCode}}</span></p>
+        <p ng-if="getMdr()">
+            <b>Biaya Layanan :</b>
+            <span>Rp {{getMdr() | number:0}}</span>
+        </p>
         <div class="total-harga">
             <p>
                 <b>TOTAL</b>
                 @* redundant di _flightDetail.mobile *@
+                @* <span ng-if="voucher.confirmedCode"> *@
+                <span>
+                    Rp {{totalPrice - voucher.amount + UniqueCodePaymentConfig.UniqueCode + getMdr()| number:0}}
+                </span>
+@* 
                 <span ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">
-                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
-                </span>
-                <span ng-if="voucher.confirmedCode">
-                    Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
-                </span>
-                <span ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
+                    Rp {{totalPrice + UniqueCodePaymentConfig.UniqueCode + getMdr()| number}}
                 </span>
                 <span ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
-                </span>
-                <span ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
+                    Rp {{totalPrice + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount + getMdr()| number}}
                 </span>
                 <span ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
+                    Rp {{totalPrice + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount + getMdr()| number}}
                 </span>
+
+                <span ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{originalPrice + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount + getMdr()| number}}
+                </span>
+                <span ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{originalPrice + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount + getMdr()| number}}
+                </span> *@
             </p>
         </div>
     </div>
