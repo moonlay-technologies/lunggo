@@ -892,7 +892,7 @@ app.controller('paymentController', [
             $scope.dateOver = false;
         }
     },true);
-    
+
     // ********************************** END *********************************************
     
     $scope.getMdr = function () {
@@ -935,3 +935,23 @@ app.controller('paymentController', [
     });
 
 }]);
+    
+
+    // Payment Desktop
+    // $('input[name="PMInput"]').click(function () {
+    //     var val = $(this).val();
+    //     $('.selected-bank').hide();
+    //     $('input[value="' + val + '"]').closest('.selected-bank').show();
+    //     $('input[value="' + val + '"]').attr('checked', true);
+    // });
+
+    // // Payment Mobile
+    // $('input[name="paymentMethod"]').click(function () {
+    //     var val = $(this).val();
+    //     $('.selected-bank').hide();
+    //     $('input[value="' + val + '"]').closest('.selected-bank').show();
+    //     $('input[value="' + val + '"]').attr('checked', true);
+    //     $('html, body').animate({
+    //         scrollTop: $("#" + val).offset().top
+    //     }, 700);
+    // });

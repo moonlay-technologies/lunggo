@@ -61,10 +61,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     var termList = new List<string>();
 
                     termList.Add("Diskon sebesar 15% (Maks. Rp 150.000). Tanpa minimum transaksi");
-                    termList.Add("Berlaku untuk pemesanan setiap tanggal <span class=\"os-bold blue-txt\">25, 26, dan 27</span> setiap bulan");
-                    termList.Add("Periode terbang dan inap kapan saja");
+                    termList.Add("Berlaku untuk pemesanan hotel setiap tanggal <span class=\"os-bold blue-txt\">25, 26, dan 27</span> setiap bulan");
+                    termList.Add("Periode inap kapan saja");
                     termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
-                    termList.Add("Berlaku untuk pembayaran menggunakan bank transfer supported by Permata Bank");
+                    termList.Add("Berlaku untuk pembayaran menggunakan bank transfer Payday Madness");
                     termList.Add("Berlaku untuk pemesanan melalui situs Travorama");
                     termList.Add("Program promo hanya dapat digunakan satu kali per hari untuk satu user");
                     termList.Add("Program tidak dapat digabungkan dengan voucher dan promo lainnya");
@@ -75,10 +75,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     var howToGet = new List<string>();
                     
                     howToGet.Add("Cari dan pesan kamar hotel melalui situs Travorama");
-                    howToGet.Add("Pilih metode pembayaran bank transfer supported by Permata Bank (Payday Madness)");
+                    howToGet.Add("Pilih metode pembayaran bank transfer Payday Madness");
                     howToGet.Add("Harga akan otomatis terpotong sesuai program promo");
                     howToGet.Add("Lakukan pembayaran sesuai dengan instruksi");
-                    howToGet.Add("Selesaikan proses pembayaran dan lakukan konfirmasi pembayaran");
+                    howToGet.Add("Selesaikan proses pembayaran");
                     howToGet.Add("E-voucher hotel akan dikirimkan ke alamat email Anda");
           
                     ViewBag.HowToGet = howToGet;

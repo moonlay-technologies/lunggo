@@ -8,7 +8,7 @@
         <div class="row">
             <!-- BANK TRANSFER -->
             <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.BankTransfer">
-                <div class="row" ng-click="setMdr('@PaymentMethod.BankTransfer')">
+                <div class="row">
                     <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
                     <div class="col-xs-7 col-md-6" ng-click="binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
                         <h4>Bank Transfer</h4>
@@ -19,7 +19,7 @@
                     <div class="separator-desktop"></div>
                     <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
                     <div class="row box-pilihan-bank">
-                        <div class="col-xs-6 col-sm-3" ng-click="paymentMethod = '@PaymentMethod.BankTransfer'">
+                        <div class="col-xs-6 col-sm-3" ng-click="paymentMethod = '@PaymentMethod.BankTransfer';  methodDiscount.reset('nVA')">
                             <div class="img-bank" ng-class="{ 'selected' : (paymentMethod == '@PaymentMethod.BankTransfer') }">
                                 <img src="/Assets/images/mandiri.png" alt="Bank Transfer Mandiri">
                             </div>
@@ -29,7 +29,7 @@
                             <div class="img-bank" ng-class="{ 'selected' : (paymentMethod == '@PaymentMethod.VirtualAccount') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Lainnya">
                             </div>
-                            <div class="nama-bank"><p><b>Bank Lainnya (Virtual Account)</b></p></div>
+                            <div class="nama-bank"><p><b>Bank Lainnya <span style="color: red">(Payday Madness)</span></b></p></div>
                         </div>
                     </div>
                     @if (ViewBag.Platform != PlatformType.DesktopWebsite) {
@@ -41,9 +41,9 @@
 
             <!-- KARTU KREDIT / DEBIT -->
             <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.CreditCard">
-                <div class="row" ng-click="setMdr('@PaymentMethod.CreditCard')">
+                <div class="row">
                     <div class="col-xs-5"><img src="/Assets/images/kredit.jpg" /></div>
-                    <div class="col-xs-7 col-md-6"><h4>Kartu Kredit / Debit</h4></div>
+                    <div class="col-xs-7 col-md-6" ng-click="methodDiscount.reset('nVA')"><h4>Kartu Kredit / Debit</h4></div>
                     <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
                 </div>
                 <div class="accordion-content">
@@ -158,9 +158,9 @@
 
             <!-- MANDIRI CLICKPAY -->
             <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.MandiriClickPay">
-                <div class="row" ng-click="setMdr('@PaymentMethod.MandiriClickPay')">
+                <div class="row">
                     <div class="col-xs-5"><img src="/Assets/images/mandiri.jpg" /></div>
-                    <div class="col-xs-7 col-md-6"><h4>Mandiri Clickpay</h4></div>
+                    <div class="col-xs-7 col-md-6" ng-click="methodDiscount.reset('nVA')"><h4>Mandiri Clickpay</h4></div>
                     <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
                 </div>
                 <div class="accordion-content">
@@ -222,9 +222,9 @@
             
             <!-- CIMB CLICKS -->
             <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.CimbClicks">
-                <div class="row" ng-click="setMdr('@PaymentMethod.CimbClicks')">
+                <div class="row">
                     <div class="col-xs-5"><img src="/Assets/images/cimb.jpg" /></div>
-                    <div class="col-xs-7 col-md-6"><h4>CIMB Clicks</h4></div>
+                    <div class="col-xs-7 col-md-6" ng-click="methodDiscount.reset('nVA')"><h4>CIMB Clicks</h4></div>
                     <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
                 </div>
                 <div class="accordion-content">
