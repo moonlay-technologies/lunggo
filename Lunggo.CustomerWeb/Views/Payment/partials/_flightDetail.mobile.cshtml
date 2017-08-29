@@ -67,25 +67,28 @@
     <div class="row">
         <div class="col-xs-6 "><a data-toggle="modal" href="#myModal">Rincian Penerbangan</a></div>
         <div class="col-xs-6 text-right">
-            <h3>
+            <h3>@* redundant di _priceDetail *@
+                @* <span ng-if="voucher.confirmedCode"> *@
+                <span>
+                    Rp {{totalPrice - voucher.amount + UniqueCodePaymentConfig.UniqueCode + getMdr()| number:0}}
+                </span>
+@* 
                 <span ng-if="!binDiscount.available && !methodDiscount.available && !voucher.confirmedCode">
-                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
-                </span>
-                <span ng-if="voucher.confirmedCode">
-                    Rp {{totalPrice - voucher.amount - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode| number}}
-                </span>
-                <span ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
+                    Rp {{totalPrice + UniqueCodePaymentConfig.UniqueCode + getMdr()| number}}
                 </span>
                 <span ng-if="binDiscount.available && !binDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount| number}}
-                </span>
-                <span ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{originalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
+                    Rp {{totalPrice + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount + getMdr()| number}}
                 </span>
                 <span ng-if="methodDiscount.available && !methodDiscount.replaceDiscount && !voucher.confirmedCode">
-                    Rp {{totalPrice - CreditCardPromo.Amount + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount| number}}
+                    Rp {{totalPrice + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount + getMdr()| number}}
                 </span>
+
+                <span ng-if="binDiscount.available && binDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{originalPrice + UniqueCodePaymentConfig.UniqueCode - binDiscount.amount + getMdr()| number}}
+                </span>
+                <span ng-if="methodDiscount.available && methodDiscount.replaceDiscount && !voucher.confirmedCode">
+                    Rp {{originalPrice + UniqueCodePaymentConfig.UniqueCode - methodDiscount.amount + getMdr()| number}}
+                </span> *@
             </h3>
         </div>
     </div>  
