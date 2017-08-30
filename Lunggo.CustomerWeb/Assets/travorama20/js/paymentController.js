@@ -917,22 +917,31 @@ app.controller('paymentController', [
     //         (console.log(price),price);
     // }
 
-    jQuery(document).ready(function ($) {
+
+    // jQuery(document).ready(function ($) {
+
         //// Animate DOM when opening / closing the accordion
         $(".box-payment .row.ui-accordion-header").click( function(){
-            //// if this section is become expanded (active):
-            if( $(this).hasClass("ui-accordion-header-active") ) {
+
+            var thisMethod = $(this).parent().data("paymentMethod");
+            var currentMethod = $scope.paymentMethod;
+            if (currentMethod == thisMethod) { //// closing the accordion
+                currentMethod = '';
+            } else {
+            //// opening the accordion
+                //// change payment method (for MDR, etc.)
+                currentMethod = thisMethod;
                 //// scroll
                 $('html, body').animate({
                     //// banyaknya pixel yang di scroll (ditutupin)
                     scrollTop: $(this).offset().top - $("header").height() - 8
                 }, 500);
-
-                //// change payment method (for MDR, etc.)
-                $scope.paymentMethod = $(this).parent().data("paymentMethod");
             }
+            $scope.$apply(function () {
+                $scope.paymentMethod = currentMethod;
+            });
         });
-    });
+    // });
 
 }]);
     
