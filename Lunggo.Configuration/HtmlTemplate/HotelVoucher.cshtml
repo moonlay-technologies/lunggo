@@ -223,9 +223,10 @@
                                     {
                                         foreach (var policy in rate.Cancellation)
                                         {
-                                            <p>
+                                            @*<p>
                                                 Pembatalan setelah tanggal @policy.StartTime.ToString("f", CultureInfo.CreateSpecificCulture("id-ID")) akan dikenakan biaya sebesar @((policy.FeePercentage * 100).ToString("####"))%.<br />
-                                            </p>
+                                            </p>*@
+                                        <p>@policy.Description</p>
                                         }
                                     }
 

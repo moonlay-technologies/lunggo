@@ -13,6 +13,8 @@ namespace Lunggo.ApCommon.Flight.Model
     {
         [JsonProperty("reqPassport", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequirePassport { get; set; }
+        [JsonProperty("reqCreatedDatePassport", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RequireCreatedDatePassport { get; set; }
         [JsonProperty("reqDob", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireBirthDate { get; set; }
         [JsonProperty("reqSameCheckIn", NullValueHandling = NullValueHandling.Ignore)]
@@ -73,6 +75,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string BookingId { get; set; }
         public string Token { get; set; }
         public bool RequirePassport { get; set; }
+        public bool RequireCreatedDatePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
         public bool RequireNationality { get; set; }

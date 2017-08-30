@@ -69,19 +69,32 @@ namespace Lunggo.WebAPI.ApiSrc.Autocomplete.Logic
                     searchType = "Destination";
                     _destination = result.Value;
                 }
-                var singleLocation = new HotelAutocompleteApi
+                if (!searchType.Equals("Hotel"))
                 {
-                    Id = result.Value,//result.Id,
-                    Name = result.LabelLocation,
-                    Country = string.IsNullOrEmpty(result.CountryId) ? null : HotelService.GetInstance().GetHotelCountryName(result.CountryId.ToUpper()),
-                    Destination = string.IsNullOrEmpty(_destination) ? null : _destination,
-                    Zone = string.IsNullOrEmpty(_zone) ? null : _zone,
-                    Area = string.IsNullOrEmpty(_area) ? null : _area,
-                    Type = searchType,
-                    NumOfHotels = numHotel,
-                    Value = result.Value
+                    var singleLocation = new HotelAutocompleteApi
+                    {
+                        Id = result.Value,//result.Id,
+                        Name = result.LabelLocation,
+                        Country = string.IsNullOrEmpty(result.CountryId) ? null : HotelService.GetInstance().GetHotelCountryName(result.CountryId.ToUpper()),
+                        Destination = string.IsNullOrEmpty(_destination) ? null : _destination,
+                        Zone = string.IsNullOrEmpty(_zone) ? null : _zone,
+                        Area = string.IsNullOrEmpty(_area) ? null : _area,
+                        Type = searchType,
+                        NumOfHotels = numHotel,
+                        Value = result.Value
+                    };
+                    hotelLocations.Add(singleLocation);
+                }
+                
+            }
+
+            if (hotelLocations.Count == 0)
+            {
+                return new HotelAutocompleteApiResponse
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Count = 0
                 };
-                hotelLocations.Add(singleLocation);
             }
 
             return new HotelAutocompleteApiResponse

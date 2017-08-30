@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Flight.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
@@ -44,8 +45,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
 
                 var itinList = new List<FlightItinerary>();
                 decimal harga = 0;
+                var originCountry = FlightService.GetInstance().GetAirportCountryCode(conditions.Trips[0].OriginAirport);
+                var destCountry = FlightService.GetInstance().GetAirportCountryCode(conditions.Trips[0].DestinationAirport);
                 foreach (var flight in result.Departures.Result)
                 {
+                    var isPassportRequired = originCountry.Equals(destCountry) == false;
+                    var airlineName = flight.AirlinesName.ToLower();
                     var itin = new FlightItinerary
                     {
                         FareId = flight.FlightId,
@@ -57,7 +62,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         Supplier = Supplier.Tiket,
                         FareType = FareType.Published,
                         RequireBirthDate = false,
-                        RequirePassport = false,
+                        RequirePassport = isPassportRequired,
+                        RequireCreatedDatePassport = isPassportRequired, //(isPassportRequired && (airlineName.Contains("tiger") || airlineName.Contains("scoot"))),
                         RequireSameCheckIn = false,
                         RequireNationality = false,
                         RequestedCabinClass = CabinClass.Economy,

@@ -230,7 +230,7 @@
             area: ''
         };
         var defaultValue = {
-            locationCode: 1316553,
+            locationCode: 'Bali',
             locationDisplay: "Bali, Indonesia",
             checkinDate: moment().locale("id").add(5, 'days'),
             checkoutDate: moment().locale("id").add(7, 'days'),
@@ -454,7 +454,7 @@
         //autocomplete for selection from popular destination
         scope.getLocationId = function (location) {
             if (location == "Bali") {
-                scope.hotelSearch.location = "1316553";
+                scope.hotelSearch.location = "Bali";
                 scope.hotelSearch.locationDisplay = "Bali, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Bali";
@@ -462,7 +462,7 @@
                 scope.hideLocation();
             }
             if (location == "Jakarta") {
-                scope.hotelSearch.location = "1390294";
+                scope.hotelSearch.location = "DKI Jakarta";
                 scope.hotelSearch.locationDisplay = "Jakarta, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Jakarta";
@@ -470,7 +470,7 @@
                 scope.hideLocation();
             }
             if (location == "Bandung") {
-                scope.hotelSearch.location = "1316847";
+                scope.hotelSearch.location = "Bandung";
                 scope.hotelSearch.locationDisplay = "Bandung, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Bandung";
@@ -478,7 +478,7 @@
                 scope.hideLocation();
             }
             if (location == "Yogyakarta") {
-                scope.hotelSearch.location = "1391623";
+                scope.hotelSearch.location = "Yogyakarta";
                 scope.hotelSearch.locationDisplay = "Yogyakarta, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Yogyakarta";
@@ -486,7 +486,7 @@
                 scope.hideLocation();
             }
             if (location == "Surabaya") {
-                scope.hotelSearch.location = "1475138";
+                scope.hotelSearch.location = "Surabaya";
                 scope.hotelSearch.locationDisplay = "Surabaya, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Surabaya";
@@ -494,7 +494,7 @@
                 scope.hideLocation();
             }
             if (location == "Solo") {
-                scope.hotelSearch.location = "1474563";
+                scope.hotelSearch.location = "Solo";
                 scope.hotelSearch.locationDisplay = "Solo, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Solo";
@@ -502,7 +502,7 @@
                 scope.hideLocation();
             }
             if (location == "Malang") {
-                scope.hotelSearch.location = "1418983";
+                scope.hotelSearch.location = "Malang";
                 scope.hotelSearch.locationDisplay = "Malang, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Malang";
@@ -510,15 +510,15 @@
                 scope.hideLocation();
             }
             if (location == "Bogor") {
-                scope.hotelSearch.location = "1381333";
+                scope.hotelSearch.location = "Bogor";
                 scope.hotelSearch.locationDisplay = "Bogor, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Bogor";
-                scope.hotelSearch.urlData.type = "Destination";
+                scope.hotelSearch.urlData.type = "Zone";
                 scope.hideLocation();
             }
             if (location == "Medan") {
-                scope.hotelSearch.location = "1418323";
+                scope.hotelSearch.location = "Medan";
                 scope.hotelSearch.locationDisplay = "Medan, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Medan";
@@ -526,7 +526,7 @@
                 scope.hideLocation();
             }
             if (location == "Palembang") {
-                scope.hotelSearch.location = "1381334";
+                scope.hotelSearch.location = "Palembang";
                 scope.hotelSearch.locationDisplay = "Palembang, Indonesia";
                 scope.hotelSearch.urlData.country = "Indonesia";
                 scope.hotelSearch.urlData.destination = "Palembang";
@@ -534,7 +534,7 @@
                 scope.hideLocation();
             }
             if (location == "Singapura") {
-                scope.hotelSearch.location = "1473998";
+                scope.hotelSearch.location = "Singapore";
                 scope.hotelSearch.locationDisplay = "Singapura";
                 scope.hotelSearch.urlData.country = "Singapura";
                 scope.hotelSearch.urlData.destination = "Singapore";
@@ -542,7 +542,7 @@
                 scope.hideLocation();
             }
             if (location == "Kuala Lumpur") {
-                scope.hotelSearch.location = "1401420";
+                scope.hotelSearch.location = "Kuala Lumpur";
                 scope.hotelSearch.locationDisplay = "Kuala Lumpur, Malaysia";
                 scope.hotelSearch.urlData.country = "Malaysia";
                 scope.hotelSearch.urlData.destination = "Kuala Lumpur";
@@ -550,7 +550,7 @@
                 scope.hideLocation();
             }
             if (location == "Bangkok") {
-                scope.hotelSearch.location = "1317515";
+                scope.hotelSearch.location = "Bangkok";
                 scope.hotelSearch.locationDisplay = "Bangkok, Thailand";
                 scope.hotelSearch.urlData.country = "Thailand";
                 scope.hotelSearch.urlData.destination = "Bangkok";
@@ -558,7 +558,7 @@
                 scope.hideLocation();
             }
             if (location == "Hong Kong") {
-                scope.hotelSearch.location = "1372807";
+                scope.hotelSearch.location = "Hong Kong";
                 scope.hotelSearch.locationDisplay = "Hong Kong";
                 scope.hotelSearch.urlData.country = "Hong Kong";
                 scope.hotelSearch.urlData.destination = "Hong Kong";
