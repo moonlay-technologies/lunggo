@@ -1140,6 +1140,8 @@
     <Content Include="Assets\images\why-free.png" />
     <Content Include="Assets\images\why-hotel.png" />
     <Content Include="Assets\images\why-long.png" />
+    <Content Include="Assets\images\why-percaya.png" />
+    <Content Include="Assets\images\why-pilihan.png" />
     <Content Include="Assets\images\why-trust.png" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
@@ -1591,6 +1593,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="robots.txt" />
+    <Content Include="sitemap.xml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
@@ -1642,6 +1646,13 @@
     <Content Include="Views\Payment\Eticket.mobile.cshtml" />
     <Content Include="Views\Payment\Instruction.cshtml" />
     <Content Include="Views\Payment\Instruction.mobile.cshtml" />
+    <Content Include="Views\Payment\partials\_flightDetail.cshtml" />
+    <Content Include="Views\Payment\partials\_flightDetail.mobile.cshtml" />
+    <Content Include="Views\Payment\partials\_hotelDetail.cshtml" />
+    <Content Include="Views\Payment\partials\_payButton.cshtml" />
+    <Content Include="Views\Payment\partials\_paymentMethods.cshtml" />
+    <Content Include="Views\Payment\partials\_paymentWrapperMobile%28buatjaga2%29.cshtml" />
+    <Content Include="Views\Payment\partials\_priceDetail.cshtml" />
     <Content Include="Views\Payment\Payment.cshtml" />
     <Content Include="Views\Payment\Payment.mobile.cshtml" />
     <Content Include="Views\Payment\Thankyou.cshtml" />
@@ -1756,13 +1767,6 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Views\Payment\partials\_flightDetail.cshtml" />
-    <Content Include="Views\Payment\partials\_flightDetail.mobile.cshtml" />
-    <Content Include="Views\Payment\partials\_hotelDetail.cshtml" />
-    <Content Include="Views\Payment\partials\_payButton.cshtml" />
-    <Content Include="Views\Payment\partials\_paymentMethods.cshtml" />
-    <Content Include="Views\Payment\partials\_paymentWrapperMobile%28buatjaga2%29.cshtml" />
-    <Content Include="Views\Payment\partials\_priceDetail.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

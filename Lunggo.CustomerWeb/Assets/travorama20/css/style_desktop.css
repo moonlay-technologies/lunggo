@@ -2853,8 +2853,14 @@ body.page-index {
     .page-index .section-why .sw-img.sw-disc {
       background-image: url(/Assets/images/why-disc.png);
       width: 54px; }
+    .page-index .section-why .sw-img.sw-percaya {
+      background-image: url(/Assets/images/why-percaya.png);
+      width: 54px; }
     .page-index .section-why .sw-img.sw-free {
       background-image: url(/Assets/images/why-free.png);
+      width: 54px; }
+    .page-index .section-why .sw-img.sw-pilihan {
+      background-image: url(/Assets/images/why-pilihan.png);
       width: 54px; }
     .page-index .section-why .sw-img.sw-flight {
       background-image: url(/Assets/images/why-long.png);
