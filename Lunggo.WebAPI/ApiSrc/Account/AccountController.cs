@@ -153,6 +153,23 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [UserAuthorize]
+        [Route("v1/paxlist")]
+        public ApiResponseBase GetSavedPassenger()
+        {
+            try
+            {
+                var apiResponse = AccountLogic.GetSavedPassenger();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         [HttpPost]
         [LunggoCorsPolicy]
         [UserAuthorize]

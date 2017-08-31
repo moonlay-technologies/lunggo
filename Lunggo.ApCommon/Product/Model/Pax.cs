@@ -11,6 +11,8 @@ namespace Lunggo.ApCommon.Product.Model
         public PaxType? Type { get; set; }
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public Title? Title { get; set; }
+        [JsonProperty("gender", NullValueHandling = NullValueHandling.Ignore)]
+        public Gender? Gender { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
         [JsonProperty("dob", NullValueHandling = NullValueHandling.Ignore)]

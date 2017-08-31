@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Product.Service
         //}
 
 
-        public static void SavePassenger(List<Pax> paxs, string email)
+        public static void SavePassenger(string email, List<Pax> paxs)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -147,6 +147,7 @@ namespace Lunggo.ApCommon.Product.Service
                 Type = pax.Type,
                 Title = pax.Title,
                 Name = name,
+                Gender = pax.Gender,
                 DateOfBirth = pax.DateOfBirth,
                 Nationality = pax.Nationality,
                 PassportNumber = pax.PassportNumber,

@@ -216,6 +216,7 @@
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangeProfileLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetSavedPassengerLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetTransactionHistoryLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ConfirmEmailLogic.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetSavedPassengerResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetReservationApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiRequest.cs" />

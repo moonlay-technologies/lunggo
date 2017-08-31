@@ -25,6 +25,7 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
+using Pax = Lunggo.ApCommon.Product.Model.Pax;
 
 namespace Lunggo.BackendWeb
 {
@@ -45,10 +46,22 @@ namespace Lunggo.BackendWeb
             //{
             //    RsvNo = "296406547890"
             //});
-            //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput
-            //{
-            //    RsvNo = "296406547891"
-            //});
+            //FlightService.GetInstance().TestSaved("suheri@travelmaedzy.com",
+            //    new List<Pax>
+            //    {
+            //        new Pax
+            //        {
+            //           Email = "suheri@test.com",
+            //           FirstName = "Suheri",
+            //           LastName = "Marpaung",
+            //           Nationality = "ID",
+            //           Gender = Gender.Male
+            //        }
+            //    });
+
+            var temp = FlightService.GetInstance().TestGet("suheri@travelmaedzy.com");
+            var oke = temp;
+            Console.WriteLine("Done");
 
             //HotelService.GetInstance().CancelHotelBooking(new HotelCancelBookingInput
             //{

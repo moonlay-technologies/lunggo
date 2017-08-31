@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
@@ -19,6 +20,16 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
+        public void SavedPassengerByUser(string email, List<Pax> paxs)
+        {
+            SavePassenger(email, paxs);
+        }
+
+        public List<PaxForDisplay> GetSavedPassengerListByUser(string email)
+        {
+            return GetSavedPassenger(email);
+        }
+        
         public FlightItineraryForDisplay GetItineraryForDisplay(string token)
         {
             try

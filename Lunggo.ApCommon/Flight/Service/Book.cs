@@ -24,6 +24,8 @@ namespace Lunggo.ApCommon.Flight.Service
 {
     public partial class FlightService
     {
+       
+
         public BookFlightOutput BookFlight(BookFlightInput input)
         {
             
@@ -76,6 +78,15 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 output.IsSuccess = true;
                 var reservation = CreateReservation(itins, input, bookResults);
+
+                /*Auto saved if cust logged in*/
+                if (HttpContext.Current.User.Identity.IsUserAuthorized())
+                {
+                    var email = HttpContext.Current.User.Identity.GetUser().Email;
+                    SavePassenger(email, reservation.Pax);
+                }
+                /*end*/
+
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
