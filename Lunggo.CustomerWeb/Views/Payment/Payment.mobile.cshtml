@@ -37,6 +37,7 @@
 }
 @section PageJS{
     <script>
+        var mdr = JSON.parse('@ViewBag.SurchargeList'.replace(/&quot;/g,'"'));
         var langCode = 'en';
         // development only start
         var paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
@@ -146,23 +147,6 @@
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
 
-        var accordionAnimationDuration = 200;
-        $(".box-payment").accordion({
-            collapsible: true,
-            active: false,
-            heightStyle: "content",
-            animate: accordionAnimationDuration
-        });
-        
-        //// close all other accordion
-        $(".box-payment").click( function(){
-            $(".box-payment").not(this).find(".accordion-content").slideUp(accordionAnimationDuration);
-            $(".box-payment").not(this).find(".ui-accordion-header").removeClass("ui-accordion-header-active ui-state-active")
-        });
-
-        $(".kode-voucher a").click( function() {
-            $(this).next().toggle(200);
-        });
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>

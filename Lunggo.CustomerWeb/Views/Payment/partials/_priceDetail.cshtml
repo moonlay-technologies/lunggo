@@ -1,6 +1,6 @@
 <div class="content-right-payment content-right-payment-edit">
     <div class="kode-voucher">
-        <a href="#">Punya kode Voucher ?</a>
+        <a>Punya kode Voucher ?</a>
         <form name="voucherForm" class="form-group" style="display: none;">
             <input type="text" name="code" class="form-control form-kode-voucher" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)">
             <input type="submit" value="CEK" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />

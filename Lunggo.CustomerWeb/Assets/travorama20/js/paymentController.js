@@ -911,37 +911,48 @@ app.controller('paymentController', [
         return a? Math.ceil(price * a.Percentage/100) : 0;
     }
 
-    // $scope.getFinalPrice = function (price) {
-    //     return ($scope.paymentMethod == 'CreditCard') ?
-    //         (console.log(price + $scope.getMdr()), price + $scope.getMdr()) :
-    //         (console.log(price),price);
-    // }
+    //// opening / closing the accordion
+    //// using manual jQuery DOM Manipulation, because jQuery-UI accordion
+    //// present bug that can disrupt payment method's price calculation
+    $(".box-payment .accordion-header").click( function(){
 
+        var thisMethod = $(this).parent().data("paymentMethod");
+        var currentMethod = $scope.paymentMethod;
 
-    // jQuery(document).ready(function ($) {
+        //// CLOSING the accordion
+        if (currentMethod == thisMethod) {
+            currentMethod = '';
+            $(".box-payment .accordion-header").
+                removeClass("ui-accordion-header-active").
+                next(".accordion-content").slideUp(200);
+        }
+        //// OPENING the accordion
+        else {
+            currentMethod = thisMethod;
+            $(this).addClass("ui-accordion-header-active").
+                next(".accordion-content").slideDown(200);
 
-        //// Animate DOM when opening / closing the accordion
-        $(".box-payment .row.ui-accordion-header").click( function(){
+            //// close all other accordion
+            $(".box-payment .accordion-header").not(this).
+                removeClass("ui-accordion-header-active").
+                next(".accordion-content").slideUp(200);
 
-            var thisMethod = $(this).parent().data("paymentMethod");
-            var currentMethod = $scope.paymentMethod;
-            if (currentMethod == thisMethod) { //// closing the accordion
-                currentMethod = '';
-            } else {
-            //// opening the accordion
-                //// change payment method (for MDR, etc.)
-                currentMethod = thisMethod;
-                //// scroll
-                $('html, body').animate({
-                    //// banyaknya pixel yang di scroll (ditutupin)
-                    scrollTop: $(this).offset().top - $("header").height() - 8
-                }, 500);
-            }
-            $scope.$apply(function () {
-                $scope.paymentMethod = currentMethod;
-            });
+            // //// scroll
+            // $('html, body').animate({
+            //     //// banyaknya pixel yang di scroll (ditutupin)
+            //     scrollTop: $(this).offset().top - $("header").height() - 8
+            // }, 500);
+        }
+
+        //// update Angular data-binding
+        $scope.$apply(function () {
+            $scope.paymentMethod = currentMethod;
         });
-    // });
+    });
+
+    $(".kode-voucher a").click( function() {
+        $(this).next().toggle(200);
+    });
 
 }]);
     

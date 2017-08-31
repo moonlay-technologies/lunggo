@@ -66,3 +66,7 @@
 .notification span {
   color: white !important;
 }
+
+.box-payment .accordion-content {
+  display: none;
+}
