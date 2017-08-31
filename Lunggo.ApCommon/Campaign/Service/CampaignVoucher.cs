@@ -112,7 +112,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 {
                     response.VoucherStatus = VoucherStatus.Success;
                     var contact = Contact.GetFromDb(rsvNo);
-                    SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
+                    //SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
                 }
                 else
                     response.VoucherStatus = VoucherStatus.UpdateError;

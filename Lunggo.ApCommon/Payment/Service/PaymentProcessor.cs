@@ -475,7 +475,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     }
                     SaveTransferValue(candidatePrice, rsvNo);
 
-                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
                 }
                 else
                 {
@@ -490,7 +490,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
                     } while (isExist);
                     SaveTransferValue(candidatePrice, rsvNo);
-                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
                 }
             }
 

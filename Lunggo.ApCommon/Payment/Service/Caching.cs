@@ -53,16 +53,16 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static void SaveTransferFeeinCache(string rsvNo, decimal transferFee)
+        private static void SaveUniqueCodeinCache(string rsvNo, decimal uniqueCode)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "transferFee:" + rsvNo;
+            var redisKey = "uniqueCode:" + rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < 3; i++)
             {
                 try
                 {
-                    redisDb.StringSet(redisKey, Convert.ToString(transferFee), TimeSpan.FromMinutes(150));
+                    redisDb.StringSet(redisKey, Convert.ToString(uniqueCode), TimeSpan.FromMinutes(150));
                     return;
                 }
                 catch
@@ -77,12 +77,12 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "uniqueCode:" + rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var transferFee = new RedisValue();
+            var uniqueCode = new RedisValue();
             for (var i = 0; i < 3; i++)
             {
                 try
                 {
-                    transferFee = redisDb.StringGet(redisKey);
+                    uniqueCode = redisDb.StringGet(redisKey);
                     break;
                 }
                 catch
@@ -92,9 +92,9 @@ namespace Lunggo.ApCommon.Payment.Service
             
             }
             
-            if (transferFee.IsNullOrEmpty)
+            if (uniqueCode.IsNullOrEmpty)
                 return 0M;
-            return Convert.ToDecimal(transferFee);
+            return Convert.ToDecimal(uniqueCode);
         }
 
         // Penambahan Buat Delete TransferCode jika tidak digunakan
