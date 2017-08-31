@@ -6338,6 +6338,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   color: #1eafe4;
 }
 
+#why-travorama h2 {
+  padding: 0 20px;
+  color: #1eafe4;
+    font-size: 18px;
+    margin-top: 14px;
+}
+
 #why-travorama p {
   padding: 0 20px;
   text-align: center;
@@ -6723,4 +6730,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 
 .ccDate .form-group div {
   float: left;
+}
+.section-title.stripe h1 {
+  font-weight: 700;
+  font-size: 18px;
+
 }
