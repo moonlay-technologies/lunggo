@@ -26,11 +26,13 @@
     var hotelImg = "";
     var roomImg = "";
     var listAges = new List<int>();
+    var bookingId = "";
     try
     {
         if (Model.Reservation is HotelReservationForDisplay)
         {
             var rsv = (Model.Reservation as HotelReservationForDisplay);
+            bookingId = rsv.HotelDetail.ClientReference;
             night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
             //images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
             //var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
@@ -75,6 +77,12 @@
                 }
                 orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
             }
+        }
+
+        if (Model.Reservation is FlightReservationForDisplay)
+        {
+           var rsvFlight = (Model.Reservation as FlightReservationForDisplay);
+           bookingId = rsvFlight.Itinerary.BookingId;
         }
     }
     catch
@@ -248,6 +256,7 @@
                                 <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
 
                                 <h4 class="md-txt"><b>Nomor Reservasi :</b> @Model.RsvNo</h4>
+                                <h4 class="md-txt"><b>Client Reference :</b> @bookingId</h4>   
                                 <p>Silakan pilih <b>metode pembayaran</b> di bawah ini yang ingin Anda gunakan:</p>
 
                                 <div class="payment-wrapper">

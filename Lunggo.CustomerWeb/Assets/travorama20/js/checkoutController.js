@@ -362,11 +362,11 @@ app.controller('checkoutController', [
                     $scope.form.incompletePassportData = false;
                 }
 
-                if ($scope.createdDatePassportRequired) {
-                    $scope.form.incompletePassportData = false;
-                } else {
-                    $scope.form.incompletePassportData = true;
-                }
+                //if ($scope.createdDatePassportRequired) {
+                //    $scope.form.incompletePassportData = false;
+                //} else {
+                //    $scope.form.incompletePassportData = true;
+                //}
 
                 if (!$scope.form.hasDuplicatePaxName && !$scope.form.incompleteTitles && !$scope.form.incompleteBirthDates
                     && !$scope.form.incompletePassportData && !$scope.form.checkNameIncomplete) {
@@ -726,12 +726,11 @@ app.controller('checkoutController', [
                         $scope.passengers[i].passport.expire.month = '';
                         $scope.passengers[i].passport.expire.year = '';
                         $scope.passengers[i].passport.expire.full = '';
-                        if (!$scope.createdDatePassportRequired) {
-                            $scope.passengers[i].passport.created.date = '';
-                            $scope.passengers[i].passport.created.month = '';
-                            $scope.passengers[i].passport.created.year = '';
-                            $scope.passengers[i].passport.created.full = '';
-                        }
+                        $scope.passengers[i].passport.created = new Date();
+                        $scope.passengers[i].passport.created.date = '';
+                        $scope.passengers[i].passport.created.month = '';
+                        $scope.passengers[i].passport.created.year = '';
+                        $scope.passengers[i].passport.created.full = '';
                         if (!$scope.nationalityRequired) {
                             $scope.passengers[i].nationality = '';
                         }

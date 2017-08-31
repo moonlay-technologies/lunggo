@@ -129,7 +129,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
 
             private static SearchResponse DoSearchFlight(SearchFlightConditions conditions)
             {
-                var client = CreateTiketClient();
+                var client = GetClientInstance().CreateTiketClient();
 
                 var url = "/search/flight?d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd")+ "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&token=" + token + "&v=3&output=json";
                 var request = new RestRequest(url, Method.GET);
@@ -138,17 +138,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 return responseSearch;
             }
 
-            private static bool CheckUpdate(SearchFlightConditions conditions)
-            {
-                var client = CreateTiketClient();
-                var url = "/ajax/mCheckFlightUpdated?token=" + token + "&d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd") + "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&time=134078435&output=json";
-                var request = new RestRequest(url, Method.GET);
-                var response = client.Execute(request);
-                var responseSearch = JsonExtension.Deserialize<UpdateSearchResponse>(response.Content);
-                if (responseSearch == null || responseSearch.Update <= 0)
-                    return false;
-                return true;
-            }
+            //private static bool CheckUpdate(SearchFlightConditions conditions)
+            //{
+            //    var client = TiketClientHandler.GetInstance().CreateTiketClient();
+            //    var url = "/ajax/mCheckFlightUpdated?token=" + token + "&d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd") + "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&time=134078435&output=json";
+            //    var request = new RestRequest(url, Method.GET);
+            //    var response = client.Execute(request);
+            //    var responseSearch = JsonExtension.Deserialize<UpdateSearchResponse>(response.Content);
+            //    if (responseSearch == null || responseSearch.Update <= 0)
+            //        return false;
+            //    return true;
+            //}
         }
 
     }
