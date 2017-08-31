@@ -16,13 +16,13 @@
     @{ Html.RenderPartial("_openGraph"); }
     @{ Html.RenderPartial("_metaTag"); }
 
-    @if (ViewBag.Title == null || ViewBag.Title != "")
+    @if (ViewBag.Title == null || ViewBag.Title == "")
     {
-        <title>@ViewBag.Title | Travorama: Pesan Promo Tiket Pesawat dan Hotel Murah</title>
+        <title>Travorama: Pesan Promo Tiket Pesawat dan Hotel Murah</title>
     }
     else
     {
-        <title>Travorama: Pesan Promo Tiket Pesawat dan Hotel Murah</title>
+        <title>@ViewBag.Title | Travorama: Pesan Promo Tiket Pesawat dan Hotel Murah</title>
     }
 
     <!-- stylesheets -->
