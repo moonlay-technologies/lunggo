@@ -607,7 +607,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       cursor: pointer;
       text-transform: lowercase;
       line-height: 9px;
-      font-weight: 400; }
+      font-weight: 400;
+      padding: 10px;
+      position: absolute;
+      right: 12px;
+      top: 13px; }
   .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
@@ -906,7 +910,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin: 0 15px;
   text-align: center;
   position: relative;
-  padding-top: 20px;
+  padding-top: 12px;
   height: 50px;
   color: #2fb4e6;
   font-size: 15px;
@@ -922,15 +926,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: absolute;
     left: 0;
     bottom: 8px;
-    width: 11px;
-    height: 12px;
+    width: 30px;
+    height: 30px;
     background-image: url("../images/ui-calendar-nav2.png");
     background-repeat: no-repeat;
-    background-position: 0 0; }
+    background-position: 14px 9px;
+    background-size: 30px }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     left: auto;
     right: 0;
-    background-position: -14px 0; }
+    background-position: -14px 9px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
