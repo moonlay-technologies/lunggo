@@ -1697,7 +1697,7 @@
     <Content Include="Views\Shared\Desktop\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\Desktop\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\Desktop\_SectionUserMenu.cshtml" />
-    <Content Include="Views\Shared\Desktop\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SiteFooter.cshtml" />
     <Content Include="Views\Shared\Desktop\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
