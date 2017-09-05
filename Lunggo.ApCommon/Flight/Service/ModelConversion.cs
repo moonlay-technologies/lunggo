@@ -121,7 +121,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 NetChildFare = cNet,
                 NetInfantFare = iNet,
                 Trips = ExtractTripsForDisplay(itins),
-                RegisterNumber = 0
+                RegisterNumber = 0,
+                BookingId = itins[0].BookingId
             };
         }
 
@@ -159,7 +160,8 @@ namespace Lunggo.ApCommon.Flight.Service
                 NetChildFare = cNet,
                 NetInfantFare = iNet,
                 Trips = itinerary.Trips.Select(ConvertToTripForDisplay).ToList(),
-                RegisterNumber = itinerary.RegisterNumber
+                RegisterNumber = itinerary.RegisterNumber,
+                BookingId = itinerary.BookingId
             };
         }
 

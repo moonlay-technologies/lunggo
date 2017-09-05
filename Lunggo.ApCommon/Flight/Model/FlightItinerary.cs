@@ -11,6 +11,9 @@ namespace Lunggo.ApCommon.Flight.Model
 {
     public class FlightItineraryForDisplay
     {
+
+        [JsonProperty("bookingId", NullValueHandling = NullValueHandling.Ignore)]
+        public string BookingId { get; set; }
         [JsonProperty("reqPassport", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequirePassport { get; set; }
         [JsonProperty("reqCreatedDatePassport", NullValueHandling = NullValueHandling.Ignore)]

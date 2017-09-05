@@ -45,7 +45,12 @@ namespace Lunggo.BackendWeb
 
             //FlightService.GetInstance().CommenceIssueTicket(new IssueTicketInput
             //{
-            //    RsvNo = "157806538888"
+            //    RsvNo = "165096568679"
+            //});
+
+            //FlightService.GetInstance().GetAndUpdateNewDetails(new GetDetailsInput
+            //{
+            //    RsvNo = "165096568679"
             //});
 
             //HotelService.GetInstance().CommenceIssueHotel(new IssueHotelTicketInput

@@ -47,14 +47,14 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 }
             }
 
-            public static RestClient CreateTiketClient()
+            public RestClient CreateTiketClient()
             {
                 var client = new RestClient(basePath);
                 client.CookieContainer = new CookieContainer();
                 return client;
             }
 
-            public static void GetToken()
+            public string GetToken()
             {
                 var client = CreateTiketClient();
                 var url = "/apiv1/payexpress?method=getToken&secretkey=" + sharedSecret + "&output=json";
@@ -65,6 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     //Do something
                     token = null;
                 token = responseToken.Token;
+                return token;
             }
 
             
