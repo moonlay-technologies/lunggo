@@ -33,6 +33,7 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             Currency.SyncCurrencyData();
             VeritransWrapper.Init();
+            NicepayWrapper.Init();
         }
     }
 }

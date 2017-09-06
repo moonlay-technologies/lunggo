@@ -789,7 +789,6 @@
     <Content Include="Assets\images\hotel\logo\aston.jpeg" />
     <Content Include="Assets\images\hotel\logo\hotelsantika.svg" />
     <Content Include="Assets\images\hotel\logo\mercure.png" />
-    <Content Include="Assets\images\hotel\logo\santika.svg" />
     <Content Include="Assets\images\hotel\logo\sprite-partner-hotel.png" />
     <Content Include="Assets\images\hotel\logo\swissbelhotel.jpeg" />
     <Content Include="Assets\images\hotel\markers-blue.png" />
@@ -1587,6 +1586,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %288%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />

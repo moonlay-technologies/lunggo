@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DeathByCaptcha;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Flight.Model;
@@ -16,6 +17,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Exception = System.Exception;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -44,9 +46,9 @@ namespace Lunggo.ApCommon.Payment.Service
 
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
-            paymentDetails.Medium = GetPaymentMedium(method);
-            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             paymentDetails.Submethod = submethod;
+            paymentDetails.Medium = GetPaymentMedium(method, submethod);
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
 
             if (!string.IsNullOrEmpty(discountCode))
             {
@@ -88,9 +90,9 @@ namespace Lunggo.ApCommon.Payment.Service
                             Name = "BIN Promo Margin Modify",
                             Description = "Margin Modified by BIN Promo",
                             Currency = order.Price.LocalCurrency,
-                            Constant = newOriginal - (order.Price.OriginalIdr/order.Price.LocalCurrency.Rate)
+                            Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
                         };
-                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant*order.Price.Margin.Currency.Rate);
+                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
                         order.Price.Rounding = 0;
                         order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
                         order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
@@ -181,7 +183,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
                 {
                     CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                }              
+                }
             }
 
             var transferFee = GetTransferFeeFromCache(rsvNo);
@@ -194,7 +196,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
-            ProcessPayment(paymentDetails, transactionDetails, method);
+            ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
                 if (reservation.Type == ProductType.Flight)
@@ -250,7 +252,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return GetUnpaidFromDb();
         }
 
-        private static PaymentMedium GetPaymentMedium(PaymentMethod method)
+        private static PaymentMedium GetPaymentMedium(PaymentMethod method, PaymentSubmethod submethod)
         {
             switch (method)
             {
@@ -261,45 +263,51 @@ namespace Lunggo.ApCommon.Payment.Service
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:
                 case PaymentMethod.CimbClicks:
-                case PaymentMethod.VirtualAccount:
                     return PaymentMedium.Veritrans;
+                case PaymentMethod.VirtualAccount:
+                    return PaymentMedium.Nicepay;
                 default:
                     return PaymentMedium.Undefined;
             }
         }
 
-        private static void ProcessPayment(PaymentDetails paymentDetails, TransactionDetails transactionDetails, PaymentMethod method)
+        private static void ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
-            if (method == PaymentMethod.BankTransfer)
+            if (payment.Method == PaymentMethod.BankTransfer)
             {
-                paymentDetails.Status = PaymentStatus.Pending;
+                payment.Status = PaymentStatus.Pending;
             }
-            else if (method == PaymentMethod.CreditCard || method == PaymentMethod.VirtualAccount || method == PaymentMethod.MandiriClickPay || method == PaymentMethod.CimbClicks || method == PaymentMethod.MandiriBillPayment)
+            else if (
+                payment.Method == PaymentMethod.CreditCard ||
+                payment.Method == PaymentMethod.VirtualAccount ||
+                payment.Method == PaymentMethod.MandiriClickPay ||
+                payment.Method == PaymentMethod.CimbClicks ||
+                payment.Method == PaymentMethod.MandiriBillPayment)
             {
-                
-                var paymentResponse = SubmitPayment(paymentDetails, transactionDetails, method);
-                if (method == PaymentMethod.VirtualAccount)
+
+                var paymentResponse = SubmitPayment(payment, transactionDetails);
+                if (payment.Method == PaymentMethod.VirtualAccount)
                 {
-                    paymentDetails.TransferAccount = paymentResponse.TransferAccount;
+                    payment.TransferAccount = paymentResponse.TransferAccount;
                 }
-                if (method == PaymentMethod.CimbClicks)
+                if (payment.Method == PaymentMethod.CimbClicks)
                 {
-                    paymentDetails.RedirectionUrl = paymentResponse.RedirectionUrl;
+                    payment.RedirectionUrl = paymentResponse.RedirectionUrl;
                 }
                 else
                 {
-                    paymentDetails.Status = paymentResponse.Status;
+                    payment.Status = paymentResponse.Status;
                 }
 
             }
             else
             {
-                paymentDetails.Status = PaymentStatus.Failed;
-                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
+                payment.Status = PaymentStatus.Failed;
+                payment.FailureReason = FailureReason.MethodNotAvailable;
             }
-            paymentDetails.PaidAmountIdr = paymentDetails.FinalPriceIdr;
-            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr;
-            paymentDetails.LocalPaidAmount = paymentDetails.FinalPriceIdr;
+            payment.PaidAmountIdr = payment.FinalPriceIdr;
+            payment.LocalFinalPrice = payment.FinalPriceIdr;
+            payment.LocalPaidAmount = payment.FinalPriceIdr;
         }
 
         public List<SavedCreditCard> GetSavedCreditCards(string email)
@@ -337,19 +345,17 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails, PaymentMethod method)
+        private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
-            var paymentResponse = new PaymentDetails();
-            if (method == PaymentMethod.VirtualAccount)
+            switch (payment.Medium)
             {
-                paymentResponse = NicepayWrapper.ProcessPayment(payment, transactionDetails);
+                case PaymentMedium.Nicepay:
+                    return NicepayWrapper.ProcessPayment(payment, transactionDetails);
+                case PaymentMedium.Veritrans:
+                    return VeritransWrapper.ProcessPayment(payment, transactionDetails);
+                default:
+                    throw new Exception("Invalid payment medium. \"" + payment.Medium + "\" shouldn't be directed here.");
             }
-            else
-            {
-                paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails);
-            }
-            
-            return paymentResponse;
         }
 
         private static string GetThirdPartyPaymentUrl(TransactionDetails transactionDetails, List<ItemDetails> itemDetails, PaymentMethod method)
