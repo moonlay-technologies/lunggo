@@ -687,8 +687,8 @@ app.controller('paymentController', [
                                 $('form#rsvno input#url-input').val($scope.redirectionUrl);
                                 $('form#rsvno').submit();
                                 $scope.pay.go = true;
-                                $scope.pay.checked = false;
-                                $scope.pay.isSuccess = true;
+                                $scope.pay.checked = true;
+                                $scope.pay.isSuccess = false;
                                 break;
                             case 'ERPPAY04':
                                 $scope.errorLog = 'Reservation not found';

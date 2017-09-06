@@ -52,6 +52,11 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
         private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
         {
+            return new PayApiResponse
+            {
+                StatusCode = HttpStatusCode.Accepted,
+                ErrorCode = "ERPPAY02"
+            };
             if (paymentDetails == null)
             {
                 return new PayApiResponse
