@@ -293,7 +293,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         (sur.PaymentSubMethod == null || payment.SubMethod == sur.PaymentSubMethod));
             return surcharge == null
                 ? 0
-                : (payment.OriginalPriceIdr - payment.DiscountNominal)*surcharge.Percentage/100 +
+                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal)*surcharge.Percentage/100) +
                   surcharge.Constant;
         }
 
