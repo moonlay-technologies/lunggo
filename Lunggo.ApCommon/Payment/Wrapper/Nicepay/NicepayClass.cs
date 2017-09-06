@@ -5,15 +5,17 @@ using System.Web.Script.Serialization;
 using System.Reflection;
 using System.Text;
 using System.Web;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using WebRequestor.System.Net;
 
-public class NicepayClass : System.Web.UI.Page
+internal class NicepayClass : System.Web.UI.Page
 {
-    public NicepayResponse CreateVA(NicepayModel Nicepay)
+    internal NicepayResponse CreateVA(NicepayModel Nicepay)
     {
         string RequestType = "RequestVA";
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
         Nicepay.dbProcessUrl = NicepayConfig.GetDBProcessUrl();
         Nicepay.callBackUrl = NicepayConfig.NICEPAY_CALLBACK_URL;
@@ -70,10 +72,10 @@ public class NicepayClass : System.Web.UI.Page
         
     }
 
-    public NicepayResponse ChargeCard(NicepayModel Nicepay)
+    internal NicepayResponse ChargeCard(NicepayModel Nicepay)
     {
         string RequestType = "CredirCard";
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
         Nicepay.dbProcessUrl = NicepayConfig.NICEPAY_DBPROCESS_URL;
         Nicepay.callBackUrl = NicepayConfig.NICEPAY_CALLBACK_URL;
@@ -129,12 +131,12 @@ public class NicepayClass : System.Web.UI.Page
         return JsonSerializer.Deserialize<NicepayResponse>(ResultString);
     }
 
-    public NotificationResult ChargcheckPaymentStatuseCard(string tXid, string referenceNo, string amt)
+    internal NotificationResult ChargcheckPaymentStatuseCard(string tXid, string referenceNo, string amt)
     {
         string RequestType = "checkPaymentStatus";
         NicepayModel Nicepay = new NicepayModel();
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.tXid = tXid;
         Nicepay.referenceNo = referenceNo;
         Nicepay.amt = amt;
@@ -156,12 +158,12 @@ public class NicepayClass : System.Web.UI.Page
 
     }
 
-    public NotificationResult CancelVA(string tXid, string amt)
+    internal NotificationResult CancelVA(string tXid, string amt)
     {
         string RequestType = "cancelVA";
         NicepayModel Nicepay = new NicepayModel();
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.tXid = tXid;
         Nicepay.amt = amt;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
@@ -187,22 +189,22 @@ public class NicepayClass : System.Web.UI.Page
         byte[] MerchantStr;
         if (RequestType == "cancelVA")
         {
-            MerchantStr = Encoding.ASCII.GetBytes(NicepayConfig.NICEPAY_IMID + Nicepay.tXid + Nicepay.amt + NicepayConfig.NICEPAY_MERCHANT_KEY);
+            MerchantStr = Encoding.ASCII.GetBytes(NicepayWrapper._merchantId + Nicepay.tXid + Nicepay.amt + NicepayWrapper._merchantKey);
         }
         else if (RequestType == "registerCustomer" || RequestType == "retrieveVaInfo") {
-            MerchantStr = Encoding.ASCII.GetBytes(NicepayConfig.NICEPAY_IMID + Nicepay.customerId + NicepayConfig.NICEPAY_MERCHANT_KEY);
+            MerchantStr = Encoding.ASCII.GetBytes(NicepayWrapper._merchantId + Nicepay.customerId + NicepayWrapper._merchantKey);
         }
         else if (RequestType == "listDepositCustomerId")
         {
-            MerchantStr = Encoding.ASCII.GetBytes(NicepayConfig.NICEPAY_IMID + Nicepay.customerId + Nicepay.startDt + NicepayConfig.NICEPAY_MERCHANT_KEY);
+            MerchantStr = Encoding.ASCII.GetBytes(NicepayWrapper._merchantId + Nicepay.customerId + Nicepay.startDt + NicepayWrapper._merchantKey);
         }
         else if (RequestType == "listDepositVa")
         {
-            MerchantStr = Encoding.ASCII.GetBytes(NicepayConfig.NICEPAY_IMID + Nicepay.vacctNo + Nicepay.startDt + NicepayConfig.NICEPAY_MERCHANT_KEY);
+            MerchantStr = Encoding.ASCII.GetBytes(NicepayWrapper._merchantId + Nicepay.vacctNo + Nicepay.startDt + NicepayWrapper._merchantKey);
         }
         else
         {
-            MerchantStr = Encoding.ASCII.GetBytes(NicepayConfig.NICEPAY_IMID + Nicepay.referenceNo + Nicepay.amt + NicepayConfig.NICEPAY_MERCHANT_KEY);
+            MerchantStr = Encoding.ASCII.GetBytes(NicepayWrapper._merchantId + Nicepay.referenceNo + Nicepay.amt + NicepayWrapper._merchantKey);
         }
         
        
@@ -218,11 +220,11 @@ public class NicepayClass : System.Web.UI.Page
 
     }
 
-    public registerCustomerId registerCustomerId(NicepayModel Nicepay)
+    internal registerCustomerId registerCustomerId(NicepayModel Nicepay)
     {
         string RequestType = "registerCustomer";
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
 
         CheckParam(Nicepay.iMid, "01");
@@ -240,11 +242,11 @@ public class NicepayClass : System.Web.UI.Page
 
     }
 
-    public registerCustomerId retrieveVaInfo(NicepayModel Nicepay)
+    internal registerCustomerId retrieveVaInfo(NicepayModel Nicepay)
     {
         string RequestType = "retrieveVaInfo";
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
 
         CheckParam(Nicepay.iMid, "01");
@@ -261,11 +263,11 @@ public class NicepayClass : System.Web.UI.Page
 
     }
 
-    public CustomerDeposit listDepositCustomerId(NicepayModel Nicepay)
+    internal CustomerDeposit listDepositCustomerId(NicepayModel Nicepay)
     {
         string RequestType = "listDepositCustomerId";
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
 
         CheckParam(Nicepay.iMid, "01");
@@ -283,11 +285,11 @@ public class NicepayClass : System.Web.UI.Page
         return JsonSerializer.Deserialize<CustomerDeposit>(ResultString);
     }
 
-    public CustomerDeposit listDepositVa(NicepayModel Nicepay)
+    internal CustomerDeposit listDepositVa(NicepayModel Nicepay)
     {
         string RequestType = "listDepositVa";
 
-        Nicepay.iMid = NicepayConfig.NICEPAY_IMID;
+        Nicepay.iMid = NicepayWrapper._merchantId;
         Nicepay.merchantToken = merchantToken(Nicepay, RequestType);
 
         CheckParam(Nicepay.iMid, "01");
@@ -305,14 +307,14 @@ public class NicepayClass : System.Web.UI.Page
         return JsonSerializer.Deserialize<CustomerDeposit>(ResultString);
     }
 
-    public string GetUserIP()
+    internal string GetUserIP()
     {
         string SearchName = string.Empty;
         String strHostName = HttpContext.Current.Request.UserHostAddress.ToString();
         return System.Net.Dns.GetHostAddresses(strHostName).GetValue(0).ToString();
     }
 
-    public string Remarks(string BankCD)
+    internal string Remarks(string BankCD)
     {
         string BankName;
         switch (BankCD)
@@ -348,84 +350,72 @@ public class NicepayClass : System.Web.UI.Page
         return BankName;
     }
 
-    public string GetBankCode(string bankName)
+    internal string GetBankCode(PaymentSubmethod submethod)
     {
-        string bankCd;
-        switch (bankName)
+        switch (submethod)
         {
-            case "BCA":
-                bankCd = "CENA";
-                break;
-            case "Maybank":
-                bankCd = "IBBK";
-                break;
-            case "BNI":
-                bankCd = "BNIN";
-                break;
-            case "Mandiri":
-                bankCd = "BMRI";
-                break;
-            case "Permata":
-                bankCd = "BBBA";
-                break;
-            case "CIMB":
-                bankCd = "BNIA";
-                break;
-            case "BRI":
-                bankCd = "BRIN";
-                break;
-            case "Danamon":
-                bankCd = "BDIN";
-                break;
-            case "KEBHana":
-                bankCd = "HNBN";
-                break;
+            case PaymentSubmethod.BCA:
+                return "CENA";
+            case PaymentSubmethod.Maybank:
+                return "IBBK";
+            case PaymentSubmethod.BNI:
+                return "BNIN";
+            case PaymentSubmethod.Mandiri:
+                return "BMRI";
+            case PaymentSubmethod.Permata:
+                return "BBBA";
+            case PaymentSubmethod.CIMB:
+                return "BNIA";
+            case PaymentSubmethod.BRI:
+                return "BRIN";
+            case PaymentSubmethod.Danamon:
+                return "BDIN";
+            case PaymentSubmethod.KEBHana:
+                return "HNBN";
             default:
-                bankCd = "BCA";
-                break;
+                return "BBBA";
         }
-        return bankCd;
     }
 
-    public string GetApiRequest(string Request)
+    internal string GetApiRequest(string Request)
     {
-        string API_req = null;
+        string API_req = NicepayWrapper._endpoint;
         if (Request == "RequestVA")
         {
-            API_req = NicepayConfig.NICEPAY_REQ_VA_URL;
+            API_req += NicepayConfig.NICEPAY_REQ_VA_URL;
         }
         else if (Request == "CredirCard")
         {
-            API_req =  NicepayConfig.NICEPAY_REQ_CC_URL;
+            API_req +=  NicepayConfig.NICEPAY_REQ_CC_URL;
         }
         else if (Request == "checkPaymentStatus")
         {
-            API_req = NicepayConfig.NICEPAY_ORDER_STATUS_URL;
+            API_req += NicepayConfig.NICEPAY_ORDER_STATUS_URL;
         }
         else if (Request == "cancelVA")
         {
-            API_req = NicepayConfig.NICEPAY_CANCEL_VA_URL;
+            API_req += NicepayConfig.NICEPAY_CANCEL_VA_URL;
         }
         else if (Request == "registerCustomer")
         {
-            API_req = NicepayConfig.NICEPAY_FIX_REG_CUSTOMER_ID;
+            API_req += NicepayConfig.NICEPAY_FIX_REG_CUSTOMER_ID;
         }
         else if (Request == "retrieveVaInfo")
         {
-            API_req = NicepayConfig.NICEPAY_FIX_RETRIEVE_VA_INFO;
+            API_req += NicepayConfig.NICEPAY_FIX_RETRIEVE_VA_INFO;
         }
         else if (Request == "listDepositCustomerId")
         {
-            API_req = NicepayConfig.NICEPAY_FIX_LIST_DEPOSIT_CUSTOMERID;
+            API_req += NicepayConfig.NICEPAY_FIX_LIST_DEPOSIT_CUSTOMERID;
         }
         else if (Request == "listDepositVa")
         {
-            API_req = NicepayConfig.NICEPAY_FIX_LIST_DEPOSIT_VA;
+            API_req += NicepayConfig.NICEPAY_FIX_LIST_DEPOSIT_VA;
         }
         return API_req;
     }
 
-    public string BuildString(NicepayModel Nicepay)
+    internal string BuildString(NicepayModel Nicepay)
     {
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -453,7 +443,7 @@ public class NicepayClass : System.Web.UI.Page
         return resultStr;
     }
 
-    public string CheckParam(string RequestData, string ErrorNo)
+    internal string CheckParam(string RequestData, string ErrorNo)
     {
         if (RequestData == null)
         {
@@ -462,7 +452,7 @@ public class NicepayClass : System.Web.UI.Page
         return RequestData;
     }
 
-    public string  PrintError(string ErrorNo)
+    internal string  PrintError(string ErrorNo)
     {
         string[,] getError = new string[1, 2];
 

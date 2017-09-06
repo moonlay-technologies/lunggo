@@ -115,6 +115,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\mandrill.properties" />
+    <None Include="Config\BackendWeb\nicepay.properties" />
     <None Include="Config\BackendWeb\sendGrid.properties" />
     <None Include="Config\BackendWeb\sriwijaya.properties">
       <SubType>Designer</SubType>
@@ -223,10 +224,12 @@
     </None>
     <None Include="Config\CustomerWeb\sendGrid.properties" />
     <None Include="Config\CustomerWeb\sriwijaya.properties" />
+    <None Include="Config\CustomerWeb\nicepay.properties" />
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
     <None Include="Config\WebAPI\api.properties" />
+    <None Include="Config\WebAPI\nicepay.properties" />
     <None Include="Config\WebJob.BookingAutomation\api.properties" />
     <None Include="Config\WebJob.BookingAutomation\azureStorage.properties" />
     <None Include="Config\WebJob.BookingAutomation\general.properties" />

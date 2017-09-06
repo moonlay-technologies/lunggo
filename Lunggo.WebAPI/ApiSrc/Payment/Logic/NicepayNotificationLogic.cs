@@ -24,12 +24,12 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             //}
 
             var status = MapNicepayPaymentStatus(notif.status,notif.resultMsg);
-            var method = PaymentMethod.VirtualAccount; //MapNicepayPaymentMethod(notif.payMethod);
+            var method = MapNicepayPaymentMethod(notif.payMethod);
             var paymentInfo = new PaymentDetails
             {
-                Medium = PaymentMedium.Veritrans,
+                Medium = PaymentMedium.Nicepay,
                 Method = method,
-                SubMethod = (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount) ? MappingNicepayPaymentSubMethod(notif.bankCd) : PaymentSubMethod.Undefined,
+                Submethod = MappingNicepayPaymentSubMethod(notif.bankCd),
                 Status = status,
                 Time = status == PaymentStatus.Settled ? DateTime.UtcNow : (DateTime?) null,
                 ExternalId = notif.tXid,
@@ -84,28 +84,28 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             }
         }
 
-        public  static PaymentSubMethod MappingNicepayPaymentSubMethod(string bankCd)
+        public static PaymentSubmethod MappingNicepayPaymentSubMethod(string bankCd)
         {
             switch (bankCd)
             {
                 case "CENA":
-                    return PaymentSubMethod.BCA;
+                    return PaymentSubmethod.BCA;
                 case "IBBK":
-                    return PaymentSubMethod.Maybank;
+                    return PaymentSubmethod.Maybank;
                 case "BNIN":
-                    return PaymentSubMethod.BNI;
+                    return PaymentSubmethod.BNI;
                 case "BMRI":
-                    return PaymentSubMethod.Mandiri;
+                    return PaymentSubmethod.Mandiri;
                 case "BBBA":
-                    return PaymentSubMethod.Permata;
+                    return PaymentSubmethod.Permata;
                 case "BNIA":
-                    return PaymentSubMethod.CIMB;
+                    return PaymentSubmethod.CIMB;
                 case "BRIN":
-                    return PaymentSubMethod.BRI;
+                    return PaymentSubmethod.BRI;
                 case "BDMN":
-                    return PaymentSubMethod.Danamon;
+                    return PaymentSubmethod.Danamon;
                 default:
-                    return PaymentSubMethod.Undefined;
+                    return PaymentSubmethod.Undefined;
             }
         }
     }

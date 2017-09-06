@@ -77,8 +77,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     mediumCd = PaymentMediumCd.Mnemonic(payment.Medium);
                 if (payment.Method != PaymentMethod.Undefined)
                     methodCd = PaymentMethodCd.Mnemonic(payment.Method);
-                if (payment.SubMethod != PaymentSubMethod.Undefined)
-                    submethodCd = PaymentSubMethodCd.Mnemonic(payment.SubMethod);
+                if (payment.Submethod != PaymentSubmethod.Undefined)
+                    submethodCd = PaymentSubmethodCd.Mnemonic(payment.Submethod);
                 if (payment.Status != PaymentStatus.Undefined)
                     statusCd = PaymentStatusCd.Mnemonic(payment.Status);
                 if (payment.Time.HasValue)

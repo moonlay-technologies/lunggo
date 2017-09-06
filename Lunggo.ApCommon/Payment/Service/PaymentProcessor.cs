@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubMethod submethod,
+        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubmethod submethod,
             PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Method = method;
             paymentDetails.Medium = GetPaymentMedium(method);
             paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-            paymentDetails.SubMethod = submethod;
+            paymentDetails.Submethod = submethod;
 
             if (!string.IsNullOrEmpty(discountCode))
             {
@@ -342,12 +342,11 @@ namespace Lunggo.ApCommon.Payment.Service
             var paymentResponse = new PaymentDetails();
             if (method == PaymentMethod.VirtualAccount)
             {
-                var niceWrapper = new NicepayWrapper();
-                paymentResponse = niceWrapper.ProcessPayment(payment, transactionDetails, method);
+                paymentResponse = NicepayWrapper.ProcessPayment(payment, transactionDetails);
             }
             else
             {
-                paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails, method);
+                paymentResponse = VeritransWrapper.ProcessPayment(payment, transactionDetails);
             }
             
             return paymentResponse;

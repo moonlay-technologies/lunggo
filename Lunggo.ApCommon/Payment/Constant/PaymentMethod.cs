@@ -21,20 +21,6 @@
         Deposit = 16
     }
 
-    public enum PaymentSubMethod
-    {
-        Undefined = 0,
-        Mandiri = 1,
-        BCA = 2,
-        Permata = 3,
-        BNI = 4,
-        BRI = 5,
-        CIMB = 6,
-        Maybank = 7,
-        Danamon = 8,
-        KEBHana = 9
-    }
-
     internal class PaymentMethodCd
     {
         internal static string Mnemonic(PaymentMethod paymentMedium)
@@ -115,63 +101,6 @@
                     return PaymentMethod.Deposit;
                 default:
                     return PaymentMethod.Undefined;
-            }
-        }
-    }
-
-    internal class PaymentSubMethodCd
-    {
-        internal static string Mnemonic(PaymentSubMethod paymentMedium)
-        {
-            switch (paymentMedium)
-            {
-                case PaymentSubMethod.BCA:
-                    return "BCA";
-                case PaymentSubMethod.Mandiri:
-                    return "Mandiri";
-                case PaymentSubMethod.Permata:
-                    return "Permata";
-                case PaymentSubMethod.BNI:
-                    return "BNI";
-                case PaymentSubMethod.BRI:
-                    return "BRI";
-                case PaymentSubMethod.CIMB:
-                    return "CIMB";
-                case PaymentSubMethod.Maybank:
-                    return "Maybank";
-                case PaymentSubMethod.Danamon:
-                    return "Danamon";
-                case PaymentSubMethod.KEBHana:
-                    return "KEBHana";
-                default:
-                    return null;
-            }
-        }
-
-        internal static PaymentSubMethod Mnemonic(string paymentMedium)
-        {
-            switch (paymentMedium)
-            {
-                case "BCA":
-                    return PaymentSubMethod.BCA;
-                case "Mandiri":
-                    return PaymentSubMethod.Mandiri;
-                case "Permata":
-                    return PaymentSubMethod.Permata;
-                case "BNI":
-                    return PaymentSubMethod.BNI;
-                case "BRI":
-                    return PaymentSubMethod.BRI;
-                case "CIMB":
-                    return PaymentSubMethod.CIMB;
-                case "Maybank":
-                    return PaymentSubMethod.Maybank;
-                case "Danamon":
-                    return PaymentSubMethod.Danamon;
-                case "KEBHana":
-                    return PaymentSubMethod.KEBHana;
-                default:
-                    return PaymentSubMethod.Undefined;
             }
         }
     }

@@ -18,20 +18,48 @@ using Lunggo.Framework.Log;
 
 namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
 {
-    public class NicepayWrapper
+    internal partial class NicepayWrapper
     {
+        private static readonly NicepayWrapper Instance = new NicepayWrapper();
+        private bool _isInitialized;
+
+        internal static string _endpoint;
+        internal static string _merchantId;
+        internal static string _merchantKey;
+
         private NicepayResponse objResult = new NicepayResponse();
         private NicepayModel objNicepay = new NicepayModel();
         private NicepayClass objNicepayClass = new NicepayClass();
         private Data objData = new Data();
         private NotificationResult objNoti = new NotificationResult();
 
-        public PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail, PaymentMethod method)
+        private NicepayWrapper()
         {
-            if (method == PaymentMethod.VirtualAccount)
+
+        }
+
+        internal static NicepayWrapper GetInstance()
+        {
+            return Instance;
+        }
+
+        internal void Init()
+        {
+            if (!_isInitialized)
             {
-                objNicepay.currency = "IDR";//
-                objNicepay.BankCd = objNicepayClass.GetBankCode(PaymentSubMethodCd.Mnemonic(payment.SubMethod));//
+                _endpoint = ConfigManager.GetInstance().GetConfigValue("nicepay", "endPoint");
+                _merchantId = ConfigManager.GetInstance().GetConfigValue("nicepay", "merchantId");
+                _merchantKey = ConfigManager.GetInstance().GetConfigValue("nicepay", "merchantKey");
+                _isInitialized = true;
+            }
+        }
+
+        internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
+        {
+            if (payment.Method == PaymentMethod.VirtualAccount)
+            {
+                objNicepay.currency = "IDR";
+                objNicepay.BankCd = objNicepayClass.GetBankCode(payment.Submethod);
                 objNicepay.DateNow = DateTime.Now.ToString("yyyyMMdd");
                 // Set VA expiry date +1 day (optional)
                 objNicepay.vaExpDate = payment.TimeLimit.ToString("yyyyMMdd");
@@ -64,7 +92,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                 objNicepay.deliveryCountry = "Indonesia";
 
                 objNicepay.vacctValidDt = objNicepay.vaExpDate;
-                objNicepay.vacctValidTm = DateTime.Now.ToString("hhmmss");
+                objNicepay.vacctValidTm = payment.TimeLimit.ToString("HHmmss");
 
                 objResult = objNicepayClass.CreateVA(objNicepay);
 

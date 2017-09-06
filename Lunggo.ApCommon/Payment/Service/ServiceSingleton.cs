@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
+using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
@@ -26,6 +27,7 @@ namespace Lunggo.ApCommon.Payment.Service
     public partial class PaymentService : SingletonBase<PaymentService>
     {
         private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
+        private static readonly NicepayWrapper NicepayWrapper = NicepayWrapper.GetInstance();
 
         public void Init()
         {

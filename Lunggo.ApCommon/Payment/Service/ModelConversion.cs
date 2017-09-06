@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 Method = payment.Method,
                 Status = payment.Status,
                 Time = time,
-                SubMethod = payment.SubMethod,
+                Submethod = payment.Submethod,
                 TimeLimit = timeLimit,
                 TransferAccount = payment.TransferAccount,
                 RedirectionUrl = payment.RedirectionUrl,

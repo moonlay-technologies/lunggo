@@ -629,6 +629,7 @@
     <Compile Include="Identity\Roles\Role.cs" />
     <Compile Include="Identity\Roles\UserRole.cs" />
     <Compile Include="Identity\UserStore\DapperUserStore.cs" />
+    <Compile Include="Payment\Constant\PaymentSubmethod.cs" />
     <Compile Include="Payment\Constant\Supplier.cs" />
     <Compile Include="Payment\Constant\TransferConfirmationReportStatus.cs" />
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
