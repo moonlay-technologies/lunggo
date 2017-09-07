@@ -431,7 +431,7 @@ app.controller('hotelSearchController',
 
     $scope.GotoDetailHotel = function (hotel) {
         var url = $scope.getUrlHotelDetail(hotel);
-        $window.open(url); 
+        $window.location = url; 
     }
 
     $scope.getUrlHotelDetail = function(hotel) {

@@ -33,18 +33,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View(model);
                 }
 
-                string location;
-                if (zone != null)
-                {
-                    location = area ?? zone;
-                }
-                else
-                {
-                    location = destination;
-                }
+                var location = area ?? zone ?? destination;
                 
                 var client = new RestClient(source);
-                string url = @"/v1/autocomplete/hotel//" + location;
+                var url = @"/v1/autocomplete/hotel/" + location.Replace('-', ' ');
                 var searchRequest = new RestRequest(url, Method.GET);
                 var searchResponse = client.Execute(searchRequest);
                 var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
@@ -54,7 +46,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (area != null)
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -62,7 +54,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -71,7 +63,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
                 else
                 {
-                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && r.Country == country).ToList();
+                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                     if (selected.Count > 0)
                     {
                         locationId = selected[0].Id;
@@ -109,15 +101,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View(model);
                 }
 
-                string location;
-                if (zone != null)
-                {
-                    location = area ?? zone;
-                }
-                else
-                {
-                    location = destination;
-                }
+                var location = area ?? zone ?? destination;
 
                 var client = new RestClient(source);
                 string url = @"/v1/autocomplete/hotel//" + location;
@@ -130,7 +114,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (area != null)
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -138,7 +122,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -147,7 +131,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
                 else
                 {
-                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && r.Country == country).ToList();
+                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                     if (selected.Count > 0)
                     {
                         locationId = selected[0].Id;
