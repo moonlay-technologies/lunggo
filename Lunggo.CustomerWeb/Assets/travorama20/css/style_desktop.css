@@ -27,7 +27,10 @@ file : /Assets/travorama20/css/travorama20.scss
   src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
   font-weight: normal;
   font-style: normal; }
-
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url("../../fonts/OpenSans-Bold.ttf");
+}
 /*--------------------*/
 /* font */
 .os-regular, .site-header, .site-footer-menu, .page-index, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout span.grey-txt, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin span.grey-txt, .page-flight, .page-hotel, .page-hotel .normal-txt, .page-hotel label.sqr span.name, .page-hotel label.round span.name, .page-hotel .main-title, .page-checkout, label.control-label, .page-password, .page-account, .page-account-login .form-section h4, .page-static {
@@ -6207,7 +6210,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         font-weight: 600; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter .filter-group {
         padding: 20px 15px;
-        border-top: 1px solid #ccc; }
+        border-top: 1px solid #ededed; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter label.filter-title {
         color: #000;
         margin-bottom: 10px; }
@@ -9524,3 +9527,119 @@ file : /Assets/travorama20/css/_page_password.scss
 .why-title h2 {
     font-size: 16px;
 }
+
+
+
+
+/* PROMO */
+
+.judul-aktivasi {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.judul-aktivasi h1 {
+    font-family: 'Open Sans Bold';
+}
+
+.desc-aktivasi {
+    color: #515151;
+    text-align: center;
+        font-size: 15px;
+    line-height: 1.6;
+}
+.info-lanjutan-aktivasi {
+    margin-top: 20px;
+}
+.info-lanjutan-aktivasi a {
+    color: #197bc6;
+    text-decoration: underline;
+}
+.detail-promo {
+    margin-top: 40px;
+}
+.box-promo {
+    border: 1px solid #b3b3b3;
+    padding: 10px 15px;
+    margin: 0 15px;
+}
+.gambar-box-promo {
+    margin-top: 5px;
+}
+
+    .judul-box-promo {
+        font-size:16px;
+        margin-bottom: 3px;
+        color: #000;
+    }
+    .gambar-box-promo img {
+        width: 70px;
+    }
+.align-right {
+        text-align: right;
+    }
+.info-box-promo {
+    margin-top: 5px;
+}
+.tanggal-box-promo {
+     font-size: 14px;
+    color: #7d7d7d
+}
+.clear-margin-right {
+    margin-right: 0 !important;
+}
+.rekomendasi-hotel-promo {
+    margin-top: 60px;
+}
+.judul-rekomendasi-hotel-promo {
+    border-bottom: 1px solid #b3b3b3;
+    padding-bottom: 10px;
+    font-family: 'Open Sans Bold';
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.judul-rekomendasi-hotel-promo span {
+    font-size: 18px;
+}
+ .container-rekomendasi-hotel {
+ }
+ .box-rekomendasi-hotel-promo {
+     background: #fff;
+     border: 1px solid #ededed;
+     padding: 0;
+     width: 31%;
+     margin: 0 1.16%;
+ }
+ .foto-hotel-rekomendasi {
+     height: 150px;
+     background-image: url(/Assets/images/kamar-hotel.jpg);
+     background-size: cover;
+     background-position: bottom;
+ }
+ .foto-hotel-rekomendasi img {
+     width: 100%;
+ }
+ .info-hotel-rekomendasi {
+     padding: 15px 10px;
+     border-bottom: 1px solid #ededed;
+ }
+ .harga-list-hotel-rekomendasi {
+     padding: 10px 10px;
+     padding-bottom: 15px;
+ }
+ .btn-lihat-kamar-rekomendasi {
+     background: #ffd632;
+     border: none;
+     color: #4f3500;
+     border-radius: 2px;
+     font-weight: 700;
+     text-align: center;
+     padding: 10px 0;
+     width: 100%;
+ }
+ .harga-baru-rekomendasi {
+    color: #1daee4;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 2px 0 10px 0;
+    text-align: center
+ }
