@@ -123,5 +123,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult DetailPageActivity()
+        {
+            return View();
+        }
     }
 }

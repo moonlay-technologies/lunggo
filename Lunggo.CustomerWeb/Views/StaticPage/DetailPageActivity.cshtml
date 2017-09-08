@@ -1,0 +1,34 @@
+﻿<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
+
+    @{ Html.RenderPartial("_openGraph"); }
+    @{ Html.RenderPartial("_metaTag"); }
+
+    <title>@ViewBag.Title | Travorama : Promo tiket pesawat dan hotel murah</title>
+
+    <!-- stylesheets -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS");
+    }
+
+    @if (ViewBag.SiteHeader != "header-contact" && ViewBag.SiteHeader != "header-faq" && ViewBag.SiteHeader != "header-how-to" && ViewBag.SiteHeader != "header-global-error" && ViewBag.SiteHeader != "header-email")
+    {
+        <link rel="stylesheet" href="/Assets/css/common.css">
+        <link rel="stylesheet" href="/Assets/travorama20/css/style_desktop.css">
+    
+    }
+</head>
+
+<body>
+    tes
+</body>
+
+
