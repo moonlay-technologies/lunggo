@@ -13,16 +13,6 @@ body.page-promo.promo-btn-mobile-app {
   font-family: 'Open Sans';
   /*Desktop*/
   /*Mobile*/ }
-  .page-promo.promo-imlek .top-section a {
-    background-image: url("/Assets/images/campaign/Imlek2017/Imlek2017-page.jpg"); }
-  .page-promo.promo-btn .top-section a {
-    background-image: url("/Assets/images/campaign/TerbanginHemat/TerbanginHemat-page.jpg"); }
-  .page-promo.promo-hut-btn .top-section a {
-    background-image: url("/Assets/images/campaign/HutBTN/HutBTN-page.jpg"); }
-  .page-promo.promo-permata .top-section a {
-    background-image: url("/Assets/images/campaign/PaydayMadness/PaydayMadness-page.jpg"); }
-  .page-promo.promo-bankmega .top-section a {
-    background-image: url("/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-page.jpg"); }
   .page-promo .top-section a {
     display: block;
     width: 100%;
@@ -31,7 +21,7 @@ body.page-promo.promo-btn-mobile-app {
     background-size: cover;
     min-height: 520px; }
   .page-promo .bottom-section {
-    margin: 40px 0 60px; }
+    margin-bottom: 60px; }
     .page-promo .bottom-section > .container {
       max-width: none;
       padding: 0 6px; }
