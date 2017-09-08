@@ -6173,7 +6173,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         color: #000;
     }
     .gambar-box-promo img {
-        width: 50%;
+        /*width: 50%;*/
     }
     .btn-book {
         text-align: center;

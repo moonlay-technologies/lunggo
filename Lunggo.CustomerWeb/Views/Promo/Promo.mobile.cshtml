@@ -1,0 +1,172 @@
+@{
+    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
+    ViewBag.BodyClass = "page-promo promo-mobile promo-btn-mobile";
+    ViewBag.AngularController = "PromoController";
+}
+
+@section AdditionalCSS {
+    <link href="/Assets/css/promo.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Assets/vendor/slick/slick.css" />
+}
+
+<div class="promo-btn">
+    <div class="mini-banner">
+        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrcMobile" alt="@ViewBag.ImageAlt" /></a>
+    </div>
+    <div class="info-promo">
+        <div class="judul-promo bold-txt">@ViewBag.PromoTitle</div>
+        <div class="desc-promo"><p>@ViewBag.PromoDescription</p></div>
+        <div class="more-info">Info Lengkapnya di <a class="bold-txt" id="syarat-ketentuan-btn">Syarat dan Ketentuan</a></div>
+        <div class="detail-promo">
+            <div class="box-promo clearfix">
+                <div class="col-xs-8 info-box-promo">
+                    <div class="judul-box-promo bold-txt">Kode Promo</div>
+                    <div class="tanggal-box-promo">@ViewBag.KodePromo</div>
+                </div>
+                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/ticket.png" /></div>
+            </div>
+            <div class="box-promo clearfix">
+                <div class="col-xs-8 info-box-promo">
+                    <div class="judul-box-promo bold-txt">Periode Booking</div>
+                    <div class="tanggal-box-promo">@ViewBag.PeriodeBooking</div>
+                </div>
+                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/images/calendar.png" /></div>
+            </div>
+            <div class="box-promo clearfix">
+                <div class="col-xs-8 info-box-promo">
+                    <div class="judul-box-promo bold-txt">Periode Inap</div>
+                    <div class="tanggal-box-promo">@ViewBag.PeriodeInap</div>
+                </div>
+                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/inap.png" /></div>
+            </div>
+        </div>
+        <div class="btn-book">
+            <a href="/hotel"><div class="book-now">BOOK NOW</div></a>
+        </div>
+    </div>
+@* 
+    <!-- <div class="rekomendasi-hotel">
+        <div class="judul-rekomendasi-hotel">Rekomendasi Hotel</div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png"/></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span/> / night<span></div>
+            </div>
+        </div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png" /></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span /> / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN</div></a>
+                </div>
+            </div>
+        </div>
+        <div class="box-rekomendasi-hotel clearfix">
+            <div class="col-xs-4 image-hotel"><img src="/Assets/mobile/images/room.jpg" /></div>
+            <div class="col-xs-8 desc-hotel">
+                <div class="nama-hotel">The Ritz-Carlton<br />Jakarta, Pacific Place Hotel</div>
+                <div class="rating-stars"><img src="/Assets/mobile/images/star.png" /></div>
+                <div class="separator-mobile"></div>
+                <div class="harga-room">Rp. 3.550.400<span /> / night<span></div>
+                <div class="btn-pesan">
+                    <a href="#"><div class="order-now">PESAN</div></a>
+                </div>
+            </div>
+        </div>
+    </div> --> *@
+    <div class="langkah-promo">
+        <div class="judul-rekomendasi-hotel clearfix">
+            <div class="col-xs-10">Langkah Dapatkan Promo</div>
+            <div class="col-xs-2 align-right hide-content-btn">
+                <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </div>
+        </div>
+        <!-- <div class="carousel-inner-mobile slider-promo" role="listbox">
+            <div class="item">
+                <img src="/Assets/mobile/images/slider-promo.png" alt="" />
+            </div>
+        </div> -->
+        <div class="isi-syarat-ketentuan clearfix">
+        @for (var i = 0; i < ViewBag.HowToGet.Count; i++ )
+        {
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-1 list-number-mobile">@(i+1)</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@Html.Raw(ViewBag.HowToGet[i])</div>
+            </div>
+        }
+        </div>
+    </div>
+    <div class="syarat-ketentuan" id="syarat-ketentuan">
+        <div class="judul-rekomendasi-hotel clearfix">
+            <div class="col-xs-10">Syarat & Ketentuan</div>
+            <div class="col-xs-2 align-right hide-content-btn">
+                <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </div>
+        </div>
+        <div class="isi-syarat-ketentuan clearfix">
+        @for (var i = 0; i < ViewBag.Terms.Count; i++ )
+        {
+            <div class="row container-list-ketentuan">
+                <div class="col-xs-1 list-number-mobile">@(i+1)</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@Html.Raw(ViewBag.Terms[i])</div>
+            </div>
+        }
+        </div>
+    </div>
+    <div class="subscribe-mobile">
+        <img class="bg-subscribe" src="/Assets/mobile/images/bg-subscribe.png" />
+        <div class="subscribe-before">
+            <div class="judul-subscribe">Subscribe now!</div>
+            <div class="container-form-subscribe">
+                <!-- <div class=""> -->
+                    <form class="subscribe-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control form-control-mobile subscribe-name" id="exampleInputEmail1" placeholder="Masukkan Nama Anda" name="name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-mobile subscribe-email" id="exampleInputEmail1" placeholder="Masukkan Alamat Email">
+                        </div>
+                        <input type="submit" class="btn-subscribe" value="SUBSCRIBE">
+                    </form>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="subscribe-after" style="display: none; padding-top: 20px">
+            <div class="judul-subscribe">Terima Kasih Telah Mendaftar di Newsletter Kami</div>
+        </div>
+    </div>
+
+    @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
+</div>
+
+@section PageJS{
+    <script src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
+    <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
+    <!-- angular controller -->
+    <script src="/Assets/travorama20/js/PromoController.js"></script>
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/mobile/js/HomeController.js"></script>
+    <script type="text/javascript">
+        $("#syarat-ketentuan-btn").click( function() {
+            $('html, body').animate({
+                //// value scrolltop = banyaknya pixel yang di scroll (ditutupin)
+                //// angka 8 untuk margin aja biar rapi
+                scrollTop: $("#syarat-ketentuan").offset().top - $("header").height() - 8
+            }, 500);
+        });
+        $(".hide-content-btn").click( function() {
+            //// hide the content element below
+            $(this).parent().next().toggle(200);
+        })
+    </script>
+}

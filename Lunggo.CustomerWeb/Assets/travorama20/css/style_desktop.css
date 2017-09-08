@@ -9560,7 +9560,7 @@ file : /Assets/travorama20/css/_page_password.scss
 .box-promo {
     border: 1px solid #b3b3b3;
     padding: 10px 15px;
-    margin-right: 30px;
+    margin: 0 15px;
 }
 .gambar-box-promo {
     margin-top: 5px;

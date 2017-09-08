@@ -60,8 +60,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View("Harbolnas2016");
                 case "mataharimall":
                     return View("MatahariMall");
-                case "paydaymadnesspermatabank":
+                case "paydaymegadeals":
+                    return View("PaydayMegaDeals");
 
+                case "paydaymadnesspermatabank":
                     ViewBag.Title = "Payday Madness Permata Bank";
                     ViewBag.ImageSrc = "/Assets/images/campaign/PaydayMadness/PaydayMadness-page-mobile.jpg";
                     ViewBag.ImageAlt = "Payday Madness Permata Bank";
@@ -88,10 +90,42 @@ namespace Lunggo.CustomerWeb.Controllers
                     howToGet.Add("Selesaikan proses pembayaran dan lakukan konfirmasi pembayaran");
                     howToGet.Add("E-voucher hotel akan dikirimkan ke alamat email Anda");
                     ViewBag.HowToGet = howToGet;
-                    
+
                     return View("PaydayMadnessPermataBank");
-                case "paydaymegadeals":
-                    return View("PaydayMegaDeals");
+
+                case "septemberseru":
+
+                    ViewBag.Title = "September Seru";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017SeptemberSeru/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017SeptemberSeru/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "September Seru";
+                    ViewBag.PromoTitle = "September Seru";
+                    ViewBag.PromoDescription = "Liburan bersama teman atau keluarga akan lebih seru dengan bebas pilih hotel di mana saja, bebas inap kapan saja dan tanpa habis budget. Pesan sekarang dan nikmati diskon s.d. Rp1.000.000 kamar hotel di dalam dan luar negeri di Travorama.";
+                    ViewBag.KodePromo = "SEPTEMBERSERU9";
+                    ViewBag.PeriodeBooking = "8 - 24 September 2017";
+                    ViewBag.PeriodeInap = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan kamar hotel melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan detail tamu");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-Voucher hotel dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar 9% (Maks. Rp 1.000.000) dan minimal transaksi Rp 500.000");
+                    termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
+                    termList.Add("Berlaku untuk pemesanan kamar hotel melalui situs Travorama ");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk semua metode pembayaran");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain ");
+                    termList.Add("Periode booking: 8 - 24 September 2017");
+                    termList.Add("Periode inap: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
                 default:
                     return RedirectToAction("Index", "Index");
             }
