@@ -173,7 +173,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 request.AddQueryParameter("output", "json");
 
                 //TODO Need Improvement
-                if (adults != null && adults.Count != 0)
+                if (adults.Count != 0)
                 {
                     i =  1;
                     foreach (var adult in adults)
@@ -201,11 +201,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportissueddatea" + i, adult.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuinga" + i, adult.PassportCountry);
                         }
+                        if (bookInfo.Itinerary.RequireNationality)
+                        {
+                            request.AddQueryParameter("passportnationalitya" + i, adult.Nationality);
+                        }
                         i++;
                     }
                 }
 
-                if ( childs != null && childs.Count != 0)
+                if (childs.Count != 0)
                 {
                     i = 1;
                     foreach (var child in childs)
@@ -228,15 +232,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             //var issueDate = child.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalityc" + i, child.PassportCountry);
                             request.AddQueryParameter("passportissueddatec" + i, child.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
-                            request.AddQueryParameter("passportissuingc" + i, child.PassportCountry);
-                            
+                            request.AddQueryParameter("passportissuingc" + i, child.PassportCountry);   
                         }
-
+                        if (bookInfo.Itinerary.RequireNationality)
+                        {
+                            request.AddQueryParameter("passportnationalityc" + i, child.Nationality);
+                        }
                         i++;
                     }
                 }
 
-                if (infants != null && infants.Count != 0)
+                if (infants.Count != 0)
                 {
                     i = 1;
                     foreach (var infant in infants)
@@ -261,6 +267,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportnationalityi" + i, infant.PassportCountry);
                             request.AddQueryParameter("passportissueddatei" + i, infant.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuingi" + i, infant.PassportCountry);
+                        }
+                        if (bookInfo.Itinerary.RequireNationality)
+                        {
+                            request.AddQueryParameter("passportnationalityi" + i, infant.Nationality);
                         }
                         i++;
                     }
