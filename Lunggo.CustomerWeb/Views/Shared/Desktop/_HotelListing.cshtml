@@ -1,5 +1,5 @@
 ﻿<div class="hotel-list-container" ng-show="searchDone">
-    <a ng-repeat="hotel in hotels" class="hl-wrapper" href="{{getUrlHotelDetail(hotel)}}" target="_blank">
+    <a ng-repeat="hotel in hotels" class="hl-wrapper" ng-href="{{getUrlHotelDetail(hotel)}}" target="_blank">
         <div class="hotel-list clearfix pointer">
             <div class="col-2">
                 <img class="img-list" hotel-list-image ng-src="{{hotel.mainImage}}" alt="Hotel" />

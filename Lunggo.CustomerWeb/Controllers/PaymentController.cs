@@ -38,17 +38,34 @@ namespace Lunggo.CustomerWeb.Controllers
                     else
                         rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
 
-                    ViewBag.SurchargeList = JsonExtension.Serialize(PaymentService.GetInstance().GetSurchargeList());
-                    return View(new PaymentData
+
+                    if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status != PaymentStatus.Settled)
                     {
-                        RsvNo = rsvNo,
-                        Reservation = rsv,
-                        TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
-                    });
-                    
+                        return Redirect(rsv.Payment.RedirectionUrl);
+                    }
+                    else if (rsv.Payment.Status == PaymentStatus.Pending &&
+                         (rsv.Payment.Method == PaymentMethod.BankTransfer ||
+                          rsv.Payment.Method == PaymentMethod.VirtualAccount))
+                    {
+                        return RedirectToAction("Instruction", "Payment", new {rsvNo, regId});
+                    }
+                    else if (rsv.Payment.Status == PaymentStatus.Undefined || rsv.Payment.Status == PaymentStatus.Failed)
+                    {
+                        ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+                        return View(new PaymentData
+                        {
+                            RsvNo = rsvNo,
+                            Reservation = rsv,
+                            TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
+                        });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Thankyou", "Payment", new {rsvNo, regId});
+                    }
                 }
                 return RedirectToAction("Index", "Index");
-                
+
             }
             catch
             {
