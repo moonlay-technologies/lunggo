@@ -11,7 +11,7 @@
 
 <div class="promo-btn">
     <div class="mini-banner">
-        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrc" alt="@ViewBag.ImageAlt" /></a>
+        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrcMobile" alt="@ViewBag.ImageAlt" /></a>
     </div>
     <div class="info-promo">
         <div class="judul-promo bold-txt">@ViewBag.PromoTitle</div>
@@ -91,7 +91,7 @@
         {
             <div class="row container-list-ketentuan">
                 <div class="col-xs-1 list-number-mobile">@(i+1)</div>
-                <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.HowToGet[i]</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@Html.Raw(ViewBag.HowToGet[i])</div>
             </div>
         }
         </div>
