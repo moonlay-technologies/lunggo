@@ -99,7 +99,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017SeptemberSeru/landingpage_mobile.jpg";
                     ViewBag.ImageAlt = "September Seru";
                     ViewBag.PromoTitle = "September Seru";
-                    ViewBag.PromoDescription = "Liburan bersama teman atau keluarga akan lebih seru dengan bebas pilih hotel di mana saja, bebas inap kapan saja dan tanpa habis budget. Pesan sekarang dan nikmati diskon s.d. Rp1.000.000 kamar hotel di dalam dan luar negeri di Travorama.";
+                    ViewBag.PromoDescription = "Liburan bersama teman atau keluarga akan lebih seru dengan bebas pilih hotel di mana saja, bebas inap kapan saja dan tanpa habis budget. Pesan sekarang dan nikmati diskon s.d. Rp1.000.000 kamar hotel domestik dan internasional di Travorama.";
                     ViewBag.KodePromo = "SEPTEMBERSERU9";
                     ViewBag.PeriodeBooking = "8 - 24 September 2017";
                     ViewBag.PeriodeInap = "Kapan Saja";
