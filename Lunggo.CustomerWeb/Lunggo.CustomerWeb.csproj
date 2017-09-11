@@ -420,6 +420,7 @@
     <Content Include="Assets\fonts\Raleway-SemiBold.ttf" />
     <Content Include="Assets\fonts\Raleway-Thin.ttf" />
     <Content Include="Assets\images\adult-icon.png" />
+    <Content Include="Assets\images\adult.jpg" />
     <Content Include="Assets\images\airlines\0V.png" />
     <Content Include="Assets\images\airlines\2J.png" />
     <Content Include="Assets\images\airlines\2P.png" />
@@ -715,6 +716,7 @@
     <Content Include="Assets\images\bersama-prima-alto.jpg" />
     <Content Include="Assets\images\bg-subscribe-desktop.jpg" />
     <Content Include="Assets\images\bg-white.jpg" />
+    <Content Include="Assets\images\bintang-hotel.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\buttons\app-store.png" />
@@ -724,6 +726,13 @@
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-nav-sprite.png" />
     <Content Include="Assets\images\calendar-sprite.png" />
+    <Content Include="Assets\images\calendar.jpg" />
+    <Content Include="Assets\images\calendar.png" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\homepagepromo_mobile.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\homepage_desktop.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\homepage_mobile.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\landingpage_desktop.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\landingpage_mobile.jpg" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />
     <Content Include="Assets\images\campaign\bali.jpg" />
@@ -982,6 +991,7 @@
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
+    <Content Include="Assets\images\meal.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\mobile-sprite.png" />
@@ -1086,6 +1096,7 @@
     <Content Include="Assets\images\social-twitter.png" />
     <Content Include="Assets\images\sprite-arrow.png" />
     <Content Include="Assets\images\ssl-image.png" />
+    <Content Include="Assets\images\star-detail-hotel.png" />
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
@@ -1143,6 +1154,7 @@
     <Content Include="Assets\images\why-percaya.png" />
     <Content Include="Assets\images\why-pilihan.png" />
     <Content Include="Assets\images\why-trust.png" />
+    <Content Include="Assets\images\wifi-hotel.jpg" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
@@ -1559,6 +1571,7 @@
     <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
     <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.scss" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\Promo Send.xlsx" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1767,6 +1780,9 @@
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Views\common\subscribe-mobile.cshtml" />
+    <Content Include="Views\Promo\Promo.cshtml" />
+    <Content Include="Views\Promo\Promo.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
