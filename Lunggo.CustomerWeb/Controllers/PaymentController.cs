@@ -49,7 +49,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     {
                         return RedirectToAction("Instruction", "Payment", new {rsvNo, regId});
                     }
-                    else if (rsv.Payment.Status == PaymentStatus.Undefined || rsv.Payment.Status == PaymentStatus.Failed)
+                    else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) || 
+                        rsv.Payment.Status == PaymentStatus.Failed)
                     {
                         ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
                         return View(new PaymentData
