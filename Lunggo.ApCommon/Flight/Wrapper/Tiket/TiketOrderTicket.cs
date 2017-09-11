@@ -79,8 +79,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var request = new RestRequest(url, Method.GET);
                 request.AddQueryParameter("token", _token);
                 request.AddQueryParameter("order_id", orderId);
-                request.AddQueryParameter("secretkey", sharedSecret);
-                request.AddQueryParameter("confirmkey", confirmKey);
+                request.AddQueryParameter("secretkey", _sharedSecret);
+                request.AddQueryParameter("confirmkey", _confirmKey);
                 request.AddQueryParameter("username", "suheri@travelmadezy.com");
                 request.AddQueryParameter("textarea_note", "confirmation"); // note for confirmation
                 request.AddQueryParameter("tanggal", DateTime.UtcNow.ToString("yyyy-MM-dd"));

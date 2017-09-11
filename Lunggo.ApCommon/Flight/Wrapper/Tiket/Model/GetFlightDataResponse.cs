@@ -39,6 +39,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket.Model
         public Details Titlea1 { get; set; }
         [JsonProperty("birthdatea1", NullValueHandling = NullValueHandling.Ignore)]
         public Details Birthdatea1 { get; set; }
+        [JsonProperty("passportnoa1", NullValueHandling = NullValueHandling.Ignore)]
+        public Details Passportnoa1 { get; set; }
+        [JsonProperty("passportissueddatea1", NullValueHandling = NullValueHandling.Ignore)]
+        public Details Passportissueddatea1 { get; set; }
         [JsonProperty("passportnationalitya1", NullValueHandling = NullValueHandling.Ignore)]
         public Details Passportnationalitya1 { get; set; }
         [JsonProperty("dcheckinbaggagea11", NullValueHandling = NullValueHandling.Ignore)]

@@ -25,8 +25,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var client = CreateTiketClient();
                 var url = "/partner/transactionApi/get_saldo";
                 var request = new RestRequest(url, Method.GET);
-                request.AddQueryParameter("secretkey", sharedSecret);
-                request.AddQueryParameter("confirmkey", confirmKey);
+                request.AddQueryParameter("secretkey", _sharedSecret);
+                request.AddQueryParameter("confirmkey", _confirmKey);
                 request.AddQueryParameter("username", "suheri@travelmadezy.com");
                 request.AddQueryParameter("output", "json");
                 var response = client.Execute(request);

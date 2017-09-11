@@ -25,7 +25,7 @@
         passengerCount = adultCount + childCount + infantCount;
         needBirthDate = Model.Itinerary.RequireBirthDate.GetValueOrDefault();
         needPassport = Model.Itinerary.RequirePassport.GetValueOrDefault();
-        needCreatedDatePassport = Model.Itinerary.RequireCreatedDatePassport.GetValueOrDefault();
+        needCreatedDatePassport = Model.Itinerary.RequireIssueDatePassport.GetValueOrDefault();
         needNationality = Model.Itinerary.RequireNationality.GetValueOrDefault();
         token = Model.Token;
 
@@ -86,7 +86,7 @@
         var totalInfantFare = infantPassenger * infantFare;
         var infantTypeName = 'Bayi';
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-        var createdDatePassportRequired = @Model.Itinerary.RequireCreatedDatePassport.ToString().ToLower();
+        var createdDatePassportRequired = @Model.Itinerary.RequireIssueDatePassport.ToString().ToLower();
         var idRequired = false;
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
         var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();

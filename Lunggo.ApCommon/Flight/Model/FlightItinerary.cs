@@ -16,8 +16,8 @@ namespace Lunggo.ApCommon.Flight.Model
         public string BookingId { get; set; }
         [JsonProperty("reqPassport", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequirePassport { get; set; }
-        [JsonProperty("reqCreatedDatePassport", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? RequireCreatedDatePassport { get; set; }
+        [JsonProperty("reqIssueDatePassport", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? RequireIssueDatePassport { get; set; }
         [JsonProperty("reqDob", NullValueHandling = NullValueHandling.Ignore)]
         public bool? RequireBirthDate { get; set; }
         [JsonProperty("reqSameCheckIn", NullValueHandling = NullValueHandling.Ignore)]
@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Model
         public string BookingId { get; set; }
         public string Token { get; set; }
         public bool RequirePassport { get; set; }
-        public bool RequireCreatedDatePassport { get; set; }
+        public bool RequireIssueDatePassport { get; set; }
         public bool RequireBirthDate { get; set; }
         public bool RequireSameCheckIn { get; set; }
         public bool RequireNationality { get; set; }
@@ -137,6 +137,7 @@ namespace Lunggo.ApCommon.Flight.Model
         {
             return
                 RequirePassport == otheritin.RequirePassport &&
+                RequireIssueDatePassport == otheritin.RequireIssueDatePassport &&
                 RequireBirthDate == otheritin.RequireBirthDate &&
                 RequireSameCheckIn == otheritin.RequireSameCheckIn &&
                 RequireNationality == otheritin.RequireNationality &&

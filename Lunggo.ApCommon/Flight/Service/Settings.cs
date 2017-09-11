@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Service
         private static readonly LionAirWrapper LionAirWrapper = LionAirWrapper.GetInstance();
         private static readonly GarudaWrapper GarudaWrapper = GarudaWrapper.GetInstance();
         private static readonly TiketWrapper TiketWrapper = TiketWrapper.GetInstance();
-        private static readonly Dictionary<int, FlightSupplierWrapperBase> Suppliers = new Dictionary<int, FlightSupplierWrapperBase>()
+        private static readonly Dictionary<int, FlightSupplierWrapperBase> Suppliers = new Dictionary<int, FlightSupplierWrapperBase>
         {
             //{ 1, MystiflyWrapper},
             //{ 2, AirAsiaWrapper},

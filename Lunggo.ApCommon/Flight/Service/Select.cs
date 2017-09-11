@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
@@ -113,42 +114,11 @@ namespace Lunggo.ApCommon.Flight.Service
             if (itin == null)
                 return null;
 
-            if (itin.Supplier == Supplier.Tiket)
+            var supplier = Suppliers[(int)itin.Supplier];
+            var selectSucceed = supplier.SelectFlight(itin);
+            if (!selectSucceed)
             {
-                var flightData = TiketWrapper.SelectFlight(itin.FareId, itin.Trips[0].DepartureDate);
-                if (flightData != null && flightData.Required != null)
-                {
-                    var requireData = flightData.Required;
-                    //if (requireData.Passportnationalitya1 != null && requireData.Passportnationalitya1.Mandatory == 1)
-                    //{
-                    //    itin.RequirePassport = true;
-                    //    //itin.RequireNationality = true;
-                    //}
-                    itin.RequireNationality = true;
-                    if (requireData.Birthdatea1 != null && requireData.Birthdatea1.Mandatory == 1)
-                    {
-                        itin.RequireBirthDate = true;
-                    }
-
-                    if (requireData.DeptCheckinBaggage != null)
-                    {
-                        if (requireData.DeptCheckinBaggage.Resource != null &&
-                            requireData.DeptCheckinBaggage.Resource.Count != 0)
-                        {
-                            var capacityData =
-                                requireData.DeptCheckinBaggage.Resource.FirstOrDefault(x => x.Name.Contains("(+ IDR 0,00)"));
-                            if (capacityData != null)
-                            {
-                                itin.Trips[0].Segments[0].BaggageCapacity = capacityData.Id;
-                            }
-
-                        }
-                    }
-                    itin.Token = flightData.Token;
-                    //TODO Save Token Here
-                    //SaveTiketTokenToCache(itin.FareId, flightData.Token);
-                    //tiketToken = flightData.Token;
-                }
+                throw new Exception("Supplier flight select failed! Supplier: " + itin.Supplier + ". Location: 66 f6 23 8c 3a 57 32 6b");
             }
 
             var currencies = GetCurrencyStatesFromCache(searchId);
@@ -162,7 +132,6 @@ namespace Lunggo.ApCommon.Flight.Service
 
         private List<string> QuarantineItineraries(string searchId, IEnumerable<int> registerNumbers)
         {
-            string tiketToken;
             return registerNumbers.Select((reg, idx) => QuarantineItinerary(searchId, reg, idx+1)).ToList();
         }
     }

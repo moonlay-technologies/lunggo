@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     };
 
                 //Step 2 : Order
-                var orderResult = Order(token);
+                var orderResult = Order(_token);
                 if (orderResult == null || orderResult.Myorder == null)
                     return new BookFlightResult
                     {
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     };
 
                 //Step 3 : Checkout Request
-                var checkoutResponse = CheckoutPage(token, orderResult.Myorder.Order_id);
+                var checkoutResponse = CheckoutPage(_token, orderResult.Myorder.Order_id);
                 if (checkoutResponse == null)
                     return new BookFlightResult
                     {
@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     };
 
                 //Step 4 : Checkout Page Customer
-                var checkoutCustResponse = CheckoutPageCustomer(token);
+                var checkoutCustResponse = CheckoutPageCustomer(_token);
                 if (checkoutCustResponse == null)
                     return new BookFlightResult
                     {

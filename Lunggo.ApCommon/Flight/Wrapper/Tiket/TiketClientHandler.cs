@@ -19,10 +19,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
         {
             private static readonly TiketClientHandler ClientInstance = new TiketClientHandler();
             private bool _isInitialized;
-            private static string basePath;
-            private static string sharedSecret;
-            private static string token;
-            private static string confirmKey;
+            private static string _basePath;
+            private static string _sharedSecret;
+            private static string _token;
+            private static string _confirmKey;
 
 
             private TiketClientHandler()
@@ -40,32 +40,32 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             {
                 if (!_isInitialized)
                 {
-                    basePath = ConfigManager.GetInstance().GetConfigValue("tiket", "apiUrl");
-                    sharedSecret = ConfigManager.GetInstance().GetConfigValue("tiket", "apiSecret");
-                    confirmKey = ConfigManager.GetInstance().GetConfigValue("tiket", "apiConfirmKey");
+                    _basePath = ConfigManager.GetInstance().GetConfigValue("tiket", "apiUrl");
+                    _sharedSecret = ConfigManager.GetInstance().GetConfigValue("tiket", "apiSecret");
+                    _confirmKey = ConfigManager.GetInstance().GetConfigValue("tiket", "apiConfirmKey");
                     _isInitialized = true;
                 }
             }
 
             public RestClient CreateTiketClient()
             {
-                var client = new RestClient(basePath);
-                client.CookieContainer = new CookieContainer();
+                var client = new RestClient(_basePath)
+                {
+                    CookieContainer = new CookieContainer(),
+                    UserAgent = "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+                };
                 return client;
             }
 
             public string GetToken()
             {
                 var client = CreateTiketClient();
-                var url = "/apiv1/payexpress?method=getToken&secretkey=" + sharedSecret + "&output=json";
+                var url = "/apiv1/payexpress?method=getToken&secretkey=" + _sharedSecret + "&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
-                var responseToken = JsonExtension.Deserialize<TiketBaseResponse>(response.Content);
-                if (responseToken == null)
-                    //Do something
-                    token = null;
-                token = responseToken.Token;
-                return token;
+                var responseToken = response.Content.Deserialize<TiketBaseResponse>();
+                _token = responseToken == null ? null : responseToken.Token;
+                return _token;
             }
 
             
