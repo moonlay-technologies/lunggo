@@ -9547,6 +9547,12 @@ file : /Assets/travorama20/css/_page_password.scss
         font-size: 15px;
     line-height: 1.6;
 }
+.desc-aktivasi h2 {
+    color: #515151;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+}
 .info-lanjutan-aktivasi {
     margin-top: 20px;
 }
@@ -9562,6 +9568,7 @@ file : /Assets/travorama20/css/_page_password.scss
     padding: 10px 15px;
     margin: 0 15px;
 }
+.box-promo-kode {background: #ffd632;}
 .gambar-box-promo {
     margin-top: 5px;
 }
