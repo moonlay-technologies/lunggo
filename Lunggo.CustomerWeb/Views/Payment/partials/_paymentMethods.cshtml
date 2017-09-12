@@ -52,40 +52,49 @@
                     <div class="credit-card-form form-kartu-kredit row">
                         <div class="form-group col-xs-12">
                             <label>Nomor Kartu</label>
-                            <input type="number" class="form-control cc-number" maxlength="19" ng-model="CreditCard.Number"
+                            <input type="number" class="form-control cc-number" ng-model="CreditCard.Number"
                                     required/>
                             @*<!-- ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" 
                                     ng-blur="binDiscount.check()" 
                             <div ng-show="binDiscount.text != ''" style="color:green">
                                 {{binDiscount.text}}
                             </div> --> *@
-                            <div ng-show="notifCardLength" style="color:red">
-                                Panjang digit kartu harus di antara 12-19 digit.
+                            <div ng-show="CreditCard.Number.toString().length != 16 &&
+                                CreditCard.Number.toString().length != 0" style="color:red">
+                                Panjang nomor kartu harus 16 digit.
                             </div>
                         </div>
                         <div class="ccDate col-xs-7" ng-class="{'has-error' : (dateOver || !checkDate(CreditCard.Month, CreditCard.Year))}">
                             <div class="form-group">
                                 <label style="width: 100%">Kadaluarsa</label>
                                  <div style="display: none">{{checkDate(CreditCard.Month, CreditCard.Year)}} </div>
-                                <div style="width: 38%;">
-                                    <input type="number" class="form-control" ng-model="CreditCard.Month" placeholder="MM" maxlength="2">
+                                <div style="width: 40%;">
+                                    <input type="number" name="cc-month" class="form-control" ng-model="CreditCard.Month" placeholder="MM" ng-change="inputChanged('cc-month')">
                                 </div>
                                 <div style="font-size: 20px; margin: 7px 5px;">/</div>
-                                <div style="width: 46%;">
-                                    <input type="number" class="form-control" ng-model="CreditCard.Year" placeholder="YYYY" maxlength="4">
+                                <div style="width: 40%;">
+                                    <input type="number" name="cc-year" class="form-control" ng-model="CreditCard.Year" placeholder="YY" ng-change="inputChanged('cc-year')">
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-5">
                             <div class="form-group">
                                 <label>CVV Kartu</label>
-                                <input type="number" class="form-control"
-                                   placeholder="xxx" maxlength="3" ng-model="CreditCard.Cvv" />
+                                @* TODO: tampilin
+                                    CVV adalah 3 digit terakhir di belakang kartu Visa/Mastercard Anda *@
+                                <input type="number" class="form-control" placeholder="xxx" ng-model="CreditCard.Cvv" />
                                    <!-- ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
                             </div>
                         </div>
+                        <div ng-show="CreditCard.errorDateMsg" style="color:red; margin-bottom: 14px;" class="col-xs-12">
+                            {{CreditCard.errorDateMsg}}
+                        </div>
                         <div ng-show="dateOver" style="color:red; margin-bottom: 14px;" class="col-xs-12">
                             Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
+                        </div>
+                        <div ng-show="CreditCard.Cvv.toString().length != 3 && CreditCard.Cvv.toString().length != 4 &&
+                            CreditCard.Cvv.toString().length != 0" style="color:red; margin-bottom: 14px;" class="col-xs-12">
+                            Panjang CVV antara 3-4 digit.
                         </div>
                         <div class="form-group col-xs-12" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
                             <label>Nama Pemegang Kartu</label>
@@ -152,8 +161,10 @@
                             <input type="number" class="form-control cc-number" maxlength="19"
                                     ng-model="MandiriClickPay.CardNo" />
                         </div>
-                        <div ng-show="notifCardLength" style="color:red">
-                            Panjang digit kartu harus di antara 12-19 digit.
+
+                        <div ng-show="MandiriClickPay.CardNo.toString().length != 16 &&
+                            MandiriClickPay.CardNo.toString().length != 0" style="color:red">
+                            Panjang nomor kartu harus 16 digit.
                         </div>
                         <div class="how-to-pay-mandiri">
                             <p>Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></p>
@@ -189,7 +200,11 @@
                         <div class="form-group">
                             <label>Respon Token Mandiri</label>
                             <input type="number" class="form-control cc-number" placeholder="xxxxxx"
-                               maxlength="6" ng-model="MandiriClickPay.Token" required />
+                               ng-model="MandiriClickPay.Token" required />
+                            <div ng-show="MandiriClickPay.Token.toString().length != 6 && 
+                                MandiriClickPay.Token.toString().length != 0" style="color:red">
+                                Panjang Token harus 6 digit.
+                            </div>
                         @*<!-- name="mandiriToken" -->*@
                         </div>
                     </div>

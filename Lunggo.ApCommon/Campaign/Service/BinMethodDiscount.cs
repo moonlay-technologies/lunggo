@@ -24,6 +24,14 @@ namespace Lunggo.ApCommon.Campaign.Service
     {
         public BinMethodDiscount CheckBinDiscount(string rsvNo, string bin, string hashedPan, string voucherCode)
         {
+            return
+                new BinMethodDiscount
+                {
+                    Amount = 0,
+                    IsAvailable = false,
+                    DisplayName = ""
+                };
+
             bin = (bin != null && bin.Length >= 6)
                 ? bin.Substring(0, 6)
                 : "";
@@ -59,6 +67,14 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         public BinMethodDiscount CheckMethodDiscount(string rsvNo, string voucherCode)
         {
+            return 
+                new BinMethodDiscount
+                    {
+                        Amount = 0,
+                        IsAvailable = false,
+                        DisplayName = ""
+                    };
+
             var promoType = "paydayMadness";
             var rsv = rsvNo.StartsWith("1")
                 ? (ReservationBase)FlightService.GetInstance().GetReservation(rsvNo)

@@ -23,6 +23,7 @@
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
     @*
 <!--
     <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
@@ -280,6 +281,7 @@
     <!-- Partners -->
     @Html.Partial("/Views/common/partners.cshtml")
 
+    Html.RenderPartial("/Views/common/subscribe-mobile.cshtml");
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 } else {
     @* <!-- anything else will be an app --> *@

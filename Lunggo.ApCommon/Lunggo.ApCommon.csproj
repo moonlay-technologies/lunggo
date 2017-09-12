@@ -208,7 +208,6 @@
     <Compile Include="Campaign\Service\Caching.cs" />
     <Compile Include="Campaign\Service\BinMethodDiscount.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
-    <Compile Include="Campaign\Service\MethodDiscount.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumDisplay.cs" />
