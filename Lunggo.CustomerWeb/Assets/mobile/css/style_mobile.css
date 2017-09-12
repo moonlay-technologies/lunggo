@@ -6152,6 +6152,20 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-bottom: 10px;
         color: #000;
     }
+    .judul-promo h1 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #000;
+        font-weight: 700;
+        margin-top: 0;
+    }
+    .desc-promo h2 {
+        margin: 0 0 10px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #717171;
+        line-height: 1.45;
+    }
     .more-info {
         margin-top: 15px;
     }
@@ -6166,6 +6180,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         border: 1px solid #b3b3b3;
         padding: 10px 25px;
         margin-top: 10px;
+    }
+    .box-promo-kode {
+        background: #ffd632 !important;
     }
     .judul-box-promo {
         font-size:14px;
