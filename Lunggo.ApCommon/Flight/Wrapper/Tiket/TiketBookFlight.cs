@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Wrapper.Tiket.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Extension;
 using RestSharp;
 using Supplier = Lunggo.ApCommon.Payment.Constant.Supplier;
@@ -46,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     };
 
                 //Step 2 : Order
-                var orderResult = Order(_token);
+                var orderResult = Order(bookInfo.Token);
                 if (orderResult == null || orderResult.Myorder == null)
                     return new BookFlightResult
                     {
@@ -74,7 +75,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     };
 
                 //Step 3 : Checkout Request
-                var checkoutResponse = CheckoutPage(_token, orderResult.Myorder.Order_id);
+                var checkoutResponse = CheckoutPage(bookInfo.Token, orderResult.Myorder.Order_id);
                 if (checkoutResponse == null)
                     return new BookFlightResult
                     {
@@ -88,7 +89,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                     };
 
                 //Step 4 : Checkout Page Customer
-                var checkoutCustResponse = CheckoutPageCustomer(_token);
+                var checkoutCustResponse = CheckoutPageCustomer(bookInfo.Token, bookInfo.Contact);
                 if (checkoutCustResponse == null)
                     return new BookFlightResult
                     {
@@ -165,14 +166,13 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 request.AddQueryParameter("child", bookInfo.Passengers.Count(x => x.Type == PaxType.Child).ToString());
                 request.AddQueryParameter("adult", bookInfo.Passengers.Count(x => x.Type == PaxType.Adult).ToString());
                 request.AddQueryParameter("infant", bookInfo.Passengers.Count(x => x.Type == PaxType.Infant).ToString());
-                request.AddQueryParameter("conSalutation", TitleCd.Mnemonic(bookInfo.Contact.Title));
+                request.AddQueryParameter("conSalutation", GetTitle(bookInfo.Contact.Title));
                 request.AddQueryParameter("conFirstName", first);
                 request.AddQueryParameter("conLastName", last);
                 request.AddQueryParameter("conPhone", "%2B"+ bookInfo.Contact.CountryCallingCode + bookInfo.Contact.Phone);
                 request.AddQueryParameter("conEmailAddress", bookInfo.Contact.Email);
                 request.AddQueryParameter("output", "json");
 
-                //TODO Need Improvement
                 if (adults.Count != 0)
                 {
                     i =  1;
@@ -198,8 +198,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportExpiryDatea" + i, adult.PassportExpiryDate.Value.ToString("yyyy-MM-dd"));
                             //var issueDate = adult.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalitya" + i, adult.PassportCountry);
-                            request.AddQueryParameter("passportissueddatea" + i, adult.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuinga" + i, adult.PassportCountry);
+                            if (bookInfo.Itinerary.RequireIssueDatePassport)
+                            { 
+                                request.AddQueryParameter("passportissueddatea" + i, adult.PassportIssueDate.Value.ToString("yyyy-MM-dd"));
+                            }
                         }
                         if (bookInfo.Itinerary.RequireNationality)
                         {
@@ -229,10 +232,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                         {
                             request.AddQueryParameter("passportnoc" + i, child.PassportNumber);
                             request.AddQueryParameter("passportExpiryDatec" + i, child.PassportExpiryDate.Value.ToString("yyyy-MM-dd"));
-                            //var issueDate = child.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalityc" + i, child.PassportCountry);
-                            request.AddQueryParameter("passportissueddatec" + i, child.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
-                            request.AddQueryParameter("passportissuingc" + i, child.PassportCountry);   
+                            request.AddQueryParameter("passportissuingc" + i, child.PassportCountry);
+                            if (bookInfo.Itinerary.RequireIssueDatePassport)
+                            {
+                                request.AddQueryParameter("passportissueddatec" + i, child.PassportIssueDate.Value.ToString("yyyy-MM-dd"));
+                            }
                         }
                         if (bookInfo.Itinerary.RequireNationality)
                         {
@@ -265,8 +270,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                             request.AddQueryParameter("passportExpiryDatei" + i, infant.PassportExpiryDate.Value.ToString("yyyy-MM-dd"));
                             //var issueDate = infant.PassportExpiryDate.Value.AddYears(-5).AddDays(1);
                             request.AddQueryParameter("passportnationalityi" + i, infant.PassportCountry);
-                            request.AddQueryParameter("passportissueddatei" + i, infant.PassportCreatedDate.Value.ToString("yyyy-MM-dd"));
                             request.AddQueryParameter("passportissuingi" + i, infant.PassportCountry);
+                            if (bookInfo.Itinerary.RequireIssueDatePassport)
+                            {
+                                request.AddQueryParameter("passportissueddatei" + i, infant.PassportIssueDate.Value.ToString("yyyy-MM-dd"));
+                            }
                         }
                         if (bookInfo.Itinerary.RequireNationality)
                         {
@@ -305,7 +313,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 switch (title)
                 {
                     case Title.Miss:
-                        titleTostring = "Miss";
+                        titleTostring = "Ms";
                         break;
                     case Title.Mister:
                         titleTostring = "Mr";
@@ -331,17 +339,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             }
 
             //step2
-            internal TiketBaseResponse CheckoutPageCustomer(string _token)
+            internal TiketBaseResponse CheckoutPageCustomer(string _token, Contact contact)
             {
                 var client = CreateTiketClient();
                 var url = "/checkout/checkout_customer";
                 var request = new RestRequest(url, Method.GET);
                 request.AddQueryParameter("token", _token);
-                request.AddQueryParameter("salutation", "Mr");
-                request.AddQueryParameter("firstName", "Suheri");
-                request.AddQueryParameter("lastName", "Marpaung");
-                request.AddQueryParameter("emailAddress", "suheri@travelmadezy.com");
-                request.AddQueryParameter("phone", "%2B85360343300");
+                request.AddQueryParameter("salutation", GetTitle(contact.Title));
+                request.AddQueryParameter("firstName", contact.Name);
+                request.AddQueryParameter("lastName", contact.Name);
+                request.AddQueryParameter("emailAddress", contact.Email);
+                request.AddQueryParameter("phone", contact.Phone);
                 request.AddQueryParameter("saveContinue", "2");
                 request.AddQueryParameter("output", "json");
                 var response = client.Execute(request);

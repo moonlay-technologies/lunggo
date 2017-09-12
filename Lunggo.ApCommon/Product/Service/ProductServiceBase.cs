@@ -102,7 +102,7 @@ namespace Lunggo.ApCommon.Product.Service
                 DateOfBirth = pax.DateOfBirth,
                 Nationality = pax.Nationality,
                 PassportNumber = pax.PassportNumber,
-                PassportCreatedDate = pax.PassportCreatedDate,
+                PassportIssueDate = pax.PassportIssueDate,
                 PassportExpiryDate = pax.PassportExpiryDate,
                 PassportCountry = pax.PassportCountry
             };

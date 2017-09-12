@@ -446,7 +446,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 Nationality = passengerRecord.NationalityCd,
                                 PassportNumber = passengerRecord.PassportNumber,
                                 PassportCountry = passengerRecord.PassportCountryCd,
-                                PassportCreatedDate = passengerRecord.PassportCreatedDate,
+                                PassportIssueDate = passengerRecord.PassportCreatedDate,
                                 PassportExpiryDate = passengerRecord.PassportExpiryDate
                             };
                             reservation.Pax.Add(passenger);
@@ -678,7 +678,7 @@ namespace Lunggo.ApCommon.Flight.Service
                         BirthDate = passenger.DateOfBirth.HasValue ? passenger.DateOfBirth.Value.ToUniversalTime() : (DateTime?)null,
                         NationalityCd = passenger.Nationality,
                         PassportNumber = passenger.PassportNumber,
-                        PassportCreatedDate = passenger.PassportCreatedDate.HasValue ? passenger.PassportCreatedDate.Value.ToUniversalTime() : (DateTime?)null,
+                        PassportCreatedDate = passenger.PassportIssueDate.HasValue ? passenger.PassportIssueDate.Value.ToUniversalTime() : (DateTime?)null,
                         PassportExpiryDate = passenger.PassportExpiryDate.HasValue ? passenger.PassportExpiryDate.Value.ToUniversalTime() : (DateTime?)null,
                         PassportCountryCd = passenger.PassportCountry,
                         InsertBy = "LunggoSystem",

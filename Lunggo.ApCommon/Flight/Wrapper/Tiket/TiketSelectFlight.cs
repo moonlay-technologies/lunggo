@@ -24,9 +24,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var flightId = itin.FareId;
                 var date = itin.Trips[0].DepartureDate;
 
-                GetToken();
+                var token = GetToken();
                 var client = CreateTiketClient();
-                var url = "/flight_api/get_flight_data?flight_id=" + flightId + "&token=" + _token + "&date=" + date.ToString("yyyy-MM-dd") + "&output=json";
+                var url = "/flight_api/get_flight_data?flight_id=" + flightId + "&token=" + token + "&date=" + date.ToString("yyyy-MM-dd") + "&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var flightData = response.Content.Deserialize<GetFlightDataResponse>();

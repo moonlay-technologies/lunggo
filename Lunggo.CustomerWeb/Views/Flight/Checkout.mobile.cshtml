@@ -76,13 +76,15 @@
             PassengerName: ['Dewasa', 'Anak', 'Bayi'],
             // identity requirement
             PassportRequired: @Model.Itinerary.RequirePassport.ToString().ToLower(),
+            IssueDatePassportRequired: @Model.Itinerary.RequireIssueDatePassport.ToString().ToLower(),
             IdRequired: false,
             NationalityRequired: @Model.Itinerary.RequireNationality.ToString().ToLower(),
             BirthDateRequired: @Model.Itinerary.RequireBirthDate.ToString().ToLower(),
             // departure date
-            DepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate',
+            DepartureDate: new Date('@Model.Itinerary.Trips.Last().DepartureDate'),
             BeforeDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)',
-            PassportDepartureDate: '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)',
+            PassportDepartureDate: '@DateTime.Now',
+            CreatedDepartureDate: '@DateTime.Now',
             // buyer info
             BuyerInfo: {
                 LoggedIn : @User.Identity.IsAuthenticated.ToString().ToLower(),
@@ -294,6 +296,9 @@
                                         <div ng-show="invalidDate(Passenger.passport.expire.date, Passenger.passport.expire.month, Passenger.passport.expire.year)" style="color: red">
                                             Tanggal kadaluarsa paspor tidak valid.
                                         </div>
+                                        <div ng-show="invalidPassportExpiry(Passenger.passport.expire.date, Passenger.passport.expire.month, Passenger.passport.expire.year)" style="color: red">
+                                            Tanggal kadaluarsa paspor harus 6 bulan lebih lama dari tanggal penerbangan.
+                                        </div>
 
                                     </div>
                                 </div>
@@ -304,6 +309,36 @@
                                         <option ng-repeat="country in Countries" value="{{country.code}}" ng-selected="country.code == 'ID'">{{country.name}}</option>
                                     </select>
                                 </div>
+                            
+                                <!--Tanggal Terbit Passport-->
+                                <div class="form-group important" ng-if="CheckoutConfig.IssueDatePassportRequired">
+                                    <label class="control-label">Tanggal Terbit Paspor: </label>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_createdDate" ng-model="Passenger.passport.created.date"
+                                                    ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                                <option value="{{date}}" ng-repeat="date in dates(Passenger.passport.created.month - 1, Passenger.passport.created.year)" ng-selected="date == 'Tanggal'">{{date}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_createdMonth" ng-model="Passenger.passport.created.month"
+                                                    ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                                <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'">{{month.name}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <select class="form-control" name="passenger_{{$index}}_createdYear" ng-model="Passenger.passport.created.year"
+                                                    ng-required="CheckoutConfig.PassportRequired" ng-change="validatePassport(Passenger)">
+                                                <option value="{{year}}" ng-repeat="year in generateYear('passport')" ng-selected="year == 'Tahun'">{{year}}</option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="invalidDate(Passenger.passport.created.date, Passenger.passport.created.month, Passenger.passport.created.year)" style="color: red">
+                                            Tanggal kadaluarsa paspor tidak valid.
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- End Tanggal Terbit Passport-->
                                 <!-- passenger passport end -->
                                 <!-- passenger nationality start -->
                                 <div class="form-group" ng-show="CheckoutConfig.NationalityRequired || CheckoutConfig.PassportRequired">

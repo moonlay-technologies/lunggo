@@ -21,7 +21,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
             private bool _isInitialized;
             private static string _basePath;
             private static string _sharedSecret;
-            private static string _token;
             private static string _confirmKey;
 
 
@@ -52,7 +51,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var client = new RestClient(_basePath)
                 {
                     CookieContainer = new CookieContainer(),
-                    UserAgent = "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36"
+                    UserAgent = "twh:24352184;PT Travel Madezy Internasional;"
                 };
                 return client;
             }
@@ -64,8 +63,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var responseToken = response.Content.Deserialize<TiketBaseResponse>();
-                _token = responseToken == null ? null : responseToken.Token;
-                return _token;
+                return responseToken == null ? null : responseToken.Token;
             }
 
             

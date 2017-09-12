@@ -140,9 +140,17 @@ namespace Lunggo.ApCommon.Payment.Service
                 };
                 UpdatePaymentQuery.GetInstance().Execute(conn, queryParam, queryParam);
                 if (payment.Discount != null)
-                    payment.Discount.InsertToDb(rsvNo);
+                {
+                    var usedDisc = UsedDiscountTableRepo.GetInstance().Find1(conn, new UsedDiscountTableRecord {RsvNo = rsvNo});
+                    if (usedDisc == null)
+                        payment.Discount.InsertToDb(rsvNo);
+                }
                 if (payment.Refund != null)
-                    payment.Refund.InsertToDb(rsvNo);
+                {
+                    var refund = RefundTableRepo.GetInstance().Find1(conn, new RefundTableRecord { RsvNo = rsvNo });
+                    if (refund == null)
+                        payment.Refund.InsertToDb(rsvNo);
+                }
                 return true;
             }
         }

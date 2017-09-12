@@ -19,7 +19,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
     $scope.flightDetail = {
         departureFullDate : new Date(CheckoutDetail.DepartureDate),
         beforeDepartureFullDate: new Date(CheckoutDetail.BeforeDepartureDate),
-        passportDepartureFullDate : new Date(CheckoutDetail.PassportDepartureDate)
+        passportDepartureFullDate : new Date(CheckoutDetail.PassportDepartureDate),
+        createdDepartureFullDate : new Date(CheckoutDetail.CreatedDepartureDate)
     };
     
     $scope.CheckoutConfig = {
@@ -254,7 +255,8 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             if (passengers[x].passport.expire.date === $scope.dates($scope.flightDetail.departureFullDate.getMonth(), $scope.flightDetail.departureFullDate.getYear)[0]
                || passengers[x].passport.expire.month === $scope.months[0].value.toString() ||
                 passengers[x].passport.expire.year == $scope.generateYear(passengers[x].type)[0]
-                || $scope.invalidDate(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year)) {
+                || $scope.invalidDate(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year) ||
+                $scope.invalidPassportExpiry(passengers[x].passport.expire.date, passengers[x].passport.expire.month, passengers[x].passport.expire.year)) {
                 valid = false;
             }
             else if (passengers[x].passport.expire.date == null || passengers[x].passport.expire.month == null ||
@@ -338,6 +340,15 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
             } else {
                 return false;
             }
+        }
+    }
+
+    $scope.invalidPassportExpiry = function (date, month, year) {
+        var expiry = new Date(year, month, date);
+        if ($scope.flightDetail.departureFullDate >= expiry.setMonth(expiry.getMonth() - 6)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -534,7 +545,12 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 return ['Tahun'].concat(years);
                 break;
             case 'passport':
-                listYear($scope.flightDetail.passportDepartureFullDate.getFullYear(), ($scope.flightDetail.passportDepartureFullDate.getFullYear() + 10));
+                listYear($scope.flightDetail.passportDepartureFullDate.getFullYear(), ($scope.flightDetail.passportDepartureFullDate.getFullYear() + 15));
+                return ['Tahun'].concat(years);
+                break;
+            case 'createdPassport':
+                listYear(($scope.flightDetail.createdDepartureFullDate.getFullYear() - 15), ($scope.flightDetail.createdDepartureFullDate.getFullYear()));
+                //years = years.reverse();  
                 return ['Tahun'].concat(years);
                 break;
         }
@@ -666,6 +682,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                     $scope.passengers[i].passport.expire.month = '';
                     $scope.passengers[i].passport.expire.year = '';
                     $scope.passengers[i].passport.expire.full = '';
+                    $scope.passengers[i].passport.created = {};
+                    $scope.passengers[i].passport.created.date = '';
+                    $scope.passengers[i].passport.created.month = '';
+                    $scope.passengers[i].passport.created.year = '';
+                    $scope.passengers[i].passport.created.full = '';
                     if (!$scope.CheckoutConfig.NationalityRequired) {
                         $scope.passengers[i].nationality = '';
                     }
@@ -682,6 +703,11 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
                 $scope.passengers[i].passport.expire.full = $scope.passengers[i].passport.expire.year + '/' + ('0'
                     + (parseInt($scope.passengers[i].passport.expire.month))).slice(-2) + '/'
                     + ('0' + $scope.passengers[i].passport.expire.date).slice(-2);
+
+                // passport created date
+                $scope.passengers[i].passport.created.full = $scope.passengers[i].passport.created.year + '/' + ('0'
+                    + (parseInt($scope.passengers[i].passport.created.month))).slice(-2) + '/'
+                    + ('0' + $scope.passengers[i].passport.created.date).slice(-2);
 
                 // birthdate
             
@@ -701,6 +727,9 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
 
                 if ($scope.CheckoutConfig.PassportRequired) {
                     $scope.paxData = $scope.paxData + ', "passportNo":"' + $scope.passengers[i].passport.number + '" , "passportExp":"' + $scope.passengers[i].passport.expire.full + '" , "passportCountry":"' + $scope.passengers[i].passport.country + '" ';
+                    if ($scope.issueDatePassportRequired) {
+                        $scope.paxData = $scope.paxData + ', "passportIssueDate":"' + $scope.passengers[i].passport.created.full + '"';
+                    }
                 }
 
                 if (i != $scope.passengers.length - 1) {

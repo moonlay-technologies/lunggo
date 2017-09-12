@@ -32,7 +32,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 GetToken();
                 var temp = conditions;
                 var result = new SearchResponse();
-                result = DoSearchFlight(conditions);
+                var token = GetToken();
+                result = DoSearchFlight(conditions, token);
                 var hasil = new SearchFlightResult();
                 //if (CheckUpdate(conditions))
                 //{
@@ -121,11 +122,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Tiket
                 return hasil;
             }
 
-            private static SearchResponse DoSearchFlight(SearchFlightConditions conditions)
+            private static SearchResponse DoSearchFlight(SearchFlightConditions conditions, string token)
             {
                 var client = GetClientInstance().CreateTiketClient();
 
-                var url = "/search/flight?d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd")+ "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&token=" + _token + "&v=3&output=json";
+                var url = "/search/flight?d=" + conditions.Trips[0].OriginAirport + "&a=" + conditions.Trips[0].DestinationAirport + "&date=" + conditions.Trips[0].DepartureDate.ToString("yyyy-MM-dd")+ "&adult=" + conditions.AdultCount + "&child=" + conditions.ChildCount + "&infant=" + conditions.InfantCount + "&token=" + token + "&v=3&output=json";
                 var request = new RestRequest(url, Method.GET);
                 var response = client.Execute(request);
                 var responseSearch = JsonExtension.Deserialize<SearchResponse>(response.Content);

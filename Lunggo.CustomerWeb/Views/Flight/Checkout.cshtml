@@ -86,14 +86,14 @@
         var totalInfantFare = infantPassenger * infantFare;
         var infantTypeName = 'Bayi';
         var passportRequired = @Model.Itinerary.RequirePassport.ToString().ToLower();
-        var createdDatePassportRequired = @Model.Itinerary.RequireIssueDatePassport.ToString().ToLower();
+        var issueDatePassportRequired = @Model.Itinerary.RequireIssueDatePassport.ToString().ToLower();
         var idRequired = false;
         var nationalityRequired = @Model.Itinerary.RequireNationality.ToString().ToLower();
         var birthDateRequired = @Model.Itinerary.RequireBirthDate.ToString().ToLower();
         var departureDate = '@Model.Itinerary.Trips.Last().DepartureDate';
         var beforeDepartureDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
-        var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(-6)'; //AddMonths
-        var createdDatePassport = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddDays(-1)';
+        var passportDate = '@DateTime.Now';
+        var createdDatePassport = '@DateTime.Now';
         var originalPrice = '@Model.Itinerary.OriginalTotalFare';
         var price = '@Model.Itinerary.NetTotalFare';
         // change current page
@@ -334,7 +334,7 @@
                                                     </div>
                                                 </div>
                                                 <!--Tanggal Terbit Passport-->
-                                                <div class="row" ng-if="createdDatePassportRequired">
+                                                <div class="row" ng-if="issueDatePassportRequired">
                                                     <div class="col-xs-12">
                                                         <label class="control-label"><small>Tanggal Terbit Paspor</small></label>
                                                         <div class="row">
@@ -388,6 +388,9 @@
                                                             <div ng-show="invalidDate(passenger.passport.expire.date, passenger.passport.expire.month, passenger.passport.expire.year)" style="color: red">
                                                                 Tanggal kadaluarsa paspor tidak valid.
                                                             </div>
+                                                            <div ng-show="invalidPassportExpiry(passenger.passport.expire.date, passenger.passport.expire.month, passenger.passport.expire.year)" style="color: red">
+                                                                Tanggal kadaluarsa paspor harus 6 bulan lebih lama dari tanggal penerbangan.
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -421,7 +424,6 @@
                                 <div ng-show="form.hasDuplicatePaxName" style="color:red">
                                     Nama Penumpang Tidak Boleh Ada yang Sama <br /> <br />
                                 </div>
-
                                 <div ng-show="form.incompleteBirthDates" style=" color:red">
                                     Tanggal Lahir Penumpang Belum Ditambahkan atau Tidak Valid<br /> <br />
                                 </div>
