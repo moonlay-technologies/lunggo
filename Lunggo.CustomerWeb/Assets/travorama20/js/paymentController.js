@@ -40,12 +40,15 @@ app.controller('paymentController', [
     $scope.randomYear = (date.getFullYear() + 2).toString();
     $scope.yearnow = date.getFullYear() + 2;
     $scope.dateOver = false;
-
     $scope.MandiriClickPay = {
         Token: '',
         CardNo: ''
     };
+    $scope.error = {
+        message : ''
+    }
     
+    //// countdown timer for payment
     window.setInterval(function () {
         var nowTime = new Date();
         if (nowTime > $scope.paymentTimeout) {
@@ -55,11 +58,12 @@ app.controller('paymentController', [
     // ************************ CreditCard and BIN Discount *****************************
     $scope.CreditCard = {
         // TwoClickToken: 'false',
-        Number: '',
-        Name: '',
-        Month: '',
-        Year: '',
-        Cvv: ''
+        Number : '',
+        Name : '',
+        Month : '',
+        Year : '',
+        Cvv : '',
+        errorDateMsg : false
     };
 
     //// bin == Bank Identification Number, untuk identifikasi dari bank mana
@@ -426,11 +430,13 @@ app.controller('paymentController', [
             if ($scope.paymentMethod == 'CreditCard') {
                 if ($scope.ccValidation() == false) {
                     $scope.pay.inputValid = false;
+                    scrollPage($('*[data-payment-method="CreditCard"]'));
                     return;
                 }
                 var ccNumber = $scope.CreditCard.Number;
-                if (ccNumber == null || ccNumber.length < 12 || ccNumber.length > 19) {
+                if (!ccNumber || ccNumber.toString().length != 16) {
                     $scope.notifCardLength = true;
+                    scrollPage($('*[data-payment-method="CreditCard"]'));
                 } else {
                     $scope.notifCardLength = false;
                     Veritrans.url = VeritransTokenConfig.Url;
@@ -483,7 +489,6 @@ app.controller('paymentController', [
                             // store token data in input #token_id and then submit form to merchant server
                             $("#vt-token").val(response.token_id);
                             $scope.CreditCard.Token = response.token_id;
-
                             $scope.pay.send();
 
                         } else {
@@ -491,9 +496,15 @@ app.controller('paymentController', [
                             //close 3d secure dialog if any
                             closeDialog();
                             $('#submit-button').removeAttr('disabled');
-                            // Show status message.
-                            $('#message').text(response.status_message);
-                            $log.debug(JSON.stringify(response));
+                            //// Show status message.
+                            // $('#message').text(response.status_message);
+                            // $log.debug(JSON.stringify(response));
+                            $scope.$apply(function () {
+                                $scope.error.message = (response.status_code == 400) ?
+                                    "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
+                                    "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";
+                            });
+                            scrollPage($('*[data-payment-method="CreditCard"]'));
                         }
                     });
 
@@ -518,8 +529,9 @@ app.controller('paymentController', [
             } else { // NOT Credit Card
                 if ($scope.paymentMethod == 'MandiriClickPay') {
                     var cardNo = $scope.MandiriClickPay.CardNo;
-                    if (cardNo == null || cardNo.length < 12 || cardNo.length > 19) {
+                    if (!cardNo || cardNo.toString().length != 19) {
                         $scope.notifCardLength = true;
+                        scrollPage($('*[data-payment-method="MandiriClickPay"]'));
                     } else {
                         $scope.notifCardLength = false;
                         $scope.pay.send();
@@ -852,7 +864,7 @@ app.controller('paymentController', [
         
         var now = new Date();
         var monthNow = now.getMonth();
-        var yearNow = now.getFullYear();
+        var yearNow = now.getFullYear() % 2000;
 
         if (year > yearNow) {
             $scope.dateOver = false;
@@ -869,21 +881,6 @@ app.controller('paymentController', [
             $scope.dateOver = true;
             return false;
         }
-    }
-
-    $scope.generateYear = function () {
-        var now = new Date();
-        var yearNow = now.getFullYear();
-        var years = [];
-
-        function listYear(min, max) {
-            for (var i = min; i <= max; i++) {
-                years.push(i);
-            }
-        }
-        listYear(yearNow, (yearNow + 20));
-        //years = years.reverse();
-        return ['Tahun'].concat(years);
     }
 
     $scope.$watch('paymentMethod', function(newValue, oldValue) {
@@ -950,28 +947,63 @@ app.controller('paymentController', [
         });
     });
 
+    function scrollPage($targetElement, animationSpeed) {
+        var speed = animationSpeed || 200;
+        //// scroll
+        $('html, body').animate({
+            //// banyaknya pixel yang di scroll (ditutupin)
+            scrollTop: $targetElement.offset().top - $("header").height() - 8
+        }, speed);
+    }
+
+
     $(".kode-voucher a").click( function() {
         $(this).next().toggle(200);
     });
 
+    $scope.inputChanged = function (inputName) {
+        var month = $scope.CreditCard.Month;
+            //// if month's value is 01 or 8 or 12
+        if ( inputName == 'cc-month'){
+            if (!$scope.CreditCard.Year && (month > 12)) {
+                month = Math.floor(month / 10);
+                $scope.CreditCard.Year = month % 10;
+                $scope.CreditCard.Month = month;
+                //// focus to year
+                focusInputToYear();
+            } else if (month > 1 || $('input[name="cc-month"]').val().length == 2) {
+                focusInputToYear();
+            }
+        }
+        $scope.CreditCard.errorDateMsg =
+            (month > 12 || $scope.CreditCard.Year > 99) ?
+            "Input dengan format MM/YY, contoh: 12/20" : false;
+    }
+
+    //// Bind keyup / keydown to the input
+    $('input[name="cc-month"]').bind('keyup', function(e){
+        //// trigger focus to cc-year if user press '/'
+        if (e.which === 191) {
+            focusInputToYear();
+        }
+    });
+
+    function focusInputToYear() {
+        //// focus to year
+        $('input[name="cc-year"]').focus();
+        if ($scope.CreditCard.Month < 10) {
+            //// change M format to MM 
+            //// FIXME: conflicted with Angular's data-binding when user input 13-19!
+            $('input[name="cc-month"]').val('0' + $scope.CreditCard.Month);
+        }
+    }
+
+    //// if user press backspace when cc-year is empty
+    $('input[name="cc-year"]').bind('keydown', function(e) {
+        if(e.which === 8 && $(this).val() ==='') {
+            //// focus on cc-month, so character in cc-month will be deleted instead
+            $('input[name="cc-month"]').focus();
+        }
+    });
+
 }]);
-    
-
-    // Payment Desktop
-    // $('input[name="PMInput"]').click(function () {
-    //     var val = $(this).val();
-    //     $('.selected-bank').hide();
-    //     $('input[value="' + val + '"]').closest('.selected-bank').show();
-    //     $('input[value="' + val + '"]').attr('checked', true);
-    // });
-
-    // // Payment Mobile
-    // $('input[name="paymentMethod"]').click(function () {
-    //     var val = $(this).val();
-    //     $('.selected-bank').hide();
-    //     $('input[value="' + val + '"]').closest('.selected-bank').show();
-    //     $('input[value="' + val + '"]').attr('checked', true);
-    //     $('html, body').animate({
-    //         scrollTop: $("#" + val).offset().top
-    //     }, 700);
-    // });

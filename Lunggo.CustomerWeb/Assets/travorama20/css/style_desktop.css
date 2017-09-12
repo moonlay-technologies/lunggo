@@ -2077,7 +2077,7 @@ body.page-index {
       margin: 0;
       padding: 0;
       padding-right: 5%;
-      z-index: 998; }
+      z-index: 2; }
       .page-index .section-search .page-slider .slick-dots li {
         list-style: none;
         display: inline-block; }

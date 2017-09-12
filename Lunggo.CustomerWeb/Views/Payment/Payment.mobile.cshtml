@@ -401,6 +401,28 @@
                 </div>
             </div>
 
+            <div class="popup__wrapper" ng-class="{'active' : error.message}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Mohon Maaf...</h4>
+                    </header>
+                    <div class="popup__body tnc-body">
+                        <div class="container_new">
+                            {{error.message}}
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <a class="btn btn-yellow btn-block" ng-click="error.message = '' "><b>TUTUP</b></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- checkout end here -->
                     break;
     case "BookExpired":
