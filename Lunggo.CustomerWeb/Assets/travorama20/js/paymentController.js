@@ -543,8 +543,6 @@ app.controller('paymentController', [
             switch ($scope.paymentMethod) {
                 case "BankTransfer":
                     if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
-                        $scope.pay.postData.method = 2;
-                        $scope.pay.postData.submethod = 1;
                         $scope.pay.transfer = true;
                     }
                     break;
@@ -552,7 +550,6 @@ app.controller('paymentController', [
                     console.log($scope.CreditCard.Number);
                     var hash = CryptoJS.SHA512($scope.CreditCard.Number.toString());
                             var hex = hash.toString(CryptoJS.enc.Hex);
-                    $scope.pay.postData.method = 1;
                     $scope.pay.postData.creditCard = {
                         tokenId : $scope.CreditCard.Token,
                         holderName : $scope.CreditCard.Name,
@@ -573,25 +570,20 @@ app.controller('paymentController', [
                         amount : netprice,
                         rsvNoLast5 : rsvNoLast5
                     };
-                    $scope.pay.postData.method = 3;
                             $scope.pay.clickpay = true;
                             break;
                         case "CimbClicks":
-                    $scope.pay.postData.method = 4;
                     $scope.pay.postData.cimbClicks = {
                         description : "Pembayaran melalui CimbClicks"
                     };
                             break;
                         case "VirtualAccount":
-                    $scope.pay.postData.method = 5;
                     $scope.pay.postData.virtualAccount = {
                         bank : "permata"
                     };
-                    $scope.pay.postData.submethod = 3;
                             $scope.pay.virtualAccount = true;
                             break;
                         case "MandiriBillPayment":
-                    $scope.pay.postData.method = 13;
                     $scope.pay.postData.mandiriBillPayment = {
                         label1 : "Payment for booking a flight",
                         value1 : "debt"

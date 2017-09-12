@@ -11,7 +11,8 @@
         CIMB = 6,
         Maybank = 7,
         Danamon = 8,
-        KEBHana = 9
+        KEBHana = 9,
+        Other = 99
     }
 
     internal class PaymentSubmethodCd
