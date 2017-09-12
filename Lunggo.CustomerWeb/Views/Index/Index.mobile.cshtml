@@ -3,7 +3,7 @@
 @using Lunggo.ApCommon.Product.Constant
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
+    ViewBag.Title = "";
     ViewBag.BodyClass = "page page-home";
     ViewBag.AngularController = "homeController";
     ViewBag.CurrentPage = "home";
@@ -23,6 +23,7 @@
     <script src="/Assets/js/jquery.ui.touch-punch.min.js"></script>
     <script src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/js/js.cookie.js"></script>
+    <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
     @*
 <!--
     <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
@@ -68,6 +69,7 @@
 
             headerIcon.toggle(accordionAnimationDuration);
             $(this).find("div span").toggle(accordionAnimationDuration);
+            $(this).find(".notification").toggle(accordionAnimationDuration);
         });
     </script>
 }
@@ -86,10 +88,10 @@
                 <a href="/id/Promo/PaydayMegaDeals"><img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider-mobile.jpg" alt="Payday Mega Deals" /></a>
             </div>
         }
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 3, 31))
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 24))
         {
             <div class="item">
-                <a href="/id/Promo/BTNTerbanginHemat"><img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" /></a>
+                <a href="/id/Promo/SeptemberSeru"><img src="/Assets/images/campaign/2017SeptemberSeru/homepage_mobile.jpg" alt="Promo September Seru" /></a>
             </div>
         }
         <div class="item">
@@ -206,19 +208,9 @@
                     IsHotelSearch = false
                 })
             </div>
+            
             <div class="col-xs-12 btn-flight">
-                
-                <div style="
-                    position: absolute;
-                    top: 15px;
-                    left: 30px;
-                    background: red;
-                    border-radius: 50%;
-                    width: 16px;
-                    height: 16px;
-                    text-align: center;">
-                        <span style="color: white;"><b>1</b></span>
-                </div>
+                <div class="notification"><span>1</span></div>
                 <div class="col-xs-4 icon-home-accordion">
                     <img src="/Assets/mobile/images/btn-Promo.png" alt="Promo" />
                 </div>
@@ -232,44 +224,38 @@
 
 @if (ViewBag.Platform != PlatformType.IosApp && ViewBag.Platform != PlatformType.AndroidApp){
 
-    <!-- Intro content -->
+
+ <!-- Intro content -->
     <div class="main-tab slider-mobile clearfix">
         <div class="row">
-            <h2 class="section-title stripe text-center xlg-txt">Mengapa Memilih <span>Travorama</span></h2>
+            <div class="section-title stripe text-center xlg-txt"><h1>Mengapa Memilih <span>Travorama</span></h1></div>
             <div id="why-travorama" class="carousel-inner-mobile" role="listbox">
                 <div class="item">
+                    <img src="/Assets/images/why-percaya.png" alt="percaya" />
+                    <h2>Terpercaya</h2>
+                    <p>Kamu pasti dapat tiket atau voucher yang kamu bayarkan, atau uang kamu kembali 100%</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-free.png" alt="free" />
+                    <h2>Harga Murah</h2>
+                    <p>Di sini kamu bisa mendapatkan penawaran harga terbaik untuk tiket pesawat dan kamar hotel pilihan kamu</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-pilihan.png" alt="pilihan" />
+                    <h2>Pilihan Maskapai dan Hotel Banyak</h2>
+                    <p>Tiket pesawat dan kamar hotel yang kamu cari ada di sini!</p>
+                </div>
+                <div class="item">
+                    <img src="/Assets/images/why-trust.png" alt="trust" />
+                    <h2>Pembayaran Lengkap, Mudah, dan Aman</h2>
+                    <p>Semua pembayaran diverifikasi secara otomatis dan semua data privasi diamankan dengan enkripsi Rapid SSL</p>
+                </div>
+                <div class="item">
                     <img src="/Assets/images/why-disc.png" alt="discount" />
-                    <h4>Harga Diskon Setiap Hari</h4>
-                    <p>Potongan harga untuk setiap transaksi di Travorama. Temukan harga bersaing dibandingkan Online Travel Agent lain.</p>
-
-                    
+                    <h2>Beragam Promo Setiap Hari</h2>
+                    <p>Setiap hari kami memberikan beragam promo yang membuat perjalanan kamu lebih hemat dan menyenangkan</p>
                 </div>
-                <div class="item">
-                    <img src="/Assets/images/why-active.png" alt="" />
-                    <h4>Waktu Pembayaran Panjang</h4>
-                    <p>Waktu pembayaran tiket pesawat dan kamar hotel lebih panjang dibandingkan Online Travel Agent pada umumnya.</p>
-                </div>
-                <div class="item">
-                    <img src="/Assets/images/why-free.png" alt="" />
-                    <h4>Tanpa Biaya Tambahan</h4>
-                    <p>Harga yang tercantum adalah harga final, tanpa biaya tersembunyi.</p>
-                </div>
-                <div class="item">
-                    <img src="/Assets/images/why-long.png" alt="" />
-                    <h4>Rute Penerbangan Domestik & Internasional</h4>
-                    <p>Temukan 9000 rute penerbangan antar kota dan antar negara.</p>
-                </div>
-                <div class="item">
-                    <img src="/Assets/images/why-hotel.png" alt="" />
-                    <h4>Pilihan Hotel Maksimal</h4>
-                    <p>Terdapat 85.000 listing hotel di seluruh dunia.</p>
-                </div>
-                <div class="item">
-                    <img src="/Assets/images/why-trust.png" alt="" />
-                    <h4>Jaminan Pembayaran Online Aman & Mudah</h4>
-                    <p>Enkripsi Rapid SSL menjamin privasi dan keamanan saat melakukan transaksi online.</p>
-                </div>
-
+                @* 
                 <!-- <div class="item">
                     <img src="/Assets/images/harga.jpg" alt="" />
                 </div>
@@ -287,7 +273,7 @@
                 </div>
                 <div class="item">
                     <img src="/Assets/images/jaminan.jpg" alt="" />
-                </div> -->
+                </div> --> *@
             </div>
         </div>
     </div>
@@ -295,6 +281,7 @@
     <!-- Partners -->
     @Html.Partial("/Views/common/partners.cshtml")
 
+    Html.RenderPartial("/Views/common/subscribe-mobile.cshtml");
     @Html.Partial("/Views/Shared/mobile/_SiteFooter.cshtml")
 } else {
     @* <!-- anything else will be an app --> *@

@@ -40,13 +40,14 @@ namespace Lunggo.ApCommon.Sequence
 
         public string GetNext(ProductType productType)
         {
-            var currentYear = DateTime.UtcNow.Year;
-            var relativeYear = currentYear - 2015;
-            var currentDay = DateTime.UtcNow.DayOfYear;
-            var encodedDate = (27 * (currentDay - 1) + relativeYear);
-            var nextRawId = GetNextNumber(_properties[(int)productType]) % 10000000L;
-            var nextId = encodedDate * 10000000L + nextRawId;
-            var rsvNo = (int)productType + nextId.ToString("00000000000");
+            //var currentYear = DateTime.UtcNow.Year;
+            //var relativeYear = currentYear - 2015;
+            //var currentDay = DateTime.UtcNow.DayOfYear;
+            //var encodedDate = (27 * (currentDay - 1) + relativeYear);
+            //var nextRawId = GetNextNumber(_properties[(int)productType]) % 10000000L;
+            //var nextId = encodedDate * 10000000L + nextRawId;
+            var nextId = GetNextNumber(_properties[(int) productType]);
+            var rsvNo = (int)productType + nextId.ToString("0000000");
             return rsvNo;
         }
     }

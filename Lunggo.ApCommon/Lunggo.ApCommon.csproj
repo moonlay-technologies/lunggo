@@ -209,7 +209,6 @@
     <Compile Include="Campaign\Service\Caching.cs" />
     <Compile Include="Campaign\Service\BinMethodDiscount.cs" />
     <Compile Include="Campaign\Service\CampaignVoucher.cs" />
-    <Compile Include="Campaign\Service\MethodDiscount.cs" />
     <Compile Include="Campaign\Service\ServiceSingleton.cs" />
     <Compile Include="Constant\ApConstant.cs" />
     <Compile Include="Constant\EnumDisplay.cs" />
@@ -649,6 +648,7 @@
     <Compile Include="Payment\Model\Data\MandiriEcash.cs" />
     <Compile Include="Payment\Model\Data\TelkomselTcash.cs" />
     <Compile Include="Payment\Model\Data\VirtualAccount.cs" />
+    <Compile Include="Payment\Model\Surcharge.cs" />
     <Compile Include="Payment\Model\UsedDiscount.cs" />
     <Compile Include="Payment\Model\Discount.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />

@@ -11,7 +11,7 @@
 
 <div class="promo-btn">
     <div class="mini-banner">
-        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrc" alt="@ViewBag.ImageAlt" /></a>
+        <a href="/"><img class="img-promo" src="@ViewBag.ImageSrcMobile" alt="@ViewBag.ImageAlt" /></a>
     </div>
     <div class="info-promo">
         <div class="judul-promo bold-txt">@ViewBag.PromoTitle</div>
@@ -37,7 +37,7 @@
             <a href="/hotel"><div class="book-now">BOOK NOW</div></a>
         </div>
     </div>
-
+@* 
     <!-- <div class="rekomendasi-hotel">
         <div class="judul-rekomendasi-hotel">Rekomendasi Hotel</div>
         <div class="box-rekomendasi-hotel clearfix">
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div> --> *@
     <div class="langkah-promo">
         <div class="judul-rekomendasi-hotel clearfix">
             <div class="col-xs-10">Langkah Dapatkan Promo</div>
@@ -91,7 +91,7 @@
         {
             <div class="row container-list-ketentuan">
                 <div class="col-xs-1 list-number-mobile">@(i+1)</div>
-                <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.HowToGet[i]</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@Html.Raw(ViewBag.HowToGet[i])</div>
             </div>
         }
         </div>
@@ -108,7 +108,7 @@
         {
             <div class="row container-list-ketentuan">
                 <div class="col-xs-1 list-number-mobile">@(i+1)</div>
-                <div class="col-xs-11 info-ketentuan bold-txt">@ViewBag.Terms[i]</div>
+                <div class="col-xs-11 info-ketentuan bold-txt">@Html.Raw(ViewBag.Terms[i])</div>
             </div>
         }
         </div>
@@ -118,7 +118,7 @@
         <div class="subscribe-before">
             <div class="judul-subscribe">Subscribe now!</div>
             <div class="container-form-subscribe">
-                <div class="">
+                <!-- <div class=""> -->
                     <form class="subscribe-form">
                         <div class="form-group">
                             <input type="text" class="form-control form-control-mobile subscribe-name" id="exampleInputEmail1" placeholder="Masukkan Nama Anda" name="name">
@@ -128,7 +128,7 @@
                         </div>
                         <input type="submit" class="btn-subscribe" value="SUBSCRIBE">
                     </form>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <div class="subscribe-after" style="display: none; padding-top: 20px">

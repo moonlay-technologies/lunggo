@@ -264,32 +264,163 @@
   <ItemGroup>
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Assets\bootstrap\bootstrap.css" />
+    <Content Include="Assets\bootstrap\bootstrap.css.map" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
+    <Content Include="Assets\bootstrap\bootstrap.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_buttons.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_center-block.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_forms.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_gradients.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_image.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_labels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_list-group.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_opacity.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_pagination.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_panels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_resize.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_size.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_table-row.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_alerts.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_badges.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_breadcrumbs.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_button-groups.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_buttons.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_carousel.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_close.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_code.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_component-animations.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_dropdowns.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_forms.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_glyphicons.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_grid.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_input-groups.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_jumbotron.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_labels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_list-group.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_media.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_mixins.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_modals.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_navbar.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_navs.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_normalize.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_pager.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_pagination.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_panels.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_popovers.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_print.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_progress-bars.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_responsive-embed.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_responsive-utilities.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_scaffolding.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_tables.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_theme.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_thumbnails.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_tooltip.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_type.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_utilities.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
+    <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
     <Content Include="Assets\bootstrap\bootstrap_difference.css" />
+    <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
+    <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
+    <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
+    <Content Include="Assets\css\common.css" />
     <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\global-error.css" />
     <Content Include="Assets\css\global-error.min.css" />
+    <Content Include="Assets\css\global-error.scss" />
     <Content Include="Assets\css\help_section.css" />
     <Content Include="Assets\css\help_section.min.css" />
+    <Content Include="Assets\css\help_section.scss" />
     <Content Include="Assets\css\invoice.css" />
     <Content Include="Assets\css\invoice.min.css" />
+    <Content Include="Assets\css\invoice.scss" />
     <Content Include="Assets\css\jquery-ui.min.css" />
     <Content Include="Assets\css\neweticket.css" />
     <Content Include="Assets\css\neweticket.min.css" />
+    <Content Include="Assets\css\neweticket.scss" />
     <Content Include="Assets\css\promo.css" />
     <Content Include="Assets\css\promo.min.css" />
+    <Content Include="Assets\css\promo.scss" />
     <Content Include="Assets\css\travorama-mobileApp.css" />
     <Content Include="Assets\css\travorama-mobileApp.min.css" />
+    <Content Include="Assets\css\travorama-mobileApp.scss" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
     <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.svg" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
+    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
+    <Content Include="Assets\fonts\DINB-webfont.eot" />
     <Content Include="Assets\fonts\DINB-webfont.svg" />
+    <Content Include="Assets\fonts\DINB-webfont.ttf" />
+    <Content Include="Assets\fonts\DINB-webfont.woff" />
+    <Content Include="Assets\fonts\DINB-webfont.woff2" />
+    <Content Include="Assets\fonts\DINR-webfont.eot" />
     <Content Include="Assets\fonts\DINR-webfont.svg" />
+    <Content Include="Assets\fonts\DINR-webfont.ttf" />
+    <Content Include="Assets\fonts\DINR-webfont.woff" />
+    <Content Include="Assets\fonts\DINR-webfont.woff2" />
+    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Assets\fonts\fontawesome-webfont.svg" />
+    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
+    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Assets\fonts\FontAwesome.otf" />
+    <Content Include="Assets\fonts\Gotham-Bold.eot" />
+    <Content Include="Assets\fonts\Gotham-Bold.otf" />
     <Content Include="Assets\fonts\Gotham-Bold.svg" />
+    <Content Include="Assets\fonts\Gotham-Bold.ttf" />
+    <Content Include="Assets\fonts\Gotham-Bold.woff" />
+    <Content Include="Assets\fonts\Gotham-Medium.eot" />
+    <Content Include="Assets\fonts\Gotham-Medium.otf" />
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
+    <Content Include="Assets\fonts\Gotham-Medium.ttf" />
+    <Content Include="Assets\fonts\Gotham-Medium.woff" />
+    <Content Include="Assets\fonts\MyriadPro-BoldCond.otf" />
+    <Content Include="Assets\fonts\MyriadPro-Regular.otf" />
+    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
     <Content Include="Assets\fonts\OpenSans-Bold.svg" />
+    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
     <Content Include="Assets\fonts\OpenSans-Regular.svg" />
+    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
+    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
     <Content Include="Assets\fonts\OpenSans-Semibold.svg" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
+    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
+    <Content Include="Assets\fonts\Raleway-Bold.ttf" />
+    <Content Include="Assets\fonts\Raleway-ExtraBold.ttf" />
+    <Content Include="Assets\fonts\Raleway-ExtraLight.ttf" />
+    <Content Include="Assets\fonts\Raleway-Heavy.ttf" />
+    <Content Include="Assets\fonts\Raleway-Light.ttf" />
+    <Content Include="Assets\fonts\Raleway-Medium.ttf" />
+    <Content Include="Assets\fonts\Raleway-Regular.ttf" />
+    <Content Include="Assets\fonts\Raleway-SemiBold.ttf" />
+    <Content Include="Assets\fonts\Raleway-Thin.ttf" />
     <Content Include="Assets\images\adult-icon.png" />
+    <Content Include="Assets\images\adult.jpg" />
     <Content Include="Assets\images\airlines\0V.png" />
     <Content Include="Assets\images\airlines\2J.png" />
     <Content Include="Assets\images\airlines\2P.png" />
@@ -557,7 +688,6 @@
     <Content Include="Assets\images\airlines\ZL.png" />
     <Content Include="Assets\images\airplane-image.jpg" />
     <Content Include="Assets\images\ajax-loader.gif" />
-    <Content Include="Assets\images\appStore.png" />
     <Content Include="Assets\images\arrow-down-grey.png" />
     <Content Include="Assets\images\arrow-down.png" />
     <Content Include="Assets\images\arrow-white.png" />
@@ -565,6 +695,7 @@
     <Content Include="Assets\images\asita.png" />
     <Content Include="Assets\images\at-icon.png" />
     <Content Include="Assets\images\atm-bersama.jpg" />
+    <Content Include="Assets\images\atm.jpg" />
     <Content Include="Assets\images\backtotop.jpg" />
     <Content Include="Assets\images\bank-bca.png" />
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
@@ -585,15 +716,25 @@
     <Content Include="Assets\images\bersama-prima-alto.jpg" />
     <Content Include="Assets\images\bg-subscribe-desktop.jpg" />
     <Content Include="Assets\images\bg-white.jpg" />
+    <Content Include="Assets\images\bintang-hotel.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
+    <Content Include="Assets\images\buttons\app-store.png" />
     <Content Include="Assets\images\bni.png" />
     <Content Include="Assets\images\bri.png" />
     <Content Include="Assets\images\buttons\back-btn.png" />
+    <Content Include="Assets\images\buttons\google-play.png" />
     <Content Include="Assets\images\cal-bg.png" />
     <Content Include="Assets\images\calendar-nav-sprite-sm.png" />
     <Content Include="Assets\images\calendar-nav-sprite.png" />
     <Content Include="Assets\images\calendar-sprite.png" />
+    <Content Include="Assets\images\calendar.jpg" />
+    <Content Include="Assets\images\calendar.png" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\homepagepromo_mobile.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\homepage_desktop.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\homepage_mobile.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\landingpage_desktop.jpg" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\landingpage_mobile.jpg" />
     <Content Include="Assets\images\campaign\bali-text.png" />
     <Content Include="Assets\images\campaign\bali-thumb.jpg" />
     <Content Include="Assets\images\campaign\bali.jpg" />
@@ -624,11 +765,9 @@
     <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page-mobile.jpg" />
     <Content Include="Assets\images\campaign\MatahariMall2016\MatahariMall-page.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\app-store-cs.png" />
-    <Content Include="Assets\images\campaign\MobileApp\app-store.png" />
     <Content Include="Assets\images\campaign\MobileApp\background.jpg" />
     <Content Include="Assets\images\campaign\MobileApp\box-photo.png" />
     <Content Include="Assets\images\campaign\MobileApp\mobile-app-banner.jpg" />
-    <Content Include="Assets\images\campaign\MobileApp\play-store.png" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\credit-card.png" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\debit.png" />
     <Content Include="Assets\images\campaign\OnlineRevolution2016\OnlineRevolution-page-mobile.jpg" />
@@ -665,7 +804,7 @@
     <Content Include="Assets\images\choose-travorama.png" />
     <Content Include="Assets\images\cimb-clicks-transparan.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
-    <Content Include="Assets\images\cimbbank.png" />
+    <Content Include="Assets\images\cimb.jpg" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\cs-desktop.png" />
@@ -754,7 +893,6 @@
     <Content Include="Assets\images\form-selection-sprite.png" />
     <Content Include="Assets\images\global-error.jpg" />
     <Content Include="Assets\images\go-top.png" />
-    <Content Include="Assets\images\googlePlay.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
     <Content Include="Assets\images\hanabank.png" />
@@ -830,6 +968,7 @@
     <Content Include="Assets\images\instagram-icon.png" />
     <Content Include="Assets\images\jaminan.jpg" />
     <Content Include="Assets\images\kai.png" />
+    <Content Include="Assets\images\kredit.jpg" />
     <Content Include="Assets\images\list-bg.png" />
     <Content Include="Assets\images\list-detail-close.png" />
     <Content Include="Assets\images\load.gif" />
@@ -844,16 +983,19 @@
     <Content Include="Assets\images\lock-image.png" />
     <Content Include="Assets\images\login-bg.jpg" />
     <Content Include="Assets\images\logo-color.png" />
+    <Content Include="Assets\images\logo-garuda.jpg" />
     <Content Include="Assets\images\logo-promo.jpg" />
     <Content Include="Assets\images\logo-travorama-sm.png" />
     <Content Include="Assets\images\logo-travorama.png" />
     <Content Include="Assets\images\logo.png" />
     <Content Include="Assets\images\main-menu-arrow.png" />
     <Content Include="Assets\images\mandiri-logo.jpg" />
+    <Content Include="Assets\images\mandiri.jpg" />
     <Content Include="Assets\images\mandiri.png" />
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
+    <Content Include="Assets\images\meal.jpg" />
     <Content Include="Assets\images\maybank.png" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
@@ -959,6 +1101,7 @@
     <Content Include="Assets\images\social-twitter.png" />
     <Content Include="Assets\images\sprite-arrow.png" />
     <Content Include="Assets\images\ssl-image.png" />
+    <Content Include="Assets\images\star-detail-hotel.png" />
     <Content Include="Assets\images\static-header-sprite.png" />
     <Content Include="Assets\images\stop.png" />
     <Content Include="Assets\images\subscribe-bg.jpg" />
@@ -1013,7 +1156,10 @@
     <Content Include="Assets\images\why-free.png" />
     <Content Include="Assets\images\why-hotel.png" />
     <Content Include="Assets\images\why-long.png" />
+    <Content Include="Assets\images\why-percaya.png" />
+    <Content Include="Assets\images\why-pilihan.png" />
     <Content Include="Assets\images\why-trust.png" />
+    <Content Include="Assets\images\wifi-hotel.jpg" />
     <Content Include="Assets\images\wifi.png" />
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
@@ -1121,10 +1267,19 @@
     <Content Include="Assets\mobile\css\help_section.min.css" />
     <Content Include="Assets\mobile\css\style_mobile.css" />
     <Content Include="Assets\mobile\css\style_mobile.min.css" />
+    <Content Include="Assets\mobile\css\style_mobile.scss" />
+    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
+    <Content Include="Assets\mobile\css\_page_account.scss" />
+    <Content Include="Assets\mobile\css\_page_checkout.scss" />
+    <Content Include="Assets\mobile\css\_page_flight.scss" />
+    <Content Include="Assets\mobile\css\_page_home.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
+    <Content Include="Assets\mobile\css\_page_static.scss" />
     <Content Include="Assets\mobile\images\adult.png" />
     <Content Include="Assets\mobile\images\anak-bw.png" />
     <Content Include="Assets\mobile\images\anak.png" />
-    <Content Include="Assets\mobile\images\app-store.png" />
     <Content Include="Assets\mobile\images\arrow-detail.png" />
     <Content Include="Assets\mobile\images\arrow-down-bw.png" />
     <Content Include="Assets\mobile\images\arrow-down.png" />
@@ -1220,6 +1375,7 @@
     <Content Include="Assets\mobile\images\loading-new.png" />
     <Content Include="Assets\mobile\images\login-header-left.png" />
     <Content Include="Assets\mobile\images\logo-cs.png" />
+    <Content Include="Assets\mobile\images\logo-garuda.jpg" />
     <Content Include="Assets\mobile\images\logo-promo.jpg" />
     <Content Include="Assets\mobile\images\loop.png" />
     <Content Include="Assets\mobile\images\medals.png" />
@@ -1231,7 +1387,6 @@
     <Content Include="Assets\mobile\images\passenger-sprite-yellow.png" />
     <Content Include="Assets\mobile\images\passenger-sprite.png" />
     <Content Include="Assets\mobile\images\people.png" />
-    <Content Include="Assets\mobile\images\play-store.png" />
     <Content Include="Assets\mobile\images\prev.png" />
     <Content Include="Assets\mobile\images\promo-logo-notif.png" />
     <Content Include="Assets\mobile\images\promo-logo.png" />
@@ -1266,6 +1421,22 @@
     <Content Include="Assets\travorama20\angularDirectory\search\hotelSearch.service.js" />
     <Content Include="Assets\travorama20\css\style_desktop.css" />
     <Content Include="Assets\travorama20\css\style_desktop.min.css" />
+    <Content Include="Assets\travorama20\css\style_desktop.scss" />
+    <Content Include="Assets\travorama20\css\_footer.scss" />
+    <Content Include="Assets\travorama20\css\_header.scss" />
+    <Content Include="Assets\travorama20\css\_page_account.scss" />
+    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
+    <Content Include="Assets\travorama20\css\_page_flight.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_map.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
+    <Content Include="Assets\travorama20\css\_page_hotel_search_listing.scss" />
+    <Content Include="Assets\travorama20\css\_page_index.scss" />
+    <Content Include="Assets\travorama20\css\_page_password.scss" />
+    <Content Include="Assets\travorama20\css\_page_static.scss" />
+    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
+    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="Assets\travorama20\images\app-store-bg.png" />
     <Content Include="Assets\travorama20\images\app-store-cs.png" />
     <Content Include="Assets\travorama20\images\Hotel\bed.png" />
@@ -1405,161 +1576,7 @@
     <Content Include="App_Code\MsToTime.cshtml" />
     <Content Include="Campaign\Harbolnas2016\css\promo-harbolnas.scss" />
     <Content Include="Campaign\MatahariMall2016\css\promo-mataharimall.scss" />
-    <Content Include="Assets\bootstrap\bootstrap.css.map" />
-    <Content Include="Assets\bootstrap\bootstrap.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_alerts.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_background-variant.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_border-radius.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_buttons.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_center-block.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_clearfix.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_forms.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_gradients.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid-framework.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_grid.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_hide-text.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_image.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_labels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_list-group.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-divider.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_nav-vertical-align.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_opacity.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_pagination.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_panels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_progress-bar.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-filter.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_reset-text.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_resize.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_responsive-visibility.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_size.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_tab-focus.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_table-row.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-emphasis.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_text-overflow.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\mixins\_vendor-prefixes.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_alerts.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_badges.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_breadcrumbs.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_button-groups.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_buttons.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_carousel.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_close.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_code.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_component-animations.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_dropdowns.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_forms.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_glyphicons.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_grid.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_input-groups.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_jumbotron.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_labels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_list-group.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_media.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_mixins.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_modals.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_navbar.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_navs.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_normalize.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_pager.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_pagination.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_panels.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_popovers.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_print.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_progress-bars.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_responsive-embed.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_responsive-utilities.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_scaffolding.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_tables.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_theme.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_thumbnails.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_tooltip.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_type.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_utilities.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
-    <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
-    <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
-    <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
-    <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
-    <Content Include="Assets\css\global-error.scss" />
-    <Content Include="Assets\css\help_section.scss" />
-    <Content Include="Assets\css\invoice.scss" />
-    <Content Include="Assets\css\neweticket.scss" />
-    <Content Include="Assets\css\promo.scss" />
-    <Content Include="Assets\css\travorama-mobileApp.scss" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.eot" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.ttf" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff" />
-    <Content Include="Assets\fonts\bootstrap\glyphicons-halflings-regular.woff2" />
-    <Content Include="Assets\fonts\DINB-webfont.eot" />
-    <Content Include="Assets\fonts\DINB-webfont.ttf" />
-    <Content Include="Assets\fonts\DINB-webfont.woff" />
-    <Content Include="Assets\fonts\DINB-webfont.woff2" />
-    <Content Include="Assets\fonts\DINR-webfont.eot" />
-    <Content Include="Assets\fonts\DINR-webfont.ttf" />
-    <Content Include="Assets\fonts\DINR-webfont.woff" />
-    <Content Include="Assets\fonts\DINR-webfont.woff2" />
-    <Content Include="Assets\fonts\fontawesome-webfont.eot" />
-    <Content Include="Assets\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Assets\fonts\fontawesome-webfont.woff" />
-    <Content Include="Assets\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Assets\fonts\FontAwesome.otf" />
-    <Content Include="Assets\fonts\Gotham-Bold.eot" />
-    <Content Include="Assets\fonts\Gotham-Bold.otf" />
-    <Content Include="Assets\fonts\Gotham-Bold.ttf" />
-    <Content Include="Assets\fonts\Gotham-Bold.woff" />
-    <Content Include="Assets\fonts\Gotham-Medium.eot" />
-    <Content Include="Assets\fonts\Gotham-Medium.otf" />
-    <Content Include="Assets\fonts\Gotham-Medium.ttf" />
-    <Content Include="Assets\fonts\Gotham-Medium.woff" />
-    <Content Include="Assets\fonts\MyriadPro-BoldCond.otf" />
-    <Content Include="Assets\fonts\MyriadPro-Regular.otf" />
-    <Content Include="Assets\fonts\OpenSans-Bold.eot" />
-    <Content Include="Assets\fonts\OpenSans-Bold.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Bold.woff" />
-    <Content Include="Assets\fonts\OpenSans-Bold.woff2" />
-    <Content Include="Assets\fonts\OpenSans-Regular.eot" />
-    <Content Include="Assets\fonts\OpenSans-Regular.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Regular.woff" />
-    <Content Include="Assets\fonts\OpenSans-Regular.woff2" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.eot" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.ttf" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.woff" />
-    <Content Include="Assets\fonts\OpenSans-Semibold.woff2" />
-    <Content Include="Assets\fonts\Raleway-Bold.ttf" />
-    <Content Include="Assets\fonts\Raleway-ExtraBold.ttf" />
-    <Content Include="Assets\fonts\Raleway-ExtraLight.ttf" />
-    <Content Include="Assets\fonts\Raleway-Heavy.ttf" />
-    <Content Include="Assets\fonts\Raleway-Light.ttf" />
-    <Content Include="Assets\fonts\Raleway-Medium.ttf" />
-    <Content Include="Assets\fonts\Raleway-Regular.ttf" />
-    <Content Include="Assets\fonts\Raleway-SemiBold.ttf" />
-    <Content Include="Assets\fonts\Raleway-Thin.ttf" />
-    <Content Include="Assets\mobile\css\style_mobile.scss" />
-    <Content Include="Assets\mobile\css\_home_page_layout.scss" />
-    <Content Include="Assets\mobile\css\_page_account.scss" />
-    <Content Include="Assets\mobile\css\_page_checkout.scss" />
-    <Content Include="Assets\mobile\css\_page_flight.scss" />
-    <Content Include="Assets\mobile\css\_page_home.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel_detail.scss" />
-    <Content Include="Assets\mobile\css\_page_hotel_search.scss" />
-    <Content Include="Assets\mobile\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\style_desktop.scss" />
-    <Content Include="Assets\travorama20\css\_footer.scss" />
-    <Content Include="Assets\travorama20\css\_header.scss" />
-    <Content Include="Assets\travorama20\css\_page_account.scss" />
-    <Content Include="Assets\travorama20\css\_page_checkout.scss" />
-    <Content Include="Assets\travorama20\css\_page_flight.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel_detail.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel_map.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel_search.scss" />
-    <Content Include="Assets\travorama20\css\_page_hotel_search_listing.scss" />
-    <Content Include="Assets\travorama20\css\_page_index.scss" />
-    <Content Include="Assets\travorama20\css\_page_password.scss" />
-    <Content Include="Assets\travorama20\css\_page_static.scss" />
-    <Content Include="Assets\travorama20\css\_screenLarge.scss" />
-    <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="Assets\images\campaign\2017SeptemberSeru\Promo Send.xlsx" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1595,34 +1612,8 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="robots.txt" />
+    <Content Include="sitemap.xml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.mobile.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
@@ -1637,11 +1628,12 @@
     <Content Include="Views\Account\Register.mobile.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.mobile.cshtml" />
+    <Content Include="Views\common\partner-flight.cshtml" />
+    <Content Include="Views\common\partner-hotel.cshtml" />
+    <Content Include="Views\common\partners.cshtml" />
     <Content Include="Views\Flight\Checkout.cshtml" />
     <Content Include="Views\Flight\Checkout.mobile.cshtml" />
     <Content Include="Views\Flight\FlightSearchForm.cshtml" />
-    <Content Include="Views\Flight\Payment.cshtml" />
-    <Content Include="Views\Flight\Payment.mobile.cshtml" />
     <Content Include="Views\Flight\Search-Return.cshtml" />
     <Content Include="Views\Flight\Search-Return.mobile.cshtml" />
     <Content Include="Views\Flight\Search-Single.cshtml" />
@@ -1673,6 +1665,13 @@
     <Content Include="Views\Payment\Eticket.mobile.cshtml" />
     <Content Include="Views\Payment\Instruction.cshtml" />
     <Content Include="Views\Payment\Instruction.mobile.cshtml" />
+    <Content Include="Views\Payment\partials\_flightDetail.cshtml" />
+    <Content Include="Views\Payment\partials\_flightDetail.mobile.cshtml" />
+    <Content Include="Views\Payment\partials\_hotelDetail.cshtml" />
+    <Content Include="Views\Payment\partials\_payButton.cshtml" />
+    <Content Include="Views\Payment\partials\_paymentMethods.cshtml" />
+    <Content Include="Views\Payment\partials\_paymentWrapperMobile%28buatjaga2%29.cshtml" />
+    <Content Include="Views\Payment\partials\_priceDetail.cshtml" />
     <Content Include="Views\Payment\Payment.cshtml" />
     <Content Include="Views\Payment\Payment.mobile.cshtml" />
     <Content Include="Views\Payment\Thankyou.cshtml" />
@@ -1696,6 +1695,7 @@
     <Content Include="Views\Promo\OnlineRevolution.mobile.cshtml" />
     <Content Include="Views\Promo\OnlineRevolutionWebview.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.cshtml" />
+    <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile - Copy.cshtml" />
     <Content Include="Views\Promo\PaydayMadnessPermataBank.mobile.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.cshtml" />
     <Content Include="Views\Promo\PaydayMegaDeals.mobile.cshtml" />
@@ -1716,7 +1716,7 @@
     <Content Include="Views\Shared\Desktop\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\Desktop\_SearchLocation.cshtml" />
     <Content Include="Views\Shared\Desktop\_SectionUserMenu.cshtml" />
-    <Content Include="Views\Shared\Desktop\_SiteFooterMenu.cshtml" />
+    <Content Include="Views\Shared\Desktop\_SiteFooter.cshtml" />
     <Content Include="Views\Shared\Desktop\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\GlobalError.cshtml" />
     <Content Include="Views\Shared\GlobalError.mobile.cshtml" />
@@ -1733,6 +1733,7 @@
     <Content Include="Views\Shared\mobile\_SearchHotelForm.cshtml" />
     <Content Include="Views\Shared\mobile\_SelectCheckInDate.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteFooter.cshtml" />
+    <Content Include="Views\Shared\mobile\_SiteFooterApp.cshtml" />
     <Content Include="Views\Shared\mobile\_SiteHeader.cshtml" />
     <Content Include="Views\Shared\mobile\_Summary.cshtml" />
     <Content Include="Views\Shared\_googleTag.cshtml" />
@@ -1757,9 +1758,37 @@
     <Content Include="Views\StaticPage\_SectionHowTo.cshtml" />
     <Content Include="Views\StaticPage\_SectionStaticHeader.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\common\partner-flight.cshtml" />
-    <Content Include="Views\common\partner-hotel.cshtml" />
-    <Content Include="Views\common\partners.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.wsdl" />
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\common\subscribe-mobile.cshtml" />
+    <Content Include="Views\Promo\Promo.cshtml" />
+    <Content Include="Views\Promo\Promo.mobile.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

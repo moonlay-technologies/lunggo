@@ -183,14 +183,17 @@ namespace Lunggo.ApCommon.Payment.Service
                     (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
                 {
                     CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                }
+                }              
             }
 
-            var transferFee = GetTransferFeeFromCache(rsvNo);
-            if (transferFee == 0M)
+            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+
+            var uniqueCode = GetUniqueCodeFromCache(rsvNo);
+            if (uniqueCode == 0M)
                 return paymentDetails;
 
-            paymentDetails.UniqueCode = transferFee;
+            paymentDetails.UniqueCode = uniqueCode;
             paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
@@ -271,6 +274,33 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
+        public List<Surcharge> GetSurchargeList()
+        {
+            return new List<Surcharge>()
+            {
+                new Surcharge
+                {
+                    PaymentMethod = PaymentMethod.CreditCard,
+                    Percentage = 2.5M,
+                    Constant = 0
+                }
+            };
+        }
+
+        public decimal GetSurchargeNominal(PaymentDetails payment)
+        {
+            var surchargeList = GetSurchargeList();
+            var surcharge =
+                surchargeList.SingleOrDefault(
+                    sur =>
+                        payment.Method == sur.PaymentMethod &&
+                        (sur.PaymentSubMethod == null || payment.Submethod == sur.PaymentSubMethod));
+            return surcharge == null
+                ? 0
+                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal)*surcharge.Percentage/100) +
+                  surcharge.Constant;
+        }
+
         private static void ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
             if (payment.Method == PaymentMethod.BankTransfer)
@@ -348,7 +378,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
             switch (payment.Medium)
-            {
+        {
                 case PaymentMedium.Nicepay:
                     return NicepayWrapper.ProcessPayment(payment, transactionDetails);
                 case PaymentMedium.Veritrans:
@@ -441,7 +471,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                uniqueCode = GetTransferFeeFromCache(rsvNo);
+                uniqueCode = GetUniqueCodeFromCache(rsvNo);
                 if (uniqueCode != 0M)
                 {
                     candidatePrice = finalPrice + uniqueCode;
@@ -462,7 +492,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     }
                     SaveTransferValue(candidatePrice, rsvNo);
 
-                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
                 }
                 else
                 {
@@ -477,7 +507,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
                     } while (isExist);
                     SaveTransferValue(candidatePrice, rsvNo);
-                    SaveTransferFeeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
                 }
             }
 

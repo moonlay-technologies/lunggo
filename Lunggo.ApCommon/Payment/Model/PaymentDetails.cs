@@ -65,6 +65,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public string DiscountCode { get; set; }
         public decimal DiscountNominal { get; set; }
         public UsedDiscount Discount { get; set; }
+        public decimal Surcharge { get; set; }
         public decimal UniqueCode { get; set; }
         public decimal FinalPriceIdr { get; set; }
         public decimal PaidAmountIdr { get; set; }

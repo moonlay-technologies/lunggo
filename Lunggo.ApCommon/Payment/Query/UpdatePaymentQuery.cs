@@ -54,6 +54,8 @@ namespace Lunggo.ApCommon.Payment.Query
                 clauseBuilder.Append(@"DiscountCode = @DiscountCode, ");
             if (condition.DiscountNominal != null)
                 clauseBuilder.Append(@"DiscountNominal = @DiscountNominal, ");
+            if (condition.Surcharge != null)
+                clauseBuilder.Append(@"Surcharge = @Surcharge, ");
             if (condition.UniqueCode != null)
                 clauseBuilder.Append(@"UniqueCode = @UniqueCode, ");
             if (condition.FinalPriceIdr != null)
