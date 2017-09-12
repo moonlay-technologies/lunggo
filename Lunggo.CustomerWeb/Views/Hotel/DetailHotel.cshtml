@@ -201,174 +201,218 @@
             <div class="detail-hotel">
                 <div class="big-slider">
                     <div class="top-desc">
-                        <span class="slider-title-lg blue-txt">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.HotelName)</span>
-                        @if (Model.HotelDetailData.StarRating == 1)
-                        {
-                            <div class="star"></div>
-                        }
-                        else if (Model.HotelDetailData.StarRating == 2)
-                        {
-                            <div class="star star-2"></div>
-                        }
-                        else if (Model.HotelDetailData.StarRating == 3)
-                        {
-                            <div class="star star-3"></div>
-                        }
-                        else if (Model.HotelDetailData.StarRating == 4)
-                        {
-                            <div class="star star-4"></div>
-                        }
-                        else if (Model.HotelDetailData.StarRating == 5)
-                        {
-                            <div class="star star-5"></div>
-                        }
+                        <div class="bintang-detail-hotel"><img src="/Assets/images/star-detail-hotel.png"/></div>
+                        <div class="judul-detail-hotel "><h1>Zen Rooms Anggrek Loka BSD</h1></div>
+                        <div class="alamat-detail-hotel">Casa Vanda Guesth,Anggrek Loka Blok Ac N12b, Jakarta 15318, Indonesia</div>
+                        <!--  <span class="slider-title-lg blue-txt">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.HotelName)</span>
+                            @if (Model.HotelDetailData.StarRating == 1)
+                            {
+                                <div class="star"></div>
+                            }
+                            else if (Model.HotelDetailData.StarRating == 2)
+                            {
+                                <div class="star star-2"></div>
+                            }
+                            else if (Model.HotelDetailData.StarRating == 3)
+                            {
+                                <div class="star star-3"></div>
+                            }
+                            else if (Model.HotelDetailData.StarRating == 4)
+                            {
+                                <div class="star star-4"></div>
+                            }
+                            else if (Model.HotelDetailData.StarRating == 5)
+                            {
+                                <div class="star star-5"></div>
+                            }
                         
-                        <br />
-                        <span class="address" style="text-transform: capitalize">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.Address) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.AreaName) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.City) @Model.HotelDetailData.PostalCode, @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.CountryName)</span>
-                        @*<a href="#" class="btn-blue small">Lihat Peta</a>*@
-                    </div>
-                    <div class="slider-container clearfix">
-                        <div class="slider clearfix">
-                            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                @if (Model.HotelDetailData.ImageUrl != null)
-                                {
-                                    if (Model.HotelDetailData.ImageUrl.Count >= 1)
-                                     {
-                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[0]" alt-image>
-                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[0]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                         </li>
-                                     }
+                            <br />
+                            <span class="address" style="text-transform: capitalize">@ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.Address) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.AreaName) @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.City) @Model.HotelDetailData.PostalCode, @ToTitleCase.ConvertToTitleCase(Model.HotelDetailData.CountryName)</span>
+                            @*<a href="#" class="btn-blue small">Lihat Peta</a>*@-->
+                    </div> 
+                    <div class="slider-container container-detail-hotel clearfix">
+                        <div class="row">
+                            <div class="left-konten col-xs-6">
+                                <img src="/Assets/images/kamar-hotel.jpg" />
+                                <!--<div class="slider clearfix">
+                                        <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                            @if (Model.HotelDetailData.ImageUrl != null)
+                                            {
+                                                if (Model.HotelDetailData.ImageUrl.Count >= 1)
+                                                {
+                                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[0]" alt-image>
+                                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[0]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                                    </li>
+                                                }
 
-                                    if (Model.HotelDetailData.ImageUrl.Count >= 2)
-                                     {
-                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[1]" alt-image>
-                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[1]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                         </li>
-                                     }
+                                                if (Model.HotelDetailData.ImageUrl.Count >= 2)
+                                                {
+                                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[1]" alt-image>
+                                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[1]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                                    </li>
+                                                }
 
-                                    if (Model.HotelDetailData.ImageUrl.Count >= 3)
-                                     {
-                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[2]" alt-image>
-                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[2]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                         </li>
-                                     }
+                                                if (Model.HotelDetailData.ImageUrl.Count >= 3)
+                                                {
+                                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[2]" alt-image>
+                                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[2]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                                    </li>
+                                                }
 
-                                    if (Model.HotelDetailData.ImageUrl.Count >= 4)
-                                     {
-                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[3]" alt-image>
-                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[3]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                         </li>
-                                     }
+                                                if (Model.HotelDetailData.ImageUrl.Count >= 4)
+                                                {
+                                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[3]" alt-image>
+                                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[3]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                                    </li>
+                                                }
 
-                                    if (Model.HotelDetailData.ImageUrl.Count >= 5)
-                                     {
-                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[4]" alt-image>
-                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[4]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                         </li>
-                                     }
+                                                if (Model.HotelDetailData.ImageUrl.Count >= 5)
+                                                {
+                                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[4]" alt-image>
+                                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[4]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                                    </li>
+                                                }
 
-                                    if (Model.HotelDetailData.ImageUrl.Count >= 6)
-                                     {
-                                         <li data-thumb="@Model.HotelDetailData.ImageUrl[5]" alt-image>
-                                             <div style="background-image: url(@Model.HotelDetailData.ImageUrl[5]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                         </li>
-                                     }
-                                    @*<li data-thumb="{{hotelImages[1]}}" alt-image>
-                                        <div style="background-image: url({{hotelImages[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>
-                                    <li data-thumb="{{hotelImages[2]}}" alt-image>
-                                        <div style="background-image: url({{hotelImages[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>
-                                    <li data-thumb="{{hotelImages[3]}}" alt-image>
-                                        <div style="background-image: url({{hotelImages[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>
-                                    <li data-thumb="{{hotelImages[4]}}" alt-image>
-                                        <div style="background-image: url({{hotelImages[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>
-                                    <li data-thumb="{{hotelImages[5]}}" alt-image>
-                                        <div style="background-image: url({{hotelImages[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
-                                    </li>*@
-                                }
-                            </ul>
-                        </div>
-                        <div class="col-right-slider">
-                            <div class="rs-title md-txt">Review Hotel</div>
-                            <div class="rs-list rs-rating clearfix">
-                                <div class="col-left-rs"><span class="rs-txt-big blue-txt">8.0</span></div>
-                                <div class="col-right-rs">
-                                    Sangat Baik <br />
-                                    <span class="blue-txt italic-txt sm-txt">Dari 100 Ulasan</span>
+                                                if (Model.HotelDetailData.ImageUrl.Count >= 6)
+                                                {
+                                                    <li data-thumb="@Model.HotelDetailData.ImageUrl[5]" alt-image>
+                                                        <div style="background-image: url(@Model.HotelDetailData.ImageUrl[5]); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                                    </li>
+                                                }
+                                            @*<li data-thumb="{{hotelImages[1]}}" alt-image>
+                                                <div style="background-image: url({{hotelImages[1]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                            </li>
+                                            <li data-thumb="{{hotelImages[2]}}" alt-image>
+                                                <div style="background-image: url({{hotelImages[2]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                            </li>
+                                            <li data-thumb="{{hotelImages[3]}}" alt-image>
+                                                <div style="background-image: url({{hotelImages[3]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                            </li>
+                                            <li data-thumb="{{hotelImages[4]}}" alt-image>
+                                                <div style="background-image: url({{hotelImages[4]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                            </li>
+                                            <li data-thumb="{{hotelImages[5]}}" alt-image>
+                                                <div style="background-image: url({{hotelImages[5]}}); width: 100%; height: 590px; background-size: cover; background-position: center center;"></div>
+                                            </li>*@
+                                            }
+                                        </ul>
+                                    </div> -->
+                            </div>  <!-- end left-konten-->
+                            
+                            <div class="right-konten col-xs-6">
+                                <div class="deskripsi-detail-hotel">
+                                    <h3>Deskripsi Hotel</h3>
+                                    <p>Terletak di Cikarang, favehotel Jababeka menawarkan kamar-kamar yang apik, 
+                                        fasilitas rapat, dan kolam renang outdoor yang besar. Wi-Fi gratis tersedia di seluruh area hotel.
+                                        Menampilkan warna-warna cerah dan lantai kayu, semua.. <span>More hotel info</span>
+                                    </p>
                                 </div>
-                            </div>
-                            <div class="rs-list rs-review">
-                                <div class="blue-txt"><b>Ulasan dari Travorama</b></div>
-                                <div class="review-bar clearfix">
-                                    <div class="rb-container clearfix">
-                                        <div class="rb-left">Kebersihan</div>
-                                        <div class="rb-mid">:</div>
-                                        <div class="rb-right">
-                                            <div class="bar-horizontal">
-                                                <span class="bar-range"></span>
-                                            </div>
-                                            <span class="total-review blue-txt">(8.6)</span>
+                                <div class="fasilitas-detail-hotel">
+                                    <h3>Fasilitas Hotel</h3>
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/facility/health-fac.png" /> Kesehatan
                                         </div>
-                                    </div>
-                                    <div class="rb-container clearfix">
-                                        <div class="rb-left">Kenyamanan</div>
-                                        <div class="rb-mid">:</div>
-                                        <div class="rb-right">
-                                            <div class="bar-horizontal">
-                                                <span class="bar-range"></span>
-                                            </div>
-                                            <span class="total-review blue-txt">(8.6)</span>
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/facility/sport-fac.png" /> Tennis
                                         </div>
-                                    </div>
-                                    <div class="rb-container clearfix">
-                                        <div class="rb-left">Pelayanan</div>
-                                        <div class="rb-mid">:</div>
-                                        <div class="rb-right">
-                                            <div class="bar-horizontal">
-                                                <span class="bar-range"></span>
-                                            </div>
-                                            <span class="total-review blue-txt">(8.6)</span>
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/facility/business-fac.png" /> Bisnis
                                         </div>
-                                    </div>
-                                    <div class="rb-container clearfix">
-                                        <div class="rb-left">Makanan</div>
-                                        <div class="rb-mid">:</div>
-                                        <div class="rb-right">
-                                            <div class="bar-horizontal">
-                                                <span class="bar-range"></span>
-                                            </div>
-                                            <span class="total-review blue-txt">(8.6)</span>
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/facility/general-fac.png" /> Umum
                                         </div>
-                                    </div>
-                                    <div class="rb-container clearfix">
-                                        <div class="rb-left">Lokasi</div>
-                                        <div class="rb-mid">:</div>
-                                        <div class="rb-right">
-                                            <div class="bar-horizontal">
-                                                <span class="bar-range"></span>
-                                            </div>
-                                            <span class="total-review blue-txt">(8.6)</span>
+                                        <div class="col-xs-4">
+                                            <img src="/Assets/images/facility/meal-fac.png" /> Makanan
                                         </div>
                                     </div>
                                 </div>
-                                <div class="btn-container"><a class="btn-blue big" href="#">Selengkapnya</a></div>
+                            </div> <!-- end right-konten-->
+                        </div> 
+                        <div class="map-detail-hotel">
+                            <div class="deskripsi-detail-hotel">
+                                <h3>Peta Hotel</h3>
+                            </div>
+                        </div> <!-- end maps-detail-hotel-->
+                        
+                        <!-- <div class="col-right-slider">
+                                 <div class="rs-title md-txt">Review Hotel</div>
+                                 <div class="rs-list rs-rating clearfix">
+                                     <div class="col-left-rs"><span class="rs-txt-big blue-txt">8.0</span></div>
+                                     <div class="col-right-rs">
+                                         Sangat Baik <br />
+                                         <span class="blue-txt italic-txt sm-txt">Dari 100 Ulasan</span>
+                                     </div>
+                                 </div>
+                                 <div class="rs-list rs-review">
+                                     <div class="blue-txt"><b>Ulasan dari Travorama</b></div>
+                                     <div class="review-bar clearfix">
+                                         <div class="rb-container clearfix">
+                                             <div class="rb-left">Kebersihan</div>
+                                             <div class="rb-mid">:</div>
+                                             <div class="rb-right">
+                                                 <div class="bar-horizontal">
+                                                     <span class="bar-range"></span>
+                                                 </div>
+                                                 <span class="total-review blue-txt">(8.6)</span>
+                                             </div>
+                                         </div>
+                                         <div class="rb-container clearfix">
+                                             <div class="rb-left">Kenyamanan</div>
+                                             <div class="rb-mid">:</div>
+                                             <div class="rb-right">
+                                                 <div class="bar-horizontal">
+                                                     <span class="bar-range"></span>
+                                                 </div>
+                                                 <span class="total-review blue-txt">(8.6)</span>
+                                             </div>
+                                         </div>
+                                         <div class="rb-container clearfix">
+                                             <div class="rb-left">Pelayanan</div>
+                                             <div class="rb-mid">:</div>
+                                             <div class="rb-right">
+                                                 <div class="bar-horizontal">
+                                                     <span class="bar-range"></span>
+                                                 </div>
+                                                 <span class="total-review blue-txt">(8.6)</span>
+                                             </div>
+                                         </div>
+                                         <div class="rb-container clearfix">
+                                             <div class="rb-left">Makanan</div>
+                                             <div class="rb-mid">:</div>
+                                             <div class="rb-right">
+                                                 <div class="bar-horizontal">
+                                                     <span class="bar-range"></span>
+                                                 </div>
+                                                 <span class="total-review blue-txt">(8.6)</span>
+                                             </div>
+                                         </div>
+                                         <div class="rb-container clearfix">
+                                             <div class="rb-left">Lokasi</div>
+                                             <div class="rb-mid">:</div>
+                                             <div class="rb-right">
+                                                 <div class="bar-horizontal">
+                                                     <span class="bar-range"></span>
+                                                 </div>
+                                                 <span class="total-review blue-txt">(8.6)</span>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="btn-container"><a class="btn-blue big" href="#">Selengkapnya</a></div>
 
-                            </div>
-                            <div class="rs-list rs-ta">
-                                <div class="ta-title green-txt"><b>Rating dari TripAdvisor</b></div>
-                                <div class="grey-txt sm-txt italic-txt">Dari 900 ulasan</div>
-                                <div class="btn-container"><a class="btn-green" href="#">Selengkapnya</a></div>
-                            </div>
-                        </div>
+                                 </div>
+                                 <div class="rs-list rs-ta">
+                                     <div class="ta-title green-txt"><b>Rating dari TripAdvisor</b></div>
+                                     <div class="grey-txt sm-txt italic-txt">Dari 900 ulasan</div>
+                                     <div class="btn-container"><a class="btn-green" href="#">Selengkapnya</a></div>
+                                 </div>
+                             </div> -->
                     </div>
                     @*<span ng-show="!searchDone" class="text-center">
                                 <img src="/Assets/images/load.gif" class="img-loading">
                         </span>*@
                 </div>
-                <div class="menu-hotel clearfix">
+                <!-- <div class="menu-hotel clearfix">
                     <div class="col-left-hotel mh-title md-txt">Informasi Hotel</div>
                     <ul class=" col-right-hotel mh-container">
                         <li class="mh-list"><a data-value="menu-map">Peta Hotel</a></li>
@@ -379,152 +423,362 @@
                             <li class="mh-list"><a href="#menu-tnc">Syarat & Ketentuan Hotel</a></li>
                         } 
                     </ul>
-                </div>
+                </div> -->
                 
                 
                 <div class="room clearfix">
-                    <div class="top-title clearfix">
-                        <div class="col-left-rs bg-title"><b>Pilih</b> Kamar </div>
-                        <div ng-hide="!searchDone">
-                            <div class="col-right-rs total-day">{{hotel.nightCount}} Malam <b>({{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}})</b></div>
-                            <div class="col-right-rs total-day">{{lastSearch.totalOcc}} Kamar</div>
-                        </div>                  
-                    </div>
-                    <div ng-show="!searchDone" class="text-center">
-                        <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
-                    </div>
-                    <div ng-show="noResults" style="font-size: 20px; text-align: center">
-                        Hasil pencarian kamar tidak ditemukan
-                    </div>
-                    <div class="room-sort clearfix" ng-hide="!searchDone || noResults">
-                        <div class="col-6">Tipe Kamar</div>
-                        <div class="col-4">
-                            <div class="tab-hotel-price clearfix">
-                                <div class="tab-l bold-txt right-txt">
-                                    Tampilkan Harga:
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="top-title clearfix">
+                                <div class="judul-detail-hotel ">
+                                    <h1>Pilih Kamar</h1>
                                 </div>
-                                <div class="tab-wrapper tab-r">
-                                    <div class="tab-border clearfix">
-                                        <div class="col-6 tab-list active" href="#detail-price-night">Per kamar, per malam</div>
-                                        <div class="col-4 tab-list" href="#detail-price-total">Harga total</div>
+                                <div ng-hide="!searchDone">
+                                    <div class="total-day">
+                                        {{lastSearch.totalOcc}} Kamar,  {{hotel.nightCount}} Malam ({{hotel.checkinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotel.checkoutDate | date : 'EEEE, dd MMM yyyy'}})
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-4 sort-detail-hotel">
+                            <select class="input-nama-hotel">
+                                <option value="Per kamar, per malam">Per kamar, per malam</option>
+                                <option value="Harga Total">Harga Total</option>
+                            </select>
+                        </div>
                     </div>
+                    <div ng-show="!searchDone" class="text-center">
+                        <img src="/Assets/images/load.gif" style="width:5%; margin-left: 10%">
+                    </div>
+                    <!-- <div ng-show="noResults" style="font-size: 20px; text-align: center">
+                             Hasil pencarian kamar tidak ditemukan
+                         </div>-->
+                    <!-- <div class="room-sort clearfix" ng-hide="!searchDone || noResults">
+                             <div class="col-6">Tipe Kamar</div>
+                             <div class="col-4">
+                                 <div class="tab-hotel-price clearfix">
+                                     <div class="tab-l bold-txt right-txt">
+                                         Tampilkan Harga:
+                                     </div>
+                                     <div class="tab-wrapper tab-r">
+                                         <div class="tab-border clearfix">
+                                             <div class="col-6 tab-list active" href="#detail-price-night">Per kamar, per malam</div>
+                                             <div class="col-4 tab-list" href="#detail-price-total">Harga total</div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div> -->
                     <div>
-                        <ul class="room-list-container" ng-hide="!searchDone || noResults">
-                            <li ng-show="$index+1 <= roomCount" ng-repeat="room in singleRoom track by $index">
-                            <div class="room-list clearfix">
-                                <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
-                                <div class="room-left" ng-show="room.roomImages !== undefined && room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
-                                <div class="room-right clearfix">
-                                    <div class="room-rl">
-                                        <div class="blue-txt md-txt" style="text-transform: capitalize"><b>{{room.roomName}}</b></div>
-                                        <div class="facility"></div>
-                                            <div class="max-people" ng-if="room.rate.breakdowns[0].board != 'RO'">Termasuk Sarapan</div>
-                                        <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
-                                        <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
-                                        <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
-                                        <div class="info-room">
-                                            <span class="info-icon italic-txt">i</span>
-                                            <span class="blue-txt sm-txt">Info Kamar</span>
+                        <div class="box-list-kamar">
+                            <div class="row">
+                                <div class="col-xs-2 list-foto-kamar">
+                                    <img src="/Assets/images/foto-hotel.jpg" />
+                                </div>
+                                <div class="col-xs-7 info-list-kamar">
+                                    <div class="judul-kamar"><h1>Double Deluxe</h1></div>
+                                    <div class="lokasi-kamar">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.. <br/>
+                                        <a href="#">Info Selengkapnya & Cancellation Policy</a>
+                                    </div>
+                                    <div class="row fac-kamar">
+                                        <div class="col-xs-4 clear-left">
+                                            <img src="/Assets/images/cancel.jpg" /> Cancelllation Policy
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/adult.jpg" /> Max 2 Adults
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/meal.jpg" /> Breakfast
                                         </div>
                                     </div>
-                                    <div class="room-rm">
-                                        <div class="dropdown-container">
-                                            <div class="form-control change-room">
-                                                <span>1</span>
-                                                <div class="option">
-                                                    <span data-value="y">2</span>
-                                                    <span data-value="c">3</span>
-                                                    <span data-value="f">4</span>
+                                </div>
+                                <div class="col-xs-2 col-xs-offset-1 harga-list-kamar">
+                                    <div class="harga-lama">Rp 500.000</div>
+                                    <div class="harga-baru">Rp 2.350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar" value="Lihat Kamar">
+                                </div>
+                            </div>
+                            <div class="separator-desktop-list-kamar"></div>
+                            <div class="row">
+                                <div class="detail-list-kamar clearfix">
+                                    <div class="col-xs-6 clear-left"><img src="/Assets/images/foto-detail-kamar.jpg" /></div>
+                                    <div class="col-xs-6">
+                                        <div class="additional-info">
+                                            <!-- Nav tabs -->
+                                            <ul class="nav nav-tabs nav-tab-info-kamar" role="tablist">
+                                                <li role="presentation" class="active"><a href="#info" aria-controls="home" role="tab" data-toggle="tab">Additional Info</a></li>
+                                                <li role="presentation"><a href="#policy" aria-controls="profile" role="tab" data-toggle="tab">Cancellation Policy</a></li>
+                                            </ul>
+
+                                            <!-- Tab panes -->
+                                            <div class="tab-content tab-info-kamar">
+                                                <div role="tabpanel" class="tab-pane fade in active" id="info">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                    Ut enim ad minim veniam Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                                    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
                                                 </div>
+                                                <div role="tabpanel" class="tab-pane fade" id="policy">...</div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div class="room-rr">
-                                        <div class="price" id="detail-price-night">
-                                            <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>
-                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netFare | number}}</b></div>
-                                        </div>
-                                        <div class="price" id="detail-price-total" style="display: none;">
-                                            <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalTotalFare | number}}</div>
-                                            <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netTotalFare | number}}</b></div>
-                                        </div>
-                                        <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                            <a href="" class="btn btn-yellow sm-btn" ng-click="bookRoom(room.rate)">PESAN</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="hotel-detail clearfix">
-                                <div class=" col-left-result">
-                                    <div class="col-left-top clearfix">
-                                        <div class="sm-slider">
-                                            <ul class="room-gallery gallery list-unstyled cS-hidden">
-                                                <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
-                                                    <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
-                                                    <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
-                                                </li>
+                        </div><!-- end-box-list-kamar -->
+                        <div class="box-list-kamar">
+                            <div class="row">
+                                <div class="col-xs-2 list-foto-kamar">
+                                    <img src="/Assets/images/foto-hotel.jpg" />
+                                </div>
+                                <div class="col-xs-7 info-list-kamar">
+                                    <div class="judul-kamar"><h1>Double Deluxe</h1></div>
+                                    <div class="lokasi-kamar">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.. <br />
+                                        <a href="#">Info Selengkapnya & Cancellation Policy</a>
+                                    </div>
+                                    <div class="row fac-kamar">
+                                        <div class="col-xs-4 clear-left">
+                                            <img src="/Assets/images/cancel.jpg" /> Cancelllation Policy
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/adult.jpg" /> Max 2 Adults
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/meal.jpg" /> Breakfast
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-offset-1 harga-list-kamar">
+                                    <div class="harga-lama">Rp 500.000</div>
+                                    <div class="harga-baru">Rp 350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar" value="Lihat Kamar">
+                                </div>
+                            </div>
+                        </div> <!-- end-box-list-kamar -->
+                        <div class="box-list-kamar">
+                            <div class="row">
+                                <div class="col-xs-2 list-foto-kamar">
+                                    <img src="/Assets/images/foto-hotel.jpg" />
+                                </div>
+                                <div class="col-xs-7 info-list-kamar">
+                                    <div class="judul-kamar"><h1>Double Deluxe</h1></div>
+                                    <div class="lokasi-kamar">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.. <br />
+                                        <a href="#">Info Selengkapnya & Cancellation Policy</a>
+                                    </div>
+                                    <div class="row fac-kamar">
+                                        <div class="col-xs-4 clear-left">
+                                            <img src="/Assets/images/cancel.jpg" /> Cancelllation Policy
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/adult.jpg" /> Max 2 Adults
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/meal.jpg" /> Breakfast
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-offset-1 harga-list-kamar">
+                                    <div class="harga-lama">Rp 500.000</div>
+                                    <div class="harga-baru">Rp 350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar" value="Lihat Kamar">
+                                </div>
+                            </div>
+                        </div> <!-- end-box-list-kamar -->
+                        <div class="box-list-kamar">
+                            <div class="row">
+                                <div class="col-xs-2 list-foto-kamar">
+                                    <img src="/Assets/images/foto-hotel.jpg" />
+                                </div>
+                                <div class="col-xs-7 info-list-kamar">
+                                    <div class="judul-kamar"><h1>Double Deluxe</h1></div>
+                                    <div class="lokasi-kamar">
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.. <br />
+                                        <a href="#">Info Selengkapnya & Cancellation Policy</a>
+                                    </div>
+                                    <div class="row fac-kamar">
+                                        <div class="col-xs-4 clear-left">
+                                            <img src="/Assets/images/cancel.jpg" /> Cancelllation Policy
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/adult.jpg" /> Max 2 Adults
+                                        </div>
+                                        <div class="col-xs-3 clear-left">
+                                            <img src="/Assets/images/meal.jpg" /> Breakfast
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2 col-xs-offset-1 harga-list-kamar">
+                                    <div class="harga-lama">Rp 500.000</div>
+                                    <div class="harga-baru">Rp 350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar" value="Lihat Kamar">
+                                </div>
+                            </div>
+                        </div> <!-- end-box-list-kamar -->
+                        <!-- <ul class="room-list-container" ng-hide="!searchDone || noResults">
+                            <li ng-show="$index+1 <= roomCount" ng-repeat="room in singleRoom track by $index">
+                                
+                            <!-- <div class="room-list clearfix">
+                                     <div class="room-left" ng-show="room.roomImages === undefined || room.roomImages.length <= 0"><div class="no-room-pic"></div></div>
+                                     <div class="room-left" ng-show="room.roomImages !== undefined && room.roomImages.length > 0"><div class="room-pic" alt-image style="background-image: url({{room.roomImages[0]}});"></div></div>
+                                     <div class="room-right clearfix">
+                                         <div class="room-rl">
+                                             <div class="blue-txt md-txt" style="text-transform: capitalize"><b>{{room.roomName}}</b></div>
+                                             <div class="facility"></div>
+                                             <div class="max-people" ng-if="room.rate.breakdowns[0].board != 'RO'">Termasuk Sarapan</div>
+                                             <div ng-show="room.rate.isFreeCancel">Pembatalan Gratis </div>
+                                             <div ng-show="!room.rate.isFreeCancel && room.rate.isRefundable">Kebijakan Pembatalan Berlaku </div>
+                                             <div ng-show="!room.rate.isFreeCancel && !room.rate.isRefundable">Tidak Dapat Dibatalkan </div>
+                                             <div class="info-room">
+                                                 <span class="info-icon italic-txt">i</span>
+                                                 <span class="blue-txt sm-txt">Info Kamar</span>
+                                             </div>
+                                         </div>
+                                         <div class="room-rm">
+                                             <div class="dropdown-container">
+                                                 <div class="form-control change-room">
+                                                     <span>1</span>
+                                                     <div class="option">
+                                                         <span data-value="y">2</span>
+                                                         <span data-value="c">3</span>
+                                                         <span data-value="f">4</span>
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         <div class="room-rr">
+                                             <div class="price" id="detail-price-night">
+                                                 <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalFare | number}}</div>
+                                                 <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netFare | number}}</b></div>
+                                             </div>
+                                             <div class="price" id="detail-price-total" style="display: none;">
+                                                 <div class="underline-txt">Rp {{room.rate.breakdowns[0].originalTotalFare | number}}</div>
+                                                 <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netTotalFare | number}}</b></div>
+                                             </div>
+                                             <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
+                                             <a href="" class="btn btn-yellow sm-btn" ng-click="bookRoom(room.rate)">PESAN</a>
+                                         </div>
+                                     </div>
+                                 </div>
+                                <div class="hotel-detail clearfix">
+                                    <div class=" col-left-result">
+                                        <div class="col-left-top clearfix">
+                                            <div class="sm-slider">
+                                                <ul class="room-gallery gallery list-unstyled cS-hidden">
+                                                    <li data-thumb="{{roomImage}}" ng-repeat="roomImage in room.roomImages track by $index">
+                                                        <div style="background-image: url({{roomImage}}); width: 100%; height: 145px; background-size: cover; background-position: center center;"></div>
+                                                        <div class="total-img"><b>{{$index+1}}</b> / {{room.roomImages.length}}</div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col-left-bottom">
+                                            <ul class="hd-list">
+                                                <li class="hd-size">: 3 x 3 m</li>
+                                                <li class="hd-bed">: {{room.rate.breakdowns[0].boardDesc}}</li>
+                                                <li class="hd-view">: City View</li>
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-left-bottom">
-                                        <ul class="hd-list">
-                                            <li class="hd-size">: 3 x 3 m</li>
-                                            <li class="hd-bed">: {{room.rate.breakdowns[0].boardDesc}}</li>
-                                            <li class="hd-view">: City View</li>
-                                        </ul>
+                                    <div class="col-right-result">
+                                        <div class="hd-right-container">
+                                            <ul class="hd-description">
+                                                <li class="hd-point" ng-show="room.rate.cancellation != null && room.rate.cancellation.length > 0">
+                                                    <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
+                                                    <div class="hd-txt">
+                                                        <ul class="blue-list" style="margin-bottom: 0;">
+                                                            <li ng-show="room.rate.isFreeCancel">
+                                                                Gratis pembatalan sebelum tanggal <span style="color:#1daee4">{{setHoursToWIB(room.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
+                                                            </li>
+                                                        </ul>
+                                                        <ul class="blue-list">
+                                                            <li ng-repeat="cancellation in room.rate.cancellation track by $index">
+                                                                Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
+                                                                akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">{{(cancellation.feePercentage *100).toFixed(0)}}%</span>.
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+
+                                                <li class="hd-point" ng-show="room.rate.tnc != null && room.rate.tnc.length > 0">
+                                                    <div class="hd-title blue-txt">Ketentuan Kamar</div>
+                                                    <div class="hd-txt">
+                                                        <ul class="blue-list">
+                                                            <li ng-repeat="tnc in room.rate.tnc track by $index">{{tnc}}</li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="col-right-result">
-                                    <div class="hd-right-container">
-                                        <ul class="hd-description">
-                                            <li class="hd-point" ng-show="room.rate.cancellation != null && room.rate.cancellation.length > 0">
-                                                <div class="hd-title blue-txt">Kebijakan Pembatalan</div>
-                                                <div class="hd-txt">
-                                                    <ul class="blue-list" style="margin-bottom: 0;">
-                                                        <li ng-show="room.rate.isFreeCancel">
-                                                            Gratis pembatalan sebelum tanggal <span style="color:#1daee4">{{setHoursToWIB(room.rate.freeUntil) | date:'dd MMMM yyyy HH:mm'}}</span> WIB.
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="blue-list">
-                                                        <li ng-repeat="cancellation in room.rate.cancellation track by $index">
-                                                            Pembatalan setelah tanggal <span style="color:#1daee4">{{setHoursToWIB(cancellation.startTime) | date:'dd MMMM yyyy HH:mm'}} WIB</span>
-                                                            akan dikenakan biaya pembatalan sebesar <span style="color:#ff7200">{{(cancellation.feePercentage *100).toFixed(0)}}%</span>.
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
 
-                                            <li class="hd-point" ng-show="room.rate.tnc != null && room.rate.tnc.length > 0">
-                                                <div class="hd-title blue-txt">Ketentuan Kamar</div>
-                                                <div class="hd-txt">
-                                                    <ul class="blue-list">
-                                                        <li ng-repeat="tnc in room.rate.tnc track by $index">{{tnc}}</li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </li>
-                    </ul>
-                    </div>
+                            </li>
+                            </ul> -->
+                    </div> <!-- end list kamar -->
                    
-                    <div class="hotel-result clearfix" ng-hide="!searchDone  || noResults">
-                        <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{singleRoom.length}}</b></span>
-                        <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
-                            Tampilkan
-                            <text ng-show="roomCount == minRoomCount">semua</text>
-                            <text ng-show="roomCount == maxRoomCount">sebagian</text>
-                        </a>
+                    <!-- <div class="hotel-result clearfix" ng-hide="!searchDone  || noResults">
+                             <span class="hotel-result-txt">Jumlah Tipe Kamar Tersedia: <b>{{singleRoom.length}}</b></span>
+                             <a href="" class="btn-hotel-result btn-blue small" ng-click="togleDisplay()">
+                                 Tampilkan
+                                 <text ng-show="roomCount == minRoomCount">semua</text>
+                                 <text ng-show="roomCount == maxRoomCount">sebagian</text>
+                             </a>
+                         </div>-->
+                </div>
+                
+                <div class="informasi-hotel">
+                    <div class="judul-detail-hotel ">
+                        <h1>Informasi Hotel</h1>
+                    </div>
+                    <div class="container-detail-hotel more-info-detail-hotel">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                        reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                     </div>
                 </div>
-                <div class="info-hotel">
+
+                <div class="separator"></div>
+
+                <div class="fasilitas-hotel">
+                    <div class="judul-detail-hotel ">
+                        <h1>Fasilitas Hotel</h1>
+                    </div>
+                    <div class="container-detail-hotel more-info-detail-hotel">
+                        <div class="list-fasilitas-hotel">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <ul>
+                                        <div class="kategori-fasilitas">Food and Beverages</div>
+                                        <li>Restaurant</li>
+                                        <li>Pub</li>
+                                        <li>Room Service</li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-4">
+                                    <ul>
+                                        <div class="kategori-fasilitas">Entertainment and services for families</div>
+                                        <li>Entertainment Staff</li>
+                                        <li>Children's Club</li>
+                                        <li>Children's playground</li>
+                                    </ul>
+                                </div>
+                                <div class="col-xs-4">
+                                    <ul>
+                                        <div class="kategori-fasilitas">Activities</div>
+                                        <li>Tennis court</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="info-hotel">
                     <div class="top-title clearfix">
                         <div class="col-left-rs bg-title"><b>Rincian Hotel</b> </div>
                     </div>
@@ -673,7 +927,7 @@
                             }   
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

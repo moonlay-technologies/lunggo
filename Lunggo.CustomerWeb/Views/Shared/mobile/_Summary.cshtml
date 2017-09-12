@@ -11,16 +11,22 @@
 }
 
 <div class="hotel-summary">
-    <div class="summary-left">
-        <div style="text-transform:capitalize"><b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b>
-        </div>
-        @if (!Model.IsHotelSearch)
-        {
-            <div class="semibold-txt">{{hotelSearch.destinationNightCount}} Malam ({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
-        }
-        
+    <div class="summary-result-hotel">
+        <div class="summary-kota"><b>Jakarta, Indonesia</b></div>
+        <div class="summary-malam">2 Malam</div>
+        <div class="summary-tanggal">(Minggu, 06 Agustus 2017 - Selasa, 08 Agustus 2017)</div>
+        <div class="ubah-pencarian">Ubah Pencarian</div>
     </div>
-    <a ng-click="PageConfig.SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>
+    <!-- <div class="summary-left">
+             <div style="text-transform:capitalize"><b>@ToTitleCase.ConvertToTitleCase(Model.Location)</b>
+             </div>
+             @if (!Model.IsHotelSearch)
+             {
+                 <div class="semibold-txt">{{hotelSearch.destinationNightCount}} Malam ({{hotelSearch.destinationCheckinDate | date : 'EEEE, dd MMM yyyy'}} - {{hotelSearch.destinationCheckoutDate | date : 'EEEE, dd MMM yyyy'}})</div>
+             }
+        
+         </div>
+        <a ng-click="PageConfig.SetOverlay('hotel-form')" class="summary-right"><span>GANTI</span></a>-->
 </div>
 
 <!-- .overlay - change flight -->
