@@ -468,9 +468,8 @@ if (typeof (angular) == 'object') {
 
             },
             SetDefaultReturnDate: function (val) {
-                if (val == true) $rootScope.FlightSearchForm.Trip = "true";
-                else $rootScope.FlightSearchForm.Trip = "false";
-                }
+                $rootScope.FlightSearchForm.Trip = (val) ? "true" : "false";
+            }
         };// datepicker
         
         // flight search form
@@ -937,7 +936,6 @@ if (typeof (angular) == 'object') {
             $(".ui-datepicker").datepicker({
                 beforeShowDay: highlight,
                 onSelect: function (date) {
-
                     var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
                     if ($rootScope.DatePicker.Position == 'hotel') {
                         if ($rootScope.DatePicker.overlay == null || $rootScope.DatePicker.overlay == '') {
@@ -948,7 +946,6 @@ if (typeof (angular) == 'object') {
                         var datex = new Date(trsdate);
                         var scope = angular.element($('.ui-datepicker')).scope();
                         scope.setCheckinDate(scope, datex);
-                        $log.debug("checkinDate = " + datex);
                     } else {
                         $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
                         $($rootScope.DatePicker.Settings.Target).val(trsdate);
