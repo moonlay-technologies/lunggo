@@ -47,9 +47,9 @@ namespace Lunggo.CustomerWeb.Controllers
                          (rsv.Payment.Method == PaymentMethod.BankTransfer ||
                           rsv.Payment.Method == PaymentMethod.VirtualAccount))
                     {
-                        return RedirectToAction("Instruction", "Payment", new {rsvNo, regId});
+                        return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
                     }
-                    else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) || 
+                    else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) ||
                         rsv.Payment.Status == PaymentStatus.Failed)
                     {
                         ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
@@ -62,7 +62,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Thankyou", "Payment", new {rsvNo, regId});
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
                     }
                 }
                 return RedirectToAction("Index", "Index");
@@ -121,6 +121,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
                     ViewBag.BankName = PaymentService.GetInstance().GetBankName(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
                     ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(rsv.Payment.TransferAccount);
+                    ViewBag.BankImageName = GetBankImageName(rsv.Payment.Submethod);
                     return View(rsv);
                 }
                 else
@@ -215,6 +216,35 @@ namespace Lunggo.CustomerWeb.Controllers
                 result = result + "" + generatedNumber;
             }
             return result;
+        }
+
+        public string GetBankImageName(PaymentSubmethod submethod)
+        {
+            switch (submethod)
+            {
+                case PaymentSubmethod.Mandiri:
+                    return "mandiri.png";
+                case PaymentSubmethod.BCA:
+                    return "bca.png";
+                case PaymentSubmethod.BNI:
+                    return "bni.png";
+                case PaymentSubmethod.BRI:
+                    return "bri.png";
+                case PaymentSubmethod.CIMB:
+                    return "cimb-niaga.png";
+                case PaymentSubmethod.Danamon:
+                    return "danamon.png";
+                case PaymentSubmethod.KEBHana:
+                    return "keb-hana.png";
+                case PaymentSubmethod.Permata:
+                    return "permata.png";
+                case PaymentSubmethod.Maybank:
+                    return "maybank.png";
+                case PaymentSubmethod.Other:
+                    return "bersama-prima-alto.jpg";
+                default:
+                    return null;
+            }
         }
 
         #endregion
