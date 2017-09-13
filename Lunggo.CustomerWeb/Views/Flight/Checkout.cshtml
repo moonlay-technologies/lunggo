@@ -616,6 +616,11 @@
                                         <input type="text" name="Payment.Method" value="" ng-model="paymentMethod" />
                                     </div>
 
+                                    <input type="checkbox" checked>
+                                    @* ====================== TODO HERE ============================ *@
+                                    @*  DON'T FORGET to edit in flight/checkout.mobile.chstml,
+                                        and hotel/checkout.cshtml hotel/checkout.mobile.cshtml *@
+
                                     <a class="btn btn-grey md-txt lg-btn" ng-click="changePage(2)" ng-disabled="checkoutForm.loading">KEMBALI</a>
                                     <input type="submit" ng-disabled="finalForm.$invalid" class="btn btn-yellow go-top md-txt lg-btn" value="{{ !checkoutForm.loading? 'PESAN' : 'MEMPROSES' }}">
 

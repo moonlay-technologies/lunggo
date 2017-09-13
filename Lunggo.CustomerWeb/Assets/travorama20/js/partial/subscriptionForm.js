@@ -12,7 +12,7 @@ function validateEmail (email) {
     return re.test(email);
 }
 
-
+//// click submit button
 $('form.subscribe-form input[type="submit"]').click(function (evt) {
     evt.preventDefault();
 
@@ -106,12 +106,14 @@ function recheckForm() {
 }
 
 var subscriptionTrial = 0;
+
 function submitForm() {
     if (subscriptionTrial > 3) {
         subscriptionTrial = 0;
     }
     //TODO TO BE REMOVED
     $('form.subscribe-form .subscribe-email, form.subscribe-form .subscribe-name').prop('disabled', true);
+    
     $.ajax({
         url: SubscribeConfig.Url,
         method: 'POST',
