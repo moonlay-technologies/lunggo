@@ -12,6 +12,8 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class PaymentDetailsForDisplay
     {
+        [JsonProperty("medium", NullValueHandling = NullValueHandling.Ignore)]
+        public PaymentMedium Medium { get; set; }
         [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentMethod Method { get; set; }
         [JsonProperty("submethod", NullValueHandling = NullValueHandling.Ignore)]

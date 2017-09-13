@@ -19,7 +19,7 @@ using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
-    public class PaymentController : Controller
+    public partial class PaymentController : Controller
     {
         public ActionResult Payment(string rsvNo, string regId)
         {
@@ -118,6 +118,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
                     && rsv.Payment.Status == PaymentStatus.Pending)
                 {
+                    ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
+                    ViewBag.BankName = PaymentService.GetInstance().GetBankName(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
+                    ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(rsv.Payment.TransferAccount);
                     return View(rsv);
                 }
                 else

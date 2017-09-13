@@ -183,7 +183,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
                 {
                     CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                }              
+                }
             }
 
             paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
@@ -274,19 +274,6 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        public List<Surcharge> GetSurchargeList()
-        {
-            return new List<Surcharge>()
-            {
-                new Surcharge
-                {
-                    PaymentMethod = PaymentMethod.CreditCard,
-                    Percentage = 2.5M,
-                    Constant = 0
-                }
-            };
-        }
-
         public decimal GetSurchargeNominal(PaymentDetails payment)
         {
             var surchargeList = GetSurchargeList();
@@ -297,7 +284,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         (sur.PaymentSubMethod == null || payment.Submethod == sur.PaymentSubMethod));
             return surcharge == null
                 ? 0
-                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal)*surcharge.Percentage/100) +
+                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal) * surcharge.Percentage / 100) +
                   surcharge.Constant;
         }
 
@@ -314,21 +301,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 payment.Method == PaymentMethod.CimbClicks ||
                 payment.Method == PaymentMethod.MandiriBillPayment)
             {
-
-                var paymentResponse = SubmitPayment(payment, transactionDetails);
-                if (payment.Method == PaymentMethod.VirtualAccount)
-                {
-                    payment.TransferAccount = paymentResponse.TransferAccount;
-                }
-                if (payment.Method == PaymentMethod.CimbClicks)
-                {
-                    payment.RedirectionUrl = paymentResponse.RedirectionUrl;
-                }
-                else
-                {
-                    payment.Status = paymentResponse.Status;
-                }
-
+                SubmitPayment(payment, transactionDetails);
             }
             else
             {
@@ -375,14 +348,16 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static PaymentDetails SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails)
+        private static void SubmitPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
             switch (payment.Medium)
-        {
+            {
                 case PaymentMedium.Nicepay:
-                    return NicepayWrapper.ProcessPayment(payment, transactionDetails);
+                    NicepayWrapper.ProcessPayment(payment, transactionDetails);
+                    break;
                 case PaymentMedium.Veritrans:
-                    return VeritransWrapper.ProcessPayment(payment, transactionDetails);
+                    VeritransWrapper.ProcessPayment(payment, transactionDetails);
+                    break;
                 default:
                     throw new Exception("Invalid payment medium. \"" + payment.Medium + "\" shouldn't be directed here.");
             }

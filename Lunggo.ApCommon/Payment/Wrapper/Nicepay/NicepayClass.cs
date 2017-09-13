@@ -372,6 +372,8 @@ internal class NicepayClass : System.Web.UI.Page
                 return "BDIN";
             case PaymentSubmethod.KEBHana:
                 return "HNBN";
+            case PaymentSubmethod.Other:
+                return "BBBA";
             default:
                 return "BBBA";
         }

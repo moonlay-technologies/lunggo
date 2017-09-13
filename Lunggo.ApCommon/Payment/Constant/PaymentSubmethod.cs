@@ -39,6 +39,8 @@
                     return "Danamon";
                 case PaymentSubmethod.KEBHana:
                     return "KEBHana";
+                case PaymentSubmethod.Other:
+                    return "Other";
                 default:
                     return null;
             }
@@ -66,6 +68,8 @@
                     return PaymentSubmethod.Danamon;
                 case "KEBHana":
                     return PaymentSubmethod.KEBHana;
+                case "Other":
+                    return PaymentSubmethod.Other;
                 default:
                     return PaymentSubmethod.Undefined;
             }

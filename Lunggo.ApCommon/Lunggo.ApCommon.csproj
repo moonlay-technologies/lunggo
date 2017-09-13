@@ -673,8 +673,8 @@
     <Compile Include="Payment\Service\Caching.cs" />
     <Compile Include="Payment\Service\Database.cs" />
     <Compile Include="Payment\Service\ModelConversion.cs" />
-    <Compile Include="Payment\Service\PaymentProcessor.cs" />
-    <Compile Include="Payment\Service\ServiceSingleton.cs" />
+    <Compile Include="Payment\Service\Processor.cs" />
+    <Compile Include="Payment\Service\Settings.cs" />
     <Compile Include="Payment\Wrapper\Nicepay\Model\Nicepay.cs" />
     <Compile Include="Payment\Wrapper\Nicepay\NicepayClass.cs">
       <SubType>ASPXCodeBehind</SubType>

@@ -21,10 +21,11 @@ namespace Lunggo.ApCommon.Payment.Service
 
             return new PaymentDetailsForDisplay
             {
+                Medium = payment.Medium,
                 Method = payment.Method,
+                Submethod = payment.Submethod,
                 Status = payment.Status,
                 Time = time,
-                Submethod = payment.Submethod,
                 TimeLimit = timeLimit,
                 TransferAccount = payment.TransferAccount,
                 RedirectionUrl = payment.RedirectionUrl,
