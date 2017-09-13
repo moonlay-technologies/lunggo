@@ -3,8 +3,8 @@
         <a>Punya kode Voucher ?</a>
         <form name="voucherForm" class="form-group" style="display: none;">
             <input type="text" name="code" class="form-control form-kode-voucher" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)">
-            <input type="submit" value="CEK" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-            <input type="submit" value="RESET" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.reset()" ng-show="voucher.checked" />
+            <input type="submit" value="GUNAKAN" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+            <input type="submit" value="BATALKAN" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.reset()" ng-show="voucher.checked" />
             <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
             <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher tidak dapat digunakan</p>
             <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
