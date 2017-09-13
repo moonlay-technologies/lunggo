@@ -342,7 +342,6 @@ app.controller('paymentController', [
                         },
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
-                        //$log.debug(returnData);
                         $scope.voucher.checking = false;
                         $scope.voucher.checked = true;
                         if (returnData.data.discount > 0) {
@@ -420,6 +419,9 @@ app.controller('paymentController', [
             ccdata: false,
             checked: false,
             isSuccess: false,
+            postData: {
+                method : ''
+            },
             ccChecked: false,
         setPaymentMethod: function () {
                 $scope.pay.continueBIN = false;
@@ -907,64 +909,52 @@ app.controller('paymentController', [
     //// opening / closing the accordion
     //// using manual jQuery DOM Manipulation, because jQuery-UI accordion
     //// present bug that can disrupt payment method's price calculation
-    $(".box-payment .accordion-header").click( function(){
-
-        var thisMethod = $(this).parent().data("paymentMethod");
-        var currentMethod = $scope.paymentMethod;
+    // $(".box-payment .accordion-header").click( function(){
+    $scope.selectSubMethod = function(subMethod) {
+        $scope.pay.postData.submethod = subMethod;
+        if (subMethod == 'Mandiri'){
+            $scope.paymentMethod = $scope.pay.postData.method = 'BankTransfer';
+            // $scope.methodDiscount.reset('nVA');
+        } else {
+            $scope.paymentMethod = $scope.pay.postData.method = 'VirtualAccount';
+            // $scope.methodDiscount.check();
+        }
+    }
+    $scope.selectMethod = function($event, method) {
+                // $scope.binDiscount.reset('ncc');
+                // $scope.methodDiscount.reset('nVA');
+        var paymentHeader = $($event.currentTarget);
+        $scope.pay.postData.submethod = '';
+        // var thisMethod = method;
+        // var currentMethod = $scope.paymentMethod;
 
         //// CLOSING the accordion
-        if (currentMethod == thisMethod) {
-            currentMethod = '';
+        if ($scope.paymentMethod == method) {
+            $scope.paymentMethod = '';
             $(".box-payment .accordion-header").
                 removeClass("ui-accordion-header-active").
                 next(".accordion-content").slideUp(200);
-    }
+        }
         //// OPENING the accordion
         else {
-            currentMethod = thisMethod;
-            $(this).addClass("ui-accordion-header-active").
+            $scope.paymentMethod = method;
+            paymentHeader.addClass("ui-accordion-header-active").
                 next(".accordion-content").slideDown(200);
 
             //// close all other accordion
-            $(".box-payment .accordion-header").not(this).
+            $(".box-payment .accordion-header").not(paymentHeader).
                 removeClass("ui-accordion-header-active").
                 next(".accordion-content").slideUp(200);
-
-            // //// scroll
-            // $('html, body').animate({
-            //     //// banyaknya pixel yang di scroll (ditutupin)
-            //     scrollTop: $(this).offset().top - $("header").height() - 8
-            // }, 500);
         }
 
         //// update Angular data-binding
-        $scope.$apply(function () {
-            $scope.paymentMethod = currentMethod;
-        });
-    });
+        // $scope.$apply(function () {
+            // $scope.paymentMethod = currentMethod;
+        // });
+    }
 
     $(".kode-voucher a").click( function() {
         $(this).next().toggle(200);
     });
 
 }]);
-
-
-    // Payment Desktop
-    // $('input[name="PMInput"]').click(function () {
-    //     var val = $(this).val();
-    //     $('.selected-bank').hide();
-    //     $('input[value="' + val + '"]').closest('.selected-bank').show();
-    //     $('input[value="' + val + '"]').attr('checked', true);
-    // });
-
-    // // Payment Mobile
-    // $('input[name="paymentMethod"]').click(function () {
-    //     var val = $(this).val();
-    //     $('.selected-bank').hide();
-    //     $('input[value="' + val + '"]').closest('.selected-bank').show();
-    //     $('input[value="' + val + '"]').attr('checked', true);
-    //     $('html, body').animate({
-    //         scrollTop: $("#" + val).offset().top
-    //     }, 700);
-    // });
