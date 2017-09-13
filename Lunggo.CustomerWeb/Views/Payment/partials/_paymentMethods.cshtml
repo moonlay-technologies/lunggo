@@ -7,10 +7,10 @@
     <div class="payment-wrapper">
         <div class="row">
             <!-- BANK TRANSFER -->
-            <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.BankTransfer">
-                <div class="row accordion-header">
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.BankTransfer')">
                     <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
-                    <div class="col-xs-7 col-md-6" ng-click="paymentMethod = '@PaymentMethod.BankTransfer'; pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.Other; binDiscount.reset('ncc'); methodDiscount.reset('nVA')">
+                    <div class="col-xs-7 col-md-6">
                         <h4>Bank Transfer</h4>
                     </div>
                     <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
@@ -19,62 +19,62 @@
                     <div class="separator-desktop"></div>
                     <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
                     <div class="row box-pilihan-bank">
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.BankTransfer; pay.postData.submethod = @PaymentSubmethod.Mandiri; methodDiscount.reset('nVA')">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.BankTransfer && pay.postData.submethod == @PaymentSubmethod.Mandiri) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Mandiri')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Mandiri') }">
                                 <img src="/Assets/images/mandiri.png" alt="Bank Transfer Mandiri">
                             </div>
-                            <div class="nama-bank"><p><b>Bank Mandiri<br/>Transfer</b></p></div>
+                            <div class="nama-bank"><p><b>Transfer Bank<br/>Mandiri</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.BCA; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.BCA) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.BCA')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.BCA') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank BCA Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank BCA<br/>Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.BNI; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.BNI) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.BNI')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.BNI') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank BNI Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank BNI<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.BRI; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.BRI) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.BRI')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.BRI') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank BRI Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank BRI<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.CIMB; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.CIMB) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.CIMB')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.CIMB') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank CIMB Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank CIMB<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.Danamon; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.Danamon) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Danamon')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Danamon') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Danamon Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank Danamon<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.Permata; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.Permata) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Permata')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Permata') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Permata Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank Permata<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.Maybank; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.Maybank) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Maybank')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Maybank') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank BII Maybank Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank BII Maybank<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.KEBHana; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.KEBHana) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.KEBHana')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.KEBHana') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank KEB Hana Virtual Account">
                             </div>
                             <div class="nama-bank"><p><b>Bank KEB Hana<br />Virtual Account</b></p></div>
                         </div>
-                        <div class="col-xs-6 col-sm-3" ng-click="pay.postData.method = @PaymentMethod.VirtualAccount; pay.postData.submethod = @PaymentSubmethod.Other; methodDiscount.check()">
-                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.method == @PaymentMethod.VirtualAccount && pay.postData.submethod == @PaymentSubmethod.Other) }">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Other')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Other') }">
                                 <img src="/Assets/images/bersama-prima-alto.jpg" alt="Bank Lainnya">
                             </div>
                             <div class="nama-bank"><p><b>Bank Lainnya</b></p></div>
@@ -88,11 +88,15 @@
             </div><!-- /BANK TRANSFER -->
 
             <!-- KARTU KREDIT / DEBIT -->
-            <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.CreditCard">
-                <div class="row accordion-header">
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.CreditCard')">
                     <div class="col-xs-5"><img src="/Assets/images/kredit.jpg" /></div>
-                    <div class="col-xs-7 col-md-6" ng-click="pay.postData.method = @PaymentMethod.CreditCard; methodDiscount.reset('nVA')"><h4>Kartu Kredit / Debit</h4></div>
-                    <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>Kartu Kredit / Debit</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
                 </div>
                 <div class="accordion-content">
                     <div class="separator-desktop"></div>
@@ -185,11 +189,15 @@
             </div> --><!-- /VIRTUAL ACCOUNT -->*@
 
             <!-- MANDIRI CLICKPAY -->
-            <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.MandiriClickPay">
-                <div class="row accordion-header">
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.MandiriClickPay')">
                     <div class="col-xs-5"><img src="/Assets/images/mandiri.jpg" /></div>
-                    <div class="col-xs-7 col-md-6" ng-click="pay.postData.method = @PaymentMethod.MandiriClickPay; methodDiscount.reset('nVA')"><h4>Mandiri Clickpay</h4></div>
-                    <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>Mandiri Clickpay</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
                 </div>
                 <div class="accordion-content">
                     <div class="separator-desktop"></div>
@@ -249,11 +257,15 @@
             </div><!-- /MANDIRI CLICKPAY -->
             
             <!-- CIMB CLICKS -->
-            <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.CimbClicks">
-                <div class="row accordion-header">
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.CimbClicks')">
                     <div class="col-xs-5"><img src="/Assets/images/cimb.jpg" /></div>
-                    <div class="col-xs-7 col-md-6" ng-click="pay.postData.method = @PaymentMethod.CimbClicks; methodDiscount.reset('nVA')"><h4>CIMB Clicks</h4></div>
-                    <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>CIMB Clicks</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
                 </div>
                 <div class="accordion-content">
                     <div class="separator-desktop"></div>
