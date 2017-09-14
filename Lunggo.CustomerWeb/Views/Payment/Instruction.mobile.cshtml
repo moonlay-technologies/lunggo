@@ -67,21 +67,21 @@
 
             <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
 
-            if (Model is FlightReservationForDisplay)
+            @if (Model is FlightReservationForDisplay)
             {
-            <section class="text">
-                <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
-                <div class="dash-border"></div>
-                <div>Mohon selesaikan pembayaran berikut:</div>
-            </section>
+                <section class="text">
+                    <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
+                    <div class="dash-border"></div>
+                    <div>Mohon selesaikan pembayaran berikut:</div>
+                </section>
             }
-            if (Model is HotelReservationForDisplay)
+            @if (Model is HotelReservationForDisplay)
             {
-            <section class="text">
-                <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
-                <div class="dash-border"></div>
-                <div>Mohon selesaikan pembayaran berikut:</div>
-            </section>
+                <section class="text">
+                    <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
+                    <div class="dash-border"></div>
+                    <div>Mohon selesaikan pembayaran berikut:</div>
+                </section>
             }
             <section class="bank-detail">
                 <div class="bank">
@@ -119,7 +119,7 @@
                     <div class="accordion-wrapper">
                         @foreach (var i in ViewBag.Instructions)
                         {
-                            <div class="accordion-title accordion active">i.Item1</div>
+                            <div class="accordion-title accordion active">@i.Item1</div>
                             <div class="accordion-content show">
                                 <ol>
                                     @foreach (var p in i.Item2)
@@ -133,30 +133,24 @@
                 </div>
             </div>
 
-            @if (Model is FlightReservationForDisplay)
-            {
-                <div class="transfer-instruction">
-                    <!--<section> -->
-                    <ol>
-                        <li class="order-list">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                        <li class="order-list">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+
+            <div class="transfer-instruction">
+                <!--<section> -->
+                <ol>
+                    <li class="order-list">Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                    <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
+                    @if (Model is FlightReservationForDisplay)
+                    {
                         <li class="order-list">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                    </ol>
-                    <!--Bagian Form Konfirmasi yang dihilangin-->
-                </div>
-            }
-            @if (Model is HotelReservationForDisplay)
-            {
-                <div class="transfer-instruction">
-                    <!--<section> -->
-                    <ol>
-                        <li class="order-list">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                        <li class="order-list">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                    }
+                    @if (Model is HotelReservationForDisplay)
+                    {
                         <li class="order-list">Voucher akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                    </ol>
-                    <!--Bagian Form Konfirmasi yang dihilangin-->
-                </div>
-            }
+                    }
+                </ol>
+                <!--Bagian Form Konfirmasi yang dihilangin-->
+            </div>
+
         </div>
 
         <div class="widget countdown">

@@ -118,7 +118,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
                     && rsv.Payment.Status == PaymentStatus.Pending)
                 {
-                    ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
+                    ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv);
                     ViewBag.BankName = PaymentService.GetInstance().GetBankName(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
                     ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(rsv.Payment.TransferAccount);
                     ViewBag.BankImageName = GetBankImageName(rsv.Payment.Submethod);

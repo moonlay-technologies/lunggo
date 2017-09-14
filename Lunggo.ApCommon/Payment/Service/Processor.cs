@@ -290,24 +290,14 @@ namespace Lunggo.ApCommon.Payment.Service
 
         private static void ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
-            if (payment.Method == PaymentMethod.BankTransfer)
-            {
-                payment.Status = PaymentStatus.Pending;
-            }
-            else if (
-                payment.Method == PaymentMethod.CreditCard ||
-                payment.Method == PaymentMethod.VirtualAccount ||
-                payment.Method == PaymentMethod.MandiriClickPay ||
-                payment.Method == PaymentMethod.CimbClicks ||
-                payment.Method == PaymentMethod.MandiriBillPayment)
-            {
+            if (payment.Medium != PaymentMedium.Undefined)
                 SubmitPayment(payment, transactionDetails);
-            }
             else
             {
                 payment.Status = PaymentStatus.Failed;
                 payment.FailureReason = FailureReason.MethodNotAvailable;
             }
+
             payment.PaidAmountIdr = payment.FinalPriceIdr;
             payment.LocalFinalPrice = payment.FinalPriceIdr;
             payment.LocalPaidAmount = payment.FinalPriceIdr;
@@ -357,6 +347,10 @@ namespace Lunggo.ApCommon.Payment.Service
                     break;
                 case PaymentMedium.Veritrans:
                     VeritransWrapper.ProcessPayment(payment, transactionDetails);
+                    break;
+                case PaymentMedium.Direct:
+                    payment.Status = PaymentStatus.Pending;
+                    payment.TransferAccount = GetInstance().GetBankTransferAccount(payment.Submethod);
                     break;
                 default:
                     throw new Exception("Invalid payment medium. \"" + payment.Medium + "\" shouldn't be directed here.");

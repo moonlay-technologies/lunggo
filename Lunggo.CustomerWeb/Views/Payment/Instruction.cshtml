@@ -107,25 +107,25 @@
                 <div class="instruction">
                     <h3 class="lg-txt">PANDUAN <b>TRANSFER</b></h3>
                     <header>
-                        <div class="text-right">No. Pesanan: <b>@Model.RsvNo</b></div>
+                        <div class="text-left">No. Pesanan: <b>@Model.RsvNo</b></div>
                     </header>
-                    if (Model is FlightReservationForDisplay)
+                    @if (Model is FlightReservationForDisplay)
                     {
-                    <section class="pesanan-container clearfix">
-                        <div class="text">
-                            <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
-                            <p>Mohon selesaikan pembayaran berikut:</p>
-                        </div>
-                    </section>
+                        <section class="pesanan-container clearfix">
+                            <div class="text">
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran berikut:</p>
+                            </div>
+                        </section>
                     }
-                    if (Model is HotelReservationForDisplay)
+                    @if (Model is HotelReservationForDisplay)
                     {
-                    <section class="pesanan-container clearfix">
-                        <div class="text">
-                            <p>Pemesanan dan harga sudah di konfirmasi oleh pihak Hotel. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
-                            <p>Mohon selesaikan pembayaran berikut:</p>
-                        </div>
-                    </section>
+                        <section class="pesanan-container clearfix">
+                            <div class="text">
+                                <p>Pemesanan dan harga sudah di konfirmasi oleh pihak Hotel. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></p>
+                                <p>Mohon selesaikan pembayaran berikut:</p>
+                            </div>
+                        </section>
                     }
                     <section class="bank-detail">
                         <div class="bank">
@@ -167,7 +167,7 @@
                             <div class="accordion-wrapper">
                                 @foreach (var i in ViewBag.Instructions)
                                 {
-                                    <div class="accordion-title accordion active">i.Item1</div>
+                                    <div class="accordion-title accordion active">@i.Item1</div>
                                     <div class="accordion-content show">
                                         <ol>
                                             @foreach (var p in i.Item2)
@@ -184,16 +184,14 @@
                     <div class="transfer-instruction">
                         <!--<section> -->
                         <ol>
+                            <li class="order-list">Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                            <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
                             @if (Model is FlightReservationForDisplay)
                             {
-                                <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
-                                <li class="order-list">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
                                 <li class="order-list">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
                             }
                             @if (Model is HotelReservationForDisplay)
                             {
-                                <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
-                                <li class="order-list">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
                                 <li class="order-list">Voucher akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
                             }
                         </ol>

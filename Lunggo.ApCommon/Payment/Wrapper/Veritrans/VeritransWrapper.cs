@@ -441,7 +441,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
-                    Bank = data.VirtualAccount.Bank
+                    Bank = "permata"
                 };
             }
             //Mandiri CLick Pay

@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Pattern;
@@ -142,8 +143,15 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
 
-        public List<Tuple<string, List<string>>> GetInstruction(PaymentMedium medium, PaymentMethod method, PaymentSubmethod submethod)
+        public List<Tuple<string, List<string>>> GetInstruction(ReservationForDisplayBase rsv)
         {
+            var rsvNo = rsv.RsvNo;
+            var medium = rsv.Payment.Medium;
+            var method = rsv.Payment.Method;
+            var submethod = rsv.Payment.Submethod;
+            var price = rsv.Payment.FinalPrice.ToString("####");
+            var account = rsv.Payment.TransferAccount;
+
             if (medium == PaymentMedium.Direct &&
                 method == PaymentMethod.BankTransfer &&
                 submethod == PaymentSubmethod.Mandiri)
@@ -152,40 +160,24 @@ namespace Lunggo.ApCommon.Payment.Service
 
                 return new List<Tuple<string, List<string>>>
                 {
-                    new Tuple<string, List<string>>("Jaringan ATM Bersama", new List<string>
+                    new Tuple<string, List<string>>("ATM", new List<string>
                     {
-                        "Masukkan PIN Anda.",
-                        "Di Menu Utama, pilih <b>Transaksi Lainnya.</b>",
-                        "Pilih <b>Transfer</b>.",
-                        "Pilih <b>Antar Bank Online</b>.",
-                        "Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).",
-                        "Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString(\"##,###\", CultureInfo.CreateSpecificCulture(\"id-ID\"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).",
-                        "No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.",
-                        "Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.",
-                        "Transaksi berhasil.",
+                        "Pilih Menu <b>Transfer</b>",
+                        "Pilih <b>Ke Rekening Mandiri</b>",
+                        "Input nomor rekening: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
+                        "Pilih <b>Benar</b>",
+                        "Pilih <b>Ya</b>",
+                        "Ambil bukti bayar anda",
+                        "Selesai",
                     }),
-                    new Tuple<string, List<string>>("Jaringan ATM PRIMA", new List<string>
+                    new Tuple<string, List<string>>("Mobile/SMS/Internet Banking", new List<string>
                     {
-                        "Masukkan PIN Anda.",
-                        "Di Menu Utama, pilih <b>Transaksi Lainnya</b>.",
-                        "Pilih <b>Transfer</b>.",
-                        "Pilih <b>Ke Rekening Bank Lain</b>.",
-                        "Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.",
-                        "Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString(\"##,###\", CultureInfo.CreateSpecificCulture(\"id-ID\"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).",
-                        "Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.",
-                        "Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.",
-                        "Transaksi berhasil.",
+                        "Lakukan seperti anda mentransfer ke <b>Rekening Mandiri</b> pada umumnya",
+                        "Input nomor rekening: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
+                        "Selesai"
                     }),
-                    new Tuple<string, List<string>>("Jaringan ATM Alto", new List<string>
-                    {
-                        "Masukkan PIN Anda.",
-                        "Di Menu Utama, pilih <b>Transaksi Lainnya</b>.",
-                        "Pilih <b>Transaksi Pembayaran</b>.",
-                        "Pilih <b>Pembayaran Virtual Account</b>.",
-                        "Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.",
-                        "Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.",
-                        "Transaksi berhasil.",
-                    })
                 };
 
                 #endregion
@@ -204,8 +196,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Di Menu Utama, pilih <b>Transaksi Lainnya.</b>",
                         "Pilih <b>Transfer</b>.",
                         "Pilih <b>Antar Bank Online</b>.",
-                        "Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).",
-                        "Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString(\"##,###\", CultureInfo.CreateSpecificCulture(\"id-ID\"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).",
+                        "Masukkan nomor <b>013 " + account + "</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).",
+                        "Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp " + price + "</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).",
                         "No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.",
                         "Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.",
                         "Transaksi berhasil.",
@@ -217,8 +209,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Transfer</b>.",
                         "Pilih <b>Ke Rekening Bank Lain</b>.",
                         "Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.",
-                        "Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString(\"##,###\", CultureInfo.CreateSpecificCulture(\"id-ID\"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).",
-                        "Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.",
+                        "Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp " + price + "</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).",
+                        "Masukkan <b>" + account + "</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.",
                         "Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.",
                         "Transaksi berhasil.",
                     }),
@@ -228,7 +220,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Di Menu Utama, pilih <b>Transaksi Lainnya</b>.",
                         "Pilih <b>Transaksi Pembayaran</b>.",
                         "Pilih <b>Pembayaran Virtual Account</b>.",
-                        "Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.",
+                        "Masukkan 16 digit nomor akun virtual pembayaran <b>" + account + "</b>.",
                         "Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.",
                         "Transaksi berhasil.",
                     })
@@ -249,8 +241,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Transfer</b>",
                         "Pilih <b>Bank Lainnya</b>",
                         "Input Kode Bank <b>013</b> atau pilih bank <b>Permata Bank</b>",
-                        "Input nomor rekening: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input nomor rekening: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Pilih <b>Benar</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil bukti bayar anda",
@@ -260,8 +252,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         "Lakukan seperti anda mentransfer ke <b>Bank Lain</b> pada umumnya",
                         "Input <b>013</b> sebagai Kode Bank atau pilih bank <b>Permata Bank</b>",
-                        "Input nomor rekening: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input nomor rekening: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Selesai"
                     }),
                 };
@@ -280,7 +272,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Transaksi Lainnya</b>",
                         "Pilih <b>Transfer</b>",
                         "Pilih <b>Ke rekening BCA Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Benar</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil bukti bayar anda",
@@ -291,7 +283,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Login Mobile Banking",
                         "Pilih <b>m-Transfer</b>",
                         "Pilih <b>BCA Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Klik <b>Send</b>",
                         "Informasi VA akan ditampilkan",
                         "Klik <b>OK</b>",
@@ -304,7 +296,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Login Internet Banking",
                         "Pilih <b>Transaksi Dana</b>",
                         "Pilih <b>Transfer Ke BCA Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Klik <b>Lanjutkan</b>",
                         "Input <b>Respon KeyBCA Appli 1</b>",
                         "Klik <b>Kirim</b>",
@@ -328,7 +320,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Lainnya</b>",
                         "Pilih <b>Multi Payment</b>",
                         "Input <b>70014</b> sebagai <b>Kode Institusi</b>",
-                        "Input Virtual Account Number: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Virtual Account Number: <b>" + account + "</b>",
                         "Pilih <b>Benar</b>",
                         "Pilih <b>Ya</b>",
                         "Pilih <b>Ya</b>",
@@ -341,7 +333,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Bayar</b>",
                         "Pilih <b>Lainnya</b>",
                         "Input <b>Transferpay</b> sebagai <b>Penyedia Jasa</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Lanjut</b>",
                         "Input <b>OTP</b> dan <b>PIN</b>",
                         "Pilih <b>OK</b>",
@@ -354,7 +346,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Bayar</b>",
                         "Pilih <b>Multi Payment</b>",
                         "Input <b>Transferpay</b> sebagai <b>Penyedia Jasa</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Ceklis <b>IDR</b>",
                         "Klik <b>Lanjutkan</b>",
                         "Bukti bayar ditampilkan",
@@ -376,8 +368,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Menu Lain</b>",
                         "Pilih <b>Menu Transfer</b>",
                         "Pilih <b>Ke Rekening BNI</b>",
-                        "Masukkan Nominal: <b>@Model.Payment.FinalPrice</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nominal: <b>" + price + "</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil Bukti Pembayaran Anda.",
                         "Selesai.",
@@ -387,8 +379,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Masuk Aplikasi SMS Banking BNI.",
                         "Pilih Menu <b>Transfer</b>",
                         "Pilih <b>Trf Rekening BNI</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Masukkan Jumlah Tagihan: <b>@Model.Payment.FinalPrice</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
+                        "Masukkan Jumlah Tagihan: <b>" + price + "</b>",
                         "Pilih <b>Proses</b>",
                         "Pada Pop Up Message, Pilih <b>Setuju</b>",
                         "Anda Akan Mendapatkan Pesan Konfirmasi.",
@@ -402,10 +394,10 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Antar Rekening BNI</b>",
                         "Pilih <b>Rekening Tujuan</b>",
                         "Pilih <b>Input Rekening Baru</b>",
-                        "Masukkan Nomor Virtual Account sebagai Nomor Rekening: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
                         "Klik <b>Lanjut</b>",
                         "Klik <b>Lanjut</b>",
-                        "Masukkan Nominal Tagihan: <b>@Model.Payment.FinalPrice</b>",
+                        "Masukkan Nominal Tagihan: <b>" + price + "</b>",
                         "Klik <b>Lanjut</b>",
                         "Periksa Detail Konfirmasi. Pastikan Data Sudah Benar.",
                         "Jika Sudah Benar, Masukkan <b>Password Transaksi</b>",
@@ -421,16 +413,16 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Atur Rekening Tujuan</b>",
                         "Pilih <b>Tambah Rekening Tujuan</b>",
                         "Klik <b>Ok</b>",
-                        "Masukkan Nomor Order Sebagai <b>Nama Singkat</b>: <b>@Model.RsvNo</b>",
-                        "Masukkan Nomor Virtual Account Sebagai Nomor Rekening: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nomor Order Sebagai <b>Nama Singkat</b>: <b>" + rsvNo + "</b>",
+                        "Masukkan Nomor Virtual Account Sebagai Nomor Rekening: <b>" + account + "</b>",
                         "Lengkapi Semua Data Yang Diperlukan.",
                         "Klik <b>Lanjutkan</b>",
                         "Masukkan <b>Kode Otentikasi Token</b> lalu, <b>Proses</b>",
                         "Rekening Tujuan Berhasil Ditambahkan.",
                         "Pilih <b>Menu Transfer</b>",
                         "Pilih <b>Transfer Antar Rek. BNI</b>",
-                        "Pilih Rekening Tujuan dengan <b>Nama Singkat</b> Yang Sudah Anda Tambahkan: <b>@Model.RsvNo</b>",
-                        "Masukkan Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Pilih Rekening Tujuan dengan <b>Nama Singkat</b> Yang Sudah Anda Tambahkan: <b>" + rsvNo + "</b>",
+                        "Masukkan Nominal: <b>" + price + "</b>",
                         "Masukkan <b>Kode Otentikasi Token</b>",
                         "Bukti Pembayaran Ditampilkan.",
                         "Selesai."
@@ -450,7 +442,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         "Pilih Menu <b>Pembayaran/Top Up Pulsa</b>",
                         "Pilih <b>Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Benar</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil bukti bayar anda",
@@ -459,9 +451,9 @@ namespace Lunggo.ApCommon.Payment.Service
                     new Tuple<string, List<string>>("SMS Banking", new List<string>
                     {
                         "SMS ke <b>69811</b>",
-                        "Ketik <b>TRANSFER @Model.Payment.TransferAccount @Model.Payment.FinalPrice</b>",
+                        "Ketik <b>TRANSFER " + account + " " + price + "</b>",
                         "Kirim SMS",
-                        "Anda akan mendapat balasan <b>Transfer dr rek &lt;nomor rekening anda&gt; ke rek @Model.Payment.TransferAccount sebesar Rp. @Model.Payment.FinalPrice.ToString(\"##,###\", CultureInfo.CreateSpecificCulture(\"id-ID\")) Ketik &lt;karakter acak&gt;</b>",
+                        "Anda akan mendapat balasan <b>Transfer dr rek &lt;nomor rekening anda&gt; ke rek " + account + " sebesar Rp. " + price + " Ketik &lt;karakter acak&gt;</b>",
                         "Balas SMS tersebut, ketik <b>&lt;karakter acak&gt;</b>",
                         "Kirim SMS",
                         "Selesai",
@@ -472,8 +464,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Rekening dan Transaksi</b>",
                         "Pilih <b>Maybank Virtual Account</b>",
                         "Pilih <b>Sumber Tabungan</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Klik <b>Submit</b>",
                         "Input <b>SMS Token</b>",
                         "Bukti bayar ditampilkan",
@@ -496,7 +488,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Pembayaran</b>",
                         "Pilih <b>Pembayaran Lain-lain</b>",
                         "Pilih <b>Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Select <b>Benar</b>",
                         "Select <b>Ya</b>",
                         "Ambil bukti bayar anda",
@@ -507,8 +499,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Login Mobile Banking",
                         "Pilih <b>Pembayaran Tagihan</b>",
                         "Pilih <b>Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal misal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
+                        "Input Nominal misal: <b>" + price + "</b>",
                         "Klik <b>Kirim</b>",
                         "Input <b>Token</b>",
                         "Klik <b>Kirim</b>",
@@ -520,8 +512,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Login Internet Banking",
                         "Pilih <b>Pembayaran Tagihan</b>",
                         "Pilih <b>Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Klik <b>Kirim</b>",
                         "Input <b>Token</b>",
                         "Klik <b>Kirim</b>",
@@ -543,7 +535,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         "Pilih Menu <b>Pembayaran</b>",
                         "Pilih <b>Lainnya</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Benar</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil bukti bayar anda",
@@ -554,8 +546,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Login Internet Banking",
                         "Pilih menu <b>Transfer</b> kemudian Pilih <b>Withdrawal Account Information</b>",
                         "Pilih <b>Account Number</b> anda",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Click <b>Submit</b>",
                         "Input <b>SMS Pin</b>",
                         "Bukti bayar akan ditampilkan",
@@ -578,7 +570,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Pembayaran</b>",
                         "Pilih Menu <b>Lain-lain</b>",
                         "Pilih Menu <b>BRIVA</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil bukti bayar anda",
                         "Selesai",
@@ -589,8 +581,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Mobile Banking BRI</b>",
                         "Pilih Menu <b>Info</b>",
                         "Pilih Menu <b>BRIVA</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Masukkan Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
+                        "Masukkan Nominal: <b>" + price + "</b>",
                         "Klik <b>Kirim</b>",
                         "Masukkan <b>PIN Mobile</b>",
                         "Klik <b>Kirim</b>",
@@ -602,7 +594,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Login Internet Banking",
                         "Pilih <b>Pembayaran</b>",
                         "Pilih <b>BRIVA</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
                         "Klik <b>Kirim</b>",
                         "Masukkan <b>Password</b>",
                         "Masukkan <b>mToken</b>",
@@ -626,7 +618,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Pembayaran</b>",
                         "Pilih Menu <b>Lanjut</b>",
                         "Pilih Menu <b>Virtual Account</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Proses</b>",
                         "Data Virtual Account akan ditampilkan",
                         "Pilih <b>Proses</b>",
@@ -640,8 +632,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Other Rekening Ponsel/CIMB Niaga</b>",
                         "Pilih Sumber Dana yang akan digunakan",
                         "Pilih <b>Casa</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
-                        "Masukkan Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
+                        "Masukkan Nominal: <b>" + price + "</b>",
                         "Klik <b>Lanjut</b>",
                         "Data Virtual Account akan ditampilkan",
                         "Masukkan <b>PIN Mobile</b>",
@@ -656,7 +648,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Rekening Sumber - Pilih yang akan Anda digunakan",
                         "Jenis Pembayaran - Pilih <b>Virtual Account</b>",
                         "Untuk Pembayaran - Pilih <b>Masukkan Nomor Virtual Account</b>",
-                        "Nomor Rekening Virtual: <b>@Model.Payment.FinalPrice</b>",
+                        "Nomor Rekening Virtual: <b>" + price + "</b>",
                         "Isi <b>Remark</b> Jika diperlukan",
                         "Klik <b>Lanjut</b>",
                         "Data Virtual Account akan ditampilkan",
@@ -681,7 +673,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Pembayaran</b>",
                         "Pilih <b>Lainnya</b>",
                         "Pilih Menu <b>Virtual Account</b>",
-                        "Input Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Input Nomor Virtual Account: <b>" + account + "</b>",
                         "Pilih <b>Benar</b>",
                         "Data Virtual Account akan ditampilkan",
                         "Pilih <b>Ya</b>",
@@ -695,7 +687,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih menu <b>Virtual Account</b>",
                         "Pilih <b>Tambah Biller Baru Pembayaran</b>",
                         "Tekan <b>Lanjut</b>",
-                        "Masukkan Nomor Virtual Account: <b>@Model.Payment.TransferAccount</b>",
+                        "Masukkan Nomor Virtual Account: <b>" + account + "</b>",
                         "Tekan <b>Ajukan</b>",
                         "Data Virtual Account akan ditampilkan",
                         "Masukkan <b>mPIN</b>",
@@ -719,8 +711,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih Menu <b>Transfer</b>",
                         "Pilih <b>Bank Lainnya</b>",
                         "Input Kode Bank <b>013</b> atau pilih bank <b>Permata Bank</b>",
-                        "Input nomor rekening: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input nomor rekening: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Pilih <b>Benar</b>",
                         "Pilih <b>Ya</b>",
                         "Ambil bukti bayar anda",
@@ -730,8 +722,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         "Lakukan seperti anda mentransfer ke <b>Bank Lain</b> pada umumnya",
                         "Input <b>013</b> sebagai Kode Bank atau pilih bank <b>Permata Bank</b>",
-                        "Input nomor rekening: <b>@Model.Payment.TransferAccount</b>",
-                        "Input Nominal: <b>@Model.Payment.FinalPrice</b>",
+                        "Input nomor rekening: <b>" + account + "</b>",
+                        "Input Nominal: <b>" + price + "</b>",
                         "Selesai"
                     }),
                 };
