@@ -188,7 +188,7 @@
                 </div>
             </section><!-- .checkout-content -->
             <!-- Syarat & Ketentuan -->
-            <div class="popup__wrapper" ng-class="{'active' : pay.transfer}">
+            <div class="popup__wrapper" ng-class="{'active' : pay.showPopup}">
                 <div class="popup">
                     <header class="popup__header">
                         <h4 class="popup__title">Syarat dan Ketentuan <br />Bank Transfer</h4>
@@ -196,10 +196,9 @@
                     <div class="popup__body tnc-body">
                         <div class="container_new">
                             <ol>
-                                <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
-                                <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran Virtual Account.</li>
-                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-                                
+                                <li>Pastikan bank yang Anda pilih <b>sama</b> dengan bank yang Anda gunakan untuk membayar. Gunakan pilihan <b>"Bank Lainnya"</b> jika bank Anda tidak terdapat di pilihan</li>
+                                <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
                             </ol>
                         </div>
                     </div>
@@ -207,7 +206,7 @@
                         <div class="container_new tnc">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a class="btn btn-grey btn-block" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
+                                    <a class="btn btn-grey btn-block" ng-click="pay.showPopup = false;" style="width:100%">KEMBALI</a>
                                 </div>
                                 <div class="col-xs-6">
                                     <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
@@ -218,7 +217,7 @@
                 </div>
             </div>
 
-            <div class="popup__wrapper" ng-class="{'active' : pay.virtualAccount }">
+            <div class="popup__wrapper" ng-class="{'active' : pay.showOtherBankPopup }">
                 <div class="popup">
                     <header class="popup__header">
                         <h4 class="popup__title">Syarat dan Ketentuan Virtual Account</h4>
@@ -226,8 +225,9 @@
                     <div class="popup__body tnc-body">
                         <div class="container_new">
                             <ol>
-                                <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
-                                <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                                <li>Dikenakan tambahan biaya Rp6.500-Rp7.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu</li>
+                                <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>3 angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
                             </ol>
                         </div>
                     </div>
@@ -235,10 +235,10 @@
                         <div class="container_new tnc">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <a class="btn btn-grey btn-block" ng-click="pay.virtualAccount = false;">KEMBALI</a>
+                                    <a class="btn btn-grey btn-block" ng-click="pay.showOtherBankPopup = false;">KEMBALI</a>
                                 </div>
                                 <div class="col-xs-6">
-                                    <input type="submit" class="btn btn-yellow" ng-click="pay.middle('virtualAccount')" value="SETUJU">
+                                    <input type="submit" class="btn btn-yellow" ng-click="pay.middle('transfer')" value="SETUJU">
                                 </div>
                             </div>
                         </div>

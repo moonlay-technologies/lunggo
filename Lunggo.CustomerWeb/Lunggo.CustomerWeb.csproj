@@ -68,13 +68,13 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Data.Edm">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.OData">
-      <HintPath>..\packages\Microsoft.Data.OData.5.7.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.OData.5.8.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Services.Client">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.7.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.8.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -102,7 +102,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Storage">
-      <HintPath>..\packages\WindowsAzure.Storage.8.0.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <HintPath>..\packages\WindowsAzure.Storage.8.4.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -133,7 +133,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial">
-      <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
+      <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -572,6 +572,16 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\bank\bank-lainnya.png" />
+    <Content Include="Assets\images\bank\bni.png" />
+    <Content Include="Assets\images\bank\keb-hana.png" />
+    <Content Include="Assets\images\bank\mandiri.png" />
+    <Content Include="Assets\images\bank\bca.png" />
+    <Content Include="Assets\images\bank\cimb-niaga.png" />
+    <Content Include="Assets\images\bank\danamon.png" />
+    <Content Include="Assets\images\bank\permata.png" />
+    <Content Include="Assets\images\bank\bri.png" />
+    <Content Include="Assets\images\bank\maybank.png" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -591,6 +601,8 @@
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
     <Content Include="Assets\images\buttons\app-store.png" />
+    <Content Include="Assets\images\bni.png" />
+    <Content Include="Assets\images\bri.png" />
     <Content Include="Assets\images\buttons\back-btn.png" />
     <Content Include="Assets\images\buttons\google-play.png" />
     <Content Include="Assets\images\cal-bg.png" />
@@ -678,6 +690,7 @@
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\cs-desktop.png" />
     <Content Include="Assets\images\cs-icon.png" />
+    <Content Include="Assets\images\danamon.png" />
     <Content Include="Assets\images\default-banner-2.jpg" />
     <Content Include="Assets\images\default-banner.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />
@@ -763,6 +776,7 @@
     <Content Include="Assets\images\go-top.png" />
     <Content Include="Assets\images\gray-bg.png" />
     <Content Include="Assets\images\grey-bg.png" />
+    <Content Include="Assets\images\hanabank.png" />
     <Content Include="Assets\images\harga.jpg" />
     <Content Include="Assets\images\header-bg-2.jpg" />
     <Content Include="Assets\images\header-bg-gray.jpg" />
@@ -863,6 +877,7 @@
     <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
     <Content Include="Assets\images\meal.jpg" />
+    <Content Include="Assets\images\maybank.png" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\mobile-sprite.png" />
@@ -981,6 +996,7 @@
     <Content Include="Assets\images\tanpa.jpg" />
     <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
+    <Content Include="Assets\images\bank-transfer.png" />
     <Content Include="Assets\images\travelmadezy-logo.jpg" />
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\travorama-logo.png" />
@@ -1597,6 +1613,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %288%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />

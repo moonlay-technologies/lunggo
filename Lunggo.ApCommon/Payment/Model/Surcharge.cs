@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Payment.Model
     public class Surcharge
     {
         public PaymentMethod? PaymentMethod { get; set; }
-        public PaymentSubMethod? PaymentSubMethod { get; set; }
+        public PaymentSubmethod? PaymentSubMethod { get; set; }
         public decimal Percentage { get; set; }
         public decimal Constant { get; set; }
     }

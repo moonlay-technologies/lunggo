@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Lunggo.Framework.BlobStorage
 {
@@ -59,6 +60,11 @@ namespace Lunggo.Framework.BlobStorage
         public List<string> GetFileNameList(string containerName, string folderName)
         {
             return Client.GetListFileName(containerName, folderName);
-        } 
+        }
+
+        internal CloudBlobContainer GetBlobContainer(string containerName)
+        {
+            return Client.GetBlobContainer(containerName);
+        }
     }
 }

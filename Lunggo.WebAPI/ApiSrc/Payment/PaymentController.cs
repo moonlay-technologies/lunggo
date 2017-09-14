@@ -138,5 +138,22 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+
+        //CallbackNotif Nicepay
+        [HttpPost]
+        [Route("v1/payment/nicepay/paymentnotification")]
+        public ApiResponseBase NicepayPaymentNotification([FromBody] NotificationResult request)
+        {
+            try
+            {
+                var apiResponse = PaymentLogic.CheckPaymentNotification(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

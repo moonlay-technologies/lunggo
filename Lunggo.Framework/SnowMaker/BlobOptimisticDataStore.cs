@@ -4,8 +4,11 @@ using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Text;
+using Lunggo.Framework.BlobStorage;
+using Lunggo.Framework.SharedModel;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Framework.SnowMaker
 {
@@ -13,19 +16,16 @@ namespace Lunggo.Framework.SnowMaker
     {
         const string DefaultSeedValue = "1";
 
-        readonly CloudBlobContainer _blobContainer;
+        readonly string _blobContainer;
 
         readonly IDictionary<string, ICloudBlob> _blobReferences;
         readonly object _blobReferencesLock = new object();
 
         public Func<String, long> SeedValueInitializer { get; set; }
 
-        public BlobOptimisticDataStore(CloudStorageAccount account, string containerName)
+        public BlobOptimisticDataStore(string containerName)
         {
-            var blobClient = account.CreateCloudBlobClient();
-            _blobContainer = blobClient.GetContainerReference(containerName.ToLower());
-            _blobContainer.CreateIfNotExists();
-
+            _blobContainer = containerName;
             _blobReferences = new Dictionary<string, ICloudBlob>();
         }
 
@@ -41,13 +41,11 @@ namespace Lunggo.Framework.SnowMaker
 
         public bool TryOptimisticWrite(string scopeName, string data)
         {
-            var blobReference = GetBlobReference(scopeName);
             try
             {
                 UploadText(
-                    blobReference,
-                    data,
-                    AccessCondition.GenerateIfMatchCondition(blobReference.Properties.ETag));
+                    scopeName,
+                    data);
             }
             catch (StorageException exc)
             {
@@ -69,7 +67,8 @@ namespace Lunggo.Framework.SnowMaker
 
         private ICloudBlob InitializeBlobReference(string blockName)
         {
-            var blobReference = _blobContainer.GetBlockBlobReference(blockName);
+            var blobContainer = BlobStorageService.GetInstance().GetBlobContainer(_blobContainer);
+            var blobReference = blobContainer.GetBlockBlobReference(blockName);
 
             if (blobReference.Exists())
                 return blobReference;
@@ -78,7 +77,7 @@ namespace Lunggo.Framework.SnowMaker
 
             try
             {
-                UploadText(blobReference, seedValue, AccessCondition.GenerateIfNoneMatchCondition("*"));
+                UploadText(blockName, seedValue);
             }
             catch (StorageException uploadException)
             {
@@ -89,14 +88,22 @@ namespace Lunggo.Framework.SnowMaker
             return blobReference;
         }
 
-        void UploadText(ICloudBlob blob, string text, AccessCondition accessCondition)
+        void UploadText(string scopeName, string text)
         {
-            blob.Properties.ContentEncoding = "UTF-8";
-            blob.Properties.ContentType = "text/plain";
-            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(text)))
+            BlobStorageService.GetInstance().WriteFileToBlob(new BlobWriteDto
             {
-                blob.UploadFromStream(stream, accessCondition);
-            }
+                FileBlobModel = new FileBlobModel
+                {
+                    FileInfo = new FileInfo
+                    {
+                        ContentType = "text/plain",
+                        FileName = scopeName,
+                        FileData = Encoding.UTF8.GetBytes(text)
+                    },
+                    Container = _blobContainer
+                },
+                SaveMethod = SaveMethod.Force
+            });
         }
     }
 }

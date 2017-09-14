@@ -1,7 +1,6 @@
 ﻿// travorama angular app - payment controller
 app.controller('paymentController', [
-    '$http', '$scope', '$location', '$log',function ($http, $scope, $location, $log)
-{
+    '$http', '$scope', '$location', '$log', function ($http, $scope, $location, $log) {
 
     //********************
     // variables
@@ -32,7 +31,7 @@ app.controller('paymentController', [
     $scope.currentchoice = '';
     $scope.loggedIn = loggedIn;
     $scope.initialPrice = price;
-    $scope.totalPrice =  Math.round(price);
+        $scope.totalPrice = Math.round(price);
     $scope.notifCardLength = false;
     $scope.originalPrice = originalPrice;
     $scope.buyerInfo = {};
@@ -171,7 +170,7 @@ app.controller('paymentController', [
         amount: 0,
         displayName: '',
         status: '',
-        firstRequest : true,
+            firstRequest: true,
         reset: function (method) {
             $scope.currentchoice = method;
             ////  available = true if amount <> 0 AND method va
@@ -184,7 +183,7 @@ app.controller('paymentController', [
         checking: false,
         text: '',
         wait: false,
-        check: function() {
+            check: function () {
             $scope.currentchoice = 'VA';
             if ($scope.methodDiscount.firstRequest) {
                 $scope.methodDiscount.wait = true;
@@ -202,7 +201,7 @@ app.controller('paymentController', [
                             voucherCode: vouchercode
                         },
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                    }).then(function(result) {
+                        }).then(function (result) {
                         $scope.methodDiscount.wait = false;
                         $scope.methodDiscount.firstRequest = false;
                         var data = result.data;
@@ -238,7 +237,7 @@ app.controller('paymentController', [
                             $scope.methodDiscount.status = data.error;
                             $scope.methodDiscount.text = '';
                         }
-                    }).catch(function() {
+                        }).catch(function () {
                         $scope.trial++;
                         if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                         {
@@ -345,7 +344,6 @@ app.controller('paymentController', [
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
-                    //$log.debug(returnData);
                     $scope.voucher.checking = false;
                     $scope.voucher.checked = true;
                     if (returnData.data.discount > 0) {
@@ -408,7 +406,6 @@ app.controller('paymentController', [
 
     $scope.pay = {
         url: FlightPayConfig.Url,
-        postData: '',
         continueVoucher: false,
         continueBIN: false,
         rsvNo: '',
@@ -418,11 +415,15 @@ app.controller('paymentController', [
         virtualAccount: false,
         go: false,
         test: 0,
-        chooseOther : false,
+            chooseOther: false,
         clickpay: false,
         ccdata: false,
         checked: false,
         isSuccess: false,
+            postData: {
+                method: '',
+                submethod: ''
+            },
         ccChecked: false,
         setPaymentMethod: function () {
             $scope.pay.continueBIN = false;
@@ -441,7 +442,7 @@ app.controller('paymentController', [
                     $scope.notifCardLength = false;
                     Veritrans.url = VeritransTokenConfig.Url;
                     Veritrans.client_key = VeritransTokenConfig.ClientKey;
-                    var card = function() {
+                        var card = function () {
                         $scope.pay.ccdata = true;
                         var gross_amount = $scope.totalPrice - $scope.voucher.amount +
                                 $scope.UniqueCodePaymentConfig.UniqueCode + $scope.getMdr();
@@ -529,7 +530,7 @@ app.controller('paymentController', [
             } else { // NOT Credit Card
                 if ($scope.paymentMethod == 'MandiriClickPay') {
                     var cardNo = $scope.MandiriClickPay.CardNo;
-                    if (!cardNo || cardNo.toString().length != 19) {
+                    if (!cardNo || cardNo.toString().length != 16) {
                         $scope.notifCardLength = true;
                         scrollPage($('*[data-payment-method="MandiriClickPay"]'));
                     } else {
@@ -546,29 +547,28 @@ app.controller('paymentController', [
             $scope.pay.isSuccess = false,
             $scope.pay.checked = false;
             $scope.pay.isPaying = false;
-            $scope.pay.postData = {
-                rsvNo : $scope.rsvNo,
-                discCd: $scope.voucher.confirmedCode
-            };
+                $scope.pay.postData.rsvNo = $scope.rsvNo;
+                $scope.pay.postData.discCd = $scope.voucher.confirmedCode;
             //generate payment data
             switch ($scope.paymentMethod) {
                 case "BankTransfer":
                     if ($scope.redirectionUrl == null || $scope.redirectionUrl.length == 0) {
-                        $scope.pay.postData.method = 2;
-                        $scope.pay.postData.submethod = 1;
-                        $scope.pay.transfer = true;
+                            if ($scope.pay.postData.submethod == "Other")
+                                $scope.pay.showOtherBankPopup = true;
+                            else
+                                $scope.pay.showPopup = true;
+                            break;
                     }
                     break;
                 case "CreditCard":
                     console.log($scope.CreditCard.Number);
                     var hash = CryptoJS.SHA512($scope.CreditCard.Number.toString());
                     var hex = hash.toString(CryptoJS.enc.Hex);
-                    $scope.pay.postData.method = 1;
                     $scope.pay.postData.creditCard = {
-                        tokenId : $scope.CreditCard.Token,
-                        holderName : $scope.CreditCard.Name,
-                        hashedPan : hex,
-                        reqBinDiscount : $scope.binDiscount.available
+                            tokenId: $scope.CreditCard.Token,
+                            holderName: $scope.CreditCard.Name,
+                            hashedPan: hex,
+                            reqBinDiscount: $scope.binDiscount.available
                     };
                     break;
                 case "MandiriClickPay":
@@ -578,34 +578,29 @@ app.controller('paymentController', [
                     rsvNoLast5 = rsvNoLast5.substr(rsvNoLast5.length - 5);
                     var netprice = $scope.initialPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
                     $scope.pay.postData.mandiriClickPay = {
-                        cardNo : $scope.MandiriClickPay.CardNo,
-                        token : $scope.MandiriClickPay.Token,
-                        cardNoLast10 : cardNoLast10,
-                        amount : netprice,
-                        rsvNoLast5 : rsvNoLast5
+                            cardNo: $scope.MandiriClickPay.CardNo,
+                            token: $scope.MandiriClickPay.Token,
+                            cardNoLast10: cardNoLast10,
+                            amount: netprice,
+                            rsvNoLast5: rsvNoLast5
                     };
-                    $scope.pay.postData.method = 3;
                     $scope.pay.clickpay = true;
                     break;
                 case "CimbClicks":
-                    $scope.pay.postData.method = 4;
                     $scope.pay.postData.cimbClicks = {
-                        description : "Pembayaran melalui CimbClicks"
+                            description: "Pembayaran melalui CimbClicks"
                     };
                     break;
                 case "VirtualAccount":
-                    $scope.pay.postData.method = 5;
-                    $scope.pay.postData.virtualAccount = {
-                        bank : "permata"
-                    };
-                    $scope.pay.postData.submethod = 3;
-                    $scope.pay.virtualAccount = true;
+                        if ($scope.pay.postData.submethod == "Other")
+                            $scope.pay.showOtherBankPopup = true;
+                        else
+                            $scope.pay.showPopup = true;
                     break;
                 case "MandiriBillPayment":
-                    $scope.pay.postData.method = 13;
                     $scope.pay.postData.mandiriBillPayment = {
-                        label1 : "Payment for booking a flight",
-                        value1 : "debt"
+                            label1: "Payment for booking a flight",
+                            value1: "debt"
                     };
                     break;
             }
@@ -621,13 +616,9 @@ app.controller('paymentController', [
             $scope.pay.isPaying = false;
         },
         middle: function (method) {
-            if (method == 'transfer') {
-                $scope.pay.transfer = false;
-                $scope.pay.go = true;
-                $scope.pay.bayar();
-            }
-            else if (method == 'virtualAccount') {
-                $scope.pay.virtualAccount = false;
+                if (method == 'transfer' || method == 'virtualAccount') {
+                    $scope.pay.showPopup = false;
+                    $scope.pay.showOtherBankPopup = false;
                 $scope.pay.go = true;
                 $scope.pay.bayar();
             }
@@ -845,7 +836,7 @@ app.controller('paymentController', [
         return (number == "" || number == null || re.test(number))
     }
 
-    $scope.ccValidation = function() {
+        $scope.ccValidation = function () {
         var validName = $scope.checkName($scope.CreditCard.Name);
         var validDate = $scope.checkDate($scope.CreditCard.Month, $scope.CreditCard.Year);
         if (validName && validDate) {
@@ -883,68 +874,72 @@ app.controller('paymentController', [
         }
     }
 
-    $scope.$watch('paymentMethod', function(newValue, oldValue) {
+        $scope.$watch('paymentMethod', function (newValue, oldValue) {
         if (newValue != oldValue) {
             $scope.notifCardLength = false;
             $scope.dateOver = false;
         }
-    },true);
+        }, true);
 
     // ********************************** END *********************************************
     
     $scope.getMdr = function () {
         var method = 999;
         switch ($scope.paymentMethod) {
-            case 'BankTransfer': method=0; break;
-            case 'CreditCard': method=1; break;
-            case 'VirtualAccount': method=2; break;
+                case 'BankTransfer': method = 0; break;
+                case 'CreditCard': method = 1; break;
+                case 'VirtualAccount': method = 2; break;
         }
-        function select ( obj ) {
+            function select(obj) {
             return obj.PaymentMethod == method;
         }
         var a = mdr.filter(select)[0];
         ///// TODO : include discount
         let price = $scope.totalPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
-        return a? Math.ceil(price * a.Percentage/100) : 0;
+            return a ? Math.ceil(price * a.Percentage / 100) : 0;
     }
 
     //// opening / closing the accordion
     //// using manual jQuery DOM Manipulation, because jQuery-UI accordion
     //// present bug that can disrupt payment method's price calculation
-    $(".box-payment .accordion-header").click( function(){
-
-        var thisMethod = $(this).parent().data("paymentMethod");
-        var currentMethod = $scope.paymentMethod;
+        // $(".box-payment .accordion-header").click( function(){
+        $scope.selectSubMethod = function (subMethod) {
+            $scope.pay.postData.submethod = subMethod;
+            if (subMethod == 'Mandiri') {
+                $scope.paymentMethod = $scope.pay.postData.method = 'BankTransfer';
+                // $scope.methodDiscount.reset('nVA');
+            } else {
+                $scope.paymentMethod = $scope.pay.postData.method = 'VirtualAccount';
+                // $scope.methodDiscount.check();
+            }
+        }
+        $scope.selectMethod = function ($event, method) {
+            // $scope.binDiscount.reset('ncc');
+            // $scope.methodDiscount.reset('nVA');
+            var paymentHeader = $($event.currentTarget);
+            $scope.pay.postData.submethod = '';
 
         //// CLOSING the accordion
-        if (currentMethod == thisMethod) {
-            currentMethod = '';
+            if ($scope.paymentMethod == method) {
+                $scope.paymentMethod = '';
             $(".box-payment .accordion-header").
                 removeClass("ui-accordion-header-active").
                 next(".accordion-content").slideUp(200);
         }
         //// OPENING the accordion
         else {
-            currentMethod = thisMethod;
-            $(this).addClass("ui-accordion-header-active").
+                $scope.paymentMethod = method;
+                paymentHeader.addClass("ui-accordion-header-active").
                 next(".accordion-content").slideDown(200);
 
             //// close all other accordion
-            $(".box-payment .accordion-header").not(this).
+                $(".box-payment .accordion-header").not(paymentHeader).
                 removeClass("ui-accordion-header-active").
                 next(".accordion-content").slideUp(200);
-
-            // //// scroll
-            // $('html, body').animate({
-            //     //// banyaknya pixel yang di scroll (ditutupin)
-            //     scrollTop: $(this).offset().top - $("header").height() - 8
-            // }, 500);
+            }
+            $scope.pay.postData.method = $scope.paymentMethod;
         }
 
-        //// update Angular data-binding
-        $scope.$apply(function () {
-            $scope.paymentMethod = currentMethod;
-        });
     });
 
     function scrollPage($targetElement, animationSpeed) {

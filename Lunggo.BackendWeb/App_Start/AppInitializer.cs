@@ -28,11 +28,11 @@ namespace Lunggo.BackendWeb
         {
             InitConfigurationManager();
             InitI18NMessageManager();
-            InitUniqueIdGenerator();
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
             InitBlobStorageService();
+            InitUniqueIdGenerator();
             InitFlightService();
             InitPaymentService();
             //InitBrowserDetectionService();
@@ -103,8 +103,7 @@ namespace Lunggo.BackendWeb
         {
             var generator = UniqueIdGenerator.GetInstance();
             var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
-            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
             };
