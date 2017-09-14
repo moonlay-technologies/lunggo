@@ -9,7 +9,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentMethod Method { get; set; }
         [JsonProperty("submethod", NullValueHandling = NullValueHandling.Ignore)]
-        public PaymentSubmethod Submethod { get; set; }
+        public PaymentSubmethod? Submethod { get; set; }
         [JsonProperty("discCd", NullValueHandling = NullValueHandling.Ignore)]
         public string DiscountCode { get; set; }
         [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]

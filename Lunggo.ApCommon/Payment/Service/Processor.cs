@@ -186,16 +186,15 @@ namespace Lunggo.ApCommon.Payment.Service
                 }
             }
 
-            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
-            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
-
             var uniqueCode = GetUniqueCodeFromCache(rsvNo);
             if (uniqueCode == 0M)
                 return paymentDetails;
-
             paymentDetails.UniqueCode = uniqueCode;
             paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
 
+            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+            
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
             var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
@@ -284,7 +283,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         (sur.PaymentSubMethod == null || payment.Submethod == sur.PaymentSubMethod));
             return surcharge == null
                 ? 0
-                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal) * surcharge.Percentage / 100) +
+                : Math.Ceiling((payment.OriginalPriceIdr + payment.UniqueCode - payment.DiscountNominal) * surcharge.Percentage / 100) +
                   surcharge.Constant;
         }
 

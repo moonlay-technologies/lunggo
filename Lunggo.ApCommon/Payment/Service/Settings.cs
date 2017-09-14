@@ -138,7 +138,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
                 submethod == PaymentSubmethod.Other)
-                return "KEB Hana Bank";
+                return "Bank Permata";
 
             return null;
         }

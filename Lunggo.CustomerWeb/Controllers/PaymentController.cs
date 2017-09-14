@@ -241,7 +241,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case PaymentSubmethod.Maybank:
                     return "maybank.png";
                 case PaymentSubmethod.Other:
-                    return "bersama-prima-alto.jpg";
+                    return "permata.png";
                 default:
                     return null;
             }

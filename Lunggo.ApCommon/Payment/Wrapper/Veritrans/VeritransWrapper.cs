@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Extension;
@@ -424,6 +425,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             };
             if (method == PaymentMethod.CreditCard)
             {
+                var contact = Contact.GetFromDb(transactionDetail.OrderId);
+
                 requestParams.CreditCard = new CreditCard
                 {
                     TokenId = data.CreditCard.TokenId,
@@ -433,7 +436,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 };
                 requestParams.CustomerDetail = new CustomerDetails
                 {
-                    FirstName = data.CreditCard.HolderName
+                    FirstName = contact.Name,
+                    Phone = contact.CountryCallingCode + contact.Phone,
+                    Email = contact.Email
                 };
             }
 

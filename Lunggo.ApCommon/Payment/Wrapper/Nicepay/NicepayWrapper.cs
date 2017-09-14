@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
@@ -73,23 +74,26 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                 objNicepay.referenceNo = transactionDetail.OrderId;//
                 objNicepay.description = "Payment Invoice No. " + objNicepay.referenceNo;//
                 // Transaction description
-                objNicepay.billingNm = "Dwi Agustina";//
-                objNicepay.billingPhone = "0811351793";//
-                objNicepay.billingEmail = "dwi.agustina@travelmadezy.com";//
-                objNicepay.billingAddr = "Jalan Sisingamangaraja";
-                objNicepay.billingCity = "Jakarta Selatan";
-                objNicepay.billingState = "Jakarta";
-                objNicepay.billingPostCd = "12110";
-                objNicepay.billingCountry = "Indonesia";
 
-                objNicepay.deliveryNm = "Dwi Agustina";
-                objNicepay.deliveryPhone = "0811351793";
-                objNicepay.deliveryEmail = "dwi.agustina@travelmadezy.com";
-                objNicepay.deliveryAddr = "Jalan Sisingamangaraja";
-                objNicepay.deliveryCity = "Jakarta Selatan";
-                objNicepay.deliveryState = "Jakarta";
-                objNicepay.deliveryPostCd = "12110";
-                objNicepay.deliveryCountry = "Indonesia";
+                var contact = Contact.GetFromDb(transactionDetail.OrderId);
+
+                objNicepay.billingNm = contact.Name;//
+                objNicepay.billingPhone = contact.CountryCallingCode + contact.Phone;//
+                objNicepay.billingEmail = contact.Email;//
+                //objNicepay.billingAddr = "Jalan Sisingamangaraja";
+                //objNicepay.billingCity = "Jakarta Selatan";
+                //objNicepay.billingState = "Jakarta";
+                //objNicepay.billingPostCd = "12110";
+                //objNicepay.billingCountry = "Indonesia";
+
+                //objNicepay.deliveryNm = "Dwi Agustina";
+                //objNicepay.deliveryPhone = "0811351793";
+                //objNicepay.deliveryEmail = "dwi.agustina@travelmadezy.com";
+                //objNicepay.deliveryAddr = "Jalan Sisingamangaraja";
+                //objNicepay.deliveryCity = "Jakarta Selatan";
+                //objNicepay.deliveryState = "Jakarta";
+                //objNicepay.deliveryPostCd = "12110";
+                //objNicepay.deliveryCountry = "Indonesia";
 
                 objNicepay.vacctValidDt = objNicepay.vaExpDate;
                 objNicepay.vacctValidTm = payment.TimeLimit.AddHours(7).ToString("HHmmss");
