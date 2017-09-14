@@ -16,7 +16,7 @@
         </p>
         <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-12 col-md-4" id="payButton"
         	value="{{ checkoutForm.loading? 'MEMPROSES' : 'BAYAR' }}"
-        	ng-disabled="checkoutForm.loading || (paymentMethod == 'VirtualAccount' && methodDiscount.firstRequest)"
+        	ng-disabled="checkoutForm.loading"
     		@if (Model != Lunggo.ApCommon.Payment.Constant.PaymentMethod.BankTransfer &&
     			 Model != Lunggo.ApCommon.Payment.Constant.PaymentMethod.VirtualAccount)
             {

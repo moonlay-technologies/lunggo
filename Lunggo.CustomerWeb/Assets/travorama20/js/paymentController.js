@@ -404,7 +404,6 @@ app.controller('paymentController', [
 
         $scope.pay = {
             url: FlightPayConfig.Url,
-            postData: '',
             continueVoucher: false,
             continueBIN: false,
             rsvNo: '',
@@ -420,10 +419,11 @@ app.controller('paymentController', [
             checked: false,
             isSuccess: false,
             postData: {
-                method : ''
+                method : '',
+                submethod : ''
             },
             ccChecked: false,
-        setPaymentMethod: function () {
+            setPaymentMethod: function () {
                 $scope.pay.continueBIN = false;
                 $scope.pay.continueVoucher = false;
                     if ($scope.paymentMethod == 'CreditCard') {
@@ -537,10 +537,8 @@ app.controller('paymentController', [
                 $scope.pay.isSuccess = false,
                 $scope.pay.checked = false;
                 $scope.pay.isPaying = false;
-            $scope.pay.postData = {
-                rsvNo : $scope.rsvNo,
-                discCd: $scope.voucher.confirmedCode
-            };
+                $scope.pay.postData.rsvNo = $scope.rsvNo;
+                $scope.pay.postData.discCd = $scope.voucher.confirmedCode;
                 //generate payment data
             switch ($scope.paymentMethod) {
                 case "BankTransfer":
@@ -912,7 +910,7 @@ app.controller('paymentController', [
     // $(".box-payment .accordion-header").click( function(){
     $scope.selectSubMethod = function(subMethod) {
         $scope.pay.postData.submethod = subMethod;
-        if (subMethod == 'Mandiri'){
+        if (subMethod == 'Mandiri') {
             $scope.paymentMethod = $scope.pay.postData.method = 'BankTransfer';
             // $scope.methodDiscount.reset('nVA');
         } else {
@@ -925,8 +923,6 @@ app.controller('paymentController', [
                 // $scope.methodDiscount.reset('nVA');
         var paymentHeader = $($event.currentTarget);
         $scope.pay.postData.submethod = '';
-        // var thisMethod = method;
-        // var currentMethod = $scope.paymentMethod;
 
         //// CLOSING the accordion
         if ($scope.paymentMethod == method) {
@@ -946,11 +942,7 @@ app.controller('paymentController', [
                 removeClass("ui-accordion-header-active").
                 next(".accordion-content").slideUp(200);
         }
-
-        //// update Angular data-binding
-        // $scope.$apply(function () {
-            // $scope.paymentMethod = currentMethod;
-        // });
+        $scope.pay.postData.method = $scope.paymentMethod;
     }
 
     $(".kode-voucher a").click( function() {
