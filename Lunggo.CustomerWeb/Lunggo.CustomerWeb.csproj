@@ -572,16 +572,17 @@
     <Content Include="Assets\images\Bank-Mandiri-small.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.jpg" />
     <Content Include="Assets\images\Bank-Mandiri.png" />
+    <Content Include="Assets\images\bank-transfer.png" />
     <Content Include="Assets\images\bank\bank-lainnya.png" />
-    <Content Include="Assets\images\bank\bni.png" />
-    <Content Include="Assets\images\bank\keb-hana.png" />
-    <Content Include="Assets\images\bank\mandiri.png" />
     <Content Include="Assets\images\bank\bca.png" />
+    <Content Include="Assets\images\bank\bni.png" />
+    <Content Include="Assets\images\bank\bri.png" />
     <Content Include="Assets\images\bank\cimb-niaga.png" />
     <Content Include="Assets\images\bank\danamon.png" />
-    <Content Include="Assets\images\bank\permata.png" />
-    <Content Include="Assets\images\bank\bri.png" />
+    <Content Include="Assets\images\bank\keb-hana.png" />
+    <Content Include="Assets\images\bank\mandiri.png" />
     <Content Include="Assets\images\bank\maybank.png" />
+    <Content Include="Assets\images\bank\permata.png" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -600,9 +601,9 @@
     <Content Include="Assets\images\bintang-hotel.jpg" />
     <Content Include="Assets\images\blue-bg.png" />
     <Content Include="Assets\images\blueBg.png" />
-    <Content Include="Assets\images\buttons\app-store.png" />
     <Content Include="Assets\images\bni.png" />
     <Content Include="Assets\images\bri.png" />
+    <Content Include="Assets\images\buttons\app-store.png" />
     <Content Include="Assets\images\buttons\back-btn.png" />
     <Content Include="Assets\images\buttons\google-play.png" />
     <Content Include="Assets\images\cal-bg.png" />
@@ -686,6 +687,7 @@
     <Content Include="Assets\images\cimb-clicks-transparan.png" />
     <Content Include="Assets\images\cimb-clicks.jpg" />
     <Content Include="Assets\images\cimb.jpg" />
+    <Content Include="Assets\images\cimbbank.png" />
     <Content Include="Assets\images\contact-sprite.jpg" />
     <Content Include="Assets\images\creditCard.jpg" />
     <Content Include="Assets\images\cs-desktop.png" />
@@ -876,8 +878,8 @@
     <Content Include="Assets\images\map.jpg" />
     <Content Include="Assets\images\marker-calendar.png" />
     <Content Include="Assets\images\mastercard-logo.jpg" />
-    <Content Include="Assets\images\meal.jpg" />
     <Content Include="Assets\images\maybank.png" />
+    <Content Include="Assets\images\meal.jpg" />
     <Content Include="Assets\images\menu-icon-white.png" />
     <Content Include="Assets\images\menu-icon.png" />
     <Content Include="Assets\images\mobile-sprite.png" />
@@ -996,7 +998,6 @@
     <Content Include="Assets\images\tanpa.jpg" />
     <Content Include="Assets\images\terima-kasih.png" />
     <Content Include="Assets\images\terms-icon.png" />
-    <Content Include="Assets\images\bank-transfer.png" />
     <Content Include="Assets\images\travelmadezy-logo.jpg" />
     <Content Include="Assets\images\travorama-logo-color.png" />
     <Content Include="Assets\images\travorama-logo.png" />
@@ -1166,6 +1167,7 @@
     <Content Include="Assets\mobile\images\burger-button.png" />
     <Content Include="Assets\mobile\images\burger-menu-active.png" />
     <Content Include="Assets\mobile\images\burger-sprite.png" />
+    <Content Include="Assets\mobile\images\calendar.png" />
     <Content Include="Assets\mobile\images\child.png" />
     <Content Include="Assets\mobile\images\contact-list-bg.png" />
     <Content Include="Assets\mobile\images\contact-map.jpg" />
