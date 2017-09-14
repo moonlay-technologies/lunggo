@@ -9,7 +9,6 @@ namespace Lunggo.ApCommon.Product.Query
         {
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateUpdateClause());
-            queryBuilder.Append(CreateFromClause());
             queryBuilder.Append(CreateWhereClause());
             return queryBuilder.ToString();
         }
@@ -17,26 +16,18 @@ namespace Lunggo.ApCommon.Product.Query
         private static string CreateUpdateClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"UPDATE sp ");
+            clauseBuilder.Append(@"UPDATE SavedPassenger ");
             clauseBuilder.Append(@"SET ");
-            clauseBuilder.Append(@"sg.Email = @Email, ");
-            clauseBuilder.Append(@"sg.TypeCd = @TypeCd, ");
-            clauseBuilder.Append(@"sg.GenderCd = @GenderCd, ");
-            clauseBuilder.Append(@"sg.TitleCd = @TitleCd, ");
-            clauseBuilder.Append(@"sg.FirstName = @FirstName, ");
-            clauseBuilder.Append(@"sg.LastName = @LastName, ");
-            clauseBuilder.Append(@"sg.BirthDate = @BirthDate, ");
-            clauseBuilder.Append(@"sg.NationalityCd = @NationalityCd, ");
-            clauseBuilder.Append(@"sg.PassportNumber = @PassportNumber, ");
-            clauseBuilder.Append(@"sg.PassportExpiryDate = @PassportExpiryDate, ");
-            clauseBuilder.Append(@"sg.PassportCountryCd = @PassportCountryCd ");
-            return clauseBuilder.ToString();
-        }
-
-        private static string CreateFromClause()
-        {
-            var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append(@"FROM SavedPassenger AS sg ");
+            clauseBuilder.Append(@"TypeCd = @TypeCd, ");
+            clauseBuilder.Append(@"GenderCd = @GenderCd, ");
+            clauseBuilder.Append(@"TitleCd = @TitleCd, ");
+            clauseBuilder.Append(@"FirstName = @FirstName, ");
+            clauseBuilder.Append(@"LastName = @LastName, ");
+            clauseBuilder.Append(@"BirthDate = @BirthDate, ");
+            clauseBuilder.Append(@"NationalityCd = @NationalityCd, ");
+            clauseBuilder.Append(@"PassportNumber = @PassportNumber, ");
+            clauseBuilder.Append(@"PassportExpiryDate = @PassportExpiryDate, ");
+            clauseBuilder.Append(@"PassportCountryCd = @PassportCountryCd ");
             return clauseBuilder.ToString();
         }
 
@@ -44,8 +35,8 @@ namespace Lunggo.ApCommon.Product.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append(@"WHERE ");
-            clauseBuilder.Append(@"sg.Id = @Id AND ");
-            clauseBuilder.Append(@"sg.Email = @Email ");
+            clauseBuilder.Append(@"Id = @Id AND ");
+            clauseBuilder.Append(@"Email = @Email ");
             return clauseBuilder.ToString();
         }
     }

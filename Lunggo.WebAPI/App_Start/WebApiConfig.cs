@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Net.Http.Headers;
 using Lunggo.ApCommon.Identity.Auth;
 
 namespace Lunggo.WebAPI
@@ -20,6 +21,8 @@ namespace Lunggo.WebAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+          config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("Text/html"));
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Newtonsoft.Json;
@@ -41,5 +43,86 @@ namespace Lunggo.ApCommon.Product.Model
         public string PassportNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }
         public string PassportCountry { get; set; }
+    }
+
+    public static class PaxUtil
+    {
+        public static List<PaxForDisplay> ConvertToPaxForDisplay(this List<Pax> pax)
+        {
+            return pax != null
+                ? pax.Select(ConvertToPaxForDisplay).ToList()
+                : null;
+        }
+
+        public static PaxForDisplay ConvertToPaxForDisplay(this Pax pax)
+        {
+            if (pax == null)
+                return null;
+
+            var name = pax.FirstName == pax.LastName
+                ? pax.LastName
+                : pax.FirstName + " " + pax.LastName;
+
+            return new PaxForDisplay
+            {
+                Type = pax.Type,
+                Title = pax.Title,
+                Name = name,
+                Gender = pax.Gender,
+                DateOfBirth = pax.DateOfBirth,
+                Nationality = pax.Nationality,
+                PassportNumber = pax.PassportNumber,
+                PassportExpiryDate = pax.PassportExpiryDate,
+                PassportCountry = pax.PassportCountry
+            };
+        }
+
+        public static List<Pax> ConvertToPax(this List<PaxForDisplay> pax)
+        {
+            return pax != null
+                ? pax.Select(ConvertToPax).ToList()
+                : null;
+        }
+
+        public static Pax ConvertToPax(this PaxForDisplay pax)
+        {
+            if (pax == null)
+                return null;
+
+            string first, last;
+            if (pax.Name == null)
+            {
+                first = null;
+                last = null;
+            }
+            else
+            {
+                var splittedName = pax.Name.Trim().Split(' ');
+                if (splittedName.Length == 1)
+                {
+                    first = pax.Name;
+                    last = pax.Name;
+                }
+                else
+                {
+                    first = pax.Name.Substring(0, pax.Name.LastIndexOf(' '));
+                    last = splittedName[splittedName.Length - 1];
+                }
+            }
+
+            return new Pax
+            {
+                Type = pax.Type.GetValueOrDefault(),
+                Title = pax.Title.GetValueOrDefault(),
+                FirstName = first,
+                LastName = last,
+                Gender = pax.Title.GetValueOrDefault() == Title.Mister ? Gender.Male : Gender.Female,
+                DateOfBirth = pax.DateOfBirth,
+                Nationality = pax.Nationality,
+                PassportNumber = pax.PassportNumber,
+                PassportExpiryDate = pax.PassportExpiryDate,
+                PassportCountry = pax.PassportCountry
+            };
+        }
     }
 }

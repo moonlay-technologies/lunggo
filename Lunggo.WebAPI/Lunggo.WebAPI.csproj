@@ -255,6 +255,9 @@
     <Compile Include="ApiSrc\Autocomplete\Model\AirportApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
+    <Compile Include="ApiSrc\Savepax\Model\CreateApiResponse.cs" />
+    <Compile Include="ApiSrc\Savepax\Model\SavepaxApiRequest.cs" />
+    <Compile Include="ApiSrc\Savepax\SavepaxController.cs" />
     <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetPromoLogic.cs" />

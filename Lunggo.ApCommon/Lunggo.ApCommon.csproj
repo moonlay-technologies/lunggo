@@ -711,6 +711,7 @@
     <Compile Include="Product\Query\GetSavedPassengerQuery.cs" />
     <Compile Include="Product\Query\UpdateSavedPassengerQuery.cs" />
     <Compile Include="Product\Service\ProductServiceBase.cs" />
+    <Compile Include="Product\Service\SavePax.cs" />
     <Compile Include="Query\ContactUs.cs" />
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
@@ -735,6 +736,7 @@
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />
+    <Compile Include="Sequence\SavedPaxIdSequence.cs" />
     <Compile Include="Sequence\VoucherSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
