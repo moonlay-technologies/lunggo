@@ -940,8 +940,6 @@ app.controller('paymentController', [
             $scope.pay.postData.method = $scope.paymentMethod;
         }
 
-    });
-
     function scrollPage($targetElement, animationSpeed) {
         var speed = animationSpeed || 200;
         //// scroll

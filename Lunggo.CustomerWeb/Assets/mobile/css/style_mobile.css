@@ -6549,11 +6549,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     text-align: center;
     margin: 30px 0px 20px;
 }
-.nama-bank {
-    margin-top: 7px;
-    color: #484848;
-    font-size: 12px;
-}
 .clear-left {
     padding-left: 0;
 }
@@ -6710,16 +6705,14 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
 }
 
 .img-bank {
-    /*width: 110px;*/
-    margin: 0 auto;
+    margin: 5px auto;
     padding: 10px;
     border-radius: 5px;
     border: 2px solid #ebebeb;
 }
 .img-bank.selected {
-  border: 2px solid #0d91c3;
+    border: 2px solid #0d91c3;
 }
-
 .img-hotel {
     margin-bottom: 5px;
 }
