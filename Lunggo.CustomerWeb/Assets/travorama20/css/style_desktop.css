@@ -9441,11 +9441,6 @@ file : /Assets/travorama20/css/_page_password.scss
     text-align: center;
     margin: 40px 0;
 }
-.nama-bank {
-    margin-top: 10px;
-    color: #484848;
-    font-size: 14px;
-}
 .data-penumpang p {
     margin-bottom: 3px;
 }
@@ -9500,15 +9495,14 @@ file : /Assets/travorama20/css/_page_password.scss
 }
 
 .img-bank {
-    margin: 0 auto;
+    margin: 5px auto;
     padding: 10px;
     border-radius: 5px;
     border: 2px solid #ebebeb;
 }
-/*.img-bank:hover {*/
 .img-bank.selected {
     border: 2px solid #0d91c3;
-    }
+}
 .img-hotel {
     margin-bottom: 5px;
 }
