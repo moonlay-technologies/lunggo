@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @model Lunggo.ApCommon.Hotel.Model.HotelDetailForDisplay
 @{
@@ -6,32 +7,25 @@
     var night = (Model.CheckOutDate - Model.CheckInDate).Days;
     var hotelImg = "";
     var roomImg = "";
-    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
+    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl ?? new List<Image>();
 
     var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-    if (orDefault != null)
-    {
-        hotelImg = images == null
-            ? null
-            : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-    }
-    
+    hotelImg = orDefault == null ? "/Assets/travorama20/images/Hotel/no-hotel.png" :
+        "https://photos.hotelbeds.com/giata/" + orDefault.Path;
+
     var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-    if (firstOrDefault != null)
-    {
-        roomImg = images == null
-            ? null
-            : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-    }
+    roomImg = firstOrDefault == null
+        ? "/Assets/travorama20/images/Hotel/no-hotel.png"
+        : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
 
     var totalRoom = 0;
-    
+
     try
     {
         totalRoom += Model.Rooms.Sum(room => room.Rates.Sum(rate => rate.Breakdowns.Sum(config => config.RateCount)));
     }
     catch (Exception)
-    {}
+    { }
 }
 
 <div class="hotel-detail-container">
@@ -102,7 +96,7 @@
             </div>
         }
     </div>
-    
+
     @if (!string.IsNullOrEmpty(Model.SpecialRequest))
     {
         <div class="rh-policy clearfix">
@@ -123,14 +117,14 @@
                     <div class="col-7 clearfix">
                         <div class="blue-txt bold-txt rh-title">Tipe Kamar : @ToTitleCase.ConvertToTitleCase(room.RoomName)</div>
                         <div class="rh-table clearfix">
-                            
+
                             <div class="cols-1 room-sort-mid clearfix">
                                 <div class="cols-title">Kamar</div>
                                 @foreach (var config in rate.Breakdowns)
                                 {
                                     <div class="cols-value">@config.RateCount</div>
                                 }
-                                    
+
                             </div>
                             <div class="cols-2 room-sort-mid clearfix">
                                 <div class="cols-title">Dewasa</div>
@@ -138,7 +132,7 @@
                                 {
                                     <div class="cols-value">@config.AdultCount</div>
                                 }
-                                    
+
                             </div>
                             <div class="cols-3 clearfix">
                                 <div class="cols-title">Anak</div>
@@ -150,18 +144,18 @@
                                             <span>@config.ChildCount </span>
                                             <span>
                                                 (@for (var a = 0; a < config.ChildrenAges.Count; a++)
-                                                 {
-                                                     if (a != config.ChildrenAges.Count - 1)
-                                                     {
-                                                         @config.ChildrenAges[a]
-                                                         <span>th, </span>
-                                                     }
-                                                     else
-                                                     {
-                                                         @config.ChildrenAges[a]
-                                                         <span>th)</span>
-                                                     }
-                                                 }
+                                                {
+                                                    if (a != config.ChildrenAges.Count - 1)
+                                                    {
+                                                        @config.ChildrenAges[a]
+                                                        <span>th, </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @config.ChildrenAges[a]
+                                                        <span>th)</span>
+                                                    }
+                                                }
 
                                             </span>
                                         }
@@ -171,7 +165,7 @@
                                         }
                                     </div>
                                 }
-                                   
+
                             </div>
                             <div class="cols-4 quarter clearfix">
                                 <div class="cols-title">Board</div>
@@ -179,15 +173,15 @@
                                 {
                                     <div class="cols-value">@ToTitleCase.ConvertToTitleCase(config.BoardDescription)</div>
                                 }
-                                    
+
                             </div>
-                            
-                            
+
+
                         </div>
                     </div>
 
                 </div>
-                
+
                 if (rate.TermAndCondition != null && rate.TermAndCondition.Count != 0 && !rate.TermAndCondition.Exists(r => r.Length < 3))
                 {
                     <div class="rh-policy clearfix">
@@ -218,5 +212,5 @@
             }
         </div>
     }
-   
+
 </div>

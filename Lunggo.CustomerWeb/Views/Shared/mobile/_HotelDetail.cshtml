@@ -1,18 +1,16 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @model Lunggo.ApCommon.Hotel.Model.HotelDetailForDisplay
 @{
-   
+
     var night = (Model.CheckOutDate - Model.CheckInDate).Days;
     var hotelImg = "";
-    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
+    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl ?? new List<Image>();
     var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-    if (orDefault != null)
-    {
-        hotelImg = images == null
-            ? null
-            : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-    }
+    hotelImg = orDefault == null
+        ? "/Assets/travorama20/images/Hotel/no-hotel.png"
+        : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
 
     new List<int>();
     new List<Tuple<string, int>>();
@@ -49,16 +47,18 @@
             else if (Model.StarRating == 5)
             {
                 <span class="star star-5 pull-right"></span>
-            }           
+            }
         </div>
     </div>
-    <div class="location sm-txt" style="text-transform: capitalize">@ToTitleCase.ConvertToTitleCase(Model.Address) @ToTitleCase.ConvertToTitleCase(Model.ZoneName),
-    @ToTitleCase.ConvertToTitleCase(Model.DestinationName), @Model.PostalCode, @Model.CountryName</div>
+    <div class="location sm-txt" style="text-transform: capitalize">
+        @ToTitleCase.ConvertToTitleCase(Model.Address) @ToTitleCase.ConvertToTitleCase(Model.ZoneName),
+        @ToTitleCase.ConvertToTitleCase(Model.DestinationName), @Model.PostalCode, @Model.CountryName
+    </div>
     <div class="fb-img" style="background-image: url(@hotelImg)"></div>
     <div class="clearfix">
         <div class="fb-row clearfix">
             <div class="col-4">Check in</div>
-            <div class="col-6 bold-txt">@Model.CheckInDate.ToString("D",CultureInfo.CreateSpecificCulture("id-ID"))</div>
+            <div class="col-6 bold-txt">@Model.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))</div>
         </div>
         <div class="fb-row clearfix">
             <div class="col-4">Check out</div>
