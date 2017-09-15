@@ -1,0 +1,17 @@
+User-agent: *
+Disallow: /*/hotel/checkout*
+Disallow: /*/flight/checkout*
+Disallow: /*/payment/payment*
+Disallow: /*/payment/instruction*
+Disallow: /*/payment/thankyou*
+Disallow: /*/payment/eticket*
+Disallow: /*/account/*
+Disallow: /*/Promo/Harbolnas2016
+Disallow: /*/terms
+Disallow: /*/privacy
+Disallow: /*/Promo/HutBTN
+Disallow: /*/howtopay
+Disallow: /*/howtoorder
+Disallow: /*/Promo/Imlek
+Disallow: /*/hotel/map/*
+Sitemap: https://www.travorama.com/sitemap.xml

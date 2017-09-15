@@ -70,10 +70,6 @@
                             <a href="/id/Account/OrderHistory">{{email}}</a>
                         </li>
                     </div>
-
-                    <li class="logout hidden @(ViewBag.CurrentPage == "Log Out" ? "active" : "") ">
-                        <a href="/id/Account/Logout">Keluar</a>
-                    </li>
                    
                 </section>
 
@@ -91,9 +87,9 @@
                 <li class="order-check @(ViewBag.CurrentPage == "checkorder" ? "active" : "")">
                     <a href="/id/Home/CekPemesanan">Cek Pemesanan</a>
                 </li>
-                <li class="promo @(ViewBag.CurrentPage == "promo" ? "active" : "")">
+                @* <li class="promo @(ViewBag.CurrentPage == "promo" ? "active" : "")">
                     <a href="/id/StaticPage/Promo">Promo Berlangsung</a>
-                </li>
+                </li> *@
                 <li class="contact @(ViewBag.CurrentPage == "contact" ? "active" : "")">
                     <a href="/id/StaticPage/Contact">Hubungi Kami</a>
                 </li>

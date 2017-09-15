@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Extension;
@@ -64,17 +65,17 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             }
         }
 
-        internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail, PaymentMethod method)
+        internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
         {
             var authorizationKey = ProcessAuthorizationKey(_serverKey);
             WebRequest request;
             WebResponse response;
             VeritransResponse content;
-            switch (method)
+            switch (payment.Method)
             {
                 case PaymentMethod.CreditCard:
                     payment.Data.CreditCard.Bank = "mandiri";
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -117,7 +118,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     return payment;
                 case PaymentMethod.VirtualAccount:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -153,7 +154,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     return payment;
 
                 case PaymentMethod.MandiriClickPay:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -188,7 +189,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     return payment;
 
                 case PaymentMethod.CimbClicks:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -224,7 +225,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     return payment;
 
                 case PaymentMethod.MandiriBillPayment:
-                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, method);
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
                     response = SubmitRequest(request);
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
@@ -424,6 +425,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             };
             if (method == PaymentMethod.CreditCard)
             {
+                var contact = Contact.GetFromDb(transactionDetail.OrderId);
+
                 requestParams.CreditCard = new CreditCard
                 {
                     TokenId = data.CreditCard.TokenId,
@@ -433,7 +436,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                 };
                 requestParams.CustomerDetail = new CustomerDetails
                 {
-                    FirstName = data.CreditCard.HolderName
+                    FirstName = contact.Name,
+                    Phone = contact.CountryCallingCode + contact.Phone,
+                    Email = contact.Email
                 };
             }
 
@@ -441,7 +446,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 requestParams.BankTransfer = new BankTransfer
                 {
-                    Bank = data.VirtualAccount.Bank
+                    Bank = "permata"
                 };
             }
             //Mandiri CLick Pay

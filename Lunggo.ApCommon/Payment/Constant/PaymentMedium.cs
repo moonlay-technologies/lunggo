@@ -4,7 +4,8 @@
     {
         Undefined = 0,
         Direct = 1,
-        Veritrans = 2
+        Veritrans = 2,
+        Nicepay = 3
     }
 
     internal class PaymentMediumCd
@@ -18,6 +19,8 @@
                     return "DRCT";
                 case PaymentMedium.Veritrans:
                     return "VERI";
+                case PaymentMedium.Nicepay:
+                    return "NICE";
                 default:
                     return "";
             }
@@ -30,6 +33,8 @@
                     return PaymentMedium.Direct;
                 case "VERI":
                     return PaymentMedium.Veritrans;
+                case "NICE":
+                    return PaymentMedium.Nicepay;
                 default:
                     return PaymentMedium.Undefined;
             }

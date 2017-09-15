@@ -11,22 +11,6 @@ namespace Lunggo.CustomerWeb
 
             routes.MapMvcAttributeRoutes();
 
-            // visa campaign start
-            routes.MapRoute(
-                name: "visawonderfulwednesday",
-                url: "wonderfulwednesdaywithvisa",
-                defaults: new { controller = "StaticPage", action = "VisaWonderfulWednesday", langCode = "id" }
-            );
-            // visa campaign end
-
-            // danamon sweet valentine start
-            routes.MapRoute(
-                name: "DanamonSweetValentine",
-                url: "danamonsweetvalentine",
-                defaults: new { controller = "StaticPage", action = "DanamonSweetValentine", langCode = "id" }
-            );
-            // danamon sweet valentine end
-
             routes.MapRoute(
                 name: "Index",
                 url: "{langCode}",

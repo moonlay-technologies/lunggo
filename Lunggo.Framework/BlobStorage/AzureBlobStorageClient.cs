@@ -362,6 +362,11 @@ namespace Lunggo.Framework.BlobStorage
                 return fileNameList;
             }
 
+            internal CloudBlobContainer GetBlobContainer(string containerName)
+            {
+                return _blobStorageClient.GetContainerReference(containerName);
+            }
+
             private class BlobModel
             {
                 internal string BlobName { get; set; }

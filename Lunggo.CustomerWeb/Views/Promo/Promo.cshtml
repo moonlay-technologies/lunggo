@@ -1,0 +1,193 @@
+@{
+    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    ViewBag.BodyClass = "page-promo promo-btn";
+}
+
+@section AdditionalCSS {
+    <!-- additional CSS -->
+    <link href="/Assets/css/promo.css" rel="stylesheet" />
+}
+
+@section AdditionalJS {
+    <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
+}
+
+<div class="promo-btn">
+    <div class="top-section"><img src="@ViewBag.ImageSrcDesktop" alt="@ViewBag.ImageAlt"></div>
+    <div class="bottom-section">
+        <div class="container">
+            <div class="content-banner">
+                <div class="judul-aktivasi">
+                    <h1>@ViewBag.PromoTitle</h1>
+                </div>
+                <div class="desc-aktivasi">
+                    <h2>@ViewBag.PromoDescription</h2>
+                    @* <div class="info-lanjutan-aktivasi">
+                        Info lengkap di <a href="#syarat-ketentuan">Syarat dan Ketentuan</a>
+                    </div> *@
+                </div>
+                <div class="detail-promo">
+                    <div class="row">
+                        <div class="col-xs-4" style="padding:10px">
+                            <div class="box-promo box-promo-kode col-xs-12">
+                                <div class="col-xs-8 info-box-promo">
+                                    <div class="judul-box-promo bold-txt">Kode Promo</div>
+                                    <div class="tanggal-box-promo" style="color:black">@ViewBag.KodePromo</div>
+                                </div>
+                                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/ticket.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" style="padding:10px">
+                            <div class="box-promo col-xs-12">
+                                <div class="col-xs-8 info-box-promo">
+                                    <div class="judul-box-promo bold-txt">Periode Booking</div>
+                                    <div class="tanggal-box-promo">@ViewBag.PeriodeBooking</div>
+                                </div>
+                                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/images/calendar.png"></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" style="padding:10px">
+                            <div class="box-promo col-xs-12"> @* clear-margin-right"> *@
+                                <div class="col-xs-8 info-box-promo">
+                                    <div class="judul-box-promo bold-txt">Periode Inap</div>
+                                    <div class="tanggal-box-promo">@ViewBag.PeriodeInap</div>
+                                </div>
+                                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/inap.png"></div>
+                            </div>
+                        </div>                            
+                    </div>
+                </div>
+                @* <div class="rekomendasi-hotel-promo">
+                    <div class="judul-rekomendasi-hotel-promo">
+                        <div class="row">
+                            <div class="col-xs-10">Rekomendasi Hotel</div>
+                            <div class="col-xs-2 align-right hide-content-btn">
+                                <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="container-rekomendasi-hotel">
+                        <div class="row">
+                            <div class="col-xs-4 box-rekomendasi-hotel-promo">
+                                <div class="foto-hotel-rekomendasi"></div>
+                                <div class="info-hotel-rekomendasi">
+                                    <div class="judul-hotel"><h1>Maven Gunung Sahari</h1></div>
+                                    <div class="lokasi-hotel">
+                                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                        kemayoran
+                                    </div>
+                                    <div class="bintang-hotel"><img src="/Assets/images/bintang-hotel.jpg" /></div>
+                                </div>
+                                <div class="harga-list-hotel-rekomendasi">
+                                    <div class="harga-baru-rekomendasi">Rp 350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar-rekomendasi" value="Lihat Kamar">
+                                </div>
+                            </div>
+                            <div class="col-xs-4 box-rekomendasi-hotel-promo">
+                                <div class="foto-hotel-rekomendasi"></div>
+                                <div class="info-hotel-rekomendasi">
+                                    <div class="judul-hotel"><h1>Maven Gunung Sahari</h1></div>
+                                    <div class="lokasi-hotel">
+                                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                        kemayoran
+                                    </div>
+                                    <div class="bintang-hotel"><img src="/Assets/images/bintang-hotel.jpg" /></div>
+                                </div>
+                                <div class="harga-list-hotel-rekomendasi">
+                                    <div class="harga-baru-rekomendasi">Rp 350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar-rekomendasi" value="Lihat Kamar">
+                                </div>
+                            </div>
+                            <div class="col-xs-4 box-rekomendasi-hotel-promo">
+                                <div class="foto-hotel-rekomendasi"></div>
+                                <div class="info-hotel-rekomendasi">
+                                    <div class="judul-hotel"><h1>Maven Gunung Sahari</h1></div>
+                                    <div class="lokasi-hotel">
+                                        <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                                        kemayoran
+                                    </div>
+                                    <div class="bintang-hotel"><img src="/Assets/images/bintang-hotel.jpg" /></div>
+                                </div>
+                                <div class="harga-list-hotel-rekomendasi">
+                                    <div class="harga-baru-rekomendasi">Rp 350.000</div>
+                                    <input type="submit" class="btn-lihat-kamar-rekomendasi" value="Lihat Kamar">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> *@
+                <div class="rekomendasi-hotel-promo">
+                    <div class="judul-rekomendasi-hotel-promo">
+                        <div class="row">
+                            <div class="col-xs-10">Langkah Untuk Dapatkan Promo</div>
+                            @* <div class="col-xs-2 align-right hide-content-btn">
+                                <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                            </div> *@
+                        </div>
+                    </div>
+                    <div class="tnc">
+                        <ol class="list-number">
+                            @for (var i = 0; i < ViewBag.HowToGet.Count; i++ )
+                            {
+                                <li>@Html.Raw(ViewBag.HowToGet[i])</li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+                <div class="rekomendasi-hotel-promo" id="syarat-ketentuan">
+                    <div class="judul-rekomendasi-hotel-promo">
+                        <div class="row">
+                            <div class="col-xs-10">Syarat dan Ketentuan</div>
+                            @* <div class="col-xs-2 align-right hide-content-btn">
+                                <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+                            </div> *@
+                        </div>
+                    </div>
+                    <div class="tnc">
+                        <ol class="list-number">
+                            @for (var i = 0; i < ViewBag.Terms.Count; i++ )
+                            {
+                                <li>@Html.Raw(ViewBag.Terms[i])</li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+                @* 
+                <!--<div class="booking">
+                    <div class="bold-title">Periode Booking:</div>
+                    <div class="blue-text"><b>1 Februari - 31 Maret 2017</b></div>
+                </div>
+                <div class="booking">
+                    <div class="bold-title">Periode Inap dan Terbang:</div>
+                    <div class="blue-txt os-bold">Kapan saja</div>
+                </div>
+                <div class="tnc">
+                    <div class="bold-title">Syarat dan Ketentuan:</div>
+                    <ol class="list-number">
+                        <li>Berlaku untuk pembayaran menggunakan Kartu Debit dan Kartu Kredit BTN.</li>
+                        <li>Periode booking <span class="os-bold blue-txt">1 Februari - 31 Maret 2017</span> untuk periode inap kapan saja.</li>
+                        <li>Periode terbang dan inap kapan saja.</li>
+                        <li>Diskon sebesar 10% (maks Rp 300.000) dengan minimum transaksi Rp 1.500.000.</li>
+                        <li>Berlaku untuk semua rute maskapai Lion Air, Wings Air, Batik Air, Air Asia, Sriwijaya Air, Nam Air dan Citilink.</li>
+                        <li>Berlaku untuk semua hotel di seluruh dunia.</li>
+                        <li>Satu Card Holder hanya bisa bertransaksi 1 kali setiap harinya.</li>
+                        <li>Program tidak dapat digabungkan dengan voucher dan promo lainnya.</li>
+                        <li>Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.</li>
+                        <li>Harga diluar promo Travorama.</li>
+                    </ol>
+                </div>
+                <div class="how-to">
+                    <div class="bold-title">Cara Mendapatkan Program Promo:</div>
+                    <ol class="list-number">
+                        <li>Cari dan pesan tiket pesawat atau kamar hotel melalui situs atau aplikasi Travorama.</li>
+                        <li>Pilih metode pembayaran kartu kredit.</li>
+                        <li>Isi detail Kartu Debit atau Kartu Kredit BTN sesuai instruksi.</li>
+                        <li>Harga akan otomatis terpotong sesuai program promo.</li>
+                        <li>Selesaikan proses pembayaran.</li>
+                        <li>E-tiket atau e-voucher akan dikirimkan ke alamat email Anda.</li>
+                    </ol>
+                </div> --> *@
+            </div>
+        </div>
+    </div>
+</div>

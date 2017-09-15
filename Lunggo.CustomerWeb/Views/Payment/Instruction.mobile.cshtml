@@ -3,7 +3,7 @@
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
-@using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubMethod
+@using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubmethod
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
 
 @{
@@ -22,7 +22,7 @@
     var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
     var images = new List<Image>();
 
-    }
+}
 
 @section AdditionalJS {
     <!-- additional Angular JS-->
@@ -30,7 +30,7 @@
 }
 @section PageJS{
     <script>
-        var langCode = 'en'; 
+        var langCode = 'en';
         var paymentTimeout = '';
 
         // development only start
@@ -61,199 +61,96 @@
 <div class="confirmation-content" ng-app="travorama" ng-controller="confirmationController">
     <div class="container-page travorama-hotel-mobile thankyou-page">
         <div class="instruction">
-            @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+            <div class="page__header">
+                <h1 class="text-center section-title stripe">Panduan <span>Transfer</span></h1>
+            </div>
+
+            <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
+
+            @if (Model is FlightReservationForDisplay)
             {
-                <div class="page__header">
-                    <h1 class="text-center section-title stripe">Panduan <span>Virtual Account</span></h1>
-                </div>
-
-                <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
-
-                if (Model is FlightReservationForDisplay)
-                {
-                    <section class="text">
-                        <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
-                        <div class="dash-border"></div>
-                        <div>Mohon selesaikan pembayaran melalui <b>Virtual Account</b></div>
-                    </section>
-                }
-                if (Model is HotelReservationForDisplay)
-                {
-                    <section class="text">
-                        <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
-                        <div class="dash-border"></div>
-                        <div>Mohon selesaikan pembayaran melalui <b>Virtual Account</b></div>
-                    </section>
-                }
-                <section class="bank-detail">
-                    <div class="bank">
-                        <div class="row">
-                            <p align="center"><span style="font-size: 13px;">No Virtual Account:</span> <span style="font-size: 15px;"><b>@Model.Payment.TransferAccount</b></span></p>
-                        </div>
-                    </div>
+                <section class="text">
+                    <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
+                    <div class="dash-border"></div>
+                    <div>Mohon selesaikan pembayaran berikut:</div>
                 </section>
-
-                <div class="instruction-accordion">
-                    <div class="accordion-content">
-                        <div class="accordion-wrapper">
-                            @if (Model.Payment.SubMethod == PaymentSubMethod.Permata)
-                            {
-                                <div class="accordion-title accordion active">Jaringan ATM Bersama:</div>
-                                <div class="accordion-content show">
-                                <ol>
-                                    <li><p>Masukkan PIN Anda.</p></li>
-                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya.</b></p></li>
-                                    <li><p>Pilih <b>Transfer</b>.</p></li>
-                                    <li><p>Pilih <b>Antar Bank Online</b>.</p></li>
-                                    <li><p>Masukkan nomor <b>013 @Model.Payment.TransferAccount</b> (kode 013 dan 16 digit nomor akun virtual pembayaran).</p></li>
-                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                    <li><p>No. referensi dapat dikosongkan, lalu tekan <b>Benar</b>.</p></li>
-                                    <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                    <li><p>Transaksi berhasil.</p></li>
-                                </ol>
-                            </div>
-
-                                <div class="accordion-title accordion active">Jaringan ATM PRIMA:</div>
-                                <div class="accordion-content show">
-                                <ol>
-                                    <li><p>Masukkan PIN Anda.</p></li>
-                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
-                                    <li><p>Pilih <b>Transfer</b>.</p></li>
-                                    <li><p>Pilih <b>Ke Rekening Bank Lain</b>.</p></li>
-                                    <li><p>Masukkan kode <b>013</b> (Kode Bank Permata) lalu tekan <b>Benar</b>.</p></li>
-                                        <li><p>Masukkan jumlah harga tiket yang harus Anda bayar <b>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</b> (jika jumlah yang dimasukkan tidak sama dengan jumlah tagihan, transaksi akan ditolak).</p></li>
-                                    <li><p>Masukkan <b>@Model.Payment.TransferAccount</b> (16 digit nomor akun virtual pembayaran) lalu tekan <b>Benar</b>.</p></li>
-                                    <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                    <li><p>Transaksi berhasil.</p></li>
-                                </ol>
-                            </div>
-
-                                <div class="accordion-title accordion active">Jaringan ATM Alto:</div>
-                                <div class="accordion-content show">
-                                <ol>
-                                    <li><p>Masukkan PIN Anda.</p></li>
-                                    <li><p>Di Menu Utama, pilih <b>Transaksi Lainnya</b>.</p></li>
-                                    <li><p>Pilih <b>Transaksi Pembayaran</b>.</p></li>
-                                    <li><p>Pilih <b>Pembayaran Virtual Account</b>.</p></li>
-                                    <li><p>Masukkan 16 digit nomor akun virtual pembayaran <b>@Model.Payment.TransferAccount</b>.</p></li>
-                                    <li><p>Di halaman konfirmasi transfer akan muncul jumlah yang dibayarkan, no. rekening tujuan. Jika informasinya telah cocok, tekan <b>Benar</b>.</p></li>
-                                    <li><p>Transaksi berhasil.</p></li>
-                                </ol>
-                            </div>
-                            }
-                            
-                            
-                        </div>
-                    </div>
-                </div>
             }
-            else
+            @if (Model is HotelReservationForDisplay)
             {
-                <div class="page__header">
-                    <h1 class="text-center section-title stripe">Panduan <span>Transfer</span></h1>
-                </div>
-
-                <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
-
-                <div class="summary summary--price">
-
-                    <h3 class="summary__title"><b>RINCIAN</b> HARGA</h3>
-                    <div class="summary__body">
-                        <dl>
-                            <dt>Total Tiket</dt>
-                            <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
-                        </dl>
-                        @if (Model.Payment.DiscountNominal != 0)
-                        {
-                            <dl>
-                                <dt>Potongan Harga</dt>
-                                <dd>Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                            </dl>
-                        }
-                        @if (Model.Payment.UniqueCode != 0)
-                        {
-                            <dl>
-                                <dt>Kode Unik Pembayaran</dt>
-                                <dd>- Rp @(Math.Abs(Model.Payment.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
-                            </dl>
-                        }
-                        <dl class="total-price">
-                            <dt>Total</dt>
-                            <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                        </dl>
-                    </div><!-- .widget.price-detail -->
-                </div><!-- .widget-container -->
-
-                if (Model is FlightReservationForDisplay)
-                {
-                    <section class="text">
-                        <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, e-tiket akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
-                        <div class="dash-border"></div>
-                        <div>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></div>
-                    </section>
-                }
-
-                if (Model is HotelReservationForDisplay)
-                {
-                    <section class="text">
-                        <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
-                        <div class="dash-border"></div>
-                        <div>Mohon selesaikan pembayaran melalui <b>ATM / Internet Banking / M-Banking</b></div>
-                    </section>
-                }
-                <section class="bank-detail">
-                    <div class="bank">
-                        <div class="image-wrapper">
-                            <img src="/Assets/images/Bank-Mandiri.png" alt="Bank Mandiri" />
-                        </div>
-                        <dl>
-                            <dt>Nama Bank</dt>
-                            <dd>Bank Mandiri</dd>
-                        </dl>
+                <section class="text">
+                    <div>Pemesanan dan harga sudah di konfirmasi oleh Maskapai. Setelah pembayaran diterima, voucher akan dikirimkan ke e-mail Anda dalam waktu maks. <b>60 menit</b></div>
+                    <div class="dash-border"></div>
+                    <div>Mohon selesaikan pembayaran berikut:</div>
+                </section>
+            }
+            <section class="bank-detail">
+                <div class="bank">
+                    <div class="image-wrapper">
+                        <img src="/Assets/images/bank/@ViewBag.BankImageName" alt="@ViewBag.BankName" />
+                    </div>
+                    <dl>
+                        <dt>Nama Bank</dt>
+                        <dd>@ViewBag.BankName</dd>
+                    </dl>
+                    @if (Model.Payment.Method == PaymentMethod.BankTransfer)
+                    {
                         <dl>
                             <dt>Cabang</dt>
-                            <dd>KC Jakarta Sudirman</dd>
+                            <dd>@ViewBag.BankBranch</dd>
                         </dl>
                         <dl>
                             <dt>Atas Nama</dt>
                             <dd>TRAVEL MADEZY INTERNASIONAL</dd>
                         </dl>
-                        <dl>
-                            <dt>Nomor Rekening</dt>
-                            <dd>1020006675802</dd>
-                        </dl>
-                        <dl>
-                            <dt>Jumlah</dt>
-                            <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
-                        </dl>
-                    </div><!-- .bank -->
-                </section><!-- .bank-detail -->
-            }
+                    }
+                    <dl>
+                        <dt>Nomor Rekening</dt>
+                        <dd>@Model.Payment.TransferAccount</dd>
+                    </dl>
+                    <dl>
+                        <dt>Jumlah</dt>
+                        <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                    </dl>
+                </div><!-- .bank -->
+            </section><!-- .bank-detail -->
 
-            @if (Model is FlightReservationForDisplay)
-            {
-                <div class="transfer-instruction">
-                    <!--<section> -->
-                    <ol>
-                        <li class="order-list">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                        <li class="order-list">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+            <div class="instruction-accordion">
+                <div class="accordion-content">
+                    <div class="accordion-wrapper">
+                        @foreach (var i in ViewBag.Instructions)
+                        {
+                            <div class="accordion-title accordion active">@i.Item1</div>
+                            <div class="accordion-content show">
+                                <ol>
+                                    @foreach (var p in i.Item2)
+                                    {
+                                        <li><p>@Html.Raw(p)</p></li>
+                                    }
+                                </ol>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="transfer-instruction">
+                <!--<section> -->
+                <ol>
+                    <li class="order-list">Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                    <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
+                    @if (Model is FlightReservationForDisplay)
+                    {
                         <li class="order-list">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                    </ol>
-                    <!--Bagian Form Konfirmasi yang dihilangin-->
-                </div>
-            }
-            @if (Model is HotelReservationForDisplay)
-            {
-                <div class="transfer-instruction">
-                    <!--<section> -->
-                    <ol>
-                        <li class="order-list">Pastikan Anda melakukan transfer ke rekening <b>Travel Madezy Internasional</b></li>
-                        <li class="order-list">Transfer keseluruhan jumlah harga hingga tiga angka terakhir yang diperlukan untuk menjaga keamanan transaksi, dengan mengidentifikasi transfer yang telah Anda lakukan.</li>
+                    }
+                    @if (Model is HotelReservationForDisplay)
+                    {
                         <li class="order-list">Voucher akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                    </ol>
-                    <!--Bagian Form Konfirmasi yang dihilangin-->
-                </div>
-            }
+                    }
+                </ol>
+                <!--Bagian Form Konfirmasi yang dihilangin-->
+            </div>
+
         </div>
 
         <div class="widget countdown">
@@ -437,13 +334,13 @@
 
             <div class=" page-hotel review-hotel" style="background-color: #f9f9f9">
                 <div class="review-room clearfix">
-                    
+
                     @Html.Partial("/Views/Shared/Mobile/_GuestDetail.cshtml")
                     <h3 class="summary__title"><b>REVIEW</b> PESANAN</h3>
                     <div class="form-group">
                         @Html.Partial("/Views/Shared/Mobile/_HotelDetail.cshtml", reservation.HotelDetail)
                     </div>
-                    
+
                 </div>
                 @Html.Partial("/Views/Shared/Mobile/_RoomDetail.cshtml", reservation.HotelDetail)
                 @Html.Partial("/Views/Shared/Mobile/_PriceDetail.cshtml", reservation)
@@ -453,7 +350,7 @@
             <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow form-control" style="width: 100%; height: 40px; font-size: 15px; line-height: 24px;"> SAYA SUDAH BAYAR</a>
         </div>
     </div>
-    
+
     <div class="popup__wrapper" ng-class="{'active' : expired}">
 
         <div class="popup">
@@ -477,18 +374,17 @@
         </div>
     </div><!-- .page-overlay -->
 </div><!-- .confirmation-content -->
-
 @*<div class="overlay datepicker" ng-class="{'active' : PageConfig.Overlay == 'datepicker'}">
-    <header class="overlay__header">
-        <h3 class="overlay__title">
-            Lorem ipsum dolor sit amet
-            <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
-        </h3>
-    </header><!-- .overlay__header -->
-    <div class="overlay__body">
-        <div class="ui-datepicker"></div>
-    </div><!-- .overlay__body -->
-    <footer class="overlay__footer hidden">
-        <button class="btn btn-yellow btn-block" ng-click="PageConfig.SetOverlay('')">KONFIRMASI</button>
-    </footer>
-</div>*@
+        <header class="overlay__header">
+            <h3 class="overlay__title">
+                Lorem ipsum dolor sit amet
+                <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+            </h3>
+        </header><!-- .overlay__header -->
+        <div class="overlay__body">
+            <div class="ui-datepicker"></div>
+        </div><!-- .overlay__body -->
+        <footer class="overlay__footer hidden">
+            <button class="btn btn-yellow btn-block" ng-click="PageConfig.SetOverlay('')">KONFIRMASI</button>
+        </footer>
+    </div>*@

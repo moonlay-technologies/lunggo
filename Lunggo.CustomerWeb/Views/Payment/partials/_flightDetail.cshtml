@@ -1,0 +1,54 @@
+@using Lunggo.ApCommon.Constant
+@{
+    @* var pax = new List<PaxForDisplay>(); *@
+    var pax = Model.Reservation.Pax;
+}
+<div class="content-right-payment">
+    <div class="row">
+        <div class="col-xs-4 logo-maskapai">
+            <img ng-src="{{trips[0].segments[0].airlineLogoUrl}}"
+                alt="{{trips[0].segments[0].airlineName}}" />
+        </div>
+        <div class="col-xs-8 info-penerbangan">
+            <div class="detail-airport">
+                <p ng-if="trips[1]">Keberangkatan</p>
+                <h3>{{trips[0].segments[0].departureCity}}
+                    ({{trips[0].segments[0].departure}})
+                    - {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalCity}}
+                    ({{trips[0].segments[ trips[0].segments.length - 1 ].arrival}})</h3>
+                <p>{{trips[0].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</p>
+                <p>{{trips[0].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
+                    - {{trips[0].segments[ trips[0].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
+                    <span><!-- (+1 hari) --></span></p>
+            </div>
+        </div>
+    </div>
+    <div class="separator"></div>
+    <div class="row" ng-if="trips[1]">
+        <div class="col-xs-4 logo-maskapai">
+            <img ng-src="{{trips[1].segments[0].airlineLogoUrl}}"
+                alt="{{trips[1].segments[0].airlineName}}" />
+        </div>
+        <div class="col-xs-8 info-penerbangan">
+            <div class="detail-airport">
+                <p>Kepulangan</p>
+                <h3>{{trips[1].segments[0].departureCity}}
+                    ({{trips[1].segments[0].departure}})
+                    - {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalCity}}
+                    ({{trips[1].segments[ trips[1].segments.length - 1 ].arrival}})</h3>
+                <p>{{trips[1].segments[0].departureTime | date: 'dd MMM yyyy':'UTC'}}</p>
+                <p>{{trips[1].segments[0].departureTime | date: 'HH:mm' : 'UTC'}}
+                    - {{trips[1].segments[ trips[1].segments.length - 1 ].arrivalTime | date: 'HH:mm': 'UTC' }}
+                    <span><!-- (+1 hari) --></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-right-payment">
+    <p><b>Penumpang</b></p>
+    <div class="data-penumpang">
+        @for (int i=0; i < pax.Count; i++){
+            <p>@(i+1). @EnumDisplay.Title(pax[i].Title) @pax[i].Name</p>
+        }
+    </div>
+</div>

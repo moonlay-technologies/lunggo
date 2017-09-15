@@ -9,76 +9,7 @@
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
 @model Lunggo.CustomerWeb.Models.PaymentData
-
-@{
-
-    var rsvNo = "";
-    //var todayDate = DateTime.Today;
-    var todayDate = new DateTime(2017, 3, 25);
-    var savedCreditCards = Model.SavedCreditCards;
-    var orderedRooms = new List<Tuple<string, int>>();
-    var totalpax = 0;
-    var totalAdult = 0;
-    var totalChild = 0;
-    var totalRoom = 0;
-    var night = 0;
-    var images = new List<Image>();
-    var hotelImg = "";
-    var roomImg = "";
-    var listAges = new List<int>();
-    try
-    {
-        if (Model.Reservation is HotelReservationForDisplay)
-        {
-            var rsv = (Model.Reservation as HotelReservationForDisplay);
-            night = (rsv.HotelDetail.CheckOutDate - rsv.HotelDetail.CheckInDate).Days;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
-            var rooms = rsv.HotelDetail.Rooms;
-            rsvNo = Model.RsvNo;
-            foreach (var room in rsv.HotelDetail.Rooms)
-            {
-                var roomName = room.RoomName;
-                var sum = 0;
-
-                foreach (var rate in room.Rates)
-                {
-
-                    foreach (var config in rate.Breakdowns)
-                    {
-                        sum += config.RateCount;
-                        totalRoom += config.RateCount;
-                        totalAdult += config.AdultCount;
-                        totalChild += config.ChildCount;
-                        if (config.ChildCount <= 0)
-                        {
-                            continue;
-                        }
-                        listAges.AddRange(config.ChildrenAges);
-                    }
-                }
-                orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
-            }
-        }
-    }
-    catch
-    {
-        ViewBag.Message = "BookExpired";
-    }
-}
+@using Lunggo.ApCommon.Product.Model
 
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -92,11 +23,14 @@
     <!-- fancybox CSS-->
     <link href="/Assets/vendor/fancybox/jquery.fancybox.css" rel="stylesheet" />
 }
-
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/jquery.countdown.min.js"></script>
-    <script src="/Assets/js/CryptoJS/components/core-min.js"></script>
+    
+@*     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha512.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.js"></script>
+ *@    <script src="/Assets/js/CryptoJS/components/core-min.js"></script>
     <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
     <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
@@ -106,55 +40,51 @@
 }
 @section PageJS{
     <script>
-    var langCode = 'en';
-    var paymentTimeout = '';
-    // development only start
-    paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
-    console.log("TIME OUT" + paymentTimeout);
-    // countdown timer
-    $('.timer').countdown(paymentTimeout, function(event) {
-        $('.timer .hour').text(event.strftime('%H'));
-        $('.timer .minute').text(event.strftime('%M'));
-        $('.timer .second').text(event.strftime('%S'));
-    });
+        var mdr = JSON.parse('@ViewBag.SurchargeList'.replace(/&quot;/g,'"'));
+        var langCode = 'en';
+        // development only start
+        var paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
+        // countdown timer
+        $('.timer').countdown(paymentTimeout, function(event) {
+            $('.timer .hour').text(event.strftime('%H'));
+            $('.timer .minute').text(event.strftime('%M'));
+            $('.timer .second').text(event.strftime('%S'));
+        });
 
-    // date selector
-    $('.date-picker').datepicker({
-        minDate: new Date()
-    });
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-    var currentPage = 1;
-    var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general", "bankTransferEndTime")'];
-    var message = '@ViewBag.Message';
-    // flight detail
-    var rsvNo = @Model.RsvNo;
-    var paymentDetail = '';
-    var flightDetail = '';
-    var trips = '';
-    var price = '';
-    var originalPrice = '';
-    var totalpax = '';
-    var nights = '';
-    @if (Model.Reservation is FlightReservationForDisplay)
+        // date selector
+        $('.date-picker').datepicker({
+            minDate: new Date()
+        });
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var currentPage = 1;
+        var message = '@ViewBag.Message';
+        // flight detail
+        var rsvNo = @Model.RsvNo;
+        var paymentDetail = '';
+        var flightDetail = '';
+        var trips = '';
+        var price = 0;
+        var originalPrice = '';
+        var nights = '';
+        @if (Model.Reservation is FlightReservationForDisplay)
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-                            @:price = @reservation.Itinerary.NetTotalFare;
-                            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-                        }
-        else
+            @:price = @reservation.Itinerary.NetTotalFare;
+            @:originalPrice = @reservation.Itinerary.OriginalTotalFare;
+        }
+        else //if (Model.Reservation is HotelReservationForDisplay)
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-                            @:price = @reservation.HotelDetail.NetTotalFare;
-                            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-                        }
-    var redirectionUrl;
-    @if (Model.Reservation.Payment.RedirectionUrl != null)
-        {
+            @:price = @reservation.HotelDetail.NetTotalFare;
+            @:originalPrice = @reservation.HotelDetail.OriginalTotalFare;
+        }
+        var redirectionUrl;
+        @if (Model.Reservation.Payment.RedirectionUrl != null) {
             @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-                        }
-    @if (Model.Reservation is FlightReservationForDisplay)
+        }
+        @if (Model.Reservation is FlightReservationForDisplay)
         {
             @:var departureDate;
             var reservation = Model.Reservation as FlightReservationForDisplay;
@@ -187,45 +117,40 @@
             @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
             @:var gtmPurchaseCurrency = 'IDR';
             @:var gtmPageName = 'payment';
-    }
-    @if (Model.Reservation is HotelReservationForDisplay)
-    {
-        var hotel = Model.Reservation as HotelReservationForDisplay;
-        @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-        @:price = '@hotel.HotelDetail.NetTotalFare';
-        @:var gtmContentType = 'hotel';
-        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
-        @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
-        @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
-        @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
-        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-        @:var gtmNumAdults = @totalAdult;
-        @:var gtmNumChildren = @totalChild;
-        @:var gtmPurchaseCurrency = 'IDR';
-        @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
-        @:var gtmPageName = 'payment';
-    }
-    // change current page
-    if (getParam('page') == 4) {
-        currentPage = getParam('page');
-    } else {
-        currentPage = 1;
-    }
-    var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-    var buyerInfo = {
-        fullname: '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
-        countryCode: '@User.Identity.GetCountryCd()',
-        phone: '@User.Identity.GetPhoneNumber()',
-        email: '@User.Identity.GetEmail()'
-    };
-
-    var langCode = '@OnlineContext.GetActiveLanguageCode()';
-
-    var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
+        }
+        @if (Model.Reservation is HotelReservationForDisplay)
+        {
+            var hotel = Model.Reservation as HotelReservationForDisplay;
+            @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
+            @:price = '@hotel.HotelDetail.NetTotalFare';
+            @:var gtmContentType = 'hotel';
+            @:var gtmCity = '@hotel.HotelDetail.DestinationName';
+            @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
+            @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
+            @:var gtmCountry = '@hotel.HotelDetail.CountryName';
+            @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+            @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+            @:var gtmPurchaseCurrency = 'IDR';
+            @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
+            @:var gtmPageName = 'payment';
+        }
+        // change current page
+        if (getParam('page') == 4) {
+            currentPage = getParam('page');
+        } else {
+            currentPage = 1;
+        }
+        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
+        var buyerInfo = {
+            fullname: '@(User.Identity.GetFirstName() + " " + User.Identity.GetLastName())',
+            countryCode: '@User.Identity.GetCountryCd()',
+            phone: '@User.Identity.GetPhoneNumber()',
+            email: '@User.Identity.GetEmail()'
+        };
+        var langCode = '@OnlineContext.GetActiveLanguageCode()';
+        var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
 
     </script>
-
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
 }
@@ -234,310 +159,47 @@
 {
     default:
         <!-- payment start here -->
-
         <div ng-app="travorama" ng-controller="paymentController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content normal-txt">
                 <div class="container">
                     <div class="row">
                         <div class="col-left">
-                            <!-- ******************** -->
-                            <div class="content-step" id="step-4">
-                                <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
-
-                                <div class="payment-wrapper">
-                                    <div class="row">
-                                        
-                                        <div class="box-payment col-xs-12" >
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
-                                                <div class="col-xs-5 not-selected"><p>Bank Transfer</p></div>
-                                                        </div>
-                                            <div class="separator-desktop"></div>
-                                            <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
-                                            <div class="row box-pilihan-bank">
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                            </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                        </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                            </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                    </div>
-                                                    </div>
-                                            <div class="form-bayar">
-                                                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                    </div>
-                                        </div><!-- .payment -->
-                                        
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/kredit.jpg" /></div>
-                                                <div class="col-xs-6 selected"><p>Kartu Kredit / Debit</p></div>
-                                                <div class="col-xs-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
-                                    </div>
-                                            <div class="separator-desktop"></div>
-                                            <h3 class="lg-txt"><b>DETAIL</b> KARTU KREDIT / DEBIT</h3>
-                                            <div class="form-kartu-kredit">
-                                                <div class="form-group">
-                                                    <label>Nomor Kartu</label>
-                                                    <input type="number" class="form-control">
-                                                    </div>
-                                                <div class="row">
-                                                    <div class="col-xs-4">
-                                                        <div class="form-group">
-                                                            <label>Kadaluarsa</label>
-                                                            <select class="form-control">
-                                                                <option>Bulan</option>
-                                                                <option>Januari</option>
-                                                                <option>Februari</option>
-                                                                <option>Maret</option>
-                                                            </select>
-                                        </div>
-                                    </div>
-                                                    <div class="col-xs-4">
-                                                        <div class="form-group">
-                                                            <label>&nbsp;</label>
-                                                            <select class="form-control">
-                                                                <option>Tahun</option>
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                            </select>
-                                                    </div>
-                                        </div>
-                                                    <div class="col-xs-4">
-                                                        <div class="form-group">
-                                                            <label>CVV Kartu</label>
-                                                            <input type="number" class="form-control" placeholder="xxx">
-                                                    </div>
-                                    </div>
-                                                    </div>
-                                                <div class="form-group">
-                                                    <label>Nama Pemegang Kartu</label>
-                                                    <input type="text" class="form-control">
-                                                            </div>
-                                                            </div>
-                                            <div class="form-bayar">
-                                                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                        </div>
-                                        </div><!-- .payment -->
-
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
-                                                <div class="col-xs-5 not-selected"><p>Virtual Account</p></div>
-                                                        </div>
-                                            <div class="separator-desktop"></div>
-                                            <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
-                                            <div class="row box-pilihan-bank">
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                    </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                                <div class="col-xs-3 ">
-                                                    <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
-                                                    <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
-                                                </div>
-                                                    </div>
-                                            <div class="form-bayar">
-                                                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                                </div>
-                                        </div><!-- .payment -->
-
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/mandiri.jpg" /></div>
-                                                <div class="col-xs-5 not-selected"><p>Mandiri Clickpay</p></div>
-                                    </div>
-                                            <div class="separator-desktop"></div>
-                                            <h3 class="lg-txt"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
-                                            <div class="form-kartu-kredit">
-                                                <div class="form-group">
-                                                    <label>Nomor Kartu</label>
-                                                    <input type="number" class="form-control">
-                                            </div>
-                                                <div class="how-to-pay-mandiri">
-                                                    <p>Input Token Mandiri (diisi secara berurutan)</p>
-                                                    <div class="row text-group">
-                                                        <div class="col-xs-2"><b>APPLI</b></div>
-                                                        <div class="col-xs-10">: 3</div>
-                                            </div>
-                                                    <div class="row text-group">
-                                                        <div class="col-xs-2"><b>Input 1</b></div>
-                                                        <div class="col-xs-10">: Masukkan Nomor Kartu Terlebih Dahulu</div>
-                                                </div>
-                                                    <div class="row text-group">
-                                                        <div class="col-xs-2"><b>Input 2</b></div>
-                                                        <div class="col-xs-10">: 436271</div>
-                                            </div>
-                                                    <div class="row text-group">
-                                                        <div class="col-xs-2"><b>Input 3</b></div>
-                                                        <div class="col-xs-10">: 45796</div>
-                                            </div>
-                                            </div>
-                                                <div class="form-group">
-                                                    <label>Respon Token Mandiri</label>
-                                                    <input type="text" class="form-control" placeholder="xxxx">
-                                        </div>
-                                    </div>
-                                            <div class="form-bayar">
-                                                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                </div>
-                                        </div><!-- .payment -->
-                                        
-                                        <div class="box-payment col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-5"><img src="/Assets/images/cimb.jpg" /></div>
-                                                <div class="col-xs-5 not-selected"><p>CIMB Clicks</p></div>
-                                </div>
-                                            <div class="separator-desktop"></div>
-                                            <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
-                                            <div class="form-bayar">
-                                                <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
-                                                <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
-                                        </div>
-                                        </div><!-- .payment -->
-
-                                        </div>
-
-                                </div><!-- .payment-wrapper -->
-
-                            </div><!-- .content.step#step-4 -->
-
-
+                            @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
                         </div>
                         <div class="col-right">
-
-                            <h3 class="lg-txt"><b>RINCIAN</b> PENERBANGAN</h3>
+                            <h3 class="lg-txt">
+                                <b>RINCIAN </b>
+                                @if (Model.Reservation is FlightReservationForDisplay)
+                                     { <span>PENERBANGAN</span> }
+                                else { <span>PEMESANAN</span> }
+                            </h3>
                             <div class="container-rincian-penerbangan">
                                 <div class="content-right-payment">
-                                    <p><b>Sisa Waktu Pembayaran </b>00:00:00</p>
-                                    <p><b>Nomor Reservasi : </b>12345678</p>
+                                    <p class="timer">
+                                        <b>Sisa Waktu Pembayaran </b>
+                                        <span class="hour">00</span>
+                                        :
+                                        <span class="minute">00</span>
+                                        :
+                                        <span class="second">00</span>
+                                    </p>
+                                    <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
                                 </div>
-                                <div class="content-right-payment">
-                                    <p><b>Penumpang</b></p>
-                                    <div class="data-penumpang">
-                                        <p>1. Indra</p>
-                                    </div>
-                                            </div>
-                                <div class="content-right-payment">
-                                                <div class="row">
-                                        <div class="col-xs-4 logo-maskapai"><img src="/Assets/images/logo-garuda.jpg" /></div>
-                                        <div class="col-xs-8 info-penerbangan">
-                                            <div class="detail-airport">
-                                                <p>Keberangkatan</p>
-                                                <h3>Jakarta (CGK) - Bali/Denpasar (DPS)</h3>
-                                                <p>20 Jul 2017</p>
-                                                <p>18:25 - 21.00</p>
-                                                    </div>
-                                                        </div>
-                                                        </div>
-                                    <div class="separator"></div>
-                                    <div class="row">
-                                        <div class="col-xs-4 logo-maskapai"><img src="/Assets/images/logo-garuda.jpg" /></div>
-                                        <div class="col-xs-8 info-penerbangan">
-                                            <div class="detail-airport">
-                                                <p>Kepulangan</p>
-                                                <h3>Jakarta (CGK) - Bali/Denpasar (DPS)</h3>
-                                                <p>20 Jul 2017</p>
-                                                <p>18:25 - 21.00</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                                    </div>
-                                <div class="content-right-payment content-right-payment-edit">
-                                    <div class="kode-voucher">
-                                        <a href="#">Punya kode Voucher ?</a>
-                                        <div class="form-group ">
-                                            <input type="text" class="form-control form-kode-voucher">
-                                                        </div>
-                                                        </div>
-                                    <div class="rincian-harga">
-                                        <p><b>Harga Tiket : </b><span>Rp 1.500.000</span></p>
-                                        <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                        <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                        <div class="total-harga">
-                                            <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-
-                            <h3 class="lg-txt"><b>RINCIAN</b> PEMESANAN</h3>
-                            <div class="container-rincian-penerbangan">
-                                <div class="content-right-payment">
-                                    <p><b>Sisa Waktu Pembayaran </b>00:00:00</p>
-                                                            </div>
-                                <div class="content-right-payment">
-                                    <div class="row">
-                                        <div class="col-xs-12 img-hotel"><img src="https://photos.hotelbeds.com/giata/43/431483/431483a_hb_a_002.jpg" /></div>
-                                        <div class="col-xs-12 info-penerbangan">
-                                            <div class="detail-airport">
-                                                <h3>Maven Gunung Sahari</h3>
-                                                                    <div class="star"></div>
-                                                <p>Jl. Gunung Sahari II No.6, RT.12/RW.7, Gn. Sahari Sel., Jakarta, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10610</p>
-                                                
-                                                        </div>
-                                                        </div>
-                                                        </div>
-                                                        </div>
-                                <div class="content-right-payment">
-                                    <div class="rincian-harga">
-                                        <p><b>Check in : </b><span>01 Agustus 2017</span></p>
-                                        <p><b>Check out : </b><span>02 Agustus 2017</span></p>
-                                        <p><b>Malam : </b><span>1 Malam</span></p>
-                                        <p><b>Kamar : </b><span>1 Kamar</span></p>
-                                        <p><b>Jenis Kamar : </b><span>1 Double Deluxe</span></p>
-                                        <p><b>Jumlah Tamu : </b><span>1 Dewasa</span></p>
-                                                            </div>
-                                                        </div>
-                                <div class="content-right-payment content-right-payment-edit">
-                                    <div class="kode-voucher">
-                                        <a href="#">Punya kode Voucher ?</a>
-                                        <div class="form-group ">
-                                            <input type="text" class="form-control form-kode-voucher">
-                                                            </div>
-                                                        </div>
-                                    <div class="rincian-harga">
-                                        <p><b>Harga Kamar : </b><span>Rp 1.500.000</span></p>
-                                        <p><b>Diskon Travorama : </b><span class="diskon">Rp 15.250</span></p>
-                                        <p><b>Kode Unik Pembayaran : </b><span>Rp -80</span></p>
-                                        <div class="total-harga">
-                                            <p><b>TOTAL</b><span>Rp 1.376.761</span></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-
+                                @if (Model.Reservation is FlightReservationForDisplay) {
+                                        Html.RenderPartial("/Views/Payment/partials/_flightDetail.cshtml");
+                                } else {
+                                        Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");
+                                }
+                                @{Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");}
                             </div>
                         </div>
                     </div>
             </section><!-- .checkout-content -->
 
             <div class="bookfailed-popup" ng-show="expired">
-                <div class=" overlay-content">
+                <div class="overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
                         <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:10px;">
@@ -556,21 +218,20 @@
                 </div>
             </div>
 
-            <div class="tnc-popup" ng-show="pay.transfer">
+            <div class="tnc-popup" ng-show="pay.showPopup">
                 <div class="popup">
                     <div class="popup-container">
                         <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
                         <div class="popup-list">
                             <ol>
-                                <li>Transfer keseluruhan jumlah harga hingga <b>3 angka terakhir</b> untuk menjaga keamanan transaksi dan dilakukan sebelum batas akhir waktu pembayaran.</li>
-                                <li>Transfer antarbank (dari bank yang berbeda) wajib menggunakan metode pembayaran Virtual Account.</li>
-                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/SKNBI</b> karena membutuhkan waktu verifikasi yang lebih lama sehingga memungkinkan pemesanan gagal.</li>
-
+                                <li>Pastikan bank yang Anda pilih <b>sama</b> dengan bank yang Anda gunakan untuk membayar. Gunakan pilihan <b>"Bank Lainnya"</b> jika bank Anda tidak terdapat di pilihan</li>
+                                <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
                             </ol>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.transfer = false;" style="width:100%">KEMBALI</a>
+                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.showPopup = false;" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
                                 <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
@@ -579,23 +240,24 @@
                     </div>
                 </div>
             </div>
-
-            <div class="tnc-popup" ng-show="pay.virtualAccount">
+            
+            <div class="tnc-popup" ng-show="pay.showOtherBankPopup">
                 <div class="popup">
                     <div class="popup-container">
-                        <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Virtual Account</span></div>
+                        <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
                         <div class="popup-list">
                             <ol>
-                                <li>Ada biaya Rp 6.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu.</li>
-                                <li>Lakukan pembayaran sebelum batas akhir waktu pembayaran.</li>
+                                <li>Dikenakan tambahan biaya Rp6.500-Rp7.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu</li>
+                                <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>3 angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
                             </ol>
                         </div>
                         <div class="row">
                             <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.virtualAccount = false;" style="width:100%">KEMBALI</a>
+                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.showOtherBankPopup = false;" style="width:100%">KEMBALI</a>
                             </div>
                             <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('virtualAccount')" value="SETUJU">
+                                <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
                             </div>
                         </div>
                     </div>
@@ -606,7 +268,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
@@ -621,7 +283,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Anda Belum Memilih Bank</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar</span></div>
@@ -635,7 +297,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:40px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Input yang Anda masukkan tidak valid. Silakan cek kembali.</span></div>
@@ -650,7 +312,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
@@ -668,7 +330,7 @@
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
                         <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
                         <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
@@ -681,10 +343,25 @@
                 </div>
             </div>
 
+            <div class="payment-popup" ng-show="error.message">
+                <div class=" overlay-content">
+                    <section style="padding-top:60px; padding-left:225px;">
+                        <!-- Ini untuk yg gagal -->
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                        <div style="padding-top:5px;"><span style="font-size:12px">{{error.message}}</span></div>
+                    </section>
+                    <div align="right" style="padding-right:30px;">
+                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="error.message = '' "><b>TUTUP</b></a>
+                    </div>
+                </div>
+            </div>
+
             <div class="bookfailed-popup" ng-show="pay.isPaying || pay.go">
                 <div class=" overlay-content">
                     <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px" width="88px"></div>
+                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
                         <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
                         <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                         <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
