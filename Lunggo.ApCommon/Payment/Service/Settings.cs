@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 new Surcharge
                 {
                     PaymentMethod = PaymentMethod.CreditCard,
-                    Percentage = 2.5M,
+                    Percentage = 0M,
                     Constant = 0
                 }
             };
