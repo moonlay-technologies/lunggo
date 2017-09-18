@@ -811,6 +811,30 @@ app.controller('CheckoutController', ['$http', '$scope', '$rootScope', '$interva
         }
     }
 
+    $( "#pax-name" ).autocomplete({
+      minLength: 0,
+      source: savedPassengers,
+      focus: function( event, ui ) {
+        $( "#project" ).val( ui.item.label );
+        return false;
+      },
+      select: function( event, ui ) {
+        $( "#pax-name" ).val( ui.item.label );
+        $( "#pax-title" ).val( ui.item.value );
+        $( "#pax-birth-date" ).val( ui.item.value );
+        $( "#pax-birth-month" ).val( ui.item.value );
+        $( ".pax-birth-year" ).val( ui.item.value );
+        $( "#project-description" ).html( ui.item.desc );
+        $( "#project-icon" ).attr( "src", "images/" + ui.item.icon );
+ 
+        return false;
+      }
+    })
+    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+      return $( "<li>" )
+        .append( "<div>" + item.label + "<br>" + item.desc + "</div>" )
+        .appendTo( ul );
+    };
     // expiry date
    
     //$scope.displayCountry = function (code) {

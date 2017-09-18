@@ -14,7 +14,6 @@
     var needPassport = false;
     var needNationality = false;
     var token = "";
-    var savedPassengers = Model.SavedPassengers;
     var savedCreditCards = Model.SavedCreditCards;
     try
     {
@@ -91,6 +90,8 @@
         var passportDate = '@Model.Itinerary.Trips.Last().DepartureDate.GetValueOrDefault().AddMonths(6)';
         var originalPrice = '@Model.Itinerary.OriginalTotalFare';
         var price = '@Model.Itinerary.NetTotalFare';
+        var savedPassengers = @Model.SavedPassengers;
+
         // change current page
         if (getParam('page') == 2) {
             currentPage = getParam('page');

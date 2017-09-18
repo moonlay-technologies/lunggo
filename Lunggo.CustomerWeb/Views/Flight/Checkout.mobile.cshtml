@@ -92,7 +92,7 @@
                 Email: '@User.Identity.GetEmail()'
             }
         };
-
+        var savedPassengers = @Model.SavedPassengers;
     </script>
     <!-- angular controller -->
     <script src="/Assets/mobile/js/CheckoutController.js"></script>
@@ -198,7 +198,7 @@
                         </form>
 
                     </div>
-                </div><!-- .page-step-1 -->
+                </div>@* <!-- .page-step-1 -->} *@
 
                 <div class="page-step-2" ng-show="PageConfig.ActivePage == 2">
                     <h3><b>DATA</b> PENUMPANG</h3>
@@ -211,51 +211,58 @@
                                 <h4 class="passenger__title" ng-if="Passenger.type == 'infant'">Penumpang {{$index + 1}} (Bayi)</h4>
                             </header><!-- .passenger__header -->
                             <div class="passenger__body">
-                                <div class="form-group">
-                                    <label class="control-label">Titel : </label>
-                                    <select class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
-                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-if="Passenger.type == 'adult'">{{title.name}}</option>
-                                        <option ng-repeat="title in titleKids" value="{{title.value}}" ng-if="Passenger.type != 'adult'">{{title.name}}</option>
-                                    </select>
-                                </div>
 
                                 <div class="form-group important">
                                     <label class="control-label">Nama Lengkap : </label>
-                                    <input type="text" value="" class="form-control nama" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
+                                    <input id="pax-name" type="text" class="form-control nama" required name="passenger_{{$index}}_name" placeholder="Ex : John" ng-model="Passenger.name" />
                                     <div ng-show="!checkName(Passenger.name)" style="color:red">
                                         Nama tidak boleh mengandung karakter selain alfabet dan spasi
                                     </div>
                                 </div>
 
+                                <div class="form-group">
+                                    <label class="control-label">Titel : </label>
+                                    <select id="pax-title" class="form-control" required ng-model="Passenger.title" name="passenger_{{$index}}_title" ng-init="Passenger.title = titles[0].value">
+                                        <option ng-repeat="title in titles" value="{{title.value}}" ng-if="Passenger.type == 'adult'">{{title.name}}</option>
+                                        <option ng-repeat="title in titleKids" value="{{title.value}}" ng-if="Passenger.type != 'adult'">{{title.name}}</option>
+                                    </select>
+                                </div>
 
                                 <!-- passenger birth date start -->
                                 <div class="form-group important" ng-if="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                     <label class="control-label">Tanggal Lahir: </label>
                                     <div class="row">
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                            <select id="pax-birth-date" class="form-control" name="passenger_{{$index}}_birthDate" ng-model="Passenger.birth.date" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month - 1, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'adult'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month - 1, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'child'">{{date}}</option>
                                                 <option value="{{date}}" ng-repeat="date in dates(Passenger.birth.month - 1, Passenger.birth.year)" ng-selected="date == 'Tanggal'" ng-if="Passenger.type == 'infant'">{{date}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
+                                            <select id="pax-birth-month" class="form-control" name="passenger_{{$index}}_birthMonth" ng-model="Passenger.birth.month" ng-change="validateBirthday(Passenger)" ng-required="CheckoutConfig.BirthDateRequired || Passenger.type == 'child' || Passenger.type == 'infant'">
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'adult'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'child'">{{month.name}}</option>
                                                 <option value="{{month.value}}" ng-repeat="month in months" ng-selected="month.value == '0'" ng-if="Passenger.type == 'infant'">{{month.name}}</option>
                                             </select>
                                         </div>
                                         <div class="col-xs-4">
-                                            <select class="form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'" ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'">
+                                            <select class="pax-birth-year form-control" name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)"
+                                                @* 
+                                                ng-if="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'"
+                                                ng-required="CheckoutConfig.BirthDateRequired && Passenger.type == 'adult'"
+                                                
+                                                ng-if="Passenger.type == 'child'" required
+                                                
+                                                ng-if="Passenger.type == 'infant'" required
+                                                 *@
+                                                required>
+                                                
                                                 <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
                                             </select>
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="Passenger.type == 'child'">
-                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
-                                            </select>
-                                            <select class="form-control" required name="passenger_{{$index}}_birthYear" ng-model="Passenger.birth.year" ng-change="validateBirthday(Passenger)" ng-if="Passenger.type == 'infant'">
-                                                <option value="{{year}}" ng-repeat="year in generateYear(Passenger.type)" ng-selected="year == 'Tahun'">{{year}}</option>
-                                            </select>
+                                            
+
+                                            
                                         </div>
                                         <div ng-show="invalidDate(Passenger.birth.date, Passenger.birth.month, Passenger.birth.year)" style="color: red">
                                             Tanggal lahir tidak valid.
