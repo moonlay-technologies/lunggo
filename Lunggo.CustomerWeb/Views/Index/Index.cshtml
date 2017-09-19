@@ -313,6 +313,14 @@
                         </a>
                     </div>
                 }
+                @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("KamisCeria", "Promo")">
+                            <img src="/Assets/images/campaign/2017KamisCeria/homepage_desktop.jpg" alt="Promo Kamis Ceria" />
+                        </a>
+                    </div>
+                }
                 <div class="slider">
                     <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
                         <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
