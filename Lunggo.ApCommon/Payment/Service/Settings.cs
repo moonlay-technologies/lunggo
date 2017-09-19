@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Policy;
 using System.Text;
+using System.Web;
 using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Database;
@@ -40,15 +44,28 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public List<Surcharge> GetSurchargeList()
         {
-            return new List<Surcharge>()
-            {
-                new Surcharge
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            var platform = Client.GetPlatformType(clientId);
+            return platform == PlatformType.DesktopWebsite || platform == PlatformType.MobileWebsite
+                ? new List<Surcharge>()
                 {
-                    PaymentMethod = PaymentMethod.CreditCard,
-                    Percentage = 0M,
-                    Constant = 0
+                    new Surcharge
+                    {
+                        PaymentMethod = PaymentMethod.CreditCard,
+                        Percentage = 2.5M,
+                        Constant = 0
+                    }
                 }
-            };
+                : new List<Surcharge>()
+                {
+                    new Surcharge
+                    {
+                        PaymentMethod = PaymentMethod.CreditCard,
+                        Percentage = 0M,
+                        Constant = 0
+                    }
+                };
         }
 
         public string GetBankTransferAccount(PaymentSubmethod submethod)
