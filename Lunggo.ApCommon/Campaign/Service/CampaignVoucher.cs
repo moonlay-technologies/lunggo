@@ -1,15 +1,20 @@
 ﻿using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Model;
 using System;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
+using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Http;
 
@@ -64,7 +69,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            var price = paymentDetails.OriginalPriceIdr*paymentDetails.LocalCurrency.Rate;
+            var price = paymentDetails.OriginalPriceIdr * paymentDetails.LocalCurrency.Rate;
 
             var validationStatus = ValidateVoucher(voucher, price, response.Email, voucherCode);
 
@@ -91,11 +96,204 @@ namespace Lunggo.ApCommon.Campaign.Service
 
             var cost = rsv.GetTotalSupplierPrice();
             if (voucher.MaxBudget.HasValue &&
-                (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr*0.97M))
+                (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr * 0.97M))
             {
                 response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
                 return response;
             }
+
+            //////////////  HARDCODED VALIDATION /////////////////
+
+            if (voucher.CampaignId == 66) // Good Monday
+            {
+                var valid = true;
+
+                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                var platform = Client.GetPlatformType(clientId);
+                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    valid = false;
+
+
+                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .All(t =>
+                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    valid = false;
+
+
+                if (!(new[] { "JKT", "CGK", "HLP", "SRG", "JOG", "TNJ", "SUB" }
+                    .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
+                {
+                    valid = false;
+                }
+
+
+                var airlines =
+                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .SelectMany(t => t.Segments)
+                        .Select(s => s.AirlineCode);
+                foreach (var airline in airlines)
+                {
+                    if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                        valid = false;
+                }
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Monday)
+                {
+                    valid = false;
+                }
+
+
+                if (!valid)
+                {
+                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    return response;
+                }
+            }
+
+            if (voucher.CampaignId == 67) // Promo Rabu
+            {
+                var valid = true;
+
+                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                var platform = Client.GetPlatformType(clientId);
+                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    valid = false;
+
+
+                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .All(t =>
+                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    valid = false;
+
+
+                var airlines =
+                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .SelectMany(t => t.Segments)
+                        .Select(s => s.AirlineCode);
+                foreach (var airline in airlines)
+                {
+                    if (!(new[] { "SJ", "IN" }.Contains(airline)))
+                        valid = false;
+                }
+
+                if (paymentDetails.Method != PaymentMethod.BankTransfer ||
+                    paymentDetails.Method != PaymentMethod.VirtualAccount)
+                    valid = false;
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Wednesday)
+                {
+                    valid = false;
+                }
+
+
+                if (!valid)
+                {
+                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    return response;
+                }
+            }
+
+            if (voucher.CampaignId == 68) // Kamis Ceria
+            {
+                var valid = true;
+
+                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                var platform = Client.GetPlatformType(clientId);
+                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    valid = false;
+
+
+                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .Any(t =>
+                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    valid = false;
+
+
+                if (!(new[] { "DPS", "LOP", "LBJ", "BTH", "BTJ" }
+                    .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
+                {
+                    valid = false;
+                }
+
+
+                var airlines =
+                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .SelectMany(t => t.Segments)
+                        .Select(s => s.AirlineCode);
+                foreach (var airline in airlines)
+                {
+                    if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                        valid = false;
+                }
+
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Thursday)
+                {
+                    valid = false;
+                }
+
+
+                if (!valid)
+                {
+                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    return response;
+                }
+            }
+
+            if (voucher.CampaignId == 69) // Jalan-Jalan Sabtu
+            {
+                var valid = true;
+
+                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                var platform = Client.GetPlatformType(clientId);
+                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    valid = false;
+
+
+                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .All(t =>
+                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    valid = false;
+
+
+                var airlines =
+                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .SelectMany(t => t.Segments)
+                        .Select(s => s.AirlineCode);
+                foreach (var airline in airlines)
+                {
+                    if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                        valid = false;
+                }
+
+
+                if (paymentDetails.Method != PaymentMethod.BankTransfer ||
+                    paymentDetails.Method != PaymentMethod.VirtualAccount)
+                    valid = false;
+
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
+                {
+                    valid = false;
+                }
+
+
+                if (!valid)
+                {
+                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    return response;
+                }
+            }
+            
+            //////////////  HARDCODED VALIDATION /////////////////
 
             response.VoucherStatus = validationStatus;
             return response;
