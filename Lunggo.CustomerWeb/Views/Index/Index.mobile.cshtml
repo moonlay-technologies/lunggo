@@ -96,11 +96,27 @@
                 </a>
             </div>
         }
+        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Monday)
+        {
+            <div class="item">
+                <a href="/id/Promo/GoodMonday">
+                    <img src="/Assets/images/campaign/2017GoodMonday/homepage_mobile.jpg" alt="Promo Good Monday" />
+                </a>
+            </div>
+        }
         @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
         {
             <div class="item">
                 <a href="/id/Promo/KamisCeria">
                     <img src="/Assets/images/campaign/2017KamisCeria/homepage_mobile.jpg" alt="Promo Kamis Ceria" />
+                </a>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Saturday)
+        {
+            <div class="item">
+                <a href="/id/Promo/JalanJalanSabtu">
+                    <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepage_mobile.jpg" alt="Promo Jalan Jalan Sabtu" />
                 </a>
             </div>
         }

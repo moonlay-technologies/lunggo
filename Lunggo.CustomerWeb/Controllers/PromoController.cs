@@ -126,6 +126,40 @@ namespace Lunggo.CustomerWeb.Controllers
 
                     return View("Promo");
 
+                case "GoodMonday":
+
+                    ViewBag.Title = "Good Monday";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017GoodMonday/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017GoodMonday/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Good Monday";
+                    ViewBag.PromoTitle = "Good Monday";
+                    ViewBag.PromoDescription = "Penawaran khusus untuk penerbangan tujuan Semarang, Yogyakarta, Jakarta, Tanjung Pinang dan Surabaya diskon s.d. Rp 300.000. Pesan sekarang di Travorama dan jadikan perjalanan kamu lebih berkesan!";
+                    ViewBag.KodePromo = "MONDAY300";
+                    ViewBag.PeriodeBooking = "Setiap Senin";
+                    ViewBag.PeriodeTerbang = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan tiket pesawat melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan penumpang");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-ticket pesawat dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar 3% (Maks. Rp 300.000) dan minimum transaksi Rp 1.000.000");
+                    termList.Add("Berlaku untuk penerbangan domestik tujuan Semarang, Yogyakarta, Jakarta, Tanjung Pinang dan Surabaya dengan maskapai Citilink, Sriwijaya, NAM Air dan Batik Air.");
+                    termList.Add("Berlaku untuk pemesanan tiket pesawat melalui situs Travorama");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk semua metode pembayaran");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: setiap Senin");
+                    termList.Add("Periode terbang: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
+
                 case "kamisceria":
 
                     ViewBag.Title = "Kamis Ceria";
@@ -139,7 +173,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     // ViewBag.PeriodeInap = "Kapan Saja";
                     ViewBag.PeriodeTerbang = "Kapan Saja";
 
-                    howToGet.Add("Cari dan pesan tiket pesawat melalui situs atau aplikasi Travorama");
+                    howToGet.Add("Cari dan pesan tiket pesawat melalui situs Travorama");
                     howToGet.Add("Isi data pemesan dan penumpang");
                     howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
                     howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
@@ -149,11 +183,45 @@ namespace Lunggo.CustomerWeb.Controllers
 
                     termList.Add("Diskon sebesar Rp 100.000 dan minimal transaksi Rp 2.500.000");
                     termList.Add("Berlaku untuk penerbangan domestik tujuan Bali, Lombok, Labuan Bajo, Batam dan Banda Aceh dengan maskapai Citilink, Sriwijaya, NAM Air dan Batik Air.");
-                    termList.Add("Berlaku untuk pemesanan tiket pesawat melalui situs Travorama ");
+                    termList.Add("Berlaku untuk pemesanan tiket pesawat melalui situs Travorama");
                     termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
                     termList.Add("Berlaku untuk semua metode pembayaran");
-                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain ");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
                     termList.Add("Periode booking: setiap Kamis");
+                    termList.Add("Periode terbang: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
+
+                case "JalanJalanSabtu":
+
+                    ViewBag.Title = "Jalan Jalan Sabtu";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017JalanJalanSabtu/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017JalanJalanSabtu/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Jalan Jalan Sabtu";
+                    ViewBag.PromoTitle = "Jalan Jalan Sabtu";
+                    ViewBag.PromoDescription = "Spesial di akhir pekan, kamu bebas pilih destinasi! Pesan tiket pesawat di Travorama dan dapatkan diskon tiket pesawat s.d. Rp 200.000 untuk semua destinasi domestik.";
+                    ViewBag.KodePromo = "JJSABTU4";
+                    ViewBag.PeriodeBooking = "Setiap Sabtu";
+                    ViewBag.PeriodeTerbang = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan tiket pesawat melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan penumpang");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran Bank Transfer");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-ticket pesawat dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar 4% (Maks. Rp 200.000) dan tanpa minimum transaksi");
+                    termList.Add("Berlaku untuk semua penerbangan domestik dengan maskapai Citilink, Sriwijaya, NAM Air dan Batik Air.");
+                    termList.Add("Berlaku untuk pemesanan tiket pesawat melalui situs Travorama");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk metode pembayaran Bank Transfer");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: setiap Sabtu");
                     termList.Add("Periode terbang: kapan saja");
                     termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
                     termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");

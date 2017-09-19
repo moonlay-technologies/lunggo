@@ -313,11 +313,27 @@
                         </a>
                     </div>
                 }
+                @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Monday)
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("GoodMonday", "Promo")" target="_blank">
+                            <img src="/Assets/images/campaign/2017GoodMonday/homepage_desktop.jpg" alt="Promo Good Monday" />
+                        </a>
+                    </div>
+                }
                 @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
                 {
                     <div class="slider">
                         <a href="@Url.Action("KamisCeria", "Promo")" target="_blank">
                             <img src="/Assets/images/campaign/2017KamisCeria/homepage_desktop.jpg" alt="Promo Kamis Ceria" />
+                        </a>
+                    </div>
+                }
+                @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Saturday)
+                {
+                    <div class="slider">
+                        <a href="@Url.Action("JalanJalanSabtu", "Promo")" target="_blank">
+                            <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepage_desktop.jpg" alt="Promo Jalan Jalan Sabtu" />
                         </a>
                     </div>
                 }
