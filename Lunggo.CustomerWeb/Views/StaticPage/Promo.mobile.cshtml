@@ -26,7 +26,25 @@
                 <p>
                     <a href="@Url.Action("SeptemberSeru", "Promo")"><img src="/Assets/images/campaign/2017SeptemberSeru/homepagepromo_mobile.jpg" /></a>
                 </p>
+                @* <p>
+                    Liburan bersama teman atau keluarga akan lebih seru dengan bebas pilih hotel di mana saja, bebas inap kapan saja dan tanpa habis budget. Pesan sekarang dan nikmati diskon s.d. Rp1.000.000 kamar hotel domestik dan internasional di Travorama.
+                </p>
                 <p>
+                    Periode booking: <b>8 - 24 September 2017</b>
+                    <br />
+                    <a href="@Url.Action("SeptemberSeru", "Promo")" style="color:blue">Selengkapnya</a>
+                </p> *@
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
+        {
+            <div class="promo-list">
+                <p>
+                    <a href="@Url.Action("KamisCeria", "Promo")">
+                        <img src="/Assets/images/campaign/2017KamisCeria/homepagepromo_mobile.jpg" />
+                    </a>
+                </p>
+                @* <p>
                     Liburan bersama teman atau keluarga akan lebih seru dengan bebas pilih hotel di mana saja, bebas inap kapan saja dan tanpa habis budget. Pesan sekarang dan nikmati diskon s.d. Rp1.000.000 kamar hotel domestik dan internasional di Travorama.
                 </p>
                 <p>
@@ -34,6 +52,7 @@
                     <br />
                     <a href="@Url.Action("SeptemberSeru", "Promo")" style="color:blue">Selengkapnya</a>
                 </p>
+                *@
             </div>
         }
         @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
@@ -42,7 +61,7 @@
                 <p>
                     <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-promo-mobile.jpg" /></a>
                 </p>
-                <p>
+                @* <p>
                     Yeay payday time! Saatnya memanjakan diri bersama keluarga atau sahabat dengan menginap di hotel-hotel terbaik pilihan kamu.
                     Nikmati diskon 15% maksimal Rp 150.000 untuk setiap reservasi kamar hotel di Indonesia dan luar negeri dengan menggunakan metode pembayaran transfer bank melalui ATM Bank Permata.
                 </p>
@@ -50,7 +69,7 @@
                     Periode booking: <b>25 - 27 Agustus 2017</b>
                     <br />
                     <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")" style="color:#197bc6; font-weight: bold; text-decoration: underline;">Selengkapnya</a>
-                </p>
+                </p> *@
             </div>
         }
     </div><!-- .section-search -->
