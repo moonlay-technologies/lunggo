@@ -1581,8 +1581,6 @@
     <Content Include="Assets\fonts\Raleway-Regular.ttf" />
     <Content Include="Assets\fonts\Raleway-SemiBold.ttf" />
     <Content Include="Assets\fonts\Raleway-Thin.ttf" />
-    <Content Include="Assets\images\campaign\2017JalanJalanSabtu\Promo Send.xlsx" />
-    <Content Include="Assets\images\campaign\2017SeptemberSeru\Promo Send.xlsx" />
     <Content Include="Assets\mobile\css\style_mobile.scss" />
     <Content Include="Assets\mobile\css\_home_page_layout.scss" />
     <Content Include="Assets\mobile\css\_page_account.scss" />
