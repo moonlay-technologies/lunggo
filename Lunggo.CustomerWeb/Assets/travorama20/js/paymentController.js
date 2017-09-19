@@ -940,16 +940,6 @@ app.controller('paymentController', [
             $scope.pay.postData.method = $scope.paymentMethod;
         }
 
-    function scrollPage($targetElement, animationSpeed) {
-        var speed = animationSpeed || 200;
-        //// scroll
-        $('html, body').animate({
-            //// banyaknya pixel yang di scroll (ditutupin)
-            scrollTop: $targetElement.offset().top - $("header").height() - 8
-        }, speed);
-    }
-
-
         $(".kode-voucher a").click(function () {
         $(this).next().toggle(200);
     });
