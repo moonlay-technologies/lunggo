@@ -91,7 +91,17 @@
         @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 24))
         {
             <div class="item">
-                <a href="/id/Promo/SeptemberSeru"><img src="/Assets/images/campaign/2017SeptemberSeru/homepage_mobile.jpg" alt="Promo September Seru" /></a>
+                <a href="/id/Promo/SeptemberSeru">
+                    <img src="/Assets/images/campaign/2017SeptemberSeru/homepage_mobile.jpg" alt="Promo September Seru" />
+                </a>
+            </div>
+        }
+        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
+        {
+            <div class="item">
+                <a href="/id/Promo/KamisCeria">
+                    <img src="/Assets/images/campaign/2017KamisCeria/homepage_mobile.jpg" alt="Promo Kamis Ceria" />
+                </a>
             </div>
         }
         <div class="item">

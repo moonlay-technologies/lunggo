@@ -125,6 +125,41 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.Terms = termList;
 
                     return View("Promo");
+
+                case "kamisceria":
+
+                    ViewBag.Title = "Kamis Ceria";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017KamisCeria/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017KamisCeria/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Kamis Ceria";
+                    ViewBag.PromoTitle = "Kamis Ceria";
+                    ViewBag.PromoDescription = "Saatnya kamu berlibur ke destinasi favorit di Indonesia tanpa habis budget dengan Travorama! Liburan lebih menyenangkan dengan diskon Rp 100.000 untuk penerbangan tujuan Bali, Lombok, Labuan Bajo, Batam dan Banda Aceh.";
+                    ViewBag.KodePromo = "KAMIS100";
+                    ViewBag.PeriodeBooking = "Setiap Kamis";
+                    // ViewBag.PeriodeInap = "Kapan Saja";
+                    ViewBag.PeriodeTerbang = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan tiket pesawat melalui situs atau aplikasi Travorama");
+                    howToGet.Add("Isi data pemesan dan penumpang");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-ticket pesawat dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar Rp 100.000 dan minimal transaksi Rp 2.500.000");
+                    termList.Add("Berlaku untuk penerbangan domestik tujuan Bali, Lombok, Labuan Bajo, Batam dan Banda Aceh dengan maskapai Citilink, Sriwijaya, NAM Air dan Batik Air.");
+                    termList.Add("Berlaku untuk pemesanan tiket pesawat melalui situs Travorama ");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk semua metode pembayaran");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain ");
+                    termList.Add("Periode booking: setiap Kamis");
+                    termList.Add("Periode terbang: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
                 default:
                     return RedirectToAction("Index", "Index");
             }

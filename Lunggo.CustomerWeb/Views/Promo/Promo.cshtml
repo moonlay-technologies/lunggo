@@ -46,15 +46,30 @@
                                 <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/images/calendar.png"></div>
                             </div>
                         </div>
+                        @if (ViewBag.PeriodeInap != null)
+                        {
                         <div class="col-xs-4" style="padding:10px">
-                            <div class="box-promo col-xs-12"> @* clear-margin-right"> *@
+                            <div class="box-promo col-xs-12"> @* clear-margin-right">" *@
                                 <div class="col-xs-8 info-box-promo">
                                     <div class="judul-box-promo bold-txt">Periode Inap</div>
                                     <div class="tanggal-box-promo">@ViewBag.PeriodeInap</div>
                                 </div>
                                 <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/mobile/images/inap.png"></div>
                             </div>
-                        </div>                            
+                        </div>
+                        }
+                        @if (ViewBag.PeriodeTerbang != null)
+                        {
+                        <div class="col-xs-4" style="padding:10px">
+                            <div class="box-promo col-xs-12"> @* clear-margin-right">" *@
+                                <div class="col-xs-8 info-box-promo">
+                                    <div class="judul-box-promo bold-txt">Periode Terbang</div>
+                                    <div class="tanggal-box-promo">@ViewBag.PeriodeTerbang</div>
+                                </div>
+                                <div class="gambar-box-promo col-xs-4 align-right"><img src="/Assets/images/pesawat.png"></div>
+                            </div>
+                        </div>
+                        }                            
                     </div>
                 </div>
                 @* <div class="rekomendasi-hotel-promo">
