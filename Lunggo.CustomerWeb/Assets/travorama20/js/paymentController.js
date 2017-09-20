@@ -703,11 +703,11 @@ app.controller('paymentController', [
                                 break;
                             case 'ERPPAY05':
                                 $scope.errorLog = 'Promo is over (voucher)';
-                                $scope.errorMessage = 'Mohon maaf, kuota promo ' + $scope.voucher.displayName + ' hari ini telah habis. ';
+                                $scope.errorMessage = 'Mohon maaf, kuota promo ' + $scope.voucher.displayName + ' hari ini telah habis atau pesanan tidak sesuai ketentuan promo. ';
                                 if ($scope.pay.clickpay) {
-                                    $scope.errorMessage += 'Silakan masukkan kembali token Anda untuk melanjutkan pembayaran';
+                                    $scope.errorMessage += 'Silakan masukkan kembali token Anda untuk melanjutkan pembayaran tanpa promo';
                                 } else {
-                                    $scope.errorMessage += 'Apakah Anda ingin melanjutkan pembayaran?';
+                                    $scope.errorMessage += 'Apakah Anda ingin melanjutkan pembayaran tanpa promo?';
                                 }
                                 $scope.voucher.amount = 0;
                                 $scope.voucher.confirmedCode = '';
@@ -718,7 +718,7 @@ app.controller('paymentController', [
                                 break;
                             case 'ERPPAY06':
                                 $scope.errorLog = 'Promo is over (BIN)';
-                                $scope.errorMessage = 'Mohon maaf, kuota promo ' + $scope.binDiscount.displayName + ' hari ini telah habis. Apakah Anda ingin melanjutkan pembayaran?';
+                                $scope.errorMessage = 'Mohon maaf, kuota promo ' + $scope.binDiscount.displayName + ' hari ini telah habis atau pesanan tidak sesuai ketentuan promo. Apakah Anda ingin melanjutkan pembayaran tanpa promo?';
                                 $scope.binDiscount.replaceDiscount = false;
                                 $scope.binDiscount.available = false;
                                 $scope.binDiscount.amount = 0;

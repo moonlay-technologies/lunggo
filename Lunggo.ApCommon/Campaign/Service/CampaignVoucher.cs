@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .All(t =>
+                        .Any(t =>
                                 FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                                 FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     valid = false;
@@ -164,7 +164,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .All(t =>
+                        .Any(t =>
                                 FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                                 FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     valid = false;
@@ -258,7 +258,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .All(t =>
+                        .Any(t =>
                                 FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                                 FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     valid = false;
