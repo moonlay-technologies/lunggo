@@ -46,30 +46,22 @@
             animate: accordionAnimationDuration
         });
 
-        //// Animate dom when opening / closing the accordion
+        //// scrolling when opening / closing the accordion
         $(".btn-flight").click( function(){
-
-            var headerIcon = $(this).find("div img");
-            //// if accordion is going to be expanded (headerIcon is still visible) 
-            if (headerIcon.is(":visible")){
-                //// show another section's headerIcon
-                var siblings = $(this).siblings(".btn-flight");
-                siblings.find("div img, div span").show(accordionAnimationDuration);
-
+            if ($(this).hasClass("ui-accordion-header-active ui-state-active")) {
                 $('html, body').animate({
                     //// banyaknya pixel yang di scroll (ditutupin)
-                    // scrollTop: $("#accordion").offset().top - $("header").height()
-                    scrollTop: $(this).offset().top - $("header").height() - 8  //// untuk padding dgn header
+                    scrollTop: $("#ui-id-1").offset().top - $("header").height() - 8 +
+                        //// untuk padding dgn header
+                        $(this).outerHeight(true) * Math.floor( $(this).attr("id").substr(-1) / 2 )
+                        //// sesuain posisi dari btn-flight yg aktif
                 }, 500);
             } else {
                 $('html, body').animate({
-                    scrollTop: $("#accordion").offset().top - $("header").height()
+                    scrollTop: 0
+                    // scrollTop: $("#accordion").offset().top - $("header").height()
                 }, 300);
             }
-
-            headerIcon.toggle(accordionAnimationDuration);
-            $(this).find("div span").toggle(accordionAnimationDuration);
-            $(this).find(".notification").toggle(accordionAnimationDuration);
         });
     </script>
 }
