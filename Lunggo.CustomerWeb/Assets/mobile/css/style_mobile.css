@@ -6751,3 +6751,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-size: 18px;
 
 }
+.promo-tab-content {
+  background: white;
+  padding-bottom: 15px;
+}
+.promo-tab-content h3 {
+  font-size: 14px;
+  font-weight: bold;
+}
