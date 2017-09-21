@@ -454,7 +454,7 @@
                             </div>
                             <div class="flight-summary-right">
                                 <div class="fsr-price">
-                                    <span class="original-price"> Rp {{flight.originalAdultFare | number:0}} </span>
+                                    <span class="original-price" ng-show="flight.originalAdultFare != flight.netAdultFare"> Rp {{flight.originalAdultFare | number:0}} </span>
                                     <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number:0}}<span class="sm-txt"> /pax</span></h4>
                                     <small>Sudah Termasuk Pajak &amp; Service Charge</small>
                                     <a class="btn btn-yellow sm-btn" ng-click="selectFlight(flight.IndexNo);">PESAN</a>
