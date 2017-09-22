@@ -18,65 +18,14 @@ namespace Lunggo.CustomerWeb.Controllers
     public class ActivityController : Controller
     {
         // GET: Activity
-        //[Route("id/wisata-kegiatan/cari/{type}/{activityname}")]
-        [Route("id/wisata-kegiatan/cari/{country}/{city}/{type}/{activityname}")]
-        public ActionResult Search(string country, string city, string type, string activityname)
+        [Route("id/wisata-kegiatan/cari/jenis/{activityName}")]
+        [Route("id/wisata-kegiatan/cari/{country}/{city}/jenis/{activityName}")]
+        [Route("id/wisata-kegiatan/cari/{country}/{city}")]
+        public ActionResult Search(string country, string city, string activityName)
         {
             try
             {
-                var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
-                var query = Request.QueryString;
-                if (query.HasKeys())
-                {
-                    var model = new ActivitySearchApiRequest(query[0]);
-                    return View(model);
-                }
-
-                var location = area ?? zone ?? destination;
                 
-                var client = new RestClient(source);
-                var url = @"/v1/autocomplete/hotel/" + location.Replace('-', ' ');
-                var searchRequest = new RestRequest(url, Method.GET);
-                var searchResponse = client.Execute(searchRequest);
-                var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
-
-                long locationId = 0;
-                if (zone != null)
-                {
-                    if (area != null)
-                    {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
-                        if (selected.Count > 0)
-                        {
-                            locationId = selected[0].Id;
-                        }
-                    }
-                    else
-                    {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
-                        if (selected.Count > 0)
-                        {
-                            locationId = selected[0].Id;
-                        }
-                    }
-                }
-                else
-                {
-                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
-                    if (selected.Count > 0)
-                    {
-                        locationId = selected[0].Id;
-                    }
-                }
-
-                var nextMonthDate = DateTime.Today.AddMonths(1);
-                var nextDate = nextMonthDate.AddDays(1);
-                var newquery = "info=Location." + locationId + "." + nextMonthDate.Year + "-" +
-                         nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
-                         nextDate.Day.ToString("d2") + ".1.1.1~0";
-                var newmodel = new HotelSearchApiRequest(newquery);
-                return View(newmodel);
             }
             catch (Exception ex)
             {

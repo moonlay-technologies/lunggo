@@ -18,21 +18,6 @@ namespace Lunggo.ApCommon.Activity.Service
             var actResult = new SearchActivityOutput();
             return actResult;
         }
-
-
-
-        //public static List<QueryByCityModel> SearchCityActivitesByCity (string city)
-        //{
-        //    var conn = DbService.GetInstance().GetOpenConnection();
-        //    var resultActivitiesByCity = SelectActivityByCityQuery.GetInstance().Execute(conn, new {city = city});
-        //    return resultActivitiesByCity.ToList();
-        //}
-
-        //public static List<QueryByDateModel> SearchCityActivitesByDate(string city, DateTime DateStart, DateTime DateFinish)
-        //{
-        //    var conn = DbService.GetInstance().GetOpenConnection();
-        //    var resultActivitiesByDate = SelectCityActivityByDateQuery.GetInstance().Execute(conn, new { city = city, DateStart = DateStart , DateFinish = DateFinish });
-        //    return resultActivitiesByDate.ToList();
-        //}
+        
     }
 }

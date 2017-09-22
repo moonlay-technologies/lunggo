@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Notification.Logic;
@@ -16,7 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
         // This creates a registration id
         [HttpPost]
         [Route("v1/notification/registration")]
-        [Authorize]
+        [Level1Authorize]
         public async Task<ApiResponseBase> RegisterDevice()
         {
             RegisterDeviceApiRequest request = null;
@@ -36,7 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
         // This creates or updates a registration (with provided channelURI) at the specified id
         [HttpPut]
         [Route("v1/notification/registration")]
-        [Authorize]
+        [Level1Authorize]
         public async Task<ApiResponseBase> UpdateRegistration()
         {
             UpdateRegistrationApiRequest request = null;
@@ -55,7 +56,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
         // DELETE api/register/5
         [HttpDelete]
         [Route("v1/notification/registration")]
-        [Authorize]
+        [Level1Authorize]
         public async Task<ApiResponseBase> DeleteRegistration()
         {
             DeleteRegistrationApiRequest request = null;

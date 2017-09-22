@@ -181,8 +181,11 @@
     <Compile Include="Activity\Database\Query\ThingsToDoQuery.cs" />
     <Compile Include="Activity\Model\ActivityModel.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
+    <Compile Include="Activity\Model\ActivityFilter.cs" />
+    <Compile Include="Activity\Model\ActivityFilterDisplayInfo.cs" />
     <Compile Include="Activity\Model\SearchActivityInput.cs" />
     <Compile Include="Activity\Model\SearchActivityOutput.cs" />
+    <Compile Include="Activity\Service\Issue.cs" />
     <Compile Include="Activity\Service\Search.cs" />
     <Compile Include="Activity\Service\Select.cs" />
     <Compile Include="Activity\Service\SelectActivityByType.cs" />
@@ -588,7 +591,7 @@
     <Compile Include="Identity\Auth\Client.cs" />
     <Compile Include="Identity\Auth\RefreshToken.cs" />
     <Compile Include="Identity\Auth\RefreshTokenProvider.cs" />
-    <Compile Include="Identity\Auth\UserAuthorizeAttribute.cs" />
+    <Compile Include="Identity\Auth\AuthorizeAttribute.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetClientByIdQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />

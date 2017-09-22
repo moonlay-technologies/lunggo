@@ -22,22 +22,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new ActivitySearchApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERHSEA01"
+                    ErrorCode = "ERASEA01"
                 };
             var searchServiceRequest = PreprocessServiceRequest(request);
             var searchServiceResponse = ActivityService.GetInstance().Search(searchServiceRequest);
             var apiResponse = AssembleApiResponse(searchServiceResponse);
-            if (apiResponse.ExpiryTime <= DateTime.UtcNow)
-            {
-                return new ActivitySearchApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERHSEA04"
-                };
-            }
-
-            var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            
             return apiResponse;
         }
 
@@ -45,32 +35,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             if (request == null)
                 return false;
-            if (request.SearchId != null)
-            {
-                return
-                    request.Filter != null ||
-                    request.Sorting != null ||
-                    (request.Page > 0 && request.PerPage > 0);
-            }
-            else if (request.RegsId != null)
-            {
-                return
-                   request.HotelCode > 0;
-            }
             else
             {
-                //if (request.Occupancies == null)
-                //    return false;
-
-                return
-                    //request.Occupancies.TrueForAll(data => data.AdultCount > 0) &&
-                    //request.Occupancies.TrueForAll(data=>data.RoomCount>0) &&
-                    request.NightCount > 0 &&
-                    //request.Occupancies.TrueForAll(data=>data.ChildCount == (data.ChildrenAges==null?0:data.ChildrenAges.Count)) &&
-                    request.CheckinDate >= DateTime.UtcNow.Date;
-                    //request.CheckoutDate >= request.CheckinDate;
-                    //request.RoomCount > 0;   
-
+                return true;
             }
         }
 

@@ -13,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/{searchId}/{progress}")]
         public ApiResponseBase SearchFlights(string searchId, int progress)
         {
@@ -35,6 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Level1Authorize]
         [Route("v1/flight/pricecalendar/{route}/{startDate}/{endDate}/{currency}")]
         public ApiResponseBase PriceCalendar(string route, string currency, string startDate, string endDate)
         {
@@ -67,7 +68,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/select")]
         public ApiResponseBase SelectFlight()
         {
@@ -86,7 +87,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/itin/{token}")]
         public ApiResponseBase GetItinerary(string token)
         {
@@ -103,7 +104,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/revalidate/{token}")]
         public ApiResponseBase RevalidateFlight(string token)
         {
@@ -124,7 +125,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/book")]
         public ApiResponseBase BookFlight()
         {
@@ -143,7 +144,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Level2Authorize]
         [Route("v1/flight/issue")]
         public ApiResponseBase IssueFlight()
         {
@@ -162,7 +163,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/check/{rsvNo}")]
         public ApiResponseBase CheckFlightIssuance(string rsvNo)
         {
@@ -206,7 +207,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/flight/top")]
         public ApiResponseBase TopDestinations()
         {
