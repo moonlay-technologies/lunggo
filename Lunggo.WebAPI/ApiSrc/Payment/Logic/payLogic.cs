@@ -63,7 +63,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             if (paymentDetails.Status == PaymentStatus.Failed)
             {
-                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerEligible)
+                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerAvailable)
                     return new PayApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
@@ -74,6 +74,12 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     {
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERPPAY06"
+                    };
+                if (paymentDetails.FailureReason == FailureReason.VoucherNotEligible)
+                    return new PayApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY07"
                     };
             }
 

@@ -56,7 +56,9 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    paymentDetails.FailureReason = campaign.VoucherStatus == VoucherStatus.ReservationNotEligible
+                        ? FailureReason.VoucherNotEligible
+                        : FailureReason.VoucherNoLongerAvailable;
                     return paymentDetails;
                 }
                 paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;

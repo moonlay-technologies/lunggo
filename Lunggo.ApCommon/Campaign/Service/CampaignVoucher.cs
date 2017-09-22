@@ -150,7 +150,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
                 if (!valid)
                 {
-                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     return response;
                 }
             }
@@ -196,7 +196,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
                 if (!valid)
                 {
-                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     return response;
                 }
             }
@@ -245,7 +245,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
                 if (!valid)
                 {
-                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     return response;
                 }
             }
@@ -293,7 +293,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
                 if (!valid)
                 {
-                    response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     return response;
                 }
             }

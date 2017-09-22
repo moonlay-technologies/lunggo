@@ -15,7 +15,8 @@
         VoucherAlreadyUsed = 10,
         ReservationNotFound = 11,
         ProductNotEligible = 12,
-        NoBudgetRemaining = 13
+        NoBudgetRemaining = 13,
+        ReservationNotEligible = 14
     }
 
     internal class VoucherStatusCd
@@ -44,6 +45,8 @@
                     return "VoucherNotFound";
                 case VoucherStatus.VoucherAlreadyUsed:
                     return "VoucherAlreadyUsed";
+                case VoucherStatus.ReservationNotEligible:
+                    return "ReservationNotEligible";
                 default:
                     return null;
             }
@@ -72,6 +75,8 @@
                     return VoucherStatus.VoucherNotFound;
                 case "VoucherAlreadyUsed":
                     return VoucherStatus.VoucherAlreadyUsed;
+                case "ReservationNotEligible":
+                    return VoucherStatus.ReservationNotEligible;
                 default:
                     return VoucherStatus.Undefined;
             }
