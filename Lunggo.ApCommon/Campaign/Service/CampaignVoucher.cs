@@ -285,10 +285,10 @@ namespace Lunggo.ApCommon.Campaign.Service
                     valid = false;
 
 
-                //if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
-                //{
-                //    valid = false;
-                //}
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
+                {
+                    valid = false;
+                }
 
 
                 if (!valid)
