@@ -735,14 +735,14 @@ app.controller('paymentController', [
                                 } else {
                                     $scope.errorMessage += 'Apakah Anda ingin melanjutkan pembayaran tanpa promo?';
                                 }
-                                $scope.$apply(function() {
+                                //$scope.$apply(function() {
                                     $scope.voucher.amount = 0;
                                     $scope.voucher.confirmedCode = '';
                                     $scope.pay.continueVoucher = true;
                                     $scope.pay.checked = false;
                                     $scope.pay.isPaying = false;
                                     $scope.pay.go = false;
-                                })
+                                //})
                                 break;
                             case 'ERRGEN98':
                                 $scope.errorLog = 'Invalid JSON Format';
