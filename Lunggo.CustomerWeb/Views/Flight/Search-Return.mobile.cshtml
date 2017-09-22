@@ -230,7 +230,7 @@
                     </div>
                     <div class="content-right">
                         <label>Harga per Orang :</label>
-                        <h5 class="flight-price-was" ng-show="Flight.originalAdultFare">Rp {{Flight.originalAdultFare | number}}</h5>
+                        <h5 class="flight-price-was" ng-show="Flight.originalAdultFare != Flight.netAdultFare">Rp {{Flight.originalAdultFare | number}}</h5>
                         <h4 class="flight-price">Rp {{Flight.netAdultFare | number}}<span style="font-size: 10px"> /pax</span></h4>
                     </div>
                 </div>
@@ -298,7 +298,7 @@
                     </div>
                     <div class="content-right">
                         <label>Harga per Orang :</label>
-                        <h5 class="flight-price-was" ng-show="Flight.originalAdultFare">Rp {{Flight.originalAdultFare | number}}</h5>
+                        <h5 class="flight-price-was" ng-show="Flight.originalAdultFare != Flight.netAdultFare">Rp {{Flight.originalAdultFare | number}}</h5>
                         <h4 class="flight-price">Rp {{Flight.netAdultFare | number}}</h4>
                     </div>
                 </div>

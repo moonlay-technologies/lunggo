@@ -1020,6 +1020,15 @@ function goTop() {
     });
 }
 
+function scrollPage($targetElement, animationSpeed) {
+    var speed = animationSpeed || 200;
+    //// scroll
+    $('html, body').animate({
+        //// banyaknya pixel yang di scroll (ditutupin)
+        scrollTop: $targetElement.offset().top - $("header").height() - 8
+    }, speed);
+}
+
 
 //// ===============================================
 //// currently unimplemented codes

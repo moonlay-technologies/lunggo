@@ -26,7 +26,7 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             return GetDb.GetCampaignVoucher(voucherCode);
         }
-        public VoucherResponse ValidateVoucherRequest(string rsvNo, string voucherCode)
+        public VoucherResponse ValidateVoucherRequest(string rsvNo, string voucherCode, PaymentDetails paymentDetails = null)
         {
             var response = new VoucherResponse();
             var user = HttpContext.Current.User;
@@ -62,11 +62,14 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
             if (paymentDetails == null)
             {
-                response.VoucherStatus = VoucherStatus.ReservationNotFound;
-                return response;
+                paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+                if (paymentDetails == null)
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotFound;
+                    return response;
+                }
             }
 
             var price = paymentDetails.OriginalPriceIdr * paymentDetails.LocalCurrency.Rate;
@@ -104,7 +107,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
             //////////////  HARDCODED VALIDATION /////////////////
 
-            if (voucher.CampaignId == 66) // Good Monday
+            if (voucher.CampaignId == 66 || voucher.CampaignName == "Good Monday") // Good Monday
             {
                 var valid = true;
 
@@ -116,7 +119,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .All(t =>
+                        .Any(t =>
                                 FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                                 FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     valid = false;
@@ -152,7 +155,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 }
             }
 
-            if (voucher.CampaignId == 67) // Promo Rabu
+            if (voucher.CampaignId == 67 || voucher.CampaignName == "Promo Rabu") // Promo Rabu
             {
                 var valid = true;
 
@@ -164,7 +167,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .All(t =>
+                        .Any(t =>
                                 FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                                 FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     valid = false;
@@ -180,8 +183,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                         valid = false;
                 }
 
-                if (paymentDetails.Method != PaymentMethod.BankTransfer ||
-                    paymentDetails.Method != PaymentMethod.VirtualAccount)
+                if (paymentDetails.Method != PaymentMethod.BankTransfer &&
+                    paymentDetails.Method != PaymentMethod.VirtualAccount &&
+                    paymentDetails.Method != PaymentMethod.Undefined)
                     valid = false;
 
                 if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Wednesday)
@@ -197,7 +201,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 }
             }
 
-            if (voucher.CampaignId == 68) // Kamis Ceria
+            if (voucher.CampaignId == 68 || voucher.CampaignName == "Kamis Ceria") // Kamis Ceria
             {
                 var valid = true;
 
@@ -246,7 +250,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 }
             }
 
-            if (voucher.CampaignId == 69) // Jalan-Jalan Sabtu
+            if (voucher.CampaignId == 69 || voucher.CampaignName == "Jalan-Jalan Sabtu") // Jalan-Jalan Sabtu
             {
                 var valid = true;
 
@@ -258,7 +262,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .All(t =>
+                        .Any(t =>
                                 FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                                 FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     valid = false;
@@ -275,8 +279,9 @@ namespace Lunggo.ApCommon.Campaign.Service
                 }
 
 
-                if (paymentDetails.Method != PaymentMethod.BankTransfer ||
-                    paymentDetails.Method != PaymentMethod.VirtualAccount)
+                if (paymentDetails.Method != PaymentMethod.BankTransfer &&
+                    paymentDetails.Method != PaymentMethod.VirtualAccount &&
+                    paymentDetails.Method != PaymentMethod.Undefined)
                     valid = false;
 
 
@@ -299,9 +304,9 @@ namespace Lunggo.ApCommon.Campaign.Service
             return response;
         }
 
-        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
+        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode, PaymentDetails paymentDetails = null)
         {
-            var response = ValidateVoucherRequest(rsvNo, voucherCode);
+            var response = ValidateVoucherRequest(rsvNo, voucherCode, paymentDetails);
             if (response.VoucherStatus == VoucherStatus.Success)
             {
                 var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);

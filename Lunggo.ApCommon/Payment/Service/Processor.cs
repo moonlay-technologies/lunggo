@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             if (!string.IsNullOrEmpty(discountCode))
             {
-                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
+                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode, paymentDetails);
                 if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;

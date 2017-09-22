@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Mvc;
 using Lunggo.CustomerWeb.Attributes;
 using Lunggo.Framework.Config;
@@ -24,7 +25,7 @@ namespace Lunggo.CustomerWeb
 
         public class PlatformFilter : ActionFilterAttribute
         {
-            public override void OnResultExecuting(ResultExecutingContext filterContext)
+            public override void OnActionExecuting(ActionExecutingContext filterContext)
             {
                 var clientId = filterContext.HttpContext.Request.Headers["X-Client-ID"];
                 var clientSecret = filterContext.HttpContext.Request.Headers["X-Client-Secret"];
@@ -33,9 +34,17 @@ namespace Lunggo.CustomerWeb
                 else
                 {
                     var mobileUrl = ConfigManager.GetInstance().GetConfigValue("general", "mobileUrl");
-                    filterContext.Controller.ViewBag.Platform = (filterContext.HttpContext.Request.Url.Host == mobileUrl)
-                        ? PlatformType.MobileWebsite
-                        : PlatformType.DesktopWebsite;
+                    var identity = filterContext.HttpContext.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                    if (filterContext.HttpContext.Request.Url.Host == mobileUrl)
+                    {
+                        identity.AddClaim(new Claim("Client ID", "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=" ?? ""));
+                        filterContext.Controller.ViewBag.Platform = PlatformType.MobileWebsite;
+                    }
+                    else
+                    {
+                        identity.AddClaim(new Claim("Client ID", "V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=" ?? ""));
+                        filterContext.Controller.ViewBag.Platform = PlatformType.DesktopWebsite;
+                    }
                 }
                 filterContext.Controller.ViewBag.ClientId = clientId;
                 filterContext.Controller.ViewBag.ClientSecret = clientSecret;
