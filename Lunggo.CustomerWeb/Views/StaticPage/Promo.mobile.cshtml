@@ -1,81 +1,29 @@
-﻿@{
-    @*
-    Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
-    ViewBag.Title = "Promo";
-    ViewBag.BodyClass = "page page-promo";
-    ViewBag.AngularController = "PromoController";
-    ViewBag.CurrentPage = "promo";
-    *@
-}
-@section AdditionalJS {
-    <!-- additional Angular JS-->
-}
-@section PageJS{
-    <!-- angular controller -->
-    <script src="/Assets/mobile/js/StaticController.js"></script>
-}
-
-<section class="site-content">
-    <header class="page_header">
-        <h1 class="text-center section-title stripe">Promo <span>Berlangsung</span></h1>
-    </header>
-    <div class=" container-page">
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 09, 24))
-        {
-            <div class="promo-list">
-                <p>
-                    <a href="@Url.Action("SeptemberSeru", "Promo")"><img src="/Assets/images/campaign/2017SeptemberSeru/homepagepromo_mobile.jpg" /></a>
-                </p>
-                @* <p>
-                    Liburan bersama teman atau keluarga akan lebih seru dengan bebas pilih hotel di mana saja, bebas inap kapan saja dan tanpa habis budget. Pesan sekarang dan nikmati diskon s.d. Rp1.000.000 kamar hotel domestik dan internasional di Travorama.
-                </p>
-                <p>
-                    Periode booking: <b>8 - 24 September 2017</b>
-                    <br />
-                    <a href="@Url.Action("SeptemberSeru", "Promo")" style="color:blue">Selengkapnya</a>
-                </p> *@
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Monday)
-        {
-            <div class="promo-list">
-                <p><a href="@Url.Action("GoodMonday", "Promo")">
-                    <img src="/Assets/images/campaign/2017GoodMonday/homepagepromo_mobile.jpg" alt="Promo Good Monday" />
-                </a></p>
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
-        {
-            <div class="promo-list">
-                <p><a href="@Url.Action("KamisCeria", "Promo")">
-                    <img src="/Assets/images/campaign/2017KamisCeria/homepagepromo_mobile.jpg" alt="Promo Kamis Ceria"/>
-                </a></p>
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Saturday)
-        {
-            <div class="promo-list">
-                <p><a href="@Url.Action("JalanJalanSabtu", "Promo")">
-                    <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepagepromo_mobile.jpg" alt="Promo Jalan Jalan Sabtu"/>
-                </a></p>
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
-        {
-            <div class="promo-list">
-                <p>
-                    <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-promo-mobile.jpg" /></a>
-                </p>
-                @* <p>
-                    Yeay payday time! Saatnya memanjakan diri bersama keluarga atau sahabat dengan menginap di hotel-hotel terbaik pilihan kamu.
-                    Nikmati diskon 15% maksimal Rp 150.000 untuk setiap reservasi kamar hotel di Indonesia dan luar negeri dengan menggunakan metode pembayaran transfer bank melalui ATM Bank Permata.
-                </p>
-                <p>
-                    Periode booking: <b>25 - 27 Agustus 2017</b>
-                    <br />
-                    <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")" style="color:#197bc6; font-weight: bold; text-decoration: underline;">Selengkapnya</a>
-                </p> *@
-            </div>
-        }
-    </div><!-- .section-search -->
-</section><!-- .home-page -->
+<div class="container promo-tab-content">
+    @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 09, 24))
+    {
+        <div class="promo-list">
+            <a href="@Url.Action("SeptemberSeru", "Promo")">
+                <h3>September Seru</h3>
+                <img src="/Assets/images/campaign/2017SeptemberSeru/homepagepromo_mobile.jpg" alt="September Seru" />
+            </a>
+        </div>
+    }
+    @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
+    {
+        <div class="promo-list">
+            <a href="@Url.Action("KamisCeria", "Promo")">
+                <h3>Kamis Ceria</h3>
+                <img src="/Assets/images/campaign/2017KamisCeria/homepagepromo_mobile.jpg" alt="Kamis Ceria"/>
+            </a>
+        </div>
+    }
+    @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
+    {
+        <div class="promo-list">
+            <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
+                <h3></h3>
+                <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-promo-mobile.jpg" />
+            </a>
+        </div>
+    }
+</div>
