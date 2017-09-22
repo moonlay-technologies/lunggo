@@ -703,7 +703,7 @@ app.controller('paymentController', [
                                 break;
                             case 'ERPPAY05':
                                 $scope.errorLog = 'Promo is over (voucher)';
-                                $scope.errorMessage = 'Mohon maaf, kuota promo ' + $scope.voucher.displayName + ' hari ini telah habis atau pesanan tidak sesuai ketentuan promo. ';
+                                $scope.errorMessage = 'Mohon maaf, kuota promo ' + $scope.voucher.displayName + ' hari ini telah habis. ';
                                 if ($scope.pay.clickpay) {
                                     $scope.errorMessage += 'Silakan masukkan kembali token Anda untuk melanjutkan pembayaran tanpa promo';
                                 } else {
@@ -726,6 +726,23 @@ app.controller('paymentController', [
                                 $scope.pay.isPaying = false;
                                 $scope.pay.go = false;
                                 $scope.pay.continueBIN = true;
+                                break;
+                                case 'ERPPAY07':
+                                $scope.errorLog = 'Reservation not eligible';
+                                $scope.errorMessage = 'Mohon maaf, pesanan Anda tidak sesuai ketentuan promo. ';
+                                if ($scope.pay.clickpay) {
+                                    $scope.errorMessage += 'Silakan masukkan kembali token Anda untuk melanjutkan pembayaran tanpa promo';
+                                } else {
+                                    $scope.errorMessage += 'Apakah Anda ingin melanjutkan pembayaran tanpa promo?';
+                                }
+                                $scope.$apply(function() {
+                                    $scope.voucher.amount = 0;
+                                    $scope.voucher.confirmedCode = '';
+                                    $scope.pay.continueVoucher = true;
+                                    $scope.pay.checked = false;
+                                    $scope.pay.isPaying = false;
+                                    $scope.pay.go = false;
+                                })
                                 break;
                             case 'ERRGEN98':
                                 $scope.errorLog = 'Invalid JSON Format';
