@@ -126,7 +126,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
                     return View("Promo");
 
-                case "GoodMonday":
+                case "goodmonday":
 
                     ViewBag.Title = "Good Monday";
                     ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017GoodMonday/landingpage_desktop.jpg";
@@ -195,7 +195,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
                     return View("Promo");
 
-                case "JalanJalanSabtu":
+                case "jalanjalansabtu":
 
                     ViewBag.Title = "Jalan Jalan Sabtu";
                     ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017JalanJalanSabtu/landingpage_desktop.jpg";

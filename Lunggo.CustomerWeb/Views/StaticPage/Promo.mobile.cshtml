@@ -7,16 +7,28 @@
                 <img src="/Assets/images/campaign/2017SeptemberSeru/homepagepromo_mobile.jpg" alt="September Seru" />
             </a>
         </div>
-    }
+    }@*
     @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Thursday)
-    {
+    { *@
+        <div class="promo-list">
+            <a href="@Url.Action("GoodMonday", "Promo")">
+                <h3>Good Monday</h3>
+                <img src="/Assets/images/campaign/2017GoodMonday/homepagepromo_mobile.jpg" alt="Good Monday"/>
+            </a>
+        </div>
         <div class="promo-list">
             <a href="@Url.Action("KamisCeria", "Promo")">
                 <h3>Kamis Ceria</h3>
                 <img src="/Assets/images/campaign/2017KamisCeria/homepagepromo_mobile.jpg" alt="Kamis Ceria"/>
             </a>
         </div>
-    }
+        <div class="promo-list">
+            <a href="@Url.Action("JalanJalanSabtu", "Promo")">
+                <h3>Jalan Jalan Sabtu</h3>
+                <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepagepromo_mobile.jpg" alt="Jalan Jalan Sabtu"/>
+            </a>
+        </div>
+    @*}
     @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
     {
         <div class="promo-list">
@@ -25,5 +37,5 @@
                 <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-promo-mobile.jpg" />
             </a>
         </div>
-    }
+    @* } *@
 </div>
