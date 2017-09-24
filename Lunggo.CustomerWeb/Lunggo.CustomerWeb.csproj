@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>644122b3</NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -224,6 +225,7 @@
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
@@ -243,6 +245,7 @@
     <Compile Include="Models\FlightSelectData.cs" />
     <Compile Include="Models\FlightThankyouData.cs" />
     <Compile Include="Models\HotelDetailModel.cs" />
+    <Compile Include="Models\ActivitySearchModel.cs" />
     <Compile Include="Models\HotelSearchModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

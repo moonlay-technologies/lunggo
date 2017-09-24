@@ -21,6 +21,7 @@
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>cb2daaaf</NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -249,6 +250,10 @@
     <Compile Include="ApiSrc\Account\Model\TokenData.cs" />
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\ActivityController.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ActivitySearchApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ActivitySearchApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />

@@ -5,13 +5,13 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class ClientTableRecord : Lunggo.Framework.Database.TableRecord
+    public class AgeClassificationTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String Id
+		public long? Id
 		{
 		    get { return _Id; }
 		    set
@@ -20,13 +20,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Id");
 		    }
 		}
-		public String Secret
+		public String Range
 		{
-		    get { return _Secret; }
+		    get { return _Range; }
 		    set
 		    {
-		        _Secret = value;
-		        IncrementLog("Secret");
+		        _Range = value;
+		        IncrementLog("Range");
 		    }
 		}
 		public String Name
@@ -38,67 +38,27 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Name");
 		    }
 		}
-		public String ApplicationTypeCd
-		{
-		    get { return _ApplicationTypeCd; }
-		    set
-		    {
-		        _ApplicationTypeCd = value;
-		        IncrementLog("ApplicationTypeCd");
-		    }
-		}
-		public Boolean? IsActive
-		{
-		    get { return _IsActive; }
-		    set
-		    {
-		        _IsActive = value;
-		        IncrementLog("IsActive");
-		    }
-		}
-		public int? RefreshTokenLifeTime
-		{
-		    get { return _RefreshTokenLifeTime; }
-		    set
-		    {
-		        _RefreshTokenLifeTime = value;
-		        IncrementLog("RefreshTokenLifeTime");
-		    }
-		}
-		public String AllowedOrigin
-		{
-		    get { return _AllowedOrigin; }
-		    set
-		    {
-		        _AllowedOrigin = value;
-		        IncrementLog("AllowedOrigin");
-		    }
-		}
 
 		
-		private String _Id;
-		private String _Secret;
+		private long? _Id;
+		private String _Range;
 		private String _Name;
-		private String _ApplicationTypeCd;
-		private Boolean? _IsActive;
-		private int? _RefreshTokenLifeTime;
-		private String _AllowedOrigin;
 
 
-		public static ClientTableRecord CreateNewInstance()
+		public static AgeClassificationTableRecord CreateNewInstance()
         {
-            var record = new ClientTableRecord();
+            var record = new AgeClassificationTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public ClientTableRecord()
+		public AgeClassificationTableRecord()
         {
             ;
         }
 
-        static ClientTableRecord()
+        static AgeClassificationTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -107,7 +67,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Client";
+            _tableName = "AgeClassification";
         }
 
         private static void InitRecordMetadata()
@@ -115,12 +75,8 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("Id", true),
-				new ColumnMetadata("Secret", false),
+				new ColumnMetadata("Range", false),
 				new ColumnMetadata("Name", false),
-				new ColumnMetadata("ApplicationTypeCd", false),
-				new ColumnMetadata("IsActive", false),
-				new ColumnMetadata("RefreshTokenLifeTime", false),
-				new ColumnMetadata("AllowedOrigin", false),
 
             };
         }
