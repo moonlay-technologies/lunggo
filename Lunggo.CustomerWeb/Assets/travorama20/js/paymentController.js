@@ -743,6 +743,7 @@ app.controller('paymentController', [
                                     $scope.pay.isPaying = false;
                                     $scope.pay.go = false;
                                 //})
+                                $scope.voucher.reset();
                                 break;
                             case 'ERRGEN98':
                                 $scope.errorLog = 'Invalid JSON Format';
