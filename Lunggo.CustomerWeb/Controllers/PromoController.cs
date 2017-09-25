@@ -160,6 +160,40 @@ namespace Lunggo.CustomerWeb.Controllers
 
                     return View("Promo");
 
+                case "promorabu":
+
+                    ViewBag.Title = "Promo Rabu";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017PromoRabu/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017PromoRabu/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Promo Rabu";
+                    ViewBag.PromoTitle = "Promo Rabu";
+                    ViewBag.PromoDescription = "Business trip atau liburan akan lebih hemat dengan pesan tiket pesawat di Travorama dan nikmati diskon tiket pesawat Rp&nbsp;75.000 untuk semua destinasi domestik.";
+                    ViewBag.KodePromo = "RABU75";
+                    ViewBag.PeriodeBooking = "Setiap Rabu";
+                    ViewBag.PeriodeTerbang = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan tiket pesawat melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan penumpang");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran Bank Transfer");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-ticket pesawat dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar Rp 75.000 dan minimum transaksi Rp&nbsp;1.500.000");
+                    termList.Add("Berlaku untuk semua penerbangan domestik dengan maskapai Sriwijaya Air dan NAM Air");
+                    termList.Add("Berlaku untuk pemesanan tiket pesawat melalui situs Travorama");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk metode pembayaran Bank Transfer");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: setiap Rabu");
+                    termList.Add("Periode terbang: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
+
                 case "kamisceria":
 
                     ViewBag.Title = "Kamis Ceria";
