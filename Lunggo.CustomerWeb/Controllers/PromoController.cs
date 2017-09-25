@@ -202,7 +202,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017JalanJalanSabtu/landingpage_mobile.jpg";
                     ViewBag.ImageAlt = "Jalan Jalan Sabtu";
                     ViewBag.PromoTitle = "Jalan Jalan Sabtu";
-                    ViewBag.PromoDescription = "Spesial di akhir pekan, kamu bebas pilih destinasi! Pesan tiket pesawat di Travorama dan dapatkan diskon tiket pesawat s.d. Rp 200.000 untuk semua destinasi domestik.";
+                    ViewBag.PromoDescription = "Spesial di akhir pekan, kamu bebas pilih destinasi! Pesan tiket pesawat di Travorama<br>dan dapatkan diskon tiket pesawat s.d. Rp&nbsp;200.000 untuk semua destinasi domestik.";
                     ViewBag.KodePromo = "JJSABTU4";
                     ViewBag.PeriodeBooking = "Setiap Sabtu";
                     ViewBag.PeriodeTerbang = "Kapan Saja";
