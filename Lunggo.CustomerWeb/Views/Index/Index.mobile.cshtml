@@ -68,23 +68,11 @@
 
 <div class="page-loading form-container" ng-class="{'page-loaded' : PageConfig.Loaded}" >
     <div class="carousel-inner" role="listbox">
-        @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
+        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 30))
         {
             <div class="item">
-                <a href="/id/Promo/PaydayMadnessPermataBank"><img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider-mobile.jpg" alt="JOINT Payday Madness Permata Bank" /></a>
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 23) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
-        {
-            <div class="item">
-                <a href="/id/Promo/PaydayMegaDeals"><img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider-mobile.jpg" alt="Payday Mega Deals" /></a>
-            </div>
-        }
-        @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 24))
-        {
-            <div class="item">
-                <a href="/id/Promo/SeptemberSeru">
-                    <img src="/Assets/images/campaign/2017SeptemberSeru/homepage_mobile.jpg" alt="Promo September Seru" />
+                <a href="/id/Promo/HoreGajian">
+                    <img src="/Assets/images/campaign/2017HoreGajian/homepage_mobile.jpg" alt="Promo Hore Gajian" />
                 </a>
             </div>
         }

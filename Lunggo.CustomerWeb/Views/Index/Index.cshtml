@@ -288,28 +288,11 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 30))
                 {
                     <div class="slider">
-                        <a href="/id/Promo/PaydayMadnessPermataBank">
-                        @* <!-- <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")"> --> *@
-                            <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider.jpg" alt="Payday Madness Permata Bank" />
-                        </a>
-                    </div>
-                }
-                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 23) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("PaydayMegaDeals", "Promo")">
-                            <img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider.jpg" alt="Payday Mega Deals" />
-                        </a>
-                    </div>
-                }
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 24))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("SeptemberSeru", "Promo")" target="_blank">
-                            <img src="/Assets/images/campaign/2017SeptemberSeru/homepage_desktop.jpg" alt="Promo September Seru" />
+                        <a href="@Url.Action("HoreGajian", "Promo")" target="_blank">
+                            <img src="/Assets/images/campaign/2017HoreGajian/homepage_desktop.jpg" alt="Promo Hore Gajian" />
                         </a>
                     </div>
                 }
