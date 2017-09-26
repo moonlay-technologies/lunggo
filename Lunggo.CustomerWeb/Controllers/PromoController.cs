@@ -100,8 +100,8 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.ImageAlt = "Hore Gajian";
                     ViewBag.PromoTitle = "Hore Gajian";
                     ViewBag.PromoDescription = "";
-                    ViewBag.KodePromo = "";
-                    ViewBag.PeriodeBooking = "8 - 24 September 2017";
+                    ViewBag.KodePromo = "HOREGAJIAN";
+                    ViewBag.PeriodeBooking = "26 - 30 September 2017";
                     ViewBag.PeriodeInap = "Kapan Saja";
 
                     howToGet.Add("Cari dan pesan kamar hotel melalui situs Travorama");
@@ -112,13 +112,13 @@ namespace Lunggo.CustomerWeb.Controllers
                     howToGet.Add("E-Voucher hotel dikirimkan ke kamu");
                     ViewBag.HowToGet = howToGet;
 
-                    termList.Add("Diskon sebesar 9% (Maks. Rp 1.000.000) dan minimal transaksi Rp 500.000");
+                    termList.Add("Diskon sebesar 9% (Maks. Rp 1.000.000) dan minimal transaksi Rp&nbsp;500.000");
                     termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
-                    termList.Add("Berlaku untuk pemesanan kamar hotel melalui situs Travorama ");
+                    termList.Add("Berlaku untuk pemesanan kamar hotel melalui situs Travorama");
                     termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
                     termList.Add("Berlaku untuk semua metode pembayaran");
-                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain ");
-                    termList.Add("Periode booking: 8 - 24 September 2017");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: 26 - 30 September 2017");
                     termList.Add("Periode inap: kapan saja");
                     termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
                     termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
