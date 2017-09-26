@@ -466,7 +466,8 @@ app.controller('checkoutController', [
                 passenger.nationality = 'Indonesia';
             }
             passenger.passport = {
-                expire: {}
+                expire: {},
+                created: {}
             }
         }
         // validate passenger birthday
