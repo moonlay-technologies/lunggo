@@ -1,10 +1,10 @@
 <div class="container promo-tab-content">
-    @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 09, 24))
+    @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 09, 30))
     {
         <div class="promo-list">
-            <a href="@Url.Action("SeptemberSeru", "Promo")">
-                <h3>September Seru</h3>
-                <img src="/Assets/images/campaign/2017SeptemberSeru/homepagepromo_mobile.jpg" alt="September Seru" />
+            <a href="@Url.Action("HoreGajian", "Promo")">
+                <h3>Hore Gajian</h3>
+                <img src="/Assets/images/campaign/2017HoreGajian/homepagepromo_mobile.jpg" alt="Hore Gajian" />
             </a>
         </div>
     }@*
@@ -28,14 +28,4 @@
                 <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepagepromo_mobile.jpg" alt="Jalan Jalan Sabtu"/>
             </a>
         </div>
-    @*}
-    @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 25) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
-    {
-        <div class="promo-list">
-            <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
-                <h3></h3>
-                <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-promo-mobile.jpg" />
-            </a>
-        </div>
-    @* } *@
 </div>
