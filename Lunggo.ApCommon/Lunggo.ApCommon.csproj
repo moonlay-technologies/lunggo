@@ -174,23 +174,17 @@
   <ItemGroup>
     <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
     <Compile Include="Activity\Constant\ActivityTypeEnum.cs" />
-    <Compile Include="Activity\Database\Query\GetCityActivitesQuery.cs" />
-    <Compile Include="Activity\Database\Query\CreateCityActivityQuery.cs" />
-    <Compile Include="Activity\Database\Query\SelectActivityByDateQuery.cs" />
-    <Compile Include="Activity\Database\Query\SelectActivityByCityQuery.cs" />
-    <Compile Include="Activity\Database\Query\ThingsToDoQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetSearchResultBySearchNameQuery.cs" />
     <Compile Include="Activity\Model\ActivityModel.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
     <Compile Include="Activity\Model\ActivityFilter.cs" />
     <Compile Include="Activity\Model\ActivityFilterDisplayInfo.cs" />
     <Compile Include="Activity\Model\SearchActivityInput.cs" />
     <Compile Include="Activity\Model\SearchActivityOutput.cs" />
+    <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\Issue.cs" />
     <Compile Include="Activity\Service\Search.cs" />
-    <Compile Include="Activity\Service\Select.cs" />
-    <Compile Include="Activity\Service\SelectActivityByType.cs" />
     <Compile Include="Activity\Service\Settings.cs" />
-    <Compile Include="Activity\Service\ThingsToDo.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
     <Compile Include="Campaign\Constant\CampaignStatus.cs" />
     <Compile Include="Campaign\Constant\CampaignType.cs" />

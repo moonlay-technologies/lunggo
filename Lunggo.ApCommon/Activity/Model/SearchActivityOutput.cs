@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Hotel.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Activity.Model
 {
     public class SearchActivityOutput
     {
-        //[JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
-        //public string SearchId { get; set; }
+        [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
+        public string SearchId { get; set; }
+        public List<ActivityDetail> ActivityList { get; set; }
         //[JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         //public List<HotelDetailForDisplay> HotelDetailLists { get; set; }
         //public HotelRoomForDisplay HotelRoom { get; set; }

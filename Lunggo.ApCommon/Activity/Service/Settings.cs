@@ -27,5 +27,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 _isInitialized = true;
             }
         }
+
+        //public static object GetInstance()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

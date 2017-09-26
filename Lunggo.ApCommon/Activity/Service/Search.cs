@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
-using Lunggo.ApCommon.Activity.Database.Query;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Config;
@@ -15,8 +14,7 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public SearchActivityOutput Search(SearchActivityInput input)
         {
-            var actResult = new SearchActivityOutput();
-            return actResult;
+            return GetActivityFromDbByName(input);
         }
         
     }

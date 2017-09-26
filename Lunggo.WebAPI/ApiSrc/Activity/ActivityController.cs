@@ -1,11 +1,11 @@
-﻿using System;
-using System.Web.Http;
-using Lunggo.ApCommon.Identity.Auth;
+﻿using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
-using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
+using System;
+using System.Web.Http;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity
 {
@@ -33,6 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
         //[HttpPost]
         //[LunggoCorsPolicy]
         //[Level1Authorize]
@@ -122,7 +123,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         //        return ApiResponseBase.ExceptionHandling(e, request);
         //    }
         //}
-
 
         //[HttpGet]
         //[LunggoCorsPolicy]
@@ -259,6 +259,4 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         //    }
         //}
     }
-    
-
 }

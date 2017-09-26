@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{69CEAB4B-DEF1-41E6-A599-D9794769FC31}"
 	ProjectSection(SolutionItems) = preProject
@@ -72,6 +72,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.PriceUpdater", "Lunggo.WebJob.PriceUpdater\Lunggo.WebJob.PriceUpdater.csproj", "{1B2FF2EC-6D5B-4797-A2C0-EAE62DC77525}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.WebJob.BookingAutomation", "Lunggo.Webjob.BookingAutomation\Lunggo.WebJob.BookingAutomation.csproj", "{867F3E3F-FDED-45C4-B386-238CBC27A752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.ApCommonTests", "Lunggo.ApCommonTests\Lunggo.ApCommonTests.csproj", "{1DCFD611-1289-47B8-9864-E6A20FF675C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -654,8 +656,43 @@ Global
 		{867F3E3F-FDED-45C4-B386-238CBC27A752}.Release-x64|ARM.ActiveCfg = Release|Any CPU
 		{867F3E3F-FDED-45C4-B386-238CBC27A752}.Release-x64|x64.ActiveCfg = Release|Any CPU
 		{867F3E3F-FDED-45C4-B386-238CBC27A752}.Release-x64|x86.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|x64.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug|x86.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|Any CPU.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|ARM.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|ARM.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|x64.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|x64.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|x86.ActiveCfg = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Debug-x64|x86.Build.0 = Debug|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|ARM.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|x64.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|x64.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|x86.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release|x86.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|Any CPU.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|Any CPU.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|ARM.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|ARM.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|x64.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|x64.Build.0 = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|x86.ActiveCfg = Release|Any CPU
+		{1DCFD611-1289-47B8-9864-E6A20FF675C9}.Release-x64|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBFA70DD-C405-43E4-9215-75494F4A309E}
 	EndGlobalSection
 EndGlobal
