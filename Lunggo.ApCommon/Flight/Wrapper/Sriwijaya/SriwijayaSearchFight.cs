@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                            (searchResponse0.StatusCode == HttpStatusCode.OK ||
                             searchResponse0.StatusCode == HttpStatusCode.Redirect))
                 {
-                    log.Post("[Sriwijaya Air Search] Error while requesting at /SJ. Unexpected RensponseUri absolute path", "#logging-dev");
+                    //log.Post("[Sriwijaya Air Search] Error while requesting at /SJ. Unexpected RensponseUri absolute path", "#logging-dev");
                 }
                 var htmlPageHome = (CQ) searchResponse0.Content;
                 var gibberishValue = htmlPageHome["#searchFlightForm_ #cityDetail"].Val();
@@ -105,7 +105,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                            (getDataSearchResponse.StatusCode == HttpStatusCode.OK ||
                             getDataSearchResponse.StatusCode == HttpStatusCode.Redirect))
                 {
-                    log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights/getData. Unexpected RensponseUri absolute path", "#logging-dev");
+                    //log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights/getData. Unexpected RensponseUri absolute path", "#logging-dev");
                 }
                 var encodedGetDataResponse = HttpUtility.UrlEncode(getDataSearchResponse.Content);
 
@@ -119,7 +119,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                            (flightResponse.StatusCode == HttpStatusCode.OK ||
                             flightResponse.StatusCode == HttpStatusCode.Redirect))
                 {
-                    log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights. Unexpected RensponseUri absolute path", "#logging-dev");
+                    //log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights. Unexpected RensponseUri absolute path", "#logging-dev");
                 }
                 var flightContent = (CQ) flightResponse.Content;
 
@@ -247,7 +247,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                            (getSummaryResponse.StatusCode == HttpStatusCode.OK ||
                             getSummaryResponse.StatusCode == HttpStatusCode.Redirect))
                         {
-                            log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights/detail_price_view. Unexpected RensponseUri absolute path", "#logging-dev");
+                            //log.Post("[Sriwijaya Air Search] Error while requesting at /SJ/Flights/detail_price_view. Unexpected RensponseUri absolute path", "#logging-dev");
                         }
                         var summaryPrice = (CQ) getSummaryResponse.Content;
 
@@ -371,7 +371,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 }
                 catch(Exception e)
                 {
-                    log.Post("[Sriwijaya Air Search] Error while processing data flight. Unexpected RensponseUri absolute path", "#logging-dev");
+                    //log.Post("[Sriwijaya Air Search] Error while processing data flight. Unexpected RensponseUri absolute path", "#logging-dev");
                     return new SearchFlightResult
                     {
                         IsSuccess = false,

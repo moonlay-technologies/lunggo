@@ -174,7 +174,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             (searchResponse.StatusCode == HttpStatusCode.OK ||
                              searchResponse.StatusCode == HttpStatusCode.Redirect))
                         {
-                            log.Post("[Airasia Search] Error while requesting at Flight/Select. Unexpected RensponseUri absolute path", "#logging-dev");
+                            //log.Post("[Airasia Search] Error while requesting at Flight/Select. Unexpected RensponseUri absolute path", "#logging-dev");
                         }
                         searchedHtml = html;
                         stillWaiting = html.Length < 1000 || html.Contains("welcome") || html.Contains("<h1>403</h1>") || html.Contains("Kesalahan");
@@ -229,7 +229,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 (response2.StatusCode == HttpStatusCode.OK ||
                                  response2.StatusCode == HttpStatusCode.Redirect))
                             {
-                                log.Post("[Airasia Search] Error while requesting atFlight/PriceItinerary. Unexpected RensponseUri absolute path", "#logging-dev");
+                                //log.Post("[Airasia Search] Error while requesting atFlight/PriceItinerary. Unexpected RensponseUri absolute path", "#logging-dev");
                             }
                             var price =
                                 decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
@@ -505,7 +505,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     }
                     catch (Exception e)
                     {
-                        log.Post("[Airasia Search] Error while processing data flight. Error  Message:  "+ e.Message, "#logging-dev");
+                        //log.Post("[Airasia Search] Error while processing data flight. Error  Message:  "+ e.Message, "#logging-dev");
                         return new SearchFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.TechnicalError },
@@ -515,7 +515,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch (Exception e)
                 {
-                    log.Post("[Airasia Search] Error while processing data flight. Error  Message:  " + e.Message, "#logging-dev");
+                    //log.Post("[Airasia Search] Error while processing data flight. Error  Message:  " + e.Message, "#logging-dev");
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },
