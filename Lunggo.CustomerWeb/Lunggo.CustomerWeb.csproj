@@ -621,6 +621,7 @@
     <Content Include="Assets\images\campaign\2017HoreGajian\homepagepromo_mobile.jpg" />
     <Content Include="Assets\images\campaign\2017HoreGajian\homepage_desktop.jpg" />
     <Content Include="Assets\images\campaign\2017HoreGajian\homepage_mobile.jpg" />
+    <Content Include="Assets\images\campaign\2017HoreGajian\landingpage_desktop.jpg" />
     <Content Include="Assets\images\campaign\2017HoreGajian\landingpage_mobile.jpg" />
     <Content Include="Assets\images\campaign\2017JalanJalanSabtu\homepage app sabtu.jpg" />
     <Content Include="Assets\images\campaign\2017JalanJalanSabtu\homepagepromo_mobile.jpg" />
@@ -1634,6 +1635,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %287%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy %288%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw-staging - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging %286%29.pubxml" />
