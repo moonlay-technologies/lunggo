@@ -14,7 +14,9 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public SearchActivityOutput Search(SearchActivityInput input)
         {
+            
             return GetActivityFromDbByName(input);
+            
         }
         
     }

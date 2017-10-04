@@ -16,97 +16,40 @@ namespace Lunggo.ApCommon.Activity.Model
     {
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
-        //[JsonProperty("hotelName", NullValueHandling = NullValueHandling.Ignore)]
-        //public string HotelName { get; set; }
-        //[JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        //public string Description { get; set; }
-        //[JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
-        //public string CountryName { get; set; }
-        //[JsonProperty("destinationName", NullValueHandling = NullValueHandling.Ignore)]
-        //public string DestinationName { get; set; }
-        //[JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
-        //public string AreaName { get; set; }
-        //[JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]
-        //public string ZoneName { get; set; }
-        //[JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal? Latitude { get; set; }
-        //[JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal? Longitude { get; set; }
-        //[JsonProperty("starRating", NullValueHandling = NullValueHandling.Ignore)]
-        //public int StarRating { get; set; }
-        //[JsonProperty("chain", NullValueHandling = NullValueHandling.Ignore)]
-        //public string ChainName { get; set; }
-        //[JsonProperty("accommodation", NullValueHandling = NullValueHandling.Ignore)]
-        //public string AccomodationName { get; set; }
-        //[JsonProperty("segments", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<string> Segments { get; set; }
-        //[JsonProperty("facilities", NullValueHandling = NullValueHandling.Ignore)]
-        //public HotelFacilityForDisplay Facilities { get; set; } 
-        //[JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
-        //public string Address { get; set; }
-        //[JsonProperty("postalCd", NullValueHandling = NullValueHandling.Ignore)]
-        //public string PostalCode { get; set; }
-        //[JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
-        //public string City { get; set; }
-        //[JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
-        //public string Email { get; set; }
-        //[JsonProperty("phoneNumber", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<string> PhonesNumbers { get; set; }
-        //[JsonProperty("room", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<HotelRoomForDisplay> Rooms { get; set; }
-        //[JsonProperty("terminal", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<Terminal> Terminals { get; set; }
-        //[JsonProperty("poi", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<POI> Pois { get; set; }
-        //[JsonProperty("mainImage", NullValueHandling = NullValueHandling.Ignore)]
-        //public string MainImage { get; set; }
-        //[JsonProperty("mapImage", NullValueHandling = NullValueHandling.Ignore)]
-        //public string MapImage { get; set; }
-        //[JsonProperty("images", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<string> ImageUrl { get; set; }
-        //[JsonProperty("originalTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal OriginalTotalFare { get; set; }
-        //[JsonProperty("originalCheapestFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal OriginalCheapestFare { get; set; }
-        //[JsonProperty("originalCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal OriginalCheapestTotalFare { get; set; }
-        //[JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal NetTotalFare { get; set; }
-        //[JsonProperty("netCheapestFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal NetCheapestFare { get; set; }
-        //[JsonProperty("netCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal NetCheapestTotalFare { get; set; }
-        //[JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal Discount { get; set; }
-        //[JsonProperty("isWifiAccessAvailable", NullValueHandling = NullValueHandling.Ignore)]
-        //public bool IsWifiAccessAvailable { get; set; }
-        //[JsonProperty("restaurant", NullValueHandling = NullValueHandling.Ignore)]
-        //public bool IsRestaurantAvailable { get; set; }
-        //[JsonProperty("supplierName", NullValueHandling = NullValueHandling.Ignore)]
-        //public string SupplierName { get; set; }
-        //[JsonProperty("supplierVat", NullValueHandling = NullValueHandling.Ignore)]
-        //public string SupplierVat { get; set; }
-        //[JsonProperty("bookingReference", NullValueHandling = NullValueHandling.Ignore)]
-        //public string BookingReference { get; set; }
-        //[JsonProperty("clientReference", NullValueHandling = NullValueHandling.Ignore)]
-        //public string ClientReference { get; set; }
-        //[JsonProperty("specialRequest", NullValueHandling = NullValueHandling.Ignore)]
-        //public string SpecialRequest { get; set; }
-        //[JsonProperty("checkIn", NullValueHandling = NullValueHandling.Ignore)]
-        //public DateTime CheckInDate { get; set; }
-        //[JsonProperty("checkOut", NullValueHandling = NullValueHandling.Ignore)]
-        //public DateTime CheckOutDate { get; set; }
-        //[JsonProperty("night", NullValueHandling = NullValueHandling.Ignore)]
-        //public int NightCount { get; set; }
-        //[JsonProperty("policy", NullValueHandling = NullValueHandling.Ignore)]
-        //public List<string> Policy { get; set; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
+        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
+        public string City { get; set; }
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
+        public string Country { get; set; }
+        [JsonProperty("operationTime", NullValueHandling = NullValueHandling.Ignore)]
+        public string OperationTime { get; set; }
+        [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Price { get; set; }
+        
     }
-
+    public class ActivityDetail
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string OperationTime { get; set; }
+        public decimal Price { get; set; }
+    }
     public class ActivityDetailsBase
     {
 
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
+        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
+        public string City { get; set; }
+        [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
+        public string Country { get; set; }
+        [JsonProperty("operationTime", NullValueHandling = NullValueHandling.Ignore)]
+        public string OperationTime { get; set; }
         //[JsonProperty("hotelName", NullValueHandling = NullValueHandling.Ignore)]
         //public string HotelName { get; set; }
         //[JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
@@ -223,29 +166,6 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Type;
         [JsonProperty("path", NullValueHandling = NullValueHandling.Ignore)]
         public string Path;
-    }
-
-
-    public class ActivityDetail : ActivityDetailsBase
-    {
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name { get; set; }
-        //[JsonProperty("originalCheapestFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal OriginalCheapestFare { get; set; }
-        //[JsonProperty("netTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal NetTotalFare { get; set; }
-        //[JsonProperty("netCheapestFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal NetCheapestFare { get; set; }
-        //[JsonProperty("discount", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal Discount { get; set; }
-        //[JsonProperty("totalAdult", NullValueHandling = NullValueHandling.Ignore)]
-        //public int TotalAdult { get; set; }
-        //[JsonProperty("totalChildren", NullValueHandling = NullValueHandling.Ignore)]
-        //public int TotalChildren { get; set; }
-        //[JsonProperty("netCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal NetCheapestTotalFare { get; set; }
-        //[JsonProperty("originalCheapestTotalFare", NullValueHandling = NullValueHandling.Ignore)]
-        //public decimal OriginalCheapestTotalFare { get; set; }
     }
 
     public class Segment2

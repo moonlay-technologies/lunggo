@@ -7,10 +7,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
     public class ActivitySearchApiResponse : ApiResponseBase
     {
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-        public string Name { get; set; }
-        [JsonProperty("ActivityList", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ActivityDetail> ActivityList { get; set; }
+        [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
+        public string SearchId { get; set; }
+        [JsonProperty("activityList", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ActivityDetailForDisplay> ActivityList { get; set; }
         //[JsonProperty("totalCount", NullValueHandling = NullValueHandling.Ignore)]
         //public int? TotalCount { get; set; }
         //[JsonProperty("activities", NullValueHandling = NullValueHandling.Ignore)]
