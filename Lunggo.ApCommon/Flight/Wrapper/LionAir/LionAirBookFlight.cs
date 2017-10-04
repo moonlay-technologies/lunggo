@@ -227,7 +227,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     depdate.Year;
                 Thread.Sleep(3000);
                 searchRequest4.AddParameter("application/x-www-form-urlencoded", postData4, ParameterType.RequestBody);
-                client.FollowRedirects = false;
                 var searchResponse4 = client.Execute(searchRequest4);
                 if ((searchResponse4.ResponseUri != null && searchResponse4.ResponseUri.AbsolutePath != "/LionAirAgentsIBE/Step1.aspx") ||
                     (searchResponse4.StatusCode != HttpStatusCode.OK &&
@@ -607,7 +606,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                         var pageBooking = (CQ)html8;
                         var vs9 = HttpUtility.UrlEncode(pageBooking["#__VIEWSTATE"].Attr("value"));
-                        var beginning = "__EVENTTARGET=lbContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vs9;// + "&__VIEWSTATEGENERATOR=B80F8107";
+                        var beginning = "__EVENTTARGET=btnContinue&__EVENTARGUMENT=&__VIEWSTATE=" + vs9;// + "&__VIEWSTATEGENERATOR=B80F8107";
                         const string ending =
                             "&txtRemark=&payDet=rbPay_HOLD&CreditCardDisplay1%24CreditCardType=VI&CreditCardDisplay1%24txtCardHolderName=&CreditCardDisplay1%24CreditCardNumber=&CreditCardDisplay1%24CreditCardExpiryMonth=MM&CreditCardDisplay1%24CreditCardExpiryYear=YY&CreditCardDisplay1%24CVVNumber=&AcceptFareConditions=on&FlightInfo=&AXTotal=&DCTotal=&OtherTotal=&nameMismatch=";
 
@@ -1023,10 +1022,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             "&txtEmailAddress2=" + HttpUtility.UrlEncode("dwi.agustina@travelmadezy.com");
 
                         Thread.Sleep(1000);
-                        var postDataBooking = beginning + dataPassenger + middle + middle1 + cntct + ending;
-                        client.FollowRedirects = false;
+                        //var postDataBooking = beginning + dataPassenger + middle + middle1 + cntct + ending;
+                        var postDataBooking = beginning + dataPassenger + cntct;
 
-                        const string urlBooking = @"LionAirAgentsIBE/Step3.aspx";
+                        const string urlBooking = @"LionAirAgentsIBE/CustomerContact.aspx";
                         var searchRequestBooking = new RestRequest(urlBooking, Method.POST);
                         searchRequestBooking.AddHeader("Accept-Encoding", "gzip, deflate");
                         searchRequestBooking.AddHeader("Accept",
@@ -1040,6 +1039,50 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         Thread.Sleep(3000);
                         var searchResponseBooking = client.Execute(searchRequestBooking);
                         string newPrice;
+
+                        var responseBookingHtml = (CQ) searchResponseBooking.Content;
+                        var vs10 = HttpUtility.UrlEncode(responseBookingHtml["#__VIEWSTATE"].Attr("value"));
+                        var postDataAddOns =
+                            "__EVENTTARGET=btnContinue&" +
+                            "__EVENTARGUMENT=" +
+                            "__VIEWSTATE=" + vs10 +
+                            middle + middle1;
+
+                        const string urlAddOns = @"LionAirAgentsIBE/AddOns.aspx";
+                        var searchRequestAddOns = new RestRequest(urlAddOns, Method.POST);
+                        searchRequestAddOns.AddHeader("Accept-Encoding", "gzip, deflate");
+                        searchRequestAddOns.AddHeader("Accept",
+                            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                        searchRequestAddOns.AddHeader("Referer",
+                            "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
+                        searchRequestAddOns.AddHeader("Origin", "https://agent.lionair.co.id");
+                        searchRequestAddOns.AddHeader("Cache-Control", "max-age=0");
+                        searchRequestAddOns.AddParameter("application/x-www-form-urlencoded", postDataAddOns,
+                            ParameterType.RequestBody);
+                        Thread.Sleep(3000);
+                        var searchResponseAddOns = client.Execute(searchRequestAddOns);
+
+                        var responseAddOnsHtml = (CQ)searchResponseAddOns.Content;
+                        var vs11 = HttpUtility.UrlEncode(responseAddOnsHtml["#__VIEWSTATE"].Attr("value"));
+                        var postDataPayment =
+                            "__EVENTTARGET=lbContinue&" +
+                            "__EVENTARGUMENT=" +
+                            "__VIEWSTATE=" + vs11 +
+                            ending;
+
+                        const string urlPayment = @"LionAirAgentsIBE/Payment.aspx";
+                        var searchRequestPayment = new RestRequest(urlPayment, Method.POST);
+                        searchRequestPayment.AddHeader("Accept-Encoding", "gzip, deflate");
+                        searchRequestPayment.AddHeader("Accept",
+                            "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+                        searchRequestPayment.AddHeader("Referer",
+                            "https://agent.lionair.co.id/LionAirAgentsIBE/OnlineBooking.aspx");
+                        searchRequestPayment.AddHeader("Origin", "https://agent.lionair.co.id");
+                        searchRequestPayment.AddHeader("Cache-Control", "max-age=0");
+                        searchRequestPayment.AddParameter("application/x-www-form-urlencoded", postDataPayment,
+                            ParameterType.RequestBody);
+                        Thread.Sleep(3000);
+                        var searchResponsePayment = client.Execute(searchRequestPayment);
 
                         //HARGA BARU DI UJUNG
                         try
