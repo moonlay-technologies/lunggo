@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("name")]
         public string Name { get; set; }
         [JsonProperty("date")]
-        public DateFilter Date { get; set; }
+        public DateTime CloseDate { get; set; }
         [JsonProperty("price")]
         public PriceFilter Price { get; set; }
     }

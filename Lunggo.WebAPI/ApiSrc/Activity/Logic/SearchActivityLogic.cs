@@ -42,6 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var searchServiceRequest = new SearchActivityInput
             {
+                SearchActivityType = request.SearchType,
                 SearchId = request.SearchId,
                 ActivityFilter = request.Filter,
                 Page = request.Page,
@@ -77,8 +78,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Country = actList.Country,
                     Description = actList.Description,
                     OperationTime = actList.OperationTime,
-                    Price = actList.Price
-                }).ToList()
+                    Price = actList.Price,
+                    CloseDate = actList.CloseDate
+                }).ToList(),
+                Page = searchServiceResponse.Page,
+                PerPage = searchServiceResponse.PerPage,
+                SearchId = searchServiceResponse.SearchId
             };
             return apiResponse;
             

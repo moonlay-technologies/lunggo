@@ -10,8 +10,10 @@ namespace Lunggo.ApCommon.Activity.Model
 {
     public class SearchActivityOutput
     {
-        public int SearchId { get; set; }
+        public string SearchId { get; set; }
         public List<ActivityDetail> ActivityList { get; set; }
+        public int Page { get; set; }
+        public int PerPage { get; set; }
         //[JsonProperty("hotels", NullValueHandling = NullValueHandling.Ignore)]
         //public List<HotelDetailForDisplay> HotelDetailLists { get; set; }
         //public HotelRoomForDisplay HotelRoom { get; set; }

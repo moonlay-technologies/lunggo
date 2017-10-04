@@ -11,7 +11,7 @@ using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Activity.Query
 {
-    internal class GetSearchResultByNameQuery : DbQueryBase<GetSearchResultByNameQuery, ActivityDetail>
+    internal class GetSearchResultByDateQuery : DbQueryBase<GetSearchResultByDateQuery, ActivityDetail>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Activity.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE Name LIKE '%' + @Name + '%'" );
+            clauseBuilder.Append("WHERE Date = @CloseDate ");
             return clauseBuilder.ToString();
         }
 

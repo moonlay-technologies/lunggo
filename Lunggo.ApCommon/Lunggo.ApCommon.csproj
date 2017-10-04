@@ -175,6 +175,7 @@
     <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
     <Compile Include="Activity\Constant\ActivityTypeEnum.cs" />
     <Compile Include="Activity\Constant\SearchActivityType.cs" />
+    <Compile Include="Activity\Database\Query\GetSearchResultByDateQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultByNameQuery.cs" />
     <Compile Include="Activity\Model\ActivityModel.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />

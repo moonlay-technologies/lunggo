@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Activity.Constant
         Undefined = 0,
         SearchID = 1,
         ActivityName = 2,
-        Location = 3,
+        ActivityDate = 3,
     }
 
     internal class SearchActivityTypeCd
@@ -24,8 +24,8 @@ namespace Lunggo.ApCommon.Activity.Constant
                     return "SearchID";
                 case SearchActivityType.ActivityName:
                     return "ActivityName";
-                case SearchActivityType.Location:
-                    return "Location";
+                case SearchActivityType.ActivityDate:
+                    return "ActivityDate";
                 default:
                     return null;
             }
@@ -39,8 +39,8 @@ namespace Lunggo.ApCommon.Activity.Constant
                     return SearchActivityType.SearchID;
                 case "ActivityName":
                     return SearchActivityType.ActivityName;
-                case "Location":
-                    return SearchActivityType.Location;
+                case "ActivityDate":
+                    return SearchActivityType.ActivityDate;
                 default:
                     return SearchActivityType.Undefined;
             }

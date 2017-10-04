@@ -26,7 +26,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperationTime { get; set; }
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Price { get; set; }
-        
+        [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime CloseDate { get; set; }
+
     }
     public class ActivityDetail
     {
@@ -36,6 +38,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Country { get; set; }
         public string OperationTime { get; set; }
         public decimal Price { get; set; }
+        public DateTime CloseDate { get; set; }
     }
     public class ActivityDetailsBase
     {
