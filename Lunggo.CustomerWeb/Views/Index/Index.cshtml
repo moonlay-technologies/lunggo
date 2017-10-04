@@ -17,7 +17,7 @@
 }
 
 @section AdditionalJS{
-    
+
     <!-- jquery datepicker -->
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
@@ -36,7 +36,7 @@
         //var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
- 
+
     @*
         <!-- currently unimplemented -->
         $(document).ready(function () {
@@ -297,36 +297,51 @@
                     </div>
                 }
                 @* @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Monday){*@
-                    <div class="slider">
-                        <a href="@Url.Action("GoodMonday", "Promo")" target="_blank">
-                            <img src="/Assets/images/campaign/2017GoodMonday/homepage_desktop.jpg" alt="Promo Good Monday" />
-                        </a>
-                    </div>
-                    <div class="slider">
-                        <a href="@Url.Action("PromoRabu", "Promo")" target="_blank">
-                            <img src="/Assets/images/campaign/2017PromoRabu/homepage_desktop.jpg" alt="Promo Rabu" />
-                        </a>
-                    </div>
-                    <div class="slider">
-                        <a href="@Url.Action("KamisCeria", "Promo")" target="_blank">
-                            <img src="/Assets/images/campaign/2017KamisCeria/homepage_desktop.jpg" alt="Promo Kamis Ceria" />
-                        </a>
-                    </div>
-                    <div class="slider">
-                        <a href="@Url.Action("JalanJalanSabtu", "Promo")" target="_blank">
-                            <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepage_desktop.jpg" alt="Promo Jalan Jalan Sabtu" />
-                        </a>
-                    </div>
-                @*<div class="slider">
-                    <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
-                        <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
+                <div class="slider">
+                    <a href="@Url.Action("GoodMonday", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017GoodMonday/homepage_desktop.jpg" alt="Promo Good Monday" />
                     </a>
                 </div>
                 <div class="slider">
-                    <a href="#">
-                        <img src="/Assets/images/default-banner.jpg" alt="Travorama" />
+                    <a href="@Url.Action("SelasaSpesial", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017SelasaSpesial/homepage_desktop.jpg" alt="Promo Selasa Spesial" />
                     </a>
-                </div>*@
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("PromoRabu", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017PromoRabu/homepage_desktop.jpg" alt="Promo Rabu" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("KamisCeria", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017KamisCeria/homepage_desktop.jpg" alt="Promo Kamis Ceria" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("JumatHemat", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017JumatHemat/homepage_desktop.jpg" alt="Promo Jumat Hemat" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("JalanJalanSabtu", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepage_desktop.jpg" alt="Promo Jalan Jalan Sabtu" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("SundayFunday", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017SundayFunday/homepage_desktop.jpg" alt="Promo Sunday Funday" />
+                    </a>
+                </div>
+                @*<div class="slider">
+                        <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
+                            <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
+                        </a>
+                    </div>
+                    <div class="slider">
+                        <a href="#">
+                            <img src="/Assets/images/default-banner.jpg" alt="Travorama" />
+                        </a>
+                    </div>*@
             </div>
         </div><!-- .slider -->
     }
@@ -375,7 +390,6 @@
         </div>
     </div>
 </section><!-- .section-why -->
-
 <!-- Partners -->
 <section>
     @Html.Partial("/Views/common/partners.cshtml")
@@ -473,7 +487,7 @@
                     </a>
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 </section><!-- .section-subscribe -->
 

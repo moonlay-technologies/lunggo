@@ -115,19 +115,26 @@ namespace Lunggo.ApCommon.Campaign.Service
                 var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                 var platform = Client.GetPlatformType(clientId);
                 if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                {
+                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
                     valid = false;
+                }
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .Any(t =>
-                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    .Any(t =>
+                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
+                }
 
 
                 if (!(new[] { "JKT", "CGK", "HLP", "SRG", "JOG", "TNJ", "SUB" }
                     .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
                 {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
                 }
 
@@ -139,18 +146,38 @@ namespace Lunggo.ApCommon.Campaign.Service
                 foreach (var airline in airlines)
                 {
                     if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
+                    }
                 }
 
                 if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Monday)
                 {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
                 }
 
 
                 if (!valid)
                 {
+                    return response;
+                }
+            }
+
+            if (voucher.CampaignId == 71 || voucher.CampaignName == "Selasa Spesial") // Selasa Spesial
+            {
+                var valid = true;
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Tuesday)
+                {
                     response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                    valid = false;
+                }
+
+
+                if (!valid)
+                {
                     return response;
                 }
             }
@@ -163,14 +190,20 @@ namespace Lunggo.ApCommon.Campaign.Service
                 var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                 var platform = Client.GetPlatformType(clientId);
                 if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                {
+                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
                     valid = false;
+                }
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .Any(t =>
-                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    .Any(t =>
+                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
+                }
 
 
                 var airlines =
@@ -180,23 +213,29 @@ namespace Lunggo.ApCommon.Campaign.Service
                 foreach (var airline in airlines)
                 {
                     if (!(new[] { "SJ", "IN" }.Contains(airline)))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
+                    }
                 }
 
                 if (paymentDetails.Method != PaymentMethod.BankTransfer &&
                     paymentDetails.Method != PaymentMethod.VirtualAccount &&
                     paymentDetails.Method != PaymentMethod.Undefined)
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
+                }
 
                 if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Wednesday)
                 {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
                 }
 
 
                 if (!valid)
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     return response;
                 }
             }
@@ -209,19 +248,26 @@ namespace Lunggo.ApCommon.Campaign.Service
                 var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                 var platform = Client.GetPlatformType(clientId);
                 if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                {
+                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
                     valid = false;
+                }
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .Any(t =>
-                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    .Any(t =>
+                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
+                }
 
 
                 if (!(new[] { "DPS", "LOP", "LBJ", "BTH", "BTJ" }
                     .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
                 {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
                 }
 
@@ -233,19 +279,53 @@ namespace Lunggo.ApCommon.Campaign.Service
                 foreach (var airline in airlines)
                 {
                     if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
+                    }
                 }
 
 
                 if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Thursday)
                 {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
                 }
 
 
                 if (!valid)
                 {
+                    return response;
+                }
+            }
+
+            if (voucher.CampaignId == 72 || voucher.CampaignName == "Jumat Hemat") // Jumat Hemat
+            {
+                var valid = true;
+
+                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                var userId = identity.Name == "anonymous" ? null : identity.GetUser().Id;
+                var userEmail = identity.Name == "anonymous" ? null : identity.GetEmail();
+                var rsvs1 = FlightService.GetInstance()
+                    .GetOverviewReservationsByUserIdOrEmail(userId, contact.Email, null, null, null, null)
+                    .Where(r => r.Payment.Status == PaymentStatus.Settled);
+                var rsvs2 = FlightService.GetInstance()
+                    .GetOverviewReservationsByUserIdOrEmail(userId, userEmail, null, null, null, null)
+                    .Where(r => r.Payment.Status == PaymentStatus.Settled);
+                if (!rsvs1.Concat(rsvs2).Any())
+                {
                     response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                    valid = false;
+                }
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Friday)
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                    valid = false;
+                }
+
+                if (!valid)
+                {
                     return response;
                 }
             }
@@ -258,14 +338,20 @@ namespace Lunggo.ApCommon.Campaign.Service
                 var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                 var platform = Client.GetPlatformType(clientId);
                 if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                {
+                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
                     valid = false;
+                }
 
 
                 if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .Any(t =>
-                                FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                                FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    .Any(t =>
+                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
+                }
 
 
                 var airlines =
@@ -275,29 +361,52 @@ namespace Lunggo.ApCommon.Campaign.Service
                 foreach (var airline in airlines)
                 {
                     if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
+                    }
                 }
 
 
                 if (paymentDetails.Method != PaymentMethod.BankTransfer &&
                     paymentDetails.Method != PaymentMethod.VirtualAccount &&
                     paymentDetails.Method != PaymentMethod.Undefined)
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
+                }
 
 
                 if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
                 {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     valid = false;
                 }
 
 
                 if (!valid)
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                     return response;
                 }
             }
-            
+
+            if (voucher.CampaignId == 73 || voucher.CampaignName == "Sunday Funday") // Sunday Funday
+            {
+                var valid = true;
+
+                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Sunday)
+                {
+                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                    valid = false;
+                }
+
+
+                if (!valid)
+                {
+                    return response;
+                }
+            }
+
             //////////////  HARDCODED VALIDATION /////////////////
 
             response.VoucherStatus = validationStatus;

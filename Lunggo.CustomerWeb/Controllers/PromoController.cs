@@ -114,6 +114,40 @@ namespace Lunggo.CustomerWeb.Controllers
 
                     return View("Promo");
 
+                case "selasaspesial":
+
+                    ViewBag.Title = "Selasa Spesial";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017SelasaSpesial/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017SelasaSpesial/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Selasa Spesial";
+                    ViewBag.PromoTitle = "Selasa Spesial";
+                    ViewBag.PromoDescription = "Promo spesial setiap Selasa dari Travorama untuk kamu yang ingin liburan! Nikmati diskon Rp 240.000 untuk semua hotel di dalam dan luar negeri.";
+                    ViewBag.KodePromo = "SELASA240";
+                    ViewBag.PeriodeBooking = "Setiap Selasa";
+                    ViewBag.PeriodeInap = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan kamar hotel melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan detail tamu");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-Voucher hotel dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar Rp 240.000 dan minimal transaksi Rp 2.500.000");
+                    termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
+                    termList.Add("Berlaku untuk pemesanan kamar hotel melalui situs Travorama");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk semua metode pembayaran");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: setiap Selasa");
+                    termList.Add("Periode inap: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
+
                 case "promorabu":
 
                     ViewBag.Title = "Promo Rabu";
@@ -158,7 +192,6 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.PromoDescription = "Saatnya kamu berlibur ke destinasi favorit di Indonesia tanpa habis budget dengan Travorama! Liburan lebih menyenangkan dengan diskon Rp 100.000 untuk penerbangan tujuan Bali, Lombok, Labuan Bajo, Batam dan Banda Aceh.";
                     ViewBag.KodePromo = "KAMIS100";
                     ViewBag.PeriodeBooking = "Setiap Kamis";
-                    // ViewBag.PeriodeInap = "Kapan Saja";
                     ViewBag.PeriodeTerbang = "Kapan Saja";
 
                     howToGet.Add("Cari dan pesan tiket pesawat melalui situs Travorama");
@@ -177,6 +210,42 @@ namespace Lunggo.CustomerWeb.Controllers
                     termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
                     termList.Add("Periode booking: setiap Kamis");
                     termList.Add("Periode terbang: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
+
+                case "jumathemat":
+
+                    ViewBag.Title = "Jumat Hemat";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017JumatHemat/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017JumatHemat/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Jumat Hemat";
+                    ViewBag.PromoTitle = "Jumat Hemat";
+                    ViewBag.PromoDescription = "Spesial untuk kamu yang telah memesan tiket pesawat di Travorama, nikmati diskon Rp 100.000 untuk semua kamar hotel di domestik dan internasional.";
+                    ViewBag.KodePromo = "JUMAT100";
+                    ViewBag.PeriodeBooking = "Setiap Jumat";
+                    ViewBag.PeriodeInap = "Kapan Saja";
+
+                    howToGet.Add("Pesan tiket pesawat ke destinasi mana saja di situs Travorama");
+                    howToGet.Add("Cari dan pesan kamar hotel melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan detail tamu (masukkan akun email yang sudah kamu gunakan saat memesan tiket pesawat di situs Travorama)");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-Voucher hotel dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar Rp 100.000 dan minimal transaksi Rp 1.200.000");
+                    termList.Add("Berlaku untuk kamu yang telah memesan tiket pesawat di situs Travorama");
+                    termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
+                    termList.Add("Berlaku untuk pemesanan kamar hotel melalui situs Travorama");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk semua metode pembayaran");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: setiap Jumat");
+                    termList.Add("Periode inap: kapan saja");
                     termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
                     termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
                     ViewBag.Terms = termList;
@@ -213,6 +282,40 @@ namespace Lunggo.CustomerWeb.Controllers
                     termList.Add("Periode terbang: kapan saja");
                     termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal.");
                     termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu.");
+                    ViewBag.Terms = termList;
+
+                    return View("Promo");
+
+                case "sundayfunday":
+
+                    ViewBag.Title = "Sunday Funday";
+                    ViewBag.ImageSrcDesktop = "/Assets/images/campaign/2017SundayFunday/landingpage_desktop.jpg";
+                    ViewBag.ImageSrcMobile = "/Assets/images/campaign/2017SundayFunday/landingpage_mobile.jpg";
+                    ViewBag.ImageAlt = "Sunday Funday";
+                    ViewBag.PromoTitle = "Sunday Funday";
+                    ViewBag.PromoDescription = "Ke mana pun dan kapan pun liburannya, tidak perlu khawatir habis budget. Kamu bisa nikmati diskon s.d. Rp 500.000 dengan pesan kamar hotel hanya di Travorama.";
+                    ViewBag.KodePromo = "SUNDAY9";
+                    ViewBag.PeriodeBooking = "Setiap Minggu";
+                    ViewBag.PeriodeInap = "Kapan Saja";
+
+                    howToGet.Add("Cari dan pesan kamar hotel melalui situs Travorama");
+                    howToGet.Add("Isi data pemesan dan detail tamu");
+                    howToGet.Add("Pada halaman metode pembayaran, pilih metode pembayaran yang akan digunakan");
+                    howToGet.Add("Masukkan kode promo dan klik gunakan, harga akan otomatis terpotong sesuai promo");
+                    howToGet.Add("Selesaikan transaksi pembayaran");
+                    howToGet.Add("E-Voucher hotel dikirimkan ke kamu");
+                    ViewBag.HowToGet = howToGet;
+
+                    termList.Add("Diskon sebesar 9% (Maks. Rp 500.000) dan minimal transaksi Rp 500.000");
+                    termList.Add("Berlaku untuk semua hotel di dalam dan luar negeri");
+                    termList.Add("Berlaku untuk pemesanan kamar hotel melalui situs Travorama");
+                    termList.Add("Kode promo dapat digunakan berkali-kali selama periode promo berlangsung");
+                    termList.Add("Berlaku untuk semua metode pembayaran");
+                    termList.Add("Promo ini tidak dapat digabungkan dengan promo lain");
+                    termList.Add("Periode booking: setiap Minggu");
+                    termList.Add("Periode inap: kapan saja");
+                    termList.Add("Perhitungan refund dilakukan berdasarkan nominal yang dibayar setelah dipotong diskon, bukan harga awal");
+                    termList.Add("Travorama berhak penuh untuk mengubah syarat dan ketentuan tanpa pemberitahuan terlebih dahulu");
                     ViewBag.Terms = termList;
 
                     return View("Promo");
