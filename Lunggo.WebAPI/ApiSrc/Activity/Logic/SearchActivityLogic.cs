@@ -24,7 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             return apiResponse;
         }
 
-        private static bool IsValid(ActivitySearchApiRequest request)
+        public static bool IsValid(ActivitySearchApiRequest request)
         {
             if (request == null)
                 return false;
@@ -38,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             }
         }
 
-        private static SearchActivityInput PreprocessServiceRequest(ActivitySearchApiRequest request)
+        public static SearchActivityInput PreprocessServiceRequest(ActivitySearchApiRequest request)
         {
             var searchServiceRequest = new SearchActivityInput
             {
@@ -67,7 +67,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             return searchServiceRequest;
         }
 
-        private static ActivitySearchApiResponse AssembleApiResponse(SearchActivityOutput searchServiceResponse)
+        public static ActivitySearchApiResponse AssembleApiResponse(SearchActivityOutput searchServiceResponse)
         {
             var apiResponse = new ActivitySearchApiResponse
             {

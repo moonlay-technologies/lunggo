@@ -58,7 +58,10 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Activity\Service\ActivityServiceTests.cs" />
+    <Compile Include="Activity\ApiSrc\SearchApiTests.cs" />
+    <Compile Include="Activity\Service\SearchTests.cs" />
+    <Compile Include="Activity\Service\DatabaseTests.cs" />
+    <Compile Include="Activity\ApiSrc\ValidationTests.cs" />
     <Compile Include="Init\Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
