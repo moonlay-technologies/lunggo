@@ -1,4 +1,7 @@
-﻿app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout', function ($log, $resource, $timeout) {
+﻿app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout',
+  function ($log, $resource, $timeout) {
+// app.factory('hotelSearchSvc', ['$log', '$resource', '$timeout', 'dateTimeService',
+  // function ($log, $resource, $timeout, dateTimeService) {
     var factory = {};
 
     factory.resource = $resource(HotelSearchConfig.Url,
@@ -170,9 +173,9 @@
                 }
             }
 
-        }).error(function (returnData) {
-
-        });
+        })
+        // .fail(function (returnData) {
+        // });
     };
    
     factory.highlightDays = function (date) {
@@ -396,6 +399,7 @@
         });
 
         //autocomplete mobile
+        // scope.$watch('hotelSearch.locationDisplay', function (newValue) {
         scope.getLocation = function (newValue) {
             var authAccess = getAuthAccess();
             if (authAccess == 1 || authAccess == 2) {
@@ -434,7 +438,7 @@
             }
             
         };
-
+        
         scope.hotelSearch.autocompleteResource = $resource(HotelAutocompleteConfig.Url + '/:prefix',
             { prefix: '@prefix' },
             {

@@ -8,6 +8,22 @@
 /* mixins */
 /*--------------------*/
 /*Font Family*/
+
+@font-face {
+  font-family: 'Myriad Bold';
+  src: url("../../fonts/MyriadPro-BoldCond.otf");
+  }
+
+@font-face {
+  font-family: 'Myriad';
+  src: url("../../fonts/MyriadPro-Regular.otf");
+  }
+
+@font-face {
+  font-family: 'Raleway';
+  src: url("../../fonts/Raleway-SemiBold.ttf");
+  }
+
 @font-face {
   font-family: 'Open Sans';
   src: url("../../fonts/OpenSans-Semibold.eot");
@@ -44,6 +60,9 @@
   font-family: 'Open Sans';
   font-weight: 700; }
 
+.bold-txt-new {
+  font-family: 'Myriad Bold'; }
+
 /*--------------------*/
 @media only screen and (min-width: 400px) {
   .page.page-flight .flight-summary {
@@ -75,7 +94,7 @@ img {
 
 .page-loaded {
   display: block; }
-
+.row {margin:0}
 .no-scroll {
   overflow: hidden; }
 
@@ -95,7 +114,10 @@ img {
   background: #ffd531;
   color: #000000;
   border-radius: 2px;
-  box-shadow: none; }
+  box-shadow: none; 
+  border: 1px solid #FFC107;
+}
+
 
 .btn.btn-grey, .btn.btn-gray {
   background: #adadad;
@@ -436,7 +458,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   background: #efefef;
   color: #000000;
   width: 100%;
-  padding: 15px 0;
+  /*padding: 15px 0;*/
   /*z-index: -1;*/
   position: relative; }
   .site-footer .site-footer-menu nav {
@@ -585,7 +607,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       cursor: pointer;
       text-transform: lowercase;
       line-height: 9px;
-      font-weight: 400; }
+      font-weight: 400;
+      padding: 10px;
+      position: absolute;
+      right: 12px;
+      top: 13px; }
   .overlay .overlay__content, .overlay .overlay__body {
     background: #fff;
     min-height: 100%;
@@ -884,7 +910,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   margin: 0 15px;
   text-align: center;
   position: relative;
-  padding-top: 20px;
+  padding-top: 12px;
   height: 50px;
   color: #2fb4e6;
   font-size: 15px;
@@ -900,15 +926,16 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     position: absolute;
     left: 0;
     bottom: 8px;
-    width: 11px;
-    height: 12px;
+    width: 30px;
+    height: 30px;
     background-image: url("../images/ui-calendar-nav2.png");
     background-repeat: no-repeat;
-    background-position: 0 0; }
+    background-position: 14px 9px;
+    background-size: 30px }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-datepicker-next {
     left: auto;
     right: 0;
-    background-position: -14px 0; }
+    background-position: -14px 9px; }
   .overlay.overlay--datepicker .ui-datepicker .ui-datepicker-header .ui-state-disabled {
     opacity: 0.3; }
 
@@ -1569,7 +1596,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .form-container .form-wrapper {
       margin: 0 0 15px;
       min-height: 100%;
-      background: none;
+      /*background: none;*/
       border: 0; }
       .page.page-home .form-container .form-wrapper h1 {
         text-align: center;
@@ -1599,7 +1626,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form span.code-airport, .page.page-home .form-container .form-wrapper form span.city {
         margin: 0 auto; }
       .page.page-home .form-container .form-wrapper form span.code-airport {
-        font-size: 40px;
+        font-size: 28px;
         line-height: 44px;
         color: #000000; }
       .page.page-home .form-container .form-wrapper form span.city {
@@ -1653,6 +1680,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
       .page.page-home .form-container .form-wrapper form .form__visitor p.form-control,
       .page.page-home .form-container .form-wrapper form .form__visitor select.form-control,
       .page.page-home .form-container .form-wrapper form .form__room p, .page.page-home .form-container .form-wrapper form .form__room p.form-control, .page.page-home .form-container .form-wrapper form .form__room select.form-control {
+        position: relative;
         -webkit-appearance: none;
         -moz-appearance: none;
         font-size: 13px;
@@ -1729,7 +1757,9 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
           text-align-last: right; }
       .page.page-home .form-container .form-wrapper form .flip-container {
         padding-top: 50px;
-        min-height: 104px; }
+        min-height: 104px;
+        text-align: center;
+      }
         .page.page-home .form-container .form-wrapper form .flip-container .flip {
           width: 35px;
           height: 37px;
@@ -1745,7 +1775,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
             width: 43px;
             height: 40px;
             margin-top: 7px;
-            margin-left: 5px;
+            left: 13px;
             content: ''; }
       .page.page-home .form-container .form-wrapper form .form__roundtrip .switch {
         float: right;
@@ -1907,10 +1937,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         vertical-align: middle;
         position: absolute;
         left: 0;
+        top: 0;
         width: 47px;
         height: 52px;
         background-image: url(/Assets/mobile/images/find.png);
-        margin-left: 12px; }
+        margin-left: -28px; }
       .page.page-home .form-container .form-wrapper form.hotel-form p.form-date:before {
         background-size: 40%;
         background-repeat: no-repeat;
@@ -1918,11 +1949,11 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         display: inline-block;
         vertical-align: middle;
         position: absolute;
-        left: 0;
+        left: 0px;
         width: 47px;
         height: 46px;
         background-image: url(/Assets/mobile/images/date.png);
-        margin-left: 12px; }
+        margin-left: -28px; }
       .page.page-home .form-container .form-wrapper form.hotel-form p.form-time .duration-title {
         float: left;
         margin-top: 10px; }
@@ -2024,13 +2055,13 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-home .carousel-inner ul.slick-dots {
       display: block;
       position: absolute;
-      bottom: 15px;
-      text-align: right;
+      bottom: 0;
+      text-align: center;
       width: 100%;
       list-style: none;
       margin: 0;
       padding: 0;
-      padding-right: 5%; }
+      padding-right: 0; }
       .page.page-home .carousel-inner ul.slick-dots > li {
         display: inline-block;
         list-style: none; }
@@ -2302,7 +2333,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport, .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
       margin: 0 auto; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.code-airport {
-      font-size: 40px;
+      font-size: 28px;
       line-height: 44px;
       color: #000000; }
     .page.page-flight .overlay.overlay--flight-form .overlay__content .form-wrapper form span.city {
@@ -3307,8 +3338,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   display: block;
   width: 100%;
   background: #fff;
-  color: #fff;
-  margin-bottom: 15px; }
+  color: #fff; }
   .page.page-checkout .summary.summary--payment label header {
     background: #36b6e7;
     position: relative; }
@@ -5993,3 +6023,739 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
     .page-hotel .rh-table .cols-value {
       padding: 10px 0;
       height: 60px; }
+    .group-kategori {
+        background: #eef0f3;
+        padding: 10px 16px;
+    }
+    .group-kategori a {
+        color: #000;
+    }
+    .group-kategori span {
+        color:#717171
+    }
+    .btn-flight {
+        background: #fff;
+        -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+        box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .accordion-content {
+      -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+      -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+      box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+      background-color: white;
+    }
+    .title-btn span { font-weight: 400;}
+    .konten-download-apps {
+        background: url(/Assets/mobile/images/bg-konten-download-apps.jpg);
+        text-align: center;
+        padding: 10px 20px;
+        padding-bottom: 20px;
+    }
+    .title-download-apps {
+        margin-bottom: 10px;
+    }
+    .title-download-apps h3 {
+        font-size: 19px;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: -1px;
+         margin-top: 15px;
+        margin-bottom: 8px;
+    }
+    .title-download-apps span {
+        font-weight: bold;
+        font-size: 11px;
+
+    }
+    .align-right {
+        text-align: right;
+    }
+    .align-left {
+        text-align: left;
+    }
+    .contact-mobile {
+        background: #303030;
+        padding: 20px 0;
+        /*height: 180px;*/
+    }
+    .list-sosmed ul {
+        padding: 0;
+    }
+    .list-sosmed li {
+        display: inline-block;
+        margin: 0 3px;
+    }
+    .list-sosmed {
+        text-align: center;
+    }
+    .list-sosmed img {
+        width: 70%;
+    }
+    .no-contact {
+        color: #fff;
+        margin-top: 22px;
+    }
+    .no-contact a{
+        color: #fff;
+        margin: 0px;
+    }
+    .logo-cs {
+        text-align: right;
+    }
+    .logo-cs img {
+        width: 70px;
+    }
+    .info-customer {
+       line-height: 1.2;
+       padding-left: 0px;
+    }
+    .info-customer h3 {
+        margin: 0;
+        margin-top: 7px;
+        margin-bottom: 3px;
+        font-weight: 700;
+        font-size: 15px;
+    }
+    .info-customer span {
+        font-size: 10px;
+    }
+    .sticky-menu {
+        position: fixed;
+        bottom: 0;
+        z-index: 1000;
+    }
+    .sticky-banner {
+        position: fixed;
+        bottom: 0;
+        display: none; /*initially hidden*/
+        z-index: 1000;
+    }
+    .sticky-banner img {
+        width: 100%;
+        opacity: 1;
+    }
+    .slider-mobile {
+        padding-bottom: 0px;
+    }
+    .carousel-inner-mobile {
+        border: none !important;
+    }
+    .info-promo {
+        padding: 15px;
+        color: #717171;
+    }
+    .judul-promo {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #000;
+    }
+    .judul-promo h1 {
+        font-size: 18px;
+        margin-bottom: 10px;
+        color: #000;
+        font-weight: 700;
+        margin-top: 0;
+    }
+    .desc-promo h2 {
+        margin: 0 0 10px;
+        font-size: 12px;
+        font-weight: 400;
+        color: #717171;
+        line-height: 1.45;
+    }
+    .more-info {
+        margin-top: 15px;
+    }
+    .more-info a {
+        color: #197bc6;
+        text-decoration: underline;
+    }
+    .detail-promo {
+        margin-top: 20px;
+    }
+    .box-promo {
+        border: 1px solid #b3b3b3;
+        padding: 10px 25px;
+        margin-top: 10px;
+    }
+    .box-promo-kode {
+        background: rgba(255, 249, 50, 0.44) !important;
+    }
+    .judul-box-promo {
+        font-size:14px;
+        margin-bottom: 3px;
+        color: #000;
+    }
+    .gambar-box-promo img {
+        /*width: 50%;*/
+    }
+    .btn-book {
+        text-align: center;
+        margin-top: 20px;
+        font-family: 'Raleway'
+        
+    }
+    .btn-book a { color: #000; font-weight: 700;}
+    .book-now {
+        background: #ffd632;
+        width: 200px;
+        padding: 16px; 0;
+        margin: 0 auto;
+        border: 1px solid #ebb600;
+        border-radius: 5px;
+    }
+    .rekomendasi-hotel {
+        color: #000;
+        margin-top: 20px;
+    }
+    .judul-rekomendasi-hotel {
+        padding: 0 15px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .box-rekomendasi-hotel {
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+    }
+    .image-hotel {
+        background: #ffd632;
+        border: 1px solid #ebb600;
+        border-radius: 5px;
+        padding: 0;
+    }
+    .image-hotel img {
+        width: 100%;
+    }
+    .desc-hotel {
+        padding-left: 20px;
+    }
+    .nama-hotel {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .rating-stars {
+        margin-top: 5px;
+    }
+    .separator-mobile {
+        width: 100%;
+        height: 1px;
+        display: block;
+        background: #cccccc;
+        margin: 5px 0;
+    }
+    .harga-room {
+        font-size: 15px;
+        color: #2face6;
+        font-weight: bold;
+    }
+    .harga-room span {
+        color: #000;
+        font-size: 12px;
+        font-weight: 400;
+    }
+    .btn-pesan {
+        text-align: center;
+        margin-top: 10px;
+        font-family: 'Raleway';
+    }
+    .btn-pesan a { color: #000; font-weight: 700; font-size: 10px;}
+    .order-now {
+        background: #ffd632;
+        width: 90px;
+        padding: 5px;
+        border: 1px solid #ebb600;
+        border-radius: 3px;
+    }
+    .syarat-ketentuan {
+        margin-top: 30px;
+    }
+    .container-list-ketentuan {
+        margin: 10px 0;
+    }
+    .isi-syarat-ketentuan {
+        background: #eef0f3;
+        padding: 10px 15px;
+    }
+    .list-number-mobile {
+        background: #2fb4e6;
+        text-align: center;
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        padding: 1px;
+    }
+    .info-ketentuan {
+        font-size: 12px;
+    }
+    .langkah-promo {
+        margin-top: 30px;
+    }
+    .slider-promo {
+        background: #eef0f3;
+    }
+    .subscribe-mobile {
+        position: relative;
+        background: #2fb4e6;
+        color: #fff;
+        text-align: center;
+        padding: 20px 30px;
+        margin-top: 45px;
+    }
+    .judul-subscribe {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    .form-control-mobile {
+        border-radius: 3px !important;
+        text-align: center;
+    }
+    .btn-subscribe {
+        background: transparent;
+        border: solid 2px #fff;
+        border-radius: 3px;
+        text-align: center;
+        width: 150px;
+        margin: 0 auto;
+        padding: 10px 0;
+    }
+    .btn-subscribe a {
+        color: #fff;
+        font-weight: bold;
+    }
+    .bg-subscribe {
+        position: absolute;
+        width: 133px;
+        left: 2px;
+        top: -34px;
+    }
+    .no-padding { padding: 0;}
+    .copyright-mobile {
+        text-align: center;
+        background: #303030;
+        padding: 0 20px;
+        color:#fff;
+        font-size: 10px;
+        padding-bottom: 10px;
+    }
+#why-travorama {
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+#why-travorama img {
+  width: 50px;
+  margin: 0 auto;
+}
+
+#why-travorama h4 {
+  padding: 0 20px;
+  color: #1eafe4;
+}
+
+#why-travorama h2 {
+  padding: 0 20px;
+  color: #1eafe4;
+    font-size: 18px;
+    margin-top: 14px;
+}
+
+#why-travorama p {
+  padding: 0 20px;
+  text-align: center;
+}
+.icon-home-accordion img {
+    width: 80%;
+}
+.judul-btn-flight {
+    margin-top: 15px;
+    font-size: 17px;
+}
+
+/*.ui-accordion-content-active{
+  padding-top: 20px;
+}*/
+
+.img-partner {
+  margin-bottom: 20px;
+}
+
+.img-partner img {
+    height: 35px;
+}
+
+.partner {
+  padding: 0;
+}
+
+.partner-hotel {
+  background-size: 724.5px 25.2px;
+  height: 25.2px;}
+  .partner-hotel.aston-international {
+    background-position: 0 0;
+    width: 42.7px; }
+  .partner-hotel.ibis {
+    background-position: -42px 0;
+    width: 23.8px; }
+  .partner-hotel.ibis-styles {
+    background-position: -67.2px 0;
+    width: 23.8px; }
+  .partner-hotel.phmhospitality {
+    background-position: -91px 0;
+    width: 24.5px; }
+  .partner-hotel.topotel {
+    background-position: -126px 0;
+    width: 24.5px; }
+  .partner-hotel.swiss-belhotel-international {
+    background-position: -150.5px 0;
+    width: 22.4px; }
+  .partner-hotel.redplanet {
+    background-position: -174.3px 0;
+    width: 39.2px; }
+  .partner-hotel.best-western-international {
+    background-position: -214.9px 0;
+    width: 98.7px; }
+  .partner-hotel.dafam {
+    background-position: -238.7px 0;
+    width: 21.7px; }
+  .partner-hotel.primeplaza {
+    background-position: -260.4px 0;
+    width: 28px; }
+  .partner-hotel.tauzia-hotel-management {
+    background-position: -364px 0;
+    width: 20.3px; }
+  .partner-hotel.santika-indonesia-hotels-resorts {
+    background-position: -384.3px 0;
+    width: 37.8px; }
+  .partner-hotel.intiwhiz {
+    background-position: -421.4px 0;
+    width: 41.3px; }
+  .partner-hotel.maxone {
+    background-position: -465.5px 0;
+    width: 42px; }
+  .partner-hotel.mercure {
+    background-position: -508.2px 0;
+    width: 42px; }
+  .partner-hotel.horison {
+    background-position: -550.2px 0;
+    width: 42px; }
+  .partner-hotel.kagum {
+    background-position: -592.9px 0;
+    width: 42px; }
+  .partner-hotel.parador {
+    background-position: -634.9px 0;
+    width: 42px; }
+  .partner-hotel.mphg {
+    background-position: -678.3px 0px;
+    width: 42px; }
+
+
+
+
+/* PAYMENT PAGE */
+
+.box-payment {
+  padding: 15px 0px;
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
+}
+
+.box-payment h4 {
+    color: #afafaf;
+    font-size: 13px;
+    margin-top: 7px;
+}
+.box-payment .glyphicon-ok {
+    display: none;
+}
+.box-payment .ui-accordion-header-active h4 {
+    color: #5d5d5d;
+    font-weight: bold;
+}
+.box-payment .ui-accordion-header-active .glyphicon-ok {
+    display: inline-block;
+    color: #75b846;
+    font-size: 16px;
+    margin-top: 14px;
+}
+
+.separator-desktop {
+    margin: 20px 0;
+    background:#ebebeb;
+    height: 1px;
+    width: 100%;
+}
+
+.form-bayar {
+    margin-top: 10px;
+}
+.form-bayar p { font-size: 11px;}
+
+.container-rincian-penerbangan {
+    background:#fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    padding: 15px;
+    color: #4b4b4c;
+}
+
+.container-rincian-penerbangan-modal {
+    padding: 10px;
+    color: #4b4b4c;
+}
+
+.content-right-payment {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+}
+.content-right-payment p {
+    font-size: 14px;
+}
+.logo-maskapai {
+    margin-top: 20px;
+}
+.detail-hotel {}
+
+.detail-hotel h3 {
+    font-weight: bold;
+    margin: 5px 0 !important;
+    font-size: 16px !important;
+    line-height: 1.5;
+}
+.detail-hotel p {
+    margin-bottom: 1px;
+    font-size: 12px;
+}
+.info-reservasi-penerbangan {
+    color: #fff;
+    font-size: 12px;
+}
+
+.box-pilihan-bank {
+    text-align: center;
+    margin: 30px 0px 20px;
+}
+.clear-left {
+    padding-left: 0;
+}
+.clear-right {
+    padding-right: 0;
+}
+
+.form-kartu-kredit label {
+    color: #505050 !important;
+}
+.rincian-pesanan-penerbangan {
+    margin-top: 20px;
+}
+
+.container-rincian-pesanan-penerbangan {
+    background: rgba(95,169,230,1);
+    background: -moz-linear-gradient(top, rgba(95,169,230,1) 0%, rgba(151,200,232,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(95,169,230,1)), color-stop(100%, rgba(151,200,232,1)));
+    background: -webkit-linear-gradient(top, rgba(95,169,230,1) 0%, rgba(151,200,232,1) 100%);
+    background: -o-linear-gradient(top, rgba(95,169,230,1) 0%, rgba(151,200,232,1) 100%);
+    background: -ms-linear-gradient(top, rgba(95,169,230,1) 0%, rgba(151,200,232,1) 100%);
+    background: linear-gradient(to bottom, rgba(95,169,230,1) 0%, rgba(151,200,232,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5fa9e6', endColorstr='#97c8e8', GradientType=0 );
+   padding: 15px 10px;
+    
+}
+
+.rincian-pesanan-penerbangan .detail-airport {
+    color: #fff;
+    text-align: center;
+}
+.rincian-pesanan-penerbangan .detail-airport h3 {
+   color: #fff;
+    font-weight: bold;
+    font-size: 26px !important;
+    margin: 20px 0 5px 0 !important;
+}
+
+.detail-airport span {
+    font-size: 10px;
+}
+
+.detail-airport-modal {
+    color: #333;
+    text-align: left;
+}
+
+.detail-airport-modal p {
+    font-size:12px;
+    margin-bottom: 1px;
+}
+
+.detail-airport-modal h3 {
+   color: #333;
+    font-weight: bold;
+    font-size: 16px !important;
+    margin: 10px 0 10px 0 !important;
+}
+
+.detail-airport-modal span {
+    font-size: 10px;
+}
+
+.logo-penerbangan {
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 50%;
+}
+.logo-penerbangan img {
+    width: 100%;
+    padding: 7%;
+    /*max-width: 50px;
+    max-height: 50px;*/
+}
+.separator-jadwal-penerbangan {
+    background: #f9f9f9;
+    height: 1px;
+    margin: 20px 0 5px 0;
+}
+
+.total-biaya {
+    background: #6fb0da;
+    padding: 15px 10px;
+    color: #fff;
+}
+
+.total-biaya a {
+    color: #ffffff;
+    text-decoration: underline;
+    font-size: 10px !important;
+}
+
+.total-biaya h3 {
+    font-size: 18px;
+    margin: 0 !important;
+    font-weight: bold;
+    font-size: 17px !important;
+}
+
+.data-penumpang {
+    
+}
+.data-penumpang p {
+    margin-bottom: 3px;
+}
+
+.kode-voucher {
+    margin-bottom: 10px;
+}
+.kode-voucher a {
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: bold;
+}
+.form-kode-voucher {
+    margin-top: 10px;
+}
+.rincian-harga p {
+    position: relative;
+    font-size: 13px;
+}
+.rincian-harga span {
+    position: absolute;
+    right: 0;
+}
+.diskon {
+    color:#31b5e6
+}
+.total-harga {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 3px solid #ebebeb;
+}
+
+.total-harga p {
+    font-size: 16px;
+}
+.total-harga span {
+    color: #0dc557;
+}
+
+.content-right-payment-edit {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+
+.how-to-pay-mandiri {
+    margin-bottom: 20px;
+}
+
+.text-group {
+    margin-bottom: 8px;
+}
+
+.img-bank {
+    margin: 5px auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ebebeb;
+}
+.img-bank.selected {
+    border: 2px solid #0d91c3;
+}
+.img-hotel {
+    margin-bottom: 5px;
+}
+.separator {
+    height: 20px;
+}
+.col-xs-1 {
+  padding-left: 0px;
+}
+.box-payment .accordion-content {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  padding: 0px 12px;
+}
+
+.box-payment input[type="submit"] {
+    padding: 12px;
+}
+
+.detail-airport h3 {
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.detail-airport p {
+    margin-bottom: 1px;
+    font-size: 12px;
+}
+
+.ccDate .form-group div {
+  float: left;
+}
+.section-title.stripe h1 {
+  font-weight: 700;
+  font-size: 18px;
+
+}
+.promo-tab-content {
+  background: white;
+  padding-bottom: 15px;
+}
+.promo-tab-content h3 {
+  font-size: 14px;
+  font-weight: bold;
+}

@@ -13,12 +13,24 @@ file : /Assets/travorama20/css/travorama20.scss
 /*--------------------*/
 /*Font Family*/
 @font-face {
+  font-family: 'Myriad Bold';
+  src: url("../../fonts/MyriadPro-BoldCond.otf");
+  }
+
+@font-face {
+  font-family: 'Myriad';
+  src: url("../../fonts/MyriadPro-Regular.otf");
+  }
+@font-face {
   font-family: 'Open Sans';
   src: url("../../fonts/OpenSans-Semibold.eot");
   src: url("../../fonts/OpenSans-Regular.eot?#iefix") format("embedded-opentype"), url("../../fonts/OpenSans-Regular.woff2") format("woff2"), url("../../fonts/OpenSans-Regular.woff") format("woff"), url("../../fonts/OpenSans-Regular.ttf") format("truetype"), url("../../fonts/OpenSans-Regular.svg#din-regularregular") format("svg");
   font-weight: normal;
   font-style: normal; }
-
+@font-face {
+  font-family: 'Open Sans Bold';
+  src: url("../../fonts/OpenSans-Bold.ttf");
+}
 /*--------------------*/
 /* font */
 .os-regular, .site-header, .site-footer-menu, .page-index, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkout span.grey-txt, .page-index .section-search .search-form .tab-content .tab-hotel .form-hotel-checkin span.grey-txt, .page-flight, .page-hotel, .page-hotel .normal-txt, .page-hotel label.sqr span.name, .page-hotel label.round span.name, .page-hotel .main-title, .page-checkout, label.control-label, .page-password, .page-account, .page-account-login .form-section h4, .page-static {
@@ -108,39 +120,6 @@ span.close {
 .no-scroll {
   overflow: hidden; }
 
-.regular-txt {
-  font-family: 'Open Sans';
-  font-weight: 400; }
-
-.semibold-txt {
-  font-family: 'Open Sans';
-  font-weight: 600; }
-
-.bold-txt {
-  font-family: 'Open Sans';
-  font-weight: 700; }
-
-.darkgrey-txt {
-  color: #555555; }
-
-.blue-txt {
-  color: #1daee4; }
-  .blue-txt.bg {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 20px; }
-
-.grey-txt {
-  color: #999; }
-
-.green-txt {
-  color: #3a8e1b; }
-
-.orange-txt {
-  color: #ff7200; }
-
-.white-txt {
-  color: #ffffff; }
 
 /*Custom scrollbar*/
 .custom-scroll::-webkit-scrollbar, .page-index .search-location div.active::-webkit-scrollbar {
@@ -154,7 +133,7 @@ span.close {
 
 .btn.btn-yellow {
   background: #ffd632;
-  border: 2px solid #ebb600;
+  border: 1px solid #ebb600;
   color: #4f3500;
   height: auto; }
   .btn.btn-yellow.lg-btn {
@@ -205,6 +184,18 @@ span.close {
   background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
   padding-bottom: 30px;
   margin-bottom: 45px; }
+
+.section-title.stripe h1 {
+  font-weight: 700;
+    font-size: 26px;
+}
+
+.section-titles.stripe {
+  font-weight: 600;
+  background: url(/Assets/images/yellow-stripe.png) center bottom no-repeat;
+  padding-bottom: 30px;
+  margin-bottom: 25px; }
+
   .section-title.stripe.small-stripe {
     background-image: url(/Assets/images/yellow-stripe-small.png); }
   .section-title.stripe span {
@@ -1346,20 +1337,14 @@ file : /Assets/travorama20/css/_header.scss
     .site-header .menu-top nav {
       float: right;
       background: #1daee4;
-      padding: 5px 12px;
-      -webkit-border-bottom-right-radius: 2px;
-      -webkit-border-bottom-left-radius: 2px;
-      -moz-border-radius-bottomright: 2px;
-      -moz-border-radius-bottomleft: 2px;
-      border-bottom-right-radius: 2px;
-      border-bottom-left-radius: 2px; }
+      padding: 7px }
       .site-header .menu-top nav ul {
         padding: 0;
         margin: 0; }
         .site-header .menu-top nav ul li {
           display: inline;
-          padding: 0 5px;
-          font-size: 12px; }
+          padding: 0 10px;
+          font-size: 10px; }
           .site-header .menu-top nav ul li a {
             color: #fff; }
         .site-header .menu-top nav ul li + li {
@@ -1467,7 +1452,8 @@ including in this file :
   width: 100%;
   /*bottom:152px; position: absolute;*/ }
   .site-footer-menu ul {
-    padding-left: 16px; }
+    padding-left: 0;
+    list-style: none; }
   .site-footer-menu a {
     color: #fff; }
   .site-footer-menu .menu-left {
@@ -1556,22 +1542,6 @@ including in this file :
           height: 44px;
           margin-right: 25px;
           display: inline-block; }
-
-/* site-footer */
-.site-footer {
-  background: #111;
-  color: #fff;
-  padding: 15px 0;
-  width: 100%;
-  /*position: absolute; bottom:0;*/ }
-  .site-footer .social-link {
-    padding: 15px 0; }
-    .site-footer .social-link img {
-      width: 40px; }
-    .site-footer .social-link a {
-      margin-left: 3px; }
-    .site-footer .social-link a + a {
-      margin-left: 10px; }
 
 .footer-main-container {
   bottom: 0; }
@@ -2107,7 +2077,7 @@ body.page-index {
       margin: 0;
       padding: 0;
       padding-right: 5%;
-      z-index: 998; }
+      z-index: 2; }
       .page-index .section-search .page-slider .slick-dots li {
         list-style: none;
         display: inline-block; }
@@ -2256,7 +2226,7 @@ body.page-index {
     max-width: none; }
 
 .page-index .section-popular {
-  padding-top: 10px; }
+  padding-top: 10px;  margin-bottom: 50px;}
   .page-index .section-popular > .container {
     max-width: none; }
   .page-index .section-popular .popular-left {
@@ -2413,11 +2383,10 @@ body.page-index {
           margin-left: -17px; }
 
 .page-index .section-subscribe {
-  color: #18a5db;
-  background: #d4e5ef;
-  padding: 3px 0;
-  margin-top: 80px;
-  height: 120px; }
+    background: url(/Assets/images/bg-subscribe-desktop.jpg);
+    height: 250px; 
+    margin-bottom: 30px;
+}
   .page-index .section-subscribe .container {
     position: relative; }
   .page-index .section-subscribe .subscribe-bg {
@@ -2639,8 +2608,7 @@ body.page-index {
 
 .page-index .section-calendar-price > .container {
   padding: 40px 0;
-  max-width: none !important;
-  border-bottom: 1px solid #ccc; }
+  max-width: none !important; }
   .page-index .section-calendar-price > .container .price-calendar > div:first-child, .page-index .section-calendar-price > .container .popular-flight > div:first-child {
     margin-bottom: 15px; }
 
@@ -2684,17 +2652,19 @@ body.page-index {
     padding: 10px 20px; }
 
 .page-index .section-calendar-price .price-calendar {
-  min-height: 600px;
   max-height: 660px;
   margin-right: 20px; }
   .page-index .section-calendar-price .price-calendar .search-map {
     position: relative;
-    background: #f0f0f0;
+    background: #f6f6f6;
     padding: 15px 5px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
-    border-radius: 2px; }
+    border-radius: 2px;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);}
     .page-index .section-calendar-price .price-calendar .search-map .location-choice .search-location {
       border: 1px solid #ccc; }
     .page-index .section-calendar-price .price-calendar .search-map .search-location {
@@ -2729,7 +2699,9 @@ body.page-index {
     .page-index .section-calendar-price .price-calendar .search-map .btn-calendar {
       padding: 8px 0;
       margin-bottom: 0 !important;
-      width: 100%; }
+      width: 100%;
+        margin-top: 15px;
+    }
     .page-index .section-calendar-price .price-calendar .search-map .select-calendar {
       font-size: 12px;
       line-height: 100%;
@@ -2757,8 +2729,11 @@ body.page-index {
       -ms-border-radius: 2px;
       border-radius: 2px;
       line-height: 100%;
-      height: 41px;
-      cursor: pointer; }
+      height: 40px;
+      cursor: pointer;
+      border: 1px solid #e2e2e2 !important;
+      color: #6a6a6a;
+    }
       .page-index .section-calendar-price .price-calendar .search-map .select-my:after {
         content: '';
         display: block;
@@ -2886,8 +2861,14 @@ body.page-index {
     .page-index .section-why .sw-img.sw-disc {
       background-image: url(/Assets/images/why-disc.png);
       width: 54px; }
+    .page-index .section-why .sw-img.sw-percaya {
+      background-image: url(/Assets/images/why-percaya.png);
+      width: 54px; }
     .page-index .section-why .sw-img.sw-free {
       background-image: url(/Assets/images/why-free.png);
+      width: 54px; }
+    .page-index .section-why .sw-img.sw-pilihan {
+      background-image: url(/Assets/images/why-pilihan.png);
       width: 54px; }
     .page-index .section-why .sw-img.sw-flight {
       background-image: url(/Assets/images/why-long.png);
@@ -6229,7 +6210,7 @@ file: /Assets/travorama20/css/_page_flight.scss
         font-weight: 600; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter .filter-group {
         padding: 20px 15px;
-        border-top: 1px solid #ccc; }
+        border-top: 1px solid #ededed; }
       .page-hotel .travorama-hotel .search-list .search-list-result .filter label.filter-title {
         color: #000;
         margin-bottom: 10px; }
@@ -9159,3 +9140,507 @@ file : /Assets/travorama20/css/_page_password.scss
 
 .page-campaign.campaign-2016-calendar .step img {
   border: 2px solid #1daee4; }
+.top-contact {
+    background: #198db8 !important;
+    width: 140px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 400;
+    padding: 1px 12px !important;
+}
+.top-contact  span {
+    font-weight: bold;
+    font-size: 10px;
+}
+.img-contact { float: left; margin-right: 5px;}
+.pilih-tujuan {
+    background: #f6f6f6;
+    -webkit-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+    box-shadow: 0px 3px 12px 0px rgba(0,0,0,0.3);
+}
+.container-form-location {
+    margin-bottom: 15px;
+}
+.label-form-location {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 400;
+}
+.map-input {
+    width: 100% !important;
+    height: 40px !important;
+    border: 1px solid #e2e2e2 !important;
+    color: #6a6a6a;
+}
+.search-map {
+    width: 300px;
+}
+.info-subscribe {
+    font-size: 36px;
+    margin-left: 125px;
+    margin-top: 26px;
+    line-height: 0.5;
+}
+.info-subscribe h1 {
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: -2px;
+    font-size: 31px;
+    margin-bottom: 5px;
+}
+.info-subscribe span {
+    font-size: 14px;
+}
+.btn-download { margin-top: 20px;}
+.btn-1 img{
+    width: 125px;
+    margin-right: 15px;
+}
+.container-calendar {
+    margin-top: 50px;
+}
+.center-call img {
+    float: left;
+    width:50px;
+    margin-right: 10px;
+}
+.list-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+.web-banner ul li {
+    font-size: 12px;
+}
+.social-link-desktop {
+    margin-top: 16px;
+}
+.social-link-desktop a img {
+    width: 40px !important;
+    margin-right: 10px;
+}
+.footer-middle {
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+.payment-banner {
+    margin-top: 15px;
+}
+.payment-banner p {
+    font-size: 14px;
+}
+.payment-banner img {
+    width: 520px;
+}
+.mail-subscribe {
+    position: relative;
+}
+.mail-subscribe img {
+    width: 275px;
+}
+.form-subscribe-desktop {
+    position: absolute;
+    top: 82px;
+    left: 40px;
+}
+.form-subscribe-desktop a:hover {
+    text-decoration: none;
+}
+.form-control-desktop-subscribe {
+    border-radius: 5px !important;
+    height: 35px !important;
+    width: 197px !important;
+    text-align: center;
+    font-size: 10px !important;
+    -webkit-box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
+    -moz-box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
+    box-shadow: inset 1px 1px 3px 1px rgba(0,0,0,0.13) !important;
+}
+.btn-subscribe-desktop {
+    display: block;
+    background: #ffd632;
+    border: 1px solid #ebb600;
+    width: 110px;
+    padding: 7px 0;
+    text-align: center;
+    border-radius: 5px;
+    color: #7a7a7a;
+    margin: 0 auto;
+    margin-top: -10px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+}
+.copyright  {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 10px;
+}
+
+.img-partner {
+  margin-bottom: 40px;
+}
+
+.img-partner img {
+    height: 50px
+}
+
+.partner {
+  padding: 20px 0px 15px;
+}
+
+.partner-hotel {
+  background-size: 1035px 36px;
+  height: 36px;}
+  .partner-hotel.aston-international {
+    background-position: 0 0;
+    width: 61px; }
+  .partner-hotel.ibis {
+    background-position: -60px 0;
+    width: 34px; }
+  .partner-hotel.ibis-styles {
+    background-position: -96px 0;
+    width: 34px; }
+  .partner-hotel.phmhospitality {
+    background-position: -130px 0;
+    width: 50px; }
+  .partner-hotel.topotel {
+    background-position: -180px 0;
+    width: 35px; }
+  .partner-hotel.swiss-belhotel-international {
+    background-position: -215px 0;
+    width: 32px; }
+  .partner-hotel.redplanet {
+    background-position: -249px 0;
+    width: 56px; }
+  .partner-hotel.best-western-international {
+    background-position: -307px 0;
+    width: 141px; }
+  .partner-hotel.dafam {
+    background-position: -341px 0;
+    width: 31px; }
+  .partner-hotel.primeplaza {
+    background-position: -372px 0;
+    width: 40px; }
+  .partner-hotel.tauzia-hotel-management {
+    background-position: -520px 0;
+    width: 29px; }
+  .partner-hotel.santika-indonesia-hotels-resorts {
+    background-position: -549px 0;
+    width: 54px; }
+  .partner-hotel.intiwhiz {
+    background-position: -602px 0;
+    width: 59px; }
+  .partner-hotel.maxone {
+    background-position: -665px 0;
+    width: 60px; }
+  .partner-hotel.mercure {
+    background-position: -726px 0;
+    width: 60px; }
+  .partner-hotel.horison {
+    background-position: -786px 0;
+    width: 60px; }
+  .partner-hotel.kagum {
+    background-position: -847px 0;
+    width: 60px; }
+  .partner-hotel.parador {
+    background-position: -907px 0;
+    width: 60px; }
+  .partner-hotel.mphg {
+    background-position: -969px 0px;
+    width: 60px; }
+} 
+
+
+/*payment */
+
+.box-payment {
+}
+.box-payment {
+  padding: 0px 20px;
+  background:#fff;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+  margin-bottom: 10px;
+}
+.box-payment .accordion-header {
+    padding: 25px 0px;
+}
+.box-payment input[type="submit"] {
+    margin-bottom: 25px;
+}
+
+.box-payment h4 {
+    color: #afafaf;
+    font-size: 15px;
+    margin-top: 13px
+}
+.box-payment .glyphicon-ok {
+    display: none;
+}
+.box-payment .ui-accordion-header-active h4 {
+    color: #5d5d5d;
+    font-weight: bold;
+}
+.box-payment .ui-accordion-header-active .glyphicon-ok {
+    display: inline-block;
+    color: #75b846;
+    font-size: 16px;
+    margin-top: 14px;
+}
+
+.separator-desktop {
+    margin: 20px 0;
+    background:#ebebeb;
+    height: 1px;
+    width: 100%;
+}
+
+.form-bayar {
+    margin-top: 25px;
+}
+
+.container-rincian-penerbangan {
+    background:#fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    -moz-box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.12);
+    padding: 15px;
+    color: #4b4b4c;
+}
+
+.content-right-payment {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ebebeb;
+}
+.content-right-payment p {
+    font-size: 14px;
+}
+.logo-maskapai {
+    margin-top: 20px;
+}
+.detail-airport {
+     padding-left:10px;
+}
+.detail-airport h3 {
+    font-weight: bold;
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+.detail-airport p {
+    margin-bottom: 1px;
+    font-size: 12px;
+}
+
+.box-pilihan-bank {
+    text-align: center;
+    margin: 40px 0;
+}
+.data-penumpang p {
+    margin-bottom: 3px;
+}
+
+.kode-voucher {
+    margin-bottom: 10px;
+}
+.kode-voucher a {
+    text-decoration: underline;
+    font-size: 13px;
+    font-weight: bold;
+}
+.form-kode-voucher {
+    margin-top: 10px;
+}
+.rincian-harga p {
+    position: relative;
+    font-size: 13px;
+}
+.rincian-harga span {
+    position: absolute;
+    right: 0;
+}
+.diskon {
+    color:#31b5e6
+}
+.total-harga {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 3px solid #ebebeb;
+}
+
+.total-harga p {
+    font-size: 16px;
+}
+.total-harga span {
+    color: #0dc557;
+}
+
+.content-right-payment-edit {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    border: none !important;
+}
+
+.how-to-pay-mandiri {
+    margin-bottom: 20px;
+}
+
+.text-group {
+    margin-bottom: 8px;
+}
+
+.img-bank {
+    margin: 5px auto;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ebebeb;
+}
+.img-bank.selected {
+    border: 2px solid #0d91c3;
+}
+.img-hotel {
+    margin-bottom: 5px;
+}
+.separator {
+    height: 20px;
+}
+.ccDate .form-group div {
+  float: left;
+}
+/*  */
+
+.section-titles.stripe h1 {
+  font-weight: 700;
+
+}
+.why-title h2 {
+    font-size: 16px;
+}
+
+
+
+
+/* PROMO */
+
+.judul-aktivasi {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.judul-aktivasi h1 {
+    font-family: 'Open Sans Bold';
+}
+
+.desc-aktivasi {
+    color: #515151;
+    text-align: center;
+        font-size: 15px;
+    line-height: 1.6;
+}
+.desc-aktivasi h2 {
+    color: #515151;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+}
+.info-lanjutan-aktivasi {
+    margin-top: 20px;
+}
+.info-lanjutan-aktivasi a {
+    color: #197bc6;
+    text-decoration: underline;
+}
+.detail-promo {
+    margin-top: 40px;
+}
+.box-promo {
+    border: 1px solid #b3b3b3;
+    padding: 10px 15px;
+    margin: 0 15px;
+}
+.box-promo-kode {background: rgba(255, 249, 50, 0.44) !important}
+.gambar-box-promo {
+    margin-top: 5px;
+}
+
+    .judul-box-promo {
+        font-size:16px;
+        margin-bottom: 3px;
+        color: #000;
+    }
+    .gambar-box-promo img {
+        width: 70px;
+    }
+.align-right {
+        text-align: right;
+    }
+.info-box-promo {
+    margin-top: 5px;
+}
+.tanggal-box-promo {
+     font-size: 14px;
+    color: #7d7d7d
+}
+.clear-margin-right {
+    margin-right: 0 !important;
+}
+.rekomendasi-hotel-promo {
+    margin-top: 60px;
+}
+.judul-rekomendasi-hotel-promo {
+    border-bottom: 1px solid #b3b3b3;
+    padding-bottom: 10px;
+    font-family: 'Open Sans Bold';
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+.judul-rekomendasi-hotel-promo span {
+    font-size: 18px;
+}
+ .container-rekomendasi-hotel {
+ }
+ .box-rekomendasi-hotel-promo {
+     background: #fff;
+     border: 1px solid #ededed;
+     padding: 0;
+     width: 31%;
+     margin: 0 1.16%;
+ }
+ .foto-hotel-rekomendasi {
+     height: 150px;
+     background-image: url(/Assets/images/kamar-hotel.jpg);
+     background-size: cover;
+     background-position: bottom;
+ }
+ .foto-hotel-rekomendasi img {
+     width: 100%;
+ }
+ .info-hotel-rekomendasi {
+     padding: 15px 10px;
+     border-bottom: 1px solid #ededed;
+ }
+ .harga-list-hotel-rekomendasi {
+     padding: 10px 10px;
+     padding-bottom: 15px;
+ }
+ .btn-lihat-kamar-rekomendasi {
+     background: #ffd632;
+     border: none;
+     color: #4f3500;
+     border-radius: 2px;
+     font-weight: 700;
+     text-align: center;
+     padding: 10px 0;
+     width: 100%;
+ }
+ .harga-baru-rekomendasi {
+    color: #1daee4;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 2px 0 10px 0;
+    text-align: center
+ }

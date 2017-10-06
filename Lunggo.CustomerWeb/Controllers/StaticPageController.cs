@@ -53,6 +53,11 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
+        public ActionResult Payment()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Contact(string name, string email, string message)
         {

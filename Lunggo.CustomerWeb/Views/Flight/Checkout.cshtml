@@ -63,7 +63,6 @@
     <script>
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var currentPage = 1;
-        var transferWindow = ['@ConfigManager.GetInstance().GetConfigValue("general","bankTransferStartTime")', '@ConfigManager.GetInstance().GetConfigValue("general","bankTransferEndTime")'];
         var message = '@ViewBag.Message';
         var token = @Model.Token;
         var paymentDetail = '';

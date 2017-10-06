@@ -550,7 +550,7 @@
                             </div>
                             <div class="flight-summary-right">
                                 <div class="fsr-price">
-                                    <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                    <span class="original-price" ng-show="flight.originalAdultFare != flight.netAdultFare"> Rp {{flight.originalAdultFare | number}} </span>
                                     <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}<span class="sm-txt"> /pax</span></h4>
                                     <small>*Termasuk Pajak &amp; Service Charge</small>
                                     <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('departure',flight.IndexNo)">PESAN</a>
@@ -910,7 +910,7 @@
 
                             <div class="flight-summary-right">
                                 <div class="fsr-price">
-                                    <span class="original-price"> Rp {{flight.originalAdultFare | number}} </span>
+                                    <span class="original-price" ng-show="flight.originalAdultFare != flight.netAdultFare"> Rp {{flight.originalAdultFare | number}} </span>
                                     <h4 class="flight-price"><sup>Rp</sup> {{flight.netAdultFare | number}}<span class="sm-txt"> /pax</span></h4>
                                     <small>*Termasuk Pajak &amp; Service Charge</small>
                                     <a class="btn btn-yellow sm-btn" ng-click="setChosenFlight('return',flight.IndexNo)">PESAN</a>
@@ -1219,20 +1219,6 @@
                 <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
                 <div style="padding-top:5px;"><span style="font-size:14px">Mengalihkan Anda ke halaman checkout.</span></div>
             </section>
-        </div>
-    </div>
-
-    <div class="bookfailed-popup" ng-show="selectError">
-        <div class="overlay-content">
-            <section style="padding-top:60px; padding-left:225px;">
-                <div><img src="/Assets/images/travorama-logo-color.png" height="22px" width="80px"></div>
-                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:26px"><b>Mohon maaf...</b></span></div>
-                <div style="padding-top:5px;"><span style="font-size:13px">Penerbangan ini <span style="color: #15b1e4;font-size:13px"><b>sudah tidak tersedia</b></span>.</span></div>
-                <div><span style="font-size:13px">Silakan klik tombol di bawah untuk kembali ke halaman awal.</span></div>
-            </section>
-            <div align="right" style="padding-right:30px;padding-top:30px;">
-                <a class="btn popup-btn-yellow book-failed sm-btn" href="{{returnUrl}}"><b>CARI ULANG</b></a>
-            </div>
         </div>
     </div>
 

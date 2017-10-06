@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
                 {
-                    log.Post("[Citilink Search] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path", "#logging-dev");
+                    //log.Post("[Citilink Search] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path", "#logging-dev");
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                 }
                                 catch
                                 {
-                                    log.Post("[Citilink Search] Error while processing flight price form data crawling", "#logging-dev");
+                                    //log.Post("[Citilink Search] Error while processing flight price form data crawling", "#logging-dev");
                                 }
 
                                     var segments = new List<FlightSegment>();
@@ -319,7 +319,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
                 catch(Exception e)
                 {
-                    log.Post("[Citilink Search] Error while processing data flight", "#logging-dev");
+                    //log.Post("[Citilink Search] Error while processing data flight", "#logging-dev");
                     return new SearchFlightResult
                     {
                         IsSuccess = false,

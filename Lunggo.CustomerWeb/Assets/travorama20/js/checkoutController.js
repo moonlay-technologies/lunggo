@@ -68,6 +68,7 @@ app.controller('checkoutController', [
                 $scope.expired = true;
             }
         }, 1000);
+        //REDUNDANT#MONTH
         $scope.monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
         $scope.months = [
             { value: 0, name: 'Bulan' },
@@ -937,18 +938,6 @@ app.controller('checkoutController', [
             $log.debug($scope);
         }
 
-        //********************
-        // transfer window
-        $scope.transferWindow = transferWindow;
-        $scope.rightNow = new Date();
-        $scope.rightNow = ($scope.rightNow.getHours() + '' + $scope.rightNow.getMinutes());
-        $scope.rightNow = parseInt($scope.rightNow);
-        $scope.transferWindowOpen = true;
-        if ($scope.rightNow >= parseInt($scope.transferWindow[0]) && $scope.rightNow <= parseInt($scope.transferWindow[1])) {
-            $scope.transferWindowOpen = true;
-        } else {
-            $scope.transferWindowOpen = false;
-        }
 
         //************************* END ******************************
     }

@@ -149,8 +149,6 @@
 }
 
 @section AdditionalJS {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="/Assets/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
     <script src="/Assets/vendor/lightslider/lightslider.js"></script>
 }
@@ -169,7 +167,7 @@
     <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
     <script src="/Assets/travorama20/angularDirectory/common/hotelAutocomplete.service.js"></script>
     <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyDV-MKwdLWTmBPiYwSm-r8m2OvVhTRfOJs"></script>
+    <script type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyA7RzjbH1IzGr-V9uGBb1aevKDKcWBRXFY"></script>
     <script>
         var gtmContentType = 'hotel';
         var gtmCity = '@Model.HotelDetailData.DestinationName';
@@ -454,7 +452,7 @@
                                             <div class="lg-txt"><b><sup>Rp</sup> {{room.rate.breakdowns[0].netTotalFare | number}}</b></div>
                                         </div>
                                         <div class="xs-txt">*Harga Termasuk Pajak & Service Charge</div>
-                                            <a href="" class="btn btn-yellow sm-btn" ng-click="bookRoom(room.rate)">PESAN</a>
+                                            <a href="" class="btn btn-yellow sm-btn" ng-click="bookRate(room.rate)">PESAN</a>
                                     </div>
                                 </div>
                             </div>

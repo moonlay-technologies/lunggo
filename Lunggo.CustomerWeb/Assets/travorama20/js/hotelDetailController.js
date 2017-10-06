@@ -417,14 +417,14 @@ app.controller('hotelDetailController', ['$scope', '$log', '$http', '$resource',
       );
 
 
-    $scope.bookRoom = function (room) {
+    $scope.bookRate = function (rate) {
         $scope.booking = true;
         var authAccess = getAuthAccess();
         if (authAccess == 1 || authAccess == 2) {
             var regs = [];
             for (var i = 0; i < $scope.lastSearch.totalOcc; i++) {
                 regs.push({
-                    "regsId": room.regsId,
+                    "regsId": rate.regsId,
                     "rateCount": $scope.lastSearch.occupancies[i].roomCount,
                     "adultCount": $scope.lastSearch.occupancies[i].adultCount,
                     "childCount": $scope.lastSearch.occupancies[i].childCount,

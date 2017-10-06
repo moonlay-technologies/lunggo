@@ -12,10 +12,12 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class PaymentDetailsForDisplay
     {
+        [JsonProperty("medium", NullValueHandling = NullValueHandling.Ignore)]
+        public PaymentMedium Medium { get; set; }
         [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentMethod Method { get; set; }
         [JsonProperty("submethod", NullValueHandling = NullValueHandling.Ignore)]
-        public PaymentSubMethod SubMethod { get; set; }
+        public PaymentSubmethod Submethod { get; set; }
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentStatus Status { get; set; }
         [JsonProperty("time", NullValueHandling = NullValueHandling.Ignore)]
@@ -52,7 +54,7 @@ namespace Lunggo.ApCommon.Payment.Model
     {
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
-        public PaymentSubMethod SubMethod { get; set; }
+        public PaymentSubmethod Submethod { get; set; }
         public PaymentStatus Status { get; set; }
         public FailureReason FailureReason { get; set; }
         public DateTime? Time { get; set; }
@@ -65,6 +67,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public string DiscountCode { get; set; }
         public decimal DiscountNominal { get; set; }
         public UsedDiscount Discount { get; set; }
+        public decimal Surcharge { get; set; }
         public decimal UniqueCode { get; set; }
         public decimal FinalPriceIdr { get; set; }
         public decimal PaidAmountIdr { get; set; }
@@ -120,7 +123,7 @@ namespace Lunggo.ApCommon.Payment.Model
                 {
                     Medium = PaymentMediumCd.Mnemonic(record.MediumCd),
                     Method = PaymentMethodCd.Mnemonic(record.MethodCd),
-                    SubMethod = PaymentSubMethodCd.Mnemonic(record.SubMethod),
+                    Submethod = PaymentSubmethodCd.Mnemonic(record.SubMethod),
                     Status = PaymentStatusCd.Mnemonic(record.StatusCd),
                     Time = record.Time,
                     TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),

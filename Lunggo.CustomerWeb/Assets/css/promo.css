@@ -48,7 +48,7 @@ body.page-promo.promo-btn-mobile-app {
         width: 100%;
         background-size: 30%; }
   .page-promo .content-banner {
-    font-size: 11px;
+    font-size: 14px;
     margin-top: 50px; }
     .page-promo .content-banner .promo-desc {
       font-weight: 600;
@@ -104,7 +104,7 @@ body.page-promo.promo-btn-mobile-app {
           background: #1eafe4;
           margin-left: -26px;
           color: #fff;
-          top: 2px;
+          top: 3px;
           line-height: 18px; }
     .page-promo .content-banner .title-italic {
       font-style: italic;

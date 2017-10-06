@@ -1,10 +1,12 @@
 ﻿// check if angular exist
 if (typeof (angular) == 'object') {
 
-    var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+    // var app = angular.module('travoramaMobile', ['ngRoute', 'ngResource']);
+    var app = angular.module('travoramaMobile', ['ngResource']);
 
+    
     // root scope
-    app.run(function ($rootScope, $log) {
+    app.run(function ($rootScope, $log, $timeout) {
         $rootScope.travoramaModuleName = 'travoramaMobile';
         $rootScope.val = false;
         $.datepicker.setDefaults(
@@ -291,8 +293,10 @@ if (typeof (angular) == 'object') {
             ActiveOverlay: '',
             SetOverlay: function (overlay) {
                 if (typeof (overlay) == 'undefined') {
-                    $rootScope.PageConfig.ActiveOverlay = '';
-                    $rootScope.PageConfig.SetBodyNoScroll(true);
+                    $timeout(function() { // make it compatible for sync AND async function call
+                        $rootScope.PageConfig.ActiveOverlay = '';
+                        $rootScope.PageConfig.SetBodyNoScroll(true);
+                    }, 0);
                 } else {
                     if (overlay == '' || overlay == ' ') {
                         $rootScope.PageConfig.ActiveOverlay = '';
@@ -466,9 +470,8 @@ if (typeof (angular) == 'object') {
 
             },
             SetDefaultReturnDate: function (val) {
-                if (val == true) $rootScope.FlightSearchForm.Trip = "true";
-                else $rootScope.FlightSearchForm.Trip = "false";
-                }
+                $rootScope.FlightSearchForm.Trip = (val) ? "true" : "false";
+            }
         };// datepicker
         
         // flight search form
@@ -530,7 +533,7 @@ if (typeof (angular) == 'object') {
                                     $('.autocomplete-result').hide();
                                     $('.autocomplete-no-result').show();
                                 }
-                            }).error(function () {
+                            }).fail(function () {
                                 trial++;
                                 if (refreshAuthAccess() && trial < 4) $rootScope.FlightSearchForm.AutoComplete.GetAirport(keyword);
                             });
@@ -697,11 +700,11 @@ if (typeof (angular) == 'object') {
                 );
             }
         }
+
         // Cookies
         $rootScope.getCookies = function() {
-            $(document).ready(function () {
-
-                $.getScript("js.cookie.js", function () { });
+            $.getScript("/Assets/js/js.cookie.js", function () {
+                $rootScope.$apply(function() {
                 if (Cookies.get('origin')) {
                     $rootScope.FlightSearchForm.AirportOrigin.Code = Cookies.get('origin');
                 } else {
@@ -735,13 +738,17 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.DepartureDate = new Date();
                 }
 
-                if (Cookies.get('return')) {
-                    if (new Date(Cookies.get('return')) < new Date())
-                        $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                var defaultReturnDaySpan = 3;   // set default return date to 3 days from today
+                var returnDate = moment().locale("id").add(defaultReturnDaySpan, 'days').format("ddd, DD MMM YYYY");
+                var returnCookie = Cookies.get('return');
+                if (returnCookie) {
+                    if (new Date(returnCookie) < new Date()){
+                        $rootScope.FlightSearchForm.ReturnDate = returnDate;
+                    }
                     else
-                    $rootScope.FlightSearchForm.ReturnDate = new Date(Cookies.get('return'));
+                        $rootScope.FlightSearchForm.ReturnDate = new Date(returnCookie);
                 } else {
-                    $rootScope.FlightSearchForm.ReturnDate = moment().locale("id").add(1, 'days');
+                    $rootScope.FlightSearchForm.ReturnDate = returnDate;
                 }
 
                 if (Cookies.get('type')) {
@@ -777,9 +784,11 @@ if (typeof (angular) == 'object') {
                     $rootScope.FlightSearchForm.Cabin = Cookies.get('cabin');
                 } else {
                     $rootScope.FlightSearchForm.Cabin = 'y';
-        }
+                }
+                });
             });
         }
+        $rootScope.getCookies();
 
         function setCookies() {
             Cookies.set('origin', $rootScope.FlightSearchForm.AirportOrigin.Code, { expires: 9999 });
@@ -824,7 +833,6 @@ if (typeof (angular) == 'object') {
                                             Name: holidayName
                                         }]
                                     }]
-
                                 });
                             } else {
                                 var foundYear = false;
@@ -865,7 +873,7 @@ if (typeof (angular) == 'object') {
                         }
                     }
                 }
-            }).error(function (returnData) {});
+            }).fail(function (returnData) {});
         }
         
         function  highlight(date) {
@@ -926,66 +934,65 @@ if (typeof (angular) == 'object') {
             } else if (!found) $('.holiday-list').remove();
         }
         
-            $(".ui-datepicker").datepicker({
-                beforeShowDay: highlight,
-                onSelect: function (date) {
-
-                    var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
-                    if ($rootScope.DatePicker.Position == 'hotel') {
-                        if ($rootScope.DatePicker.overlay == null || $rootScope.DatePicker.overlay == '') {
-                            $rootScope.PageConfig.SetOverlay('');
-                        } else {
-                            $rootScope.PageConfig.SetOverlay('hotel-form');
-                        }
-                        var datex = new Date(trsdate);
-                        var scope = angular.element($('.ui-datepicker')).scope();
-                        scope.setCheckinDate(scope, datex);
-                        $log.debug("checkinDate = " + datex);
+        $(".ui-datepicker").datepicker({
+            beforeShowDay: highlight,
+            onSelect: function (date) {
+                var trsdate = $rootScope.DatePicker.ChangeLanguage(date);
+                if ($rootScope.DatePicker.Position == 'hotel') {
+                    if ($rootScope.DatePicker.overlay == null || $rootScope.DatePicker.overlay == '') {
+                        $rootScope.PageConfig.SetOverlay('');
                     } else {
-                        $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
-                        $($rootScope.DatePicker.Settings.Target).val(trsdate);
-                        $($rootScope.DatePicker.Settings.Target).trigger('input');
+                        $rootScope.PageConfig.SetOverlay('hotel-form');
+                    }
+                    var datex = new Date(trsdate);
+                    var scope = angular.element($('.ui-datepicker')).scope();
+                    scope.setCheckinDate(scope, datex);
+                } else {
+                    $rootScope.DatePicker.Settings.SelectedDate = new Date(trsdate);
+                    $($rootScope.DatePicker.Settings.Target).val(trsdate);
+                    $($rootScope.DatePicker.Settings.Target).trigger('input');
 
-                        var depdate = new Date($rootScope.FlightSearchForm.DepartureDate);
-                        var retdate = new Date($rootScope.FlightSearchForm.ReturnDate);
-                        if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
-                            depdate = new Date(trsdate);
-                            $rootScope.FlightSearchForm.DepartureDate = depdate;
-                        } else {
-                            retdate = new Date(trsdate);
-                            $rootScope.FlightSearchForm.ReturnDate = retdate;
+                    var depdate = new Date($rootScope.FlightSearchForm.DepartureDate);
+                    var retdate = new Date($rootScope.FlightSearchForm.ReturnDate);
+                    if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
+                        depdate = new Date(trsdate);
+                        $rootScope.FlightSearchForm.DepartureDate = depdate;
+                    } else {
+                        retdate = new Date(trsdate);
+                        $rootScope.FlightSearchForm.ReturnDate = retdate;
+                    }
+                    if (depdate > retdate) {
+                        $('.form__departure .field-container span').text(date);
+                        $('.form__return .field-container span').text(date);
+                        if ($rootScope.DatePicker.Position == 'form-index') {
+                            $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                            $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
+                            $rootScope.PageConfig.SetOverlay();
+                        } else if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
+                            $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                            $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+                            $rootScope.PageConfig.SetOverlay('flight-form');
                         }
-                        if (depdate > retdate) {
+                    } else {
+                        if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
                             $('.form__departure .field-container span').text(date);
-                            $('.form__return .field-container span').text(date);
-                            if ($rootScope.DatePicker.Position == 'form-index') {
-                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
-                                $rootScope.FlightSearchForm.ReturnDate = new Date(trsdate);
-                                $rootScope.PageConfig.SetOverlay();
-                            } else if ($rootScope.DatePicker.Position == 'search-single' || $rootScope.DatePicker.Position == 'search-return') {
-                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
-                                $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
-                                $rootScope.PageConfig.SetOverlay('flight-form');
-                            }
+                            $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+
                         } else {
-                            if ($rootScope.DatePicker.Settings.Target == '.flight-search-form-departure') {
-                                $('.form__departure .field-container span').text(date);
-                                $('.ui-datepicker.departure-date').datepicker("setDate", new Date(trsdate));
+                            $('.form__return .field-container span').text(date);
+                            $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
+                        }
 
-                            } else {
-                                $('.form__return .field-container span').text(date);
-                                $('.ui-datepicker.return-date').datepicker("setDate", new Date(trsdate));
-                            }
-
-                            if ($rootScope.DatePicker.Position == 'form-index') {
-                                $rootScope.PageConfig.SetOverlay();
-                            } else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
-                                $rootScope.PageConfig.SetOverlay('flight-form');
-                            }
+                        if ($rootScope.DatePicker.Position == 'form-index') {
+                            $rootScope.PageConfig.SetOverlay();
+                        } else if ($rootScope.DatePicker.Position == 'search-return' || $rootScope.DatePicker.Position == 'search-single') {
+                            $rootScope.PageConfig.SetOverlay('flight-form');
                         }
                     }
                 }
-            });
+            }
+        });
+
         //Some Initialisations used in Search
         $rootScope.initAirport = function (target, airport, city) {
             if (target == 'departure') {
@@ -1059,7 +1066,11 @@ function getAnonymousAccessByRefreshToken(refreshToken) {
         url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "refreshtoken": refreshToken,
+            "clientId": "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=",
+            "clientSecret": "VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
@@ -1079,7 +1090,11 @@ function getLoginAccessByRefreshToken(refreshToken) {
         url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "refreshtoken": refreshToken,
+            "clientId": "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=",
+            "clientSecret": "VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
@@ -1168,4 +1183,26 @@ function accordionFunctions() {
 
 jQuery(document).ready(function($) {
     $('.ui-slider-handle').draggable();
-})
+
+
+    //// dismiss sticky banner
+    $(".sticky-banner").click( function() {
+        $(".sticky-banner").slideUp();
+    });
+
+    $(document).ready( function() {
+        //// show sticky banner after 2000ms
+        setTimeout( function(){
+            $(".sticky-banner").slideDown();
+        }, 2000);
+    });
+});
+
+function scrollPage($targetElement, animationSpeed) {
+    var speed = animationSpeed || 200;
+    //// scroll
+    $('html, body').animate({
+        //// banyaknya pixel yang di scroll (ditutupin)
+        scrollTop: $targetElement.offset().top - $("header").height() - 8
+    }, speed);
+}

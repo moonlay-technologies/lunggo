@@ -29,19 +29,19 @@ namespace Lunggo.CustomerWeb
         {
             InitConfigurationManager();
             InitI18NMessageManager();
-            InitUniqueIdGenerator();
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
             //InitLogger();
             InitFlightService();
             InitPaymentService();
-            //InitBrowserDetectionService();
+            InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
             InitHtmlTemplateService();
             InitTableStorageService();
             InitBlobStorageService();
+            InitUniqueIdGenerator();
             InitHotelService();
         }
         private static void InitBlobStorageService()
@@ -94,8 +94,7 @@ namespace Lunggo.CustomerWeb
         {
             var generator = UniqueIdGenerator.GetInstance();
             var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
-            var storageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            var optimisticData = new BlobOptimisticDataStore(CloudStorageAccount.Parse(storageConnectionString), seqContainerName)
+            var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
             };
@@ -155,7 +154,7 @@ namespace Lunggo.CustomerWeb
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
             {
                 ContextCondition = context =>
-                                context.Request.Url.Host == mobileUrl
+                                context.Request.Url.Host == mobileUrl || context.Request.Url.Host == "192.168.0.139"
             });
             DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
         }

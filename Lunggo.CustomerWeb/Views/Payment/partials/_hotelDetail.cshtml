@@ -1,0 +1,126 @@
+@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Service
+@using Lunggo.ApCommon.Hotel.Model
+
+@{
+    @* var todayDate = new DateTime(2017, 3, 25);          //var todayDate = DateTime.Today; *@
+    @* var savedCreditCards = Model.SavedCreditCards; *@
+    @* var images = new List<Image>(); *@
+    @* var roomImg = ""; *@
+    var hotelDetail = Model.Reservation.HotelDetail;
+    var orderedRooms = new List<Tuple<string, int>>();
+    var totalAdult = 0;
+    var totalChild = 0;
+    var totalRoom = 0;
+    var night = 0;
+    var hotelImg = "";
+    var listAges = new List<int>();
+    try
+    {
+@*/*
+        images = HotelService.GetInstance().GetHotelDetailFromDb(hotelDetail.HotelCode).ImageUrl;
+        var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
+        if (orDefault != null)
+        {
+            hotelImg = images == null
+                ? null
+                : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
+        }
+        var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
+        if (firstOrDefault != null)
+        {
+            roomImg = images == null
+                ? null
+                : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
+        } 
+*/*@
+        night = (hotelDetail.CheckOutDate - hotelDetail.CheckInDate).Days;
+        var rooms = hotelDetail.Rooms;
+        foreach (var room in hotelDetail.Rooms)
+        {
+            var roomName = room.RoomName;
+            var sum = 0;
+
+            foreach (var rate in room.Rates)
+            {
+
+                foreach (var config in rate.Breakdowns)
+                {
+                    sum += config.RateCount;
+                    totalRoom += config.RateCount;
+                    totalAdult += config.AdultCount;
+                    totalChild += config.ChildCount;
+                    if (config.ChildCount <= 0)
+                    {
+                        continue;
+                    }
+                    listAges.AddRange(config.ChildrenAges);
+                }
+            }
+            orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
+        }
+    }
+    catch
+    {
+        ViewBag.Message = "BookExpired";
+    }
+}
+<div class="content-right-payment">
+    <div class="row">
+        <div class="col-xs-12 img-hotel"><img src="@hotelImg" /></div>
+        <div class="col-xs-12 info-penerbangan">
+            <div class="detail-airport">
+                <h3>@ToTitleCase.ConvertToTitleCase(hotelDetail.HotelName)</h3>
+                @if     (hotelDetail.StarRating == 1) { <div class="star"></div> }
+                else if (hotelDetail.StarRating == 2) { <div class="star star-2"></div> }
+                else if (hotelDetail.StarRating == 3) { <div class="star star-3"></div> }
+                else if (hotelDetail.StarRating == 4) { <div class="star star-4"></div> }
+                else if (hotelDetail.StarRating == 5) { <div class="star star-5"></div> }
+                <p>@ToTitleCase.ConvertToTitleCase( hotelDetail.Address +" "+ hotelDetail.ZoneName + ", " +
+                    hotelDetail.DestinationName +" "+ hotelDetail.PostalCode +", "+ hotelDetail.CountryName )
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content-right-payment">
+    <div class="rincian-harga">
+        <p><b>Check in : </b><span>
+            @hotelDetail.CheckInDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
+        </span></p>
+        <p><b>Check out : </b><span>
+            @hotelDetail.CheckOutDate.ToString("D", CultureInfo.CreateSpecificCulture("id-ID"))
+        </span></p>
+        <p><b>Malam : </b><span>@night Malam</span></p>
+        <p><b>Kamar : </b><span>@totalRoom Kamar</span></p>
+        <p><b>Jenis Kamar : </b><span>
+            @for (var i = 0; i < orderedRooms.Count; i++) {
+                if (i != orderedRooms.Count - 1) {
+                    @orderedRooms[i].Item2<span> </span>
+                    @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)<span>, </span>
+                } else {
+                    @orderedRooms[i].Item2<span> </span>
+                    @ToTitleCase.ConvertToTitleCase(orderedRooms[i].Item1)
+                }
+            }
+        </span></p>
+        <p>
+            <b>Jumlah Tamu : </b>
+            <span>
+                @totalAdult Dewasa @if (totalChild > 0) {
+                    <span>, @totalChild Anak </span>
+                    <span> (
+                        @for (var a = 0; a < listAges.Count; a++) {
+                            if (a != listAges.Count - 1) {
+                                @listAges[a]
+                                <span>Tahun, </span>
+                            } else {
+                                @listAges[a] <span>Tahun)</span>
+                            }
+                        }
+                    </span>
+                }
+            </span>
+        </p>
+    </div>
+</div>

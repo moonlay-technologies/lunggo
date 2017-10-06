@@ -1,0 +1,46 @@
+<!-- overlay passenger picker -->
+<div class="overlay overlay--theme--blue overlay--passenger-selector" ng-class="{'active' : (PageConfig.ActiveOverlay == 'passenger-select')}">
+    <header class="overlay__header">
+        <h3 class="overlay__title">
+            Jumlah Penumpang
+            <span class="overlay__close" ng-click="PageConfig.SetOverlay()">X</span>
+        </h3>
+    </header><!-- .overlay__header -->
+    <section class="overlay__content">
+        <div class="passenger-selector">
+            <div class="passenger-selector__header">
+                <ul>
+                    <li><a class="adult" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'adult'}" ng-click="FlightSearchForm.PassengerPicker.Reset('adult')"></a></li>
+                    <li><a class="children" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'children'}" ng-click="FlightSearchForm.PassengerPicker.Reset('children')"></a></li>
+                    <li><a class="infant" ng-class="{'active' : FlightSearchForm.PassengerPicker.ActiveType == 'infant'}" ng-click="FlightSearchForm.PassengerPicker.Reset('infant')"></a></li>
+                </ul>
+            </div>
+            <div class="passenger-selector__body">
+                <div class="selected">
+                    <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'adult'">
+                        <span class="number">{{FlightSearchForm.Passenger[0]}}</span>
+                        <span class="description"><b>Dewasa</b><br />(&gt; 12 Tahun)</span>
+                    </p>
+                    <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'children'">
+                        <span class="number">{{FlightSearchForm.Passenger[1]}}</span>
+                        <span class="description"><b>Anak</b><br />(2-12 Tahun)</span>
+                    </p>
+                    <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                        <span class="number">{{FlightSearchForm.Passenger[2]}}</span>
+                        <span class="description"><b>Bayi</b><br />(&lt; 2 Tahun)</span>
+                    </p>
+                </div>
+                <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType != 'infant'">
+                    <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number, ' ')" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) )}">{{number}}</span>
+                </div>
+                <div class="selector" ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">
+                    <span ng-repeat="number in FlightSearchForm.PassengerPicker.List" ng-click="FlightSearchForm.PassengerPicker.Set(number, ' ')" ng-class="{'disabled' : (number > (FlightSearchForm.PassengerPicker.TotalMaxPassenger - FlightSearchForm.PassengerPicker.TotalCurrentPassenger) || ( number > FlightSearchForm.Passenger[0] ) )}">{{number}}</span>
+                </div>
+                <div class="note">
+                    <p ng-show="FlightSearchForm.PassengerPicker.ActiveType == 'infant'">Jumlah bayi tidak boleh lebih dari jumlah penumpang dewasa</p>
+                    <p>Jumlah total penumpang tidak boleh lebih dari 9 orang</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div><!-- .overlay--passenger-selector -->

@@ -218,7 +218,7 @@
                 </div>
                 <div class="content-right">
                     <label>Harga per Orang :</label>
-                    <h5 class="flight-price-was" ng-show="flight.originalAdultFare">Rp {{flight.originalAdultFare | number}}</h5>
+                    <h5 class="flight-price-was" ng-show="flight.originalAdultFare != flight.netAdultFare">Rp {{flight.originalAdultFare | number}}</h5>
                     <h4 class="flight-price">Rp {{flight.netAdultFare | number}}<span style="font-size: 10px"> /pax</span></h4>
                 </div>
             </div>
@@ -834,24 +834,6 @@
                             <button class="btn btn-block btn-yellow" ng-click="PageConfig.RefreshPage()" ng-disabled="PageConfig.Refreshing">KEMBALI</button>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="popup__wrapper" ng-class="{'active': selectError == true}">
-        <div class="popup">
-            <header class="popup__header">
-                <h4 class="popup__title">Penerbangan Tidak Tersedia</h4>
-            </header>
-            <div class="popup__body">
-                <div class="container_new">
-                    <span>Mohon Maaf, penerbangan ini tidak tersedia. Silakan klik tombol di bawah untuk kembali ke halaman awal.</span>
-                </div>
-            </div>
-            <div class="popup__footer">
-                <div class="container_new">
-                    <a class="btn btn-block btn-yellow" href="{{returnUrl}}">KEMBALI</a>
                 </div>
             </div>
         </div>

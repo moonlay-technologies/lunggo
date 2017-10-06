@@ -1,0 +1,287 @@
+@using Lunggo.ApCommon.Product.Constant
+@using Lunggo.ApCommon.Payment.Constant
+
+<!-- ========================= PAYMENT METHOD ========================= -->
+<div class="content-step" id="step-4">
+    <h3 class="lg-txt"><b>METODE</b> PEMBAYARAN</h3>
+    <div class="payment-wrapper">
+        <div class="row">
+            <!-- BANK TRANSFER -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.BankTransfer')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank-transfer.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>Bank Transfer</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
+                    <div class="row box-pilihan-bank">
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Mandiri')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Mandiri') }">
+                                <img src="/Assets/images/bank/mandiri.png" alt="Bank Transfer Mandiri">
+                            </div>
+                        </div>
+                        @*<div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.BCA')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.BCA') }">
+                                <img src="/Assets/images/bank/bca.png" alt="Bank BCA Virtual Account">
+                            </div>
+                        </div>*@
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.BNI')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.BNI') }">
+                                <img src="/Assets/images/bank/bni.png" alt="Bank BNI Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.BRI')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.BRI') }">
+                                <img src="/Assets/images/bank/bri.png" alt="Bank BRI Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.CIMB')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.CIMB') }">
+                                <img src="/Assets/images/bank/cimb-niaga.png" alt="Bank CIMB Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Danamon')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Danamon') }">
+                                <img src="/Assets/images/bank/danamon.png" alt="Bank Danamon Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Permata')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Permata') }">
+                                <img src="/Assets/images/bank/permata.png" alt="Bank Permata Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Maybank')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Maybank') }">
+                                <img src="/Assets/images/bank/maybank.png" alt="Bank BII Maybank Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.KEBHana')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.KEBHana') }">
+                                <img src="/Assets/images/bank/keb-hana.png" alt="Bank KEB Hana Virtual Account">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-3" ng-click="selectSubMethod('@PaymentSubmethod.Other')">
+                            <div class="img-bank" ng-class="{ 'selected' : (pay.postData.submethod == '@PaymentSubmethod.Other') }">
+                                <img src="/Assets/images/bank/bank-lainnya.png" alt="Bank Lainnya">
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite) {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.VirtualAccount)
+                </div>
+            </div><!-- /BANK TRANSFER -->
+
+            <!-- KARTU KREDIT / DEBIT -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.CreditCard')">
+                    <div class="col-xs-5"><img src="/Assets/images/kredit.jpg" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>Kartu Kredit / Debit</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <h3 class="lg-txt"><b>DETAIL</b> KARTU KREDIT / DEBIT</h3>
+                    <div class="credit-card-form form-kartu-kredit row">
+                        <div class="form-group col-xs-12">
+                            <label>Nomor Kartu</label>
+                            <input type="number" class="form-control cc-number" ng-model="CreditCard.Number"
+                                    required/>
+                            @*<!-- ng-required="(paymentMethod == '@PaymentMethod.CreditCard') && (CreditCard.TwoClick == 'false')" 
+                                    ng-blur="binDiscount.check()" 
+                            <div ng-show="binDiscount.text != ''" style="color:green">
+                                {{binDiscount.text}}
+                            </div> --> *@
+                            <div ng-show="CreditCard.Number.toString().length != 16 &&
+                                CreditCard.Number.toString().length != 0" style="color:red">
+                                Panjang nomor kartu harus 16 digit.
+                            </div>
+                        </div>
+                        <div class="ccDate col-xs-7" ng-class="{'has-error' : (dateOver || !checkDate(CreditCard.Month, CreditCard.Year))}">
+                            <div class="form-group">
+                                <label style="width: 100%">Kadaluarsa</label>
+                                 <div style="display: none">{{checkDate(CreditCard.Month, CreditCard.Year)}} </div>
+                                <div style="width: 40%;">
+                                    <input type="number" name="cc-month" class="form-control" ng-model="CreditCard.Month" placeholder="MM" ng-change="inputChanged('cc-month')">
+                                </div>
+                                <div style="font-size: 20px; margin: 7px 5px;">/</div>
+                                <div style="width: 40%;">
+                                    <input type="number" name="cc-year" class="form-control" ng-model="CreditCard.Year" placeholder="YY" ng-change="inputChanged('cc-year')">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5">
+                            <div class="form-group">
+                                <label>CVV Kartu</label>
+                                @* TODO: tampilin
+                                    CVV adalah 3 digit terakhir di belakang kartu Visa/Mastercard Anda *@
+                                <input type="number" class="form-control" placeholder="xxx" ng-model="CreditCard.Cvv" />
+                                   <!-- ng-required="paymentMethod == '@PaymentMethod.CreditCard'" /> -->
+                            </div>
+                        </div>
+                        <div ng-show="CreditCard.errorDateMsg" style="color:red; margin-bottom: 14px;" class="col-xs-12">
+                            {{CreditCard.errorDateMsg}}
+                        </div>
+                        <div ng-show="dateOver" style="color:red; margin-bottom: 14px;" class="col-xs-12">
+                            Tanggal Kadaluarsa harus lebih dari tanggal saat ini.
+                        </div>
+                        <div ng-show="CreditCard.Cvv.toString().length != 3 && CreditCard.Cvv.toString().length != 4 &&
+                            CreditCard.Cvv.toString().length != 0" style="color:red; margin-bottom: 14px;" class="col-xs-12">
+                            Panjang CVV antara 3-4 digit.
+                        </div>
+                        <div class="form-group col-xs-12" ng-class="{'has-error' : !checkName(CreditCard.Name)}">
+                            <label>Nama Pemegang Kartu</label>
+                            <input type="text" class="form-control" ng-model="CreditCard.Name" required>
+                    @* <!--     pattern="^[a-zA-Z ]+$"
+                                ng-required="paymentMethod == '@PaymentMethod.CreditCard'"  -->*@ 
+                            <div ng-show="!checkName(CreditCard.Name)" style="color:red">
+                                Nama tidak boleh mengandung karakter selain alfabet dan spasi
+                            </div>
+                        </div>
+                    </div>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite) {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CreditCard)
+                </div>
+            </div><!-- /KARTU KREDIT / DEBIT -->
+            
+        @*  <!-- VIRTUAL ACCOUNT -->
+            <!-- <div class="box-payment col-xs-12" data-payment-method="@PaymentMethod.VirtualAccount">
+                <div class="row" ng-click="setMdr('@PaymentMethod.VirtualAccount')">
+                    <div class="col-xs-5"><img src="/Assets/images/atm.jpg" /></div>
+                    <div class="col-xs-5 not-selected"><p>Virtual Account</p></div>
+                </div>
+                <div class="separator-desktop"></div>
+                <h3 class="lg-txt"><b>PILIHAN</b> BANK</h3>
+                <div class="row box-pilihan-bank">
+                    <div class="col-xs-3 ">
+                        <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                        <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                    </div>
+                    <div class="col-xs-3 ">
+                        <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                        <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                    </div>
+                    <div class="col-xs-3 ">
+                        <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                        <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                    </div>
+                    <div class="col-xs-3 ">
+                        <div class="img-bank"><img src="/Assets/images/mandiri.png" alt="Bank Mandiri"></div>
+                        <div class="nama-bank"><p><b>Bank Mandiri</b></p></div>
+                    </div>
+                </div>
+                <div class="form-bayar">
+                    <p>*Dengan klik tombol ‘Bayar’, Anda telah setuju dengan <a href="#">syarat & ketentuan</a> dan <a href="#">kebijakan privasi</a></p>
+                    <input type="submit" class="btn btn-yellow md-txt lg-btn col-xs-4" value="BAYAR">
+                </div>
+            </div> --><!-- /VIRTUAL ACCOUNT -->*@
+
+            <!-- MANDIRI CLICKPAY -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.MandiriClickPay')">
+                    <div class="col-xs-5"><img src="/Assets/images/mandiri.jpg" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>Mandiri Clickpay</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <h3 class="lg-txt"><b>DETAIL</b> PEMBAYARAN - <b>MANDIRI CLICKPAY</b></h3>
+                    <div class="form-kartu-kredit">
+                        <div class="form-group">
+                            <label>Nomor Kartu</label>
+                            <input type="number" class="form-control cc-number" maxlength="19"
+                                    ng-model="MandiriClickPay.CardNo" />
+                        </div>
+
+                        <div ng-show="MandiriClickPay.CardNo.toString().length != 16 &&
+                            MandiriClickPay.CardNo.toString().length != 0" style="color:red">
+                            Panjang nomor kartu harus 16 digit.
+                        </div>
+                        <div class="how-to-pay-mandiri">
+                            <p>Input Token Mandiri &nbsp;<small>(diisi secara berurutan)</small></p>
+                            <div class="row text-group">
+                                <div class="col-xs-3 clear-left"><b>APPLI</b></div>
+                                <div class="col-xs-9">: 3</div>
+                            </div>
+                            <div class="row text-group">
+                                <div class="col-xs-3 clear-left"><b>Input 1</b></div>
+                                <div class="col-xs-9">:
+                                    <span ng-if="MandiriClickPay.CardNo.toString().length >= 12">
+                                    <!-- <span ng-if="MandiriClickPay.CardNo.length >= 12"> -->
+                                        {{MandiriClickPay.CardNo | limitTo:-10}}
+                                    </span>
+                                    <span ng-if="MandiriClickPay.CardNo.toString().length < 12">
+                                        Masukkan nomor kartu terlebih dahulu
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row text-group">
+                                <div class="col-xs-3 clear-left"><b>Input 2</b></div>
+                                <div class="col-xs-9">: 
+                                    {{totalPrice - voucher.amount + UniqueCodePaymentConfig.UniqueCode}}
+                                </div>
+                            </div>
+                            <div class="row text-group">
+                                <div class="col-xs-3 clear-left"><b>Input 3</b></div>
+                                <div class="col-xs-9">: 
+                                    @Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Respon Token Mandiri</label>
+                            <input type="number" class="form-control cc-number" placeholder="xxxxxx"
+                               ng-model="MandiriClickPay.Token" required />
+                            <div ng-show="MandiriClickPay.Token.toString().length != 6 && 
+                                MandiriClickPay.Token.toString().length != 0" style="color:red">
+                                Panjang Token harus 6 digit.
+                            </div>
+                        @*<!-- name="mandiriToken" -->*@
+                        </div>
+                    </div>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite) {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.MandiriClickPay)
+                </div>
+            </div><!-- /MANDIRI CLICKPAY -->
+            
+            <!-- CIMB CLICKS -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.CimbClicks')">
+                    <div class="col-xs-5"><img src="/Assets/images/cimb.jpg" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>CIMB Clicks</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran CIMB Clicks akan diproses di situs Bank CIMB Niaga. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite) {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CimbClicks)
+                </div>
+            </div><!-- /CIMB CLICKS -->
+        </div>
+    </div><!-- .payment-wrapper -->
+</div><!-- .content.step#step-4 -->
+<!-- ======================= END OF PAYMENT METHOD ======================= -->

@@ -5,7 +5,7 @@
     ViewBag.FooterSubscribe = true;
     ViewBag.FooterPayment = true;
     ViewBag.FooterFeedback = false;
-    ViewBag.Title = "Diskon untuk semua penerbangan dan hotel domestik dan internasional";
+    ViewBag.Title = "";
     ViewBag.AngularController = "homeController";
     //ViewBag.Campaign = true;
     ViewBag.Page = "Index";
@@ -17,38 +17,33 @@
 }
 
 @section AdditionalJS{
-    <!-- additional Angular JS-->
-    <script src="/Assets/js/js.cookie.js"></script>
+
     <!-- jquery datepicker -->
-    <script src="/Assets/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
-    <script src="/Assets/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/Assets/js/jquery.ui.datepicker-id.js"></script>
     <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar.min.js"></script>
     <script type="text/javascript" src="/Assets/vendor/fullcalendar/fullcalendar-id.min.js"></script>
 }
 
 @section PageJS{
+    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
+    <script src="/Assets/travorama20/js/homeController.js"></script>
+    <script src="/Assets/travorama20/js/pagejs/index-page.js"></script>
+    <script src="/Assets/travorama20/js/partial/subscriptionForm.js"></script>
     <script>
-        newsletterFormFunctions();
-        indexPageFunctions();
-        subscribeFormFunctions();
-
         var indexPageDestination = '@ViewBag.DestinationName' || '';
         var indexPageDestinationsCode = '@ViewBag.DestinationCode' || '';
         //var topDestinations = @Html.Raw(ViewBag.LocationList);
         var departureDate = '@(DateTime.Now.AddDays(1).ToString("ddMMyy"))';
     </script>
-    <script src="/Assets/travorama20/angularDirectory/search/hotelSearch.service.js"></script>
-    <script src="/Assets/travorama20/js/homeController.js"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-            $('.fc-event-container').click(function () {
-                $(this).closest('table').find('.fc-day-top').addClass('active');
-            });
-        })
-    </script>
-    @*<script> changeMainTab();</script>*@
+
+    @*
+        <!-- currently unimplemented -->
+        $(document).ready(function () {
+            changeTheme(indexPageDestination);
+        });
+        <script> changeMainTab();</script>
+    *@
 }
 
 <section class="section-search normal-txt">
@@ -293,40 +288,60 @@
     {
         <div class="page-slider">
             <div class="slider-wrapper" id="index-wrapper">
-                @if (DateTime.UtcNow.AddHours(7) >= new DateTime(2017, 03, 24, 20, 0, 0) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 08, 27))
+                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 9, 30))
                 {
                     <div class="slider">
-                        <a href="@Url.Action("PaydayMadnessPermataBank", "Promo")">
-                            <img src="/Assets/images/campaign/PaydayMadness/PaydayMadness-slider.jpg" alt="Payday Madness Permata Bank" />
+                        <a href="@Url.Action("HoreGajian", "Promo")" target="_blank">
+                            <img src="/Assets/images/campaign/2017HoreGajian/homepage_desktop.jpg" alt="Promo Hore Gajian" />
                         </a>
                     </div>
                 }
-                @if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 03, 23) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 04, 02))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("PaydayMegaDeals", "Promo")">
-                            <img src="/Assets/images/campaign/PaydayMegaDeals/PaydayMegaDeals-slider.jpg" alt="Payday Mega Deals" />
-                        </a>
-                    </div>
-                }
-                @if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 3, 31))
-                {
-                    <div class="slider">
-                        <a href="@Url.Action("BTNTerbanginHemat", "Promo")">
-                            <img src="/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider.jpg" alt="Terbangin Hemat (Terbang & Nginap Hemat)" />
-                        </a>
-                    </div>
-                }
+                @* @if (DateTime.UtcNow.AddHours(7).DayOfWeek == DayOfWeek.Monday){*@
                 <div class="slider">
-                    <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
-                        <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
+                    <a href="@Url.Action("GoodMonday", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017GoodMonday/homepage_desktop.jpg" alt="Promo Good Monday" />
                     </a>
                 </div>
                 <div class="slider">
-                    <a href="#">
-                        <img src="/Assets/images/default-banner.jpg" alt="Travorama" />
+                    <a href="@Url.Action("SelasaSpesial", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017SelasaSpesial/homepage_desktop.jpg" alt="Promo Selasa Spesial" />
                     </a>
                 </div>
+                <div class="slider">
+                    <a href="@Url.Action("PromoRabu", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017PromoRabu/homepage_desktop.jpg" alt="Promo Rabu" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("KamisCeria", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017KamisCeria/homepage_desktop.jpg" alt="Promo Kamis Ceria" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("JumatHemat", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017JumatHemat/homepage_desktop.jpg" alt="Promo Jumat Hemat" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("JalanJalanSabtu", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017JalanJalanSabtu/homepage_desktop.jpg" alt="Promo Jalan Jalan Sabtu" />
+                    </a>
+                </div>
+                <div class="slider">
+                    <a href="@Url.Action("SundayFunday", "Promo")" target="_blank">
+                        <img src="/Assets/images/campaign/2017SundayFunday/homepage_desktop.jpg" alt="Promo Sunday Funday" />
+                    </a>
+                </div>
+                @*<div class="slider">
+                        <a href="@Url.Action("TravoramaMobileApp","StaticPage")">
+                            <img src="/Assets/images/campaign/MobileApp/mobile-app-banner.jpg" alt="Download Travorama Mobile App" />
+                        </a>
+                    </div>
+                    <div class="slider">
+                        <a href="#">
+                            <img src="/Assets/images/default-banner.jpg" alt="Travorama" />
+                        </a>
+                    </div>*@
             </div>
         </div><!-- .slider -->
     }
@@ -339,35 +354,70 @@
             </div>
         </div><!-- .slider -->
     }
-
 </section><!-- .section-search -->
+
+<section class="section-why">
+    <div class="container text-center">
+        <div class="section-titles stripe xlg-txt"><h1>Mengapa memilih <span class="os-bold blue-txt">Travorama?</span></h1></div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="sw-img sw-disc"></div>
+                <div class="blue-txt md-txt why-title"><h2><span class="os-bold">Beragam Promo<br />Setiap Hari</span></h2></div>
+                <div class="normal-txt">Setiap hari kami memberikan beragam promo yang membuat perjalanan kamu lebih hemat dan menyenangkan.</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-percaya"></div>
+                <div class="blue-txt md-txt why-title"><h2><span class="os-bold">Terpercaya</span></h2></div>
+                <div class="normal-txt"><br />Kamu pasti dapat tiket atau voucher yang kamu bayarkan, atau uang kamu kembali 100%</div>
+            </div>
+            <div class="col-xs-4">
+                <div class="sw-img sw-pilihan"></div>
+                <div class="blue-txt md-txt why-title"><h2><span class="os-bold">Pilihan Maskapai<br />dan Hotel Banyak<br /></span></h2></div>
+                <div class="normal-txt">Tiket pesawat dan kamar hotel yang kamu cari ada di sini!</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-xs-offset-3">
+                <div class="sw-img sw-free"></div>
+                <div class="blue-txt md-txt why-title"><h2><span class="os-bold">Harga Murah</span></h2></div>
+                <div class="normal-txt"><br />Di sini kamu bisa mendapatkan penawaran harga terbaik untuk tiket pesawat dan kamar hotel pilihan kamu</div>
+            </div>
+            <div class="col-xs-3 col-xs-offset-1">
+                <div class="sw-img sw-trust"></div>
+                <div class="blue-txt md-txt why-title"><h2><span class="os-bold">Pembayaran Lengkap, <br />Mudah, dan Aman</span></h2></div>
+                <div class="normal-txt">Semua pembayaran diverifikasi secara otomatis dan semua data privasi diamankan dengan enkripsi Rapid SSL</div>
+            </div>
+        </div>
+    </div>
+</section><!-- .section-why -->
+<!-- Partners -->
+<section>
+    @Html.Partial("/Views/common/partners.cshtml")
+</section>
+
 <section class="section-calendar-price">
     <div class="container">
-        <div class="row">
-            <div class="col-xs-8">
+        <div class="section-titles stripe xlg-txt text-center "><h1>Cari Tanggal <span class="os-bold blue-txt">Termurah</span></h1></div>
+        <div class="row container-calendar">
+            <div class="col-xs-5">
                 <div class="price-calendar">
-                    <div class="md-txt os-bold">Tiket Pesawat Termurah Setiap Hari</div>
                     <div class="search-map">
                         <div class="row normal-txt semibold-txt">
-                            <div class="col-xs-7">
-                                <div class="col-xs-6" id="searchFrom">Dari</div>
-                                <div class="col-xs-6" id="searchTo">Ke</div>
-                            </div>
-                            <div class="col-xs-5">
-                                <div class="col-xs-12">Bulan</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="search-input col-xs-7">
-                                <div class="col-xs-6 map-input">
-                                    <input type="text" name="searchFrom">
-                                </div>
-                                <div class="col-xs-6 map-input">
-                                    <input type="text" name="searchTo">
+                            <div class="col-xs-12 container-form-location">
+                                <div class="col-xs-12 label-form-location" id="searchFrom">Dari</div>
+                                <div class="col-xs-12">
+                                    <input class="map-input" type="text" name="searchFrom">
                                 </div>
                             </div>
-                            <div class="col-xs-5">
-                                <div class="col-xs-8">
+                            <div class="col-xs-12 container-form-location">
+                                <div class="col-xs-12 label-form-location" id="searchTo">Ke</div>
+                                <div class="col-xs-12">
+                                    <input class="map-input" type="text" name="searchTo">
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="col-xs-12 label-form-location">Bulan</div>
+                                <div class="col-xs-12">
                                     <select id="month-year-select" class="hidden">
                                         <option value="" id="smonth0"></option>
                                         <option value="" id="smonth1"></option>
@@ -402,113 +452,53 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xs-4">
+                                <div class="col-xs-12 ">
                                     <a class="btn btn-yellow lg-btn md-txt btn-calendar" id="submitCalendar">CARI</a>
                                 </div>
-
                             </div>
                         </div>
                         <div class="location-choice">
                             @Html.Partial("/Views/Shared/Desktop/_SearchLocation.cshtml")
                         </div>
                     </div>
-                    <div id="pc-datepicker"></div>
+                    <!--<div id="pc-datepicker"></div> -->
                 </div>
             </div>
-            <div class="col-xs-4">
-                @Html.Partial("/Views/Shared/Desktop/_PopularFlight.cshtml")
+            <div class="col-xs-7">
+                <div id="pc-datepicker"></div>
             </div>
+
         </div>
     </div>
 </section>
+
+<section class="section-subscribe">
+    <div class="container">
+        <div class="info-subscribe">
+            <h1>Booking Tiket Mudah & Cepat</h1>
+            <span>Rasakan kemudahan booking tiket di HP Anda<br />dengan download GRATIS Travorama Mobile App</span>
+            <div class="btn-download">
+                <div class="btn-1">
+                    <a href="https://play.google.com/store/apps/details?id=com.travorama&amp;hl=en">
+                        <img src="Assets/images/buttons/google-play.png" />
+                    </a>
+                    <a href="https://appsto.re/id/N8Dgeb.i">
+                        <img src="Assets/images/buttons/app-store.png" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- .section-subscribe -->
+
 <section class="section-popular">
     <div class="container">
         @Html.Partial("/Views/Shared/Desktop/_PopularHotel.cshtml")
     </div>
 </section>
-<section class="section-why">
-    <div class="container text-center">
-        <div class="xlg-txt"><span class="os-regular">Mengapa memilih</span> <span class="os-bold blue-txt">Travorama?</span></div>
-        <div class="row">
-            <div class="col-xs-4">
-                <div class="sw-img sw-disc"></div>
-                <div class="blue-txt md-txt">Harga <span class="os-bold">Diskon<br />Setiap Hari </span></div>
-                <div class="normal-txt">Potongan harga untuk setiap transaksi di Travorama. Temukan harga bersaing dibandingkan Online Travel Agent lain.</div>
-            </div>
-            <div class="col-xs-4">
-                <div class="sw-img sw-active"></div>
-                <div class="blue-txt md-txt">Waktu<br /><span class="os-bold">Pembayaran Panjang</span></div>
-                <div class="normal-txt">Waktu pembayaran tiket pesawat dan kamar hotel lebih panjang dibandingkan Online Travel Agent pada umumnya.</div>
-            </div>
-            <div class="col-xs-4">
-                <div class="sw-img sw-free"></div>
-                <div class="blue-txt md-txt">Tanpa<br /><span class="os-bold">Biaya Tambahan</span></div>
-                <div class="normal-txt">Harga yang tercantum adalah harga final, tanpa biaya tersembunyi.</div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4">
-                <div class="sw-img sw-flight"></div>
-                <div class="blue-txt md-txt">Rute <span class="os-bold">Penerbangan<br />Domestik & Internasional<br /></span></div>
-                <div class="normal-txt">Waktu pembayaran tiket pesawat dan kamar hotel lebih panjang dibandingkan Online Travel Agent pada umumnya.</div>
-            </div>
-            <div class="col-xs-4">
-                <div class="sw-img sw-hotel"></div>
-                <div class="blue-txt md-txt">Pilihan<br /> <span class="os-bold">Hotel Maksimal</span></div>
-                <div class="normal-txt">Terdapat 85.000 listing hotel di seluruh dunia.</div>
-            </div>
-            <div class="col-xs-4">
-                <div class="sw-img sw-trust"></div>
-                <div class="blue-txt md-txt">Jaminan <span class="os-bold">Pembayaran <br />Online Aman & Mudah</span></div>
-                <div class="normal-txt">Enkripsi Rapid SSL menjamin privasi dan keamanan saat melakukan transaksi online.</div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="section-subscribe">
-    <div class="container">
 
-        <img class="subscribe-bg" src="/Assets/images/subscribe-bg.jpg" alt="Email" />
 
-        <div class="row subscribe-after">
-            <div class="col-xs-10 col-xs-offset-2">
-                <div>
-                    <h2><b>Terima Kasih Telah Mendaftar di Newsletter Kami</b></h2>
-                </div>
-            </div>
-        </div>
 
-        <div class="row subscribe-before">
-            <div class="col-xs-7">
-                <h2>Jadilah yang pertama tahu mengenai tujuan perjalanan serta promo penerbangan terkini!</h2>
-            </div>
-            <div class="col-xs-5">
-                <form class="form subscribe-form">
-                    <div class="form-group">
-                        <input type="text" name="address" value="" class="subscribe-email form-control" placeholder="Alamat E-mail Anda" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="name" value="" class="subscribe-name form-control" placeholder="Nama Anda" />
-                        <input type="submit" class="btn btn-yellow sm-btn" value="MEMBERSHIP" />
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
-</section><!-- .section-subscribe -->
-
-<section class="section-payment">
-    <div class="container text-center">
-
-        <h2 class="section-title stripe text-center xlg-txt">MENERIMA <span>PEMBAYARAN</span> MELALUI</h2>
-
-        <p class="text-center">
-            <img src="/Assets/images/payment-method.jpg" alt="Visa and Master Card, ATM Bersama, CIMB Clicks" />
-        </p>
-
-    </div>
-</section><!-- .section-payment -->
 @*// location
     ViewBag.LocationData = new Dictionary<string, string>
     ();

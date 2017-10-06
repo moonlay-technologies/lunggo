@@ -10,9 +10,10 @@ namespace Lunggo.ApCommon.Payment.Constant
     {
         None,
         PaymentFailure,
-        VoucherNoLongerEligible,
+        VoucherNoLongerAvailable,
         BinPromoNoLongerEligible,
         MethodDiscountNoLongerEligible,
-        MethodNotAvailable
+        MethodNotAvailable,
+        VoucherNotEligible
     }
 }

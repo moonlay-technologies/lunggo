@@ -1129,8 +1129,9 @@ app.controller('returnFlightController', [
                         $scope.initWeek('return');
                     }
                     
-                }).error(function (returnData) {
-                });
+                })
+                // .fail(function (returnData) {
+                // });
             }
         }
 
@@ -1265,6 +1266,7 @@ app.controller('returnFlightController', [
             }
         }
 
+        //REDUNDANT#MONTH
         $scope.returnMonth = function (val) {
             if (val == '1' || val == '01')
                 return "Jan";

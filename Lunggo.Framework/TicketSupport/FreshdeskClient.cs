@@ -4,6 +4,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.SharedModel;
 using Newtonsoft.Json;
 using RestSharp;
+using RestSharp.Authenticators;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 
 namespace Lunggo.Framework.TicketSupport

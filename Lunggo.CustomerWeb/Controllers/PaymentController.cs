@@ -14,11 +14,12 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Extension;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
-    public class PaymentController : Controller
+    public partial class PaymentController : Controller
     {
         public ActionResult Payment(string rsvNo, string regId)
         {
@@ -37,16 +38,35 @@ namespace Lunggo.CustomerWeb.Controllers
                     else
                         rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
 
-                    return View(new PaymentData
+
+                    if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status != PaymentStatus.Settled)
                     {
-                        RsvNo = rsvNo,
-                        Reservation = rsv,
-                        TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
-                    });
-                    
+                        return Redirect(rsv.Payment.RedirectionUrl);
+                    }
+                    else if (rsv.Payment.Status == PaymentStatus.Pending &&
+                         (rsv.Payment.Method == PaymentMethod.BankTransfer ||
+                          rsv.Payment.Method == PaymentMethod.VirtualAccount))
+                    {
+                        return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
+                    }
+                    else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) ||
+                        rsv.Payment.Status == PaymentStatus.Failed)
+                    {
+                        ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+                        return View(new PaymentData
+                        {
+                            RsvNo = rsvNo,
+                            Reservation = rsv,
+                            TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
+                        });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+                    }
                 }
                 return RedirectToAction("Index", "Index");
-                
+
             }
             catch
             {
@@ -98,6 +118,10 @@ namespace Lunggo.CustomerWeb.Controllers
                 if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
                     && rsv.Payment.Status == PaymentStatus.Pending)
                 {
+                    ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv);
+                    ViewBag.BankName = PaymentService.GetInstance().GetBankName(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
+                    ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(rsv.Payment.TransferAccount);
+                    ViewBag.BankImageName = GetBankImageName(rsv.Payment.Submethod);
                     return View(rsv);
                 }
                 else
@@ -192,6 +216,35 @@ namespace Lunggo.CustomerWeb.Controllers
                 result = result + "" + generatedNumber;
             }
             return result;
+        }
+
+        public string GetBankImageName(PaymentSubmethod submethod)
+        {
+            switch (submethod)
+            {
+                case PaymentSubmethod.Mandiri:
+                    return "mandiri.png";
+                case PaymentSubmethod.BCA:
+                    return "bca.png";
+                case PaymentSubmethod.BNI:
+                    return "bni.png";
+                case PaymentSubmethod.BRI:
+                    return "bri.png";
+                case PaymentSubmethod.CIMB:
+                    return "cimb-niaga.png";
+                case PaymentSubmethod.Danamon:
+                    return "danamon.png";
+                case PaymentSubmethod.KEBHana:
+                    return "keb-hana.png";
+                case PaymentSubmethod.Permata:
+                    return "permata.png";
+                case PaymentSubmethod.Maybank:
+                    return "maybank.png";
+                case PaymentSubmethod.Other:
+                    return "permata.png";
+                default:
+                    return null;
+            }
         }
 
         #endregion

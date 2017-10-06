@@ -34,18 +34,10 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View(model);
                 }
 
-                string location;
-                if (zone != null)
-                {
-                    location = area ?? zone;
-                }
-                else
-                {
-                    location = destination;
-                }
-
+                var location = area ?? zone ?? destination;
+                
                 var client = new RestClient(source);
-                string url = @"/v1/autocomplete/hotel//" + location;
+                var url = @"/v1/autocomplete/hotel/" + location.Replace('-', ' ');
                 var searchRequest = new RestRequest(url, Method.GET);
                 var searchResponse = client.Execute(searchRequest);
                 var data = searchResponse.Content.Deserialize<AutocompleteResponse>();
@@ -55,7 +47,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (area != null)
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -63,7 +55,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -72,7 +64,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
                 else
                 {
-                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && r.Country == country).ToList();
+                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                     if (selected.Count > 0)
                     {
                         locationId = selected[0].Id;
@@ -83,7 +75,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var nextDate = nextMonthDate.AddDays(1);
                 var newquery = "info=Location." + locationId + "." + nextMonthDate.Year + "-" +
                          nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" +
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
@@ -110,15 +102,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     return View(model);
                 }
 
-                string location;
-                if (zone != null)
-                {
-                    location = area ?? zone;
-                }
-                else
-                {
-                    location = destination;
-                }
+                var location = area ?? zone ?? destination;
 
                 var client = new RestClient(source);
                 string url = @"/v1/autocomplete/hotel//" + location;
@@ -131,7 +115,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (area != null)
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Area" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -139,7 +123,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     }
                     else
                     {
-                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && r.Country == country).ToList();
+                        var selected = data.Autocompletes.Where(r => r.Type == "Zone" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                         if (selected.Count > 0)
                         {
                             locationId = selected[0].Id;
@@ -148,7 +132,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
                 else
                 {
-                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && r.Country == country).ToList();
+                    var selected = data.Autocompletes.Where(r => r.Type == "Destination" && country.Split('-').All(w => r.Country.Contains(w))).ToList();
                     if (selected.Count > 0)
                     {
                         locationId = selected[0].Id;
@@ -159,7 +143,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var nextDate = tomorrowDate.AddDays(1);
                 var newquery = "info=Location." + locationId + "." + tomorrowDate.Year + "-" +
                          tomorrowDate.Month.ToString("d2") + "-" + tomorrowDate.Day.ToString("d2")
-                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" +
+                         + "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + 
                          nextDate.Day.ToString("d2") + ".1.1.1~0";
                 var newmodel = new HotelSearchApiRequest(newquery);
                 return View(newmodel);
@@ -231,22 +215,22 @@ namespace Lunggo.CustomerWeb.Controllers
             if (Request != null && Request.QueryString != null && Request.QueryString.ToString().Length > 0)
             {
                 var searchParam = HttpUtility.UrlDecode(Request.QueryString.ToString());
-    
-                return View(new HotelDetailModel.HotelDetail
-                {
-                    HotelCode = hotelCd,
+                
+            return View(new HotelDetailModel.HotelDetail
+            {
+                HotelCode = hotelCd,
                     SearchId = searchId,
                     SearchParam = searchParam,
                     HotelDetailId = result.HotelDetailId,
                     HotelDetailData = result.HotelDetail
-                });
-            }
+            });
+        }
 
             var nextMonthDate = DateTime.Today.AddMonths(1);
             var nextDate = nextMonthDate.AddDays(1);
             var searchParams = "Location." + result.HotelDetail.DestinationName + "." + nextMonthDate.Year + "-" + nextMonthDate.Month.ToString("d2") + "-" + nextMonthDate.Day.ToString("d2") +
                                "." + nextDate.Year + "-" + nextDate.Month.ToString("d2") + "-" + nextDate.Day.ToString("d2") + ".1.1.1~0";
-
+                    
             return View(new HotelDetailModel.HotelDetail
             {
                 HotelCode = hotelCd,
@@ -293,7 +277,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     });
                 }
             }
-            return RedirectToAction("Index", "Index");
+                return RedirectToAction("Index", "Index");
         }
 
         [HttpPost]
@@ -339,7 +323,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return View();
         }
 
-
+        
 
         #region Helpers
 
