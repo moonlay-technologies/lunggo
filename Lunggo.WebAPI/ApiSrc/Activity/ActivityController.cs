@@ -6,26 +6,70 @@ using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System;
 using System.Web.Http;
+using Lunggo.ApCommon.Activity.Constant;
+using Lunggo.ApCommon.Activity.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity
 {
     public class ActivityController : ApiController
     {
-        [HttpPost]
+        [HttpGet]
         [LunggoCorsPolicy]
         [Level1Authorize]
         [Route("v1/activity/search")]
-        public ApiResponseBase SearchActivity()
+        public ApiResponseBase SearchActivity(string searchActivityType="ActivityName", string name="", string date="", string page="1", string perPage="10")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
             var currency = ApiRequestBase.GetHeaderValue("Currency");
             OnlineContext.SetActiveCurrencyCode(currency);
-            ActivitySearchApiRequest request = null;
+
+            if (searchActivityType != "ActivityName")
+            {
+                if(searchActivityType != "ActivityDate")
+                    return ActivityLogic.Search(null);
+            }
+
+            var SearchType = SearchActivityTypeCd.Mnemonic(searchActivityType);
+
             try
             {
-                request = ApiRequestBase.DeserializeRequest<ActivitySearchApiRequest>();
+                var CloseYear = "20" + date.Substring(4, 2);
+                var CloseDate = new DateTime(Convert.ToInt32(CloseYear), Convert.ToInt32(date.Substring(2, 2)),
+                    Convert.ToInt32(date.Substring(0, 2)));
+
+                var request = new ActivitySearchApiRequest
+                {
+                    SearchType = SearchType,
+                    Filter = new ActivityFilter { Name = name, CloseDate = CloseDate },
+                    Page = Convert.ToInt32(page),
+                    PerPage = Convert.ToInt32(perPage)
+                };
+
                 var apiResponse = ActivityLogic.Search(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/activity/select")]
+        public ApiResponseBase SelectActivity()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            ActivitySelectApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ActivitySelectApiRequest>();
+                var apiResponse = ActivityLogic.Select(request);
                 return apiResponse;
             }
             catch (Exception e)
@@ -33,52 +77,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
-
-        //[HttpPost]
-        //[LunggoCorsPolicy]
-        //[Level1Authorize]
-        //[Route("v1/hotel/book")]
-        //public ApiResponseBase BookHotel()
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    HotelBookApiRequest request = null;
-        //    try
-        //    {
-        //        request = ApiRequestBase.DeserializeRequest<HotelBookApiRequest>();
-        //        var apiResponse = HotelLogic.BookLogic(request);
-        //        return apiResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e, request);
-        //    }
-        //}
-
-        //[HttpPost]
-        //[LunggoCorsPolicy]
-        //[Level1Authorize]
-        //[Route("v1/hotel/select")]
-        //public ApiResponseBase SelectHotel()
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    HotelSelectRoomApiRequest request = null;
-        //    try
-        //    {
-        //        request = ApiRequestBase.DeserializeRequest<HotelSelectRoomApiRequest>();
-        //        var apiResponse = HotelLogic.SelectHotelRatesLogic(request);
-        //        return apiResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e, request);
-        //    }
-        //}
 
         //[HttpPost]
         //[LunggoCorsPolicy]

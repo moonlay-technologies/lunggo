@@ -4,6 +4,7 @@ using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System.Linq;
 using System.Net;
+using Lunggo.ApCommon.Activity.Model.Logic;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
@@ -47,22 +48,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 ActivityFilter = request.Filter,
                 Page = request.Page,
                 PerPage = request.PerPage
-                //SearchHotelType = request.SearchType,
-                //SearchId = request.SearchId,
-                //CheckIn = request.CheckinDate,
-                //Checkout = request.CheckoutDate,
-                //AdultCount = request.AdultCount,
-                //ChildCount = request.ChildCount,
-                //Nights = request.NightCount,
-                //Occupancies = request.Occupancies,
-                //Rooms = request.RoomCount,
-                //Location = request.Location,
-                //Page = request.Page,
-                //PerPage = request.PerPage,
-                //FilterParam = request.Filter,
-                //SortingParam = request.Sorting,
-                //HotelCode = request.HotelCode,
-                //RegsId = request.RegsId
             };
             return searchServiceRequest;
         }
@@ -71,8 +56,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new ActivitySearchApiResponse
             {
-                ActivityList = searchServiceResponse.ActivityList.Select(actList => new ActivityDetailForDisplay()
+                ActivityList = searchServiceResponse.ActivityList.Select(actList => new SearchResultForDisplay()
                 {
+                    ActivityId = actList.ActivityId,
                     Name = actList.Name,
                     City = actList.City,
                     Country = actList.Country,

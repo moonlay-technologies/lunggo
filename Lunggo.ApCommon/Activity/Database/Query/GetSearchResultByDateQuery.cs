@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.Framework.Database;
-using Lunggo.Framework.Documents;
-using Lunggo.Repository.TableRecord;
 
-namespace Lunggo.ApCommon.Activity.Query
+namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class GetSearchResultByDateQuery : DbQueryBase<GetSearchResultByDateQuery, ActivityDetail>
+    internal class GetSearchResultByDateQuery : DbQueryBase<GetSearchResultByDateQuery, SearchResult>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -26,7 +19,8 @@ namespace Lunggo.ApCommon.Activity.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Name AS Name, ");
+            clauseBuilder.Append("SELECT act.Id AS ActivityId, ");
+            clauseBuilder.Append("act.Name AS Name, ");
             clauseBuilder.Append("act.Description AS Description, ");
             clauseBuilder.Append("act.City AS City, ");
             clauseBuilder.Append("act.Country AS Country, ");

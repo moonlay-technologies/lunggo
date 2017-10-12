@@ -1,7 +1,8 @@
 ﻿using Lunggo.ApCommon.Activity.Model;
-using Lunggo.ApCommon.Activity.Query;
 using Lunggo.Framework.Database;
 using System.Linq;
+using Lunggo.ApCommon.Activity.Database.Query;
+using Lunggo.ApCommon.Activity.Model.Logic;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -17,8 +18,9 @@ namespace Lunggo.ApCommon.Activity.Service
                 //Do Logic Here
                 var output = new SearchActivityOutput
                 {
-                    ActivityList = savedActivities.Select(a => new ActivityDetail()
+                    ActivityList = savedActivities.Select(a => new SearchResult()
                                     {
+                                        ActivityId = a.ActivityId,
                                         Name = a.Name,
                                         City = a.City,
                                         Country = a.Country,
@@ -46,8 +48,9 @@ namespace Lunggo.ApCommon.Activity.Service
                 //Do Logic Here
                 var output = new SearchActivityOutput
                 {
-                    ActivityList = savedActivities.Select(a => new ActivityDetail()
+                    ActivityList = savedActivities.Select(a => new SearchResult()
                     {
+                        ActivityId = a.ActivityId,
                         Name = a.Name,
                         City = a.City,
                         Country = a.Country,
@@ -63,6 +66,33 @@ namespace Lunggo.ApCommon.Activity.Service
                 return output;
             }
         }
-        
+
+        public SelectActivityOutput GetActivityDetailFromDb(SelectActivityInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var savedActivity = GetActivityDetailQuery.GetInstance()
+                    .Execute(conn, new { ActivityId = input.ActivityId}).Single();
+                //Do Logic Here
+                var output = new SelectActivityOutput
+                {
+                    ActivityDetail = new ActivityDetail
+                    {
+                        ActivityId = savedActivity.ActivityId,
+                        Name = savedActivity.Name,
+                        City = savedActivity.City,
+                        Country = savedActivity.Country,
+                        Description = savedActivity.Description,
+                        OperationTime = savedActivity.OperationTime,
+                        ImportantNotice = savedActivity.ImportantNotice,
+                        Warning = savedActivity.Warning,
+                        AdditionalNotes = savedActivity.AdditionalNotes,
+                        Price = savedActivity.Price,
+                        CloseDate = savedActivity.CloseDate
+                    }
+                };
+                return output;
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
         public string SearchId { get; set; }
         [JsonProperty("activityList", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ActivityDetailForDisplay> ActivityList { get; set; }
+        public List<SearchResultForDisplay> ActivityList { get; set; }
         [JsonProperty("page", NullValueHandling = NullValueHandling.Ignore)]
         public int? Page { get; set; }
         [JsonProperty("perPage", NullValueHandling = NullValueHandling.Ignore)]

@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Activity.Constant
         ActivityDate = 3,
     }
 
-    internal class SearchActivityTypeCd
+    public class SearchActivityTypeCd
     {
-        internal static string Mnemonic(SearchActivityType type)
+        public static string Mnemonic(SearchActivityType type)
         {
             switch (type)
             {
@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Activity.Constant
             }
         }
 
-        internal static SearchActivityType Mnemonic(string searchHotelType)
+        public static SearchActivityType Mnemonic(string searchHotelType)
         {
             switch (searchHotelType)
             {

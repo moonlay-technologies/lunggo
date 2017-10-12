@@ -48,6 +48,11 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Data.Services" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -58,10 +63,13 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Activity\ApiSrc\SearchApiTests.cs" />
+    <Compile Include="Activity\ApiSrc\Logic\SearchApiTests.cs" />
+    <Compile Include="Activity\ApiSrc\SearchActivityControllerTests.cs" />
+    <Compile Include="Activity\Constant\SearchActivityTypeTests.cs" />
     <Compile Include="Activity\Service\SearchTests.cs" />
     <Compile Include="Activity\Service\DatabaseTests.cs" />
-    <Compile Include="Activity\ApiSrc\ValidationTests.cs" />
+    <Compile Include="Activity\ApiSrc\Logic\ValidationTests.cs" />
+    <Compile Include="Activity\Service\InitTests.cs" />
     <Compile Include="Init\Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

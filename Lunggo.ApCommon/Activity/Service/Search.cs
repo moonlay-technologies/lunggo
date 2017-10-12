@@ -4,6 +4,7 @@ using System.Linq;
 using System.Diagnostics;
 using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
