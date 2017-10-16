@@ -33,16 +33,19 @@ namespace Lunggo.Framework.Encoder
             }
         }
 
-        internal static string Hash(this string plain)
+        public static string Sha1Encode(this string input)
         {
-            var hash = plain;
-            return hash;
-        }
-
-        internal static string Unhash(this string hash)
-        {
-            var plain = hash;
-            return plain;
+            var data = Encoding.UTF8.GetBytes(input);
+            using (SHA1 shaM = new SHA1Managed())
+            {
+                var hash = shaM.ComputeHash(data);
+                var stringBuilder = new StringBuilder();
+                foreach (var hashByte in hash)
+                {
+                    stringBuilder.AppendFormat("{0:x2}", hashByte);
+                }
+                return stringBuilder.ToString();
+            }
         }
     }
 }

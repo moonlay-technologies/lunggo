@@ -201,7 +201,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
             
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
-            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
+            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails, reservation.Contact);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
@@ -408,13 +408,14 @@ namespace Lunggo.ApCommon.Payment.Service
             return itemDetails;
         }
 
-        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment)
+        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment, Contact contact)
         {
             return new TransactionDetails
             {
-                OrderId = rsvNo,
+                RsvNo = rsvNo,
                 OrderTime = DateTime.UtcNow,
-                Amount = (long)payment.FinalPriceIdr
+                Amount = (long)payment.FinalPriceIdr,
+                Contact = contact
             };
         }
 

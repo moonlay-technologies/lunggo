@@ -112,6 +112,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\mandrill.properties" />
+    <None Include="Config\BackendWeb\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\nicepay.properties" />
     <None Include="Config\BackendWeb\sendGrid.properties" />
     <None Include="Config\BackendWeb\sriwijaya.properties">

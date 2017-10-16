@@ -425,7 +425,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             };
             if (method == PaymentMethod.CreditCard)
             {
-                var contact = Contact.GetFromDb(transactionDetail.OrderId);
+                var contact = transactionDetail.Contact;
 
                 requestParams.CreditCard = new CreditCard
                 {

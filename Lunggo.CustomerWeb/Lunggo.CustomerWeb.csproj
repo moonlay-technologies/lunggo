@@ -229,6 +229,7 @@
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PromoController.cs" />
     <Compile Include="Controllers\StaticPageController.cs" />
+    <Compile Include="Controllers\E2PayController.cs" />
     <Compile Include="Controllers\VeritransController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
