@@ -19,14 +19,15 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Id AS ActivityId, ");
+            clauseBuilder.Append("SELECT act.Id AS Id, ");
             clauseBuilder.Append("act.Name AS Name, ");
             clauseBuilder.Append("act.Description AS Description, ");
             clauseBuilder.Append("act.City AS City, ");
             clauseBuilder.Append("act.Country AS Country, ");
             clauseBuilder.Append("act.OperationTime AS OperationTime, ");
             clauseBuilder.Append("asp.Price AS Price, ");
-            clauseBuilder.Append("acd.Date AS CloseDate ");
+            clauseBuilder.Append("acd.Date AS CloseDate, ");
+            clauseBuilder.Append("act.ImgSrc AS ImgSrc ");
             return clauseBuilder.ToString();
         }
 

@@ -5,8 +5,8 @@ namespace Lunggo.ApCommon.Activity.Model
 {
     public class SearchResultForDisplay
     {
-        [JsonProperty("activityId", NullValueHandling = NullValueHandling.Ignore)]
-        public int ActivityId { get; set; }
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public int Id { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
@@ -19,13 +19,15 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperationTime { get; set; }
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Price { get; set; }
-        [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("closeDate", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CloseDate { get; set; }
+        [JsonProperty("imgSrc", NullValueHandling = NullValueHandling.Ignore)]
+        public string ImgSrc { get; set; }
     }
 
     public class SearchResult
     {
-        public int ActivityId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string City { get; set; }
@@ -33,5 +35,6 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperationTime { get; set; }
         public decimal Price { get; set; }
         public DateTime CloseDate { get; set; }
+        public string ImgSrc { get; set; }
     }
 }

@@ -20,15 +20,16 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     ActivityList = savedActivities.Select(a => new SearchResult()
                                     {
-                                        ActivityId = a.ActivityId,
+                                        Id = a.Id,
                                         Name = a.Name,
                                         City = a.City,
                                         Country = a.Country,
                                         Description = a.Description,
                                         OperationTime = a.OperationTime,
                                         Price = a.Price,
-                                        CloseDate = a.CloseDate
-                                    }).ToList(),
+                                        CloseDate = a.CloseDate,
+                                        ImgSrc = a.ImgSrc
+                    }).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage,
                     SearchId = input.SearchId
@@ -50,14 +51,15 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     ActivityList = savedActivities.Select(a => new SearchResult()
                     {
-                        ActivityId = a.ActivityId,
+                        Id = a.Id,
                         Name = a.Name,
                         City = a.City,
                         Country = a.Country,
                         Description = a.Description,
                         OperationTime = a.OperationTime,
                         Price = a.Price,
-                        CloseDate = a.CloseDate
+                        CloseDate = a.CloseDate,
+                        ImgSrc = a.ImgSrc
                     }).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage,

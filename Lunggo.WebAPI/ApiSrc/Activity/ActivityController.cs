@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpGet]
         [LunggoCorsPolicy]
         [Level1Authorize]
-        [Route("v1/activity/search")]
+        [Route("v1/activities")]
         public ApiResponseBase SearchActivity(string searchActivityType="ActivityName", string name="", string date="", string page="1", string perPage="10")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
@@ -30,18 +30,18 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                     return ActivityLogic.Search(null);
             }
 
-            var SearchType = SearchActivityTypeCd.Mnemonic(searchActivityType);
+            var searchType = SearchActivityTypeCd.Mnemonic(searchActivityType);
 
             try
             {
-                var CloseYear = "20" + date.Substring(4, 2);
-                var CloseDate = new DateTime(Convert.ToInt32(CloseYear), Convert.ToInt32(date.Substring(2, 2)),
+                var closeYear = "20" + date.Substring(4, 2);
+                var closeDate = new DateTime(Convert.ToInt32(closeYear), Convert.ToInt32(date.Substring(2, 2)),
                     Convert.ToInt32(date.Substring(0, 2)));
 
                 var request = new ActivitySearchApiRequest
                 {
-                    SearchType = SearchType,
-                    Filter = new ActivityFilter { Name = name, CloseDate = CloseDate },
+                    SearchType = searchType,
+                    Filter = new ActivityFilter { Name = name, CloseDate = closeDate },
                     Page = Convert.ToInt32(page),
                     PerPage = Convert.ToInt32(perPage)
                 };
@@ -77,184 +77,5 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
-
-        //[HttpPost]
-        //[LunggoCorsPolicy]
-        //[Route("v1/hotel/getroomdetail")]
-        //public ApiResponseBase GetRoomDetail()
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    HotelRoomDetailApiRequest request = null;
-        //    try
-        //    {
-        //        request = ApiRequestBase.DeserializeRequest<HotelRoomDetailApiRequest>();
-        //        var apiResponse = HotelLogic.GetHotelRoomDetailLogic(request);
-        //        return apiResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e, request);
-        //    }
-        //}
-
-        //[HttpPost]
-        //[LunggoCorsPolicy]
-        //[Route("v1/hotel/getrate")]
-        //public ApiResponseBase GetRate()
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    HotelRateApiRequest request = null;
-        //    try
-        //    {
-        //        request = ApiRequestBase.DeserializeRequest<HotelRateApiRequest>();
-        //        var apiResponse = HotelLogic.GetRateLogic(request);
-        //        return apiResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e, request);
-        //    }
-        //}
-
-        //[HttpGet]
-        //[LunggoCorsPolicy]
-        //[Level1Authorize]
-        //[Route("v1/hotel/GetHotelDetail/{searchId}/{hotelCd}")]
-        //public ApiResponseBase GetHotelDetail(string searchId, int hotelCd)
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    try
-        //    {
-        //        var request = new HotelDetailApiRequest
-        //        {
-        //            HotelCode = hotelCd,
-        //            SearchId = searchId
-        //        };
-        //        var apiResponse = HotelLogic.GetHotelDetailLogic(request);
-        //        return apiResponse;
-        //        //var apiResponse = HotelService.GetInstance().GetHotelDetailFromDb(444942);
-        //        //return new ApiResponseBase();
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e);
-        //    }
-        //}
-
-        //[HttpGet]
-        //[LunggoCorsPolicy]
-        //[Route("v1/hotel/GetSelectedHotelDetail/{token}")]
-        //public ApiResponseBase GetSelectedHotelDetail(string token)
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    try
-        //    {
-        //        var request = new HotelSelectedRoomApiRequest
-        //        {
-        //            Token = token
-        //        };
-        //        var apiResponse = HotelLogic.GetSelectedHotelDetailLogic(request);
-        //        return apiResponse;
-        //        //var apiResponse = HotelService.GetInstance().GetHotelDetailFromDb(444942);
-        //        //return new ApiResponseBase();
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e);
-        //    }
-        //}
-
-        //[HttpGet]
-        //[LunggoCorsPolicy]
-        //[Route("v1/hotel/CancelHotelBooking/{bookingId}")]
-        //public ApiResponseBase CancelHotelBooking(string bookingId)
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    try
-        //    {
-        //        var request = new HotelCancelBookingApiRequest
-        //        {
-        //            BookingId = bookingId
-        //        };
-        //        var apiResponse = HotelLogic.CancelBookingLogic(request);
-        //        return apiResponse;
-        //        //var apiResponse = HotelService.GetInstance().GetHotelDetailFromDb(444942);
-        //        //return new ApiResponseBase();
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e);
-        //    }
-        //}
-
-        //[HttpPost]
-        //[LunggoCorsPolicy]
-        //[Level1Authorize]
-        //[Route("v1/hotel/availableRate")]
-        //public ApiResponseBase GetAvailableRate()
-        //{
-        //    var lang = ApiRequestBase.GetHeaderValue("Language");
-        //    OnlineContext.SetActiveLanguageCode(lang);
-        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
-        //    OnlineContext.SetActiveCurrencyCode(currency);
-        //    HotelAvailableRateApiRequest request = null;
-        //    try
-        //    {
-        //        request = ApiRequestBase.DeserializeRequest<HotelAvailableRateApiRequest>();
-        //        var apiResponse = HotelLogic.GetAvailableRates(request);
-        //        return apiResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e, request);
-        //    }
-        //}
-
-        //[HttpGet]
-        //[LunggoCorsPolicy]
-        //[Route("v1/hotel/pricecalendar/{location}/{startDate}/{endDate}/{currency}")]
-        //public ApiResponseBase PriceCalendar(string location, string currency, string startDate, string endDate)
-        //{
-        //    try
-        //    {
-        //        var startYear = "20" + startDate.Substring(4, 2);
-        //        var endYear = "20" + endDate.Substring(4, 2);
-        //        var startTime = new DateTime(Convert.ToInt32(startYear), Convert.ToInt32(startDate.Substring(2, 2)),
-        //            Convert.ToInt32(startDate.Substring(0, 2)));
-        //        var endTime = new DateTime(Convert.ToInt32(endYear), Convert.ToInt32(endDate.Substring(2, 2)),
-        //            Convert.ToInt32(endDate.Substring(0, 2)));
-        //        var request = new HotelPriceCalendarApiRequest
-        //        {
-        //            LocationCode = location,
-        //            Currency = currency,
-        //            StartDate = startTime,
-        //            EndDate = endTime,
-        //        };
-        //        var apiResponse = HotelLogic.FindLowestPrices(request);
-        //        return apiResponse;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return ApiResponseBase.ExceptionHandling(e);
-        //    }
-        //}
     }
 }

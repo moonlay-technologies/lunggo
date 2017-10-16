@@ -16,24 +16,24 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public SearchActivityOutput Search(SearchActivityInput input)
         {
-            var hotelResult = new SearchActivityOutput();
+            var result = new SearchActivityOutput();
 
             switch (input.SearchActivityType)
             {
                 case SearchActivityType.SearchID:
-                    hotelResult = DoSearchById(input);
+                    result = DoSearchById(input);
                     break;
 
                 case SearchActivityType.ActivityName:
-                    hotelResult = DoSearchByActivityName(input);
+                    result = DoSearchByActivityName(input);
                     break;
 
                 case SearchActivityType.ActivityDate:
-                    hotelResult = DoSearchByDate(input);
+                    result = DoSearchByDate(input);
                     break;
             }
 
-            return hotelResult;
+            return result;
         }
 
         public SearchActivityOutput DoSearchById(SearchActivityInput input)

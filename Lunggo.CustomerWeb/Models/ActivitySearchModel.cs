@@ -42,15 +42,15 @@ namespace Lunggo.CustomerWeb.Models
             List<string> parameters = query.Split('.').ToList();
             SearchParamObject = new SearchActivityParameter();
             SearchParamObject.Date = parameters[(int)RequestParam.SearchHotelType];
-            SearchParamObject.Duration = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
-            SearchParamObject.Infant = parameters[(int)RequestParam.Location];
-            SearchParamObject.SearchHotelType = parameters[(int)RequestParam.SearchHotelType];
-            SearchParamObject.Location = parameters[(int)RequestParam.Location];
-            SearchParamObject.CheckinDate = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
-            SearchParamObject.CheckoutDate = DateTime.Parse(parameters[(int)RequestParam.CheckoutDate]);
-            SearchParamObject.NightCount = int.Parse(parameters[(int)RequestParam.NightCount]);
-            SearchParamObject.RoomCount = int.Parse(parameters[(int)RequestParam.RoomCount]);
-            SearchParamObject.Occupancies = new List<Occupancy>();
+            //SearchParamObject.Duration = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
+            //SearchParamObject.Infant = parameters[(int)RequestParam.Location];
+            //SearchParamObject.SearchHotelType = parameters[(int)RequestParam.SearchHotelType];
+            //SearchParamObject.Location = parameters[(int)RequestParam.Location];
+            //SearchParamObject.CheckinDate = DateTime.Parse(parameters[(int)RequestParam.CheckinDate]);
+            //SearchParamObject.CheckoutDate = DateTime.Parse(parameters[(int)RequestParam.CheckoutDate]);
+            //SearchParamObject.NightCount = int.Parse(parameters[(int)RequestParam.NightCount]);
+            //SearchParamObject.RoomCount = int.Parse(parameters[(int)RequestParam.RoomCount]);
+            //SearchParamObject.Occupancies = new List<Occupancy>();
             var occupancyquery = parameters[(int) RequestParam.Occupancies].Split('|');
             foreach (var occ in occupancyquery)
             {
@@ -71,7 +71,7 @@ namespace Lunggo.CustomerWeb.Models
                     }
                 }
 
-                SearchParamObject.Occupancies.Add(occupancy);
+                //SearchParamObject.Occupancies.Add(occupancy);
             }
             SearchParam = query;
         }
