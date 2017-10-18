@@ -9,8 +9,10 @@ namespace Lunggo.ApCommon.Activity.Model
     {
         [JsonProperty("name")]
         public string Name { get; set; }
-        [JsonProperty("date")]
-        public DateTime CloseDate { get; set; }
+        [JsonProperty("startDate")]
+        public DateTime StartDate { get; set; }
+        [JsonProperty("endDate")]
+        public DateTime EndDate { get; set; }
         [JsonProperty("price")]
         public PriceFilter Price { get; set; }
     }
@@ -23,11 +25,11 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? MaxPrice { get; set; }
     }
 
-    public class DateFilter
-    {
-        [JsonProperty("startDate")]
-        public DateTime StartDate { get; set; }
-        [JsonProperty("endDate")]
-        public DateTime EndDate { get; set; }
-    }
+    //public class DateFilter
+    //{
+    //    [JsonProperty("startDate")]
+    //    public DateTime StartDate { get; set; }
+    //    [JsonProperty("endDate")]
+    //    public DateTime EndDate { get; set; }
+    //}
 }

@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Activity.Model
 
     public class ActivityDetailForDisplay
     {
-        [JsonProperty("activityId", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int ActivityId { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Price { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime CloseDate { get; set; }
+        public DateTime Date { get; set; }
 
     }
     public class ActivityDetail
@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Warning { get; set; }
         public string AdditionalNotes { get; set; }
         public decimal Price { get; set; }
-        public DateTime CloseDate { get; set; }
+        public DateTime Date { get; set; }
     }
     
 }

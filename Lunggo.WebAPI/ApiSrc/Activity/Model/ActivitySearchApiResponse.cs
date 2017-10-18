@@ -7,8 +7,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
     public class ActivitySearchApiResponse : ApiResponseBase
     {
-        [JsonProperty("searchId", NullValueHandling = NullValueHandling.Ignore)]
-        public string SearchId { get; set; }
         [JsonProperty("activityList", NullValueHandling = NullValueHandling.Ignore)]
         public List<SearchResultForDisplay> ActivityList { get; set; }
         [JsonProperty("page", NullValueHandling = NullValueHandling.Ignore)]

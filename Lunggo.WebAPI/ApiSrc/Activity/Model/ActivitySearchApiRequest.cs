@@ -1,20 +1,18 @@
-﻿using Lunggo.ApCommon.Activity.Constant;
-using Lunggo.ApCommon.Activity.Model;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
     public class ActivitySearchApiRequest
     {
-        [JsonProperty("searchActivityType")]
-        public SearchActivityType SearchType { get; set; }
-        [JsonProperty("searchId")]
-        public string SearchId { get; set; }
-        [JsonProperty("activityFilter")]
-        public ActivityFilter Filter { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("startDate")]
+        public string StartDate { get; set; }
+        [JsonProperty("endDate")]
+        public string EndDate { get; set; }
         [JsonProperty("page")]
-        public int Page { get; set; }
+        public string Page { get; set; }
         [JsonProperty("perPage")]
-        public int PerPage { get; set; }
+        public string PerPage { get; set; }
     }
 }

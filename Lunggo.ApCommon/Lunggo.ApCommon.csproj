@@ -172,10 +172,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\Constant\SearchActivityType.cs" />
-    <Compile Include="Activity\Database\Query\GetSearchResultByDateQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityDetailQuery.cs" />
-    <Compile Include="Activity\Database\Query\GetSearchResultByNameQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
     <Compile Include="Activity\Model\ActivityFilter.cs" />
     <Compile Include="Activity\Model\Logic\SelectActivityInput.cs" />
@@ -185,7 +183,7 @@
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\Issue.cs" />
-    <Compile Include="Activity\Service\Select.cs" />
+    <Compile Include="Activity\Service\GetDetail.cs" />
     <Compile Include="Activity\Service\Search.cs" />
     <Compile Include="Activity\Service\Settings.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
@@ -967,6 +965,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Activity\Constant\" />
     <Folder Include="Hotel\Logic\Search\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

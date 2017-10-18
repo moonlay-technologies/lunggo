@@ -1,0 +1,12 @@
+﻿using Lunggo.ApCommon.Activity.Model.Logic;
+
+namespace Lunggo.ApCommon.Activity.Service
+{
+    public partial class ActivityService
+    {
+        public SelectActivityOutput GetDetail(SelectActivityInput input)
+        {
+            return GetActivityDetailFromDb(input);
+        }
+    }
+}

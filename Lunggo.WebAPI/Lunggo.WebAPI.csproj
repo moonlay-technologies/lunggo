@@ -251,7 +251,7 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
-    <Compile Include="ApiSrc\Activity\Logic\SelectActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivitySelectApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivitySelectApiRequest.cs" />

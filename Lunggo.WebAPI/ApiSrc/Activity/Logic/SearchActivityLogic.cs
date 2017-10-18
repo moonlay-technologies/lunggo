@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Activity.Model;
+﻿using System;
+using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -12,46 +13,85 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
     {
         public static ApiResponseBase Search(ActivitySearchApiRequest request)
         {
-            if (!IsValid(request))
+            var succeed = TryPreprocess(request, out var searchServiceRequest);
+            if (!succeed)
+            {
                 return new ActivitySearchApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERASEA01"
                 };
-            var searchServiceRequest = PreprocessServiceRequest(request);
+            }
             var searchServiceResponse = ActivityService.GetInstance().Search(searchServiceRequest);
             var apiResponse = AssembleApiResponse(searchServiceResponse);
 
             return apiResponse;
         }
 
-        public static bool IsValid(ActivitySearchApiRequest request)
+        public static bool TryPreprocess(ActivitySearchApiRequest request, out SearchActivityInput serviceRequest)
         {
+            serviceRequest = new SearchActivityInput();
+            serviceRequest.ActivityFilter = new ActivityFilter();
+
             if (request == null)
-                return false;
-            if (request.SearchId != null)
             {
-                return (request.Page > 0 && request.PerPage > 0);
+                return false;
+            }
+
+            bool isPageNumeric = int.TryParse(request.Page, out var pageValid);
+            if (!isPageNumeric) { return false; }
+
+            bool isPerPageNumeric = int.TryParse(request.PerPage, out var perPageValid);
+            if (!isPerPageNumeric) { return false; }
+
+            //int pageValid = Convert.ToInt32(request.Page);
+            //int perPageValid = Convert.ToInt32(request.PerPage);
+
+            if (pageValid < 0 || perPageValid < 0)
+            {
+                return false;
+            }
+            
+            if (string.IsNullOrEmpty(request.StartDate))
+            {
+                serviceRequest.ActivityFilter.StartDate = DateTime.Today;
             }
             else
             {
-                return true;
+                var startDateValid = DateTime.TryParse(request.StartDate, out var startDate);
+                if (startDateValid)
+                {
+                    serviceRequest.ActivityFilter.StartDate = startDate;
+                }
+                else
+                {
+                    return false;
+                }
             }
-        }
 
-        public static SearchActivityInput PreprocessServiceRequest(ActivitySearchApiRequest request)
-        {
-            var searchServiceRequest = new SearchActivityInput
+            if (string.IsNullOrEmpty(request.EndDate))
             {
-                SearchActivityType = request.SearchType,
-                SearchId = request.SearchId,
-                ActivityFilter = request.Filter,
-                Page = request.Page,
-                PerPage = request.PerPage
-            };
-            return searchServiceRequest;
+                serviceRequest.ActivityFilter.EndDate = serviceRequest.ActivityFilter.StartDate.AddYears(5);
+            }
+            else
+            {
+                var endDateValid = DateTime.TryParse(request.EndDate, out var endDate);
+                if (endDateValid)
+                {
+                    serviceRequest.ActivityFilter.EndDate = endDate;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            
+            serviceRequest.ActivityFilter.Name = request.Name;
+            serviceRequest.Page = pageValid;
+            serviceRequest.PerPage = perPageValid;
+            return true;
         }
-
+        
         public static ActivitySearchApiResponse AssembleApiResponse(SearchActivityOutput searchServiceResponse)
         {
             var apiResponse = new ActivitySearchApiResponse
@@ -65,15 +105,13 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Description = actList.Description,
                     OperationTime = actList.OperationTime,
                     Price = actList.Price,
-                    CloseDate = actList.CloseDate,
                     ImgSrc = actList.ImgSrc
                 }).ToList(),
                 Page = searchServiceResponse.Page,
-                PerPage = searchServiceResponse.PerPage,
-                SearchId = searchServiceResponse.SearchId
+                PerPage = searchServiceResponse.PerPage
             };
             return apiResponse;
-            
+
         }
     }
 }
