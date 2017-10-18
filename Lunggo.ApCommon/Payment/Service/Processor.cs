@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using DeathByCaptcha;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Service;
@@ -8,15 +9,20 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Client = Lunggo.ApCommon.Identity.Auth.Client;
 using Exception = System.Exception;
 
 namespace Lunggo.ApCommon.Payment.Service
@@ -27,211 +33,237 @@ namespace Lunggo.ApCommon.Payment.Service
             PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
-            ReservationBase reservation;
-            if (rsvNo.StartsWith("1"))
-                reservation = FlightService.GetInstance().GetReservation(rsvNo);
-            else
-                reservation = HotelService.GetInstance().GetReservation(rsvNo);
-            var paymentDetails = reservation.Payment;
-
-            if (paymentDetails == null)
-                return null;
-
-            if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Method != PaymentMethod.BankTransfer)
+            try
             {
-                paymentDetails.Status = PaymentStatus.Failed;
-                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
+                ReservationBase reservation;
+                if (rsvNo.StartsWith("1"))
+                    reservation = FlightService.GetInstance().GetReservation(rsvNo);
+                else
+                    reservation = HotelService.GetInstance().GetReservation(rsvNo);
+                var paymentDetails = reservation.Payment;
+
+                if (paymentDetails == null)
+                    return null;
+
+                if (paymentDetails.Method != PaymentMethod.Undefined &&
+                    paymentDetails.Method != PaymentMethod.BankTransfer)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
+                    return paymentDetails;
+                }
+
+                paymentDetails.Data = paymentData;
+                paymentDetails.Method = method;
+                paymentDetails.Submethod = submethod;
+                paymentDetails.Medium = GetPaymentMedium(method, submethod);
+                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
+
+                if (!string.IsNullOrEmpty(discountCode))
+                {
+                    var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode, paymentDetails);
+                    if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
+                    {
+                        paymentDetails.Status = PaymentStatus.Failed;
+                        paymentDetails.FailureReason =
+                            campaign.VoucherStatus == VoucherStatus.NoVoucherRemaining ||
+                            campaign.VoucherStatus == VoucherStatus.NoBudgetRemaining ||
+                            campaign.VoucherStatus == VoucherStatus.VoucherAlreadyUsed
+                                ? FailureReason.VoucherNoLongerAvailable
+                                : FailureReason.VoucherNotEligible;
+                        return paymentDetails;
+                    }
+                    paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                    paymentDetails.Discount = campaign.Discount;
+                    paymentDetails.DiscountCode = campaign.VoucherCode;
+                    paymentDetails.DiscountNominal = campaign.TotalDiscount;
+                }
+
+                if (paymentDetails.Method == PaymentMethod.CreditCard &&
+                    paymentDetails.Data.CreditCard.RequestBinDiscount)
+                {
+                    var binDiscount = CampaignService.GetInstance()
+                        .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
+                            discountCode);
+                    if (binDiscount == null)
+                    {
+                        paymentDetails.Status = PaymentStatus.Failed;
+                        paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
+                        return paymentDetails;
+                    }
+                    if (binDiscount.ReplaceMargin)
+                    {
+                        var orders = reservation.Type == ProductType.Flight
+                            ? (IEnumerable<OrderBase>) (reservation as FlightReservation).Itineraries.ToList()
+                            : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+
+                        foreach (var order in orders)
+                        {
+                            var newOriginal = order.GetApparentOriginalPrice();
+                            order.Price.Margin = new UsedMargin
+                            {
+                                Name = "BIN Promo Margin Modify",
+                                Description = "Margin Modified by BIN Promo",
+                                Currency = order.Price.LocalCurrency,
+                                Constant = newOriginal - (order.Price.OriginalIdr/order.Price.LocalCurrency.Rate)
+                            };
+                            order.Price.Local = order.Price.OriginalIdr +
+                                                (order.Price.Margin.Constant*order.Price.Margin.Currency.Rate);
+                            order.Price.Rounding = 0;
+                            order.Price.FinalIdr = order.Price.Local*order.Price.LocalCurrency.Rate;
+                            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+                        }
+                        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                    }
+                    else
+                    {
+                        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+
+                    }
+                    if (paymentDetails.Discount == null)
+                        paymentDetails.Discount = new UsedDiscount
+                        {
+                            DisplayName = binDiscount.DisplayName,
+                            Name = binDiscount.DisplayName,
+                            Constant = binDiscount.Amount,
+                            Percentage = 0M,
+                            Currency = new Currency("IDR"),
+                            Description = "BIN Promo",
+                            IsFlat = false
+                        };
+                    else
+                        paymentDetails.Discount.Constant += binDiscount.Amount;
+                    paymentDetails.DiscountNominal += binDiscount.Amount;
+                    var contact = reservation.Contact;
+                    if (contact == null)
+                        return null;
+                    CampaignService.GetInstance()
+                        .SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
+                }
+
+                if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
+                {
+                    var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
+                    if (binDiscount == null)
+                    {
+                        paymentDetails.Status = PaymentStatus.Failed;
+                        paymentDetails.FailureReason = FailureReason.MethodDiscountNoLongerEligible;
+                        return paymentDetails;
+                    }
+                    if (binDiscount.ReplaceMargin)
+                    {
+                        var orders =
+                            (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+
+                        foreach (var order in orders)
+                        {
+                            var newOriginal = order.GetApparentOriginalPrice();
+                            order.Price.Margin = new UsedMargin
+                            {
+                                Name = "Payday Madness Margin Modify",
+                                Description = "Margin Modified by Payday Madness Promo",
+                                Currency = order.Price.LocalCurrency,
+                                Constant = newOriginal - (order.Price.OriginalIdr/order.Price.LocalCurrency.Rate)
+                            };
+                            order.Price.Local = order.Price.OriginalIdr +
+                                                (order.Price.Margin.Constant*order.Price.Margin.Currency.Rate);
+                            order.Price.Rounding = 0;
+                            order.Price.FinalIdr = order.Price.Local*order.Price.LocalCurrency.Rate;
+                            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+                        }
+                        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                    }
+                    else
+                    {
+                        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                    }
+                    if (paymentDetails.Discount == null)
+                        paymentDetails.Discount = new UsedDiscount
+                        {
+                            DisplayName = binDiscount.DisplayName,
+                            Name = binDiscount.DisplayName,
+                            Constant = binDiscount.Amount,
+                            Percentage = 0M,
+                            Currency = new Currency("IDR"),
+                            Description = "Payday Madness Bank Permata",
+                            IsFlat = false
+                        };
+                    else
+                        paymentDetails.Discount.Constant += binDiscount.Amount;
+                    paymentDetails.DiscountNominal += binDiscount.Amount;
+                    var contact = reservation.Contact;
+                    if (contact == null)
+                        return null;
+                    var todayDate = new DateTime(2017, 3, 25);
+                    //var todayDate = DateTime.Today;
+                    if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
+                        (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
+                    {
+                        CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
+                    }
+                }
+
+                var uniqueCode = GetUniqueCodeFromCache(rsvNo);
+                if (uniqueCode == 0M)
+                    return paymentDetails;
+                paymentDetails.UniqueCode = uniqueCode;
+                paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
+
+                paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+                paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+
+                paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr*paymentDetails.LocalCurrency.Rate;
+                var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
+                //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
+                ProcessPayment(paymentDetails, transactionDetails);
+                if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
+                {
+                    if (reservation.Type == ProductType.Flight)
+                    {
+                        var rsv = reservation as FlightReservation;
+                        rsv.Itineraries.ForEach(i => i.Price.UpdateToDb());
+                    }
+                    else
+                    {
+                        var rsv = reservation as HotelReservation;
+                        rsv.HotelDetails.Rooms.ForEach(ro => ro.Rates.ForEach(ra => ra.Price.UpdateToDb()));
+                    }
+                    UpdatePaymentToDb(rsvNo, paymentDetails);
+                }
+                if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
+                {
+                    if (reservation.Type == ProductType.Flight)
+                    {
+                        FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                    }
+                    else
+                    {
+                        HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                    }
+                }
+
+                isUpdated = true;
                 return paymentDetails;
             }
-
-            paymentDetails.Data = paymentData;
-            paymentDetails.Method = method;
-            paymentDetails.Submethod = submethod;
-            paymentDetails.Medium = GetPaymentMedium(method, submethod);
-            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-
-            if (!string.IsNullOrEmpty(discountCode))
+            finally
             {
-                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode, paymentDetails);
-                if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = 
-                        campaign.VoucherStatus == VoucherStatus.NoVoucherRemaining || 
-                        campaign.VoucherStatus == VoucherStatus.NoBudgetRemaining || 
-                        campaign.VoucherStatus == VoucherStatus.VoucherAlreadyUsed
-                        ? FailureReason.VoucherNoLongerAvailable
-                        : FailureReason.VoucherNotEligible;
-                    return paymentDetails;
-                }
-                paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
-                paymentDetails.Discount = campaign.Discount;
-                paymentDetails.DiscountCode = campaign.VoucherCode;
-                paymentDetails.DiscountNominal = campaign.TotalDiscount;
+                var log = LogService.GetInstance();
+                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                log.Post(
+                    "```Submit Payment Log```"
+                    + "\n*Environment :* " + env.ToUpper()
+                    + "\n*rsvNo :* " + rsvNo
+                    + "\n*method :* " + method
+                    + "\n*submethod :* " + submethod
+                    + "\n*paymentData :* " + paymentData.Serialize()
+                    + "\n*discountCode :* " + discountCode
+                    + "\n*isUpdated :* " + isUpdated
+                    + "\n*Platform :* "
+                    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                    env == "production" ? "#logging-prod" : "#logging-dev");
             }
-
-            if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
-            {
-                var binDiscount = CampaignService.GetInstance()
-                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
-                        discountCode);
-                if (binDiscount == null)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
-                    return paymentDetails;
-                }
-                if (binDiscount.ReplaceMargin)
-                {
-                    var orders = reservation.Type == ProductType.Flight
-                        ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
-                        : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
-
-                    foreach (var order in orders)
-                    {
-                        var newOriginal = order.GetApparentOriginalPrice();
-                        order.Price.Margin = new UsedMargin
-                        {
-                            Name = "BIN Promo Margin Modify",
-                            Description = "Margin Modified by BIN Promo",
-                            Currency = order.Price.LocalCurrency,
-                            Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                        };
-                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                        order.Price.Rounding = 0;
-                        order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                        order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                    }
-                    paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                }
-                else
-                {
-                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-
-                }
-                if (paymentDetails.Discount == null)
-                    paymentDetails.Discount = new UsedDiscount
-                    {
-                        DisplayName = binDiscount.DisplayName,
-                        Name = binDiscount.DisplayName,
-                        Constant = binDiscount.Amount,
-                        Percentage = 0M,
-                        Currency = new Currency("IDR"),
-                        Description = "BIN Promo",
-                        IsFlat = false
-                    };
-                else
-                    paymentDetails.Discount.Constant += binDiscount.Amount;
-                paymentDetails.DiscountNominal += binDiscount.Amount;
-                var contact = reservation.Contact;
-                if (contact == null)
-                    return null;
-                CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
-            }
-
-            if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
-            {
-                var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
-                if (binDiscount == null)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.MethodDiscountNoLongerEligible;
-                    return paymentDetails;
-                }
-                if (binDiscount.ReplaceMargin)
-                {
-                    var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
-
-                    foreach (var order in orders)
-                    {
-                        var newOriginal = order.GetApparentOriginalPrice();
-                        order.Price.Margin = new UsedMargin
-                        {
-                            Name = "Payday Madness Margin Modify",
-                            Description = "Margin Modified by Payday Madness Promo",
-                            Currency = order.Price.LocalCurrency,
-                            Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                        };
-                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                        order.Price.Rounding = 0;
-                        order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                        order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                    }
-                    paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                }
-                else
-                {
-                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                }
-                if (paymentDetails.Discount == null)
-                    paymentDetails.Discount = new UsedDiscount
-                    {
-                        DisplayName = binDiscount.DisplayName,
-                        Name = binDiscount.DisplayName,
-                        Constant = binDiscount.Amount,
-                        Percentage = 0M,
-                        Currency = new Currency("IDR"),
-                        Description = "Payday Madness Bank Permata",
-                        IsFlat = false
-                    };
-                else
-                    paymentDetails.Discount.Constant += binDiscount.Amount;
-                paymentDetails.DiscountNominal += binDiscount.Amount;
-                var contact = reservation.Contact;
-                if (contact == null)
-                    return null;
-                var todayDate = new DateTime(2017, 3, 25);
-                //var todayDate = DateTime.Today;
-                if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
-                    (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
-                {
-                    CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                }
-            }
-
-            var uniqueCode = GetUniqueCodeFromCache(rsvNo);
-            if (uniqueCode == 0M)
-                return paymentDetails;
-            paymentDetails.UniqueCode = uniqueCode;
-            paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
-
-            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
-            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
-            
-            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
-            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
-            //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
-            ProcessPayment(paymentDetails, transactionDetails);
-            if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
-            {
-                if (reservation.Type == ProductType.Flight)
-                {
-                    var rsv = reservation as FlightReservation;
-                    rsv.Itineraries.ForEach(i => i.Price.UpdateToDb());
-                }
-                else
-                {
-                    var rsv = reservation as HotelReservation;
-                    rsv.HotelDetails.Rooms.ForEach(ro => ro.Rates.ForEach(ra => ra.Price.UpdateToDb()));
-                }
-                UpdatePaymentToDb(rsvNo, paymentDetails);
-            }
-            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
-            {
-                if (reservation.Type == ProductType.Flight)
-                {
-                    FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
-                }
-                else
-                {
-                    HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
-                }
-            }
-
-            isUpdated = true;
-            return paymentDetails;
         }
 
         public void ClearPayment(string rsvNo)

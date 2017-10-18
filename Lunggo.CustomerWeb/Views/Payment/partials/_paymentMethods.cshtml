@@ -245,10 +245,10 @@
                         </div>
                         <div class="form-group">
                             <label>Respon Token Mandiri</label>
-                            <input type="number" class="form-control cc-number" placeholder="xxxxxx"
+                            <input type="text" class="form-control cc-number" placeholder="xxxxxx"
                                ng-model="MandiriClickPay.Token" required />
-                            <div ng-show="MandiriClickPay.Token.toString().length != 6 && 
-                                MandiriClickPay.Token.toString().length != 0" style="color:red">
+                            <div ng-show="MandiriClickPay.Token.length != 6 && 
+                                MandiriClickPay.Token.length != 0" style="color:red">
                                 Panjang Token harus 6 digit.
                             </div>
                         @*<!-- name="mandiriToken" -->*@
