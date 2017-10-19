@@ -44,7 +44,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.SearchLogic.Tests
         }
 
         [TestMethod]
-        public void AssembleApiResponse_ActivitySearchApiResponse_ReturnSearchActivityOutput()
+        public void AssembleApiResponse_SearchActivityOutput_ReturnActivitySearchApiResponse()
         {
             var actList1 = new SearchResult()
             { Name = "", City = "Bandung", Country = "Indonesia", Description = "", OperationTime = "24 Jam", Price = 2000 };

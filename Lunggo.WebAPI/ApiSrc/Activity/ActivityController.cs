@@ -56,9 +56,33 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
 
             try
             {
-                var request = new ActivitySelectApiRequest {ActivityId = id};
+                var request = new GetDetailActivityApiRequest { ActivityId = id};
 
                 var apiResponse = ActivityLogic.GetDetail(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/activities/{id}/availabledates")]
+        public ApiResponseBase GetAvailableDate(string id = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetAvailableDatesApiRequest { ActivityId = id };
+
+                var apiResponse = ActivityLogic.GetAvailable(request);
                 return apiResponse;
             }
             catch (Exception e)

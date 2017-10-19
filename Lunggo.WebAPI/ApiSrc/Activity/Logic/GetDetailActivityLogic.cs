@@ -11,11 +11,11 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
     public static partial class ActivityLogic
     {
-        public static ApiResponseBase GetDetail(ActivitySelectApiRequest request)
+        public static ApiResponseBase GetDetail(GetDetailActivityApiRequest request)
         {
             var succeed = TryPreprocess(request, out var searchServiceRequest);
             if (!succeed)
-                return new ActivitySelectApiResponse
+                return new GetDetailActivityApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERASEA01"
@@ -26,9 +26,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             return apiResponse;
         }
 
-        public static bool TryPreprocess(ActivitySelectApiRequest request, out SelectActivityInput serviceRequest)
+        public static bool TryPreprocess(GetDetailActivityApiRequest request, out GetDetailActivityInput serviceRequest)
         {
-            serviceRequest = new SelectActivityInput();
+            serviceRequest = new GetDetailActivityInput();
 
             if (request == null)
                 return false;
@@ -47,9 +47,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             }
         }
 
-        public static ActivitySelectApiResponse AssembleApiResponse(SelectActivityOutput searchServiceResponse)
+        public static GetDetailActivityApiResponse AssembleApiResponse(GetDetailActivityOutput searchServiceResponse)
         {
-            var apiResponse = new ActivitySelectApiResponse
+            var apiResponse = new GetDetailActivityApiResponse
             {
                 ActivityDetail = new ActivityDetailForDisplay()
                 {
@@ -62,8 +62,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ImportantNotice = searchServiceResponse.ActivityDetail.ImportantNotice,
                     Warning = searchServiceResponse.ActivityDetail.Warning,
                     AdditionalNotes = searchServiceResponse.ActivityDetail.AdditionalNotes,
-                    Price = searchServiceResponse.ActivityDetail.Price,
-                    Date = searchServiceResponse.ActivityDetail.Date
+                    Price = searchServiceResponse.ActivityDetail.Price
                 }
             };
             return apiResponse;

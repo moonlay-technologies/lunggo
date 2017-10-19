@@ -89,8 +89,11 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Activity\ApiSrc\GetAvailableLogic\GetAvailableApiTests.cs" />
+    <Compile Include="Activity\ApiSrc\GetAvailableLogic\TryPreprocessTests.cs" />
+    <Compile Include="Activity\ApiSrc\GetDetailLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\SearchApiTests.cs" />
-    <Compile Include="Activity\Service\DatabaseTests.cs" />
+    <Compile Include="Activity\ApiSrc\GetDetailLogic\GetDetailApiTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\Service\InitTests.cs" />
     <Compile Include="Init\Initializer.cs" />
@@ -121,9 +124,7 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Activity\ApiSrc\SelectLogic\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

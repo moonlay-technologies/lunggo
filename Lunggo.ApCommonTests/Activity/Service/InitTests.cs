@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Lunggo.ApCommonTests.Activity.Service.Tests
 {
+    [TestClass]
     public partial class ActivityServiceTests
     {
         [TestMethod()]

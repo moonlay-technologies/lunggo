@@ -37,14 +37,14 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
-        public SelectActivityOutput GetActivityDetailFromDb(SelectActivityInput input)
+        public GetDetailActivityOutput GetActivityDetailFromDb(GetDetailActivityInput input)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var savedActivity = GetActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId}).Single();
 
-                var output = new SelectActivityOutput
+                var output = new GetDetailActivityOutput
                 {
                     ActivityDetail = new ActivityDetail
                     {
@@ -57,9 +57,26 @@ namespace Lunggo.ApCommon.Activity.Service
                         ImportantNotice = savedActivity.ImportantNotice,
                         Warning = savedActivity.Warning,
                         AdditionalNotes = savedActivity.AdditionalNotes,
-                        Price = savedActivity.Price,
-                        Date = savedActivity.Date
+                        Price = savedActivity.Price
                     }
+                };
+                return output;
+            }
+        }
+
+        public GetAvailableDatesOutput GetAvailableDatesFromDb(GetAvailableDatesInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var savedActivities = GetAvailableDatesQuery.GetInstance()
+                    .Execute(conn, new { ActivityId = input.ActivityId });
+
+                var output = new GetAvailableDatesOutput
+                {
+                    AvailableDates = savedActivities.Select(a => new ActivityDetail()
+                    {
+                        Date = a.Date
+                    }).ToList()
                 };
                 return output;
             }

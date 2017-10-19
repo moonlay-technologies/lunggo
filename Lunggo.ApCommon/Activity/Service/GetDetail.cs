@@ -4,7 +4,7 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public SelectActivityOutput GetDetail(SelectActivityInput input)
+        public GetDetailActivityOutput GetDetail(GetDetailActivityInput input)
         {
             return GetActivityDetailFromDb(input);
         }
