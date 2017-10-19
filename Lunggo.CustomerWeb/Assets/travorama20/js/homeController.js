@@ -807,6 +807,10 @@ jQuery(document).ready(function ($) {
         $('body .form-child-age').show();
     });
 
+    $('body .hotel-detail').on('click', function () {
+        $('body .form-child-age').show();
+    });
+
     $('body input[name="FormAgeSubmit"]').on('click', function () {
         $('body .form-child-age').hide();
     });
