@@ -6,7 +6,7 @@
         Public = 1,
         Private = 2,
         Member = 3,
-        
+        Invite = 4
     }
 
     internal class CampaignTypeCd
@@ -21,6 +21,8 @@
                     return "PRI";
                 case CampaignType.Member:
                     return "MEM";
+                case CampaignType.Invite:
+                    return "INV";
                 default:
                     return null;
             }
@@ -35,6 +37,8 @@
                     return CampaignType.Private;
                 case "MEM":
                     return CampaignType.Member;
+                case "INV":
+                    return CampaignType.Invite;
                 default:
                     return CampaignType.Undefined;
             }

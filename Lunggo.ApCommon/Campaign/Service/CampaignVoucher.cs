@@ -26,12 +26,19 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             return GetDb.GetCampaignVoucher(voucherCode);
         }
+
         public VoucherResponse ValidateVoucherRequest(string rsvNo, string voucherCode, PaymentDetails paymentDetails = null)
+        {
+            CampaignVoucher voucher;
+            return ValidateVoucherRequest(rsvNo, voucherCode, out voucher, paymentDetails);
+        }
+
+        public VoucherResponse ValidateVoucherRequest(string rsvNo, string voucherCode, out CampaignVoucher voucher, PaymentDetails paymentDetails = null)
         {
             var response = new VoucherResponse();
             var user = HttpContext.Current.User;
 
-            var voucher = GetDb.GetCampaignVoucher(voucherCode);
+            voucher = GetDb.GetCampaignVoucher(voucherCode);
 
             if (voucher == null)
             {
@@ -56,7 +63,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            if (!IsPhoneAndEmailEligibleInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email))
+            if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Public) && 
+                !IsPhoneAndEmailEligibleInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email))
             {
                 response.VoucherStatus = VoucherStatus.EmailNotEligible;
                 return response;
@@ -415,7 +423,8 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode, PaymentDetails paymentDetails = null)
         {
-            var response = ValidateVoucherRequest(rsvNo, voucherCode, paymentDetails);
+            CampaignVoucher voucher;
+            var response = ValidateVoucherRequest(rsvNo, voucherCode, out voucher, paymentDetails);
             if (response.VoucherStatus == VoucherStatus.Success)
             {
                 var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);
@@ -424,7 +433,8 @@ namespace Lunggo.ApCommon.Campaign.Service
                 {
                     response.VoucherStatus = VoucherStatus.Success;
                     var contact = Contact.GetFromDb(rsvNo);
-                    //SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
+                    if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Public))
+                        SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
                 }
                 else
                     response.VoucherStatus = VoucherStatus.UpdateError;

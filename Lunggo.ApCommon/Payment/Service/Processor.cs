@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using DeathByCaptcha;
 using Lunggo.ApCommon.Campaign.Constant;
+using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;

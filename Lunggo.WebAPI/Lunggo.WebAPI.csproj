@@ -415,6 +415,7 @@
     <None Include="Properties\PublishProfiles\travorama-dvapp-api %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %2810%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %284%29.pubxml" />
