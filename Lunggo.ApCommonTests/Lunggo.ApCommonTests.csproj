@@ -89,6 +89,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Activity\ApiSrc\BookLogic\BookApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetAvailableLogic\GetAvailableApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetAvailableLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\GetDetailLogic\TryPreprocessTests.cs" />

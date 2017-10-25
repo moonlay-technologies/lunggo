@@ -44,9 +44,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             bool isPerPageNumeric = int.TryParse(request.PerPage, out var perPageValid);
             if (!isPerPageNumeric) { return false; }
 
-            //int pageValid = Convert.ToInt32(request.Page);
-            //int perPageValid = Convert.ToInt32(request.PerPage);
-
             if (pageValid < 0 || perPageValid < 0)
             {
                 return false;
@@ -102,8 +99,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Name = actList.Name,
                     City = actList.City,
                     Country = actList.Country,
-                    Description = actList.Description,
-                    OperationTime = actList.OperationTime,
                     Price = actList.Price,
                     ImgSrc = actList.ImgSrc
                 }).ToList(),

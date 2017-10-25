@@ -19,10 +19,12 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT act.Id AS ActivityId, act.Name AS Name, ");
-            clauseBuilder.Append("act.Description AS Description, act.City AS City, ");
-            clauseBuilder.Append("act.Country AS Country, act.OperationTime AS OperationTime, ");
+            clauseBuilder.Append("act.Description AS ShortDesc, act.Address AS Address, ");
+            clauseBuilder.Append("act.City AS City, act.Country AS Country, ");
+            clauseBuilder.Append("act.Latitude AS Latitude, act.Longitude AS Longitude, ");
             clauseBuilder.Append("act.ImportantNotice AS ImportantNotice, act.Warning AS Warning, ");
-            clauseBuilder.Append("act.AdditionalNotes AS AdditionalNotes, asp.Price AS Price ");
+            clauseBuilder.Append("act.OperationTime AS OperationTime, asp.Price AS Price, ");
+            clauseBuilder.Append("act.Cancellation AS Cancellation ");
             return clauseBuilder.ToString();
         }
 

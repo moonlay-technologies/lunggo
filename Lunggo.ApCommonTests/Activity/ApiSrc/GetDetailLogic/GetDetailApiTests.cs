@@ -46,13 +46,10 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetDetailLogic.Tests
             {
                 ActivityId = 1,
                 Name = "tiket",
-                Description = "",
+                ShortDesc = "",
                 City = "Jakarta",
                 Country = "Indonesia",
                 OperationTime = "24 Jam",
-                ImportantNotice = "",
-                Warning = "",
-                AdditionalNotes = "",
                 Price = 2000
             };
             var input = new GetDetailActivityOutput()
@@ -66,13 +63,10 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetDetailLogic.Tests
             {
                 ActivityId = 1,
                 Name = "tiket",
-                Description = "",
+                ShortDesc = "",
                 City = "Jakarta",
                 Country = "Indonesia",
                 OperationTime = "24 Jam",
-                ImportantNotice = "",
-                Warning = "",
-                AdditionalNotes = "",
                 Price = 2000
             };
             var expectedResult = new GetDetailActivityApiResponse()
@@ -82,13 +76,10 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetDetailLogic.Tests
 
             Assert.AreEqual(expectedResult.ActivityDetail.ActivityId, actualResult.ActivityDetail.ActivityId);
             Assert.AreEqual(expectedResult.ActivityDetail.Name, actualResult.ActivityDetail.Name);
-            Assert.AreEqual(expectedResult.ActivityDetail.Description, actualResult.ActivityDetail.Description);
+            Assert.AreEqual(expectedResult.ActivityDetail.ShortDesc, actualResult.ActivityDetail.ShortDesc);
             Assert.AreEqual(expectedResult.ActivityDetail.City, actualResult.ActivityDetail.City);
             Assert.AreEqual(expectedResult.ActivityDetail.Country, actualResult.ActivityDetail.Country);
             Assert.AreEqual(expectedResult.ActivityDetail.OperationTime, actualResult.ActivityDetail.OperationTime);
-            Assert.AreEqual(expectedResult.ActivityDetail.ImportantNotice, actualResult.ActivityDetail.ImportantNotice);
-            Assert.AreEqual(expectedResult.ActivityDetail.Warning, actualResult.ActivityDetail.Warning);
-            Assert.AreEqual(expectedResult.ActivityDetail.AdditionalNotes, actualResult.ActivityDetail.AdditionalNotes);
             Assert.AreEqual(expectedResult.ActivityDetail.Price, actualResult.ActivityDetail.Price);
         }
     }

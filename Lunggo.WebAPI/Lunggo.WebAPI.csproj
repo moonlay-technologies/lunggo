@@ -252,6 +252,7 @@
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAvailableDatesLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\BookActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAvailableDatesApiRequest.cs" />
@@ -260,6 +261,8 @@
     <Compile Include="ApiSrc\Activity\Model\GetDetailActivityApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivitySearchApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivitySearchApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ActivityBookApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ActivityBookApiResponse.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />

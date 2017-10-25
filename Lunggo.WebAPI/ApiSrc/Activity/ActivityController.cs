@@ -90,5 +90,28 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/activities/book")]
+        public ApiResponseBase BookActivity()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            ActivityBookApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ActivityBookApiRequest>();
+                var apiResponse = ActivityLogic.BookActivity(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

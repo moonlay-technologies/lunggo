@@ -55,13 +55,17 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 {
                     ActivityId = searchServiceResponse.ActivityDetail.ActivityId,
                     Name = searchServiceResponse.ActivityDetail.Name,
+                    ShortDesc = searchServiceResponse.ActivityDetail.ShortDesc,
                     City = searchServiceResponse.ActivityDetail.City,
                     Country = searchServiceResponse.ActivityDetail.Country,
-                    Description = searchServiceResponse.ActivityDetail.Description,
+                    Address = searchServiceResponse.ActivityDetail.Address,
+                    Latitude = searchServiceResponse.ActivityDetail.Latitude,
+                    Longitude = searchServiceResponse.ActivityDetail.Longitude,
                     OperationTime = searchServiceResponse.ActivityDetail.OperationTime,
-                    ImportantNotice = searchServiceResponse.ActivityDetail.ImportantNotice,
-                    Warning = searchServiceResponse.ActivityDetail.Warning,
-                    AdditionalNotes = searchServiceResponse.ActivityDetail.AdditionalNotes,
+                    MediaSrc = searchServiceResponse.ActivityDetail.MediaSrc,
+                    Content = searchServiceResponse.ActivityDetail.Content,
+                    AdditionalContent = searchServiceResponse.ActivityDetail.AdditionalContent,
+                    Cancellation = searchServiceResponse.ActivityDetail.Cancellation,
                     Price = searchServiceResponse.ActivityDetail.Price
                 }
             };

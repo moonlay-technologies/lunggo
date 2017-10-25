@@ -47,7 +47,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.SearchLogic.Tests
         public void AssembleApiResponse_SearchActivityOutput_ReturnActivitySearchApiResponse()
         {
             var actList1 = new SearchResult()
-            { Name = "", City = "Bandung", Country = "Indonesia", Description = "", OperationTime = "24 Jam", Price = 2000 };
+            { Name = "", City = "Bandung", Country = "Indonesia", Price = 2000 };
             var test = new SearchActivityOutput()
             {
                 ActivityList = new List<SearchResult>() { actList1 },
@@ -58,7 +58,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.SearchLogic.Tests
             var actualResult = ActivityLogic.AssembleApiResponse(test);
 
             var actListDisplay = new SearchResultForDisplay()
-            { Name = "", City = "Bandung", Country = "Indonesia", Description = "", OperationTime = "24 Jam", Price = 2000 };
+            { Name = "", City = "Bandung", Country = "Indonesia", Price = 2000 };
             var expectedResult = new ActivitySearchApiResponse()
             {
                 ActivityList = new List<SearchResultForDisplay>() { actListDisplay },
@@ -69,11 +69,9 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.SearchLogic.Tests
             Assert.AreEqual(expectedResult.Page, actualResult.Page);
             Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
             Assert.AreEqual(expectedResult.ActivityList[0].Name, actualResult.ActivityList[0].Name);
-            Assert.AreEqual(expectedResult.ActivityList[0].Description, actualResult.ActivityList[0].Description);
             Assert.AreEqual(expectedResult.ActivityList[0].Price, actualResult.ActivityList[0].Price);
             Assert.AreEqual(expectedResult.ActivityList[0].City, actualResult.ActivityList[0].City);
             Assert.AreEqual(expectedResult.ActivityList[0].Country, actualResult.ActivityList[0].Country);
-            Assert.AreEqual(expectedResult.ActivityList[0].OperationTime, actualResult.ActivityList[0].OperationTime);
         }
     }
 }
