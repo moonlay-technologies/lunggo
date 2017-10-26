@@ -21,6 +21,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT DISTINCT act.Id AS Id, ");
             clauseBuilder.Append("act.Name AS Name, ");
+            clauseBuilder.Append("act.Category AS Category, ");
             clauseBuilder.Append("act.Description AS Description, ");
             clauseBuilder.Append("act.City AS City, ");
             clauseBuilder.Append("act.Country AS Country, ");

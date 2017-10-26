@@ -8,9 +8,11 @@ namespace Lunggo.ApCommon.Activity.Model
     public class ActivityDetailForDisplay
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ActivityId { get; set; }
+        public string ActivityId { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
+        [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
+        public string Category { get; set; }
         [JsonProperty("shortDesc", NullValueHandling = NullValueHandling.Ignore)]
         public string ShortDesc { get; set; }
         [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
@@ -29,8 +31,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperationTime { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> MediaSrc { get; set; }
-        [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ContentActivityDetail> Content { get; set; }
+        [JsonProperty("contents", NullValueHandling = NullValueHandling.Ignore)]
+        public Content Contents { get; set; }
         [JsonProperty("additionalContent", NullValueHandling = NullValueHandling.Ignore)]
         public List<AdditionalContent> AdditionalContent { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
@@ -41,8 +43,9 @@ namespace Lunggo.ApCommon.Activity.Model
     }
     public class ActivityDetail
     {
-        public int ActivityId { get; set; }
+        public string ActivityId { get; set; }
         public string Name { get; set; }
+        public string Category { get; set; }
         public string ShortDesc { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
@@ -50,15 +53,15 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
         public decimal Price { get; set; }
-        public List<string> MediaSrc { get; set; }
         public string OperationTime { get; set; }
-        public List<ContentActivityDetail> Content { get; set; }
+        public List<string> MediaSrc { get; set; }
+        public Content Contents { get; set; }
         public List<AdditionalContent> AdditionalContent { get; set; }
         public string Cancellation { get; set; }
         public DateTime Date { get; set; }
     }
 
-    public class ContentActivityDetail
+    public class AdditionalContent
     {
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
@@ -66,11 +69,20 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Description { get; set; }
     }
 
-    public class AdditionalContent
+    public class Content
     {
-        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
-        public string Title { get; set; }
-        [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ContentActivityDetail> Content { get; set; }
+        [JsonProperty("content1", NullValueHandling = NullValueHandling.Ignore)]
+        public string Content1 { get; set; }
+        [JsonProperty("content2", NullValueHandling = NullValueHandling.Ignore)]
+        public string Content2 { get; set; }
+        [JsonProperty("content3", NullValueHandling = NullValueHandling.Ignore)]
+        public string Content3 { get; set; }
     }
+    //public class AdditionalContent
+    //{
+    //    [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
+    //    public string Title { get; set; }
+    //    [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
+    //    public List<ContentActivityDetail> Content { get; set; }
+    //}
 }

@@ -43,7 +43,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     request != null && request.Contact != null &&
                     request.Passengers != null && 
                     !string.IsNullOrEmpty(request.ActivityId) &&
-                    !string.IsNullOrEmpty(request.LanguageCode) &&
                     request.Contact.Title != Title.Undefined &&
                     !string.IsNullOrEmpty(request.Contact.Name) &&
                     !string.IsNullOrEmpty(request.Contact.Phone) &&

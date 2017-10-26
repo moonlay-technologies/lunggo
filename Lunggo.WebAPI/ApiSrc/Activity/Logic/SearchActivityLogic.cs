@@ -95,7 +95,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 ActivityList = searchServiceResponse.ActivityList.Select(actList => new SearchResultForDisplay()
                 {
-                    Id = actList.Id,
+                    Id = actList.Category + "-" + actList.Id,
                     Name = actList.Name,
                     City = actList.City,
                     Country = actList.Country,

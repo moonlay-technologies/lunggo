@@ -13,7 +13,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
 {
     [TestClass]
-    public partial class BookLogicTest
+    public class BookLogicTest
     {
         [TestMethod]
         public void Book_Null_ReturnBadRequest()
@@ -35,17 +35,15 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             Initializer.Init();
             
             var pax = new PaxForDisplay(){ Type= PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister};
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com"},
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
-            var actualResult = ActivityLogic.BookActivity(input);
+            ActivityLogic.BookActivity(input);
         }
 
         [TestMethod]
@@ -59,15 +57,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_EmptyPassengerName_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -77,15 +73,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_EmptyPassengerNationality_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -95,15 +89,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_PassengerNationalityNotEqualTwoChar_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "IDN", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -113,15 +105,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_ContactNull_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact(),
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -134,8 +124,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = null,
-                LanguageCode = "id"
+                Passengers = null
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -145,15 +134,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_ActvityIdNullOrEmpty_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -163,15 +150,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_LanguageCodeNullOrEmpty_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = ""
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -181,15 +166,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_TitleContactUndefined_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Undefined, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -199,15 +182,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_ContactNameNullOrEmpty_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -217,15 +198,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_ContactPhoneNullOrEmpty_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -235,15 +214,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_ContactEmailNullOrEmpty_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -253,15 +230,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         public void IsValid_ContactCallingCdNullOrEmpty_ReturnFalse()
         {
             var pax = new PaxForDisplay() { Type = PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister };
-            var paxs = new List<PaxForDisplay>();
-            paxs.Add(pax);
+            var paxs = new List<PaxForDisplay> {pax};
 
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs,
-                LanguageCode = "id"
+                Passengers = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -270,11 +245,9 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         [TestMethod]
         public void AssembleApiResponse_Null_ReturnEmptyObject()
         {
-            BookActivityOutput input = null;
-
             var expectedResult = new ActivityBookApiResponse();
 
-            var actualResult = ActivityLogic.AssembleApiResponse(input);
+            var actualResult = ActivityLogic.AssembleApiResponse((BookActivityOutput) null);
 
             Assert.AreEqual(expectedResult.RsvNo, actualResult.RsvNo);
             Assert.AreEqual(expectedResult.IsValid, actualResult.IsValid);

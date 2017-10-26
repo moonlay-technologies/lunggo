@@ -31,6 +31,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     {
                         Id = a.Id,
                         Name = a.Name,
+                        Category = a.Category,
                         City = a.City,
                         Country = a.Country,
                         Price = a.Price,
@@ -54,19 +55,23 @@ namespace Lunggo.ApCommon.Activity.Service
                 //        return detail;
                 //    }, "MediaSrc").ToList();
 
-                var details = GetActivityDetailQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId })
-                    .ToList();
+                var details = GetActivityDetailQuery.GetInstance().ExecuteMultiMap(conn, new { ActivityId = input.ActivityId }, null,
+                        (detail, content) =>
+                        {
+                            detail.Contents = content;
+                            return detail;
+                        },"Content1");
 
                 var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId }).ToList();
 
-                var contentsDetail = GetContentActivityDetailQuery.GetInstance()
+                var additionalContentsDetail = GetAdditionalContentActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId });
 
                 var activityDetail = details.First();
-
+                //activityDetail.ActivityId = activityDetail.Category + "-" + activityDetail.ActivityId;
                 activityDetail.MediaSrc = mediaSrc;
-                activityDetail.Content = contentsDetail.Select(a => new ContentActivityDetail()
+                activityDetail.AdditionalContent = additionalContentsDetail.Select(a => new AdditionalContent()
                 {
                     Title = a.Title,
                     Description = a.Description

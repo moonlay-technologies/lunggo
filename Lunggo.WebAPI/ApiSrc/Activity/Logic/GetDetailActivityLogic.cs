@@ -32,8 +32,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
             if (request == null)
                 return false;
-
-            var isNumeric = int.TryParse(request.ActivityId, out var activityId);
+            var actId = request.ActivityId.Split('-');
+            var isNumeric = int.TryParse(actId[1], out var activityId);
             if (!isNumeric) { return false; }
 
             if (activityId <= 0)
@@ -53,7 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 ActivityDetail = new ActivityDetailForDisplay()
                 {
-                    ActivityId = searchServiceResponse.ActivityDetail.ActivityId,
+                    ActivityId = searchServiceResponse.ActivityDetail.Category + "-" + searchServiceResponse.ActivityDetail.ActivityId,
                     Name = searchServiceResponse.ActivityDetail.Name,
                     ShortDesc = searchServiceResponse.ActivityDetail.ShortDesc,
                     City = searchServiceResponse.ActivityDetail.City,
@@ -63,7 +63,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Longitude = searchServiceResponse.ActivityDetail.Longitude,
                     OperationTime = searchServiceResponse.ActivityDetail.OperationTime,
                     MediaSrc = searchServiceResponse.ActivityDetail.MediaSrc,
-                    Content = searchServiceResponse.ActivityDetail.Content,
+                    Contents = searchServiceResponse.ActivityDetail.Contents,
                     AdditionalContent = searchServiceResponse.ActivityDetail.AdditionalContent,
                     Cancellation = searchServiceResponse.ActivityDetail.Cancellation,
                     Price = searchServiceResponse.ActivityDetail.Price

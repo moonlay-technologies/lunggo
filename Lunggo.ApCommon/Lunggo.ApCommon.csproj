@@ -173,7 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\Database\Query\GetMediaActivityDetailQuery.cs" />
-    <Compile Include="Activity\Database\Query\GetContentActivityDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAdditionalContentActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableDatesQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />

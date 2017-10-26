@@ -33,7 +33,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             if (request == null)
                 return false;
 
-            var isNumeric = int.TryParse(request.ActivityId, out var activityId);
+            var actId = request.ActivityId.Split('-');
+
+            var isNumeric = int.TryParse(actId[1], out var activityId);
             if (!isNumeric) { return false; }
 
             if (activityId <= 0)

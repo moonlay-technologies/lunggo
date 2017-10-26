@@ -21,9 +21,11 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public BookActivityOutput BookActivity(BookActivityInput input)
         {
+            var actId = input.ActivityId.Split('-');
+
             var getDetail = GetActivityDetailFromDb(new GetDetailActivityInput()
             {
-                ActivityId = Convert.ToInt32(input.ActivityId)
+                ActivityId = Convert.ToInt32(actId[1])
             });
             
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
@@ -38,7 +40,7 @@ namespace Lunggo.ApCommon.Activity.Service
             };
         }
 
-        private ActivityReservation CreateActivityReservation(BookActivityInput input, ActivityDetail activityInfo)
+        public ActivityReservation CreateActivityReservation(BookActivityInput input, ActivityDetail activityInfo)
         {
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Activity);
 
