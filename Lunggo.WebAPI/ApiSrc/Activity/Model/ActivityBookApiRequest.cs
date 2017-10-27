@@ -8,6 +8,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     {
         [JsonProperty("activityId")]
         public string ActivityId { get; set; }
+        [JsonProperty("date")]
+        public string Date { get; set; }
         [JsonProperty("contact")]
         public Contact Contact { get; set; }
         [JsonProperty("pax")]

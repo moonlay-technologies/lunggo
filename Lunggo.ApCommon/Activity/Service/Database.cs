@@ -22,21 +22,26 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 string endDate = input.ActivityFilter.EndDate.ToString("yyyy/MM/dd");
                 string startDate = input.ActivityFilter.StartDate.ToString("yyyy/MM/dd");
+
                 var savedActivities = GetSearchResultQuery.GetInstance()
-                    .Execute(conn, new { Name = input.ActivityFilter.Name, StartDate = startDate, EndDate = endDate, Page = input.Page, PerPage = input.PerPage });
+                    .ExecuteMultiMap(conn, new { Name = input.ActivityFilter.Name, StartDate = startDate, EndDate = endDate, Page = input.Page, PerPage = input.PerPage },
+                    null, (activities, duration) =>
+                        {
+                            activities.Duration = duration;
+                            return activities;
+                        }, "Amount").ToList();
+                
+                for (int i = 0; i < savedActivities.Count; i++)
+                {
+                    var id = savedActivities[i].Id;
+                    var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
+                        .Execute(conn, new { ActivityId = id }).ToList();
+                    savedActivities[i].MediaSrc = mediaSrc[0];
+                }
 
                 var output = new SearchActivityOutput
                 {
-                    ActivityList = savedActivities.Select(a => new SearchResult()
-                    {
-                        Id = a.Id,
-                        Name = a.Name,
-                        Category = a.Category,
-                        City = a.City,
-                        Country = a.Country,
-                        Price = a.Price,
-                        ImgSrc = a.ImgSrc
-                    }).ToList(),
+                    ActivityList = savedActivities,
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
@@ -56,11 +61,12 @@ namespace Lunggo.ApCommon.Activity.Service
                 //    }, "MediaSrc").ToList();
 
                 var details = GetActivityDetailQuery.GetInstance().ExecuteMultiMap(conn, new { ActivityId = input.ActivityId }, null,
-                        (detail, content) =>
+                        (detail, duration, content) =>
                         {
+                            detail.Duration = duration;
                             detail.Contents = content;
                             return detail;
-                        },"Content1");
+                        }, "Amount, Content1");
 
                 var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId }).ToList();
@@ -69,7 +75,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     .Execute(conn, new { ActivityId = input.ActivityId });
 
                 var activityDetail = details.First();
-                //activityDetail.ActivityId = activityDetail.Category + "-" + activityDetail.ActivityId;
+
                 activityDetail.MediaSrc = mediaSrc;
                 activityDetail.AdditionalContent = additionalContentsDetail.Select(a => new AdditionalContent()
                 {
@@ -122,6 +128,16 @@ namespace Lunggo.ApCommon.Activity.Service
                     InsertPgId = "0"
                 };
 
+                var activityRecord = new ActivityReservationTableRecord
+                {
+                    Id = ActivityReservationIdSequence.GetInstance().GetNext(),
+                    RsvNo = reservation.RsvNo,
+                    ActivityId = reservation.ActivityDetails.ActivityId,
+                    Date = reservation.ActivityDetails.Date
+
+                };
+
+                ActivityReservationTableRepo.GetInstance().Insert(conn, activityRecord);
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);

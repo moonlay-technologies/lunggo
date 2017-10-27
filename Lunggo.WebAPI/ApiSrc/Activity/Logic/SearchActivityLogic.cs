@@ -95,12 +95,16 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 ActivityList = searchServiceResponse.ActivityList.Select(actList => new SearchResultForDisplay()
                 {
-                    Id = actList.Category + "-" + actList.Id,
+                    Id = actList.Id,
                     Name = actList.Name,
+                    Category = actList.Category,
+                    Address = actList.Address,
                     City = actList.City,
                     Country = actList.Country,
                     Price = actList.Price,
-                    ImgSrc = actList.ImgSrc
+                    PriceDetail = actList.PriceDetail,
+                    Duration = actList.Duration,
+                    MediaSrc = actList.MediaSrc
                 }).ToList(),
                 Page = searchServiceResponse.Page,
                 PerPage = searchServiceResponse.PerPage

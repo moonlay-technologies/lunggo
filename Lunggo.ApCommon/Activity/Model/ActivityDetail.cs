@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Activity.Model
     public class ActivityDetailForDisplay
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public string ActivityId { get; set; }
+        public long ActivityId { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
         [JsonProperty("category", NullValueHandling = NullValueHandling.Ignore)]
@@ -27,6 +27,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? Longitude { get; set; }
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Price { get; set; }
+        [JsonProperty("priceDetail", NullValueHandling = NullValueHandling.Ignore)]
+        public string PriceDetail { get; set; }
+        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
+        public DurationActivity Duration { get; set; }
         [JsonProperty("operationTime", NullValueHandling = NullValueHandling.Ignore)]
         public string OperationTime { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
@@ -43,7 +47,7 @@ namespace Lunggo.ApCommon.Activity.Model
     }
     public class ActivityDetail
     {
-        public string ActivityId { get; set; }
+        public long ActivityId { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
         public string ShortDesc { get; set; }
@@ -53,6 +57,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
         public decimal Price { get; set; }
+        public string PriceDetail { get; set; }
+        public DurationActivity Duration { get; set; }
         public string OperationTime { get; set; }
         public List<string> MediaSrc { get; set; }
         public Content Contents { get; set; }

@@ -21,13 +21,12 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public BookActivityOutput BookActivity(BookActivityInput input)
         {
-            var actId = input.ActivityId.Split('-');
-
             var getDetail = GetActivityDetailFromDb(new GetDetailActivityInput()
             {
-                ActivityId = Convert.ToInt32(actId[1])
+                ActivityId = Convert.ToInt32(input.ActivityId)
             });
-            
+            getDetail.ActivityDetail.Date = input.Date;
+
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
             InsertActivityRsvToDb(rsvDetail);
             ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);

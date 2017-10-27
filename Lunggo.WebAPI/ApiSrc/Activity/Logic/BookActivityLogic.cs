@@ -43,6 +43,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     request != null && request.Contact != null &&
                     request.Passengers != null && 
                     !string.IsNullOrEmpty(request.ActivityId) &&
+                    !string.IsNullOrEmpty(request.Date) &&
                     request.Contact.Title != Title.Undefined &&
                     !string.IsNullOrEmpty(request.Contact.Name) &&
                     !string.IsNullOrEmpty(request.Contact.Phone) &&
@@ -63,7 +64,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 Passengers = pax,
                 Contact = request.Contact,
-                ActivityId = request.ActivityId
+                ActivityId = request.ActivityId,
+                Date = DateTime.Parse(request.Date)
             };
             return selectServiceRequest;
         }

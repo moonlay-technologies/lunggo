@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TableRecord\ActivityBuyPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPackageTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityReservationTableRecord.cs" />
     <Compile Include="TableRecord\ActivitySellPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityTableRecord.cs" />
     <Compile Include="TableRecord\AgeClassificationTableRecord.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="TableRepository\ActivityBuyPriceRepository.cs" />
     <Compile Include="TableRepository\ActivityPackageRepository.cs" />
     <Compile Include="TableRepository\ActivityRepository.cs" />
+    <Compile Include="TableRepository\ActivityReservationRepository.cs" />
     <Compile Include="TableRepository\ActivitySellPriceRepository.cs" />
     <Compile Include="TableRepository\AgeClassificationRepository.cs" />
     <Compile Include="TableRepository\ContactRepository.cs" />

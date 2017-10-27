@@ -146,6 +146,78 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("IsPhoneNumberAccordingToPassport");
 		    }
 		}
+		public String Address
+		{
+		    get { return _Address; }
+		    set
+		    {
+		        _Address = value;
+		        IncrementLog("Address");
+		    }
+		}
+		public Decimal? Latitude
+		{
+		    get { return _Latitude; }
+		    set
+		    {
+		        _Latitude = value;
+		        IncrementLog("Latitude");
+		    }
+		}
+		public Decimal? Longitude
+		{
+		    get { return _Longitude; }
+		    set
+		    {
+		        _Longitude = value;
+		        IncrementLog("Longitude");
+		    }
+		}
+		public String Cancellation
+		{
+		    get { return _Cancellation; }
+		    set
+		    {
+		        _Cancellation = value;
+		        IncrementLog("Cancellation");
+		    }
+		}
+		public String Category
+		{
+		    get { return _Category; }
+		    set
+		    {
+		        _Category = value;
+		        IncrementLog("Category");
+		    }
+		}
+		public String PriceDetail
+		{
+		    get { return _PriceDetail; }
+		    set
+		    {
+		        _PriceDetail = value;
+		        IncrementLog("PriceDetail");
+		    }
+		}
+		public int? AmountDuration
+		{
+		    get { return _AmountDuration; }
+		    set
+		    {
+		        _AmountDuration = value;
+		        IncrementLog("AmountDuration");
+		    }
+		}
+		public String UnitDuration
+		{
+		    get { return _UnitDuration; }
+		    set
+		    {
+		        _UnitDuration = value;
+		        IncrementLog("UnitDuration");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -163,6 +235,14 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _IsPassportNumberNeeded;
 		private Boolean? _IsNameAccordingToPassport;
 		private Boolean? _IsPhoneNumberAccordingToPassport;
+		private String _Address;
+		private Decimal? _Latitude;
+		private Decimal? _Longitude;
+		private String _Cancellation;
+		private String _Category;
+		private String _PriceDetail;
+		private int? _AmountDuration;
+		private String _UnitDuration;
 
 
 		public static ActivityTableRecord CreateNewInstance()
@@ -209,6 +289,14 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("IsPassportNumberNeeded", false),
 				new ColumnMetadata("IsNameAccordingToPassport", false),
 				new ColumnMetadata("IsPhoneNumberAccordingToPassport", false),
+				new ColumnMetadata("Address", false),
+				new ColumnMetadata("Latitude", false),
+				new ColumnMetadata("Longitude", false),
+				new ColumnMetadata("Cancellation", false),
+				new ColumnMetadata("Category", false),
+				new ColumnMetadata("PriceDetail", false),
+				new ColumnMetadata("AmountDuration", false),
+				new ColumnMetadata("UnitDuration", false),
 
             };
         }

@@ -730,6 +730,7 @@
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
     <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
     <Compile Include="Sequence\DiscountIdSequence.cs" />
+    <Compile Include="Sequence\ActivityReservationIdSequence.cs" />
     <Compile Include="Sequence\HotelReservationIdSequence.cs" />
     <Compile Include="Sequence\HotelRateIdSequence.cs" />
     <Compile Include="Sequence\HotelRoomIdSequence.cs" />

@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    public class GetSearchResultQuery : DbQueryBase<GetSearchResultQuery, SearchResult>
+    public class GetSearchResultQuery : DbQueryBase<GetSearchResultQuery, SearchResult, SearchResult, DurationActivity>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -22,12 +22,14 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("SELECT DISTINCT act.Id AS Id, ");
             clauseBuilder.Append("act.Name AS Name, ");
             clauseBuilder.Append("act.Category AS Category, ");
-            clauseBuilder.Append("act.Description AS Description, ");
+            clauseBuilder.Append("act.Description AS ShortDesc, ");
+            clauseBuilder.Append("act.Address AS Address, ");
             clauseBuilder.Append("act.City AS City, ");
             clauseBuilder.Append("act.Country AS Country, ");
-            clauseBuilder.Append("act.OperationTime AS OperationTime, ");
             clauseBuilder.Append("asp.Price AS Price, ");
-            clauseBuilder.Append("act.ImgSrc AS ImgSrc ");
+            clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
+            clauseBuilder.Append("act.AmountDuration AS Amount, ");
+            clauseBuilder.Append("act.UnitDuration AS Unit ");
             return clauseBuilder.ToString();
         }
 

@@ -40,6 +40,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             var input = new ActivityBookApiRequest
             {
                 ActivityId = "1",
+                Date = "2017-02-18",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com"},
                 Passengers = paxs
             };
