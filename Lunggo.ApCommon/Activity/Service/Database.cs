@@ -31,13 +31,13 @@ namespace Lunggo.ApCommon.Activity.Service
                             return activities;
                         }, "Amount").ToList();
                 
-                for (int i = 0; i < savedActivities.Count; i++)
-                {
-                    var id = savedActivities[i].Id;
-                    var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
-                        .Execute(conn, new { ActivityId = id }).ToList();
-                    savedActivities[i].MediaSrc = mediaSrc[0];
-                }
+                //for (int i = 0; i < savedActivities.Count; i++)
+                //{
+                //    var id = savedActivities[i].Id;
+                //    var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
+                //        .Execute(conn, new { ActivityId = id }).ToList();
+                //    savedActivities[i].MediaSrc = mediaSrc[0];
+                //}
 
                 var output = new SearchActivityOutput
                 {

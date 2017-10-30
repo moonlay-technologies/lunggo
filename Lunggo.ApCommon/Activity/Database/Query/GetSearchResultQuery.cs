@@ -28,6 +28,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.Country AS Country, ");
             clauseBuilder.Append("asp.Price AS Price, ");
             clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
+            clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc, ");
             clauseBuilder.Append("act.AmountDuration AS Amount, ");
             clauseBuilder.Append("act.UnitDuration AS Unit ");
             return clauseBuilder.ToString();
