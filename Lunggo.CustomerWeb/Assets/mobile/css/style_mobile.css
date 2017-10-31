@@ -79,7 +79,7 @@ body {
   background: #f9f9f9;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
-  padding-top: 60px;
+  padding-top: 0;
   letter-spacing: 0;
   -webkit-font-smoothing: antialiased; }
 
@@ -168,7 +168,6 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   transform: translate(-50%, -50%); }
 
 .site-header {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
