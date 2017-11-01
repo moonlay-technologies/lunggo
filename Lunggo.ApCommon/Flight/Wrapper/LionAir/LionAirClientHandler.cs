@@ -49,6 +49,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 client.AddDefaultHeader("Accept-Language", "en-US,en;q=0.8");
                 client.AddDefaultHeader("Upgrade-Insecure-Requests", "1");
                 client.UserAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+                client.Proxy = new WebProxy("128.199.91.32", 80)
+                {
+                    Credentials = new NetworkCredential("travorama", "tmi12345")
+                };
                 client.CookieContainer = new CookieContainer();
                 return client;
             }

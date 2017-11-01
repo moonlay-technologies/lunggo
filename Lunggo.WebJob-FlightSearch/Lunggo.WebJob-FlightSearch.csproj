@@ -88,6 +88,7 @@
     <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-webjobflightsearch.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjobflightsearch - Web Deploy %282%29.pubxml" />
