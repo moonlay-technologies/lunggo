@@ -32,16 +32,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             try
             {
-                foreach (var passenger in request.Passengers)
-                {
-                    if (string.IsNullOrEmpty(passenger.Name) || string.IsNullOrEmpty(passenger.Nationality) || passenger.Nationality.Length != 2)
-                    {
-                        return false;
-                    }
-                }
                 return
                     request != null && request.Contact != null &&
-                    request.Passengers != null && 
                     !string.IsNullOrEmpty(request.ActivityId) &&
                     !string.IsNullOrEmpty(request.Date) &&
                     request.Contact.Title != Title.Undefined &&
@@ -65,7 +57,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 Passengers = pax,
                 Contact = request.Contact,
                 ActivityId = request.ActivityId,
-                Date = DateTime.Parse(request.Date)
+                Date = DateTime.Parse(request.Date),
+                TicketCount = request.TicketCount
             };
             return selectServiceRequest;
         }

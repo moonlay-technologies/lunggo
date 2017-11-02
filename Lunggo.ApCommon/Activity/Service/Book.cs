@@ -64,6 +64,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 RsvNo = rsvNo,
                 Contact = input.Contact,
                 ActivityDetails = activityInfo,
+                TicketCount = input.TicketCount,
                 Pax = input.Passengers,
                 Payment = new PaymentDetails
                 {

@@ -882,6 +882,7 @@
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\FlightDepositWarningNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
+    <None Include="HtmlTemplate\ActivityIssueTicketNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelInternalFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
     <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />

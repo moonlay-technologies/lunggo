@@ -1,0 +1,19 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+@model Lunggo.ApCommon.Activity.Model.ActivityReservationForDisplay
+@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+<html>
+<head>
+    <title>
+        Activity Issue Ticket in Travorama
+    </title>
+</head>
+<body>
+    <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
+    <p>Please Issue a ticket for :</p>
+    <p>Reservation Number : @Model.RsvNo</p>
+    <p>TAP Link : @("http://tap.travorama.com/Hotel/Detail?RsvNo=" + Model.RsvNo)</p>
+</body>
+
+</html>

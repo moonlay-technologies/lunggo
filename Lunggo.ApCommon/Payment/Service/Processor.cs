@@ -8,6 +8,8 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
+using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
@@ -30,8 +32,11 @@ namespace Lunggo.ApCommon.Payment.Service
             ReservationBase reservation;
             if (rsvNo.StartsWith("1"))
                 reservation = FlightService.GetInstance().GetReservation(rsvNo);
-            else
+            else if (rsvNo.StartsWith("2"))
                 reservation = HotelService.GetInstance().GetReservation(rsvNo);
+            else
+                reservation = ActivityService.GetInstance().GetReservation(rsvNo);
+
             var paymentDetails = reservation.Payment;
 
             if (paymentDetails == null)
@@ -188,7 +193,9 @@ namespace Lunggo.ApCommon.Payment.Service
 
             var uniqueCode = GetUniqueCodeFromCache(rsvNo);
             if (uniqueCode == 0M)
-                return paymentDetails;
+            {
+                uniqueCode = GetUniqueCode(rsvNo, null, discountCode);
+            }
             paymentDetails.UniqueCode = uniqueCode;
             paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
 
@@ -206,7 +213,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     var rsv = reservation as FlightReservation;
                     rsv.Itineraries.ForEach(i => i.Price.UpdateToDb());
                 }
-                else
+                else if (reservation.Type == ProductType.Hotel)
                 {
                     var rsv = reservation as HotelReservation;
                     rsv.HotelDetails.Rooms.ForEach(ro => ro.Rates.ForEach(ra => ra.Price.UpdateToDb()));
@@ -219,9 +226,13 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     FlightService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
                 }
-                else
+                else if (reservation.Type == ProductType.Hotel)
                 {
                     HotelService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
+                }
+                else
+                {
+                    ActivityService.GetInstance().SendTransferInstructionToCustomer(rsvNo);
                 }
             }
 
@@ -246,6 +257,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     FlightService.GetInstance().Issue(rsvNo);
                 if (rsvNo.StartsWith("2"))
                     HotelService.GetInstance().Issue(rsvNo);
+                if (rsvNo.StartsWith("3"))
+                    ActivityService.GetInstance().Issue(rsvNo);
             }
         }
 

@@ -2,7 +2,7 @@
 {
     public class GetDetailActivityInput
     {
-        public int ActivityId { get; set; }
+        public long? ActivityId { get; set; }
         //public SearchActivityType SearchActivityType { get; set; }
         //public string SearchId { get; set; }
         //public ActivityFilter ActivityFilter { get; set; }

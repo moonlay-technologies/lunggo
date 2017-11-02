@@ -47,12 +47,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Date");
 		    }
 		}
+		public int? TicketCount
+		{
+		    get { return _TicketCount; }
+		    set
+		    {
+		        _TicketCount = value;
+		        IncrementLog("TicketCount");
+		    }
+		}
 
 		
 		private long? _Id;
 		private String _RsvNo;
 		private long? _ActivityId;
 		private DateTime? _Date;
+		private int? _TicketCount;
 
 
 		public static ActivityReservationTableRecord CreateNewInstance()
@@ -88,6 +98,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("ActivityId", false),
 				new ColumnMetadata("Date", false),
+				new ColumnMetadata("TicketCount", false),
 
             };
         }

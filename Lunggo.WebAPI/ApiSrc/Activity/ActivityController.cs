@@ -93,7 +93,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Level1Authorize]
+        [Level2Authorize]
         [Route("v1/activities/book")]
         public ApiResponseBase BookActivity()
         {

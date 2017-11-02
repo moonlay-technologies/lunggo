@@ -185,6 +185,8 @@
     <Compile Include="Activity\Model\Logic\GetAvailableDatesInput.cs" />
     <Compile Include="Activity\Model\Logic\GetDetailActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAvailableDatesOutput.cs" />
+    <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
+    <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetDetailActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
@@ -194,8 +196,10 @@
     <Compile Include="Activity\Service\Issue.cs" />
     <Compile Include="Activity\Service\GetDetail.cs" />
     <Compile Include="Activity\Service\Book.cs" />
+    <Compile Include="Activity\Service\ModelConversion.cs" />
     <Compile Include="Activity\Service\Reservations.cs" />
     <Compile Include="Activity\Service\Search.cs" />
+    <Compile Include="Activity\Service\Sender.cs" />
     <Compile Include="Activity\Service\Settings.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
     <Compile Include="Campaign\Constant\CampaignStatus.cs" />

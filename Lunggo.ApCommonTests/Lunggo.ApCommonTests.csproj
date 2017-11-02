@@ -97,6 +97,7 @@
     <Compile Include="Activity\ApiSrc\GetDetailLogic\GetDetailApiTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\Service\InitTests.cs" />
+    <Compile Include="Activity\Service\ModelConversionTests.cs" />
     <Compile Include="Init\Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

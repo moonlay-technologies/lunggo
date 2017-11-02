@@ -10,6 +10,8 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -108,6 +110,60 @@ namespace Lunggo.ApCommon.Activity.Service
                 return output;
             }
         }
+
+        private ActivityReservation GetReservationFromDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservationRecord = ReservationTableRepo.GetInstance()
+                    .Find1(conn, new ReservationTableRecord { RsvNo = rsvNo });
+
+                if (reservationRecord == null)
+                    return null;
+
+                var activityReservation = new ActivityReservation
+                {
+                    RsvNo = rsvNo,
+                    Contact = Contact.GetFromDb(rsvNo),
+                    Pax = new List<Pax>(),
+                    Payment = PaymentDetails.GetFromDb(rsvNo),
+                    State = ReservationState.GetFromDb(rsvNo),
+                    ActivityDetails = new ActivityDetail(),
+                    RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd)
+                };
+
+                if (activityReservation.Contact == null || activityReservation.Payment == null)
+                    return null;
+
+                var activityDetailRecord = ActivityReservationTableRepo.GetInstance()
+                    .Find1(conn, new ActivityReservationTableRecord { RsvNo = rsvNo });
+
+                var actDetail = GetActivityDetailFromDb(new GetDetailActivityInput() {ActivityId = activityDetailRecord.ActivityId });
+
+                activityReservation.ActivityDetails = actDetail.ActivityDetail;
+
+                var paxRecords = PaxTableRepo.GetInstance()
+                        .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
+
+                if (paxRecords.Count == 0)
+                    return null;
+
+                foreach (var passengerRecord in paxRecords)
+                {
+                    var passenger = new Pax
+                    {
+                        Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                        FirstName = passengerRecord.FirstName,
+                        LastName = passengerRecord.LastName,
+                        Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
+                    };
+                    activityReservation.Pax.Add(passenger);
+                }
+                return activityReservation;
+            }
+        }
+
         #endregion
 
         #region Insert
@@ -133,8 +189,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     Id = ActivityReservationIdSequence.GetInstance().GetNext(),
                     RsvNo = reservation.RsvNo,
                     ActivityId = reservation.ActivityDetails.ActivityId,
-                    Date = reservation.ActivityDetails.Date
-
+                    Date = reservation.ActivityDetails.Date,
+                    TicketCount = reservation.TicketCount
                 };
 
                 ActivityReservationTableRepo.GetInstance().Insert(conn, activityRecord);
@@ -142,32 +198,52 @@ namespace Lunggo.ApCommon.Activity.Service
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
-                foreach (var passenger in reservation.Pax)
+                if(reservation.Pax != null)
                 {
-
-                    var passengerRecord = new PaxTableRecord
+                    foreach (var passenger in reservation.Pax)
                     {
-                        Id = PaxIdSequence.GetInstance().GetNext(),
-                        RsvNo = reservation.RsvNo,
-                        TypeCd = PaxTypeCd.Mnemonic(passenger.Type),
-                        GenderCd = GenderCd.Mnemonic(passenger.Gender),
-                        TitleCd = TitleCd.Mnemonic(passenger.Title),
-                        FirstName = passenger.FirstName,
-                        LastName = passenger.LastName,
-                        BirthDate = passenger.DateOfBirth.HasValue ? passenger.DateOfBirth.Value.ToUniversalTime() : (DateTime?)null,
-                        NationalityCd = passenger.Nationality,
-                        PassportNumber = passenger.PassportNumber,
-                        PassportExpiryDate = passenger.PassportExpiryDate.HasValue ? passenger.PassportExpiryDate.Value.ToUniversalTime() : (DateTime?)null,
-                        PassportCountryCd = passenger.PassportCountry,
-                        InsertBy = "LunggoSystem",
-                        InsertDate = DateTime.UtcNow,
-                        InsertPgId = "0"
-                    };
-                    PaxTableRepo.GetInstance().Insert(conn, passengerRecord);
+
+                        var passengerRecord = new PaxTableRecord
+                        {
+                            Id = PaxIdSequence.GetInstance().GetNext(),
+                            RsvNo = reservation.RsvNo,
+                            TypeCd = PaxTypeCd.Mnemonic(passenger.Type),
+                            GenderCd = GenderCd.Mnemonic(passenger.Gender),
+                            TitleCd = TitleCd.Mnemonic(passenger.Title),
+                            FirstName = passenger.FirstName,
+                            LastName = passenger.LastName,
+                            BirthDate = passenger.DateOfBirth.HasValue ? passenger.DateOfBirth.Value.ToUniversalTime() : (DateTime?)null,
+                            NationalityCd = passenger.Nationality,
+                            PassportNumber = passenger.PassportNumber,
+                            PassportExpiryDate = passenger.PassportExpiryDate.HasValue ? passenger.PassportExpiryDate.Value.ToUniversalTime() : (DateTime?)null,
+                            PassportCountryCd = passenger.PassportCountry,
+                            InsertBy = "LunggoSystem",
+                            InsertDate = DateTime.UtcNow,
+                            InsertPgId = "0"
+                        };
+                        PaxTableRepo.GetInstance().Insert(conn, passengerRecord);
+                    }
                 }
+                
             }
         }
 
+        #endregion
+
+        #region Update
+
+        private void UpdateRsvStatusDb(string rsvNo, RsvStatus status)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ReservationTableRepo.GetInstance().Update(conn, new ReservationTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                });
+            }
+
+        }
         #endregion
     }
 }

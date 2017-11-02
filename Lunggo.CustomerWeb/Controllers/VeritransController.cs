@@ -29,8 +29,8 @@ namespace Lunggo.CustomerWeb.Controllers
             var rawKey = notif.order_id + notif.status_code + notif.gross_amount + serverKey;
             var signatureKey = rawKey.Sha512Encode();
 
-            if (notif.signature_key != signatureKey)
-                return null;
+            //if (notif.signature_key != signatureKey)
+            //    return null;
 
             if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
             {

@@ -5,9 +5,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
 {
     public class RegisterApiRequest
     {
+        [JsonProperty("name")]
+        public string Name { get; set; }
         [Required]
         [EmailAddress]
         [JsonProperty("email")]
         public string Email { get; set; }
+        [JsonProperty("phone")]
+        public int Phone { get; set; }
+        [Required]
+        [JsonProperty("password")]
+        public string password { get; set; }
     }
 }

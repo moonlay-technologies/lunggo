@@ -56,5 +56,32 @@ namespace Lunggo.ApCommon.Activity.Service
                 return null;
             }
         }
+
+        public ActivityReservation GetReservation(string rsvNo)
+        {
+            try
+            {
+                return GetReservationFromDb(rsvNo);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public ActivityReservationForDisplay GetReservationForDisplay(string rsvNo)
+        {
+            try
+            {
+                var rsv = GetReservation(rsvNo);
+
+                var rsvfordisplay = ConvertToReservationForDisplay(rsv);
+                return rsvfordisplay;
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
