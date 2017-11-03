@@ -23,8 +23,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERAREG01"
                 };
             }
-
+            
             var foundUser = userManager.FindByEmail(request.Email);
+
             if (foundUser != null)
             {
                 return new ApiResponseBase
@@ -36,12 +37,28 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
+            string first, last;
+            var splittedName = request.Name.Split(' ');
+            if (splittedName.Length == 1)
+            {
+                first = request.Name;
+                last = request.Name;
+            }
+            else
+            {
+                first = request.Name.Substring(0, request.Name.LastIndexOf(' '));
+                last = splittedName[splittedName.Length - 1];
+            }
+            
             var user = new User
             {
-                UserName = request.Email,
-                Email = request.Email
+                FirstName = first,
+                LastName = last,
+                UserName = request.Phone + ":" + request.Email,
+                Email = request.Email,
+                PhoneNumber = request.Phone
             };
-            var result = userManager.Create(user);
+            var result = userManager.Create(user, request.Password);
             if (result.Succeeded)
             {
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));

@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Product.Constant;
+using System.Web;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
@@ -15,6 +16,15 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
     {
         public static ApiResponseBase BookActivity(ActivityBookApiRequest request)
         {
+            var user = HttpContext.Current.User;
+            if (user == null)
+            {
+                return new ActivityBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERAGPR01"
+                };
+            }
             if (!IsValid(request))
                 return new ActivityBookApiResponse
                 {

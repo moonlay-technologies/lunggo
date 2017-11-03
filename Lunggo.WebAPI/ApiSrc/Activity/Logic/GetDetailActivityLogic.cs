@@ -6,6 +6,7 @@ using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Activity.Model.Logic;
+using System.Collections.Generic;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
@@ -49,6 +50,19 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static GetDetailActivityApiResponse AssembleApiResponse(GetDetailActivityOutput searchServiceResponse)
         {
+            List<string> RequiredPax = new List<string>();
+
+            if (!searchServiceResponse.ActivityDetail.IsPassportNumberNeeded && 
+                !searchServiceResponse.ActivityDetail.IsPassportIssuedDateNeeded && 
+                !searchServiceResponse.ActivityDetail.IsPaxDoBNeeded)
+            {
+                RequiredPax = null;
+            }
+
+            if (searchServiceResponse.ActivityDetail.IsPassportNumberNeeded) { RequiredPax.Add("Passport Number"); }
+            if (searchServiceResponse.ActivityDetail.IsPassportIssuedDateNeeded) { RequiredPax.Add("Passport Issued Date"); }
+            if (searchServiceResponse.ActivityDetail.IsPaxDoBNeeded) { RequiredPax.Add("Date of Birth"); }
+            
             var apiResponse = new GetDetailActivityApiResponse
             {
                 ActivityDetail = new ActivityDetailForDisplay()
@@ -69,8 +83,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Cancellation = searchServiceResponse.ActivityDetail.Cancellation,
                     Price = searchServiceResponse.ActivityDetail.Price,
                     PriceDetail = searchServiceResponse.ActivityDetail.PriceDetail,
-                    Duration = searchServiceResponse.ActivityDetail.Duration
-                    
+                    Duration = searchServiceResponse.ActivityDetail.Duration,
+                    RequiredPaxData = RequiredPax
+
                 }
             };
             return apiResponse;

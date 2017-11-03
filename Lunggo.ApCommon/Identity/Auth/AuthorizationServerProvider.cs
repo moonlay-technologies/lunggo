@@ -91,11 +91,11 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             var userManager = new UserManager<User>(new DapperUserStore<User>());
             var isPasswordOk = await userManager.CheckPasswordAsync(user, context.Password);
-            if (!user.EmailConfirmed)
-            {
-                context.SetError("not_active", "User is not yet activated.");
-                return;
-            }
+            //if (!user.EmailConfirmed)
+            //{
+            //    context.SetError("not_active", "User is not yet activated.");
+            //    return;
+            //}
 
             if (!isPasswordOk)
             {

@@ -218,6 +218,24 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UnitDuration");
 		    }
 		}
+		public Boolean? IsPaxDoBNeeded
+		{
+		    get { return _IsPaxDoBNeeded; }
+		    set
+		    {
+		        _IsPaxDoBNeeded = value;
+		        IncrementLog("IsPaxDoBNeeded");
+		    }
+		}
+		public Boolean? IsPassportIssuedDateNeeded
+		{
+		    get { return _IsPassportIssuedDateNeeded; }
+		    set
+		    {
+		        _IsPassportIssuedDateNeeded = value;
+		        IncrementLog("IsPassportIssuedDateNeeded");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -243,6 +261,8 @@ namespace Lunggo.Repository.TableRecord
 		private String _PriceDetail;
 		private int? _AmountDuration;
 		private String _UnitDuration;
+		private Boolean? _IsPaxDoBNeeded;
+		private Boolean? _IsPassportIssuedDateNeeded;
 
 
 		public static ActivityTableRecord CreateNewInstance()
@@ -297,6 +317,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PriceDetail", false),
 				new ColumnMetadata("AmountDuration", false),
 				new ColumnMetadata("UnitDuration", false),
+				new ColumnMetadata("IsPaxDoBNeeded", false),
+				new ColumnMetadata("IsPassportIssuedDateNeeded", false),
 
             };
         }

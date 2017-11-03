@@ -24,6 +24,8 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.Latitude AS Latitude, act.Longitude AS Longitude, ");
             clauseBuilder.Append("act.OperationTime AS OperationTime, asp.Price AS Price, ");
             clauseBuilder.Append("act.PriceDetail AS PriceDetail, act.Cancellation AS Cancellation, ");
+            clauseBuilder.Append("act.IsPassportNumberNeeded AS IsPassportNumberNeeded, act.IsPassportIssuedDateNeeded AS IsPassportIssuedDateNeeded, ");
+            clauseBuilder.Append("act.IsPaxDoBNeeded AS IsPaxDoBNeeded, ");
             clauseBuilder.Append("act.AmountDuration AS Amount, act.UnitDuration AS Unit, ");
             clauseBuilder.Append("act.ImportantNotice AS Content1, act.Warning AS Content2, act.AdditionalNotes AS Content3 ");
             return clauseBuilder.ToString();

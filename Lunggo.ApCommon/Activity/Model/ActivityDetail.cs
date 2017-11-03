@@ -43,6 +43,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Cancellation { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? Date { get; set; }
+        [JsonProperty("requiredPaxData", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> RequiredPaxData { get; set; }
 
     }
     public class ActivityDetail
@@ -65,6 +67,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public List<AdditionalContent> AdditionalContent { get; set; }
         public string Cancellation { get; set; }
         public DateTime Date { get; set; }
+        public bool IsPassportNumberNeeded { get; set; }
+        public bool IsPassportIssuedDateNeeded { get; set; }
+        public bool IsPaxDoBNeeded { get; set; }
     }
 
     public class AdditionalContent
@@ -84,11 +89,4 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("content3", NullValueHandling = NullValueHandling.Ignore)]
         public string Content3 { get; set; }
     }
-    //public class AdditionalContent
-    //{
-    //    [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
-    //    public string Title { get; set; }
-    //    [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
-    //    public List<ContentActivityDetail> Content { get; set; }
-    //}
 }

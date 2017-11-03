@@ -12,9 +12,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [JsonProperty("email")]
         public string Email { get; set; }
         [JsonProperty("phone")]
-        public int Phone { get; set; }
+        public string Phone { get; set; }
         [Required]
         [JsonProperty("password")]
-        public string password { get; set; }
+        public string Password { get; set; }
     }
 }
