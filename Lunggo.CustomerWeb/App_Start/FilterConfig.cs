@@ -29,20 +29,23 @@ namespace Lunggo.CustomerWeb
             {
                 var clientId = filterContext.HttpContext.Request.Headers["X-Client-ID"];
                 var clientSecret = filterContext.HttpContext.Request.Headers["X-Client-Secret"];
+                var identity = filterContext.HttpContext.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                 if (clientId != null && clientId != "")
+                {
+                    identity.AddClaim(new Claim("Client ID", clientId));
                     filterContext.Controller.ViewBag.Platform = Client.GetPlatformType(clientId);
+                }
                 else
                 {
                     var mobileUrl = ConfigManager.GetInstance().GetConfigValue("general", "mobileUrl");
-                    var identity = filterContext.HttpContext.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     if (filterContext.HttpContext.Request.Url.Host == mobileUrl)
                     {
-                        identity.AddClaim(new Claim("Client ID", "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=" ?? ""));
+                        identity.AddClaim(new Claim("Client ID", "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0="));
                         filterContext.Controller.ViewBag.Platform = PlatformType.MobileWebsite;
                     }
                     else
                     {
-                        identity.AddClaim(new Claim("Client ID", "V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0=" ?? ""));
+                        identity.AddClaim(new Claim("Client ID", "V2toa2VrOXFSWFZOUXpSM1QycEZlRTlIVlhwYWFrVjVUVVJrYlZsVVp6Vk5WRlp0VGtSR2FrOUhSWGhhYWsweFRucGpNRTE2U1RCT2VtTjNXbTFKZDFwcVFUMD0="));
                         filterContext.Controller.ViewBag.Platform = PlatformType.DesktopWebsite;
                     }
                 }
