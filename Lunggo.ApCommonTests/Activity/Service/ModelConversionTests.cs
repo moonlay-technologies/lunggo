@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Product.Constant;
 using System.Collections.Generic;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommonTests.Activity.Service
 {
@@ -20,33 +21,32 @@ namespace Lunggo.ApCommonTests.Activity.Service
             Assert.IsNull(result);
         }
 
-        //[TestMethod]
-        //public void ConvertToReservationForDisplay_valid_returnConvertedRsv()
-        //{
-        //    var input = new ActivityReservation()
-        //    {
-        //        RsvNo = "1234",
-        //        RsvTime = new DateTime(2000-01-01),
-        //        Payment = new PaymentDetails()
-        //        {
-        //            Status = PaymentStatus.Undefined,
-        //            Method = PaymentMethod.Indomaret,
-        //            LocalCurrency = new Currency("")
-        //        }
-        //    };
+        [TestMethod]
+        public void ConvertToReservationForDisplay_valid_returnConvertedRsv()
+        {
+            var input = new ActivityReservation()
+            {
+                RsvNo = "1234",
+                RsvTime = new DateTime(2000 - 01 - 01),
+                Payment = null,
+                ActivityDetails = new ActivityDetail(),
+                Pax = new List<Pax>(),
+                Contact = new Contact(),
+                RsvStatus = RsvStatus.Undefined
+            };
 
-        //    var actualResult = ActivityService.GetInstance().ConvertToReservationForDisplay(input);
+            var actualResult = ActivityService.GetInstance().ConvertToReservationForDisplay(input);
 
-        //    var expectedResult = new ActivityReservationForDisplay()
-        //    {
-        //        RsvNo = "1234",
-        //        RsvTime = new DateTime(2000 - 01 - 01),
-        //        RsvDisplayStatus = RsvDisplayStatus.Undefined
-        //    };
+            var expectedResult = new ActivityReservationForDisplay()
+            {
+                RsvNo = "1234",
+                RsvTime = new DateTime(2000 - 01 - 01),
+                RsvDisplayStatus = RsvDisplayStatus.Undefined
+            };
 
-        //    Assert.AreEqual(expectedResult.RsvNo, actualResult.RsvNo);
-        //    Assert.AreEqual(expectedResult.RsvTime, actualResult.RsvTime);
-        //}
+            Assert.AreEqual(expectedResult.RsvNo, actualResult.RsvNo);
+            Assert.AreEqual(expectedResult.RsvTime, actualResult.RsvTime);
+        }
 
         [TestMethod]
         public void ConvertToActivityDetailForDisplay_null_returnNull()

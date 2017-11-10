@@ -9,15 +9,40 @@ using Lunggo.ApCommonTests.Init;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Web;
+using System.Security.Principal;
 
 namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
 {
     [TestClass]
     public class BookLogicTest
     {
+        [TestInitialize]
+        public void TestInit()
+        {
+            HttpContext.Current = new HttpContext(new HttpRequest(null, "http://localhost.com", null), new HttpResponse(null));
+        }
+
+        [TestMethod]
+        public void Book_null_ReturnUnauthorized()
+        {
+            HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
+            HttpContext.Current.User = new GenericPrincipal( new GenericIdentity(String.Empty), new string[0] );
+            var expectedResult = new ActivityBookApiResponse
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                ErrorCode = "ERAGPR01"
+            };
+            var actualResult = ActivityLogic.BookActivity(null);
+            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+        }
+
         [TestMethod]
         public void Book_Null_ReturnBadRequest()
         {
+            HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
+            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("username"), new string[0]);
             var expectedResult = new ActivityBookApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
@@ -241,6 +266,32 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
+        }
+
+        [TestMethod]
+        public void PreprocessServiceRequest_valid_ReturnObjectWithConvertedPax()
+        {
+            var PaxsForDisplay = new List<PaxForDisplay>() { new PaxForDisplay() { Name = "abcde" } };
+            var Paxs = new List<Pax>() { new Pax() { FirstName = "abcde" } };
+            var input = new ActivityBookApiRequest()
+            {
+                ActivityId = "1",
+                Date = "2017-01-01",
+                Contact = null,
+                Passengers = PaxsForDisplay,
+                TicketCount = null
+            };
+
+            var expectedResult = new BookActivityInput()
+            {
+                ActivityId = "1",
+                Passengers = Paxs
+            };
+
+            var actualResult = ActivityLogic.PreprocessServiceRequest(input);
+
+            Assert.AreEqual(expectedResult.ActivityId, actualResult.ActivityId);
+            Assert.AreEqual(expectedResult.Passengers[0].FirstName, actualResult.Passengers[0].FirstName);
         }
 
         [TestMethod]

@@ -104,6 +104,8 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public static RsvDisplayStatus MapReservationStatus(ActivityReservation reservation)
         {
+            if(reservation.Payment == null) { return RsvDisplayStatus.Undefined; }
+
             var paymentStatus = reservation.Payment.Status;
             var paymentMethod = reservation.Payment.Method;
             var rsvStatus = reservation.RsvStatus;

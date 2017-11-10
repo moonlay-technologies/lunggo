@@ -8,6 +8,10 @@ using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;
+using Lunggo.ApCommon.Product.Constant;
+using System.Security.Claims;
+using Lunggo.ApCommon.Identity.Auth;
+using System.Linq;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -25,15 +29,13 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
             
             var foundUser = userManager.FindByEmail(request.Email);
-
-            if (foundUser != null)
+            var foundUserByPhone = userManager.FindByName(request.Phone);
+            if (foundUser != null || foundUserByPhone != null)
             {
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = foundUser.EmailConfirmed
-                        ? "ERAREG02"
-                        : "ERAREG03"
+                    ErrorCode = foundUser == null ? (foundUserByPhone.EmailConfirmed ? "ERAREG02" : "ERAREG03") : (foundUser.EmailConfirmed ? "ERAREG02" : "ERAREG03")
                 };
             }
 
@@ -49,14 +51,23 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 first = request.Name.Substring(0, request.Name.LastIndexOf(' '));
                 last = splittedName[splittedName.Length - 1];
             }
-            
+
+
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            PlatformType Platform;
+
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            Platform = Client.GetPlatformType(clientId);
+
             var user = new User
             {
                 FirstName = first,
                 LastName = last,
                 UserName = request.Phone + ":" + request.Email,
                 Email = request.Email,
-                PhoneNumber = request.Phone
+                PhoneNumber = request.Phone,
+                PlatformCd = PlatformTypeCd.Mnemonic(Platform)
             };
             var result = userManager.Create(user, request.Password);
             if (result.Succeeded)

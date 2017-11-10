@@ -98,20 +98,8 @@ namespace Lunggo.ApCommon.Identity.UserStore
 
         private UserTableRecord ToUsersTableRecordForInsert(TUser user)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            PlatformType Platform;
-            if (env == "production")
-            {
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-                Platform = Client.GetPlatformType(clientId);
-            }
-            else
-            {
-                Platform = PlatformType.Undefined;
-            }
 
-            var record = new UserTableRecord
+        var record = new UserTableRecord
             {
                 AccessFailedCount = user.AccessFailedCount,
                 Email = user.Email,
@@ -132,7 +120,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 InsertBy = "LunggoSystem",
                 InsertDate = DateTime.UtcNow,
                 InsertPgId = "0",
-                PlatformCd = PlatformTypeCd.Mnemonic(Platform)
+                PlatformCd = user.PlatformCd
             };
             return record;
         }

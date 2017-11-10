@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class GetAvailableDatesQuery : DbQueryBase<GetAvailableDatesQuery, ActivityDetail>
+    internal class GetAvailableDatesQuery : DbQueryBase<GetAvailableDatesQuery, DateAndAvailableHour>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT Date ");
+            clauseBuilder.Append("SELECT Date, AvailableHour ");
             return clauseBuilder.ToString();
         }
 

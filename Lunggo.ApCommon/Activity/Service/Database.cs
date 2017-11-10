@@ -93,12 +93,13 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 var savedActivities = GetAvailableDatesQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId });
-
+                
                 var output = new GetAvailableDatesOutput
                 {
-                    AvailableDates = savedActivities.Select(a => new ActivityDetail()
+                    AvailableDateTimes = savedActivities.Select(a => new DateAndAvailableHour()
                     {
-                        Date = a.Date
+                        Date = a.Date,
+                        AvailableHour = a.AvailableHour
                     }).ToList()
                 };
                 return output;

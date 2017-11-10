@@ -4,6 +4,6 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
 {
     public class GetAvailableDatesOutput
     {
-        public List<ActivityDetail> AvailableDates { get; set; }
+        public List<DateAndAvailableHour> AvailableDateTimes { get; set; }
     }
 }

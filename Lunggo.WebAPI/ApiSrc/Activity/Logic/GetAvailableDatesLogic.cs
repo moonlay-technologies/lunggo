@@ -51,10 +51,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new GetAvailableDatesApiResponse
             {
-                AvailableDates = searchServiceResponse.AvailableDates.Select(dateList => new ActivityDetailForDisplay()
-                {
-                    Date = dateList.Date
-                }).ToList()
+                AvailableDateTimes = searchServiceResponse.AvailableDateTimes
             };
             return apiResponse;
             

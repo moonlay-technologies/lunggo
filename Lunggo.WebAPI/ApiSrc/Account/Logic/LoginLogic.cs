@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static LoginApiResponse Login(LoginApiRequest request)
         {
-            if (request.RefreshToken != null && (request.UserName != null || request.Password != null))
+            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,

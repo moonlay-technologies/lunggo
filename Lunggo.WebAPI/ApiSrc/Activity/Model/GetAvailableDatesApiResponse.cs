@@ -7,7 +7,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
     public class GetAvailableDatesApiResponse : ApiResponseBase
     {
-        [JsonProperty("availableDates", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ActivityDetailForDisplay> AvailableDates { get; set; }
+        [JsonProperty("availableDateTimes", NullValueHandling = NullValueHandling.Ignore)]
+        public List<DateAndAvailableHour> AvailableDateTimes { get; set; }
     }
 }

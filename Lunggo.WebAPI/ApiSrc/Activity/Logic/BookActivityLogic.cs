@@ -17,7 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         public static ApiResponseBase BookActivity(ActivityBookApiRequest request)
         {
             var user = HttpContext.Current.User;
-            if (user == null)
+            if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new ActivityBookApiResponse
                 {
@@ -59,7 +59,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             }
         }
 
-        private static BookActivityInput PreprocessServiceRequest(ActivityBookApiRequest request)
+        public static BookActivityInput PreprocessServiceRequest(ActivityBookApiRequest request)
         {
             var pax = ActivityService.GetInstance().ConvertToPax(request.Passengers);
             var selectServiceRequest = new BookActivityInput

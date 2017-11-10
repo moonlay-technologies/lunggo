@@ -43,28 +43,25 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetAvailableLogic.Tests
         [TestMethod]
         public void AssembleApiResponse_GetAvailableDatesOutput_ReturnGetAvailableDatesApiResponse()
         {
-            var activityDetail = new ActivityDetail()
+            var activityDateTimes = new DateAndAvailableHour()
             {
-                Date = DateTime.Parse("2017/02/18")
+                Date = DateTime.Parse("2017/02/18"),
+                AvailableHour = "07.00 - 12.00"
             };
             var input = new GetAvailableDatesOutput()
             {
-                AvailableDates = new List<ActivityDetail>() { activityDetail }
+                AvailableDateTimes = new List<DateAndAvailableHour>() { activityDateTimes }
             };
 
             var actualResult = ActivityLogic.AssembleApiResponse(input);
 
-            var activityDetailForDisplay = new ActivityDetailForDisplay()
-            {
-                Date = DateTime.Parse("2017/02/18")
-            };
-
             var expectedResult = new GetAvailableDatesApiResponse()
             {
-                AvailableDates = new List<ActivityDetailForDisplay>() { activityDetailForDisplay}
+                AvailableDateTimes = new List<DateAndAvailableHour>() { activityDateTimes }
             };
 
-            Assert.AreEqual(expectedResult.AvailableDates[0].Date, actualResult.AvailableDates[0].Date);
+            Assert.AreEqual(expectedResult.AvailableDateTimes[0].Date, actualResult.AvailableDateTimes[0].Date);
+            Assert.AreEqual(expectedResult.AvailableDateTimes[0].AvailableHour, actualResult.AvailableDateTimes[0].AvailableHour);
         }
     }
 }
