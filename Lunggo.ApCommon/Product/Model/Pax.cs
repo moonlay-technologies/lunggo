@@ -27,12 +27,12 @@ namespace Lunggo.ApCommon.Product.Model
 
     public class Pax
     {
-        public PaxType Type { get; set; }
-        public Title Title { get; set; }
+        public PaxType? Type { get; set; }
+        public Title? Title { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
         public string Nationality { get; set; }
         public string PassportNumber { get; set; }
         public DateTime? PassportExpiryDate { get; set; }

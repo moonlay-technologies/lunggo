@@ -5,7 +5,6 @@ using Lunggo.Framework.Database;
 using System.Linq;
 using Lunggo.ApCommon.Activity.Database.Query;
 using Lunggo.ApCommon.Activity.Model.Logic;
-using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Repository.TableRecord;
@@ -15,6 +14,7 @@ using Lunggo.ApCommon.Payment.Model;
 using System.Web;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Users;
+using Lunggo.ApCommon.Flight.Constant;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -188,6 +188,43 @@ namespace Lunggo.ApCommon.Activity.Service
                     }).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
+
+        public GetMyBookingDetailOutput GetMyBookingDetailFromDb(GetMyBookingDetailInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                
+                var savedBooking = GetMyBookingDetailQuery.GetInstance()
+                    .Execute(conn, new { RsvNo = input.RsvNo }).First();
+
+                var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = input.RsvNo }, null,
+                        (passengers, typeCd, titleCd, genderCd) =>
+                        {
+                            passengers.Type = PaxTypeCd.Mnemonic(typeCd);
+                            passengers.Title = TitleCd.Mnemonic(titleCd);
+                            passengers.Gender = GenderCd.Mnemonic(genderCd);
+                            return passengers;
+                        }, "TypeCd, TitleCd, GenderCd").ToList();
+
+                var output = new GetMyBookingDetailOutput
+                {
+                    BookingDetail = new BookingDetail()
+                    {
+                        ActivityId = savedBooking.ActivityId,
+                        Name = savedBooking.Name,
+                        BookingStatus = savedBooking.BookingStatus,
+                        TimeLimit = savedBooking.TimeLimit.Value.AddHours(1),
+                        Date = savedBooking.Date,
+                        SelectedSession = savedBooking.SelectedSession,
+                        PaxCount = savedBooking.PaxCount,
+                        Passengers = savedPassengers,
+                        Price = savedBooking.Price,
+                        MediaSrc = savedBooking.MediaSrc
+                    }
                 };
                 return output;
             }

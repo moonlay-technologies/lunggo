@@ -10,7 +10,7 @@
 
     internal class PaxTypeCd
     {
-        internal static string Mnemonic(PaxType type)
+        internal static string Mnemonic(PaxType? type)
         {
             switch (type)
             {

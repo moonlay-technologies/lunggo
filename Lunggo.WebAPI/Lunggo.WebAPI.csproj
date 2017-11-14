@@ -251,11 +251,14 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetMyBookingDetailLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAvailableDatesLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\BookActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetMyBookingDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetMyBookingDetailApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAvailableDatesApiRequest.cs" />

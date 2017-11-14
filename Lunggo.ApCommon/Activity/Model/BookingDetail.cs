@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.ApCommon.Activity.Model
 {
@@ -27,7 +28,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? Price { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
-        
+        [JsonProperty("paxsDetail", NullValueHandling = NullValueHandling.Ignore)]
+        public List<PaxForDisplay> Passengers { get; set; }
+
     }
     public class BookingDetail
     {
@@ -41,7 +44,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string PaxCount { get; set; }
         public decimal Price { get; set; }
         public string MediaSrc { get; set; }
-        
+        public List<Pax> Passengers { get; set; }
+
     }
     
 }

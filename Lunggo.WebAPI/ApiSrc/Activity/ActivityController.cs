@@ -140,5 +140,32 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/{rsvNo}")]
+        public ApiResponseBase MyBookingDetail(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetMyBookingDetailApiRequest()
+                {
+                    RsvNo = rsvNo
+                };
+                var apiResponse = ActivityLogic.GetMyBookingDetail(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
     }
 }

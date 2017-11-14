@@ -1,0 +1,90 @@
+﻿using System;
+using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Activity.Service;
+using Lunggo.WebAPI.ApiSrc.Activity.Model;
+using Lunggo.WebAPI.ApiSrc.Common.Model;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using Lunggo.ApCommon.Activity.Model.Logic;
+using Lunggo.ApCommon.Product.Constant;
+using System.Web;
+using Lunggo.ApCommon.Product.Model;
+
+namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
+{
+    public static partial class ActivityLogic
+    {
+        public static ApiResponseBase GetMyBookingDetail(GetMyBookingDetailApiRequest request)
+        {
+            var user = HttpContext.Current.User;
+            if (string.IsNullOrEmpty(user.Identity.Name))
+            {
+                return new GetMyBookingDetailApiResponse
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERAGPR01"
+                };
+            }
+
+            if (!IsValid(request))
+            {
+                return new GetMyBookingDetailApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERASEA01"
+                };
+            }
+            var serviceRequest = PreprocessServiceRequest(request);
+            var serviceResponse = ActivityService.GetInstance().GetMyBookingDetail(serviceRequest);
+            var apiResponse = AssembleApiResponse(serviceResponse);
+
+            return apiResponse;
+        }
+
+        public static bool IsValid(GetMyBookingDetailApiRequest request)
+        {
+            try
+            {
+                return request != null && !string.IsNullOrEmpty(request.RsvNo);
+            }
+            catch
+            {
+                return false;
+            }
+            
+        }
+        
+        public static GetMyBookingDetailInput PreprocessServiceRequest (GetMyBookingDetailApiRequest request)
+        {
+            return new GetMyBookingDetailInput()
+            {
+                RsvNo = request.RsvNo
+            };
+        }
+
+        public static GetMyBookingDetailApiResponse AssembleApiResponse(GetMyBookingDetailOutput serviceResponse)
+        {
+            var paxForDisplay = ActivityService.GetInstance().ConvertToPaxForDisplay(serviceResponse.BookingDetail.Passengers);
+
+            var apiResponse = new GetMyBookingDetailApiResponse()
+            {
+                BookingDetail = new BookingDetailForDisplay()
+                {
+                    ActivityId = serviceResponse.BookingDetail.ActivityId,
+                    Name = serviceResponse.BookingDetail.Name,
+                    TimeLimit = serviceResponse.BookingDetail.TimeLimit,
+                    Date = serviceResponse.BookingDetail.Date,
+                    SelectedSession = serviceResponse.BookingDetail.SelectedSession,
+                    Price = serviceResponse.BookingDetail.Price,
+                    MediaSrc = serviceResponse.BookingDetail.MediaSrc,
+                    PaxCount = serviceResponse.BookingDetail.PaxCount,
+                    Passengers = paxForDisplay
+                }
+            };
+
+            return apiResponse;
+
+        }
+    }
+}

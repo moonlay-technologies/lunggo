@@ -176,7 +176,9 @@
     <Compile Include="Activity\Database\Query\GetAdditionalContentActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableDatesQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetMyBookingDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetMyBookingsQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
     <Compile Include="Activity\Model\BookingDetail.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
@@ -185,8 +187,10 @@
     <Compile Include="Activity\Model\Logic\BookActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAvailableDatesInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetMyBookingDetailInput.cs" />
     <Compile Include="Activity\Model\Logic\GetDetailActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAvailableDatesOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
@@ -196,6 +200,7 @@
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Database.cs" />
+    <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
     <Compile Include="Activity\Service\Issue.cs" />
     <Compile Include="Activity\Service\GetActivityDetail.cs" />
