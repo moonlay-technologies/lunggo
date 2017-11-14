@@ -93,6 +93,8 @@
     <Compile Include="Activity\ApiSrc\GetAvailableLogic\GetAvailableApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetAvailableLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\GetDetailLogic\TryPreprocessTests.cs" />
+    <Compile Include="Activity\ApiSrc\GetMyBookingsLogic\GetMyBookingsApiTests.cs" />
+    <Compile Include="Activity\ApiSrc\GetMyBookingsLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\SearchApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetDetailLogic\GetDetailApiTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />

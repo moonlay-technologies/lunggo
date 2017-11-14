@@ -25,8 +25,7 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 ActivityId = Convert.ToInt32(input.ActivityId)
             });
-            getDetail.ActivityDetail.Date = input.Date;
-
+            
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
             InsertActivityRsvToDb(rsvDetail);
             ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
@@ -64,6 +63,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 RsvNo = rsvNo,
                 Contact = input.Contact,
                 ActivityDetails = activityInfo,
+                DateTime = input.DateTime,
                 TicketCount = input.TicketCount,
                 Pax = input.Passengers,
                 Payment = new PaymentDetails

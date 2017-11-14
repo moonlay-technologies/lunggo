@@ -10,6 +10,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         public string ActivityId { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public string Date { get; set; }
+        [JsonProperty("selectedSession", NullValueHandling = NullValueHandling.Ignore)]
+        public string SelectedSession { get; set; }
         [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
         public Contact Contact { get; set; }
         [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]

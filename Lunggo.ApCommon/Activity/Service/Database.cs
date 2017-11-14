@@ -12,6 +12,9 @@ using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Payment.Model;
+using System.Web;
+using Lunggo.ApCommon.Identity.Query;
+using Lunggo.ApCommon.Identity.Users;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -159,6 +162,36 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
+        public GetMyBookingsOutput GetMyBookingsFromDb(GetMyBookingsInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+                
+                var savedBookings = GetMyBookingsQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+                
+                var output = new GetMyBookingsOutput
+                {
+                    MyBookings = savedBookings.Select(a => new BookingDetail()
+                    {
+                        ActivityId = a.ActivityId,
+                        RsvNo = a.RsvNo,
+                        Name = a.Name,
+                        BookingStatus = a.BookingStatus,
+                        TimeLimit = a.TimeLimit.Value.AddHours(1),
+                        Date = a.Date,
+                        SelectedSession = a.SelectedSession,
+                        PaxCount = a.PaxCount,
+                        Price = a.Price,
+                        MediaSrc = a.MediaSrc
+                    }).ToList(),
+                    Page = input.Page,
+                    PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
         #endregion
 
         #region Insert
@@ -184,7 +217,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     Id = ActivityReservationIdSequence.GetInstance().GetNext(),
                     RsvNo = reservation.RsvNo,
                     ActivityId = reservation.ActivityDetails.ActivityId,
-                    Date = reservation.ActivityDetails.Date,
+                    Date = reservation.DateTime.Date,
+                    SelectedSession = reservation.DateTime.AvailableHour,
                     TicketCount = reservation.TicketCount
                 };
 

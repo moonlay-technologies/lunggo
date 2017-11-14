@@ -19,6 +19,8 @@ namespace Lunggo.ApCommon.Activity.Model
 
         [JsonProperty("activityDetail", NullValueHandling = NullValueHandling.Ignore)]
         public ActivityDetailForDisplay ActivityDetail { get; set; }
+        [JsonProperty("selectedDateTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateAndAvailableHour DateTime { get; set; }
         [JsonProperty("ticketCount", NullValueHandling = NullValueHandling.Ignore)]
         public int? TicketCount { get; set; }
     }
@@ -30,6 +32,7 @@ namespace Lunggo.ApCommon.Activity.Model
         }
 
         public ActivityDetail ActivityDetails { get; set; }
+        public DateAndAvailableHour DateTime { get; set; }
         public int? TicketCount { get; set; }
         public override decimal GetTotalSupplierPrice()
         {
