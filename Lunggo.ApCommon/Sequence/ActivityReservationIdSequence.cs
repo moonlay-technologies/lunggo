@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Sequence
         {
             _properties = new SequenceProperties
             {
-                Name = "FlightItineraryIdSequence",
+                Name = "ActivityIdSequence",
                 InitialValue = 20000
             };
             Init(_properties);

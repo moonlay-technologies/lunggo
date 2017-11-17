@@ -59,7 +59,7 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                         new LogAttachment("REQUEST", requestString)
                     });
             return e.GetType() == typeof(JsonReaderException)
-                ? ErrorInvalidJson()
+                ? ErrorInvalidJson(e.Message)
                 : Error500();
         }
 
@@ -72,12 +72,12 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             };
         }
 
-        public static ApiResponseBase ErrorInvalidJson()
+        public static ApiResponseBase ErrorInvalidJson(string message)
         {
             return new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERRGEN98"
+                ErrorCode = "ERRGEN98 : " + message
             };
         }
 

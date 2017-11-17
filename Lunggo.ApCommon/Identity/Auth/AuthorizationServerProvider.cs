@@ -102,7 +102,7 @@ namespace Lunggo.ApCommon.Identity.Auth
                 context.SetError("invalid_grant", "Wrong username and password combination.");
                 return;
             }
-            
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Authentication, "password"));
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));

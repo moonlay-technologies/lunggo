@@ -95,6 +95,8 @@
     <Compile Include="Activity\ApiSrc\GetDetailLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\GetMyBookingsLogic\GetMyBookingsApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetMyBookingsLogic\TryPreprocessTests.cs" />
+    <Compile Include="Activity\ApiSrc\Operator\AppointmentRequest\GetAppointmentRequestApiTests.cs" />
+    <Compile Include="Activity\ApiSrc\Operator\AppointmentRequest\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\SearchApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetDetailLogic\GetDetailApiTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />

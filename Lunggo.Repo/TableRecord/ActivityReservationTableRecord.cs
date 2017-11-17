@@ -65,6 +65,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("SelectedSession");
 		    }
 		}
+		public String UserId
+		{
+		    get { return _UserId; }
+		    set
+		    {
+		        _UserId = value;
+		        IncrementLog("UserId");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -73,6 +82,7 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _Date;
 		private int? _TicketCount;
 		private String _SelectedSession;
+		private String _UserId;
 
 
 		public static ActivityReservationTableRecord CreateNewInstance()
@@ -110,6 +120,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Date", false),
 				new ColumnMetadata("TicketCount", false),
 				new ColumnMetadata("SelectedSession", false),
+				new ColumnMetadata("UserId", false),
 
             };
         }

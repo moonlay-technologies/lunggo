@@ -8,7 +8,7 @@ namespace Lunggo.ApCommon.Activity.Model
 
     public class BookingDetailForDisplay
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("activityId", NullValueHandling = NullValueHandling.Ignore)]
         public long ActivityId { get; set; }
         [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvNo { get; set; }

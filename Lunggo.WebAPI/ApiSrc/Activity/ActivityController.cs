@@ -7,11 +7,42 @@ using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System;
 using System.Web.Http;
 using Lunggo.ApCommon.Activity.Model;
+using System.Web;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity
 {
     public class ActivityController : ApiController
     {
+        #region Managers
+        public ActivityController()
+        {
+        }
+
+        public ActivityController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
+
+        private ApplicationUserManager _userManager;
+
+        public ApplicationUserManager UserManager
+        {
+            get { return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { _userManager = value; }
+        }
+
+        private ApplicationSignInManager _signInManager;
+
+        public ApplicationSignInManager SignInManager
+        {
+            get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { _signInManager = value; }
+        }
+        #endregion
+
+        #region Customer
         [HttpGet]
         [LunggoCorsPolicy]
         [Level1Authorize]
@@ -145,6 +176,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [LunggoCorsPolicy]
         [Level2Authorize]
         [Route("v1/activities/mybooking/{rsvNo}")]
+        
         public ApiResponseBase MyBookingDetail(string rsvNo = "")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
@@ -166,6 +198,65 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+        #endregion
+
+        #region Operator
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/request")]
+
+        public ApiResponseBase AppointmentRequest(string page = "1", string perPage = "10")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetAppointmentRequestApiRequest()
+                {
+                    Page = page,
+                    PerPage = perPage
+                };
+                var apiResponse = ActivityLogic.GetAppointmentRequest(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        //[HttpGet]
+        //[LunggoCorsPolicy]
+        //[Level2Authorize]
+        //[Route("v1/operator/myactivity")]
+
+        //public ApiResponseBase ListActivities(string page = "1", string perPage = "10")
+        //{
+        //    var lang = ApiRequestBase.GetHeaderValue("Language");
+        //    OnlineContext.SetActiveLanguageCode(lang);
+        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
+        //    OnlineContext.SetActiveCurrencyCode(currency);
+
+        //    try
+        //    {
+        //        var request = new GetAppointmentRequestApiRequest()
+        //        {
+        //            Page = page,
+        //            PerPage = perPage
+        //        };
+        //        var apiResponse = ActivityLogic.GetAppointmentRequest(request, UserManager);
+        //        return apiResponse;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return ApiResponseBase.ExceptionHandling(e);
+        //    }
+        //}
+        #endregion
 
     }
 }

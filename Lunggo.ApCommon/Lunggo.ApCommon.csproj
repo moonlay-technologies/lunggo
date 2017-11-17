@@ -177,9 +177,11 @@
     <Compile Include="Activity\Database\Query\GetAvailableDatesQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetMyBookingDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAppointmentRequestQuery.cs" />
     <Compile Include="Activity\Database\Query\GetMyBookingsQuery.cs" />
     <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
+    <Compile Include="Activity\Model\AppointmentDetail.cs" />
     <Compile Include="Activity\Model\BookingDetail.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
     <Compile Include="Activity\Model\ActivityFilter.cs" />
@@ -191,6 +193,8 @@
     <Compile Include="Activity\Model\Logic\GetDetailActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAvailableDatesOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
@@ -202,6 +206,7 @@
     <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
+    <Compile Include="Activity\Service\Operator\GetAppointmentRequest.cs" />
     <Compile Include="Activity\Service\Issue.cs" />
     <Compile Include="Activity\Service\GetActivityDetail.cs" />
     <Compile Include="Activity\Service\Book.cs" />
@@ -743,6 +748,7 @@
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
     <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
+    <Compile Include="Sequence\AppointmentRequestIdSequence .cs" />
     <Compile Include="Sequence\DiscountIdSequence.cs" />
     <Compile Include="Sequence\ActivityReservationIdSequence.cs" />
     <Compile Include="Sequence\HotelReservationIdSequence.cs" />

@@ -61,6 +61,25 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPost]
+        [Level0Authorize]
+        [LunggoCorsPolicy]
+        [Route("v1/operator/login")]
+        public ApiResponseBase LoginOperator()
+        {
+            LoginApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<LoginApiRequest>();
+                var apiResponse = AccountLogic.LoginOperator(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
         [LunggoCorsPolicy]
         [Level1Authorize]
         [Route("v1/register")]

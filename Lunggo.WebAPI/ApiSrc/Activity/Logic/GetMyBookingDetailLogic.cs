@@ -9,7 +9,13 @@ using System.Net.Mail;
 using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Product.Constant;
 using System.Web;
+using System.Threading.Tasks;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Identity.Users;
+using Lunggo.ApCommon.Identity.RoleStore;
+using Lunggo.ApCommon.Identity.Roles;
+using Microsoft.AspNet.Identity;
+using Lunggo.ApCommon.Identity.UserStore;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
@@ -18,6 +24,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         public static ApiResponseBase GetMyBookingDetail(GetMyBookingDetailApiRequest request)
         {
             var user = HttpContext.Current.User;
+            var userManager = new UserManager<User>(new DapperUserStore<User>());
+            var role = userManager.GetRoles(user.Identity.GetUser().Id).FirstOrDefault();
+
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new GetMyBookingDetailApiResponse
@@ -26,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERAGPR01"
                 };
             }
-
+            
             if (!IsValid(request))
             {
                 return new GetMyBookingDetailApiResponse

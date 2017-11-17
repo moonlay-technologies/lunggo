@@ -75,7 +75,9 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         [TestMethod]
         public void IsValid_Null_ReturnFalse()
         {
-            var actualResult = ActivityLogic.IsValid(null);
+            var input = new ActivityBookApiRequest();
+            input = null;
+            var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
         }
 

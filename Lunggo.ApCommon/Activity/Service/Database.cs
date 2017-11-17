@@ -229,6 +229,34 @@ namespace Lunggo.ApCommon.Activity.Service
                 return output;
             }
         }
+
+        public GetAppointmentRequestOutput GetAppointmentRequestFromDb(GetAppointmentRequestInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+
+                var savedBookings = GetAppointmentRequestQuery.GetInstance()
+                    .Execute(conn, new {UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+
+                var output = new GetAppointmentRequestOutput
+                {
+                    Appointments = savedBookings.Select(a => new AppointmentDetail()
+                    {
+                        ActivityId = a.ActivityId,
+                        Name = a.Name,
+                        Date = a.Date,
+                        Session = a.Session,
+                        RequestTime = a.RequestTime,
+                        PaxCount = a.PaxCount,
+                        MediaSrc = a.MediaSrc
+                    }).ToList(),
+                    Page = input.Page,
+                    PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
         #endregion
 
         #region Insert
@@ -256,7 +284,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     ActivityId = reservation.ActivityDetails.ActivityId,
                     Date = reservation.DateTime.Date,
                     SelectedSession = reservation.DateTime.AvailableHour,
-                    TicketCount = reservation.TicketCount
+                    TicketCount = reservation.TicketCount,
+                    UserId = reservation.User.Id
                 };
 
                 ActivityReservationTableRepo.GetInstance().Insert(conn, activityRecord);
@@ -294,6 +323,27 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
+        private void InsertAppointmentReqToDb(ActivityReservation rsvData, string request)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activityRsv = ActivityReservationTableRepo.GetInstance()
+                    .Find1(conn, new ActivityReservationTableRecord { RsvNo = rsvData.RsvNo });
+                var operatorData = OperatorTableRepo.GetInstance().Find1(conn, new OperatorTableRecord {ActivityId = activityRsv.ActivityId });
+
+                AppointmentTableRepo.GetInstance().Insert(conn, new AppointmentTableRecord()
+                {
+                    Id = AppointmentRequestIdSequence.GetInstance().GetNext(),
+                    ActivityRsvId = activityRsv.Id,
+                    RsvNo = rsvData.RsvNo,
+                    AppointmentStatus = request,
+                    OperatorId = operatorData.UserId,
+                    InsertDate = DateTime.UtcNow
+
+                });
+            }
+            
+        }
         #endregion
 
         #region Update

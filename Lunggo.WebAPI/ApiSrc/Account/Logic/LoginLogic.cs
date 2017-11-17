@@ -16,13 +16,23 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static LoginApiResponse Login(LoginApiRequest request)
         {
-            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password)))
+            if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.UserName) || !string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERALOG01"
+                    ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
                 };
-
+            if(!string.IsNullOrEmpty(request.UserName))
+            {
+                if (!Int64.TryParse(request.UserName, out long result))
+                    if (!request.UserName.Contains("@"))
+                        return new LoginApiResponse
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ErrorCode = "ERR_USER_FORMAT"
+                        };
+            }
+            
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
             var tokenRequest = new RestRequest("/oauth/token", Method.POST);
             var postData =
@@ -57,25 +67,25 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG02"
+                        ErrorCode = "ERR_INVALID" //ERALOG02
                     };
                 if (tokenData.Error == "not_active")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG03"
+                        ErrorCode = "ERR_NOT_ACTIVE" //ERALOG03
                     };
                 if (tokenData.Error == "invalid_clientId")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG04"
+                        ErrorCode = "ERR_INVALID_CLIENTID" //ERALOG04
                     };
                 if (tokenData.Error == "not_registered")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG05"
+                        ErrorCode = "ERR_UNREGISTERED" //ERALOG05
                     };
                 return new LoginApiResponse
                 {
