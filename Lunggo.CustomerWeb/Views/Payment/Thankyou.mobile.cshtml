@@ -3,6 +3,7 @@
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Product.Constant
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -209,7 +210,18 @@
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek e-tiket Anda melalui tombol berikut.</div>
                         <div class="ticket-print">
-                            <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK E-TIKET</a>
+                            @if (ViewBag.Platform == PlatformType.AndroidApp || ViewBag.Platform == PlatformType.IosApp)
+                            {
+                                <button onclick="window.postMessage('ExploreScreen')" class="btn btn-yellow print-ticket-button">
+                                    <span class="fa fa-print"></span>OK
+                                </button>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button">
+                                    <span class="fa fa-print"></span>CEK E-TIKET
+                                </a>
+                            }
                         </div>
                         <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>
                     </div>
@@ -219,7 +231,9 @@
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan hotel di Travorama. Anda dapat mengecek voucher Anda melalui tombol berikut.</div>
                         <div class="ticket-print">
-                            <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK VOUCHER</a>
+                            <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button">
+                                <span class="fa fa-print"></span>CEK VOUCHER
+                            </a>
                         </div>
                         <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>
                     </div>
