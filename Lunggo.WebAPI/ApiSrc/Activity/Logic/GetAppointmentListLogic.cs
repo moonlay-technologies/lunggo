@@ -16,12 +16,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
     public static partial class ActivityLogic
     {
-        public static ApiResponseBase GetAppointmentRequest(GetAppointmentRequestApiRequest request, ApplicationUserManager userManager)
+        public static ApiResponseBase GetAppointmentList(GetAppointmentListApiRequest request, ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
-                return new GetAppointmentRequestApiResponse
+                return new GetAppointmentListApiResponse
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
                     ErrorCode = "ERR_UNDEFINED_USER" //ERAGPR01
@@ -30,7 +30,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             var role = userManager.GetRoles(user.Identity.GetUser().Id).FirstOrDefault();
             if (role != "Operator")
             {
-                return new GetAppointmentRequestApiResponse
+                return new GetAppointmentListApiResponse
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
                     ErrorCode = "ERR_NOT_OPERATOR"
@@ -39,21 +39,21 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             var succeed = TryPreprocess(request, out var serviceRequest);
             if (!succeed)
             {
-                return new GetAppointmentRequestApiResponse
+                return new GetAppointmentListApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERASEA01"
                 };
             }
-            var serviceResponse = ActivityService.GetInstance().GetAppointmentRequest(serviceRequest);
+            var serviceResponse = ActivityService.GetInstance().GetAppointmentList(serviceRequest);
             var apiResponse = AssembleApiResponse(serviceResponse);
 
             return apiResponse;
         }
 
-        public static bool TryPreprocess(GetAppointmentRequestApiRequest request, out GetAppointmentRequestInput serviceRequest)
+        public static bool TryPreprocess(GetAppointmentListApiRequest request, out GetAppointmentListInput serviceRequest)
         {
-            serviceRequest = new GetAppointmentRequestInput();
+            serviceRequest = new GetAppointmentListInput();
 
             if (request == null)
             {
@@ -77,20 +77,18 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             return true;
         }
         
-        public static GetAppointmentRequestApiResponse AssembleApiResponse(GetAppointmentRequestOutput serviceResponse)
+        public static GetAppointmentListApiResponse AssembleApiResponse(GetAppointmentListOutput serviceResponse)
         {
-            var apiResponse = new GetAppointmentRequestApiResponse()
+            var apiResponse = new GetAppointmentListApiResponse()
             {
                 Appointments = serviceResponse.Appointments.Select(AppointmentList => new AppointmentDetailForDisplay()
                 {
                     ActivityId = AppointmentList.ActivityId,
                     Name = AppointmentList.Name,
-                    RsvNo = AppointmentList.RsvNo,
                     PaxCount = AppointmentList.PaxCount,
                     Date = AppointmentList.Date,
                     Session = AppointmentList.Session,
-                    MediaSrc = AppointmentList.MediaSrc,
-                    RequestTime = DateTime.Parse(AppointmentList.RequestTime).AddHours(5)
+                    MediaSrc = AppointmentList.MediaSrc
                 }).ToList(),
                 Page = serviceResponse.Page,
                 PerPage = serviceResponse.PerPage

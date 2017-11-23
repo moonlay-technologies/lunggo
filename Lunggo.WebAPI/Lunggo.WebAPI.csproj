@@ -252,6 +252,10 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetAppointmentDetailLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetListActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingDetailLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentRequestLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsLogic.cs" />
@@ -259,7 +263,15 @@
     <Compile Include="ApiSrc\Activity\Logic\BookActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetListActivityApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetListActivityApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ConfirmationStatusApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingDetailApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ConfirmationStatusApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingDetailApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentRequestApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsApiRequest.cs" />

@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class GetAppointmentRequestQuery : DbQueryBase<GetAppointmentRequestQuery, AppointmentDetail>
+    internal class GetAppointmentListQuery : DbQueryBase<GetAppointmentListQuery, AppointmentDetail>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -19,9 +19,9 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Id AS ActivityId, apo.RsvNo AS RsvNo, act.Name AS Name, ");
-            clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ");
-            clauseBuilder.Append("apo.InsertDate AS RequestTime, ar.SelectedSession AS Session, ");
+            clauseBuilder.Append("SELECT DISTINCT apo.Id AS AppointmentId, act.Name AS Name, ");
+            clauseBuilder.Append("SUM(ar.TicketCount) OVER(PARTITION BY act.Id) AS PaxCount, ");
+            clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS Session, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();
         }
@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE apo.AppointmentStatus = 'Requesting' AND ");
+            clauseBuilder.Append("WHERE apo.AppointmentStatus = 'Approved' AND ");
             clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId ");
             return clauseBuilder.ToString();
         }

@@ -172,6 +172,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Database\Query\GetReservationBySessionQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetListActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetMediaActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAdditionalContentActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableDatesQuery.cs" />
@@ -188,10 +192,18 @@
     <Compile Include="Activity\Model\ActivityReservation.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentListInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentListOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentDetailInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetListActivityInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetListActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAvailableDatesInput.cs" />
+    <Compile Include="Activity\Model\Logic\AppointmentConfirmationInput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingDetailInput.cs" />
     <Compile Include="Activity\Model\Logic\GetDetailActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAvailableDatesOutput.cs" />
+    <Compile Include="Activity\Model\Logic\AppointmentConfirmationOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
@@ -206,6 +218,10 @@
     <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
+    <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />
+    <Compile Include="Activity\Service\Operator\GetAppointmentList.cs" />
+    <Compile Include="Activity\Service\Operator\AppointmentConfirmation.cs" />
+    <Compile Include="Activity\Service\Operator\GetListActivityRequest.cs" />
     <Compile Include="Activity\Service\Operator\GetAppointmentRequest.cs" />
     <Compile Include="Activity\Service\Issue.cs" />
     <Compile Include="Activity\Service\GetActivityDetail.cs" />

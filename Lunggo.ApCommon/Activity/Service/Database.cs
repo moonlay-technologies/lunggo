@@ -144,20 +144,19 @@ namespace Lunggo.ApCommon.Activity.Service
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
 
-                if (paxRecords.Count == 0)
-                    return null;
-
-                foreach (var passengerRecord in paxRecords)
-                {
-                    var passenger = new Pax
+                if (paxRecords.Count != 0)
+                    foreach (var passengerRecord in paxRecords)
                     {
-                        Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
-                        FirstName = passengerRecord.FirstName,
-                        LastName = passengerRecord.LastName,
-                        Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
-                    };
-                    activityReservation.Pax.Add(passenger);
-                }
+                        var passenger = new Pax
+                        {
+                            Title = TitleCd.Mnemonic(passengerRecord.TitleCd),
+                            FirstName = passengerRecord.FirstName,
+                            LastName = passengerRecord.LastName,
+                            Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
+                        };
+                        activityReservation.Pax.Add(passenger);
+                    }
+
                 return activityReservation;
             }
         }
@@ -244,6 +243,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Appointments = savedBookings.Select(a => new AppointmentDetail()
                     {
                         ActivityId = a.ActivityId,
+                        RsvNo = a.RsvNo,
                         Name = a.Name,
                         Date = a.Date,
                         Session = a.Session,
@@ -253,6 +253,94 @@ namespace Lunggo.ApCommon.Activity.Service
                     }).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
+
+        public GetAppointmentListOutput GetAppointmentListFromDb(GetAppointmentListInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+
+                var savedBookings = GetAppointmentListQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+
+                var output = new GetAppointmentListOutput
+                {
+                    Appointments = savedBookings.Select(a => new AppointmentDetail()
+                    {
+                        AppointmentId = a.AppointmentId,
+                        Name = a.Name,
+                        Date = a.Date,
+                        Session = a.Session,
+                        RequestTime = a.RequestTime,
+                        PaxCount = a.PaxCount,
+                        MediaSrc = a.MediaSrc
+                    }).ToList(),
+                    Page = input.Page,
+                    PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
+
+        public GetListActivityOutput GetListActivityFromDb(GetListActivityInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+
+                var savedBookings = GetListActivityQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+
+                var output = new GetListActivityOutput
+                {
+                    ActivityList = savedBookings.Select(a => new SearchResult()
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        MediaSrc = a.MediaSrc
+                    }).ToList(),
+                    Page = input.Page,
+                    PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
+
+        public GetAppointmentDetailOutput GetAppointmentDetailFromDb(GetAppointmentDetailInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+
+                var savedBookings = GetAppointmentDetailQuery.GetInstance()
+                    .Execute(conn, new { AppointmentId = input.ActivityId }).Single();
+
+                var savedReservation = GetReservationBySessionQuery.GetInstance().Execute(conn, new { });
+
+                var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = savedBookings.RsvNo }, null,
+                        (passengers, typeCd, titleCd, genderCd) =>
+                        {
+                            passengers.Type = PaxTypeCd.Mnemonic(typeCd);
+                            passengers.Title = TitleCd.Mnemonic(titleCd);
+                            passengers.Gender = GenderCd.Mnemonic(genderCd);
+                            return passengers;
+                        }, "TypeCd, TitleCd, GenderCd").ToList();
+
+                var output = new GetAppointmentDetailOutput
+                {
+                    AppointmentDetail = new AppointmentDetail()
+                    {
+                        ActivityId = savedBookings.ActivityId,
+                        Name = savedBookings.Name,
+                        Date = savedBookings.Date,
+                        Session = savedBookings.Session,
+                        MediaSrc = savedBookings.MediaSrc,
+                        PaxGroups = new List<PaxGroup>()
+                    }
                 };
                 return output;
             }
@@ -356,6 +444,22 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     RsvNo = rsvNo,
                     RsvStatusCd = RsvStatusCd.Mnemonic(status)
+                });
+            }
+
+        }
+
+        private void UpdateAppointmentStatusDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var appointmentDetailRecord = AppointmentTableRepo.GetInstance()
+                    .Find1(conn, new AppointmentTableRecord { RsvNo = rsvNo });
+
+                AppointmentTableRepo.GetInstance().Update(conn, new AppointmentTableRecord
+                {
+                    Id = appointmentDetailRecord.Id,
+                    AppointmentStatus = "Approved"
                 });
             }
 

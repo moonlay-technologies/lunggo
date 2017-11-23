@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class GetAppointmentRequestQuery : DbQueryBase<GetAppointmentRequestQuery, AppointmentDetail>
+    internal class GetListActivityQuery : DbQueryBase<GetListActivityQuery, SearchResult>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -19,9 +19,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Id AS ActivityId, apo.RsvNo AS RsvNo, act.Name AS Name, ");
-            clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ");
-            clauseBuilder.Append("apo.InsertDate AS RequestTime, ar.SelectedSession AS Session, ");
+            clauseBuilder.Append("SELECT act.Id AS Id, act.Name AS Name, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();
         }
@@ -29,17 +27,15 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateJoinClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("FROM ((Appointment AS apo ");
-            clauseBuilder.Append("INNER JOIN ActivityReservation AS ar ON ar.RsvNo=apo.RsvNo) ");
-            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=ar.ActivityId) ");
+            clauseBuilder.Append("FROM (Operator AS op ");
+            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=op.ActivityId) ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE apo.AppointmentStatus = 'Requesting' AND ");
-            clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId ");
+            clauseBuilder.Append("WHERE op.UserId = @UserId ");
             return clauseBuilder.ToString();
         }
 
