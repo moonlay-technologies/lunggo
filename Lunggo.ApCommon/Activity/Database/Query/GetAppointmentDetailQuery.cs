@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
             queryBuilder.Append(CreateJoinClause());
-            queryBuilder.Append(CreateWhereClause());
+            queryBuilder.Append(CreateWhereClause(condition));
             return queryBuilder.ToString();
         }
 
@@ -33,10 +33,13 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             return clauseBuilder.ToString();
         }
 
-        private static string CreateWhereClause()
+        private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE apo.Id = '@AppointmentId'");
+            clauseBuilder.Append("WHERE ar.ActivityId = @ActivityId AND ");
+            clauseBuilder.Append("ar.Date = @Date ");
+            if(!string.IsNullOrEmpty(condition.Session))
+                clauseBuilder.Append("AND ar.SelectedSession = @Session ");
             return clauseBuilder.ToString();
         }
     }

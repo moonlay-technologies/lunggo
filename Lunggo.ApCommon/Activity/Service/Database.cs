@@ -316,12 +316,25 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
-                var savedBookings = GetAppointmentDetailQuery.GetInstance()
-                    .Execute(conn, new { AppointmentId = input.ActivityId }).Single();
+                string date = input.Date.ToString("yyyy/MM/dd");
 
-                var savedReservation = GetReservationBySessionQuery.GetInstance().Execute(conn, new { });
+                var savedAppointments = GetAppointmentDetailQuery.GetInstance()
+                    .Execute(conn, new { ActivityId = input.ActivityId, Date = date}, new { Session = input.Session });
+                var savedAppointment = savedAppointments.First();
 
-                var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = savedBookings.RsvNo }, null,
+                var appointmentDetail = new AppointmentDetail()
+                {
+                    ActivityId = savedAppointment.ActivityId,
+                    Name = savedAppointment.Name,
+                    Date = savedAppointment.Date,
+                    Session = savedAppointment.Session,
+                    MediaSrc = savedAppointment.MediaSrc,
+                    PaxGroups = new List<PaxGroup>()
+                };
+                
+                foreach(var appointment in savedAppointments.ToList())
+                {
+                    var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = appointment.RsvNo }, null,
                         (passengers, typeCd, titleCd, genderCd) =>
                         {
                             passengers.Type = PaxTypeCd.Mnemonic(typeCd);
@@ -329,18 +342,19 @@ namespace Lunggo.ApCommon.Activity.Service
                             passengers.Gender = GenderCd.Mnemonic(genderCd);
                             return passengers;
                         }, "TypeCd, TitleCd, GenderCd").ToList();
+                    var contact = Contact.GetFromDb(appointment.RsvNo);
+                    var paxgroup = new PaxGroup()
+                    {
+                        Contact = contact,
+                        Passengers = ConvertToPaxForDisplay(savedPassengers)
+                    };
 
+                    appointmentDetail.PaxGroups.Add(paxgroup);
+                }
+                
                 var output = new GetAppointmentDetailOutput
                 {
-                    AppointmentDetail = new AppointmentDetail()
-                    {
-                        ActivityId = savedBookings.ActivityId,
-                        Name = savedBookings.Name,
-                        Date = savedBookings.Date,
-                        Session = savedBookings.Session,
-                        MediaSrc = savedBookings.MediaSrc,
-                        PaxGroups = new List<PaxGroup>()
-                    }
+                    AppointmentDetail = appointmentDetail
                 };
                 return output;
             }

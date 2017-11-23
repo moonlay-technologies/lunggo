@@ -4,7 +4,11 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
     public class GetAppointmentDetailApiRequest
     {
-        [JsonProperty("appointmentId")]
-        public string AppointmentId { get; set; }
+        [JsonProperty("activityId")]
+        public string ActivityId { get; set; }
+        [JsonProperty("date")]
+        public string Date { get; set; }
+        [JsonProperty("session")]
+        public string Session { get; set; }
     }
 }

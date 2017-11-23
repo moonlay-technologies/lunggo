@@ -172,7 +172,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\Database\Query\GetReservationBySessionQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
     <Compile Include="Activity\Database\Query\GetListActivityQuery.cs" />

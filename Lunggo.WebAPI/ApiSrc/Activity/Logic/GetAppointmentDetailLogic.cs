@@ -60,10 +60,22 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return false;
             }
 
-            bool isPageNumeric = int.TryParse(request.AppointmentId, out var appointmentIdValid);
-            if (!isPageNumeric || appointmentIdValid < 0) { return false; }
-            
-            serviceRequest.ActivityId = appointmentIdValid;
+            bool isPageNumeric = int.TryParse(request.ActivityId, out var activityId);
+            if (!isPageNumeric || activityId < 0) { return false; }
+            var date = new DateTime();
+
+            if (string.IsNullOrEmpty(request.Date))
+            {
+                return false;
+            }
+            else
+            {
+                bool isDateValid = DateTime.TryParse(request.Date, out date);
+                if (!isDateValid) return false;
+            }
+            serviceRequest.ActivityId = activityId;
+            serviceRequest.Date = date;
+            serviceRequest.Session = request.Session;
             return true;
         }
         
@@ -75,12 +87,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 {
                     ActivityId = serviceResponse.AppointmentDetail.ActivityId,
                     Name = serviceResponse.AppointmentDetail.Name,
-                    RsvNo = serviceResponse.AppointmentDetail.RsvNo,
-                    PaxCount = serviceResponse.AppointmentDetail.PaxCount,
                     Date = serviceResponse.AppointmentDetail.Date,
                     Session = serviceResponse.AppointmentDetail.Session,
                     MediaSrc = serviceResponse.AppointmentDetail.MediaSrc,
-                    RequestTime = DateTime.Parse(serviceResponse.AppointmentDetail.RequestTime).AddHours(5)
+                    PaxGroups = serviceResponse.AppointmentDetail.PaxGroups
                 }
             };
 

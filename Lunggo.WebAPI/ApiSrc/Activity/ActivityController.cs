@@ -289,9 +289,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]
-        [Route("v1/operator/appointments/{apppointmentId}")]
+        [Route("v1/operator/appointments/{activityId}/{date}")]
 
-        public ApiResponseBase AppointmentDetail(string apppointmentId = "")
+        public ApiResponseBase AppointmentDetail(string activityId = "", string date = "", string session = "")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
@@ -302,7 +302,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             {
                 request = new GetAppointmentDetailApiRequest()
                 {
-                    AppointmentId = apppointmentId
+                    ActivityId = activityId,
+                    Date = date,
+                    Session = session
                 };
                 var apiResponse = ActivityLogic.GetAppointmentDetail(request, UserManager);
                 return apiResponse;
