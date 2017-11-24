@@ -24,9 +24,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         public static ApiResponseBase GetMyBookingDetail(GetMyBookingDetailApiRequest request)
         {
             var user = HttpContext.Current.User;
-            var userManager = new UserManager<User>(new DapperUserStore<User>());
-            var role = userManager.GetRoles(user.Identity.GetUser().Id).FirstOrDefault();
-
+            
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new GetMyBookingDetailApiResponse

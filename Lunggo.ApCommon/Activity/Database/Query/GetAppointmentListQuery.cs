@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT DISTINCT apo.Id AS AppointmentId, act.Name AS Name, ");
+            clauseBuilder.Append("SELECT DISTINCT act.Id AS ActivityId, act.Name AS Name, ");
             clauseBuilder.Append("SUM(ar.TicketCount) OVER(PARTITION BY act.Id) AS PaxCount, ");
             clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS Session, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");

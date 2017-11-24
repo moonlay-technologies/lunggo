@@ -9,9 +9,9 @@ namespace Lunggo.ApCommon.Activity.Model
     public class AppointmentDetailForDisplay
     {
         [JsonProperty("activityId", NullValueHandling = NullValueHandling.Ignore)]
-        public long ActivityId { get; set; }
+        public long? ActivityId { get; set; }
         [JsonProperty("appointmentId", NullValueHandling = NullValueHandling.Ignore)]
-        public long AppointmentId { get; set; }
+        public long? AppointmentId { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
         [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]

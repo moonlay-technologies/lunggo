@@ -10,55 +10,77 @@ using System;
 using System.Security.Principal;
 using System.Web;
 using Lunggo.WebAPI;
+using Lunggo.ApCommon.Identity.UserStore;
+using Lunggo.ApCommon.Identity.Users;
 
-namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetAppointmentRequestLogic.Tests
+namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLogic.Tests
 {
     [TestClass]
     public partial class GetAppointmentRequestLogicTest
     {
-
         [TestMethod]
-        public void MyBookings_null_ReturnUnauthorized()
+        public void GetAppointmentRequest_null_ReturnUnauthorized()
         {
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
             HttpContext.Current.User = new GenericPrincipal(new GenericIdentity(String.Empty), new string[0]);
             var expectedResult = new GetAppointmentRequestApiResponse
             {
                 StatusCode = HttpStatusCode.Unauthorized,
-                ErrorCode = "ERAGPR01"
+                ErrorCode = "ERR_UNDEFINED_USER"
             };
             var actualResult = ActivityLogic.GetAppointmentRequest(null, null);
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.AreEqual(expectedResult.ErrorCode, actualResult.ErrorCode);
         }
 
         [TestMethod]
-        public void MyBookings_Null_ReturnBadRequest()
+        public void GetAppointmentRequest_NotOperator_ReturnUnauthorized()
         {
+            Initializer.Init();
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
-            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("username"), new string[0]);
+            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("08712345678"), new string[0]);
+            var userManager = new ApplicationUserManager(new DapperUserStore<User>());
+            var expectedResult = new GetAppointmentRequestApiResponse
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                ErrorCode = "ERR_NOT_OPERATOR"
+            };
+            var actualResult = ActivityLogic.GetAppointmentRequest(null, userManager);
+            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.AreEqual(expectedResult.ErrorCode, actualResult.ErrorCode);
+        }
+
+        [TestMethod]
+        public void GetListActivity_Null_ReturnBadRequest()
+        {
+            Initializer.Init();
+            HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
+            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("12345678900"), new string[0]);
+            var userManager = new ApplicationUserManager(new DapperUserStore<User>());
+
             var expectedResult = new GetAppointmentRequestApiResponse
             {
                 StatusCode = HttpStatusCode.BadRequest,
                 ErrorCode = "ERASEA01"
             };
-            var actualResult = ActivityLogic.GetAppointmentRequest(null, null);
+            var actualResult = ActivityLogic.GetAppointmentRequest(null, userManager);
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+            Assert.AreEqual(expectedResult.ErrorCode, actualResult.ErrorCode);
         }
 
         [TestMethod]
-        public void Search_ValidInput_ReturnSomething()
+        public void GetAppointmentRequest_ValidInput_ReturnSomething()
         {
             Initializer.Init();
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
-            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("username"), new string[0]);
+            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("12345678900"), new string[0]);
+            var userManager = new ApplicationUserManager(new DapperUserStore<User>());
             var input = new GetAppointmentRequestApiRequest()
             {
                 Page = "1",
                 PerPage = "10"
             };
-            var actualResult = ActivityLogic.GetAppointmentRequest(input, null);
+            var actualResult = ActivityLogic.GetAppointmentRequest(input, userManager);
 
             Assert.IsNotNull(actualResult);
         }

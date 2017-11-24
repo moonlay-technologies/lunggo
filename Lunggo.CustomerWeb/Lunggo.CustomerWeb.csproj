@@ -221,6 +221,7 @@
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
+    <Compile Include="Common\GeneratorIdRsvNo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />

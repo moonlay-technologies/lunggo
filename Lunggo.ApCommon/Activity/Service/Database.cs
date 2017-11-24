@@ -271,7 +271,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     Appointments = savedBookings.Select(a => new AppointmentDetail()
                     {
-                        AppointmentId = a.AppointmentId,
+                        ActivityId = a.ActivityId,
                         Name = a.Name,
                         Date = a.Date,
                         Session = a.Session,
@@ -319,7 +319,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 string date = input.Date.ToString("yyyy/MM/dd");
 
                 var savedAppointments = GetAppointmentDetailQuery.GetInstance()
-                    .Execute(conn, new { ActivityId = input.ActivityId, Date = date}, new { Session = input.Session });
+                    .Execute(conn, new { ActivityId = input.ActivityId, Date = date, Session = input.Session }, new { Session = input.Session });
                 var savedAppointment = savedAppointments.First();
 
                 var appointmentDetail = new AppointmentDetail()

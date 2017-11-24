@@ -7,7 +7,7 @@ using Lunggo.WebAPI.ApiSrc.Activity.Model;
 
 namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLogic.Tests
 {
-    [TestClass]
+    
     public partial class GetAppointmentRequestLogicTest
     {
         [TestMethod]
@@ -28,7 +28,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLog
             };
 
             var result = ActivityLogic.TryPreprocess(test, out var serviceRequest);
-            Assert.IsFalse(result);
+            Assert.IsTrue(result);
         }
 
         [TestMethod]

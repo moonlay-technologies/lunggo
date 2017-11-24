@@ -61,7 +61,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             }
 
             bool isPageNumeric = int.TryParse(request.ActivityId, out var activityId);
-            if (!isPageNumeric || activityId < 0) { return false; }
+            if (!isPageNumeric || activityId <= 0) { return false; }
             var date = new DateTime();
 
             if (string.IsNullOrEmpty(request.Date))
@@ -72,6 +72,11 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 bool isDateValid = DateTime.TryParse(request.Date, out date);
                 if (!isDateValid) return false;
+            }
+            if (!string.IsNullOrEmpty(request.Session))
+            {
+                request.Session = request.Session.Substring(0, 2) + "." + request.Session.Substring(2, 2) +
+                                  " - " + request.Session.Substring(5, 2) + "." + request.Session.Substring(7, 2);
             }
             serviceRequest.ActivityId = activityId;
             serviceRequest.Date = date;

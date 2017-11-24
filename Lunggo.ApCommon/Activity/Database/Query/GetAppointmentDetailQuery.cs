@@ -36,8 +36,8 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ar.ActivityId = @ActivityId AND ");
-            clauseBuilder.Append("ar.Date = @Date ");
+            clauseBuilder.Append("WHERE apo.AppointmentStatus = 'Approved' AND ");
+            clauseBuilder.Append("ar.ActivityId = @ActivityId AND ar.Date = @Date ");
             if(!string.IsNullOrEmpty(condition.Session))
                 clauseBuilder.Append("AND ar.SelectedSession = @Session ");
             return clauseBuilder.ToString();

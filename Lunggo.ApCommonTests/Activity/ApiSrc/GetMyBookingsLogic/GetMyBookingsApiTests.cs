@@ -46,11 +46,11 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
         }
 
         [TestMethod]
-        public void Search_ValidInput_ReturnSomething()
+        public void MyBookings_ValidInput_ReturnSomething()
         {
             Initializer.Init();
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
-            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("username"), new string[0]);
+            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("08712345678"), new string[0]);
             var input = new GetMyBookingsApiRequest()
             {
                 Page = "1",
