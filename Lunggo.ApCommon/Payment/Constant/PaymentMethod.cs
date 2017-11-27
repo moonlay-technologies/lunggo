@@ -22,8 +22,8 @@
         IbMuamalat = 17,
         DanamonOnlineBanking = 18,
         OnlineSbi = 19,
-        Qnb = 20,
-        Btn = 21
+        DooEtQnb = 20,
+        BtnMobileBanking = 21
     }
 
     internal class PaymentMethodCd
@@ -70,9 +70,9 @@
                     return "DOB";
                 case PaymentMethod.OnlineSbi:
                     return "SBI";
-                case PaymentMethod.Qnb:
+                case PaymentMethod.DooEtQnb:
                     return "QNB";
-                case PaymentMethod.Btn:
+                case PaymentMethod.BtnMobileBanking:
                     return "BTN";
                 default:
                     return "";
@@ -121,9 +121,9 @@
                 case "SBI":
                     return PaymentMethod.OnlineSbi;
                 case "QNB":
-                    return PaymentMethod.Qnb;
+                    return PaymentMethod.DooEtQnb;
                 case "BTN":
-                    return PaymentMethod.Btn;
+                    return PaymentMethod.BtnMobileBanking;
                 default:
                     return PaymentMethod.Undefined;
             }

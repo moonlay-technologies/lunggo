@@ -578,12 +578,17 @@
     <Content Include="Assets\images\bank\bca.png" />
     <Content Include="Assets\images\bank\bni.png" />
     <Content Include="Assets\images\bank\bri.png" />
+    <Content Include="Assets\images\bank\btn.png" />
+    <Content Include="Assets\images\bank\btn_mobile_banking.png" />
     <Content Include="Assets\images\bank\cimb-niaga.png" />
     <Content Include="Assets\images\bank\danamon.png" />
+    <Content Include="Assets\images\bank\danamon_online_banking.png" />
+    <Content Include="Assets\images\bank\dooet_qnb.png" />
     <Content Include="Assets\images\bank\keb-hana.png" />
     <Content Include="Assets\images\bank\mandiri.png" />
     <Content Include="Assets\images\bank\maybank.png" />
     <Content Include="Assets\images\bank\permata.png" />
+    <Content Include="Assets\images\bank\qnb.png" />
     <Content Include="Assets\images\banner\download-app.jpg" />
     <Content Include="Assets\images\banner\standard-web-banner.jpg" />
     <Content Include="Assets\images\bca-logo.jpg" />
@@ -1665,6 +1670,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %286%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %288%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
