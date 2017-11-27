@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (paymentDetails == null)
                 return null;
 
-            if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Method != PaymentMethod.BankTransfer)
+            if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Status != PaymentStatus.Failed)
             {
                 paymentDetails.Status = PaymentStatus.Failed;
                 paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
@@ -259,25 +259,6 @@ namespace Lunggo.ApCommon.Payment.Service
             return GetUnpaidFromDb();
         }
 
-        private static PaymentMedium GetPaymentMedium(PaymentMethod method, PaymentSubmethod submethod)
-        {
-            switch (method)
-            {
-                case PaymentMethod.BankTransfer:
-                case PaymentMethod.Credit:
-                case PaymentMethod.Deposit:
-                    return PaymentMedium.Direct;
-                case PaymentMethod.CreditCard:
-                case PaymentMethod.MandiriClickPay:
-                case PaymentMethod.CimbClicks:
-                    return PaymentMedium.Veritrans;
-                case PaymentMethod.VirtualAccount:
-                    return PaymentMedium.Nicepay;
-                default:
-                    return PaymentMedium.Undefined;
-            }
-        }
-
         public decimal GetSurchargeNominal(PaymentDetails payment)
         {
             var surchargeList = GetSurchargeList();
@@ -351,6 +332,9 @@ namespace Lunggo.ApCommon.Payment.Service
                     break;
                 case PaymentMedium.Veritrans:
                     VeritransWrapper.ProcessPayment(payment, transactionDetails);
+                    break;
+                case PaymentMedium.E2Pay:
+                    E2PayWrapper.ProcessPayment(payment, transactionDetails);
                     break;
                 case PaymentMedium.Direct:
                     payment.Status = PaymentStatus.Pending;

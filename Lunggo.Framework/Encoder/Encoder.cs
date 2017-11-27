@@ -33,18 +33,14 @@ namespace Lunggo.Framework.Encoder
             }
         }
 
-        public static string Sha1Encode(this string input)
+        public static string Sha1Base64Encode(this string input)
         {
             var data = Encoding.UTF8.GetBytes(input);
             using (SHA1 shaM = new SHA1Managed())
             {
                 var hash = shaM.ComputeHash(data);
-                var stringBuilder = new StringBuilder();
-                foreach (var hashByte in hash)
-                {
-                    stringBuilder.AppendFormat("{0:x2}", hashByte);
-                }
-                return stringBuilder.ToString();
+                var base64Hash = Convert.ToBase64String(hash);
+                return base64Hash;
             }
         }
     }

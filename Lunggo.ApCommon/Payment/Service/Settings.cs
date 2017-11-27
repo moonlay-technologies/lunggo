@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
+using Lunggo.ApCommon.Payment.Wrapper.E2Pay;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.ApCommon.Product.Constant;
@@ -34,12 +35,44 @@ namespace Lunggo.ApCommon.Payment.Service
     {
         private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
         private static readonly NicepayWrapper NicepayWrapper = NicepayWrapper.GetInstance();
+        private static readonly E2PayWrapper E2PayWrapper = E2PayWrapper.GetInstance();
 
         public void Init()
         {
             Currency.SyncCurrencyData();
             VeritransWrapper.Init();
             NicepayWrapper.Init();
+            E2PayWrapper.Init();
+        }
+
+        private static PaymentMedium GetPaymentMedium(PaymentMethod method, PaymentSubmethod submethod)
+        {
+            switch (method)
+            {
+                case PaymentMethod.BankTransfer:
+                case PaymentMethod.Credit:
+                case PaymentMethod.Deposit:
+                    return PaymentMedium.Direct;
+                case PaymentMethod.CreditCard:
+                case PaymentMethod.MandiriClickPay:
+                    return PaymentMedium.Veritrans;
+                case PaymentMethod.VirtualAccount:
+                    return PaymentMedium.Nicepay;
+                case PaymentMethod.CimbClicks:
+                case PaymentMethod.XlTunai:
+                case PaymentMethod.TelkomselTcash:
+                case PaymentMethod.IbMuamalat:
+                case PaymentMethod.EpayBri:
+                case PaymentMethod.DanamonOnlineBanking:
+                case PaymentMethod.IndosatDompetku:
+                case PaymentMethod.OnlineSbi:
+                case PaymentMethod.BcaKlikpay:
+                case PaymentMethod.DooEtQnb:
+                case PaymentMethod.BtnMobileBanking:
+                    return PaymentMedium.E2Pay;
+                default:
+                    return PaymentMedium.Undefined;
+            }
         }
 
         public List<Surcharge> GetSurchargeList()

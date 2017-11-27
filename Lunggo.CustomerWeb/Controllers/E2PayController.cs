@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
@@ -17,31 +18,60 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class E2PayController : Controller
     {
+
         [HttpPost]
-        public string PaymentNotification()
+        public ActionResult ResponsePage()
         {
             var form = Request.Form;
+            var isSuccess = ProcessResponse(form);
+            var param = new {rsvNo = form["RefNo"], regId = new PaymentController().GenerateId(form["RefNo"])};
+            return RedirectToAction(isSuccess ? "Thankyou" : "Payment", "Payment", param);
+        }
 
+        [HttpPost]
+        public string BackendPost()
+        {
+            var form = Request.Form;
+            var isSuccess = ProcessResponse(form);
+            return isSuccess ? "OK" : "Failed";
+        }
+
+        private static bool ProcessResponse(NameValueCollection form)
+        {
             var signatureKey = CreateSignature(form["PaymentId"], form["RefNo"], form["Amount"], form["Currency"], form["Status"]);
 
-            if (form["Signature"] != signatureKey)
-                return null;
+            if (!string.IsNullOrEmpty(form["Signature"]) && form["Signature"] != signatureKey)
+                return false;
 
-            if (form["Status"] == "1")
+            if (form["Status"] != "1")
             {
-                var paymentInfo = new PaymentDetails
+                var payment = new PaymentDetails
                 {
                     Medium = PaymentMedium.E2Pay,
                     Method = MapPaymentMethod(form["PaymentId"]),
-                    Status = PaymentStatus.Settled,
+                    Status = PaymentStatus.Failed,
                     Time = DateTime.UtcNow,
                     ExternalId = form["TransId"],
-                    FinalPriceIdr = decimal.Parse(form["Amount"])/100,
+                    RedirectionUrl = null,
+                    FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
                     LocalCurrency = new Currency("IDR")
                 };
-                PaymentService.GetInstance().UpdatePayment(form["RefNo"], paymentInfo);
+                PaymentService.GetInstance().UpdatePayment(form["RefNo"], payment);
+                return false;
             }
-            return "OK";
+
+            var paymentInfo = new PaymentDetails
+            {
+                Medium = PaymentMedium.E2Pay,
+                Method = MapPaymentMethod(form["PaymentId"]),
+                Status = PaymentStatus.Settled,
+                Time = DateTime.UtcNow,
+                ExternalId = form["TransId"],
+                FinalPriceIdr = decimal.Parse(form["Amount"])/100,
+                LocalCurrency = new Currency("IDR")
+            };
+            PaymentService.GetInstance().UpdatePayment(form["RefNo"], paymentInfo);
+            return true;
         }
 
         private static PaymentMethod MapPaymentMethod(string id)
@@ -69,9 +99,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "18":
                     return PaymentMethod.BcaKlikpay;
                 case "19":
-                    return PaymentMethod.Qnb;
+                    return PaymentMethod.DooEtQnb;
                 case "22":
-                    return PaymentMethod.Btn;
+                    return PaymentMethod.BtnMobileBanking;
                 default:
                     return PaymentMethod.Undefined;
             }
@@ -82,7 +112,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var merchantKey = ConfigManager.GetInstance().GetConfigValue("e2pay", "merchantKey");
             var merchantCode = ConfigManager.GetInstance().GetConfigValue("e2pay", "merchantCode");
             var plain = merchantKey + merchantCode + paymentId + rsvNo + amount + currency + status;
-            var hashed = plain.Sha1Encode();
+            var hashed = plain.Sha1Base64Encode();
             return hashed;
         }
     }
