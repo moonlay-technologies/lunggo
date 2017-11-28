@@ -94,7 +94,8 @@ namespace Lunggo.ApCommon.Activity.Model
     {
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? Date { get; set; }
-        [JsonProperty("availableHour", NullValueHandling = NullValueHandling.Ignore)]
-        public string AvailableHour { get; set; }
+        [JsonProperty("availableHours", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> AvailableHours { get; set; }
     }
+    
 }

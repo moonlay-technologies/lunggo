@@ -10,7 +10,7 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
     public class BookActivityInput
     {
         public string ActivityId { get; set; }
-        public DateAndAvailableHour DateTime { get; set; }
+        public DateAndSession DateTime { get; set; }
         public List<Pax> Passengers { get; set; }
         public Contact Contact { get; set; }
         public int? TicketCount { get; set; }

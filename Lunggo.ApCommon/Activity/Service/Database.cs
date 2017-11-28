@@ -36,14 +36,6 @@ namespace Lunggo.ApCommon.Activity.Service
                             return activities;
                         }, "Amount").ToList();
                 
-                //for (int i = 0; i < savedActivities.Count; i++)
-                //{
-                //    var id = savedActivities[i].Id;
-                //    var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
-                //        .Execute(conn, new { ActivityId = id }).ToList();
-                //    savedActivities[i].MediaSrc = mediaSrc[0];
-                //}
-
                 var output = new SearchActivityOutput
                 {
                     ActivityList = savedActivities,
@@ -94,16 +86,27 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var savedActivities = GetAvailableDatesQuery.GetInstance()
+                var savedDates = GetAvailableDatesQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId });
+
+                var result = new List<DateAndAvailableHour>();
+
+                foreach(var i in savedDates.ToList())
+                {                   
+                    var savedHours = GetAvailableSessionQuery.GetInstance()
+                        .Execute(conn, new { ActivityId = input.ActivityId, Date = i.Date }).ToList();
+                    var savedDatesAndHours = new DateAndAvailableHour()
+                    {
+                        Date = i.Date,
+                        AvailableHours = savedHours
+                    };
+
+                    result.Add(savedDatesAndHours);
+                }
                 
                 var output = new GetAvailableDatesOutput
                 {
-                    AvailableDateTimes = savedActivities.Select(a => new DateAndAvailableHour()
-                    {
-                        Date = a.Date,
-                        AvailableHour = a.AvailableHour
-                    }).ToList()
+                    AvailableDateTimes = result
                 };
                 return output;
             }
@@ -140,7 +143,12 @@ namespace Lunggo.ApCommon.Activity.Service
                 var actDetail = GetActivityDetailFromDb(new GetDetailActivityInput() {ActivityId = activityDetailRecord.ActivityId });
 
                 activityReservation.ActivityDetails = actDetail.ActivityDetail;
-
+                activityReservation.DateTime = new DateAndSession()
+                {
+                    Date = activityDetailRecord.Date,
+                    Session = activityDetailRecord.SelectedSession
+                };
+                    
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
 
@@ -385,7 +393,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     RsvNo = reservation.RsvNo,
                     ActivityId = reservation.ActivityDetails.ActivityId,
                     Date = reservation.DateTime.Date,
-                    SelectedSession = reservation.DateTime.AvailableHour,
+                    SelectedSession = reservation.DateTime.Session,
                     TicketCount = reservation.TicketCount,
                     UserId = reservation.User.Id
                 };

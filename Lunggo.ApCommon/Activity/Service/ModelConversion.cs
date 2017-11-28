@@ -27,6 +27,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 CancellationType = activityReservation.CancellationType,
                 Contact = activityReservation.Contact,
                 ActivityDetail = ConvertToActivityDetailForDisplay(activityReservation.ActivityDetails),
+                DateTime = activityReservation.DateTime,
                 Pax = ConvertToPaxForDisplay(activityReservation.Pax),
                 RsvNo = activityReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(activityReservation.Payment),

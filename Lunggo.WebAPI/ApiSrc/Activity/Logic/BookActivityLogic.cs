@@ -67,10 +67,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 Passengers = pax,
                 Contact = request.Contact,
                 ActivityId = request.ActivityId,
-                DateTime = new DateAndAvailableHour()
+                DateTime = new DateAndSession()
                 {
                     Date = DateTime.Parse(request.Date),
-                    AvailableHour = request.SelectedSession
+                    Session = request.SelectedSession
                 },
                 TicketCount = request.TicketCount
             };

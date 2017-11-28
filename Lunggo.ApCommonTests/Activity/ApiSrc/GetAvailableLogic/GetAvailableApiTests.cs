@@ -45,8 +45,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetAvailableLogic.Tests
         {
             var activityDateTimes = new DateAndAvailableHour()
             {
-                Date = DateTime.Parse("2017/02/18"),
-                AvailableHour = "07.00 - 12.00"
+                Date = DateTime.Parse("2017/02/18")
             };
             var input = new GetAvailableDatesOutput()
             {
@@ -61,7 +60,6 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetAvailableLogic.Tests
             };
 
             Assert.AreEqual(expectedResult.AvailableDateTimes[0].Date, actualResult.AvailableDateTimes[0].Date);
-            Assert.AreEqual(expectedResult.AvailableDateTimes[0].AvailableHour, actualResult.AvailableDateTimes[0].AvailableHour);
         }
     }
 }

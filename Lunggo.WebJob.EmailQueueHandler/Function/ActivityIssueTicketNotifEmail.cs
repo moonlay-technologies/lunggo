@@ -22,6 +22,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             sw.Start();
             var reservation = activityService.GetReservationForDisplay(rsvNo);
             sw.Stop();
+            var x = !string.IsNullOrEmpty(reservation.DateTime.Session) ? reservation.DateTime.Session : "N/A" ;
+            //Console.WriteLine("session :" + reservation.DateTime.Session);
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 

@@ -30,8 +30,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 (rsvData.Payment.Method != PaymentMethod.Credit &&
                  rsvData.Payment.Status == PaymentStatus.Settled))
             {
-                UpdateRsvStatusDb(rsvData.RsvNo, RsvStatus.Completed );
-                InsertAppointmentReqToDb(rsvData, "Requesting");
+                //UpdateRsvStatusDb(rsvData.RsvNo, RsvStatus.Completed );
+                //InsertAppointmentReqToDb(rsvData, "Requesting");
                 SendNotificationToAdmin(rsvData.RsvNo);
                 output.IsSuccess = true;
                 return output;

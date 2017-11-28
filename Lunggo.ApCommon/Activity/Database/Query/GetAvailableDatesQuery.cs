@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT Date, AvailableHour ");
+            clauseBuilder.Append("SELECT DISTINCT Date ");
             return clauseBuilder.ToString();
         }
 

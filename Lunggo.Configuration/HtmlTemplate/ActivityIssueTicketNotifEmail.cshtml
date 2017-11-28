@@ -11,7 +11,14 @@
 </head>
 <body>
     <p>@(env != "production" ? "THIS IS A TEST EMAIL. PLEASE IGNORE THIS DREADED EMAIL. SORRY FOR THE INCONVENIENCE." : "")</p>
-    <p>Book Activity and payment for Reservation Number : @Model.RsvNo</p>
+    <p>The Reservation Number : @Model.RsvNo has paid and reserved activity</p>
+    <p>Name of Activity : @Model.ActivityDetail.Name</p>
+    @{ 
+        var date = @Model.DateTime.Date.HasValue ? @Model.DateTime.Date.Value.ToString("d MMM yyyy") : "N/A";
+        var session = !string.IsNullOrEmpty(@Model.DateTime.Session) ? @Model.DateTime.Session : "N/A";
+     }
+    <p>Date of Reservation : @date </p>
+    <p>Session of Reservation : @session </p>
     @*<p>Reservation Number : @Model.RsvNo</p>*@
     @*<p>TAP Link : @("http://tap.travorama.com/Activity/Detail?RsvNo=" + Model.RsvNo)</p>*@
 </body>

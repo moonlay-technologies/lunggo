@@ -2,6 +2,7 @@
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
+using Lunggo.ApCommon.Activity.Model;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -12,6 +13,7 @@ namespace Lunggo.ApCommon.Activity.Service
             var queueService = QueueService.GetInstance();
             var queue = queueService.GetQueueByReference("ActivityIssueTicketNotifEmail");
             queue.AddMessage(new CloudQueueMessage(rsvNo));
+            
         }
 
         public void SendTransferInstructionToCustomer(string rsvNo)

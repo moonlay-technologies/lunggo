@@ -33,7 +33,7 @@ namespace Lunggo.CustomerWeb
             InitDatabaseService();
             InitQueueService();
             //InitLogger();
-            InitFlightService();
+            //InitFlightService();
             InitPaymentService();
             InitBrowserDetectionService();
             InitDisplayModes();
@@ -42,7 +42,7 @@ namespace Lunggo.CustomerWeb
             InitTableStorageService();
             InitBlobStorageService();
             InitUniqueIdGenerator();
-            InitHotelService();
+            //InitHotelService();
         }
         private static void InitBlobStorageService()
         {
