@@ -108,6 +108,8 @@
     <Compile Include="Activity\ApiSrc\Operator\AppointmentList\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\Operator\AppointmentRequest\GetAppointmentRequestApiTests.cs" />
     <Compile Include="Activity\ApiSrc\Operator\AppointmentRequest\TryPreprocessTests.cs" />
+    <Compile Include="Activity\ApiSrc\Operator\UpdateActivity\UpdateActivityApiTests.cs" />
+    <Compile Include="Activity\ApiSrc\Operator\UpdateActivity\TryPreprocessTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\SearchApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetDetailLogic\GetDetailApiTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />

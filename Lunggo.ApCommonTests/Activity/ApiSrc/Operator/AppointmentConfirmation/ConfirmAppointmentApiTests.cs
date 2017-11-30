@@ -35,7 +35,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.AppointmentConfirmationL
         }
 
         [TestMethod]
-        public void GetAppointmentRequest_NotOperator_ReturnUnauthorized()
+        public void ConfirmAppointment_NotOperator_ReturnUnauthorized()
         {
             Initializer.Init();
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));

@@ -253,6 +253,7 @@
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\UpdateActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentDetailLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetListActivityLogic.cs" />
@@ -263,6 +264,8 @@
     <Compile Include="ApiSrc\Activity\Logic\BookActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ActivityUpdateApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\ActivityUpdateApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentDetailApiRequest.cs" />

@@ -343,6 +343,30 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
         #endregion
+        #region Update
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/update")]
+        public ApiResponseBase UpdateActivity()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            ActivityUpdateApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ActivityUpdateApiRequest>();
+                var apiResponse = ActivityLogic.UpdateActivity(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+        #endregion
 
     }
 }

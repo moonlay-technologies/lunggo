@@ -486,6 +486,38 @@ namespace Lunggo.ApCommon.Activity.Service
             }
 
         }
+
+        private void UpdateActivityDb(ActivityUpdateInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                ActivityTableRepo.GetInstance().Update(conn, new ActivityTableRecord
+                {
+                    Id = input.ActivityId,
+                    Name = input.Name,
+                    Category = input.Category,
+                    Description = input.ShortDesc,
+                    City = input.City,
+                    Country = input.Country,
+                    Address = input.Address,
+                    Latitude = input.Latitude,
+                    Longitude = input.Longitude,
+                    PriceDetail = input.PriceDetail,
+                    AmountDuration = int.Parse(input.Duration.Amount),
+                    UnitDuration = input.Duration.Unit,
+                    OperationTime = input.OperationTime,
+                    ImportantNotice = input.Contents.Content1,
+                    Warning = input.Contents.Content2,
+                    AdditionalNotes = input.Contents.Content3,
+                    Cancellation = input.Cancellation,
+                    IsPaxDoBNeeded = input.IsPaxDoBNeeded,
+                    IsPassportIssuedDateNeeded = input.IsPassportIssuedDateNeeded,
+                    IsPassportNumberNeeded = input.IsPassportNumberNeeded 
+                });
+                UpdatePriceQuery.GetInstance().Execute(conn, new {Price = input.Price, ActivityId = input.ActivityId });
+            }
+
+        }
         #endregion
     }
 }
