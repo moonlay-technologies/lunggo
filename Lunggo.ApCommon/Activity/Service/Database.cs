@@ -95,6 +95,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 {                   
                     var savedHours = GetAvailableSessionQuery.GetInstance()
                         .Execute(conn, new { ActivityId = input.ActivityId, Date = i.Date }).ToList();
+                    if (savedHours.TrueForAll(e => e == null))
+                        savedHours = null;
                     var savedDatesAndHours = new DateAndAvailableHour()
                     {
                         Date = i.Date,
