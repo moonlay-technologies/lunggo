@@ -69,6 +69,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 case PaymentMethod.OnlineSbi:
                 case PaymentMethod.DooEtQnb:
                 case PaymentMethod.BtnMobileBanking:
+                case PaymentMethod.MaybankVa:
                     return PaymentMedium.E2Pay;
                 default:
                     return PaymentMedium.Undefined;
