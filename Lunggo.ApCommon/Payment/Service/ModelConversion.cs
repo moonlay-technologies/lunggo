@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -39,6 +40,27 @@ namespace Lunggo.ApCommon.Payment.Service
                 FinalPrice = payment.LocalFinalPrice,
                 Refund = ConvertToRefundForDisplay(payment.Refund),
                 InvoiceNo = payment.InvoiceNo
+            };
+        }
+
+        internal Transaction ConvertToTransaction(TransactionJournalTableRecord record)
+        {
+            return new Transaction
+            {
+                Id = record.Id,
+                Time = record.Time.GetValueOrDefault(),
+                Amount = record.Amount.GetValueOrDefault(),
+                BalanceAfter = record.BalanceAfter.GetValueOrDefault(),
+                Remark = record.Remark
+            };
+        }
+
+        internal AccountBalance ConvertToAccountBalance(AccountBalanceTableRecord record)
+        {
+            return new AccountBalance
+            {
+                Balance = record.Balance.GetValueOrDefault(),
+                Withdrawable = record.Withdrawable.GetValueOrDefault()
             };
         }
 

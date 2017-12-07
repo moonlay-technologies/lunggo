@@ -262,5 +262,40 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/statement")]
+        public ApiResponseBase GetAccountStatement(string from = null, string to = null)
+        {
+            try
+            {
+                var request = ApiRequestBase.DeserializeRequest<GetAccountStatementApiRequest>();
+                var apiResponse = AccountLogic.GetAccountStatement(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/balance")]
+        public ApiResponseBase GetAccountBalance()
+        {
+            try
+            {
+                var apiResponse = AccountLogic.GetAccountBalance();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
     }
 }

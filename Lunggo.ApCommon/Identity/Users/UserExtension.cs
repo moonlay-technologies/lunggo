@@ -25,6 +25,19 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
+        public static string GetUserId(this IIdentity identity)
+        {
+            if (identity.IsUserAuthorized())
+            {
+                var customUser = GetUser(identity);
+                return customUser.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static string GetFirstName(this IIdentity identity)
         {
             if (identity.IsUserAuthorized())

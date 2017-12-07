@@ -680,6 +680,7 @@
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
     <Compile Include="Payment\Constant\PaymentStatus.cs" />
+    <Compile Include="Payment\Model\AccountBalance.cs" />
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\CreditCardInfo.cs" />
     <Compile Include="Payment\Model\Currency.cs" />
@@ -695,6 +696,7 @@
     <Compile Include="Payment\Model\Data\TelkomselTcash.cs" />
     <Compile Include="Payment\Model\Data\VirtualAccount.cs" />
     <Compile Include="Payment\Model\Surcharge.cs" />
+    <Compile Include="Payment\Model\Transaction.cs" />
     <Compile Include="Payment\Model\UsedDiscount.cs" />
     <Compile Include="Payment\Model\Discount.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
@@ -704,6 +706,9 @@
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
+    <Compile Include="Payment\Query\CreateAccountByUserQuery.cs" />
+    <Compile Include="Payment\Query\GetAccountUserQuery.cs" />
+    <Compile Include="Payment\Query\GetBalanceQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentByRsvNoQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentStatusQuery.cs" />
     <Compile Include="Payment\Query\GetRefundQuery.cs" />
@@ -713,11 +718,13 @@
     <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Payment\Query\GetTransactionsQuery.cs" />
     <Compile Include="Payment\Query\GetUncheckedTransferConfirmationReportsQuery.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Payment\Query\GetUnpaidQuery.cs" />
     <Compile Include="Payment\Query\UpdatePaymentQuery.cs" />
+    <Compile Include="Payment\Service\AccountTransaction.cs" />
     <Compile Include="Payment\Service\Caching.cs" />
     <Compile Include="Payment\Service\Database.cs" />
     <Compile Include="Payment\Service\ModelConversion.cs" />
@@ -769,6 +776,7 @@
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
     <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
     <Compile Include="Sequence\AppointmentRequestIdSequence .cs" />
+    <Compile Include="Sequence\AccountNoSequence.cs" />
     <Compile Include="Sequence\DiscountIdSequence.cs" />
     <Compile Include="Sequence\ActivityReservationIdSequence.cs" />
     <Compile Include="Sequence\HotelReservationIdSequence.cs" />

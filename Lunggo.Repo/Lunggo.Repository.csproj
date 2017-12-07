@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\AccountBalanceTableRecord.cs" />
+    <Compile Include="TableRecord\AccountUserTableRecord.cs" />
     <Compile Include="TableRecord\ActivityBuyPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPackageTableRecord.cs" />
     <Compile Include="TableRecord\ActivityReservationTableRecord.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="TableRecord\NewsletterSubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SupplierTableRecord.cs" />
+    <Compile Include="TableRecord\TransactionJournalTableRecord.cs" />
     <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
     <Compile Include="TableRecord\UsedDiscountTableRecord.cs" />
     <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
@@ -125,6 +128,8 @@
     <Compile Include="TableRecord\UserTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\AccountBalanceRepository.cs" />
+    <Compile Include="TableRepository\AccountUserRepository.cs" />
     <Compile Include="TableRepository\ActivityBuyPriceRepository.cs" />
     <Compile Include="TableRepository\ActivityPackageRepository.cs" />
     <Compile Include="TableRepository\ActivityRepository.cs" />
@@ -176,6 +181,7 @@
     <Compile Include="TableRepository\NewsletterSubscriberRepository.cs" />
     <Compile Include="TableRepository\SubscriberRepository.cs" />
     <Compile Include="TableRepository\SupplierRepository.cs" />
+    <Compile Include="TableRepository\TransactionJournalRepository.cs" />
     <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />
     <Compile Include="TableRepository\UsedDiscountRepository.cs" />
     <Compile Include="TableRepository\UsedMarginRepository.cs" />

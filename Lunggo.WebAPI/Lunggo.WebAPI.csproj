@@ -224,6 +224,7 @@
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetAccountBalanceLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangeProfileLogic.cs" />
@@ -235,6 +236,9 @@
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetAccountBalanceApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetAccountStatementApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetAccountStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangePasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ChangeProfileApiRequest.cs" />
@@ -253,6 +257,7 @@
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetAccountStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\UpdateActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentDetailLogic.cs" />
