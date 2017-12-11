@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Identity.Users
             }
         }
 
-        public static string GetUserId(this IIdentity identity)
+        public static string GetId(this IIdentity identity)
         {
             if (identity.IsUserAuthorized())
             {

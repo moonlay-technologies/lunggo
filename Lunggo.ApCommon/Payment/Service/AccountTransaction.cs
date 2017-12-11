@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var userId = HttpContext.Current.User.Identity.GetUserId();
+                var userId = HttpContext.Current.User.Identity.GetId();
                 var balanceRecord = GetBalanceQuery.GetInstance().Execute(conn, new {userId}).Single();
                 var balance = ConvertToAccountBalance(balanceRecord);
                 return balance;
@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var userId = HttpContext.Current.User.Identity.GetUserId();
+                var userId = HttpContext.Current.User.Identity.GetId();
                 var transactionRecords = GetTransactionsQuery.GetInstance().Execute(conn, new {userId, fromDate, toDate});
                 var transactions = transactionRecords.Select(ConvertToTransaction).ToList();
                 return transactions;
