@@ -67,70 +67,70 @@
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-            @:price = @reservation.Itinerary.NetTotalFare;
-            @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
-        }
+                        @:price = @reservation.Itinerary.NetTotalFare;
+                        @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
+                    }
         else //if (Model.Reservation is HotelReservationForDisplay)
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-            @:price = @reservation.HotelDetail.NetTotalFare;
-            @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
-        }
+                        @:price = @reservation.HotelDetail.NetTotalFare;
+                        @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
+                    }
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
             @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-        }
+                    }
         @if (Model.Reservation is FlightReservationForDisplay)
         {
             @:var departureDate;
-            var reservation = Model.Reservation as FlightReservationForDisplay;
+                        var reservation = Model.Reservation as FlightReservationForDisplay;
             if (reservation.Itinerary.Trips != null)
             {
                 if (reservation.Itinerary.Trips.Count == 2)
                 {
                     @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                }
+                            }
                 else
                 {
                     @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                }
+                            }
             }
 
             if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
             {
                 @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-                @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
-            }
+                            @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+                        }
             @:var gtmContentType = 'flight';
-            @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
-            @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
-            @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
-            @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
-            @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
-            @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
-            @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmPageName = 'payment';
-        }
+                        @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                        @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+                        @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
+                        @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
+                        @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
+                        @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
+                        @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
+                        @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
+                        @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
+                        @:var gtmPurchaseCurrency = 'IDR';
+                        @:var gtmPageName = 'payment';
+                    }
         @if (Model.Reservation is HotelReservationForDisplay)
         {
             var hotel = Model.Reservation as HotelReservationForDisplay;
             @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-            @:price = '@hotel.HotelDetail.NetTotalFare';
-            @:var gtmContentType = 'hotel';
-            @:var gtmCity = '@hotel.HotelDetail.DestinationName';
-            @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
-            @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
-            @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-            @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
-            @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
-            @:var gtmPageName = 'payment';
-        }
+                        @:price = '@hotel.HotelDetail.NetTotalFare';
+                        @:var gtmContentType = 'hotel';
+                        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
+                        @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
+                        @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
+                        @:var gtmCountry = '@hotel.HotelDetail.CountryName';
+                        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+                        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+                        @:var gtmPurchaseCurrency = 'IDR';
+                        @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
+                        @:var gtmPageName = 'payment';
+                    }
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -146,6 +146,7 @@
         };
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
+        var paymentFailed = @((ViewBag.PaymentFailed != null).ToString().ToLower());
 
     </script>
     <!-- angular controller -->
@@ -160,9 +161,12 @@
         <div ng-app="travorama" @*ng-controller="paymentController"*@ ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
                 <div class="page__body">
-                    @if (Model.Reservation is FlightReservationForDisplay) {
+                    @if (Model.Reservation is FlightReservationForDisplay)
+                    {
                         Html.RenderPartial("/Views/Payment/partials/_flightDetail.mobile.cshtml");
-                    } else {
+                    }
+                    else
+                    {
                         <h3 class="lg-txt">
                             <b>RINCIAN </b><span>PEMESANAN</span>
                         </h3>
@@ -326,7 +330,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="popup__wrapper" ng-class="{'active' : mustSelectBank}">
                 <div class="popup">
                     <header class="popup__header">
@@ -401,6 +405,28 @@
                 </div>
             </div>
 
+            <div class="popup__wrapper" ng-class="{'active' : paymentFailed}">
+                <div class="popup">
+                    <header class="popup__header">
+                        <h4 class="popup__title">Pembayaran Anda gagal</h4>
+                    </header>
+                    <div class="popup__body tnc-body">
+                        <div class="container_new">
+                            Silakan melakukan pembayaran menggunakan metode pembayaran lain.
+                        </div>
+                    </div>
+                    <div class="popup__footer">
+                        <div class="container_new tnc">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class="btn btn-grey btn-block" ng-click="paymentFailed = false">TUTUP</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="popup__wrapper" ng-class="{'active' : error.message}">
                 <div class="popup">
                     <header class="popup__header">
@@ -424,7 +450,7 @@
             </div>
 
         </div><!-- checkout end here -->
-                    break;
+                        break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
         break;

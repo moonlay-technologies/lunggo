@@ -185,13 +185,14 @@
             <div class="container">
                 @if (Model is FlightReservationForDisplay)
                 {
-                <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
+                    <p>Pembayaran Anda berhasil.</p>
+                    <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
 
                 }
                 @if (Model is HotelReservationForDisplay)
                 {
+                    <p>Pembayaran Anda berhasil.</p>
                     <p>Terima kasih telah memesan hotel di Travorama.com. Anda dapat mencetak voucher Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
-
                 }
 
                 <section class="countdown">

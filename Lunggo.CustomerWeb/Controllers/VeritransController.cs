@@ -69,7 +69,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     Method = MapPaymentMethod(notif),
                     Status = status,
                     Time = status == PaymentStatus.Settled ? time : null,
-                    ExternalId = notif.approval_code,
+                    ExternalId = notif.transaction_id,
                     TransferAccount = notif.permata_va_number,
                     FinalPriceIdr = notif.gross_amount,
                     LocalCurrency = new Currency("IDR")
@@ -125,8 +125,11 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
 
-        public ActionResult PaymentFinish(VeritransResponse response)
+        public ActionResult PaymentFinish(VeritransResponse response = null, string id = null)
         {
+            if (id != null)
+                return PaymentFinishPost(null, id);
+
             var rsvNo = response.order_id;
             if (response.status_code == "202")
             {
@@ -243,14 +246,14 @@ namespace Lunggo.CustomerWeb.Controllers
                     return PaymentStatus.Settled;
                 case "pending":
                     return PaymentStatus.Pending;
-                case "authorize":
-                case "cancel":
                 case "expire":
                     return PaymentStatus.Expired;
                 case "deny":
                     return PaymentStatus.Denied;
+                case "authorize":
+                case "cancel":
                 default:
-                    return PaymentStatus.Denied;
+                    return PaymentStatus.Failed;
             }
         }
     }

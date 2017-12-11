@@ -14,6 +14,7 @@ app.controller('paymentController', [
     $scope.pageLoaded = true;
     $scope.loginShown = false;
     $scope.mustSelectBank = false;
+    $scope.paymentFailed = paymentFailed;
     $scope.checkoutForm = {
         loading: false
     };

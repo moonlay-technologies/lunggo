@@ -26,11 +26,12 @@
 @section AdditionalJS {
     <!-- additional Angular JS-->
     <script src="/Assets/js/jquery.countdown.min.js"></script>
-    
-@*     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha512.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.js"></script>
- *@    <script src="/Assets/js/CryptoJS/components/core-min.js"></script>
+
+    @*     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/core.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/sha512.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/enc-base64.js"></script>
+    *@
+    <script src="/Assets/js/CryptoJS/components/core-min.js"></script>
     <script src="/Assets/js/CryptoJS/rollups/sha512.js"></script>
     <script src="/Assets/js/CryptoJS/components/enc-base64-min.js"></script>
     <!-- veritrans JS -->
@@ -70,70 +71,70 @@
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
-            @:price = @reservation.Itinerary.NetTotalFare;
-            @:originalPrice = @reservation.Itinerary.OriginalTotalFare;
-        }
+                    @:price = @reservation.Itinerary.NetTotalFare;
+                    @:originalPrice = @reservation.Itinerary.OriginalTotalFare;
+                }
         else //if (Model.Reservation is HotelReservationForDisplay)
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
-            @:price = @reservation.HotelDetail.NetTotalFare;
-            @:originalPrice = @reservation.HotelDetail.OriginalTotalFare;
-        }
+                    @:price = @reservation.HotelDetail.NetTotalFare;
+                    @:originalPrice = @reservation.HotelDetail.OriginalTotalFare;
+                }
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
             @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-        }
+                }
         @if (Model.Reservation is FlightReservationForDisplay)
         {
             @:var departureDate;
-            var reservation = Model.Reservation as FlightReservationForDisplay;
+                    var reservation = Model.Reservation as FlightReservationForDisplay;
             if (reservation.Itinerary.Trips != null)
             {
                 if (reservation.Itinerary.Trips.Count == 2)
                 {
                     @:departureDate = '@reservation.Itinerary.Trips[1].DepartureDate';
-                }
+                        }
                 else
                 {
                     @:departureDate = '@reservation.Itinerary.Trips[0].DepartureDate';
-                }
+                        }
             }
 
             if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
             {
                 @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-                @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
-            }
+                        @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+                    }
             @:var gtmContentType = 'flight';
-            @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
-            @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
-            @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
-            @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
-            @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
-            @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
-            @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmPageName = 'payment';
-        }
+                    @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                    @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+                    @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
+                    @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
+                    @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
+                    @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
+                    @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
+                    @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
+                    @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
+                    @:var gtmPurchaseCurrency = 'IDR';
+                    @:var gtmPageName = 'payment';
+                }
         @if (Model.Reservation is HotelReservationForDisplay)
         {
             var hotel = Model.Reservation as HotelReservationForDisplay;
             @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-            @:price = '@hotel.HotelDetail.NetTotalFare';
-            @:var gtmContentType = 'hotel';
-            @:var gtmCity = '@hotel.HotelDetail.DestinationName';
-            @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
-            @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
-            @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-            @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
-            @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
-            @:var gtmPageName = 'payment';
-        }
+                    @:price = '@hotel.HotelDetail.NetTotalFare';
+                    @:var gtmContentType = 'hotel';
+                    @:var gtmCity = '@hotel.HotelDetail.DestinationName';
+                    @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
+                    @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
+                    @:var gtmCountry = '@hotel.HotelDetail.CountryName';
+                    @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+                    @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+                    @:var gtmPurchaseCurrency = 'IDR';
+                    @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
+                    @:var gtmPageName = 'payment';
+                }
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -149,243 +150,244 @@
         };
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
+        var paymentFailed = @((ViewBag.PaymentFailed != null).ToString().ToLower());
 
     </script>
     <!-- angular controller -->
     <script src="/Assets/travorama20/js/paymentController.js"></script>
 }
 
-@switch ((string)ViewBag.Message)
-{
-    default:
-        <!-- payment start here -->
-        <div ng-app="travorama" ng-controller="paymentController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
-            <section class="checkout-content normal-txt">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-left">
-                            @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
+<!-- payment start here -->
+<div ng-app="travorama" ng-controller="paymentController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
+    <section class="checkout-content normal-txt">
+        <div class="container">
+            <div class="row">
+                <div class="col-left">
+                    @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
+                </div>
+                <div class="col-right">
+                    <h3 class="lg-txt">
+                        <b>RINCIAN </b>
+                        @if (Model.Reservation is FlightReservationForDisplay)
+                        { <span>PENERBANGAN</span> }
+                        else
+                        { <span>PEMESANAN</span> }
+                    </h3>
+                    <div class="container-rincian-penerbangan">
+                        <div class="content-right-payment">
+                            <p class="timer">
+                                <b>Sisa Waktu Pembayaran </b>
+                                <span class="hour">00</span>
+                                :
+                                <span class="minute">00</span>
+                                :
+                                <span class="second">00</span>
+                            </p>
+                            <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
                         </div>
-                        <div class="col-right">
-                            <h3 class="lg-txt">
-                                <b>RINCIAN </b>
-                                @if (Model.Reservation is FlightReservationForDisplay)
-                                     { <span>PENERBANGAN</span> }
-                                else { <span>PEMESANAN</span> }
-                            </h3>
-                            <div class="container-rincian-penerbangan">
-                                <div class="content-right-payment">
-                                    <p class="timer">
-                                        <b>Sisa Waktu Pembayaran </b>
-                                        <span class="hour">00</span>
-                                        :
-                                        <span class="minute">00</span>
-                                        :
-                                        <span class="second">00</span>
-                                    </p>
-                                    <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
-                                </div>
-                                @if (Model.Reservation is FlightReservationForDisplay) {
-                                        Html.RenderPartial("/Views/Payment/partials/_flightDetail.cshtml");
-                                } else {
-                                        Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");
-                                }
-                                @{Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section><!-- .checkout-content -->
-
-            <div class="bookfailed-popup" ng-show="expired">
-                <div class="overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
-                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:10px;">
-                            <span style="font-size:12px; padding-right:10px;">
-                                Maaf, waktu pembayaran Anda habis. <br />
-                                Silakan klik tombol di bawah untuk kembali ke halaman utama
-                            </span>
-                        </div>
-                    </section>
-                    <div class="row" style="padding-top:5px;">
-                        <div class=" col-xs-6"></div>
-                        <div class="col-xs-3">
-                            <a class="btn btn-grey btn-block sm-btn" href="/" style="width:100%">KEMBALI</a>
-                        </div>
+                        @if (Model.Reservation is FlightReservationForDisplay)
+                        {
+                            Html.RenderPartial("/Views/Payment/partials/_flightDetail.cshtml");
+                        }
+                        else
+                        {
+                            Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");
+                        }
+                        @{Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");}
                     </div>
                 </div>
             </div>
-
-            <div class="tnc-popup" ng-show="pay.showPopup">
-                <div class="popup">
-                    <div class="popup-container">
-                        <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
-                        <div class="popup-list">
-                            <ol>
-                                <li>Pastikan bank yang Anda pilih <b>sama</b> dengan bank yang Anda gunakan untuk membayar. Gunakan pilihan <b>"Bank Lainnya"</b> jika bank Anda tidak terdapat di pilihan</li>
-                                <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
-                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
-                            </ol>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.showPopup = false;" style="width:100%">KEMBALI</a>
-                            </div>
-                            <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="tnc-popup" ng-show="pay.showOtherBankPopup">
-                <div class="popup">
-                    <div class="popup-container">
-                        <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
-                        <div class="popup-list">
-                            <ol>
-                                <li>Dikenakan tambahan biaya Rp6.500-Rp7.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu</li>
-                                <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>3 angka terakhir</b> agar pembayaran dapat diverifikasi</li>
-                                <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
-                            </ol>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a class="btn btn-grey btn-block sm-btn" ng-click="pay.showOtherBankPopup = false;" style="width:100%">KEMBALI</a>
-                            </div>
-                            <div class="col-xs-6">
-                                <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
-                <div class=" overlay-content">
-                    <section style="padding-top:40px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;padding-top:10px;">
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.close()"><b>Tutup</b></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="payment-popup" ng-show="mustSelectBank">
-                <div class=" overlay-content">
-                    <section style="padding-top:40px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Anda Belum Memilih Bank</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;padding-top:10px;">
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="mustSelectBank = false;"><b>Tutup</b></a>
-                    </div>
-                </div>
-            </div>
-            <div class="payment-popup" ng-show="!pay.inputValid">
-                <div class=" overlay-content">
-                    <section style="padding-top:40px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Input yang Anda masukkan tidak valid. Silakan cek kembali.</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;padding-top:10px;">
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.inputValid = true"><b>Tutup</b></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="payment-popup" ng-show="pay.continueVoucher">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;">
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continuePay('voucher')" ng-show="!pay.clickpay"><b>Ya</b></a>
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueVoucher = false;" ng-show="!pay.clickpay"><b>Tidak</b></a>
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueVoucher = false;" ng-show="pay.clickpay"><b>Tutup</b></a>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="payment-popup" ng-show="pay.continueBIN">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;">
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continuePay('bin')"><b>Ya</b></a>
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueBIN = false;"><b>Tidak</b></a>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="payment-popup" ng-show="error.message">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <!-- Ini untuk yg gagal -->
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
-                        <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:5px;"><span style="font-size:12px">{{error.message}}</span></div>
-                    </section>
-                    <div align="right" style="padding-right:30px;">
-                        <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="error.message = '' "><b>TUTUP</b></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bookfailed-popup" ng-show="pay.isPaying || pay.go">
-                <div class=" overlay-content">
-                    <section style="padding-top:60px; padding-left:225px;">
-                        <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
-                        <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
-                        <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
-                        <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
-                    </section>
-                </div>
-            </div>
-
         </div>
+    </section><!-- .checkout-content -->
+
+    <div class="bookfailed-popup" ng-show="expired">
+        <div class="overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Waktu Habis</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:10px;">
+                    <span style="font-size:12px; padding-right:10px;">
+                        Maaf, waktu pembayaran Anda habis. <br />
+                        Silakan klik tombol di bawah untuk kembali ke halaman utama
+                    </span>
+                </div>
+            </section>
+            <div class="row" style="padding-top:5px;">
+                <div class=" col-xs-6"></div>
+                <div class="col-xs-3">
+                    <a class="btn btn-grey btn-block sm-btn" href="/" style="width:100%">KEMBALI</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tnc-popup" ng-show="pay.showPopup">
+        <div class="popup">
+            <div class="popup-container">
+                <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
+                <div class="popup-list">
+                    <ol>
+                        <li>Pastikan bank yang Anda pilih <b>sama</b> dengan bank yang Anda gunakan untuk membayar. Gunakan pilihan <b>"Bank Lainnya"</b> jika bank Anda tidak terdapat di pilihan</li>
+                        <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                        <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a class="btn btn-grey btn-block sm-btn" ng-click="pay.showPopup = false;" style="width:100%">KEMBALI</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tnc-popup" ng-show="pay.showOtherBankPopup">
+        <div class="popup">
+            <div class="popup-container">
+                <div class="popup-header"><span class="popup-title stripe">Syarat dan Ketentuan Bank Transfer</span></div>
+                <div class="popup-list">
+                    <ol>
+                        <li>Dikenakan tambahan biaya Rp6.500-Rp7.500/transaksi (tidak termasuk di total transaksi) untuk pembayaran melalui jaringan ATM Bersama, Prima, dan Alto. Ini sesuai ketetapan ATM Bersama, Prima, dan Alto, dan dapat berubah sewaktu-waktu</li>
+                        <li>Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>3 angka terakhir</b> agar pembayaran dapat diverifikasi</li>
+                        <li><b>Tidak disarankan</b> melakukan transfer dengan <b>LLG/Kliring/RTGS/SKNBI</b> karena membutuhkan waktu verifikasi yang lama sehingga batas waktu terlewat</li>
+                    </ol>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a class="btn btn-grey btn-block sm-btn" ng-click="pay.showOtherBankPopup = false;" style="width:100%">KEMBALI</a>
+                    </div>
+                    <div class="col-xs-6">
+                        <input type="submit" class="btn btn-yellow sm-btn" ng-click="pay.middle('transfer')" value="SETUJU">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-popup" ng-show="pay.checked && !pay.isSuccess">
+        <div class=" overlay-content">
+            <section style="padding-top:40px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">{{errorMessage}}</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:10px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.close()"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-popup" ng-show="mustSelectBank">
+        <div class=" overlay-content">
+            <section style="padding-top:40px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Anda Belum Memilih Bank</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Silakan pilih salah satu bank yang tersedia sebelum mengklik tombol Bayar</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:10px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="mustSelectBank = false;"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+    <div class="payment-popup" ng-show="!pay.inputValid">
+        <div class=" overlay-content">
+            <section style="padding-top:40px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px; padding-right:30px;"><span style="font-size:12px">Input yang Anda masukkan tidak valid. Silakan cek kembali.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;padding-top:10px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.inputValid = true"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-popup" ng-show="pay.continueVoucher">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continuePay('voucher')" ng-show="!pay.clickpay"><b>Ya</b></a>
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueVoucher = false;" ng-show="!pay.clickpay"><b>Tidak</b></a>
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueVoucher = false;" ng-show="pay.clickpay"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
 
 
+    <div class="payment-popup" ng-show="pay.continueBIN">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px">{{errorMessage}}</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continuePay('bin')"><b>Ya</b></a>
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="pay.continueBIN = false;"><b>Tidak</b></a>
 
-        <!-- checkout end here -->
-                                break;
-    case "BookExpired":
-    @:[Ini ceritanya page booking expired]
-        break;
-    case "BookError":
-    @:[Ini ceritanya page kalo input datanya ga bener]
-        break;
-    case "NoLongerAvailable":
-    @:[Ini ceritanya page kalo fare-nya uda ga available lageh]
-        break;
-    case "InvalidInputData":
-    @:[Ini ceritanya page kalo input datanya ga bener]
-        break;
-}
+            </div>
+        </div>
+    </div>
+    
+    <div class="payment-popup" ng-show="paymentFailed">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px">Pembayaran Anda gagal. Silakan melakukan pembayaran dengan metode pembayaran lain.</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="paymentFailed = false"><b>Tutup</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="payment-popup" ng-show="error.message">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <!-- Ini untuk yg gagal -->
+                <div><img src="/Assets/images/travorama-logo-color.png" height="22px"></div>
+                <div style="padding-top:20px;"><span style="color: #15b1e4; font-size:20px"><b>Mohon Maaf...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:5px;"><span style="font-size:12px">{{error.message}}</span></div>
+            </section>
+            <div align="right" style="padding-right:30px;">
+                <a class="btn popup-btn-yellow book-failed sm-btn" ng-click="error.message = '' "><b>TUTUP</b></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bookfailed-popup" ng-show="pay.isPaying || pay.go">
+        <div class=" overlay-content">
+            <section style="padding-top:60px; padding-left:225px;">
+                <div><img src="/Assets/images/travorama-logo-color.png" height="30px"></div>
+                <div style="padding-top:25px;"><span style="color: #15b1e4; font-size:23px"><b>Mohon tunggu...</b></span></div>
+                <div><img src="~/Assets/images/popup/paymentyellowstrip.png" /></div>
+                <div style="padding-top:10px;"><span style="font-size:14px">Sedang memproses pilihan Anda</span></div>
+            </section>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- checkout end here -->

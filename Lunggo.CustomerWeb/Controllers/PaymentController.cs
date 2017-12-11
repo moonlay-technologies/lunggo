@@ -55,6 +55,9 @@ namespace Lunggo.CustomerWeb.Controllers
                         rsv.Payment.Status == PaymentStatus.Failed)
                     {
                         ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+                        if (TempData["PaymentFailed"] != null)
+                            ViewBag.PaymentFailed = true;
+
                         return View(new PaymentData
                         {
                             RsvNo = rsvNo,
@@ -153,6 +156,13 @@ namespace Lunggo.CustomerWeb.Controllers
                     rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
                 else
                     rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+
+                if (rsv.Payment.Status == PaymentStatus.Failed)
+                {
+                    TempData["PaymentFailed"] = true;
+                    return RedirectToAction("Payment", "Payment", new {rsvNo = rsvNo, regId = GenerateId(rsvNo)});
+                }
+
                 return View(rsv);
             }
             return RedirectToAction("Index", "Index");

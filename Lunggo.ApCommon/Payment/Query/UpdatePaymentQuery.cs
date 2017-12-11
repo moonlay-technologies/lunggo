@@ -69,62 +69,7 @@ namespace Lunggo.ApCommon.Payment.Query
             if (condition.InvoiceNo != null)
                 clauseBuilder.Append(@"InvoiceNo = @InvoiceNo, ");
             if (condition.StatusCd != null)
-            {
-                clauseBuilder.Append(
-                    @"StatusCd = CASE ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'CAN' THEN @StatusCd ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'PEN' THEN StatusCd ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'DEN' THEN @StatusCd ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'FAI' THEN @StatusCd ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'SET' THEN ");
-                clauseBuilder.Append(
-                            @"CASE WHEN ((StatusCd = 'PEN') OR (StatusCd = 'VER') OR (StatusCd = 'CHA')) ");
-                clauseBuilder.Append(
-                                @"THEN @StatusCd ");
-                clauseBuilder.Append(
-                                @"ELSE StatusCd ");
-                clauseBuilder.Append(
-                            @"END ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'EXP' THEN ");
-                clauseBuilder.Append(
-                            @"CASE WHEN ((StatusCd = 'PEN') OR (StatusCd = 'VER') OR (StatusCd = 'CHA')) ");
-                clauseBuilder.Append(
-                                @"THEN @StatusCd ");
-                clauseBuilder.Append(
-                                @"ELSE StatusCd ");
-                clauseBuilder.Append(
-                            @"END ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'VER' THEN ");
-                clauseBuilder.Append(
-                            @"CASE WHEN StatusCd = 'PEN' ");
-                clauseBuilder.Append(
-                                @"THEN @StatusCd ");
-                clauseBuilder.Append(
-                                @"ELSE StatusCd ");
-                clauseBuilder.Append(
-                            @"END ");
-                clauseBuilder.Append(
-                        @"WHEN @StatusCd = 'CHA' THEN ");
-                clauseBuilder.Append(
-                            @"CASE WHEN StatusCd = 'VER' ");
-                clauseBuilder.Append(
-                                @"THEN @StatusCd ");
-                clauseBuilder.Append(
-                                @"ELSE StatusCd ");
-                clauseBuilder.Append(
-                            @"END ");
-                clauseBuilder.Append(
-                        @"ELSE StatusCd ");
-                clauseBuilder.Append(
-                    @"END, ");
-            }
+                clauseBuilder.Append(@"StatusCd = @StatusCd, ");
             clauseBuilder.Remove(clauseBuilder.Length - 2, 2);
             clauseBuilder.Append(" ");
             return clauseBuilder.ToString();
