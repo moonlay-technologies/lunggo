@@ -14,7 +14,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
     {
         public static ApiResponseBase GetDetail(GetDetailActivityApiRequest request)
         {
-            var succeed = TryPreprocess(request, out var searchServiceRequest);
+            GetDetailActivityInput searchServiceRequest;
+            var succeed = TryPreprocess(request, out searchServiceRequest);
             if (!succeed)
                 return new GetDetailActivityApiResponse
                 {
@@ -34,7 +35,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             if (request == null)
                 return false;
 
-            var isNumeric = int.TryParse(request.ActivityId, out var activityId);
+            int activityId;
+            var isNumeric = int.TryParse(request.ActivityId, out activityId);
             if (!isNumeric) { return false; }
 
             if (activityId <= 0)

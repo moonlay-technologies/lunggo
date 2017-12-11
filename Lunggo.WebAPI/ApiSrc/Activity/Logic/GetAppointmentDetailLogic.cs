@@ -36,7 +36,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERR_NOT_OPERATOR"
                 };
             }
-            var succeed = TryPreprocess(request, out var serviceRequest);
+            GetAppointmentDetailInput serviceRequest;
+            var succeed = TryPreprocess(request, out serviceRequest);
             if (!succeed)
             {
                 return new GetAppointmentDetailApiResponse
@@ -60,7 +61,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return false;
             }
 
-            bool isPageNumeric = int.TryParse(request.ActivityId, out var activityId);
+            int activityId;
+            bool isPageNumeric = int.TryParse(request.ActivityId, out activityId);
             if (!isPageNumeric || activityId <= 0) { return false; }
             var date = new DateTime();
 

@@ -13,7 +13,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
     {
         public static ApiResponseBase GetAvailable(GetAvailableDatesApiRequest request)
         {
-            var succeed = TryPreprocess(request, out var searchServiceRequest);
+            GetAvailableDatesInput searchServiceRequest;
+            var succeed = TryPreprocess(request, out searchServiceRequest);
             if (!succeed)
                 return new GetAvailableDatesApiResponse
                 {
@@ -32,8 +33,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
             if (request == null)
                 return false;
-            
-            var isNumeric = int.TryParse(request.ActivityId, out var activityId);
+
+            int activityId;
+            var isNumeric = int.TryParse(request.ActivityId, out activityId);
             if (!isNumeric) { return false; }
 
             if (activityId <= 0)

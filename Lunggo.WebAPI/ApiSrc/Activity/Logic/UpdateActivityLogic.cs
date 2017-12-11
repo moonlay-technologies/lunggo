@@ -36,7 +36,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERR_NOT_OPERATOR"
                 };
             }
-            var succeed = TryPreprocess(request, out var serviceRequest);
+            ActivityUpdateInput serviceRequest;
+            var succeed = TryPreprocess(request, out serviceRequest);
             if (!succeed)
             {
                 return new ApiResponseBase
@@ -64,7 +65,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             
             if(request.Price < 0) { return false; }
 
-            var isNumeric = int.TryParse(request.Duration.Amount, out var amountDuration);
+            int amountDuration;
+            var isNumeric = int.TryParse(request.Duration.Amount, out amountDuration);
             if(!isNumeric) { return false; }
 
             serviceRequest.ActivityId = request.ActivityId;

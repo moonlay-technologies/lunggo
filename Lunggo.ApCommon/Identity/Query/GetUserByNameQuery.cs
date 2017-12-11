@@ -22,7 +22,8 @@ namespace Lunggo.ApCommon.Identity.Query
 
         private static string CreateConditionClause(dynamic condition)
         {
-            bool IsNumeric = Int64.TryParse(condition.userName, out long phone);
+            long phone;
+            bool IsNumeric = Int64.TryParse(condition.userName, out phone);
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT * FROM [User] WHERE LOWER(UserName) LIKE");
             if (IsNumeric)

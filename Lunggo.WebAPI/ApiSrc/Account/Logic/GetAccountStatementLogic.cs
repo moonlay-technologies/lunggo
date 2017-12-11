@@ -14,8 +14,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase GetAccountStatement(GetAccountStatementApiRequest request)
         {
-            var fromDateOk = DateTime.TryParse(request.FromDate, out var fromDate);
-            var toDateOk = DateTime.TryParse(request.ToDate, out var toDate);
+            DateTime fromDate;
+            DateTime toDate;
+            var fromDateOk = DateTime.TryParse(request.FromDate, out fromDate);
+            var toDateOk = DateTime.TryParse(request.ToDate, out toDate);
             if (!fromDateOk || !toDateOk)
             {
                 return new ApiResponseBase

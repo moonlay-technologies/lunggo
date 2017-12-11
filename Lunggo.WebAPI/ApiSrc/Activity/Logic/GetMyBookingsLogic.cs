@@ -25,7 +25,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERAGPR01"
                 };
             }
-            var succeed = TryPreprocess(request, out var serviceRequest);
+            GetMyBookingsInput serviceRequest;
+            var succeed = TryPreprocess(request, out serviceRequest);
             if (!succeed)
             {
                 return new GetMyBookingsApiResponse
@@ -50,10 +51,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return false;
             }
 
-            bool isPageNumeric = int.TryParse(request.Page, out var pageValid);
+            int pageValid;
+            bool isPageNumeric = int.TryParse(request.Page, out pageValid);
             if (!isPageNumeric) { return false; }
 
-            bool isPerPageNumeric = int.TryParse(request.PerPage, out var perPageValid);
+            int perPageValid;
+            bool isPerPageNumeric = int.TryParse(request.PerPage, out perPageValid);
             if (!isPerPageNumeric) { return false; }
 
             if (pageValid < 0 || perPageValid < 0)

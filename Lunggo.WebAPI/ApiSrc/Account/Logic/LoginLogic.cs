@@ -24,7 +24,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             if(!string.IsNullOrEmpty(request.UserName))
             {
-                if (!Int64.TryParse(request.UserName, out long result))
+                long result;
+                if (!Int64.TryParse(request.UserName, out result))
                     if (!request.UserName.Contains("@"))
                         return new LoginApiResponse
                         {
