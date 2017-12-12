@@ -64,6 +64,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             try
             {
                 var tokenData = tokenResponse.Content.Deserialize<TokenData>();
+                if (tokenData.Error == "invalid_password")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_PASSWORD"
+                    };
                 if (tokenData.Error == "invalid_grant")
                     return new LoginApiResponse
                     {
@@ -86,7 +92,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_UNREGISTERED" //ERALOG05
+                        ErrorCode = "ERR_NOT_REGISTERED" //ERALOG05
                     };
                 return new LoginApiResponse
                 {

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Web;
+using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Identity.Auth;
@@ -25,6 +26,8 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 ActivityId = Convert.ToInt32(input.ActivityId)
             });
+
+            getDetail.ActivityDetail.BookingStatus = BookingStatus.Booked;
             
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
             InsertActivityRsvToDb(rsvDetail);

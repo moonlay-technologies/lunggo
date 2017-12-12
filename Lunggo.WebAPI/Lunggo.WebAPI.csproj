@@ -256,6 +256,7 @@
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\Admin\GetBookedActivitiesLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\UpdateActivityLogic.cs" />
@@ -269,6 +270,7 @@
     <Compile Include="ApiSrc\Activity\Logic\BookActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetBookedActivitiesResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityUpdateApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityUpdateApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiRequest.cs" />
@@ -460,6 +462,7 @@
     <None Include="Properties\PublishProfiles\travorama-dvapp-api.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dvapp-api__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-api - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-api - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %283%29.pubxml" />

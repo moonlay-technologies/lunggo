@@ -74,6 +74,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserId");
 		    }
 		}
+		public String BookingStatusCd
+		{
+		    get { return _BookingStatusCd; }
+		    set
+		    {
+		        _BookingStatusCd = value;
+		        IncrementLog("BookingStatusCd");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -83,6 +92,7 @@ namespace Lunggo.Repository.TableRecord
 		private int? _TicketCount;
 		private String _SelectedSession;
 		private String _UserId;
+		private String _BookingStatusCd;
 
 
 		public static ActivityReservationTableRecord CreateNewInstance()
@@ -121,6 +131,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("TicketCount", false),
 				new ColumnMetadata("SelectedSession", false),
 				new ColumnMetadata("UserId", false),
+				new ColumnMetadata("BookingStatusCd", false),
 
             };
         }

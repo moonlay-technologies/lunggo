@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.Framework.Database;
 using System.Linq;
 using Lunggo.ApCommon.Activity.Database.Query;
@@ -14,7 +15,8 @@ using Lunggo.ApCommon.Payment.Model;
 using System.Web;
 using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Flight.Constant;
+using BookingStatus = Lunggo.ApCommon.Activity.Constant.BookingStatus;
+using BookingStatusCd = Lunggo.ApCommon.Activity.Constant.BookingStatusCd;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -67,6 +69,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 var activityDetail = details.First();
 
+                activityDetail.BookingStatus = BookingStatus.Booked;
                 activityDetail.MediaSrc = mediaSrc;
                 activityDetail.AdditionalContent = additionalContentsDetail.Select(a => new AdditionalContent()
                 {
@@ -369,6 +372,17 @@ namespace Lunggo.ApCommon.Activity.Service
                 return output;
             }
         }
+
+        internal List<ActivityReservation> GetBookedActivitiesFromDb()
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsvNos = GetBookedActivitiesRsvNoQuery.GetInstance().Execute(conn, null);
+                var reservations = rsvNos.Select(GetReservationFromDb).ToList();
+                return reservations;
+            }
+        }
+
         #endregion
 
         #region Insert
@@ -394,6 +408,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Id = ActivityReservationIdSequence.GetInstance().GetNext(),
                     RsvNo = reservation.RsvNo,
                     ActivityId = reservation.ActivityDetails.ActivityId,
+                    BookingStatusCd = BookingStatusCd.Mnemonic(reservation.ActivityDetails.BookingStatus),
                     Date = reservation.DateTime.Date,
                     SelectedSession = reservation.DateTime.Session,
                     TicketCount = reservation.TicketCount,

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Activity.Constant;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Activity.Model
@@ -50,6 +51,7 @@ namespace Lunggo.ApCommon.Activity.Model
     public class ActivityDetail
     {
         public long ActivityId { get; set; }
+        public BookingStatus BookingStatus { get; set; }
         public string Name { get; set; }
         public string Category { get; set; }
         public string ShortDesc { get; set; }

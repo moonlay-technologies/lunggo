@@ -24,18 +24,19 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERAREG01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
             
             var foundUser = userManager.FindByEmail(request.Email);
             var foundUserByPhone = userManager.FindByName(request.Phone);
-            if (foundUser != null || foundUserByPhone != null)
+            var isUserAlreadyExist = foundUser != null || foundUserByPhone != null;
+            if (isUserAlreadyExist)
             {
                 return new ApiResponseBase
                 {
-                    StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = foundUser == null ? (foundUserByPhone.EmailConfirmed ? "ERAREG02" : "ERAREG03") : (foundUser.EmailConfirmed ? "ERAREG02" : "ERAREG03")
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_ALREADY_EXIST"
                 };
             }
 

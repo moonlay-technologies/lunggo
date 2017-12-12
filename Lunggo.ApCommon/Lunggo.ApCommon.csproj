@@ -172,8 +172,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Constant\BookingStatus.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
     <Compile Include="Activity\Database\Query\GetListActivityQuery.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
+    <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
@@ -1025,7 +1028,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Activity\Constant\" />
     <Folder Include="Hotel\Logic\Search\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

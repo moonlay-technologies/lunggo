@@ -343,6 +343,29 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
         #endregion
+
+        #region Admin
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/admin/booked")]
+
+        public ApiResponseBase GetBookingActivities()
+        {
+            try
+            {
+                var apiResponse = ActivityLogic.GetBookedActivities();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        #endregion
+
         #region Update
         [HttpPost]
         [LunggoCorsPolicy]

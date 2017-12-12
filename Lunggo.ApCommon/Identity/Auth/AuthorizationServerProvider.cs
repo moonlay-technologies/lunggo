@@ -99,7 +99,7 @@ namespace Lunggo.ApCommon.Identity.Auth
 
             if (!isPasswordOk)
             {
-                context.SetError("invalid_grant", "Wrong username and password combination.");
+                context.SetError("invalid_password", "Wrong username and password combination.");
                 return;
             }
 
