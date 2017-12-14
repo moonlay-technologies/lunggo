@@ -28,7 +28,7 @@ namespace Lunggo.CustomerWeb
             {
                 var clientId = filterContext.HttpContext.Request.Headers["X-Client-ID"];
                 var clientSecret = filterContext.HttpContext.Request.Headers["X-Client-Secret"];
-                if (clientId != null && clientId != "")
+                if (!string.IsNullOrEmpty(clientId))
                     filterContext.Controller.ViewBag.Platform = Client.GetPlatformType(clientId);
                 else
                 {

@@ -22,14 +22,14 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new ActivityBookApiResponse
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERAGPR01"
+                    ErrorCode = "ERR_UNAUTHORIZED"
                 };
             }
             if (!IsValid(request))
                 return new ActivityBookApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             var bookServiceRequest = PreprocessServiceRequest(request);
             var searchServiceResponse = ActivityService.GetInstance().BookActivity(bookServiceRequest);

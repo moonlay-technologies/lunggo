@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Constant;
@@ -13,6 +14,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.CustomerWeb.Helper;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Extension;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
@@ -26,47 +28,46 @@ namespace Lunggo.CustomerWeb.Controllers
             try
             {
                 if (string.IsNullOrEmpty(regId))
-                {
                     return RedirectToAction("Index", "Index");
-                }
-                var signature = GenerateId(rsvNo);
-                if (regId.Equals(signature))
+
+                var signature = Generator.GenerateRsvNoId(rsvNo);
+                if (regId != signature)
+                    return RedirectToAction("Index", "Index");
+
+                ReservationForDisplayBase rsv;
+                if (rsvNo[0] == '1')
+                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+                else if (rsvNo[0] == '2')
+                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+                else
+                    rsv = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
+
+
+                if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status != PaymentStatus.Settled)
                 {
-                    ReservationForDisplayBase rsv;
-                    if (rsvNo[0] == '1')
-                        rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-                    else
-                        rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-
-
-                    if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status != PaymentStatus.Settled)
-                    {
-                        return Redirect(rsv.Payment.RedirectionUrl);
-                    }
-                    else if (rsv.Payment.Status == PaymentStatus.Pending &&
-                         (rsv.Payment.Method == PaymentMethod.BankTransfer ||
-                          rsv.Payment.Method == PaymentMethod.VirtualAccount))
-                    {
-                        return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
-                    }
-                    else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) ||
-                        rsv.Payment.Status == PaymentStatus.Failed)
-                    {
-                        ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
-                        return View(new PaymentData
-                        {
-                            RsvNo = rsvNo,
-                            Reservation = rsv,
-                            TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
-                        });
-                    }
-                    else
-                    {
-                        return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
-                    }
+                    return Redirect(rsv.Payment.RedirectionUrl);
                 }
-                return RedirectToAction("Index", "Index");
-
+                else if (rsv.Payment.Status == PaymentStatus.Pending &&
+                     (rsv.Payment.Method == PaymentMethod.BankTransfer ||
+                      rsv.Payment.Method == PaymentMethod.VirtualAccount))
+                {
+                    return RedirectToAction("Instruction", "Payment", new { rsvNo, regId });
+                }
+                else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) ||
+                    rsv.Payment.Status == PaymentStatus.Failed)
+                {
+                    ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+                    return View(new PaymentData
+                    {
+                        RsvNo = rsvNo,
+                        Reservation = rsv,
+                        TimeLimit = rsv.Payment.TimeLimit.GetValueOrDefault(),
+                    });
+                }
+                else
+                {
+                    return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+                }
             }
             catch
             {
@@ -84,7 +85,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentPost(string rsvNo, string paymentUrl)
         {
             var payment = PaymentService.GetInstance().GetPayment(rsvNo);
-            var regId = GenerateId(rsvNo);
+            var regId = Generator.GenerateRsvNoId(rsvNo);
             if (payment.Method == PaymentMethod.BankTransfer ||
                 payment.Method == PaymentMethod.VirtualAccount)
             {
@@ -104,56 +105,56 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult Instruction(string rsvNo, string regId)
         {
             if (string.IsNullOrEmpty(regId))
-            {
                 return RedirectToAction("Index", "Index");
-            }
-            var signature = GenerateId(rsvNo);
+
+            var signature = Generator.GenerateRsvNoId(rsvNo);
             if (regId.Equals(signature))
+                return RedirectToAction("Index", "Index");
+
+            ReservationForDisplayBase rsv;
+            if (rsvNo[0] == '1')
+                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+            else if (rsvNo[0] == '2')
+                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            else
+                rsv = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
+            if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
+                && rsv.Payment.Status == PaymentStatus.Pending)
             {
-                ReservationForDisplayBase rsv;
-                if (rsvNo[0] == '1')
-                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-                else
-                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-                if ((rsv.Payment.Method == PaymentMethod.BankTransfer || rsv.Payment.Method == PaymentMethod.VirtualAccount)
-                    && rsv.Payment.Status == PaymentStatus.Pending)
-                {
-                    ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv);
-                    ViewBag.BankName = PaymentService.GetInstance().GetBankName(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
-                    ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(rsv.Payment.TransferAccount);
-                    ViewBag.BankImageName = GetBankImageName(rsv.Payment.Submethod);
-                    return View(rsv);
-                }
-                else
-                    TempData["AllowThisThankyouPage"] = rsvNo;
-                return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId = signature });
+                ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(rsv);
+                ViewBag.BankName = PaymentService.GetInstance().GetBankName(rsv.Payment.Medium, rsv.Payment.Method, rsv.Payment.Submethod);
+                ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(rsv.Payment.TransferAccount);
+                ViewBag.BankImageName = GetBankImageName(rsv.Payment.Submethod);
+                return View(rsv);
             }
-            return RedirectToAction("Index", "Index");
+            else
+                TempData["AllowThisThankyouPage"] = rsvNo;
+            return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId = signature });
         }
 
         public ActionResult InstructionPost(string rsvNo)
         {
-            var regId = GenerateId(rsvNo);
+            var regId = Generator.GenerateRsvNoId(rsvNo);
             return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
         }
 
         public ActionResult Thankyou(string rsvNo, string regId)
         {
             if (string.IsNullOrEmpty(regId))
-            {
                 return RedirectToAction("Index", "Index");
-            }
-            var signature = GenerateId(rsvNo);
+
+            var signature = Generator.GenerateRsvNoId(rsvNo);
             if (regId.Equals(signature))
-            {
-                ReservationForDisplayBase rsv;
-                if (rsvNo[0] == '1')
-                    rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-                else
-                    rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-                return View(rsv);
-            }
-            return RedirectToAction("Index", "Index");
+                return RedirectToAction("Index", "Index");
+
+            ReservationForDisplayBase rsv;
+            if (rsvNo[0] == '1')
+                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
+            else if (rsvNo[0] == '2')
+                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            else
+                rsv = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
+            return View(rsv);
         }
 
         [HttpPost]
@@ -169,8 +170,10 @@ namespace Lunggo.CustomerWeb.Controllers
             ReservationForDisplayBase rsvData;
             if (rsvNo.StartsWith("1"))
                 rsvData = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            else
+            else if (rsvNo.StartsWith("2"))
                 rsvData = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            else
+                rsvData = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
             try
             {
 
@@ -201,22 +204,6 @@ namespace Lunggo.CustomerWeb.Controllers
         }
 
         #region Helpers
-
-        public string GenerateId(string key)
-        {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
-        }
 
         public string GetBankImageName(PaymentSubmethod submethod)
         {

@@ -221,7 +221,7 @@
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
-    <Compile Include="Common\GeneratorIdRsvNo.cs" />
+    <Compile Include="Helper\Generator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FlightController.cs" />
     <Compile Include="Controllers\HelpSectionController.cs" />
@@ -1590,6 +1590,7 @@
     <Content Include="Assets\travorama20\css\_page_static.scss" />
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
+    <Content Include="App_Data\wurfl-latest.zip" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -1597,6 +1598,9 @@
     <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-api - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-cw - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-cw2 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %283%29.pubxml" />
@@ -1618,6 +1622,7 @@
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %287%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %288%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travoramatest - Web Deploy.pubxml" />
     <None Include="Service References\Mystifly.OnePointService.Flight\OnePoint.disco" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration91.svcinfo" />
     <None Include="Service References\Mystifly.OnePointService.Flight\configuration.svcinfo" />

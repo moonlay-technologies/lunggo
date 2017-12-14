@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.CustomerWeb.Helper;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Error;
 using Lunggo.ApCommon.Payment.Constant;
@@ -95,7 +96,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var rsvNoSet = new
                     {
                         RsvNo = displayReservation.RsvNo,
-                        regId = GenerateId(rsvNo)
+                        regId = Generator.GenerateRsvNoId(rsvNo)
                     };
 
 
@@ -111,25 +112,5 @@ namespace Lunggo.CustomerWeb.Controllers
                 
             return View();
         }
-
-        #region Helpers
-
-        public string GenerateId(string key)
-        {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
-        }
-
-        #endregion
     }
 }

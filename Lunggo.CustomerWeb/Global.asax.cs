@@ -31,9 +31,8 @@ namespace Lunggo.CustomerWeb
             var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
             var host = httpRequest.Url.Host;
             var path = httpRequest.Url.PathAndQuery;
-            var userAgent = httpRequest.UserAgent;
             var browserDetectionService = BrowserDetectionService.GetInstance();
-            var isSmartphone = browserDetectionService.IsRequestFromAndroidOrIphone(userAgent);
+            var isSmartphone = browserDetectionService.IsRequestFromAndroidOrIphone(httpRequest);
             var isOnMobilePage = host == mobileUrl || host == "192.168.0.139";
             if (!isOnMobilePage && isSmartphone)
             {

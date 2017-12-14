@@ -33,7 +33,7 @@ namespace Lunggo.CustomerWeb
             InitDatabaseService();
             InitQueueService();
             //InitLogger();
-            //InitFlightService();
+            InitFlightService();
             InitPaymentService();
             InitBrowserDetectionService();
             InitDisplayModes();
@@ -42,7 +42,7 @@ namespace Lunggo.CustomerWeb
             InitTableStorageService();
             InitBlobStorageService();
             InitUniqueIdGenerator();
-            //InitHotelService();
+            InitHotelService();
         }
         private static void InitBlobStorageService()
         {
@@ -154,7 +154,7 @@ namespace Lunggo.CustomerWeb
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
             {
                 ContextCondition = context =>
-                                context.Request.Url.Host == mobileUrl || context.Request.Url.Host == "192.168.0.139"
+                                context.Request.Url.Host == mobileUrl || context.Request.Url.Host == "192.168.0.139" || context.Request.Headers["X-Client-ID"] != null
             });
             DisplayModeProvider.Instance.Modes.Insert(1, new DefaultDisplayMode(""));
         }

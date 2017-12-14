@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.CustomerWeb.Helper;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Filter;
 
@@ -158,7 +159,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            var regId = GenerateId(rsvNo);
+            var regId = Generator.GenerateRsvNoId(rsvNo);
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
         
@@ -168,39 +169,5 @@ namespace Lunggo.CustomerWeb.Controllers
             var topDestinations = flightService.GetTopDestination();
             return View(topDestinations);
         }
-
-        #region Helpers
-
-        public string GenerateId(string key)
-        {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
-        }
-
-        public static string RsvNoHash(string rsvNo)
-        {
-            var rsa = RSA.Create();
-            var encryptedRsvNo = rsa.EncryptValue(Encoding.UTF8.GetBytes(rsvNo));
-            return Encoding.UTF8.GetString(encryptedRsvNo);
-        }
-
-        private static string RsvNoUnhash(string encryptedRsvNo)
-        {
-            var rsa = RSA.Create();
-            var rsvNo = rsa.DecryptValue(Encoding.UTF8.GetBytes(encryptedRsvNo));
-            return Encoding.UTF8.GetString(rsvNo);
-        }
-
-        #endregion
     }
 }

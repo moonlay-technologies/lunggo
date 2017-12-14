@@ -9,7 +9,12 @@ namespace Lunggo.Framework.Encoder
         public static string Base64Encode(this string plainText)
         {
             var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-            return Convert.ToBase64String(plainTextBytes);
+            return plainTextBytes.Base64Encode();
+        }
+
+        public static string Base64Encode(this byte[] byteArray)
+        {
+            return Convert.ToBase64String(byteArray);
         }
 
         public static string Base64Decode(this string base64EncodedData)
@@ -30,6 +35,22 @@ namespace Lunggo.Framework.Encoder
                     stringBuilder.AppendFormat("{0:x2}", hashByte);
                 }
                 return stringBuilder.ToString();
+            }
+        }
+
+        public static byte[] Sha1Encode(this string input)
+        {
+            var data = Encoding.UTF8.GetBytes(input);
+            using (SHA1 shaM = new SHA1Managed())
+            {
+                var hash = shaM.ComputeHash(data);
+                //var stringBuilder = new StringBuilder();
+                //foreach (var hashByte in hash)
+                //{
+                //    stringBuilder.AppendFormat("{0:x2}", hashByte);
+                //}
+                //return stringBuilder.ToString();
+                return hash;
             }
         }
 

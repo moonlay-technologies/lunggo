@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Service;
 
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Voucher;
+using Lunggo.CustomerWeb.Helper;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
@@ -711,17 +712,15 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult OrderHistory(string rsvNo)
         {
-            var RsvNo = rsvNo;
-            var RegId = GenerateId(rsvNo);
-            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo, regId = RegId });
+            var regId = Generator.GenerateRsvNoId(rsvNo);
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
         }
 
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult SelectReservation(string rsvNo)
         {
-            var RsvNo = rsvNo;
-            var RegId = GenerateId(rsvNo);
-            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo, regId = RegId });
+            var regId = Generator.GenerateRsvNoId(rsvNo);
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
         }
 
         [System.Web.Mvc.AllowAnonymous]
@@ -731,7 +730,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-            var signature = GenerateId(rsvNo);
+            var signature = Generator.GenerateRsvNoId(rsvNo);
             if (regId.Equals(signature))
             {
                 var flightService = FlightService.GetInstance();
@@ -755,7 +754,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
             ReservationForDisplayBase rsv;
-            var regId = GenerateId(rsvNo);
+            var regId = Generator.GenerateRsvNoId(rsvNo);
             var flightService = FlightService.GetInstance();
             var hotelService = HotelService.GetInstance();
             ReservationForDisplayBase displayReservation;
@@ -847,25 +846,5 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
         }
-
-        #region Helpers
-
-        public string GenerateId(string key)
-        {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
-        }
-
-        #endregion
     }
 }

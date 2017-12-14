@@ -70,7 +70,7 @@
             @:price = @reservation.Itinerary.NetTotalFare;
             @:originalPrice = '@reservation.Itinerary.OriginalTotalFare';
         }
-        else //if (Model.Reservation is HotelReservationForDisplay)
+        else if (Model.Reservation is HotelReservationForDisplay)
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
@@ -162,7 +162,8 @@
                 <div class="page__body">
                     @if (Model.Reservation is FlightReservationForDisplay) {
                         Html.RenderPartial("/Views/Payment/partials/_flightDetail.mobile.cshtml");
-                    } else {
+                    } else if (Model.Reservation is HotelReservationForDisplay)
+                    {
                         <h3 class="lg-txt">
                             <b>RINCIAN </b><span>PEMESANAN</span>
                         </h3>
