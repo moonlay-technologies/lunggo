@@ -15,7 +15,8 @@ namespace Lunggo.Configuration
         DV1 = 6,
         DV2 = 7,
         QA = 8,
-        Production = 9
+        Production = 9,
+        LocalAzure = 10
     }
 
     public class ConfigGenerator

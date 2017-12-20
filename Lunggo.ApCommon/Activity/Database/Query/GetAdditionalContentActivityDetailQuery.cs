@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class GetAdditionalContentActivityDetailQuery : DbQueryBase<GetAdditionalContentActivityDetailQuery, AdditionalContent>
+    internal class GetAdditionalContentActivityDetailQuery : DbQueryBase<GetAdditionalContentActivityDetailQuery, Content>
     {
         protected override string GetQuery(dynamic condition = null)
         {

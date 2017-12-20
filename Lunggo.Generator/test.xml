@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
+  <table name="Activity" />
   <!--<table name="AccountBalance" />
   <table name="AccountUser" />
   <table name="TransactionJournal" />-->
@@ -7,13 +8,13 @@
   <table name="HotelReservationDetails" />
   <table name="HotelRate" />
   <table name="HotelRateRule" />
-  <table name="Activity" />
+  
   <table name="ActivityPackage" />
   <table name="ActivitySellPrice" />
   <table name="ActivityBuyPrice" />
   <table name="AgeClassification" />
   <table name="MarketPrice" />-->
-  <table name="ActivityReservation" />
+  <!--<table name="ActivityReservation" />-->
   <!--<table name="Appointment" />-->
   <!--<table name="Operator" />
   <table name="Activities" />

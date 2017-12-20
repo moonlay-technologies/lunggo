@@ -204,7 +204,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]
-        [Route("v1/operator/request")]
+        [Route("v1/operator/appointments/request")]
 
         public ApiResponseBase AppointmentRequest(string page = "1", string perPage = "10")
         {
@@ -232,7 +232,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpPost]
         [LunggoCorsPolicy]
         [Level2Authorize]
-        [Route("v1/operator/request/{rsvNo}")]
+        [Route("v1/operator/appointments/confirm/{rsvNo}")]
 
         public ApiResponseBase AppointmentConfirmation(string rsvNo = "")
         {
@@ -250,6 +250,35 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 //    Status = request.Status
                 //};
                 var apiResponse = ActivityLogic.ConfirmAppointment(rsvNo, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/appointments/decline/{rsvNo}")]
+
+        public ApiResponseBase AppointmentDeclination(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            //ConfirmationStatusApiRequest request = null;
+            try
+            {
+                //request = ApiRequestBase.DeserializeRequest<ConfirmationStatusApiRequest>();
+                //var a = new ConfirmationStatusApiRequest()
+                //{
+                //    RsvNo = rsvNo,
+                //    Status = request.Status
+                //};
+                var apiResponse = ActivityLogic.DeclineAppointment(rsvNo, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
@@ -345,24 +374,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         #endregion
 
         #region Admin
-
-        [HttpGet]
-        [LunggoCorsPolicy]
-        [Level2Authorize]
-        [Route("v1/activities/admin/booked")]
-
-        public ApiResponseBase GetBookingActivities()
-        {
-            try
-            {
-                var apiResponse = ActivityLogic.GetBookedActivities();
-                return apiResponse;
-            }
-            catch (Exception e)
-            {
-                return ApiResponseBase.ExceptionHandling(e);
-            }
-        }
 
         #endregion
 

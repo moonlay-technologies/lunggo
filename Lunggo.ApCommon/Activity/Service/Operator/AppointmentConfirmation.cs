@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Activity.Model.Logic;
+﻿using Lunggo.ApCommon.Activity.Constant;
+using Lunggo.ApCommon.Activity.Model.Logic;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -8,7 +9,33 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
-                UpdateAppointmentStatusDb(input.RsvNo);
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
+                return new AppointmentConfirmationOutput { IsSuccess = true };
+            }
+            catch
+            {
+                return new AppointmentConfirmationOutput { IsSuccess = false };
+            }
+        }
+
+        public AppointmentConfirmationOutput DeclineAppointment(AppointmentConfirmationInput input)
+        {
+            try
+            {
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Cancelled);
+                return new AppointmentConfirmationOutput { IsSuccess = true };
+            }
+            catch
+            {
+                return new AppointmentConfirmationOutput { IsSuccess = false };
+            }
+        }
+
+        public AppointmentConfirmationOutput ForwardAppointment(AppointmentConfirmationInput input)
+        {
+            try
+            {
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.ForwardedToOperator);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             }
             catch

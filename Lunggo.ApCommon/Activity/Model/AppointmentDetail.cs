@@ -26,8 +26,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string PaxCount { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
-        [JsonProperty("paxGroups", NullValueHandling = NullValueHandling.Ignore)]
-        public List<PaxGroup> PaxGroups { get; set; }
+        [JsonProperty("paxGroup", NullValueHandling = NullValueHandling.Ignore)]
+        public PaxGroup PaxGroup { get; set; }
 
     }
     public class AppointmentDetail
@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Session { get; set; }
         public string PaxCount { get; set; }
         public string MediaSrc { get; set; }
-        public List<PaxGroup> PaxGroups { get; set; }
+        public PaxGroup PaxGroup { get; set; }
     }
 
     public class PaxGroup

@@ -43,7 +43,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetAppointmentDetailApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
             var serviceResponse = ActivityService.GetInstance().GetAppointmentDetail(serviceRequest);
@@ -97,7 +97,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Date = serviceResponse.AppointmentDetail.Date,
                     Session = serviceResponse.AppointmentDetail.Session,
                     MediaSrc = serviceResponse.AppointmentDetail.MediaSrc,
-                    PaxGroups = serviceResponse.AppointmentDetail.PaxGroups
+                    PaxGroup = serviceResponse.AppointmentDetail.PaxGroup
                 }
             };
 

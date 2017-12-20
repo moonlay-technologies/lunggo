@@ -22,7 +22,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetMyBookingsApiResponse
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERAGPR01"
+                    ErrorCode = "ERR_UNDEFINED_USER"
                 };
             }
             GetMyBookingsInput serviceRequest;
@@ -32,7 +32,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetMyBookingsApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
 
@@ -74,23 +74,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new GetMyBookingsApiResponse()
             {
-                MyBookings = serviceResponse.MyBookings.Select(bookList => new BookingDetailForDisplay()
-                {
-                    ActivityId = bookList.ActivityId,
-                    RsvNo = bookList.RsvNo,
-                    Name = bookList.Name,
-                    BookingStatus = bookList.BookingStatus == "PROC"? "On Process" : 
-                                    bookList.BookingStatus == "COMP" ? "Completed" :
-                                    bookList.BookingStatus == "EXPD" ? "Expired" :
-                                    bookList.BookingStatus == "CANC" ? "Cancelled" :
-                                    bookList.BookingStatus == "FAIL" ? "Failed" : null,
-                    TimeLimit = bookList.TimeLimit,
-                    PaxCount = bookList.PaxCount,
-                    Price = bookList.Price,
-                    Date = bookList.Date,
-                    SelectedSession = bookList.SelectedSession,
-                    MediaSrc = bookList.MediaSrc
-                }).ToList(),
+                MyBookings = serviceResponse.MyBookings.Select(bookList => ActivityService.GetInstance().ConvertToBookingDetailForDisplay(bookList)).ToList(),
                 Page = serviceResponse.Page,
                 PerPage = serviceResponse.PerPage
             };

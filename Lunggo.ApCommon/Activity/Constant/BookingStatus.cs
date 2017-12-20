@@ -4,12 +4,13 @@
     {
         Undefined = 0,
         Booked = 1,
-        Confirmed = 2,
-        Ticketing = 3,
-        Ticketed = 4,
-        Cancelled = 5,
-        ScheduleChanged = 6,
-        Failed = 7
+        ForwardedToOperator = 2,
+        Confirmed = 3,
+        Ticketing = 4,
+        Ticketed = 5,
+        Cancelled = 6,
+        ScheduleChanged = 7,
+        Failed = 8
     }
     internal class BookingStatusCd
     {
@@ -19,6 +20,8 @@
             {
                 case BookingStatus.Booked:
                     return "BOOK";
+                case BookingStatus.ForwardedToOperator:
+                    return "FORW";
                 case BookingStatus.Confirmed:
                     return "CONF";
                 case BookingStatus.Ticketing:
@@ -42,6 +45,8 @@
             {
                 case "BOOK":
                     return BookingStatus.Booked;
+                case "FORW":
+                    return BookingStatus.ForwardedToOperator;
                 case "CONF":
                     return BookingStatus.Confirmed;
                 case "TKTG":

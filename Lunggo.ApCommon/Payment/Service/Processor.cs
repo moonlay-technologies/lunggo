@@ -16,6 +16,7 @@ using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -361,8 +362,16 @@ namespace Lunggo.ApCommon.Payment.Service
                     VeritransWrapper.ProcessPayment(payment, transactionDetails);
                     break;
                 case PaymentMedium.Direct:
-                    payment.Status = PaymentStatus.Pending;
-                    payment.TransferAccount = GetInstance().GetBankTransferAccount(payment.Submethod);
+                    var env = ConfigManager.GetInstance().GetConfigValue("general", "enviroment");
+                    if (env != "production")
+                    {
+                        payment.Status = PaymentStatus.Settled;
+                    }
+                    else
+                    {
+                        payment.Status = PaymentStatus.Pending;
+                        payment.TransferAccount = GetInstance().GetBankTransferAccount(payment.Submethod);
+                    }
                     break;
                 default:
                     throw new Exception("Invalid payment medium. \"" + payment.Medium + "\" shouldn't be directed here.");

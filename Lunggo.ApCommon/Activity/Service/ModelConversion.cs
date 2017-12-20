@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 
@@ -42,7 +44,22 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             if (activityDetail == null)
                 return null;
-            var convertedHotel = new ActivityDetailForDisplay
+
+            var requiredPaxData = new List<string>();
+
+            if (activityDetail.IsPassportNeeded) 
+                requiredPaxData.Add("passportNumber");
+            if (activityDetail.IsPassportIssueDateNeeded) 
+                requiredPaxData.Add("passportIssueDate");
+            if (activityDetail.IsDateOfBirthNeeded) 
+                requiredPaxData.Add("dateOfBirth");
+            if (activityDetail.IsIdCardNoRequired) 
+                requiredPaxData.Add("idCardNo");
+            
+            if (requiredPaxData.Count == 0)
+                requiredPaxData = null;
+
+            var convertedActivity = new ActivityDetailForDisplay
             {
                 ActivityId = activityDetail.ActivityId,
                 Name = activityDetail.Name,
@@ -58,13 +75,31 @@ namespace Lunggo.ApCommon.Activity.Service
                 Duration = activityDetail.Duration,
                 OperationTime = activityDetail.OperationTime,
                 MediaSrc = activityDetail.MediaSrc,
-                Contents = activityDetail.Contents,
-                AdditionalContent = activityDetail.AdditionalContent,
+                Contents = new List<Content>
+                {
+                    new Content
+                    {
+                        Title = "Catatan Penting",
+                        Description = activityDetail.ImportantNotice
+                    },
+                    new Content
+                    {
+                        Title = "Perhatian",
+                        Description = activityDetail.Warning
+                    },
+                    new Content
+                    {
+                        Title = "Catatan Tambahan",
+                        Description = activityDetail.AdditionalNotes
+                    },
+                },
+                AdditionalContents = activityDetail.AdditionalContents,
                 Cancellation = activityDetail.Cancellation,
-                Date = activityDetail.Date
+                Date = activityDetail.Date,
+                RequiredPaxData = requiredPaxData
             };
 
-            return convertedHotel;
+            return convertedActivity;
         }
         
         public List<ActivityDetailForDisplay> ConvertToActivityDetailForDisplay(List<ActivityDetail> activityDetails)
@@ -91,17 +126,58 @@ namespace Lunggo.ApCommon.Activity.Service
                     Duration = activityDetail.Duration,
                     OperationTime = activityDetail.OperationTime,
                     MediaSrc = activityDetail.MediaSrc,
-                    Contents = activityDetail.Contents,
-                    AdditionalContent = activityDetail.AdditionalContent,
+                    AdditionalContents = activityDetail.AdditionalContents,
                     Cancellation = activityDetail.Cancellation,
                     Date = activityDetail.Date
+                };
+                activity.Contents = new List<Content>
+                {
+                    new Content
+                    {
+                        Title = "Catatan Penting",
+                        Description = activityDetail.ImportantNotice
+                    },
+                    new Content
+                    {
+                        Title = "Perhatian",
+                        Description = activityDetail.Warning
+                    },
+                    new Content
+                    {
+                        Title = "Catatan Tambahan",
+                        Description = activityDetail.AdditionalNotes
+                    },
                 };
                 convertedactivities.Add(activity);
             };
             return convertedactivities.ToList();
         }
 
-        
+        public BookingDetailForDisplay ConvertToBookingDetailForDisplay(BookingDetail bookingDetails, List<PaxForDisplay> passengersForDisplay)
+        {
+            return new BookingDetailForDisplay
+            {
+                ActivityId = bookingDetails.ActivityId,
+                RsvNo = bookingDetails.RsvNo,
+                Name = bookingDetails.Name,
+                BookingStatus = bookingDetails.BookingStatus,
+                TimeLimit = bookingDetails.TimeLimit,
+                PaxCount = bookingDetails.PaxCount,
+                Price = bookingDetails.Price,
+                Date = bookingDetails.Date,
+                SelectedSession = bookingDetails.SelectedSession,
+                MediaSrc = bookingDetails.MediaSrc,
+                City = bookingDetails.City,
+                Latitude = bookingDetails.Latitude,
+                Longitude = bookingDetails.Longitude,
+                Passengers = passengersForDisplay
+            };
+        }
+
+        public BookingDetailForDisplay ConvertToBookingDetailForDisplay(BookingDetail bookingDetails)
+        {
+            return ConvertToBookingDetailForDisplay(bookingDetails, null);
+        }
 
         public static RsvDisplayStatus MapReservationStatus(ActivityReservation reservation)
         {

@@ -22,6 +22,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("SELECT act.Id AS ActivityId, ar.RsvNo AS RsvNo, ");
             clauseBuilder.Append("act.Name AS Name, rsv.RsvStatusCd AS BookingStatus, rsv.RsvTime AS TimeLimit, ");
             clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ar.SelectedSession AS SelectedSession, ");
+            clauseBuilder.Append("act.City AS City, act.Latitude AS Latitude, act.Longitude AS Longitude, ");
             clauseBuilder.Append("(SELECT TOP 1 asp.Price FROM ActivitySellPrice AS asp WHERE asp.PackageId=(SELECT Id FROM ActivityPackage WHERE Id=act.Id)) AS Price, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();

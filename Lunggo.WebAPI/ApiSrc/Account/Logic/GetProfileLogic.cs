@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new GetProfileApiResponse
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERAGPR01"
+                    ErrorCode = "ERR_UNDEFINED_USER"
                 };
             }
             var foundUser = user.Identity.GetUser();

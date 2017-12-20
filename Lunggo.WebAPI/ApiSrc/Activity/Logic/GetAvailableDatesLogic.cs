@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetAvailableDatesApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             var searchServiceResponse = ActivityService.GetInstance().GetAvailable(searchServiceRequest);
             var apiResponse = AssembleApiResponse(searchServiceResponse);

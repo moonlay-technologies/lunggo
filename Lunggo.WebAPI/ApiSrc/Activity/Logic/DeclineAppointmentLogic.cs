@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
     public static partial class ActivityLogic
     {
-        public static ApiResponseBase ConfirmAppointment(string rsvNo, ApplicationUserManager userManager)
+        public static ApiResponseBase DeclineAppointment(string rsvNo, ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
@@ -46,36 +46,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 };
             }
             var serviceRequest = PreprocessServiceRequest(rsvNo);
-            var serviceResponse = ActivityService.GetInstance().ConfirmAppointment(serviceRequest);
+            var serviceResponse = ActivityService.GetInstance().DeclineAppointment(serviceRequest);
             var apiResponse = AssembleApiResponse(serviceResponse);
 
             return apiResponse;
-        }
-
-        public static AppointmentConfirmationInput PreprocessServiceRequest(string rsvNo)
-        {
-            return new AppointmentConfirmationInput()
-            {
-                RsvNo = rsvNo
-            };
-        }
-
-        public static ApiResponseBase AssembleApiResponse(AppointmentConfirmationOutput serviceResponse)
-        {
-            if(serviceResponse.IsSuccess)
-                return new ApiResponseBase()
-                    {
-                        StatusCode = HttpStatusCode.OK
-                    };
-            else
-            {
-                return new ApiResponseBase()
-                {
-                    StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = "ERR_CONFIRMATION_FAILED"
-                };
-            }
-            
         }
     }
 }

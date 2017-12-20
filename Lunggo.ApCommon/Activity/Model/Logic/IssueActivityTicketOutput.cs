@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lunggo.ApCommon.Flight.Constant;
-using Lunggo.ApCommon.Flight.Model.Logic;
+using Lunggo.ApCommon.Activity.Constant;
 
 namespace Lunggo.ApCommon.Activity.Model.Logic
 {

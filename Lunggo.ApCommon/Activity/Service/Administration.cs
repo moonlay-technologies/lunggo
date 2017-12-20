@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Activity.Model;
 
 namespace Lunggo.ApCommon.Activity.Service
@@ -13,6 +14,11 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             var reservations = GetBookedActivitiesFromDb();
             return reservations;
+        }
+
+        public void ForwardActivityToOperator(string rsvNo)
+        {
+            UpdateActivityBookingStatusInDb(rsvNo, BookingStatus.ForwardedToOperator);
         }
     }
 }

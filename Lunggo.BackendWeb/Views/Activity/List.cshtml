@@ -1,0 +1,98 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Activity.Model
+@model List<ActivityReservation>
+
+@{
+    ViewBag.Title = "Flight Reservation List";
+}
+
+<h3><i class="fa fa-angle-right"></i> Activity Reservation</h3>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Booked Activiy List</h4>
+            <hr>
+            <table class="table table-hover table-flight-booking">
+                <thead>
+                    <tr>
+                        <th>No. Reservasi</th>
+                        <th>Nama Operator</th>
+                        <th>Kontak Operator</th>
+                        <th>Nama Aktivitas</th>
+                        <th>Tanggal/Sesi</th>
+                        <th>Jumlah Orang</th>
+                        <th>Nama Pemesan</th>
+                        <th>Kontak Pemesan</th>
+                        <th>Harga</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var rsv in Model)
+                    {
+                        <tr>
+                            <td>
+                                @rsv.RsvNo
+                            </td>
+                            <td>
+                                @rsv.ActivityDetails.OperatorName
+                            </td>
+                            <td>
+                                @rsv.ActivityDetails.OperatorEmail<br />
+                                @rsv.ActivityDetails.OperatorPhone
+                            </td>
+                            <td>
+                                @rsv.ActivityDetails.Name
+                            </td>
+                            <td>
+                                @rsv.DateTime.Date<br/>
+                                @rsv.DateTime.Session
+                            </td>
+                            <td>
+                                @rsv.Pax.Count orang
+                            </td>
+                            <td>
+                                @rsv.Contact.Name
+                            </td>
+                            <td>
+                                @rsv.Contact.Email<br/>
+                                @rsv.Contact.CountryCallingCode @rsv.Contact.Phone
+                            </td>
+                            <td>
+                                @(rsv.Payment.FinalPriceIdr == 0 ? rsv.Payment.OriginalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")) : rsv.Payment.FinalPriceIdr.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID")))
+                                @if (rsv.Payment.DiscountNominal != 0)
+                                {
+                                    <br/>
+                                    <span class="badge bg-info" style="font-size: 10px" title="@rsv.Payment.Discount.Name">V</span><span style="font-size: 10px">@rsv.Payment.DiscountNominal.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))</span>
+                                }
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("ForwardReservation", "Activity", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@rsv.RsvNo"/>
+                                    <input class="btn btn-green" type="submit" value="Forward">
+                                }
+                                @using (Html.BeginForm("ConfirmReservation", "Activity", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@rsv.RsvNo" />
+                                    <input class="btn btn-blue" type="submit" value="Forward">
+                                }
+                                @using (Html.BeginForm("CancelReservation", "Activity", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@rsv.RsvNo" />
+                                    <input class="btn btn-danger" type="submit" value="Forward">
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div><!-- row -->

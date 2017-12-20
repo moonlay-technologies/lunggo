@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Activity.Model
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
@@ -77,6 +78,12 @@
             @:price = @reservation.HotelDetail.NetTotalFare;
             @:originalPrice = '@reservation.HotelDetail.OriginalTotalFare';
         }
+        else
+        {
+            var reservation = Model.Reservation as ActivityReservationForDisplay;
+            @:price = @reservation.ActivityDetail.Price;
+            @:originalPrice = '@reservation.ActivityDetail.Price';
+        }
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {
             @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
@@ -100,37 +107,37 @@
             if (reservation.Itinerary.TripType.GetValueOrDefault() == TripType.RoundTrip)
             {
                 @:var gtmReturningDepartureDate = '@reservation.Itinerary.Trips[1].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-                @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
-            }
+                            @:var gtmReturningArrivalDate = '@reservation.Itinerary.Trips[1].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")'
+                        }
             @:var gtmContentType = 'flight';
-            @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
-            @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
-            @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
-            @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
-            @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
-            @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
-            @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
-            @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmPageName = 'payment';
-        }
+                        @:var gtmDepartingDepartureDate = '@reservation.Itinerary.Trips[0].DepartureDate.GetValueOrDefault().ToString("yyyyMMdd")';
+                        @:var gtmDepartingArrivalDate = '@reservation.Itinerary.Trips[0].Segments.Last().ArrivalTime.GetValueOrDefault().ToString("yyyyMMdd")';
+                        @:var gtmOriginAirport = '@reservation.Itinerary.Trips[0].OriginAirport';
+                        @:var gtmDestinationAirport = '@reservation.Itinerary.Trips[0].DestinationAirport';
+                        @:var gtmNumAdults = @reservation.Itinerary.AdultCount;
+                        @:var gtmNumChildren = @reservation.Itinerary.ChildCount;
+                        @:var gtmNumInfants = @reservation.Itinerary.InfantCount;
+                        @:var gtmTravelClass = '@reservation.Itinerary.RequestedCabinClass.ToString().ToLower()';
+                        @:var gtmPurchaseValue = @reservation.Itinerary.NetTotalFare;
+                        @:var gtmPurchaseCurrency = 'IDR';
+                        @:var gtmPageName = 'payment';
+                    }
         @if (Model.Reservation is HotelReservationForDisplay)
         {
             var hotel = Model.Reservation as HotelReservationForDisplay;
             @:originalPrice = '@hotel.HotelDetail.OriginalTotalFare';
-            @:price = '@hotel.HotelDetail.NetTotalFare';
-            @:var gtmContentType = 'hotel';
-            @:var gtmCity = '@hotel.HotelDetail.DestinationName';
-            @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
-            @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
-            @:var gtmCountry = '@hotel.HotelDetail.CountryName';
-            @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
-            @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
-            @:var gtmPurchaseCurrency = 'IDR';
-            @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
-            @:var gtmPageName = 'payment';
-        }
+                        @:price = '@hotel.HotelDetail.NetTotalFare';
+                        @:var gtmContentType = 'hotel';
+                        @:var gtmCity = '@hotel.HotelDetail.DestinationName';
+                        @:var gtmHotelIds = '@hotel.HotelDetail.HotelCode';
+                        @:var gtmRegion = '@hotel.HotelDetail.DestinationName';
+                        @:var gtmCountry = '@hotel.HotelDetail.CountryName';
+                        @:var gtmCheckinDate = '@hotel.HotelDetail.CheckInDate.ToString("yyyyMMdd")';
+                        @:var gtmCheckoutDate = '@hotel.HotelDetail.CheckOutDate.ToString("yyyyMMdd")';
+                        @:var gtmPurchaseCurrency = 'IDR';
+                        @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
+                        @:var gtmPageName = 'payment';
+                    }
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -160,9 +167,11 @@
         <div ng-app="travorama" @*ng-controller="paymentController"*@ ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
                 <div class="page__body">
-                    @if (Model.Reservation is FlightReservationForDisplay) {
+                    @if (Model.Reservation is FlightReservationForDisplay)
+                    {
                         Html.RenderPartial("/Views/Payment/partials/_flightDetail.mobile.cshtml");
-                    } else if (Model.Reservation is HotelReservationForDisplay)
+                    }
+                    else if (Model.Reservation is HotelReservationForDisplay)
                     {
                         <h3 class="lg-txt">
                             <b>RINCIAN </b><span>PEMESANAN</span>
@@ -327,7 +336,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="popup__wrapper" ng-class="{'active' : mustSelectBank}">
                 <div class="popup">
                     <header class="popup__header">
@@ -425,7 +434,7 @@
             </div>
 
         </div><!-- checkout end here -->
-                    break;
+                        break;
     case "BookExpired":
     @:[Ini ceritanya page booking expired]
         break;

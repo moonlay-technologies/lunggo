@@ -30,7 +30,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetMyBookingDetailApiResponse
                 {
                     StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERAGPR01"
+                    ErrorCode = "ERR_UNDEFINED_USER"
                 };
             }
             
@@ -39,7 +39,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetMyBookingDetailApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
             var serviceRequest = PreprocessServiceRequest(request);
@@ -74,20 +74,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var paxForDisplay = ActivityService.GetInstance().ConvertToPaxForDisplay(serviceResponse.BookingDetail.Passengers);
 
-            var apiResponse = new GetMyBookingDetailApiResponse()
+            var apiResponse = new GetMyBookingDetailApiResponse
             {
-                BookingDetail = new BookingDetailForDisplay()
-                {
-                    ActivityId = serviceResponse.BookingDetail.ActivityId,
-                    Name = serviceResponse.BookingDetail.Name,
-                    TimeLimit = serviceResponse.BookingDetail.TimeLimit,
-                    Date = serviceResponse.BookingDetail.Date,
-                    SelectedSession = serviceResponse.BookingDetail.SelectedSession,
-                    Price = serviceResponse.BookingDetail.Price,
-                    MediaSrc = serviceResponse.BookingDetail.MediaSrc,
-                    PaxCount = serviceResponse.BookingDetail.PaxCount,
-                    Passengers = paxForDisplay
-                }
+                BookingDetail = ActivityService.GetInstance().ConvertToBookingDetailForDisplay(serviceResponse.BookingDetail, paxForDisplay)
             };
 
             return apiResponse;

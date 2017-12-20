@@ -37,9 +37,9 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> MediaSrc { get; set; }
         [JsonProperty("contents", NullValueHandling = NullValueHandling.Ignore)]
-        public Content Contents { get; set; }
-        [JsonProperty("additionalContent", NullValueHandling = NullValueHandling.Ignore)]
-        public List<AdditionalContent> AdditionalContent { get; set; }
+        public List<Content> Contents { get; set; }
+        [JsonProperty("additionalContents", NullValueHandling = NullValueHandling.Ignore)]
+        public AdditionalContent AdditionalContents { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
         public string Cancellation { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
@@ -65,31 +65,35 @@ namespace Lunggo.ApCommon.Activity.Model
         public DurationActivity Duration { get; set; }
         public string OperationTime { get; set; }
         public List<string> MediaSrc { get; set; }
-        public Content Contents { get; set; }
-        public List<AdditionalContent> AdditionalContent { get; set; }
+        public string ImportantNotice { get; set; }
+        public string Warning { get; set; }
+        public string AdditionalNotes { get; set; }
         public string Cancellation { get; set; }
         public DateTime Date { get; set; }
-        public bool IsPassportNumberNeeded { get; set; }
-        public bool IsPassportIssuedDateNeeded { get; set; }
-        public bool IsPaxDoBNeeded { get; set; }
+        public bool IsPassportNeeded { get; set; }
+        public bool IsPassportIssueDateNeeded { get; set; }
+        public bool IsDateOfBirthNeeded { get; set; }
+        public bool IsIdCardNoRequired { get; set; }
+        public string OperatorName { get; set; }
+        public string OperatorEmail { get; set; }
+        public string OperatorPhone { get; set; }
+        public AdditionalContent AdditionalContents { get; set; }
     }
 
     public class AdditionalContent
     {
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
-        [JsonProperty("desc", NullValueHandling = NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        [JsonProperty("contents", NullValueHandling = NullValueHandling.Ignore)]
+        public List<Content> Contents { get; set; }
     }
 
     public class Content
     {
-        [JsonProperty("content1", NullValueHandling = NullValueHandling.Ignore)]
-        public string Content1 { get; set; }
-        [JsonProperty("content2", NullValueHandling = NullValueHandling.Ignore)]
-        public string Content2 { get; set; }
-        [JsonProperty("content3", NullValueHandling = NullValueHandling.Ignore)]
-        public string Content3 { get; set; }
+        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
+        public string Title { get; set; }
+        [JsonProperty("desc", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
     }
 
     public class DateAndAvailableHour

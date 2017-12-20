@@ -176,6 +176,7 @@
     <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
     <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
     <Compile Include="Activity\Database\Query\GetListActivityQuery.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
+    <Compile Include="Activity\Model\Logic\OutputBase.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetDetailActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />

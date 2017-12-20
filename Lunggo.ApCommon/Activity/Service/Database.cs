@@ -54,12 +54,11 @@ namespace Lunggo.ApCommon.Activity.Service
             {
 
                 var details = GetActivityDetailQuery.GetInstance().ExecuteMultiMap(conn, new { ActivityId = input.ActivityId }, null,
-                        (detail, duration, content) =>
+                        (detail, duration) =>
                         {
                             detail.Duration = duration;
-                            detail.Contents = content;
                             return detail;
-                        }, "Amount, Content1");
+                        }, "Amount");
 
                 var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId }).ToList();
@@ -71,11 +70,11 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 activityDetail.BookingStatus = BookingStatus.Booked;
                 activityDetail.MediaSrc = mediaSrc;
-                activityDetail.AdditionalContent = additionalContentsDetail.Select(a => new AdditionalContent()
+                activityDetail.AdditionalContents = new AdditionalContent
                 {
-                    Title = a.Title,
-                    Description = a.Description
-                }).ToList();
+                    Title = "Keterangan Tambahan",
+                    Contents = additionalContentsDetail.ToList()
+                };
 
                 var output = new GetDetailActivityOutput
                 {
@@ -181,23 +180,11 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
                 
                 var savedBookings = GetMyBookingsQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage }).ToList();
                 
                 var output = new GetMyBookingsOutput
                 {
-                    MyBookings = savedBookings.Select(a => new BookingDetail()
-                    {
-                        ActivityId = a.ActivityId,
-                        RsvNo = a.RsvNo,
-                        Name = a.Name,
-                        BookingStatus = a.BookingStatus,
-                        TimeLimit = a.TimeLimit.Value.AddHours(1),
-                        Date = a.Date,
-                        SelectedSession = a.SelectedSession,
-                        PaxCount = a.PaxCount,
-                        Price = a.Price,
-                        MediaSrc = a.MediaSrc
-                    }).ToList(),
+                    MyBookings = savedBookings,
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
@@ -211,9 +198,9 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 
                 var savedBooking = GetMyBookingDetailQuery.GetInstance()
-                    .Execute(conn, new { RsvNo = input.RsvNo }).First();
+                    .Execute(conn, new { input.RsvNo }).First();
 
-                var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = input.RsvNo }, null,
+                var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { input.RsvNo }, null,
                         (passengers, typeCd, titleCd, genderCd) =>
                         {
                             passengers.Type = PaxTypeCd.Mnemonic(typeCd);
@@ -221,22 +208,11 @@ namespace Lunggo.ApCommon.Activity.Service
                             passengers.Gender = GenderCd.Mnemonic(genderCd);
                             return passengers;
                         }, "TypeCd, TitleCd, GenderCd").ToList();
+                savedBooking.Passengers = savedPassengers;
 
                 var output = new GetMyBookingDetailOutput
                 {
-                    BookingDetail = new BookingDetail()
-                    {
-                        ActivityId = savedBooking.ActivityId,
-                        Name = savedBooking.Name,
-                        BookingStatus = savedBooking.BookingStatus,
-                        TimeLimit = savedBooking.TimeLimit.Value.AddHours(1),
-                        Date = savedBooking.Date,
-                        SelectedSession = savedBooking.SelectedSession,
-                        PaxCount = savedBooking.PaxCount,
-                        Passengers = savedPassengers,
-                        Price = savedBooking.Price,
-                        MediaSrc = savedBooking.MediaSrc
-                    }
+                    BookingDetail = savedBooking
                 };
                 return output;
             }
@@ -342,7 +318,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Date = savedAppointment.Date,
                     Session = savedAppointment.Session,
                     MediaSrc = savedAppointment.MediaSrc,
-                    PaxGroups = new List<PaxGroup>()
+                    PaxGroup = new PaxGroup()
                 };
                 
                 foreach(var appointment in savedAppointments.ToList())
@@ -362,7 +338,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         Passengers = ConvertToPaxForDisplay(savedPassengers)
                     };
 
-                    appointmentDetail.PaxGroups.Add(paxgroup);
+                    appointmentDetail.PaxGroup = paxgroup;
                 }
                 
                 var output = new GetAppointmentDetailOutput
@@ -449,28 +425,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 
             }
         }
-
-        private void InsertAppointmentReqToDb(ActivityReservation rsvData, string request)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var activityRsv = ActivityReservationTableRepo.GetInstance()
-                    .Find1(conn, new ActivityReservationTableRecord { RsvNo = rsvData.RsvNo });
-                var operatorData = OperatorTableRepo.GetInstance().Find1(conn, new OperatorTableRecord {ActivityId = activityRsv.ActivityId });
-
-                AppointmentTableRepo.GetInstance().Insert(conn, new AppointmentTableRecord()
-                {
-                    Id = AppointmentRequestIdSequence.GetInstance().GetNext(),
-                    ActivityRsvId = activityRsv.Id,
-                    RsvNo = rsvData.RsvNo,
-                    AppointmentStatus = request,
-                    OperatorId = operatorData.UserId,
-                    InsertDate = DateTime.UtcNow
-
-                });
-            }
-            
-        }
         #endregion
 
         #region Update
@@ -483,22 +437,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     RsvNo = rsvNo,
                     RsvStatusCd = RsvStatusCd.Mnemonic(status)
-                });
-            }
-
-        }
-
-        private void UpdateAppointmentStatusDb(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var appointmentDetailRecord = AppointmentTableRepo.GetInstance()
-                    .Find1(conn, new AppointmentTableRecord { RsvNo = rsvNo });
-
-                AppointmentTableRepo.GetInstance().Update(conn, new AppointmentTableRecord
-                {
-                    Id = appointmentDetailRecord.Id,
-                    AppointmentStatus = "Approved"
                 });
             }
 
@@ -523,9 +461,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     AmountDuration = int.Parse(input.Duration.Amount),
                     UnitDuration = input.Duration.Unit,
                     OperationTime = input.OperationTime,
-                    ImportantNotice = input.Contents.Content1,
-                    Warning = input.Contents.Content2,
-                    AdditionalNotes = input.Contents.Content3,
+                    //TODO: ImportantNotices, Warning, AdditionalNotes missing
                     Cancellation = input.Cancellation,
                     IsPaxDoBNeeded = input.IsPaxDoBNeeded,
                     IsPassportIssuedDateNeeded = input.IsPassportIssuedDateNeeded,
@@ -536,5 +472,12 @@ namespace Lunggo.ApCommon.Activity.Service
 
         }
         #endregion
+
+        private void UpdateActivityBookingStatusInDb(string rsvNo, BookingStatus bookingStatus)
+        {
+            var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+                UpdateActivityBookingStatusQuery.GetInstance().Execute(conn, new {rsvNo, bookingStatusCd});
+        }
     }
 }

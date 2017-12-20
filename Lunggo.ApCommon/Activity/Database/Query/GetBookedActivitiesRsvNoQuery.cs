@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             return
                 "SELECT r.RsvNo FROM ActivityReservation AS r " +
-                "INNER JOIN ActivityDetails AS d ON r.ActivityId = d.Id " +
+                "INNER JOIN Activity AS d ON r.ActivityId = d.Id " +
                 "INNER JOIN Payment AS p ON p.RsvNo = r.RsvNo " +
                 "WHERE r.BookingStatusCd = 'BOOK' AND p.StatusCd = 'SET'";
         }

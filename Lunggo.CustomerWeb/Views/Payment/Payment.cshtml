@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Activity.Model
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
@@ -79,6 +80,12 @@
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
             @:price = @reservation.HotelDetail.NetTotalFare;
             @:originalPrice = @reservation.HotelDetail.OriginalTotalFare;
+        }
+        else
+        {
+            var reservation = Model.Reservation as ActivityReservationForDisplay;
+            @:price = @reservation.ActivityDetail.Price;
+            @:originalPrice = @reservation.ActivityDetail.Price;
         }
         var redirectionUrl;
         @if (Model.Reservation.Payment.RedirectionUrl != null) {

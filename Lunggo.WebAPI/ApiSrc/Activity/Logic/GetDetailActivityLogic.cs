@@ -20,7 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new GetDetailActivityApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             var searchServiceResponse = ActivityService.GetInstance().GetDetail(searchServiceRequest);
             var apiResponse = AssembleApiResponse(searchServiceResponse);
@@ -52,43 +52,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static GetDetailActivityApiResponse AssembleApiResponse(GetDetailActivityOutput searchServiceResponse)
         {
-            List<string> RequiredPax = new List<string>();
-
-            if (!searchServiceResponse.ActivityDetail.IsPassportNumberNeeded && 
-                !searchServiceResponse.ActivityDetail.IsPassportIssuedDateNeeded && 
-                !searchServiceResponse.ActivityDetail.IsPaxDoBNeeded)
-            {
-                RequiredPax = null;
-            }
-
-            if (searchServiceResponse.ActivityDetail.IsPassportNumberNeeded) { RequiredPax.Add("Passport Number"); }
-            if (searchServiceResponse.ActivityDetail.IsPassportIssuedDateNeeded) { RequiredPax.Add("Passport Issued Date"); }
-            if (searchServiceResponse.ActivityDetail.IsPaxDoBNeeded) { RequiredPax.Add("Date of Birth"); }
-            
             var apiResponse = new GetDetailActivityApiResponse
             {
-                ActivityDetail = new ActivityDetailForDisplay()
-                {
-                    ActivityId = searchServiceResponse.ActivityDetail.ActivityId,
-                    Name = searchServiceResponse.ActivityDetail.Name,
-                    Category = searchServiceResponse.ActivityDetail.Category,
-                    ShortDesc = searchServiceResponse.ActivityDetail.ShortDesc,
-                    City = searchServiceResponse.ActivityDetail.City,
-                    Country = searchServiceResponse.ActivityDetail.Country,
-                    Address = searchServiceResponse.ActivityDetail.Address,
-                    Latitude = searchServiceResponse.ActivityDetail.Latitude,
-                    Longitude = searchServiceResponse.ActivityDetail.Longitude,
-                    OperationTime = searchServiceResponse.ActivityDetail.OperationTime,
-                    MediaSrc = searchServiceResponse.ActivityDetail.MediaSrc,
-                    Contents = searchServiceResponse.ActivityDetail.Contents,
-                    AdditionalContent = searchServiceResponse.ActivityDetail.AdditionalContent,
-                    Cancellation = searchServiceResponse.ActivityDetail.Cancellation,
-                    Price = searchServiceResponse.ActivityDetail.Price,
-                    PriceDetail = searchServiceResponse.ActivityDetail.PriceDetail,
-                    Duration = searchServiceResponse.ActivityDetail.Duration,
-                    RequiredPaxData = RequiredPax
-
-                }
+                ActivityDetail = ActivityService.GetInstance().ConvertToActivityDetailForDisplay(searchServiceResponse.ActivityDetail)
             };
             return apiResponse;
             

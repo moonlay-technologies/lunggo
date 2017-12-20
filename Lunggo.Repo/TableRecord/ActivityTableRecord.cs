@@ -236,6 +236,33 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("IsPassportIssuedDateNeeded");
 		    }
 		}
+		public String OperatorName
+		{
+		    get { return _OperatorName; }
+		    set
+		    {
+		        _OperatorName = value;
+		        IncrementLog("OperatorName");
+		    }
+		}
+		public String OperatorEmail
+		{
+		    get { return _OperatorEmail; }
+		    set
+		    {
+		        _OperatorEmail = value;
+		        IncrementLog("OperatorEmail");
+		    }
+		}
+		public String OperatorPhone
+		{
+		    get { return _OperatorPhone; }
+		    set
+		    {
+		        _OperatorPhone = value;
+		        IncrementLog("OperatorPhone");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -263,6 +290,9 @@ namespace Lunggo.Repository.TableRecord
 		private String _UnitDuration;
 		private Boolean? _IsPaxDoBNeeded;
 		private Boolean? _IsPassportIssuedDateNeeded;
+		private String _OperatorName;
+		private String _OperatorEmail;
+		private String _OperatorPhone;
 
 
 		public static ActivityTableRecord CreateNewInstance()
@@ -319,6 +349,9 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UnitDuration", false),
 				new ColumnMetadata("IsPaxDoBNeeded", false),
 				new ColumnMetadata("IsPassportIssuedDateNeeded", false),
+				new ColumnMetadata("OperatorName", false),
+				new ColumnMetadata("OperatorEmail", false),
+				new ColumnMetadata("OperatorPhone", false),
 
             };
         }

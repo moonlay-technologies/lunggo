@@ -43,7 +43,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
             var serviceResponse = ActivityService.GetInstance().UpdateActivity(serviceRequest);

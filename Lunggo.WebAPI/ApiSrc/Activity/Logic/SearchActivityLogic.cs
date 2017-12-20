@@ -20,7 +20,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new ActivitySearchApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERASEA01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
             var searchServiceResponse = ActivityService.GetInstance().Search(searchServiceRequest);

@@ -30,7 +30,12 @@ namespace Lunggo.ApCommon.Activity.Model
         public string MediaSrc { get; set; }
         [JsonProperty("paxsDetail", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaxForDisplay> Passengers { get; set; }
-
+        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
+        public string City { get; set; }
+        [JsonProperty("latitude", NullValueHandling = NullValueHandling.Ignore)]
+        public double Latitude { get; set; }
+        [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
+        public double Longitude { get; set; }
     }
     public class BookingDetail
     {
@@ -45,7 +50,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal Price { get; set; }
         public string MediaSrc { get; set; }
         public List<Pax> Passengers { get; set; }
-
+        public string City { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
     }
     
 }

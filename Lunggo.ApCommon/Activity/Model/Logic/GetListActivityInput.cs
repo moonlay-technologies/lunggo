@@ -4,19 +4,9 @@ using System;
 
 namespace Lunggo.ApCommon.Activity.Model.Logic
 {
-    public class GetListActivityInput : ReservationBase
+    public class GetListActivityInput
     {
-        public override ProductType Type
-        {
-            get { return ProductType.Activity; }
-        }
-
         public int Page { get; set; }
         public int PerPage { get; set; }
-
-        public override decimal GetTotalSupplierPrice()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
