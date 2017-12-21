@@ -231,6 +231,9 @@
     <None Include="Config\CustomerWeb\general.properties" />
     <None Include="Config\CustomerWeb\hotel.properties" />
     <None Include="Config\CustomerWeb\lionAir.properties" />
+    <None Include="Config\CustomerWeb\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\mandrill.properties" />
     <None Include="Config\CustomerWeb\mystifly.properties" />
     <None Include="Config\CustomerWeb\redis.properties">

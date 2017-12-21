@@ -54,7 +54,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return ReturnAndLogFailure(rs.Content);
             }
 
-            if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202"))
+            if ((notif.status_code == "200") || (notif.status_code == "201") || (notif.status_code == "202") || (notif.status_code == "407"))
             {
                 DateTime? time;
                 if (notif.transaction_time != null)
@@ -136,7 +136,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Payment", "Payment", new { RsvNo = rsvNo, regId = new PaymentController().GenerateId(rsvNo) });
             }
             PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Verifying });
-            TempData["AllowThisThankyouPage"] = rsvNo;
             return RedirectToAction("Thankyou", "Payment", new { RsvNo = rsvNo, regId = new PaymentController().GenerateId(rsvNo) });
         }
 
@@ -160,13 +159,13 @@ namespace Lunggo.CustomerWeb.Controllers
                 rsvNo = response2.order_id;
             }
             var paymentStatus = HandleNotification(rsvNoOrExternalId);
-            TempData["AllowThisThankyouPage"] = rsvNo;
-            if (paymentStatus == PaymentStatus.Denied)
+            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = paymentStatus });
+            if (paymentStatus == PaymentStatus.Denied || paymentStatus == PaymentStatus.Expired || paymentStatus == PaymentStatus.Failed)
             {
+                TempData["PaymentFailed"] = true;
                 return RedirectToAction("Payment", "Payment", new { RsvNo = rsvNo, regId = new PaymentController().GenerateId(rsvNo) });
             }
-            PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = paymentStatus });
-            TempData["AllowThisThankyouPage"] = rsvNo;
+            
             return RedirectToAction("Thankyou", "Payment", new { RsvNo = rsvNo, regId = new PaymentController().GenerateId(rsvNo) });
         }
 
@@ -175,7 +174,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var rsvNo = response.order_id;
             PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
-            TempData["AllowThisThankyouPage"] = rsvNo;
             return RedirectToAction("Thankyou", "Payment", new { RsvNo = rsvNo, regId = new PaymentController().GenerateId(rsvNo) });
         }
 
@@ -190,7 +188,6 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var rsvNo = response.order_id;
             PaymentService.GetInstance().UpdatePayment(rsvNo, new PaymentDetails { Status = PaymentStatus.Expired });
-            TempData["AllowThisThankyouPage"] = rsvNo;
             return RedirectToAction("Thankyou", "Payment", new { RsvNo = rsvNo, regId = new PaymentController().GenerateId(rsvNo) });
         }
 
@@ -245,7 +242,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "settlement":
                     return PaymentStatus.Settled;
                 case "pending":
-                    return PaymentStatus.Pending;
+                    return MapPaymentMethod(notif) == PaymentMethod.BcaKlikpay 
+                        ? PaymentStatus.Failed 
+                        : PaymentStatus.Pending;
                 case "expire":
                     return PaymentStatus.Expired;
                 case "deny":

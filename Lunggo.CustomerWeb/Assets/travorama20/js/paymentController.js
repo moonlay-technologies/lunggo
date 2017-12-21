@@ -47,6 +47,7 @@ app.controller('paymentController', [
     $scope.error = {
             message: ''
     }
+    $scope.uniqueCode = uniqueCode;
     
     //// countdown timer for payment
     window.setInterval(function () {
@@ -268,7 +269,7 @@ app.controller('paymentController', [
 
     // ******************************** UNIQUE CODE ***************************************
     $scope.UniqueCodePaymentConfig = {
-        UniqueCode: 0,
+        UniqueCode: uniqueCode,
         Token: '',
         GetUniqueCode: function (rsvNo, voucherCode, bin) {
 

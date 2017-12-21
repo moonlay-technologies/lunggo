@@ -10,6 +10,7 @@ using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
+using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.I18nMessage;
@@ -43,6 +44,14 @@ namespace Lunggo.CustomerWeb
             InitBlobStorageService();
             InitUniqueIdGenerator();
             InitHotelService();
+            InitLogService();
+        }
+
+        public static void InitLogService()
+        {
+            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var log = LogService.GetInstance();
+            log.Init(webhookUrl);
         }
         private static void InitBlobStorageService()
         {

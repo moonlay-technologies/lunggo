@@ -269,7 +269,7 @@
             <!-- BCA KLIKPAY -->
             <div class="box-payment col-xs-12">
                 <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.BcaKlikpay')">
-                    <div class="col-xs-5"><img src="/Assets/images/bank/bca.png" /></div>
+                    <div class="col-xs-5"><img src="/Assets/images/bank/bca-klikpay.png" /></div>
                     <div class="col-xs-7 col-md-6">
                         <h4>BCA KlikPay</h4>
                     </div>
@@ -279,7 +279,7 @@
                 </div>
                 <div class="accordion-content">
                     <div class="separator-desktop"></div>
-                    <p>Pembayaran BCA KlikPay akan diproses di situs BCA. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    <p>Pembayaran BCA KlikPay akan diproses di halaman BCA KlikPay. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
                     @if (ViewBag.Platform != PlatformType.DesktopWebsite)
                     {
                         Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");

@@ -151,6 +151,7 @@
         var langCode = '@OnlineContext.GetActiveLanguageCode()';
         var expirytime = '@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")';
         var paymentFailed = @((ViewBag.PaymentFailed != null).ToString().ToLower());
+        var uniqueCode = @ViewBag.UniqueCode;
 
     </script>
     <!-- angular controller -->
