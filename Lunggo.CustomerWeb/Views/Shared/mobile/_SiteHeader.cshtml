@@ -13,16 +13,16 @@
 <header class="site-header" ng-controller="siteHeaderController">
 
     <div class="header-display">
-    @*
+        @*
 
         TODO : benerin cara nampilin icon, jgn kyk gini!
     
     *@
-    @if (ViewBag.Platform == PlatformType.IosApp){
-        <a ng-click="window.history.back()" class="site-menu" style="background: url(/Assets/images/buttons/back-btn.png) no-repeat;"></a>
-    } else {
-        <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
-    }
+        @if (ViewBag.SiteHeader != "Payment" && ViewBag.SiteHeader != "Instruction" && ViewBag.SiteHeader != "Thankyou")
+        {
+            <a ng-click="PageConfig.ToggleBurger()" class="site-menu"></a>
+        }
+
         <a href="/">
             <img src="/Assets/images/travorama-logo-color.png" alt="Travorama" class="site-logo" />
         </a>

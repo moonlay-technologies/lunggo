@@ -5,6 +5,7 @@
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.ApCommon.Product.Constant
+@using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -13,6 +14,7 @@
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-thankyou";
     ViewBag.Title = "Terima Kasih";
+    ViewBag.SiteHeader = "Thankyou";
     ViewBag.BookingFailed = false;
 }
 
@@ -71,7 +73,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/ThankYouController.js"></script>
+    <script src=@Fingerprint.Tag("/Assets/travorama20/js/ThankYouController.js")></script>
     <script>
         @if (Model is FlightReservationForDisplay)
         {
@@ -185,29 +187,38 @@
             <div class="container">
                 @if (Model is FlightReservationForDisplay)
                 {
-                <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
-
+                    <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
                 }
-                @if (Model is HotelReservationForDisplay)
+                else if (Model is HotelReservationForDisplay)
                 {
                     <p>Terima kasih telah memesan hotel di Travorama.com. Anda dapat mencetak voucher Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
-
+                }
+                else
+                {
+                    <p>Terima kasih telah memesan di Travorama.com.</p>
                 }
 
                 <section class="countdown">
                     <div class="row">
                         <div class="col-sm-4 col-sm-offset-4">
                             <div class="print">
-                                <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow block">
-                                    @if (Model is FlightReservationForDisplay)
-                                    {
-                                    <span>CEK E-TIKET</span>
-                                    }
-                                    @if (Model is HotelReservationForDisplay)
-                                    {
+                                @if (Model is FlightReservationForDisplay)
+                                {
+
+                                    <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow block">
+                                        <span>CEK E-TIKET</span>
+                                    </a>
+                                }
+                                else if (Model is HotelReservationForDisplay)
+                                {
+                                    <a href="@Url.Action("Eticket", "Payment", new {Model.RsvNo})" class="btn btn-yellow block">
                                         <span>CEK VOUCHER</span>
-                                    }
-                                </a>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <button onclick="window.postMessage('ExploreScreen')" class="btn btn-yellow block">OK</button>
+                                }
                             </div>
                         </div>
                     </div>

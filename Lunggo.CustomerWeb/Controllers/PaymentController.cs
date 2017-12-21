@@ -108,7 +108,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Index", "Index");
 
             var signature = Generator.GenerateRsvNoId(rsvNo);
-            if (regId.Equals(signature))
+            if (regId != signature)
                 return RedirectToAction("Index", "Index");
 
             ReservationForDisplayBase rsv;
@@ -144,7 +144,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Index", "Index");
 
             var signature = Generator.GenerateRsvNoId(rsvNo);
-            if (regId.Equals(signature))
+            if (regId != signature)
                 return RedirectToAction("Index", "Index");
 
             ReservationForDisplayBase rsv;

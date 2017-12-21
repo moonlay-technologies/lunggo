@@ -3,6 +3,7 @@
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Flight.Model
+@using Lunggo.CustomerWeb.Helper
 @using PaymentMethod = Lunggo.ApCommon.Payment.Constant.PaymentMethod
 @using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubmethod
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -12,7 +13,7 @@
     ViewBag.BodyClass = "page-checkout page-confirmation";
     ViewBag.Title = "Instruksi Pembayaran";
     ViewBag.AngularController = "confirmationController";
-    ViewBag.SiteHeader = "checkout";
+    ViewBag.SiteHeader = "Instruction";
 
     var beneficiaryBankList = new List<SelectListItem>
     {
@@ -80,7 +81,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/ConfirmationController.js"></script>
+    <script src=@Fingerprint.Tag("/Assets/travorama20/js/ConfirmationController.js")></script>
 
     <!-- accordion -->
     <script>

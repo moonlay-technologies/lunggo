@@ -74,17 +74,17 @@
                                 @using (Html.BeginForm("ForwardReservation", "Activity", FormMethod.Post))
                                 {
                                     <input class="hidden" name='RsvNo' value="@rsv.RsvNo"/>
-                                    <input class="btn btn-green" type="submit" value="Forward">
+                                    <input class="btn btn-success" type="submit" value="Forward">
                                 }
                                 @using (Html.BeginForm("ConfirmReservation", "Activity", FormMethod.Post))
                                 {
                                     <input class="hidden" name='RsvNo' value="@rsv.RsvNo" />
-                                    <input class="btn btn-blue" type="submit" value="Forward">
+                                    <input class="btn btn-primary" type="submit" value="Confirm">
                                 }
                                 @using (Html.BeginForm("CancelReservation", "Activity", FormMethod.Post))
                                 {
                                     <input class="hidden" name='RsvNo' value="@rsv.RsvNo" />
-                                    <input class="btn btn-danger" type="submit" value="Forward">
+                                    <input class="btn btn-danger" type="submit" value="Cancel">
                                 }
                             </td>
                         </tr>

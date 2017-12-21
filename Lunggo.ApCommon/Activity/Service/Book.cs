@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     Status = PaymentStatus.Pending,
                     LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                    //OriginalPriceIdr = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
+                    OriginalPriceIdr = activityInfo.Price,
                     TimeLimit = DateTime.UtcNow.AddHours(1)
                     //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
                 },

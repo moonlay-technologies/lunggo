@@ -6,6 +6,7 @@
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
@@ -15,7 +16,7 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
-    ViewBag.SiteHeader = "checkout";
+    ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Pembayaran";
 }
 
@@ -159,7 +160,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/paymentController.js"></script>
+    <script src=@Fingerprint.Tag("/Assets/travorama20/js/paymentController.js")></script>
 }
 
 @switch ((string)ViewBag.Message)

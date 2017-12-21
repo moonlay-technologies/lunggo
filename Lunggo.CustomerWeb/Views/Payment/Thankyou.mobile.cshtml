@@ -3,6 +3,7 @@
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
 @model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
@@ -11,7 +12,7 @@
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Terima Kasih";
     ViewBag.BodyClass = "page page-thankyou page-confirmation page-hotel page-checkout";
-    ViewBag.SiteHeader = "thankyou";
+    ViewBag.SiteHeader = "Thankyou";
     ViewBag.AngularController = "ThankyouController";
 
 }
@@ -48,7 +49,7 @@
     <script>
         var totalRoom = 0;
     </script>
-    <script src="/Assets/travorama20/js/ThankyouController.js"></script>
+    <script src=@Fingerprint.Tag("/Assets/travorama20/js/ThankyouController.js")></script>
     <script>
         @if (Model is FlightReservationForDisplay)
         {
@@ -187,11 +188,17 @@
 
                     </div>
                 }
-
-                @if (Model is HotelReservationForDisplay)
+                else if (Model is HotelReservationForDisplay)
                 {
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan hotel di Travorama. Pembayaran Anda sedang diverifikasi oleh sistem kami.</div>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="thankyou-words">
+                        <div>Terima kasih telah memesan di Travorama. Pembayaran Anda sedang diverifikasi oleh sistem kami.</div>
 
                     </div>
                 }
@@ -214,14 +221,23 @@
                         <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>
                     </div>
                 }
-                if (Model is HotelReservationForDisplay)
+                else if (Model is HotelReservationForDisplay)
                 {
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan hotel di Travorama. Anda dapat mengecek voucher Anda melalui tombol berikut.</div>
                         <div class="ticket-print">
-                            <a href="@Url.Action("Eticket", "Payment", new { Model.RsvNo })" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK VOUCHER</a>
+                            <a href="@Url.Action("Eticket", "Payment", new {Model.RsvNo})" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>CEK VOUCHER</a>
                         </div>
                         <div>Anda dapat menutup halaman ini dan mengecek kembali halaman ini di menu Cek Pemesanan setiap saat.</div>
+                    </div>
+                }
+                else
+                {
+                    <div class="thankyou-words">
+                        <div>Terima kasih telah memesan di Travorama.</div>
+                        <div class="ticket-print">
+                            <button onclick="window.postMessage('ExploreScreen')" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>OK</button>
+                        </div>
                     </div>
                 }
                 break;

@@ -362,7 +362,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     VeritransWrapper.ProcessPayment(payment, transactionDetails);
                     break;
                 case PaymentMedium.Direct:
-                    var env = ConfigManager.GetInstance().GetConfigValue("general", "enviroment");
+                    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                     if (env != "production")
                     {
                         payment.Status = PaymentStatus.Settled;
