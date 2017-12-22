@@ -352,6 +352,28 @@
                     @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.DooEtQnb)
                 </div>
             </div><!-- /DOOET QNB -->
+            
+            <!-- IB MUAMALAT -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.IbMuamalat')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/ib-muamalat.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>IB Muamalat</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran IB Muamalat akan diproses di situs Bank Muamalat. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.IbMuamalat)
+                </div>
+            </div><!-- /IB MUAMALAT -->
         </div>
     </div><!-- .payment-wrapper -->
 </div><!-- .content.step#step-4 -->

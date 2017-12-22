@@ -230,10 +230,20 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public BookFlightResult BookFlightInternal(FlightBookingInfo bookInfo)
         {
+            //TODO: TEST E2Pay
+            if (bookInfo.Itinerary.FareId == "TEST")
+                return new BookFlightResult
+                {
+                    IsSuccess = true,
+                    Status = new BookingStatusInfo { BookingId = "TEST", BookingStatus = BookingStatus.Booked, TimeLimit = DateTime.UtcNow.AddDays(3) }
+                };
+
+
             var supplierName = bookInfo.Itinerary.Supplier;
             var supplier = Suppliers.Where(entry => entry.Value.SupplierName == supplierName).Select(entry => entry.Value).Single();
 
             var result = supplier.BookFlight(bookInfo);
+            
             if (bookInfo.Test)
                 return result;
             //Auto Retry Book
