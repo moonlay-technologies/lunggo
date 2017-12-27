@@ -82,18 +82,18 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         
         public static GetAppointmentRequestApiResponse AssembleApiResponse(GetAppointmentRequestOutput serviceResponse)
         {
-            var apiResponse = new GetAppointmentRequestApiResponse()
+            var apiResponse = new GetAppointmentRequestApiResponse
             {
-                Appointments = serviceResponse.Appointments.Select(AppointmentList => new AppointmentDetailForDisplay()
+                Appointments = serviceResponse.Appointments.Select(appointmentList => new AppointmentDetailForDisplay
                 {
-                    ActivityId = AppointmentList.ActivityId,
-                    Name = AppointmentList.Name,
-                    RsvNo = AppointmentList.RsvNo,
-                    PaxCount = AppointmentList.PaxCount,
-                    Date = AppointmentList.Date,
-                    Session = AppointmentList.Session,
-                    MediaSrc = AppointmentList.MediaSrc,
-                    RequestTime = DateTime.Parse(AppointmentList.RequestTime).AddHours(5)
+                    ActivityId = appointmentList.ActivityId,
+                    Name = appointmentList.Name,
+                    RsvNo = appointmentList.RsvNo,
+                    PaxCount = appointmentList.PaxCount,
+                    Date = appointmentList.Date,
+                    Session = appointmentList.Session,
+                    MediaSrc = appointmentList.MediaSrc,
+                    //RequestTime = DateTime.Parse(appointmentList.RequestTime).AddHours(5)
                 }).ToList(),
                 Page = serviceResponse.Page,
                 PerPage = serviceResponse.PerPage
