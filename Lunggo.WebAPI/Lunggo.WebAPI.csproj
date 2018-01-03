@@ -92,6 +92,7 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -198,6 +199,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -316,6 +318,18 @@
     <Compile Include="ApiSrc\Auxiliary\Model\AllPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\FeaturedPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\GetCalendarApiResponse.cs" />
+    <Compile Include="ApiSrc\Cart\CartController.cs" />
+    <Compile Include="ApiSrc\Cart\Logic\AddCartLogic.cs" />
+    <Compile Include="ApiSrc\Cart\Logic\DeleteRsvFromCartLogic.cs" />
+    <Compile Include="ApiSrc\Cart\Logic\ViewCartLogic.cs" />
+    <Compile Include="ApiSrc\Cart\Model\AddToCartApiRequest.cs" />
+    <Compile Include="ApiSrc\Cart\Model\AddToCartApiResponse.cs" />
+    <Compile Include="ApiSrc\Cart\Model\CheckoutApiRequest.cs" />
+    <Compile Include="ApiSrc\Cart\Model\CheckoutApiResponse.cs" />
+    <Compile Include="ApiSrc\Cart\Model\DeleteRsvFromCartApiRequest.cs" />
+    <Compile Include="ApiSrc\Cart\Model\DeleteRsvFromCartApiResponse.cs" />
+    <Compile Include="ApiSrc\Cart\Model\ViewCartApiRequest.cs" />
+    <Compile Include="ApiSrc\Cart\Model\ViewCartApiResponse.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiRequestBase.cs" />
     <Compile Include="ApiSrc\Common\Model\ApiResponseBase.cs" />
     <Compile Include="ApiSrc\Flight\FlightController.cs" />
@@ -392,6 +406,7 @@
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckMethodDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
+    <Compile Include="ApiSrc\Payment\Logic\CheckOutLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\NicepayNotificationLogic.cs" />
@@ -401,6 +416,8 @@
     <Compile Include="ApiSrc\Payment\Model\CheckMethodDiscountApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckMethodDiscountApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckBinDiscountApiResponse.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckOutApiRequest.cs" />
+    <Compile Include="ApiSrc\Payment\Model\CheckOutApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\GetMethodsApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiResponse.cs" />
     <Compile Include="ApiSrc\Payment\Model\PayApiRequest.cs" />
