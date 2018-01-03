@@ -179,8 +179,8 @@ namespace Lunggo.ApCommon.Flight.Service
                             }
                 };
                 itin.Price.LocalCurrency = new Currency("IDR");
-                itin.Price.SetSupplier(15000, new Currency("IDR"));
-                itin.Price.Local = 15000;
+                itin.Price.SetSupplier(11000, new Currency("IDR"));
+                itin.Price.Local = 11000;
                 itin.Price.SetMargin(new Margin
                 {
                     Constant = 0, Percentage = 0, Currency = new Currency("IDR"), Name = "TEST", Description = "TEST"

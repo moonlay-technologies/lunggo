@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Log;
 using Newtonsoft.Json;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -23,8 +26,20 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult ResponsePage()
         {
             var form = Request.Form;
+
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            log.Post(
+                "```E2Pay Response Page```"
+                + "\n`*Environment :* " + env.ToUpper()
+                + "\n*FORM :*\n"
+                + form
+                + "\n*Platform :* "
+                + Client.GetPlatformType(System.Web.HttpContext.Current.User.Identity.GetClientId()),
+                env == "production" ? "#logging-prod" : "#logging-dev");
+
             var isSuccess = ProcessResponse(form);
-            var param = new {rsvNo = form["RefNo"], regId = new PaymentController().GenerateId(form["RefNo"])};
+            var param = new { rsvNo = form["RefNo"], regId = new PaymentController().GenerateId(form["RefNo"]) };
             return RedirectToAction(isSuccess ? "Thankyou" : "Payment", "Payment", param);
         }
 
@@ -32,6 +47,18 @@ namespace Lunggo.CustomerWeb.Controllers
         public string BackendPost()
         {
             var form = Request.Form;
+
+            var log = LogService.GetInstance();
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            log.Post(
+                "```E2Pay Backend Post```"
+                + "\n`*Environment :* " + env.ToUpper()
+                + "\n*FORM :*\n"
+                + form
+                + "\n*Platform :* "
+                + Client.GetPlatformType(System.Web.HttpContext.Current.User.Identity.GetClientId()),
+                env == "production" ? "#logging-prod" : "#logging-dev");
+
             var isSuccess = ProcessResponse(form);
             return isSuccess ? "OK" : "Failed";
         }
@@ -67,7 +94,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 Status = PaymentStatus.Settled,
                 Time = DateTime.UtcNow,
                 ExternalId = form["TransId"],
-                FinalPriceIdr = decimal.Parse(form["Amount"])/100,
+                FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
                 LocalCurrency = new Currency("IDR")
             };
             PaymentService.GetInstance().UpdatePayment(form["RefNo"], paymentInfo);
