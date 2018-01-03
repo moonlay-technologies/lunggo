@@ -53,7 +53,11 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new GetAvailableDatesApiResponse
             {
-                AvailableDateTimes = searchServiceResponse.AvailableDateTimes
+                AvailableDateTimes = searchServiceResponse.AvailableDateTimes.Select(e => new DateAndAvailableHourApi
+                {
+                    Date = e.Date.HasValue ? e.Date.Value.ToString("yyyy-MM-dd") : null,
+                    AvailableHours = e.AvailableHours
+                }).ToList()
             };
             return apiResponse;
             
