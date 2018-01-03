@@ -116,7 +116,7 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
-        private ActivityReservation GetReservationFromDb(string rsvNo)
+        public ActivityReservation GetReservationFromDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

@@ -54,6 +54,7 @@
     <Compile Include="TableRecord\ActivitySellPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityTableRecord.cs" />
     <Compile Include="TableRecord\AgeClassificationTableRecord.cs" />
+    <Compile Include="TableRecord\CartsTableRecord.cs" />
     <Compile Include="TableRecord\ContactTableRecord.cs" />
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="TableRepository\ActivityReservationRepository.cs" />
     <Compile Include="TableRepository\ActivitySellPriceRepository.cs" />
     <Compile Include="TableRepository\AgeClassificationRepository.cs" />
+    <Compile Include="TableRepository\CartsRepository.cs" />
     <Compile Include="TableRepository\ContactRepository.cs" />
     <Compile Include="TableRepository\CurrencyRepository.cs" />
     <Compile Include="TableRepository\DiscountRepository.cs" />

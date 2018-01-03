@@ -115,6 +115,7 @@
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />
     <Compile Include="Activity\Service\InitTests.cs" />
     <Compile Include="Activity\Service\ModelConversionTests.cs" />
+    <Compile Include="Cart\ApiSrc\ViewCartLogicTest.cs" />
     <Compile Include="Init\Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
