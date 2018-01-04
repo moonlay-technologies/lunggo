@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Model.Logic;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System.Net;
+using Lunggo.ApCommon.Identity.Users;
 
 namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
 {
@@ -16,6 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
         public static ApiResponseBase AddCart(AddToCartApiRequest request)
         {
             AddToCartInput addToCartServiceRequest;
+            var user = HttpContext.Current.User.Identity.GetId();
             var succeed = TryPreprocess(request, out addToCartServiceRequest);
             if (!succeed)
                 return new AddToCartApiResponse
@@ -23,8 +25,14 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
+            if (user == null)
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_USER_UNDEFINED"
+                };
             var serviceRequest = PreprocessServiceRequest(request);
-            var addToCartResponse = PaymentService.GetInstance().AddToCart(serviceRequest);
+            var addToCartResponse = PaymentService.GetInstance().AddToCart(serviceRequest,user);
             var apiResponse = AssembleApiResponse(addToCartResponse);
             return apiResponse;
             
@@ -50,11 +58,17 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
 
         public static AddToCartApiResponse AssembleApiResponse(AddToCartOutput addToCartApiResponse)
         {
-            var apiResponse = new AddToCartApiResponse
+
+            var apiResponse = new AddToCartApiResponse();
+            if (!addToCartApiResponse.isSuccess)
             {
-                ErrorCode = addToCartApiResponse.ErrorCode,
-                StatusCode = addToCartApiResponse.StatusCode
-            };
+                apiResponse.StatusCode = HttpStatusCode.BadRequest;
+                apiResponse.ErrorCode = "ERR_INVALID_REQUEST";
+            }
+            else
+            {
+                apiResponse.StatusCode = HttpStatusCode.OK;
+            }
             return apiResponse;
         }
 

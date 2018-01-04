@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var queryBuilder = new StringBuilder();
             queryBuilder.Append(CreateSelectClause());
             queryBuilder.Append(CreateJoinClause());
-            queryBuilder.Append(CreateWhereClause());
+            queryBuilder.Append(CreateWhereClause(condition));
             queryBuilder.Append(CreateRangeClause());
             return queryBuilder.ToString();
         }
@@ -29,8 +29,9 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("asp.Price AS Price, ");
             clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc, ");
+            clauseBuilder.Append("(SELECT CASE WHEN (count(*) > 0) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END from wishlist where UserId=@userId and ActivityId=act.id) AS Wishlisted, ");
             clauseBuilder.Append("act.AmountDuration AS Amount, ");
-            clauseBuilder.Append("act.UnitDuration AS Unit ");
+            clauseBuilder.Append("act.UnitDuration AS Unit ");            
             return clauseBuilder.ToString();
         }
 
@@ -44,18 +45,24 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             return clauseBuilder.ToString();
         }
 
-        private static string CreateWhereClause()
+        private static string CreateWhereClause(dynamic condition)
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE Name LIKE '%' + @Name + '%' ");
-            clauseBuilder.Append("AND Date BETWEEN @StartDate AND @EndDate ");
+            clauseBuilder.Append("WHERE ");
+            if (condition.Name != null)
+                clauseBuilder.Append("act.Name LIKE '%' + @Name + '%' AND ");
+            if (condition.Id != null)
+                clauseBuilder.Append("act.Id IN @Id AND ");
+            if (condition.Id == null)
+                clauseBuilder.Append("ad.Date BETWEEN @StartDate AND @EndDate AND ");
+            clauseBuilder.Remove(clauseBuilder.Length - 4, 4);
             return clauseBuilder.ToString();
         }
 
         private static string CreateRangeClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("ORDER BY Name OFFSET @Page-1 ROWS FETCH NEXT @PerPage ROWS ONLY");
+            clauseBuilder.Append("ORDER BY act.Name OFFSET @Page-1 ROWS FETCH NEXT @PerPage ROWS ONLY");
             return clauseBuilder.ToString();
         }
     }

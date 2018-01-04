@@ -30,15 +30,11 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPaymentCart(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public PaymentDetails SubmitPaymentCart(string user, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
             var paymentDetails = new PaymentDetails();
-            var user = HttpContext.Current.User.Identity.GetId();
-            if(cartId != GetUserIdCart(user))
-            {
-                return null;
-            }
+            var cartId = GetUserIdCart(user);
             paymentDetails = GetFinalPriceCart(paymentData, discountCode);
             if (paymentDetails == null)
             {
@@ -55,7 +51,7 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 UpdateCartPayment(method, submethod, paymentData, discountCode, paymentDetails);
             }
-            InsertCartToDb(cartId, ViewCart().RsvNoList);
+            InsertCartToDb(cartId, ViewCart(user).RsvNoList);
             DeleteCartIdRedis(cartId);
             isUpdated = true;
             return paymentDetails;
@@ -541,9 +537,12 @@ namespace Lunggo.ApCommon.Payment.Service
         }
         public PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
         {
-            var rsvNoList = ViewCart().RsvNoList;
+            var user = HttpContext.Current.User.Identity.GetId();
+            var rsvNoList = ViewCart(user).RsvNoList;
             var finalPrice = new PaymentDetails();
             finalPrice.FinalPriceIdr = 0;
+            var originalTotalPrice = ViewCart(user).TotalPrice;
+
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -718,7 +717,8 @@ namespace Lunggo.ApCommon.Payment.Service
         public void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
             PaymentData paymentData, string discountCode, PaymentDetails paymentDetailsCart)
         {
-            var rsvNoList = ViewCart().RsvNoList;
+            var user = HttpContext.Current.User.Identity.GetId();
+            var rsvNoList = ViewCart(user).RsvNoList;
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -889,14 +889,15 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNoArray = string.Join(",", rsvNoList.ToArray());
-
-                var cartsRecord = new CartsTableRecord
+                foreach(string rsvNo in rsvNoList)
                 {
-                    CartId = cartId,
-                    RsvNoList = rsvNoArray
-                };
-                CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
+                    var cartsRecord = new CartsTableRecord
+                    {
+                        CartId = cartId,
+                        RsvNoList = rsvNo
+                    };
+                    CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
+                }
             }
         }
     }

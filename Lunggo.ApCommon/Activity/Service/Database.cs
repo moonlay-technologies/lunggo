@@ -17,6 +17,8 @@ using Lunggo.ApCommon.Identity.Query;
 using Lunggo.ApCommon.Identity.Users;
 using BookingStatus = Lunggo.ApCommon.Activity.Constant.BookingStatus;
 using BookingStatusCd = Lunggo.ApCommon.Activity.Constant.BookingStatusCd;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -29,15 +31,26 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 string endDate = input.ActivityFilter.EndDate.ToString("yyyy/MM/dd");
                 string startDate = input.ActivityFilter.StartDate.ToString("yyyy/MM/dd");
-
+                input.Page = 1;
+                input.PerPage = 10;
+                var param = new
+                {
+                    Name = input.ActivityFilter.Name,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Page = input.Page <= 0 ? 1 : input.Page,
+                    PerPage = input.PerPage <= 0 ? 10 : input.PerPage,
+                    Id = input.ActivityFilter.Id,
+                    userId = HttpContext.Current.User.Identity.GetId()
+                };
                 var savedActivities = GetSearchResultQuery.GetInstance()
-                    .ExecuteMultiMap(conn, new { Name = input.ActivityFilter.Name, StartDate = startDate, EndDate = endDate, Page = input.Page, PerPage = input.PerPage },
-                    null, (activities, duration) =>
+                    .ExecuteMultiMap(conn, param, param,
+                    (activities, duration) =>
                         {
                             activities.Duration = duration;
                             return activities;
                         }, "Amount").ToList();
-                
+
                 var output = new SearchActivityOutput
                 {
                     ActivityList = savedActivities,
@@ -93,8 +106,8 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 var result = new List<DateAndAvailableHour>();
 
-                foreach(var i in savedDates.ToList())
-                {                   
+                foreach (var i in savedDates.ToList())
+                {
                     var savedHours = GetAvailableSessionQuery.GetInstance()
                         .Execute(conn, new { ActivityId = input.ActivityId, Date = i.Date }).ToList();
                     if (savedHours.TrueForAll(e => e == null))
@@ -107,7 +120,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                     result.Add(savedDatesAndHours);
                 }
-                
+
                 var output = new GetAvailableDatesOutput
                 {
                     AvailableDateTimes = result
@@ -144,7 +157,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var activityDetailRecord = ActivityReservationTableRepo.GetInstance()
                     .Find1(conn, new ActivityReservationTableRecord { RsvNo = rsvNo });
 
-                var actDetail = GetActivityDetailFromDb(new GetDetailActivityInput() {ActivityId = activityDetailRecord.ActivityId });
+                var actDetail = GetActivityDetailFromDb(new GetDetailActivityInput() { ActivityId = activityDetailRecord.ActivityId });
 
                 activityReservation.ActivityDetails = actDetail.ActivityDetail;
                 activityReservation.DateTime = new DateAndSession()
@@ -152,7 +165,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Date = activityDetailRecord.Date,
                     Session = activityDetailRecord.SelectedSession
                 };
-                    
+
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
 
@@ -178,10 +191,10 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userName = HttpContext.Current.User.Identity.GetUser();
-                
+
                 var savedBookings = GetMyBookingsQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage }).ToList();
-                
+
                 var output = new GetMyBookingsOutput
                 {
                     MyBookings = savedBookings,
@@ -196,7 +209,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                
+
                 var savedBooking = GetMyBookingDetailQuery.GetInstance()
                     .Execute(conn, new { input.RsvNo }).First();
 
@@ -225,7 +238,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
                 var savedBookings = GetAppointmentRequestQuery.GetInstance()
-                    .Execute(conn, new {UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
 
                 var output = new GetAppointmentRequestOutput
                 {
@@ -311,8 +324,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     MediaSrc = savedAppointment.MediaSrc,
                     PaxGroup = new PaxGroup()
                 };
-                
-                foreach(var appointment in savedAppointments.ToList())
+
+                foreach (var appointment in savedAppointments.ToList())
                 {
                     var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = appointment.RsvNo }, null,
                         (passengers, typeCd, titleCd, genderCd) =>
@@ -331,7 +344,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                     appointmentDetail.PaxGroup = paxgroup;
                 }
-                
+
                 var output = new GetAppointmentDetailOutput
                 {
                     AppointmentDetail = appointmentDetail
@@ -387,7 +400,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
-                if(reservation.Pax != null)
+                if (reservation.Pax != null)
                 {
                     foreach (var passenger in reservation.Pax)
                     {
@@ -413,7 +426,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         PaxTableRepo.GetInstance().Insert(conn, passengerRecord);
                     }
                 }
-                
+
             }
         }
         #endregion
@@ -456,9 +469,9 @@ namespace Lunggo.ApCommon.Activity.Service
                     Cancellation = input.Cancellation,
                     IsPaxDoBNeeded = input.IsPaxDoBNeeded,
                     IsPassportIssuedDateNeeded = input.IsPassportIssuedDateNeeded,
-                    IsPassportNumberNeeded = input.IsPassportNumberNeeded 
+                    IsPassportNumberNeeded = input.IsPassportNumberNeeded
                 });
-                UpdatePriceQuery.GetInstance().Execute(conn, new {Price = input.Price, ActivityId = input.ActivityId });
+                UpdatePriceQuery.GetInstance().Execute(conn, new { Price = input.Price, ActivityId = input.ActivityId });
             }
 
         }
@@ -468,7 +481,56 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
             using (var conn = DbService.GetInstance().GetOpenConnection())
-                UpdateActivityBookingStatusQuery.GetInstance().Execute(conn, new {rsvNo, bookingStatusCd});
+                UpdateActivityBookingStatusQuery.GetInstance().Execute(conn, new { rsvNo, bookingStatusCd });
+        }
+
+        public AddToWishlistOutput InsertActivityIdToWishlistDb(long activityId, string user)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var wishlistRecord = new WishlistTableRecord
+                {
+                    UserId = user,
+                    ActivityId = activityId
+                };
+                try
+                {
+                    WishlistTableRepo.GetInstance().Insert(conn, wishlistRecord);
+                }
+                catch
+                {
+
+                }
+            }
+            var response = new AddToWishlistOutput { isSuccess = true };
+            return response;
+        }
+
+        public DeleteFromWishlistOutput DeleteActivityIdFromWishlistDb(long activityId, string user)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var wishlistRecord = new WishlistTableRecord
+                {
+                    UserId = user,
+                    ActivityId = activityId
+                };
+                WishlistTableRepo.GetInstance().Delete(conn, wishlistRecord);
+            }
+            var response = new DeleteFromWishlistOutput { isSuccess = true };
+            return response;
+        }
+
+        public List<long> GetActivityListFromWishlistDb(string user)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activityList = GetActivityListFromWishlistDbQuery.GetInstance().Execute(conn, new { user });
+
+                var response = activityList.ToList();
+                //List<int>responseInt = response.Select(i => (int)i).ToList();
+                return response;
+            }
         }
     }
 }

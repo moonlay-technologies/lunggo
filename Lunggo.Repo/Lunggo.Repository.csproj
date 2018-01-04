@@ -128,6 +128,7 @@
     <Compile Include="TableRecord\UserTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRecord\WishlistTableRecord.cs" />
     <Compile Include="TableRepository\AccountBalanceRepository.cs" />
     <Compile Include="TableRepository\AccountUserRepository.cs" />
     <Compile Include="TableRepository\ActivityBuyPriceRepository.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="TableRepository\UserRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\WishlistRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">

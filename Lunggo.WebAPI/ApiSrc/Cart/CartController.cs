@@ -10,7 +10,6 @@ using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
-using System.Web.Http;
 using Lunggo.WebAPI.ApiSrc.Cart.Model;
 using Lunggo.WebAPI.ApiSrc.Cart.Logic;
 

@@ -10,7 +10,6 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class AddToCartOutput
     {
-        public HttpStatusCode StatusCode;
-        public string ErrorCode;        
+        public bool isSuccess;       
     }
 }

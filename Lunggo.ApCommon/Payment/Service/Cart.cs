@@ -22,18 +22,12 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public ViewCartOutput ViewCart()
+        public ViewCartOutput ViewCart(string user)
         {
             
             var cartList = new ViewCartOutput();
             cartList.RsvNoList = new List<string>();
             cartList.TotalPrice = 0;
-            var user = HttpContext.Current.User.Identity.GetId();
-            if (user == null)
-            {
-                cartList.StatusCode = HttpStatusCode.Unauthorized;
-                return cartList;
-            }
             var idCart = GetUserIdCart(user);
             var redisService = RedisService.GetInstance();
             var redisKey = "CartId:" + idCart;
@@ -49,15 +43,9 @@ namespace Lunggo.ApCommon.Payment.Service
             return cartList;
         }
 
-        public AddToCartOutput AddToCart(AddToCartInput input)
+        public AddToCartOutput AddToCart(AddToCartInput input, string user)
         {
             var response = new AddToCartOutput();
-            var user = HttpContext.Current.User.Identity.GetId();
-            if (user == null)
-            {
-                response.StatusCode = HttpStatusCode.Unauthorized;
-                return response;
-            }
             var idCart = GetUserIdCart(user);
             if (idCart == null)
             {
@@ -66,13 +54,12 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             var checkRsv = ActivityService.GetInstance().GetReservation(input.RsvNo);
             if (checkRsv == null)
-            {
-                response.StatusCode = HttpStatusCode.BadRequest;
-                return response;
-            }
+                return new AddToCartOutput { isSuccess = false };
+            var paymentDetail = PaymentDetails.GetFromDb(input.RsvNo);
+            if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
+                return new AddToCartOutput { isSuccess = false };
             AddRsvNoToIdCart(idCart, input.RsvNo);
-            response.StatusCode = HttpStatusCode.OK;
-            return response;
+            return new AddToCartOutput { isSuccess = true };
         }
 
         public DeleteRsvFromCartOutput DeleteFromCart(DeleteRsvFromCartInput request)
