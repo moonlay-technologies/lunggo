@@ -271,16 +271,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 var output = new GetAppointmentListOutput
                 {
-                    Appointments = savedBookings.Select(a => new AppointmentDetail()
-                    {
-                        ActivityId = a.ActivityId,
-                        Name = a.Name,
-                        Date = a.Date,
-                        Session = a.Session,
-                        RequestTime = a.RequestTime,
-                        PaxCount = a.PaxCount,
-                        MediaSrc = a.MediaSrc
-                    }).ToList(),
+                    Appointments = savedBookings.ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
