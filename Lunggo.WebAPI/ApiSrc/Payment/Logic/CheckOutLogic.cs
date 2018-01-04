@@ -42,9 +42,61 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
 
             bool isUpdated;
+            var cartId = PaymentService.GetInstance().GetUserIdCart(user);
             var paymentDetails = PaymentService.GetInstance().SubmitPaymentCart(user, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
-            var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
+            var apiResponse = AssembleApiResponse(paymentDetails, isUpdated, cartId);
             return apiResponse;
         }
+
+        private static CheckOutApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated, string cartId)
+        {
+            if (paymentDetails == null)
+            {
+                return new CheckOutApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERPPAY04"
+                };
+            }
+
+            if (paymentDetails.Status == PaymentStatus.Failed)
+            {
+                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerEligible)
+                    return new CheckOutApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY05"
+                    };
+                if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
+                    return new CheckOutApiResponse
+                    {
+                        StatusCode = HttpStatusCode.Accepted,
+                        ErrorCode = "ERPPAY06"
+                    };
+            }
+
+            if (!isUpdated)
+            {
+                return new CheckOutApiResponse
+                {
+                    StatusCode = HttpStatusCode.Accepted,
+                    ErrorCode = "ERPPAY03"
+                };
+            }
+
+            return new CheckOutApiResponse
+            {
+                PaymentStatus = paymentDetails.Status,
+                Method = paymentDetails.Method,
+                TimeLimit = paymentDetails.TimeLimit.TruncateMilliseconds(),
+                RedirectionUrl = paymentDetails.RedirectionUrl,
+                TransferAccount = paymentDetails.TransferAccount,
+                StatusCode =
+                    paymentDetails.Status == PaymentStatus.Settled || paymentDetails.Status == PaymentStatus.Pending
+                        ? HttpStatusCode.OK
+                        : HttpStatusCode.Accepted,
+                CartId = cartId
+            };
+        }
     }
-}
+}  
