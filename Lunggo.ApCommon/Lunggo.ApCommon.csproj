@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\Constant\BookingStatus.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityListFromWishlistDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
     <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
@@ -196,8 +197,12 @@
     <Compile Include="Activity\Model\ActivityReservation.cs" />
     <Compile Include="Activity\Model\Logic\ActivityUpdateInput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityUpdateOutput.cs" />
+    <Compile Include="Activity\Model\Logic\AddToWishlistInput.cs" />
+    <Compile Include="Activity\Model\Logic\AddToWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\DeleteFromWishlistInput.cs" />
+    <Compile Include="Activity\Model\Logic\DeleteFromWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentDetailInput.cs" />
@@ -213,6 +218,7 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />

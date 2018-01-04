@@ -46,6 +46,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime? Date { get; set; }
         [JsonProperty("requiredPaxData", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> RequiredPaxData { get; set; }
+        [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> Whislisted { get; set; }
 
     }
     public class ActivityDetail

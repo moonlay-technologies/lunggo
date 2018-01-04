@@ -27,6 +27,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public DurationActivity Duration { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
+        [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
+        public bool Wishlisted { get; set; }
     }
 
     public class SearchResult
@@ -42,6 +44,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string PriceDetail { get; set; }
         public DurationActivity Duration { get; set; }
         public string MediaSrc { get; set; }
+        public bool Wishlisted { get; set; }
 
     }
 

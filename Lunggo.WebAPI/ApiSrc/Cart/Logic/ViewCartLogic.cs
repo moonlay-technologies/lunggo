@@ -11,6 +11,7 @@ using System.Net;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Database;
 using Lunggo.ApCommon.Activity.Service;
+using Lunggo.ApCommon.Identity.Users;
 
 namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
 {
@@ -18,7 +19,16 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
     {
         public static ApiResponseBase ViewCart()
         {
-            var viewCartResponse = PaymentService.GetInstance().ViewCart();
+            var user = HttpContext.Current.User.Identity.GetId();
+            if (user == null)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERR_USER_UNDEFINED"
+                };
+            }
+            var viewCartResponse = PaymentService.GetInstance().ViewCart(user);
             var apiResponse = AssembleApiResponse(viewCartResponse);
             return apiResponse;
         }

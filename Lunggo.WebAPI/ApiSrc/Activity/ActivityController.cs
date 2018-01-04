@@ -198,6 +198,75 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/wishlist")]
+        public ApiResponseBase GetWishlist()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var apiResponse = ActivityLogic.GetWishlist();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPut]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/wishlist/{activityId}")]
+        public ApiResponseBase AddToWishlist(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new AddToWishlistApiRequest { ActivityId = activityId };
+                var apiResponse = ActivityLogic.AddToWishlist(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpDelete]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/wishlist/{activityId}")]
+        public ApiResponseBase DeleteFromWishlist(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new DeleteFromWishlistApiRequest { ActivityId = activityId };
+                var apiResponse = ActivityLogic.DeleteFromWishlist(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         #endregion
 
         #region Operator

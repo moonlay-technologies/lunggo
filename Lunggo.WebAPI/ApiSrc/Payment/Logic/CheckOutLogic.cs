@@ -14,8 +14,9 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
     public partial class PaymentLogic
     {
         public static ApiResponseBase CheckOut(CheckOutApiRequest request)
-        { 
-            var user = HttpContext.Current.User;
+        {
+            var user = HttpContext.Current.User.Identity.GetId();
+            var user2 = HttpContext.Current.User;
             if (request.Test == 1)
             {
                 return new PayApiResponse
@@ -33,7 +34,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             }
 
-            if (NotEligibleForPaymentMethod(request, user))
+            if (NotEligibleForPaymentMethod(request, user2))
                 return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
@@ -41,8 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
 
             bool isUpdated;
-            var cartId = HttpContext.Current.User.Identity.GetId();
-            var paymentDetails = PaymentService.GetInstance().SubmitPaymentCart(cartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
+            var paymentDetails = PaymentService.GetInstance().SubmitPaymentCart(user, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
             return apiResponse;
         }

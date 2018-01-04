@@ -109,11 +109,13 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Price = actList.Price,
                     PriceDetail = actList.PriceDetail,
                     Duration = actList.Duration,
-                    MediaSrc = actList.MediaSrc
+                    MediaSrc = actList.MediaSrc,
+                    Wishlisted = actList.Wishlisted
                 }).ToList(),
                 Page = searchServiceResponse.Page,
                 PerPage = searchServiceResponse.PerPage
             };
+            apiResponse.StatusCode = HttpStatusCode.OK;
             return apiResponse;
 
         }

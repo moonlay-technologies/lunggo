@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [LunggoCorsPolicy]
         [Level1Authorize]
-        [Route("v1/payment/checkout")]
+        [Route("v1/payment/cart/checkout")]
         public ApiResponseBase CheckOut()
         {
             CheckOutApiRequest request = null;

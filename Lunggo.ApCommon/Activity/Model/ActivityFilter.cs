@@ -15,6 +15,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime EndDate { get; set; }
         [JsonProperty("price")]
         public PriceFilter Price { get; set; }
+        [JsonProperty("id")]
+        public List<long> Id { get; set; }
     }
 
     public class PriceFilter
