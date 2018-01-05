@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return response;
         }
 
-        public string GetUserIdCart(string user)
+        internal string GetUserIdCart(string user)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "NameId:" + user;
@@ -97,7 +97,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
         
-        public void AddIdCart(string user)
+        internal void AddIdCart(string user)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "NameId:" + user;
@@ -106,34 +106,14 @@ namespace Lunggo.ApCommon.Payment.Service
             redisDb.StringSet(redisKey, redisValue.ToString());            
         }
 
-        public void AddRsvNoToIdCart(string idCart, string rsvNo)
+        internal void AddRsvNoToIdCart(string idCart, string rsvNo)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "CartId:" + idCart;
             var redisValue = rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.ListRightPush(redisKey, redisValue);
-        }
-        
-        /*public CheckoutOutput Checkout(decimal promo)
-        {
-            var input = new CheckoutInput();
-            input.TotalPrice = 0;
-            var user = HttpContext.Current.User.Identity.GetId();
-            var idCart = GetUserIdCart(user);
-            var redisService = RedisService.GetInstance();
-            var redisKey = "IdCart:" + idCart;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            for (long i = 0; i < redisDb.ListLength(redisKey); i++)
-            {
-                cartList.RsvNoList.Add(redisDb.ListGetByIndex(redisKey, i));
-                var paymentDetail = PaymentDetails.GetFromDb(redisDb.ListGetByIndex(redisKey, i));
-                cartList.PriceList.Add(paymentDetail.OriginalPriceIdr);
-                cartList.TotalPrice += paymentDetail.OriginalPriceIdr;
-            }
-            
-            return null;
-        }*/
+        }        
     }
 }
 

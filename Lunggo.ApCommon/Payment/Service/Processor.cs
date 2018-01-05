@@ -535,14 +535,14 @@ namespace Lunggo.ApCommon.Payment.Service
 
             return uniqueCode;
         }
-        public PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
+        internal PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
         {
             var user = HttpContext.Current.User.Identity.GetId();
             var rsvNoList = ViewCart(user).RsvNoList;
             var finalPrice = new PaymentDetails();
             finalPrice.FinalPriceIdr = 0;
             var originalTotalPrice = ViewCart(user).TotalPrice;
-
+            var numberOfRsvNo = rsvNoList.Count();
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -569,10 +569,11 @@ namespace Lunggo.ApCommon.Payment.Service
                         paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
                         return paymentDetails;
                     }
-                    paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                    var totalDiscount = (campaign.OriginalPrice / originalTotalPrice) * campaign.TotalDiscount;
+                    paymentDetails.FinalPriceIdr = campaign.OriginalPrice - totalDiscount;
                     paymentDetails.Discount = campaign.Discount;
                     paymentDetails.DiscountCode = campaign.VoucherCode;
-                    paymentDetails.DiscountNominal = campaign.TotalDiscount;
+                    paymentDetails.DiscountNominal = totalDiscount;
                 }
 
                 if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
@@ -714,10 +715,11 @@ namespace Lunggo.ApCommon.Payment.Service
 
             return finalPrice;
         }
-        public void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
+        internal void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
             PaymentData paymentData, string discountCode, PaymentDetails paymentDetailsCart)
         {
             var user = HttpContext.Current.User.Identity.GetId();
+            var originalTotalPrice = ViewCart(user).TotalPrice;
             var rsvNoList = ViewCart(user).RsvNoList;
             foreach (string rsvNo in rsvNoList)
             {
@@ -740,10 +742,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (!string.IsNullOrEmpty(discountCode))
                 {
                     var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-                    paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                    var totalDiscount = (campaign.OriginalPrice / originalTotalPrice) * campaign.TotalDiscount;
+                    paymentDetails.FinalPriceIdr = campaign.OriginalPrice - totalDiscount;
                     paymentDetails.Discount = campaign.Discount;
                     paymentDetails.DiscountCode = campaign.VoucherCode;
-                    paymentDetails.DiscountNominal = campaign.TotalDiscount;
+                    paymentDetails.DiscountNominal = totalDiscount;
                 }
 
                 if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
