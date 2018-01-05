@@ -28,7 +28,7 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
                     ErrorCode = "ERR_USER_UNDEFINED"
                 };
             }
-            var viewCartResponse = PaymentService.GetInstance().ViewCart(user);
+            var viewCartResponse = PaymentService.GetInstance().ViewCart();
             var apiResponse = AssembleApiResponse(viewCartResponse);
             return apiResponse;
         }

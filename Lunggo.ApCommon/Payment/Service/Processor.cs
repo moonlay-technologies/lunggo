@@ -467,13 +467,20 @@ namespace Lunggo.ApCommon.Payment.Service
             };
         }
 
-        public decimal GetUniqueCode(string rsvNo, string bin, string discountCode)
+        public decimal GetUniqueCode(string trxId, string bin, string discountCode)
         {
+            if (trxId.Length >= 15)
+            {
+                var cart = ViewCart(trxId);
+                var payments = cart.RsvNoList.Select(PaymentDetails.GetFromDb);
+                return payments.Sum(p => p.UniqueCode);
+            }
+
             decimal uniqueCode, finalPrice;
-            var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
+            var voucher = CampaignService.GetInstance().ValidateVoucherRequest(trxId, discountCode);
             if (voucher.VoucherStatus != VoucherStatus.Success)
             {
-                var payment = PaymentDetails.GetFromDb(rsvNo);
+                var payment = PaymentDetails.GetFromDb(trxId);
 
                 if (payment == null)
                     return 404404404.404404404M;
@@ -493,12 +500,12 @@ namespace Lunggo.ApCommon.Payment.Service
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                uniqueCode = GetUniqueCodeFromCache(rsvNo);
+                uniqueCode = GetUniqueCodeFromCache(trxId);
                 if (uniqueCode != 0M)
                 {
                     candidatePrice = finalPrice + uniqueCode;
                     var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
-                    isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                    isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != trxId;
                     if (isExist)
                     {
                         var cap = -1;
@@ -509,12 +516,12 @@ namespace Lunggo.ApCommon.Payment.Service
                             uniqueCode = -rnd.Next(1, cap);
                             candidatePrice = finalPrice + uniqueCode;
                             rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
-                            isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                            isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != trxId;
                         } while (isExist);
                     }
-                    SaveTransferValue(candidatePrice, rsvNo);
+                    SaveTransferValue(candidatePrice, trxId);
 
-                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(trxId, uniqueCode);
                 }
                 else
                 {
@@ -526,10 +533,10 @@ namespace Lunggo.ApCommon.Payment.Service
                         uniqueCode = -rnd.Next(1, cap);
                         candidatePrice = finalPrice + uniqueCode;
                         var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
-                        isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
+                        isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != trxId;
                     } while (isExist);
-                    SaveTransferValue(candidatePrice, rsvNo);
-                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
+                    SaveTransferValue(candidatePrice, trxId);
+                    SaveUniqueCodeinCache(trxId, uniqueCode);
                 }
             }
 

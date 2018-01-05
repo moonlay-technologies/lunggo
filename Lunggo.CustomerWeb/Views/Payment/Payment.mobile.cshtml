@@ -58,14 +58,15 @@
         var currentPage = 1;
         var message = '@ViewBag.Message';
         // flight detail
-        var rsvNo = @Model.RsvNo;
+        //var rsvNo = '@Model.TrxId';
+        var trxId = '@Model.TrxId';
         var paymentDetail = '';
         var flightDetail = '';
         var trips = '';
-        var price = '';
-        var originalPrice = '';
+        var price = @Model.OriginalPrice;
+        var originalPrice = @Model.OriginalPrice;
         var nights = '';
-        @if (Model.Reservation is FlightReservationForDisplay)
+        @*@if (Model.Reservation is FlightReservationForDisplay)
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
@@ -84,12 +85,12 @@
             var reservation = Model.Reservation as ActivityReservationForDisplay;
             @:price = @reservation.ActivityDetail.Price;
             @:originalPrice = '@reservation.ActivityDetail.Price';
-        }
+        }*@
         var redirectionUrl;
-        @if (Model.Reservation.Payment.RedirectionUrl != null) {
-            @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
+        @if (Model.PaymentDetails.RedirectionUrl != null) {
+            @:redirectionUrl = '@Model.PaymentDetails.RedirectionUrl';
         }
-        @if (Model.Reservation is FlightReservationForDisplay)
+        @*@if (Model.Reservation is FlightReservationForDisplay)
         {
             @:var departureDate;
             var reservation = Model.Reservation as FlightReservationForDisplay;
@@ -138,7 +139,7 @@
                         @:var gtmPurchaseCurrency = 'IDR';
                         @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
                         @:var gtmPageName = 'payment';
-                    }
+                    }*@
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -168,7 +169,7 @@
         <div ng-app="travorama" @*ng-controller="paymentController"*@ ng-class="{'page-loaded' : pageLoaded}">
             <section class="checkout-content">
                 <div class="page__body">
-                    @if (Model.Reservation is FlightReservationForDisplay)
+                    @*@if (Model.Reservation is FlightReservationForDisplay)
                     {
                         Html.RenderPartial("/Views/Payment/partials/_flightDetail.mobile.cshtml");
                     }
@@ -191,7 +192,7 @@
                             </div>
                             @{Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");}
                         </div>
-                    }
+                    }*@
                     <!-- ========================= PAYMENT METHOD ========================= -->
                     <div class="summary summary--payment">
                         @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}

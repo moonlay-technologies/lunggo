@@ -6,7 +6,7 @@ app.controller('paymentController', [
     // variables
 
     angular.element(document).ready(function () {
-        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo);
+        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.trxId);
     });
     
     $scope.currentPage = 4;
@@ -27,7 +27,9 @@ app.controller('paymentController', [
     $scope.errorLog = '';
     $scope.errorMessage = '';
     $scope.currency = 'IDR';
-    $scope.rsvNo = rsvNo;
+    //$scope.rsvNo = rsvNo;
+    $scope.trxId = trxId;
+    $scope.isRsv = trxId.length < 15;
     $scope.currentchoice = '';
     $scope.loggedIn = loggedIn;
     $scope.initialPrice = price;
@@ -66,202 +68,202 @@ app.controller('paymentController', [
     };
 
     //// bin == Bank Identification Number, untuk identifikasi dari bank mana
-    $scope.binDiscount = {
-        amount: 0,
-        displayName: '',
-        status: '',
-        reset: function (method) {
-            $scope.currentchoice = method;
-            ////  available = true if amount <> 0 AND method cc
-            $scope.binDiscount.available = $scope.binDiscount.amount != 0 && method == 'cc';
-        },
-        available: false,
-        replaceDiscount: false,
-        receive: false,
-        checked: false,
-        checking: false,
-        text: '',
-        tohex: function (str) {
-            var hex, i;
-            var result = "";
-            for (i = 0; i < str.length; i++) {
-                hex = str.charCodeAt(i).toString(16);
-                result += ("000" + hex).slice(-4);
-            }
-            return result;
-        },
-        check: function () {
-            if ($scope.trial > 3) {
-                $scope.trial = 0;
-            }
+    //$scope.binDiscount = {
+    //    amount: 0,
+    //    displayName: '',
+    //    status: '',
+    //    reset: function (method) {
+    //        $scope.currentchoice = method;
+    //        ////  available = true if amount <> 0 AND method cc
+    //        $scope.binDiscount.available = $scope.binDiscount.amount != 0 && method == 'cc';
+    //    },
+    //    available: false,
+    //    replaceDiscount: false,
+    //    receive: false,
+    //    checked: false,
+    //    checking: false,
+    //    text: '',
+    //    tohex: function (str) {
+    //        var hex, i;
+    //        var result = "";
+    //        for (i = 0; i < str.length; i++) {
+    //            hex = str.charCodeAt(i).toString(16);
+    //            result += ("000" + hex).slice(-4);
+    //        }
+    //        return result;
+    //    },
+    //    check: function () {
+    //        if ($scope.trial > 3) {
+    //            $scope.trial = 0;
+    //        }
 
-            //Check Authorization
-            var authAccess = getAuthAccess();
-            $scope.binDiscount.checking = true;
-            if (authAccess == 1 || authAccess == 2) {
-                var hash = CryptoJS.SHA512($scope.CreditCard.Number);
-                var hex = hash.toString(CryptoJS.enc.Hex);
-                $http({
-                    method: 'POST',
-                    url: CheckBinDiscountConfig.Url,
-                    data: {
-                        bin: $scope.CreditCard.Number.substring(0, 6),
-                        hashedPan: hex,
-                        rsvno: $scope.rsvNo,
-                        voucherCode: $scope.voucher.code
-                    },
-                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                }).then(function (returnData) {
-                    //$log.debug(returnData);
-                    if (returnData.data.status == 200) {
-                        if (returnData.data.isAvailable) {
-                            $scope.binDiscount.amount = returnData.data.amount;
-                            $scope.binDiscount.displayName = returnData.data.name;
-                            // get unique code for transfer payment
-                            $scope.binDiscount.status = 'Success';
-                            if ($scope.binDiscount.amount != 0) {
-                                $scope.binDiscount.text = 'Anda menggunakan promo ' + $scope.binDiscount.displayName + '.';
-                            }
-                            $scope.methodDiscount.available = false;
-                            $scope.binDiscount.available = true;
-                            $scope.binDiscount.replaceDiscount = returnData.data.replaceOriginalDiscount;
-                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
-                        } else {
-                            $scope.binDiscount.amount = 0;
-                            $scope.binDiscount.checked = true;
-                            $scope.binDiscount.status = returnData.data.error;
-                            if (returnData.data.name != null) {
-                                $scope.binDiscount.text = 'Maaf, kuota promo ' + returnData.data.name + ' hari ini telah habis.';
-                            } else {
-                                $scope.binDiscount.text = null;
-                            }
-                            $scope.binDiscount.replaceDiscount = false;
-                            $scope.binDiscount.available = false;
-                        }
-                    } else {
-                        $scope.binDiscount.amount = 0;
-                        $scope.binDiscount.checked = true;
-                        $scope.binDiscount.status = returnData.data.error;
-                        $scope.binDiscount.text = '';
-                    }
-                }).catch(function () {
-                    $scope.trial++;
-                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                    {
-                        $scope.binDiscount.check();
-                    }
-                    else {
-                        $scope.binDiscount.amount = 0;
-                        $scope.binDiscount.checked = true;
-                        $scope.binDiscount.checking = false;
-                        $scope.binDiscount.text = '';
-                    }
-                });
-            }
-            else {
-                $log.debug('Not Authorized');
-                $scope.binDiscount.amount = 0;
-                $scope.binDiscount.checking = false;
-            }
-        }
-    }
+    //        //Check Authorization
+    //        var authAccess = getAuthAccess();
+    //        $scope.binDiscount.checking = true;
+    //        if (authAccess == 1 || authAccess == 2) {
+    //            var hash = CryptoJS.SHA512($scope.CreditCard.Number);
+    //            var hex = hash.toString(CryptoJS.enc.Hex);
+    //            $http({
+    //                method: 'POST',
+    //                url: CheckBinDiscountConfig.Url,
+    //                data: {
+    //                    bin: $scope.CreditCard.Number.substring(0, 6),
+    //                    hashedPan: hex,
+    //                    rsvno: $scope.rsvNo,
+    //                    voucherCode: $scope.voucher.code
+    //                },
+    //                headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+    //            }).then(function (returnData) {
+    //                //$log.debug(returnData);
+    //                if (returnData.data.status == 200) {
+    //                    if (returnData.data.isAvailable) {
+    //                        $scope.binDiscount.amount = returnData.data.amount;
+    //                        $scope.binDiscount.displayName = returnData.data.name;
+    //                        // get unique code for transfer payment
+    //                        $scope.binDiscount.status = 'Success';
+    //                        if ($scope.binDiscount.amount != 0) {
+    //                            $scope.binDiscount.text = 'Anda menggunakan promo ' + $scope.binDiscount.displayName + '.';
+    //                        }
+    //                        $scope.methodDiscount.available = false;
+    //                        $scope.binDiscount.available = true;
+    //                        $scope.binDiscount.replaceDiscount = returnData.data.replaceOriginalDiscount;
+    //                        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.trxId, '', $scope.CreditCard.Number.substring(0, 6));
+    //                    } else {
+    //                        $scope.binDiscount.amount = 0;
+    //                        $scope.binDiscount.checked = true;
+    //                        $scope.binDiscount.status = returnData.data.error;
+    //                        if (returnData.data.name != null) {
+    //                            $scope.binDiscount.text = 'Maaf, kuota promo ' + returnData.data.name + ' hari ini telah habis.';
+    //                        } else {
+    //                            $scope.binDiscount.text = null;
+    //                        }
+    //                        $scope.binDiscount.replaceDiscount = false;
+    //                        $scope.binDiscount.available = false;
+    //                    }
+    //                } else {
+    //                    $scope.binDiscount.amount = 0;
+    //                    $scope.binDiscount.checked = true;
+    //                    $scope.binDiscount.status = returnData.data.error;
+    //                    $scope.binDiscount.text = '';
+    //                }
+    //            }).catch(function () {
+    //                $scope.trial++;
+    //                if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+    //                {
+    //                    $scope.binDiscount.check();
+    //                }
+    //                else {
+    //                    $scope.binDiscount.amount = 0;
+    //                    $scope.binDiscount.checked = true;
+    //                    $scope.binDiscount.checking = false;
+    //                    $scope.binDiscount.text = '';
+    //                }
+    //            });
+    //        }
+    //        else {
+    //            $log.debug('Not Authorized');
+    //            $scope.binDiscount.amount = 0;
+    //            $scope.binDiscount.checking = false;
+    //        }
+    //    }
+    //}
 
-    $scope.methodDiscount = {
-        amount: 0,
-        displayName: '',
-        status: '',
-            firstRequest: true,
-        reset: function (method) {
-            $scope.currentchoice = method;
-            ////  available = true if amount <> 0 AND method va
-            $scope.methodDiscount.available = $scope.methodDiscount.amount != 0 && method == 'VA';
-        },
-        available: false,
-        replaceDiscount: false,
-        receive: false,
-        checked: false,
-        checking: false,
-        text: '',
-        wait: false,
-            check: function () {
-            $scope.currentchoice = 'VA';
-            if ($scope.methodDiscount.firstRequest) {
-                $scope.methodDiscount.wait = true;
-                if ($scope.trial > 3) $scope.trial = 0;
-                //Check Authorization
-                $scope.methodDiscount.checking = true;
-                var vouchercode = ($scope.voucher.receive) ? $scope.voucher.code : '';
-                var authAccess = getAuthAccess();
-                if (authAccess == 1 || authAccess == 2) {
-                    $http({
-                        method: 'POST',
-                        url: CheckMethodDiscountConfig.Url,
-                        data: {
-                            rsvno: $scope.rsvNo,
-                            voucherCode: vouchercode
-                        },
-                        headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
-                        }).then(function (result) {
-                        $scope.methodDiscount.wait = false;
-                        $scope.methodDiscount.firstRequest = false;
-                        var data = result.data;
-                        if (data.status == 200) {
-                            if (data.isAvailable) {
-                                $scope.methodDiscount.amount = data.amount;
-                                $scope.methodDiscount.displayName = data.name;
-                                // get unique code for transfer payment
-                                $scope.methodDiscount.status = 'Success';
-                                if ($scope.methodDiscount.amount != 0) {
-                                    $scope.methodDiscount.text = 'Anda menggunakan promo ' + $scope.methodDiscount.displayName + '.';
-                                }
-                                if ($scope.paymentMethod == 'VirtualAccount') {
-                                    $scope.methodDiscount.available = true;
-                                    $scope.methodDiscount.replaceDiscount = data.replaceOriginalDiscount;
-                                } else {
-                                    $scope.methodDiscount.available = false;
-                                    $scope.methodDiscount.replaceDiscount = false;
-                                }
-                                $scope.binDiscount.replaceDiscount = false;
-                                $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, '', $scope.CreditCard.Number.substring(0, 6));
-                            } else {
-                                $scope.methodDiscount.amount = 0;
-                                $scope.methodDiscount.checked = true;
-                                $scope.methodDiscount.status = data.error;
-                                $scope.methodDiscount.text = (data.name) ? 'Maaf, kuota promo ' + data.name + ' hari ini telah habis.' : null;
-                                $scope.methodDiscount.available = false;
-                                $scope.methodDiscount.replaceDiscount = false;
-                            }
-                        } else {
-                            $scope.methodDiscount.amount = 0;
-                            $scope.methodDiscount.checked = true;
-                            $scope.methodDiscount.status = data.error;
-                            $scope.methodDiscount.text = '';
-                        }
-                        }).catch(function () {
-                        $scope.trial++;
-                        if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
-                        {
-                            $scope.methodDiscount.check();
-                        } else {
-                            $scope.methodDiscount.wait = false;
-                            $scope.methodDiscount.amount = 0;
-                            $scope.methodDiscount.checked = true;
-                            $scope.methodDiscount.checking = false;
-                            $scope.methodDiscount.text = '';
-                            $scope.methodDiscount.firstRequest = false;
-                        }
-                    });
-                } else {
-                    $log.debug('Not Authorized');
-                    $scope.methodDiscount.amount = 0;
-                    $scope.methodDiscount.checking = false;
-                    $scope.methodDiscount.firstRequest = false;
-                }
-            } else {
-                $scope.methodDiscount.available = $scope.methodDiscount.amount != 0;
-            }
-        }
-    }
+    //$scope.methodDiscount = {
+    //    amount: 0,
+    //    displayName: '',
+    //    status: '',
+    //        firstRequest: true,
+    //    reset: function (method) {
+    //        $scope.currentchoice = method;
+    //        ////  available = true if amount <> 0 AND method va
+    //        $scope.methodDiscount.available = $scope.methodDiscount.amount != 0 && method == 'VA';
+    //    },
+    //    available: false,
+    //    replaceDiscount: false,
+    //    receive: false,
+    //    checked: false,
+    //    checking: false,
+    //    text: '',
+    //    wait: false,
+    //        check: function () {
+    //        $scope.currentchoice = 'VA';
+    //        if ($scope.methodDiscount.firstRequest) {
+    //            $scope.methodDiscount.wait = true;
+    //            if ($scope.trial > 3) $scope.trial = 0;
+    //            //Check Authorization
+    //            $scope.methodDiscount.checking = true;
+    //            var vouchercode = ($scope.voucher.receive) ? $scope.voucher.code : '';
+    //            var authAccess = getAuthAccess();
+    //            if (authAccess == 1 || authAccess == 2) {
+    //                $http({
+    //                    method: 'POST',
+    //                    url: CheckMethodDiscountConfig.Url,
+    //                    data: {
+    //                        rsvno: $scope.rsvNo,
+    //                        voucherCode: vouchercode
+    //                    },
+    //                    headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
+    //                    }).then(function (result) {
+    //                    $scope.methodDiscount.wait = false;
+    //                    $scope.methodDiscount.firstRequest = false;
+    //                    var data = result.data;
+    //                    if (data.status == 200) {
+    //                        if (data.isAvailable) {
+    //                            $scope.methodDiscount.amount = data.amount;
+    //                            $scope.methodDiscount.displayName = data.name;
+    //                            // get unique code for transfer payment
+    //                            $scope.methodDiscount.status = 'Success';
+    //                            if ($scope.methodDiscount.amount != 0) {
+    //                                $scope.methodDiscount.text = 'Anda menggunakan promo ' + $scope.methodDiscount.displayName + '.';
+    //                            }
+    //                            if ($scope.paymentMethod == 'VirtualAccount') {
+    //                                $scope.methodDiscount.available = true;
+    //                                $scope.methodDiscount.replaceDiscount = data.replaceOriginalDiscount;
+    //                            } else {
+    //                                $scope.methodDiscount.available = false;
+    //                                $scope.methodDiscount.replaceDiscount = false;
+    //                            }
+    //                            $scope.binDiscount.replaceDiscount = false;
+    //                            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.trxId, '', $scope.CreditCard.Number.substring(0, 6));
+    //                        } else {
+    //                            $scope.methodDiscount.amount = 0;
+    //                            $scope.methodDiscount.checked = true;
+    //                            $scope.methodDiscount.status = data.error;
+    //                            $scope.methodDiscount.text = (data.name) ? 'Maaf, kuota promo ' + data.name + ' hari ini telah habis.' : null;
+    //                            $scope.methodDiscount.available = false;
+    //                            $scope.methodDiscount.replaceDiscount = false;
+    //                        }
+    //                    } else {
+    //                        $scope.methodDiscount.amount = 0;
+    //                        $scope.methodDiscount.checked = true;
+    //                        $scope.methodDiscount.status = data.error;
+    //                        $scope.methodDiscount.text = '';
+    //                    }
+    //                    }).catch(function () {
+    //                    $scope.trial++;
+    //                    if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
+    //                    {
+    //                        $scope.methodDiscount.check();
+    //                    } else {
+    //                        $scope.methodDiscount.wait = false;
+    //                        $scope.methodDiscount.amount = 0;
+    //                        $scope.methodDiscount.checked = true;
+    //                        $scope.methodDiscount.checking = false;
+    //                        $scope.methodDiscount.text = '';
+    //                        $scope.methodDiscount.firstRequest = false;
+    //                    }
+    //                });
+    //            } else {
+    //                $log.debug('Not Authorized');
+    //                $scope.methodDiscount.amount = 0;
+    //                $scope.methodDiscount.checking = false;
+    //                $scope.methodDiscount.firstRequest = false;
+    //            }
+    //        } else {
+    //            $scope.methodDiscount.available = $scope.methodDiscount.amount != 0;
+    //        }
+    //    }
+    //}
 
     // ********************************** END *********************************************
 
@@ -269,14 +271,14 @@ app.controller('paymentController', [
     $scope.UniqueCodePaymentConfig = {
         UniqueCode: 0,
         Token: '',
-        GetUniqueCode: function (rsvNo, voucherCode, bin) {
+        GetUniqueCode: function (trxId, voucherCode, bin) {
 
             if ($scope.trial > 3) {
                 $scope.trial = 0;
             }
 
-            if (!rsvNo) {
-                rsvNo = $scope.rsvNo;
+            if (!trxId) {
+                trxId = $scope.trxId;
             }
 
             //Check Authorization
@@ -286,7 +288,7 @@ app.controller('paymentController', [
                     method: 'POST',
                     url: uniqueCodePaymentConfig.Url,
                     data: {
-                        rsvNo: rsvNo,
+                        trxId: trxId,
                         discCode: voucherCode,
                         bin: bin,
                     },
@@ -301,7 +303,7 @@ app.controller('paymentController', [
                     $scope.trial++;
                     if (refreshAuthAccess() && $scope.trial < 4) //refresh cookie
                     {
-                        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, voucherCode);
+                        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.trxId, voucherCode);
                     }
                     else {
                         $log.debug('Failed to get Unique Payment Code');
@@ -340,7 +342,8 @@ app.controller('paymentController', [
                     url: CheckVoucherConfig.Url,
                     data: {
                         code: $scope.voucher.code,
-                        rsvno: $scope.rsvNo
+                        rsvno: $scope.trxId,
+                        trxId: $scope.trxId
                     },
                     headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                 }).then(function (returnData) {
@@ -358,7 +361,7 @@ app.controller('paymentController', [
                         $scope.voucher.status = 'Success';
                         $scope.binDiscount.text = '';
                         $scope.methodDiscount.text = '';
-                        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+                        $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.trxId, $scope.voucher.code);
                         $scope.voucher.receive = true;
                     }
                     else {
@@ -396,7 +399,7 @@ app.controller('paymentController', [
                 $scope.methodDiscount.check();
             }
             // get unique code for transfer payment
-            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.rsvNo, $scope.voucher.code);
+            $scope.UniqueCodePaymentConfig.GetUniqueCode($scope.trxId, $scope.voucher.code);
         }
     };
     
@@ -405,7 +408,7 @@ app.controller('paymentController', [
     // ****************************** SUBMIT PAYMENT **************************************
 
     $scope.pay = {
-        url: FlightPayConfig.Url,
+        url: $scope.isRsv ? FlightPayConfig.Url : CartCheckoutConfig.Url,
         continueVoucher: false,
         continueBIN: false,
         rsvNo: '',
@@ -548,6 +551,7 @@ app.controller('paymentController', [
             $scope.pay.checked = false;
             $scope.pay.isPaying = false;
                 $scope.pay.postData.rsvNo = $scope.rsvNo;
+                $scope.pay.postData.trxId = $scope.trxId;
                 $scope.pay.postData.discCd = $scope.voucher.confirmedCode;
             //generate payment data
             switch ($scope.paymentMethod) {
@@ -574,15 +578,15 @@ app.controller('paymentController', [
                 case "MandiriClickPay":
                     var cardNoLast10 = $scope.MandiriClickPay.CardNo + ""; // gak ngerti ini buat apa ditambah "" , convert to string?
                     cardNoLast10 = cardNoLast10.substr(cardNoLast10.length - 10);
-                    var rsvNoLast5 = $scope.rsvNo + "";
-                    rsvNoLast5 = rsvNoLast5.substr(rsvNoLast5.length - 5);
+                    var trxIdLast5 = $scope.trxId + "";
+                    trxIdLast5 = trxIdLast5.substr(trxIdLast5.length - 5);
                     var netprice = $scope.initialPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
                     $scope.pay.postData.mandiriClickPay = {
                             cardNo: $scope.MandiriClickPay.CardNo,
                             token: $scope.MandiriClickPay.Token,
                             cardNoLast10: cardNoLast10,
                             amount: netprice,
-                            rsvNoLast5: rsvNoLast5
+                            trxIdLast5: trxIdLast5
                     };
                     $scope.pay.clickpay = true;
                     break;
@@ -636,8 +640,9 @@ app.controller('paymentController', [
                 }).then(function (returnData) {
                     if (returnData.data.status == '200') {
                         $scope.pay.isSuccess = true;
-                        $scope.pay.rsvNo = $scope.rsvNo;
-                        $('form#rsvno input#rsvno-input').val($scope.pay.rsvNo);
+                        $scope.pay.rsvNo = $scope.trxId;
+                        $scope.pay.trxId = $scope.trxId;
+                        $('form#rsvno input#rsvno-input').val($scope.pay.trxId);
                         $('form#rsvno input#url-input').val(returnData.data.redirectionUrl);
                         $('form#rsvno').submit();
                         $scope.redirectUrl = returnData.data.redirectionUrl;
@@ -686,7 +691,7 @@ app.controller('paymentController', [
                                 $scope.errorLog = 'You have already choose one method before';
                                 $scope.errorMessage = 'Anda telah memilih metode pembayaran sebelumnya. Anda akan ' +
                                     'dialihkan ke halaman pembayaran';
-                                $('form#rsvno input#rsvno-input').val($scope.rsvNo);
+                                $('form#rsvno input#rsvno-input').val($scope.trxId);
                                 $('form#rsvno input#url-input').val($scope.redirectionUrl);
                                 $('form#rsvno').submit();
                                 $scope.pay.go = true;
@@ -887,7 +892,7 @@ app.controller('paymentController', [
         var method = 999;
         switch ($scope.paymentMethod) {
                 case 'BankTransfer': method = 0; break;
-                case 'CreditCard': method = 1; break;
+                case 'CreditCard': method = 1; break;                            5
                 case 'VirtualAccount': method = 2; break;
         }
             function select(obj) {

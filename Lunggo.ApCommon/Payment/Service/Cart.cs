@@ -5,7 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
+using Lunggo.Framework.Database;
 using Lunggo.Framework.Redis;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 using StackExchange.Redis;
 using Lunggo.ApCommon.Payment.Model;
 using System.Runtime.InteropServices;
@@ -22,15 +25,20 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public ViewCartOutput ViewCart(string user)
+        public ViewCartOutput ViewCart()
         {
-            
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var cartId = GetUserIdCart(userId);
+            return ViewCart(cartId);
+        }
+
+        public ViewCartOutput ViewCart(string cartId)
+        {
             var cartList = new ViewCartOutput();
             cartList.RsvNoList = new List<string>();
             cartList.TotalPrice = 0;
-            var idCart = GetUserIdCart(user);
             var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + idCart;
+            var redisKey = "CartId:" + cartId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (long i = 0; i < redisDb.ListLength(redisKey); i++)
             {
@@ -40,6 +48,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 cartList.TotalPrice += paymentDetail.OriginalPriceIdr;
             }
             cartList.StatusCode = HttpStatusCode.OK;
+            cartList.CartId = cartId;
             return cartList;
         }
 

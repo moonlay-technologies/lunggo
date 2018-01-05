@@ -64,7 +64,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("CartId", false),
+				new ColumnMetadata("CartId", true),
 				new ColumnMetadata("RsvNoList", false),
 
             };
