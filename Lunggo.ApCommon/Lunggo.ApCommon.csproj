@@ -227,6 +227,7 @@
     <Compile Include="Activity\Model\Logic\GetDetailActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Database.cs" />
