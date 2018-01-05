@@ -68,6 +68,7 @@
     <Compile Include="TableRecord\HotelRoomTableRecord.cs" />
     <Compile Include="TableRecord\MarginTableRecord.cs" />
     <Compile Include="TableRecord\MarketPriceTableRecord.cs" />
+    <Compile Include="TableRecord\NotificationTableRecord.cs" />
     <Compile Include="TableRecord\OperatorTableRecord.cs" />
     <Compile Include="TableRecord\PaymentTableRecord.cs" />
     <Compile Include="TableRecord\PriceTableRecord.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="TableRepository\HotelRoomRepository.cs" />
     <Compile Include="TableRepository\MarginRepository.cs" />
     <Compile Include="TableRepository\MarketPriceRepository.cs" />
+    <Compile Include="TableRepository\NotificationRepository.cs" />
     <Compile Include="TableRepository\OperatorRepository.cs" />
     <Compile Include="TableRepository\PaymentRepository.cs" />
     <Compile Include="TableRepository\PriceRepository.cs" />

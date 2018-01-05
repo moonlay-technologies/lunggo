@@ -1,15 +1,15 @@
 ﻿using Lunggo.Framework.Database;
-using System.Collections.Generic;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using System.Collections.Generic;
 
-namespace Lunggo.Framework.Notifications
+namespace Lunggo.ApCommon.Notifications
 {
     public partial class NotificationService
     {
         private static readonly NotificationService Instance = new NotificationService();
         private bool _isInitialized;
-        private static readonly AzureNotificationClient Client = AzureNotificationClient.GetClientInstance();
+        //private static readonly AzureNotificationClient Client = AzureNotificationClient.GetClientInstance();
 
         private NotificationService()
         {
@@ -19,7 +19,7 @@ namespace Lunggo.Framework.Notifications
         {
             if (!_isInitialized)
             {
-                Client.Init(connString, hubName);
+                //Client.Init(connString, hubName);
                 _isInitialized = true;
             }
         }
@@ -41,12 +41,12 @@ namespace Lunggo.Framework.Notifications
             {
                 var notificationRecord = new NotificationTableRecord
                 {
-                    UserId = user,
-                    ActivityId = activityId
+                    Handle = notificationHandle,
+                    DeviceId = deviceId
                 };
                 try
                 {
-                    WishlistTableRepo.GetInstance().Insert(conn, wishlistRecord);
+                    NotificationTableRepo.GetInstance().Insert(conn, notificationRecord);
                 }
                 catch
                 {
@@ -59,22 +59,23 @@ namespace Lunggo.Framework.Notifications
         public bool UpdateTags(string registrationId, string notificationHandle, Platform platform,
             Dictionary<string, string> tags)
         {
-            return Client.UpdateTags(registrationId, notificationHandle, platform, tags);
+            //return Client.UpdateTags(registrationId, notificationHandle, platform, tags);
+            return false;
         }
 
         public void DeleteRegistration(string registrationId)
         {
-            Client.DeleteRegistration(registrationId);
+            //Client.DeleteRegistration(registrationId);
         }
 
         public void PushNotification(Notification notification, Dictionary<string, string> tags)
         {
-            Client.PushNotification(notification, tags);
+            //Client.PushNotification(notification, tags);
         }
 
         public void PushSilentNotification(object data, Dictionary<string, string> tags)
         {
-            Client.PushSilentNotification(data, tags);
+            //Client.PushSilentNotification(data, tags);
         }
     }
 }

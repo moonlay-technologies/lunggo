@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Notifications;
+using Lunggo.ApCommon.Notifications;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

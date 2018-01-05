@@ -13,7 +13,7 @@ using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
-using Lunggo.Framework.Notifications;
+using Lunggo.ApCommon.Notifications;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;

@@ -80,7 +80,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return response;
         }
 
-        internal string GetUserIdCart(string user)
+        public string GetUserIdCart(string user)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "NameId:" + user;
