@@ -35,7 +35,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
                 return View(new PaymentData
                 {
-                    TimeLimit = PaymentService.GetInstance().GetPayment(payment.RsvNoList[0]).TimeLimit,
+                    TimeLimit = PaymentService.GetInstance().GetPayment(cartId).TimeLimit,
                     TrxId = payment.CartId,
                     OriginalPrice = payment.TotalPrice
                 });

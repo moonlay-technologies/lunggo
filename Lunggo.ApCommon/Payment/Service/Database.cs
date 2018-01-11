@@ -18,25 +18,40 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails GetPayment(string id)
+        public PaymentDetails GetPayment(string cartIdOrRsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rsvNos = CartsTableRepo.GetInstance()
-                        .Find(conn, new CartsTableRecord {CartId = id})
-                        .Select(r => r.RsvNoList).ToList();
+                if (cartIdOrRsvNo.Length < 15)
+                {
+                    var rsvNo = cartIdOrRsvNo;
+                    return PaymentDetails.GetFromDb(rsvNo);
+                }
+                else
+                {
+                    var cartId = cartIdOrRsvNo;
+                    
+                    var cartRsvNos = ViewCart(cartId).RsvNoList;
+                    if (cartRsvNos == null || !cartRsvNos.Any())
+                    {
 
-                if (!rsvNos.Any())
-                    return PaymentDetails.GetFromDb(id);
+                        cartRsvNos = CartsTableRepo.GetInstance()
+                            .Find(conn, new CartsTableRecord {CartId = cartId})
+                            .Select(r => r.RsvNoList).ToList();
+                        if (!cartRsvNos.Any())
+                            return null;
+                    }
 
-                var payments = rsvNos.Select(PaymentDetails.GetFromDb).ToList();
-                var payment = payments[0];
-                payment.UniqueCode = payments.Sum(p => p.UniqueCode);
-                payment.FinalPriceIdr = payments.Sum(p => p.FinalPriceIdr);
-                payment.LocalFinalPrice = payments.Sum(p => p.LocalFinalPrice);
-                payment.PaidAmountIdr = payments.Sum(p => p.PaidAmountIdr);
-                payment.LocalPaidAmount = payments.Sum(p => p.LocalPaidAmount);
-                return payment;
+                    var payments = cartRsvNos.Select(PaymentDetails.GetFromDb).ToList();
+                    var payment = payments[0];
+                    payment.UniqueCode = payments.Sum(p => p.UniqueCode);
+                    payment.FinalPriceIdr = payments.Sum(p => p.FinalPriceIdr);
+                    payment.LocalFinalPrice = payments.Sum(p => p.LocalFinalPrice);
+                    payment.PaidAmountIdr = payments.Sum(p => p.PaidAmountIdr);
+                    payment.LocalPaidAmount = payments.Sum(p => p.LocalPaidAmount);
+                    payment.TimeLimit = payments.Min(p => p.TimeLimit);
+                    return payment;
+                }   
             }
         }
 

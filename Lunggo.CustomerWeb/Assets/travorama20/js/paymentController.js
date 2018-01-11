@@ -22,7 +22,7 @@ app.controller('paymentController', [
     $scope.trips = trips;
     $scope.submethod = '';
     $scope.stepClass = '';
-    $scope.redirectionUrl = redirectionUrl;
+    //$scope.redirectionUrl = redirectionUrl;
     $scope.expired = false;
     $scope.errorLog = '';
     $scope.errorMessage = '';

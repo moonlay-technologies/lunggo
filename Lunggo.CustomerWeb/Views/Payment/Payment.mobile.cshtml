@@ -86,10 +86,10 @@
             @:price = @reservation.ActivityDetail.Price;
             @:originalPrice = '@reservation.ActivityDetail.Price';
         }*@
-        var redirectionUrl;
-        @if (Model.PaymentDetails.RedirectionUrl != null) {
+        @*var redirectionUrl;
+        @if (Model..PaymentDetails.RedirectionUrl != null) {
             @:redirectionUrl = '@Model.PaymentDetails.RedirectionUrl';
-        }
+        }*@
         @*@if (Model.Reservation is FlightReservationForDisplay)
         {
             @:var departureDate;

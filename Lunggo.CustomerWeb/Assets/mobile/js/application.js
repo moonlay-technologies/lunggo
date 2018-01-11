@@ -1066,7 +1066,11 @@ function getAnonymousAccessByRefreshToken(refreshToken) {
         url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "refreshtoken": refreshToken,
+            "clientId": "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=",
+            "clientSecret": "VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
@@ -1086,7 +1090,11 @@ function getLoginAccessByRefreshToken(refreshToken) {
         url: LoginConfig.Url,
         method: 'POST',
         async: false,
-        data: JSON.stringify({ "refreshtoken": refreshToken, "clientId": "Jajal", "clientSecret": "Standar" }),
+        data: JSON.stringify({
+            "refreshtoken": refreshToken,
+            "clientId": "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=",
+            "clientSecret": "VFVSTk1sbHFiR3hhVjAweFdXMUdhbHBYVVhwYVIxRXpUWHBCTlUxRVRtdGFhbHBvV1ZSU2FFMUhSbXhOUkdob1dtcEpkMDVSUFQwPQ=="
+        }),
         contentType: 'application/json',
     }).done(function (returnData) {
         if (returnData.status == '200') {
