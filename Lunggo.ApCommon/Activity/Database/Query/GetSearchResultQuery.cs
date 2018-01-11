@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             if (condition.Id != null)
                 clauseBuilder.Append("act.Id IN @Id AND ");
             if (condition.Id == null)
-                clauseBuilder.Append("ad.Date BETWEEN @StartDate AND @EndDate AND asp.AgeId = 2 AND ");
+                clauseBuilder.Append("ad.Date BETWEEN @StartDate AND @EndDate AND asp.Flag = 1 AND ");
             clauseBuilder.Remove(clauseBuilder.Length - 4, 4);
             return clauseBuilder.ToString();
         }
