@@ -173,7 +173,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\Constant\BookingStatus.cs" />
+    <Compile Include="Activity\Database\Query\DeleteDaySessionFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityListFromWishlistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityPackageDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityPackageIdDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityTicketDetaiDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
     <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
@@ -195,14 +199,20 @@
     <Compile Include="Activity\Model\ActivityDetail.cs" />
     <Compile Include="Activity\Model\ActivityFilter.cs" />
     <Compile Include="Activity\Model\ActivityReservation.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityAddSessionOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityDeleteSessionInput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityDeleteSessionOutput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityUpdateInput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityUpdateOutput.cs" />
     <Compile Include="Activity\Model\Logic\AddToWishlistInput.cs" />
     <Compile Include="Activity\Model\Logic\AddToWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityAddSessionInput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistInput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityTicketDetailInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityTicketDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentDetailInput.cs" />
@@ -222,16 +232,22 @@
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
+    <Compile Include="Activity\Model\Logic\LandingPageInput.cs" />
+    <Compile Include="Activity\Model\Logic\LandingPageOutput.cs" />
     <Compile Include="Activity\Model\Logic\OutputBase.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\GetDetailActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Database.cs" />
+    <Compile Include="Activity\Service\GetActivityTicketDetail.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
+    <Compile Include="Activity\Service\LandingPage.cs" />
+    <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
     <Compile Include="Activity\Service\Operator\UpdateActivity.cs" />
     <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />
     <Compile Include="Activity\Service\Operator\GetAppointmentList.cs" />
@@ -476,6 +492,10 @@
     <Compile Include="Hotel\Model\SearchHotelResult.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCheckRateHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsSearchHotel.cs" />
+    <Compile Include="Notifications\Notification.cs" />
+    <Compile Include="Notifications\NotificationClient.cs" />
+    <Compile Include="Notifications\NotificationService.cs" />
+    <Compile Include="Notifications\Platform.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightStop.cs" />
@@ -714,7 +734,6 @@
     <Compile Include="Payment\Model\Data\MandiriEcash.cs" />
     <Compile Include="Payment\Model\Data\TelkomselTcash.cs" />
     <Compile Include="Payment\Model\Data\VirtualAccount.cs" />
-    <Compile Include="Payment\Model\Logic\ViewCartInput.cs" />
     <Compile Include="Payment\Model\Surcharge.cs" />
     <Compile Include="Payment\Model\Transaction.cs" />
     <Compile Include="Payment\Model\UsedDiscount.cs" />
@@ -726,7 +745,7 @@
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
-    <Compile Include="Payment\Model\ViewCartOutput.cs" />
+    <Compile Include="Payment\Model\Cart.cs" />
     <Compile Include="Payment\Query\CreateAccountByUserQuery.cs" />
     <Compile Include="Payment\Query\GetAccountUserQuery.cs" />
     <Compile Include="Payment\Query\GetBalanceQuery.cs" />
@@ -1047,7 +1066,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Activity\Service\Admin\" />
     <Folder Include="Hotel\Logic\Search\" />
+    <Folder Include="Payment\Model\Logic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets')" />

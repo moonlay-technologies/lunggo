@@ -1,4 +1,5 @@
 ﻿using System;
+using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Payment.Model
@@ -11,5 +12,6 @@ namespace Lunggo.ApCommon.Payment.Model
         public DateTime OrderTime { get; set; }
         [JsonProperty("gross_amount")]
         public long Amount { get; set; }
+        public Contact Contact { get; set; }
     }
 }

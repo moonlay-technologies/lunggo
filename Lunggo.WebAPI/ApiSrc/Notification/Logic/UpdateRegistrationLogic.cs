@@ -8,7 +8,7 @@ using System.Web.Http;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Notifications;
+using Lunggo.ApCommon.Notifications;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Notification.Model;

@@ -96,7 +96,9 @@ namespace Lunggo.ApCommon.Activity.Service
                 AdditionalContents = activityDetail.AdditionalContents,
                 Cancellation = activityDetail.Cancellation,
                 Date = activityDetail.Date,
-                RequiredPaxData = requiredPaxData
+                RequiredPaxData = requiredPaxData,
+                Package = activityDetail.Package,
+                Wishlisted = activityDetail.Wishlisted
             };
 
             return convertedActivity;

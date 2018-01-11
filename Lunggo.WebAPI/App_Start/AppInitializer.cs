@@ -13,7 +13,7 @@ using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
-using Lunggo.Framework.Notifications;
+using Lunggo.ApCommon.Notifications;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
@@ -30,7 +30,7 @@ namespace Lunggo.WebAPI
             //InitI18NMessageManager();
             InitDatabaseService();
             InitRedisService();
-            InitFlightService();
+            //InitFlightService();
             InitQueueService();
             InitMailService();
             InitBlobStorageService();
@@ -41,8 +41,8 @@ namespace Lunggo.WebAPI
             InitNotificationService();
             InitLogService();
             //InitDocumentsService();
-            InitHotelService();
-            InitAutocompleteManager();
+            //InitHotelService();
+            //InitAutocompleteManager();
         }
 
         private static void InitBlobStorageService()

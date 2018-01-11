@@ -357,7 +357,7 @@ namespace Lunggo.Configuration
             const string getReservationPath = @"/v1/rsv/";
             const string resendConfirmationEmailPath = @"/v1/resendconfirmationemail";
             const string uniqueCodePaymentPath = @"/v1/payment/uniquecode";
-            const string cartCheckoutPath = @"/v1/cart/checkout";
+            const string cartCheckoutPath = @"/v1/payment/cart/checkout";
             const string hotelSearchPath = @"/v1/hotel/search";
             const string hotelDetailsPath = @"/v1/hotel/gethoteldetail";
             const string hotelSelectPath = @"/v1/hotel/select";

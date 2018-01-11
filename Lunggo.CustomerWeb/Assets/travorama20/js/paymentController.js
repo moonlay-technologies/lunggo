@@ -550,9 +550,9 @@ app.controller('paymentController', [
             $scope.pay.isSuccess = false,
             $scope.pay.checked = false;
             $scope.pay.isPaying = false;
-                $scope.pay.postData.rsvNo = $scope.rsvNo;
-                $scope.pay.postData.trxId = $scope.trxId;
-                $scope.pay.postData.discCd = $scope.voucher.confirmedCode;
+            $scope.pay.postData.rsvNo = $scope.rsvNo;
+            $scope.pay.postData.cartId = $scope.trxId;
+            $scope.pay.postData.discCd = $scope.voucher.confirmedCode;
             //generate payment data
             switch ($scope.paymentMethod) {
                 case "BankTransfer":

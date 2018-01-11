@@ -23,8 +23,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 apiResponse.ErrorCode = "ERR_USER_UNDEFINED";
                 return apiResponse;
             }
-            var viewCartResponse = ActivityService.GetInstance().GetWishlist(user);
-            apiResponse = AssembleApiResponse(viewCartResponse);
+            var getWishlistResponse = ActivityService.GetInstance().GetWishlist(user);
+            apiResponse = AssembleApiResponse(getWishlistResponse);
             return apiResponse;
         }
 

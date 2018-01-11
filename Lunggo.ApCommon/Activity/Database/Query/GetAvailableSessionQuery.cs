@@ -25,14 +25,14 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateJoinClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("FROM ActivityDate ");
+            clauseBuilder.Append("FROM ActivityRegularDate ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ActivityDate.ActivityId = @ActivityId AND ActivityDate.Date = @Date");
+            clauseBuilder.Append("WHERE ActivityRegularDate.ActivityId = @ActivityId AND ActivityRegularDate.AvailableDay = @AvailableDay");
             return clauseBuilder.ToString();
         }
     }

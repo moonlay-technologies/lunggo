@@ -50,6 +50,7 @@
     <Compile Include="TableRecord\AccountUserTableRecord.cs" />
     <Compile Include="TableRecord\ActivityBuyPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPackageTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityRegularDateTableRecord.cs" />
     <Compile Include="TableRecord\ActivityReservationTableRecord.cs" />
     <Compile Include="TableRecord\ActivitySellPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityTableRecord.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="TableRecord\HotelRoomTableRecord.cs" />
     <Compile Include="TableRecord\MarginTableRecord.cs" />
     <Compile Include="TableRecord\MarketPriceTableRecord.cs" />
+    <Compile Include="TableRecord\NotificationTableRecord.cs" />
     <Compile Include="TableRecord\OperatorTableRecord.cs" />
     <Compile Include="TableRecord\PaymentTableRecord.cs" />
     <Compile Include="TableRecord\PriceTableRecord.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="TableRepository\AccountUserRepository.cs" />
     <Compile Include="TableRepository\ActivityBuyPriceRepository.cs" />
     <Compile Include="TableRepository\ActivityPackageRepository.cs" />
+    <Compile Include="TableRepository\ActivityRegularDateRepository.cs" />
     <Compile Include="TableRepository\ActivityRepository.cs" />
     <Compile Include="TableRepository\ActivityReservationRepository.cs" />
     <Compile Include="TableRepository\ActivitySellPriceRepository.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="TableRepository\HotelRoomRepository.cs" />
     <Compile Include="TableRepository\MarginRepository.cs" />
     <Compile Include="TableRepository\MarketPriceRepository.cs" />
+    <Compile Include="TableRepository\NotificationRepository.cs" />
     <Compile Include="TableRepository\OperatorRepository.cs" />
     <Compile Include="TableRepository\PaymentRepository.cs" />
     <Compile Include="TableRepository\PriceRepository.cs" />

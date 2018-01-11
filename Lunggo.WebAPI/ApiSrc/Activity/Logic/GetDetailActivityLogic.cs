@@ -52,9 +52,18 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static GetDetailActivityApiResponse AssembleApiResponse(GetDetailActivityOutput searchServiceResponse)
         {
+            if (searchServiceResponse == null)
+            {
+                return new GetDetailActivityApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_INVALID_REQUEST"
+                };
+            }
             var apiResponse = new GetDetailActivityApiResponse
             {
-                ActivityDetail = ActivityService.GetInstance().ConvertToActivityDetailForDisplay(searchServiceResponse.ActivityDetail)
+                ActivityDetail = ActivityService.GetInstance().ConvertToActivityDetailForDisplay(searchServiceResponse.ActivityDetail),
+                StatusCode = HttpStatusCode.OK
             };
             return apiResponse;
             

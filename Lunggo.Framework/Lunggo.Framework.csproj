@@ -252,13 +252,6 @@
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="I18nMessage\LangToISOCodeMapper.cs" />
     <Compile Include="Mail\SendGridMailClient.cs" />
-    <Compile Include="Notifications\AzureNotificationClient.cs" />
-    <Compile Include="Notifications\Notification.cs" />
-    <Compile Include="Notifications\NotificationClient.cs" />
-    <Compile Include="Notifications\NotificationService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Notifications\Platform.cs" />
     <Compile Include="Pattern\SingletonBase.cs" />
     <Compile Include="Payment\CreditCardProcessor.cs" />
     <Compile Include="Payment\Data\CIMBPaymentDataDummy.cs" />

@@ -8,6 +8,9 @@ using Lunggo.WebAPI.ApiSrc.Notification.Logic;
 using Lunggo.WebAPI.ApiSrc.Notification.Model;
 using Microsoft.Azure.NotificationHubs;
 using Newtonsoft.Json;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
+
 
 namespace Lunggo.WebAPI.ApiSrc.Notification
 {
@@ -15,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
     {
         // POST api/register
         // This creates a registration id
-        [HttpPost]
+        [HttpPut]
         [Route("v1/notification/registration")]
         [Level1Authorize]
         public async Task<ApiResponseBase> RegisterDevice()
@@ -35,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
 
         // PUT api/register/5
         // This creates or updates a registration (with provided channelURI) at the specified id
-        [HttpPut]
+        [HttpPatch]
         [Route("v1/notification/registration")]
         [Level1Authorize]
         public async Task<ApiResponseBase> UpdateRegistration()

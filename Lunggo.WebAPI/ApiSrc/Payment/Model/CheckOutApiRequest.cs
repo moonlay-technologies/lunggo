@@ -6,6 +6,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
 {
     public class CheckOutApiRequest : PaymentData
     {
+        [JsonProperty("cartId", NullValueHandling = NullValueHandling.Ignore)]
+        public string CartId { get; set; }
         [JsonProperty("method", NullValueHandling = NullValueHandling.Ignore)]
         public PaymentMethod Method { get; set; }
         [JsonProperty("submethod", NullValueHandling = NullValueHandling.Ignore)]

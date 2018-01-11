@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Notifications;
+using Lunggo.ApCommon.Notifications;
 
 namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {

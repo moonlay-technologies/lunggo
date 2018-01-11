@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.WebControls;
 using DeathByCaptcha;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Service;
@@ -30,12 +31,11 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPaymentCart(string user, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public PaymentDetails SubmitPaymentCart(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
-            var paymentDetails = new PaymentDetails();
-            var cartId = GetUserIdCart(user);
-            paymentDetails = GetFinalPriceCart(paymentData, discountCode);
+            var cart = ViewCart(cartId);
+            var paymentDetails = GetFinalPriceCart(cart, paymentData, discountCode);
             if (paymentDetails == null)
             {
                 return null;
@@ -44,14 +44,14 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Method = method;
             paymentDetails.Submethod = submethod;
             paymentDetails.Medium = GetPaymentMedium(method, submethod);
-            var transactionDetails = ConstructTransactionDetails(cartId, paymentDetails);
+            var transactionDetails = ConstructTransactionDetails(cartId, paymentDetails, cart.Contact);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);           
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
                 UpdateCartPayment(method, submethod, paymentData, discountCode, paymentDetails);
             }
-            InsertCartToDb(cartId, ViewCart(user).RsvNoList);
+            InsertCartToDb(cartId, ViewCart(cartId).RsvNoList);
             DeleteCartIdRedis(cartId);
             isUpdated = true;
             return paymentDetails;
@@ -236,7 +236,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
-            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
+            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails, reservation.Contact);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
@@ -457,13 +457,14 @@ namespace Lunggo.ApCommon.Payment.Service
             return itemDetails;
         }
 
-        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment)
+        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment, Contact contact)
         {
             return new TransactionDetails
             {
                 OrderId = rsvNo,
                 OrderTime = DateTime.UtcNow,
-                Amount = (long)payment.FinalPriceIdr
+                Amount = (long)payment.FinalPriceIdr,
+                Contact = contact
             };
         }
 
@@ -542,14 +543,26 @@ namespace Lunggo.ApCommon.Payment.Service
 
             return uniqueCode;
         }
-        public PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
+
+        internal PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
-            var rsvNoList = ViewCart(user).RsvNoList;
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var cartId = GetCartId(userId);
+            return GetFinalPriceCart(cartId, paymentData, discountCode);
+        }
+
+        internal PaymentDetails GetFinalPriceCart(string cartId, PaymentData paymentData, string discountCode)
+        {
+            var cart = ViewCart(cartId);
+            return GetFinalPriceCart(cart, paymentData, discountCode);
+        }
+
+        internal PaymentDetails GetFinalPriceCart(Cart cart, PaymentData paymentData, string discountCode)
+        {
+            var rsvNoList = cart.RsvNoList;
             var finalPrice = new PaymentDetails();
             finalPrice.FinalPriceIdr = 0;
-            var originalTotalPrice = ViewCart(user).TotalPrice;
-
+            var originalTotalPrice = cart.TotalPrice;
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -576,10 +589,11 @@ namespace Lunggo.ApCommon.Payment.Service
                         paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
                         return paymentDetails;
                     }
-                    paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                    var totalDiscount = (campaign.OriginalPrice / originalTotalPrice) * campaign.TotalDiscount;
+                    paymentDetails.FinalPriceIdr = campaign.OriginalPrice - totalDiscount;
                     paymentDetails.Discount = campaign.Discount;
                     paymentDetails.DiscountCode = campaign.VoucherCode;
-                    paymentDetails.DiscountNominal = campaign.TotalDiscount;
+                    paymentDetails.DiscountNominal = totalDiscount;
                 }
 
                 if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
@@ -721,11 +735,12 @@ namespace Lunggo.ApCommon.Payment.Service
 
             return finalPrice;
         }
-        public void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
+        internal void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
             PaymentData paymentData, string discountCode, PaymentDetails paymentDetailsCart)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
-            var rsvNoList = ViewCart(user).RsvNoList;
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var originalTotalPrice = ViewCart(userId).TotalPrice;
+            var rsvNoList = ViewCart(userId).RsvNoList;
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -747,10 +762,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (!string.IsNullOrEmpty(discountCode))
                 {
                     var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-                    paymentDetails.FinalPriceIdr = campaign.DiscountedPrice;
+                    var totalDiscount = (campaign.OriginalPrice / originalTotalPrice) * campaign.TotalDiscount;
+                    paymentDetails.FinalPriceIdr = campaign.OriginalPrice - totalDiscount;
                     paymentDetails.Discount = campaign.Discount;
                     paymentDetails.DiscountCode = campaign.VoucherCode;
-                    paymentDetails.DiscountNominal = campaign.TotalDiscount;
+                    paymentDetails.DiscountNominal = totalDiscount;
                 }
 
                 if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
@@ -882,12 +898,12 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void DeleteCartIdRedis(string cartId)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
+            var userId = HttpContext.Current.User.Identity.GetId();
             var redisService = RedisService.GetInstance();
             var redisKeyCartId = "CartId:" + cartId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             
-            var redisKeyNameId = "NameId:" + user;
+            var redisKeyNameId = "NameId:" + userId;
             redisDb.KeyDelete(redisKeyNameId);
             redisDb.KeyDelete(redisKeyCartId);
         }

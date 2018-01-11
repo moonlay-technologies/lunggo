@@ -9,5 +9,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     {
         [JsonProperty("activityDetail", NullValueHandling = NullValueHandling.Ignore)]
         public ActivityDetailForDisplay ActivityDetail { get; set; }
+
     }
 }
