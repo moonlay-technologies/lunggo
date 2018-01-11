@@ -5,7 +5,6 @@ using System.Web;
 using Lunggo.WebAPI.ApiSrc.Cart.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Payment.Model.Logic;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System.Net;
 using Lunggo.ApCommon.Activity.Model;

@@ -22,35 +22,34 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public ViewCartOutput ViewCart(string user)
+        public ViewCartOutput ViewCart(string userId)
         {
-            
-            var cartList = new ViewCartOutput();
-            cartList.RsvNoList = new List<string>();
-            cartList.TotalPrice = 0;
-            var idCart = GetUserIdCart(user);
+            var cart = new ViewCartOutput();
+            cart.RsvNoList = new List<string>();
+            cart.TotalPrice = 0;
+            var idCart = GetUserIdCart(userId);
             var redisService = RedisService.GetInstance();
             var redisKey = "CartId:" + idCart;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (long i = 0; i < redisDb.ListLength(redisKey); i++)
             {
                 string rsvNo = redisDb.ListGetByIndex(redisKey, i);         
-                cartList.RsvNoList.Add(rsvNo);
+                cart.RsvNoList.Add(rsvNo);
                 var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
-                cartList.TotalPrice += paymentDetail.OriginalPriceIdr;
+                cart.TotalPrice += paymentDetail.OriginalPriceIdr;
             }
-            cartList.StatusCode = HttpStatusCode.OK;
-            return cartList;
+            cart.StatusCode = HttpStatusCode.OK;
+            return cart;
         }
 
-        public AddToCartOutput AddToCart(AddToCartInput input, string user)
+        public AddToCartOutput AddToCart(AddToCartInput input, string userId)
         {
             var response = new AddToCartOutput();
-            var idCart = GetUserIdCart(user);
+            var idCart = GetUserIdCart(userId);
             if (idCart == null)
             {
-                AddIdCart(user);
-                idCart = GetUserIdCart(user);
+                AddIdCart(userId);
+                idCart = GetUserIdCart(userId);
             }
             var checkRsv = ActivityService.GetInstance().GetReservation(input.RsvNo);
             if (checkRsv == null)
@@ -65,13 +64,13 @@ namespace Lunggo.ApCommon.Payment.Service
         public DeleteRsvFromCartOutput DeleteFromCart(DeleteRsvFromCartInput request)
         {
             var response = new DeleteRsvFromCartOutput();
-            var user = HttpContext.Current.User.Identity.GetId();
-            if (user == null)
+            var userId = HttpContext.Current.User.Identity.GetId();
+            if (userId == null)
             {
                 response.StatusCode = HttpStatusCode.Unauthorized;
                 return response;
             }
-            var idCart = GetUserIdCart(user);
+            var idCart = GetUserIdCart(userId);
             var redisService = RedisService.GetInstance();
             var redisKey = "CartId:" + idCart;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
@@ -80,10 +79,10 @@ namespace Lunggo.ApCommon.Payment.Service
             return response;
         }
 
-        public string GetUserIdCart(string user)
+        public string GetUserIdCart(string userId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "NameId:" + user;
+            var redisKey = "NameId:" + userId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             try
             {
@@ -97,10 +96,10 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
         
-        internal void AddIdCart(string user)
+        internal void AddIdCart(string userId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "NameId:" + user;
+            var redisKey = "NameId:" + userId;
             var redisValue = Guid.NewGuid();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, redisValue.ToString());            

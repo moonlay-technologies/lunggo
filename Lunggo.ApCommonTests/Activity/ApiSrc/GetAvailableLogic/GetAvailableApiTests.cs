@@ -56,7 +56,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetAvailableLogic.Tests
 
             var expectedResult = new GetAvailableDatesApiResponse()
             {
-                AvailableDateTimes = new List<DateAndAvailableHour>() { activityDateTimes }
+               // AvailableDateTimes = new List<DateAndAvailableHour>() { activityDateTimes }
             };
 
             Assert.AreEqual(expectedResult.AvailableDateTimes[0].Date, actualResult.AvailableDateTimes[0].Date);

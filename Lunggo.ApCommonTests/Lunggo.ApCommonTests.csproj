@@ -113,9 +113,11 @@
     <Compile Include="Activity\ApiSrc\SearchLogic\SearchApiTests.cs" />
     <Compile Include="Activity\ApiSrc\GetDetailLogic\GetDetailApiTests.cs" />
     <Compile Include="Activity\ApiSrc\SearchLogic\TryPreprocessTests.cs" />
+    <Compile Include="Activity\ApiSrc\WishlistLogic\AddToWishlistApiTests.cs" />
     <Compile Include="Activity\Service\InitTests.cs" />
     <Compile Include="Activity\Service\ModelConversionTests.cs" />
-    <Compile Include="Cart\ApiSrc\ViewCartLogicTest.cs" />
+    <Compile Include="Cart\ApiSrc\AddToCartLogicTest.cs" />
+    <Compile Include="Cart\Service\ViewCartServiceTest.cs" />
     <Compile Include="Init\Initializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

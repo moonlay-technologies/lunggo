@@ -537,11 +537,11 @@ namespace Lunggo.ApCommon.Payment.Service
         }
         internal PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
-            var rsvNoList = ViewCart(user).RsvNoList;
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var rsvNoList = ViewCart(userId).RsvNoList;
             var finalPrice = new PaymentDetails();
             finalPrice.FinalPriceIdr = 0;
-            var originalTotalPrice = ViewCart(user).TotalPrice;
+            var originalTotalPrice = ViewCart(userId).TotalPrice;
             var numberOfRsvNo = rsvNoList.Count();
             foreach (string rsvNo in rsvNoList)
             {
@@ -718,9 +718,9 @@ namespace Lunggo.ApCommon.Payment.Service
         internal void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
             PaymentData paymentData, string discountCode, PaymentDetails paymentDetailsCart)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
-            var originalTotalPrice = ViewCart(user).TotalPrice;
-            var rsvNoList = ViewCart(user).RsvNoList;
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var originalTotalPrice = ViewCart(userId).TotalPrice;
+            var rsvNoList = ViewCart(userId).RsvNoList;
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -878,12 +878,12 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void DeleteCartIdRedis(string cartId)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
+            var userId = HttpContext.Current.User.Identity.GetId();
             var redisService = RedisService.GetInstance();
             var redisKeyCartId = "CartId:" + cartId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             
-            var redisKeyNameId = "NameId:" + user;
+            var redisKeyNameId = "NameId:" + userId;
             redisDb.KeyDelete(redisKeyNameId);
             redisDb.KeyDelete(redisKeyCartId);
         }

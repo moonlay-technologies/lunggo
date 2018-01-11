@@ -46,8 +46,11 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime? Date { get; set; }
         [JsonProperty("requiredPaxData", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> RequiredPaxData { get; set; }
+        [JsonProperty("package", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ActivityPackage> Package { get; set; }
         [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> Whislisted { get; set; }
+        public bool Wishlisted { get; set; }
+        
 
     }
     public class ActivityDetail
@@ -80,6 +83,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorEmail { get; set; }
         public string OperatorPhone { get; set; }
         public AdditionalContent AdditionalContents { get; set; }
+        public List<ActivityPackage> Package { get; set; }
+        public bool Wishlisted { get; set; }
     }
 
     public class AdditionalContent
@@ -105,5 +110,39 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("availableHours", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> AvailableHours { get; set; }
     }
-    
+
+    public class AvailableDayAndHours
+    {
+        [JsonProperty("availableDay", NullValueHandling = NullValueHandling.Ignore)]
+        public string Day { get; set; }
+        [JsonProperty("availableHours", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> AvailableHours { get; set; }
+    }
+
+    public class ActivityPackage
+    {
+        [JsonProperty("packageName", NullValueHandling = NullValueHandling.Ignore)]
+        public string PackageName { get; set; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description{ get; set; }
+        [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ActivityPricePackage> Price { get; set; }
+    }
+
+    public class ActivityPackageId
+    {
+        [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
+        public long PackageId { get; set; }
+    }
+
+    public class ActivityPricePackage
+    {
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public long Type { get; set; }
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
+        [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Amount { get; set; }
+    }
+
 }

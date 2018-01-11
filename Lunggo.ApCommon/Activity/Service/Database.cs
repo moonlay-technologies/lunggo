@@ -79,6 +79,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 var additionalContentsDetail = GetAdditionalContentActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId });
 
+                if (details.Count() == 0)
+                {
+                    return null;
+                }
                 var activityDetail = details.First();
 
                 activityDetail.BookingStatus = BookingStatus.Booked;
@@ -89,6 +93,16 @@ namespace Lunggo.ApCommon.Activity.Service
                     Contents = additionalContentsDetail.ToList()
                 };
 
+                var inputWishlist = new SearchActivityInput();
+                var activityIdWishlist = new ActivityFilter();
+                var idList = new List<long>();
+                idList.Add(input.ActivityId.GetValueOrDefault());
+                activityIdWishlist.Id = idList;
+                inputWishlist.ActivityFilter = activityIdWishlist;
+                var wishlistedList = GetActivitiesFromDb(inputWishlist).ActivityList;
+                activityDetail.Wishlisted = wishlistedList[0].Wishlisted;
+
+                activityDetail.Package = GetActivityTicketDetailFromDb(input).Package;
                 var output = new GetDetailActivityOutput
                 {
                     ActivityDetail = activityDetail
@@ -101,30 +115,47 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var savedDates = GetAvailableDatesQuery.GetInstance()
-                    .Execute(conn, new { ActivityId = input.ActivityId });
-
+                var allDates = new List<DateTime>();
                 var result = new List<DateAndAvailableHour>();
-
-                foreach (var i in savedDates.ToList())
+                var allAvailableDates = new List<DateTime>();
+                var startDate = DateTime.Today;
+                var endDate = startDate.AddMonths(3);
+                for (var date = startDate; date <= endDate; date = date.AddDays(1))
                 {
-                    var savedHours = GetAvailableSessionQuery.GetInstance()
-                        .Execute(conn, new { ActivityId = input.ActivityId, Date = i.Date }).ToList();
-                    if (savedHours.TrueForAll(e => e == null))
-                        savedHours = null;
-                    var savedDatesAndHours = new DateAndAvailableHour()
-                    {
-                        Date = i.Date,
-                        AvailableHours = savedHours
-                    };
+                    allDates.Add(date);
+                }
+                var savedDay = GetAvailableDatesQuery.GetInstance()
+                    .Execute(conn, new { ActivityId = input.ActivityId });
+                var availableDays = savedDay.ToList();
+                var dayEnum = new List<DayOfWeek>();
+                foreach(var day in availableDays)
+                {
+                    DayOfWeek myDays = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), day);
+                    dayEnum.Add(myDays);
+                }
 
-                    result.Add(savedDatesAndHours);
+                foreach (var date in allDates)
+                {
+                    if (dayEnum.Contains(date.DayOfWeek))
+                    {
+                        var savedHours = GetAvailableSessionQuery.GetInstance()
+                         .Execute(conn, new { ActivityId = input.ActivityId, AvailableDay = date.DayOfWeek.ToString() }).ToList();
+                        var savedDateAndHour = new DateAndAvailableHour
+                        {
+                            AvailableHours = savedHours,
+                            Date = date
+                        };
+                        result.Add(savedDateAndHour);
+                    }
+                    
                 }
 
                 var output = new GetAvailableDatesOutput
                 {
                     AvailableDateTimes = result
                 };
+               
+                
                 return output;
             }
         }
@@ -531,6 +562,96 @@ namespace Lunggo.ApCommon.Activity.Service
                 //List<int>responseInt = response.Select(i => (int)i).ToList();
                 return response;
             }
+        }
+
+        public ActivityAddSessionOutput InsertActivitySessionToDb(ActivityAddSessionInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                if (input.RegularAvailableDates == null)
+                {
+                    return new ActivityAddSessionOutput { isSuccess = false };
+                }
+
+                foreach (var date in input.RegularAvailableDates)
+                {
+                    foreach(var availableHours in date.AvailableHours)
+                    {
+                        var activityAddSessionRecord = new ActivityRegularDateTableRecord
+                        {
+                            ActivityId = input.ActivityId,
+                            AvailableDay = date.Day,
+                            AvailableHour = availableHours
+                        };
+                        ActivityRegularDateTableRepo.GetInstance().Insert(conn, activityAddSessionRecord);
+                    }   
+                }                      
+            }
+            var response = new ActivityAddSessionOutput { isSuccess = true };
+            return response;
+        }
+
+        public ActivityDeleteSessionOutput DeleteActivitySessionFromDb(ActivityDeleteSessionInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                if (input.RegularAvailableDates == null)
+                {
+                    return new ActivityDeleteSessionOutput { isSuccess = false };
+                }
+
+                foreach (var date in input.RegularAvailableDates)
+                {
+                    if(date.AvailableHours == null)
+                    {
+                        var ActivityId = input.ActivityId;
+                        var AvailableDay = date.Day;                       
+                        DeleteDaySessionDbQuery.GetInstance().Execute(conn, new { ActivityId, AvailableDay });
+                    }
+                    else
+                    {
+                        foreach (var availableHours in date.AvailableHours)
+                        {
+                            var activityDeleteSessionRecord = new ActivityRegularDateTableRecord
+                            {
+                                ActivityId = input.ActivityId,
+                                AvailableDay = date.Day,
+                                AvailableHour = availableHours ?? "*"
+                            };
+                            ActivityRegularDateTableRepo.GetInstance().Delete(conn, activityDeleteSessionRecord);
+                        }
+                    }
+                }
+            }
+            var response = new ActivityDeleteSessionOutput { isSuccess = true };
+            return response;
+        }
+
+        public GetActivityTicketDetailOutput GetActivityTicketDetailFromDb(GetDetailActivityInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var result = new List<ActivityPackage>();
+                var packageIds = GetActivityPackageIdDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
+                foreach (var packageId in packageIds)
+                {
+                    var packageName = GetActivityPackageDbQuery.GetInstance().Execute(conn, new { PackageId = packageId }).ToList();
+                    var packagePrice = GetActivityTicketDetailDbQuery.GetInstance().Execute(conn, new { PackageId = packageId }).ToList();
+                    var package = new ActivityPackage
+                    {
+                        PackageName = packageName[0].PackageName,
+                        Description = packageName[0].Description,
+                        Price = packagePrice
+                    };
+                    result.Add(package);
+                }
+                var output = new GetActivityTicketDetailOutput
+                {
+                    Package = result
+                };
+                return output;
+            }
+                
         }
     }
 }

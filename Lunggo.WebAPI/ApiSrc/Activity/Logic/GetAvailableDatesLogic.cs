@@ -57,7 +57,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 {
                     Date = e.Date.HasValue ? e.Date.Value.ToString("yyyy-MM-dd") : null,
                     AvailableHours = e.AvailableHours
-                }).ToList()
+                }).ToList(),
+                StatusCode = HttpStatusCode.OK
             };
             return apiResponse;
             

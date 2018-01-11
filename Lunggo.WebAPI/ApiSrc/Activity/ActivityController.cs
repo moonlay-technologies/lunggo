@@ -267,6 +267,53 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPut]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/landingpage/contact")]
+        public ApiResponseBase InsertContactLandingPage()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            LandingPageApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<LandingPageApiRequest>();
+                var apiResponse = ActivityLogic.InsertContactLandingPage(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/activities/{activityId}/ticket")]
+        public ApiResponseBase GetActivityTicketDetail(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetActivityTicketDetailApiRequest { ActivityId = activityId };
+
+                var apiResponse = ActivityLogic.GetActivityTicketDetail(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         #endregion
 
         #region Operator
@@ -432,6 +479,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                     Page = page,
                     PerPage = perPage
                 };
+                
                 var apiResponse = ActivityLogic.GetListActivity(request, UserManager);
                 return apiResponse;
             }
@@ -440,6 +488,77 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/myactivity/{id}")]
+        public ApiResponseBase GetActivityDetailOperator(string id = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetDetailActivityApiRequest { ActivityId = id };
+
+                var apiResponse = ActivityLogic.GetDetail(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPut]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/activity/{activityId}/session")]
+        public ApiResponseBase InsertRegularAvailableDates(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {       
+                var request = ApiRequestBase.DeserializeRequest<ActivityAddSessionApiRequest>();
+                request.ActivityId = Int64.Parse(activityId);
+                var apiResponse = ActivityLogic.InsertRegularAvailableDates(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpDelete]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/activity/{activityId}/session")]
+        public ApiResponseBase DeleteRegularAvailableDates(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var request = ApiRequestBase.DeserializeRequest<ActivityDeleteSessionApiRequest>();
+                request.ActivityId = Int64.Parse(activityId);
+                var apiResponse = ActivityLogic.DeleteRegularAvailableDates(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         #endregion
 
         #region Admin

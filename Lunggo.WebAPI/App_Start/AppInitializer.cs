@@ -30,7 +30,7 @@ namespace Lunggo.WebAPI
             //InitI18NMessageManager();
             InitDatabaseService();
             InitRedisService();
-            InitFlightService();
+            //InitFlightService();
             InitQueueService();
             InitMailService();
             InitBlobStorageService();
@@ -41,8 +41,8 @@ namespace Lunggo.WebAPI
             InitNotificationService();
             InitLogService();
             //InitDocumentsService();
-            InitHotelService();
-            InitAutocompleteManager();
+            //InitHotelService();
+            //InitAutocompleteManager();
         }
 
         private static void InitBlobStorageService()
