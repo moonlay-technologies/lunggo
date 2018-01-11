@@ -138,7 +138,7 @@ namespace Lunggo.ApCommon.Activity.Model
     public class ActivityPricePackage
     {
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
-        public long Type { get; set; }
+        public string Type { get; set; }
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
         [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]

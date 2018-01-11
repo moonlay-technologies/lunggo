@@ -242,7 +242,6 @@
     <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
-    <Compile Include="Activity\Service\Admin\Class1.cs" />
     <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\GetActivityTicketDetail.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
@@ -1067,6 +1066,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Activity\Service\Admin\" />
     <Folder Include="Hotel\Logic\Search\" />
     <Folder Include="Payment\Model\Logic\" />
   </ItemGroup>
