@@ -115,6 +115,8 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+                var whitelistedDates = GetWhitelistedDateDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
+                var blacklistedDates = GetBlacklistedDateDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
                 var allDates = new List<DateTime>();
                 var result = new List<DateAndAvailableHour>();
                 var allAvailableDates = new List<DateTime>();
@@ -140,14 +142,48 @@ namespace Lunggo.ApCommon.Activity.Service
                     {
                         var savedHours = GetAvailableSessionQuery.GetInstance()
                          .Execute(conn, new { ActivityId = input.ActivityId, AvailableDay = date.DayOfWeek.ToString() }).ToList();
-                        var savedDateAndHour = new DateAndAvailableHour
+               
+                        if (whitelistedDates.Contains(date))
                         {
-                            AvailableHours = savedHours,
-                            Date = date
-                        };
-                        result.Add(savedDateAndHour);
-                    }
-                    
+                            var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date }).ToList();
+                            foreach(var customSavedHour in customSavedHours)
+                            {
+                                savedHours.Add(customSavedHour);
+                                whitelistedDates.Remove(date);
+                            }
+                        }
+
+                        if (blacklistedDates.Contains(date))
+                        {
+                            var customSavedHours = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date }).ToList();
+                            foreach (var customSavedHour in customSavedHours)
+                            {
+                                savedHours.Remove(customSavedHour);
+                            }
+                        }
+
+                        if (savedHours.Count > 0)
+                        {
+                            var savedDateAndHour = new DateAndAvailableHour
+                            {
+                                AvailableHours = savedHours,
+                                Date = date
+                            };
+                            result.Add(savedDateAndHour);
+                        }                      
+                    }                   
+                }
+
+                
+                foreach (var whitelistedDate in whitelistedDates)
+                {
+                    var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate }).ToList();
+                    var customSavedDateAndHour = new DateAndAvailableHour
+                    {
+                        AvailableHours = customSavedHours,
+                        Date = whitelistedDate
+                    };
+                    result.Add(customSavedDateAndHour);
                 }
 
                 var output = new GetAvailableDatesOutput
@@ -650,8 +686,111 @@ namespace Lunggo.ApCommon.Activity.Service
                     Package = result
                 };
                 return output;
+            }            
+        }
+
+        public ActivityCustomDateOutput ActivityCustomDateSetOrUnsetDb(ActivityCustomDateInput activityCustomDateInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var regularDates = GetAvailableDatesFromDb(new GetAvailableDatesInput { ActivityId = (int)activityCustomDateInput.ActivityId }).AvailableDateTimes;
+                var customDateStatus = GetStatusDateDbQuery.GetInstance().Execute(conn, new { ActivityId = activityCustomDateInput.ActivityId, CustomDate = activityCustomDateInput.CustomDate, CustomHour = activityCustomDateInput.CustomHour }).ToList();
+                if (customDateStatus.Count() > 0)
+                {
+                    DeleteCustomDateDbQuery.GetInstance().Execute(conn, new { ActivityId = activityCustomDateInput.ActivityId, CustomDate = activityCustomDateInput.CustomDate, AvailableHour = activityCustomDateInput.CustomHour });
+                    return new ActivityCustomDateOutput
+                    {
+                        isSuccess = true
+                    };
+                }
+                foreach (var regularDate in regularDates)
+                {
+                    if (regularDate.Date == activityCustomDateInput.CustomDate && regularDate.AvailableHours.Contains(activityCustomDateInput.CustomHour))
+                    {
+                        var blacklist = new ActivityCustomDateTableRecord
+                        {
+                            ActivityId = activityCustomDateInput.ActivityId,
+                            AvailableHour = activityCustomDateInput.CustomHour,
+                            CustomDate = activityCustomDateInput.CustomDate,
+                            DateStatus = "blacklisted"
+                        };
+                        ActivityCustomDateTableRepo.GetInstance().Insert(conn, blacklist);
+
+                        return new ActivityCustomDateOutput
+                        {
+                            isSuccess = true
+                        };
+                    }
+                }
+                var whitelist = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = activityCustomDateInput.ActivityId,
+                    AvailableHour = activityCustomDateInput.CustomHour,
+                    CustomDate = activityCustomDateInput.CustomDate,
+                    DateStatus = "whitelisted"
+                };
+                ActivityCustomDateTableRepo.GetInstance().Insert(conn, whitelist);
+                return new ActivityCustomDateOutput
+                {
+                    isSuccess = true
+                };
+            }                      
+        }
+
+        public CustomDateOutput AddCustomDateToDb(CustomDateInput customDateInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                if (customDateInput == null || customDateInput.CustomDate == null)
+                {
+                    return new CustomDateOutput
+                    {
+                        isSuccess = false
+                    };
+                }
+
+                var customDate = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = customDateInput.ActivityId,
+                    CustomDate = customDateInput.CustomDate,
+                    AvailableHour = customDateInput.CustomHour,
+                    DateStatus = customDateInput.DateStatus
+                };
+                ActivityCustomDateTableRepo.GetInstance().Insert(conn, customDate);
+                return new CustomDateOutput
+                {
+                    isSuccess = true
+                };
             }
-                
+            
+        }
+
+        public CustomDateOutput DeleteCustomDateFromDb(CustomDateInput customDateInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                if (customDateInput == null || customDateInput.CustomDate == null)
+                {
+                    return new CustomDateOutput
+                    {
+                        isSuccess = false
+                    };
+                }
+
+                var customDate = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = customDateInput.ActivityId,
+                    CustomDate = customDateInput.CustomDate,
+                    AvailableHour = customDateInput.CustomHour,
+                    DateStatus = customDateInput.DateStatus
+                };
+                ActivityCustomDateTableRepo.GetInstance().Delete(conn, customDate);
+                return new CustomDateOutput
+                {
+                    isSuccess = true
+                };
+            }
+
         }
     }
 }

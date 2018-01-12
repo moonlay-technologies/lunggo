@@ -559,6 +559,75 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/activity/{activityId}/customdate")]
+        public ApiResponseBase SetOrUnsetCustomDate(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var request = ApiRequestBase.DeserializeRequest<SetOrUnsetCustomDateApiRequest>();
+                request.ActivityId = Int64.Parse(activityId);
+                var apiResponse = ActivityLogic.SetOrUnsetCustomDate(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPut]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/activity/{activityId}/customdate")]
+        public ApiResponseBase AddCustomDate(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var request = ApiRequestBase.DeserializeRequest<CustomDateApiRequest>();
+                request.ActivityId = Int64.Parse(activityId);
+                var apiResponse = ActivityLogic.AddCustomDate(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpDelete]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/activity/{activityId}/customdate")]
+        public ApiResponseBase DeleteCustomDate(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var request = ApiRequestBase.DeserializeRequest<CustomDateApiRequest>();
+                request.ActivityId = Int64.Parse(activityId);
+                var apiResponse = ActivityLogic.DeleteCustomDate(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         #endregion
 
         #region Admin

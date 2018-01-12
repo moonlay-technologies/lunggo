@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     {
         [JsonProperty("activityId", NullValueHandling = NullValueHandling.Ignore)]
         public long ActivityId { get; set; }
-        [JsonProperty("availableDates", NullValueHandling = NullValueHandling.Ignore)]
-        public List<AvailableDayAndHours> AvailableDates { get; set; }
+        [JsonProperty("availableRegularDates", NullValueHandling = NullValueHandling.Ignore)]
+        public List<AvailableDayAndHours> AvailableRegularDates { get; set; }
     }
 }

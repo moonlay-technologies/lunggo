@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity\Constant\BookingStatus.cs" />
+    <Compile Include="Activity\Database\Query\DeleteCustomDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\DeleteDaySessionFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityListFromWishlistDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityPackageDbQuery.cs" />
@@ -180,7 +181,12 @@
     <Compile Include="Activity\Database\Query\GetActivityTicketDetaiDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetBlacklistedDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCustomAvailableHoursBlacklistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCustomAvailableHoursWhitelistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetWhitelistedDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
@@ -200,6 +206,8 @@
     <Compile Include="Activity\Model\ActivityFilter.cs" />
     <Compile Include="Activity\Model\ActivityReservation.cs" />
     <Compile Include="Activity\Model\Logic\ActivityAddSessionOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityCustomDateInput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityCustomDateOutput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityDeleteSessionInput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityDeleteSessionOutput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityUpdateInput.cs" />
@@ -209,6 +217,8 @@
     <Compile Include="Activity\Model\Logic\BookActivityInput.cs" />
     <Compile Include="Activity\Model\Logic\BookActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\ActivityAddSessionInput.cs" />
+    <Compile Include="Activity\Model\Logic\CustomDateInput.cs" />
+    <Compile Include="Activity\Model\Logic\CustomDateOutput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistInput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityTicketDetailInput.cs" />

@@ -145,4 +145,12 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal Amount { get; set; }
     }
 
+    public class CustomDate
+    {
+        [JsonProperty("availableDay", NullValueHandling = NullValueHandling.Ignore)]
+        public string Day { get; set; }
+        [JsonProperty("availableHours", NullValueHandling = NullValueHandling.Ignore)]
+        public string AvailableHours { get; set; }
+    }
+
 }

@@ -49,6 +49,7 @@
     <Compile Include="TableRecord\AccountBalanceTableRecord.cs" />
     <Compile Include="TableRecord\AccountUserTableRecord.cs" />
     <Compile Include="TableRecord\ActivityBuyPriceTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityCustomDateTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPackageTableRecord.cs" />
     <Compile Include="TableRecord\ActivityRegularDateTableRecord.cs" />
     <Compile Include="TableRecord\ActivityReservationTableRecord.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="TableRepository\AccountBalanceRepository.cs" />
     <Compile Include="TableRepository\AccountUserRepository.cs" />
     <Compile Include="TableRepository\ActivityBuyPriceRepository.cs" />
+    <Compile Include="TableRepository\ActivityCustomDateRepository.cs" />
     <Compile Include="TableRepository\ActivityPackageRepository.cs" />
     <Compile Include="TableRepository\ActivityRegularDateRepository.cs" />
     <Compile Include="TableRepository\ActivityRepository.cs" />
