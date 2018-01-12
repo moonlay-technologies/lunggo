@@ -21,24 +21,24 @@
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
     var totalAdult = 0;
     var totalChild = 0;
-    if (Model is HotelReservationForDisplay)
-    {
-        var rsv = Model as HotelReservationForDisplay;
-        foreach (var room in rsv.HotelDetail.Rooms)
-        {
-            var roomName = room.RoomName;
-            var sum = 0;
+    //if (Model is HotelReservationForDisplay)
+    //{
+    //    var rsv = Model as HotelReservationForDisplay;
+    //    foreach (var room in rsv.HotelDetail.Rooms)
+    //    {
+    //        var roomName = room.RoomName;
+    //        var sum = 0;
 
-            foreach (var rate in room.Rates)
-            {
-                foreach (var config in rate.Breakdowns)
-                {
-                    totalAdult += config.AdultCount;
-                    totalChild += config.ChildCount;
-                }
-            }
-        }
-    }
+    //        foreach (var rate in room.Rates)
+    //        {
+    //            foreach (var config in rate.Breakdowns)
+    //            {
+    //                totalAdult += config.AdultCount;
+    //                totalChild += config.ChildCount;
+    //            }
+    //        }
+    //    }
+    //}
 }
 
 @section AdditionalCSS {
@@ -211,7 +211,7 @@
             <header class="page__header">
                 <h1 class="text-center section-title stripe">Terima <span>Kasih</span></h1>
             </header>
-                if (Model is FlightReservationForDisplay)
+                @*if (Model is FlightReservationForDisplay)
                 {
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan penerbangan di Travorama. Anda dapat mengecek e-tiket Anda melalui tombol berikut.</div>
@@ -232,14 +232,14 @@
                     </div>
                 }
                 else
-                {
+                {*@
                     <div class="thankyou-words">
                         <div>Terima kasih telah memesan di Travorama.</div>
                         <div class="ticket-print">
                             <button onclick="window.postMessage('ExploreScreen')" class="btn btn-yellow print-ticket-button"> <span class="fa fa-print"></span>OK</button>
                         </div>
                     </div>
-                }
+                @*}*@
                 break;
         }
 

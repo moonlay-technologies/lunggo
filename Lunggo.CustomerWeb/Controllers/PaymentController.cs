@@ -28,17 +28,11 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (!string.IsNullOrEmpty(cartId))
             {
-                var payment = PaymentService.GetInstance().ViewCart(cartId);
-                if (payment == null || payment.RsvNoList == null || !payment.RsvNoList.Any())
+                var payment = PaymentService.GetInstance().GetPayment(cartId);
+                if (payment == null)
                     return RedirectToAction("Index", "Index");
 
-                ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
-                return View(new PaymentData
-                {
-                    TimeLimit = PaymentService.GetInstance().GetPayment(cartId).TimeLimit,
-                    TrxId = payment.CartId,
-                    OriginalPrice = payment.TotalPrice
-                });
+                return HandlePaymentState(cartId, regId, payment);
             }
 
             trxId = trxId ?? rsvNo;
@@ -47,7 +41,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (string.IsNullOrEmpty(regId))
                     return RedirectToAction("Index", "Index");
 
-                var signature = Generator.GenerateRsvNoId(trxId);
+                var signature = Generator.GenerateTrxIdRegId(trxId);
                 if (regId != signature)
                     return RedirectToAction("Index", "Index");
 
@@ -89,6 +83,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     //RsvNo = rsvNo,
                     //Reservation = rsv,
                     //PaymentDetails = payment,
+                    TrxId = trxId,
                     TimeLimit = payment.TimeLimit,
                     OriginalPrice = payment.OriginalPriceIdr
                 });
@@ -101,10 +96,12 @@ namespace Lunggo.CustomerWeb.Controllers
 
         [HttpPost]
         [ActionName("Payment")]
-        public ActionResult PaymentPost(string trxId, string paymentUrl)
+        public ActionResult PaymentPost(string rsvNo = null, string trxId = null, string cartId = null, string paymentUrl = null)
         {
+            trxId = cartId ?? trxId ?? rsvNo;
             var payment = PaymentService.GetInstance().GetPayment(trxId);
-            var regId = Generator.GenerateRsvNoId(trxId);
+            var regId = Generator.GenerateTrxIdRegId(trxId);
+
             if (payment.Method == PaymentMethod.BankTransfer ||
                 payment.Method == PaymentMethod.VirtualAccount)
             {
@@ -126,8 +123,8 @@ namespace Lunggo.CustomerWeb.Controllers
             if (string.IsNullOrEmpty(regId))
                 return RedirectToAction("Index", "Index");
 
-            var signature = Generator.GenerateRsvNoId(trxId);
-            if (regId != signature)
+            var generatedRegId = Generator.GenerateTrxIdRegId(trxId);
+            if (generatedRegId != regId)
                 return RedirectToAction("Index", "Index");
 
             var payment = PaymentService.GetInstance().GetPayment(trxId);
@@ -143,51 +140,45 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
                 TempData["AllowThisThankyouPage"] = trxId;
-            return RedirectToAction("Thankyou", "Payment", new { trxId, regId = signature });
+            return RedirectToAction("Thankyou", "Payment", new { trxId, regId });
         }
 
-        public ActionResult InstructionPost(string rsvNo)
+        public ActionResult InstructionPost(string trxId)
         {
-            var regId = Generator.GenerateRsvNoId(rsvNo);
-            return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
+            var regId = Generator.GenerateTrxIdRegId(trxId);
+            return RedirectToAction("Thankyou", "Payment", new { trxId, regId });
         }
 
-        public ActionResult Thankyou(string rsvNo, string regId)
+        public ActionResult Thankyou(string trxId, string regId)
         {
             if (string.IsNullOrEmpty(regId))
                 return RedirectToAction("Index", "Index");
 
-            var signature = Generator.GenerateRsvNoId(rsvNo);
+            var signature = Generator.GenerateTrxIdRegId(trxId);
             if (regId != signature)
                 return RedirectToAction("Index", "Index");
 
-            ReservationForDisplayBase rsv;
-            if (rsvNo[0] == '1')
-                rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            else if (rsvNo[0] == '2')
-                rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
-            else
-                rsv = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
-            return View(rsv);
+            var payment = PaymentService.GetInstance().GetPayment(trxId);
+            return View(payment);
         }
 
         [HttpPost]
         [ActionName("Thankyou")]
-        public ActionResult ThankyouPost(string rsvNo)
+        public ActionResult ThankyouPost(string trxId)
         {
-            TempData["AllowThisReservationCheck"] = rsvNo;
-            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo });
+            TempData["AllowThisReservationCheck"] = trxId;
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = trxId });
         }
 
-        public ActionResult Eticket(string rsvNo)
+        public ActionResult Eticket(string trxId)
         {
             ReservationForDisplayBase rsvData;
-            if (rsvNo.StartsWith("1"))
-                rsvData = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
-            else if (rsvNo.StartsWith("2"))
-                rsvData = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+            if (trxId.StartsWith("1"))
+                rsvData = FlightService.GetInstance().GetReservationForDisplay(trxId);
+            else if (trxId.StartsWith("2"))
+                rsvData = HotelService.GetInstance().GetReservationForDisplay(trxId);
             else
-                rsvData = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
+                rsvData = ActivityService.GetInstance().GetReservationForDisplay(trxId);
             try
             {
 
@@ -195,12 +186,12 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     if (rsvData.Type == ProductType.Flight)
                     {
-                        var eticketData = FlightService.GetInstance().GetEticket(rsvNo);
+                        var eticketData = FlightService.GetInstance().GetEticket(trxId);
                         return File(eticketData, "application/pdf");
                     }
                     else
                     {
-                        var eticketData = HotelService.GetInstance().GetEticket(rsvNo);
+                        var eticketData = HotelService.GetInstance().GetEticket(trxId);
                         return File(eticketData, "application/pdf");
                     }
                 }

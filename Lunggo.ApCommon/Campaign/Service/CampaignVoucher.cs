@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Http;
 
@@ -21,10 +22,14 @@ namespace Lunggo.ApCommon.Campaign.Service
         {
             return GetDb.GetCampaignVoucher(voucherCode);
         }
-        public VoucherResponse ValidateVoucherRequest(string rsvNo, string voucherCode)
+        public VoucherResponse ValidateVoucherRequest(string trxId, string voucherCode)
         {
             var response = new VoucherResponse();
             var user = HttpContext.Current.User;
+            var isRsv = trxId.Length < 15;
+            var cart = new Cart();
+            if (!isRsv)
+                cart = PaymentService.GetInstance().GetCart(trxId);
 
             var voucher = GetDb.GetCampaignVoucher(voucherCode);
 
@@ -34,7 +39,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            if (voucher.ProductType != null && !voucher.ProductType.Contains(rsvNo[0]))
+            if (isRsv && voucher.ProductType != null && !voucher.ProductType.Contains(trxId[0]))
             {
                 response.VoucherStatus = VoucherStatus.ProductNotEligible;
                 return response;
@@ -44,7 +49,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 response.Email = user.Identity.GetEmail();
             response.VoucherCode = voucherCode;
 
-            var contact = Contact.GetFromDb(rsvNo);
+            var contact = isRsv ? Contact.GetFromDb(trxId) : cart.Contact;
             if (contact == null)
             {
                 response.VoucherStatus = VoucherStatus.ReservationNotFound;
@@ -57,7 +62,7 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            var paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+            var paymentDetails = PaymentService.GetInstance().GetPayment(trxId);
             if (paymentDetails == null)
             {
                 response.VoucherStatus = VoucherStatus.ReservationNotFound;
@@ -83,19 +88,19 @@ namespace Lunggo.ApCommon.Campaign.Service
                 };
             }
 
-            ReservationBase rsv;
-            if (rsvNo.StartsWith("1"))
-                rsv = FlightService.GetInstance().GetReservation(rsvNo);
-            else
-                rsv = HotelService.GetInstance().GetReservation(rsvNo);
+            //ReservationBase rsv;
+            //if (rsvNo.StartsWith("1"))
+            //    rsv = FlightService.GetInstance().GetReservation(rsvNo);
+            //else
+            //    rsv = HotelService.GetInstance().GetReservation(rsvNo);
 
-            var cost = rsv.GetTotalSupplierPrice();
-            if (voucher.MaxBudget.HasValue &&
-                (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr*0.97M))
-            {
-                response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
-                return response;
-            }
+            //var cost = rsv.GetTotalSupplierPrice();
+            //if (voucher.MaxBudget.HasValue &&
+            //    (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr*0.97M))
+            //{
+            //    response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+            //    return response;
+            //}
 
             response.VoucherStatus = validationStatus;
             return response;

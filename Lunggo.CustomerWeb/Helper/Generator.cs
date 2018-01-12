@@ -6,9 +6,9 @@ namespace Lunggo.CustomerWeb.Helper
 {
     public static class Generator
     {
-        public static string GenerateRsvNoId(string rsvNo)
+        public static string GenerateTrxIdRegId(string trxId)
         {
-            var sha1 = rsvNo.Sha1Encode();
+            var sha1 = trxId.Sha1Encode();
             var base64 = sha1.Base64Encode();
             return base64;
         }

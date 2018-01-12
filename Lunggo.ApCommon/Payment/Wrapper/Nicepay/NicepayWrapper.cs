@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                 objNicepay.description = "Payment Invoice No. " + objNicepay.referenceNo;//
                 // Transaction description
 
-                var contact = Contact.GetFromDb(transactionDetail.OrderId);
+                var contact = transactionDetail.Contact;
 
                 objNicepay.billingNm = contact.Name;//
                 objNicepay.billingPhone = contact.CountryCallingCode + contact.Phone;//

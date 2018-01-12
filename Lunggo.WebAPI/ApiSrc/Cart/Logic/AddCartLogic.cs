@@ -16,7 +16,6 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
         public static ApiResponseBase AddCart(AddToCartApiRequest request)
         {
             AddToCartInput addToCartServiceRequest;
-            var user = HttpContext.Current.User.Identity.GetId();
             var succeed = TryPreprocess(request, out addToCartServiceRequest);
             if (!succeed)
                 return new AddToCartApiResponse
@@ -24,15 +23,12 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
-            if (user == null)
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_USER_UNDEFINED"
-                };
-            var serviceRequest = PreprocessServiceRequest(request);
-            var addToCartResponse = PaymentService.GetInstance().AddToCart(serviceRequest,user);
-            var apiResponse = AssembleApiResponse(addToCartResponse);
+            var isSuccess = PaymentService.GetInstance().AddToCart(request.RsvNo);
+            var apiResponse = new ApiResponseBase
+            {
+                StatusCode = isSuccess ? HttpStatusCode.OK : HttpStatusCode.BadRequest,
+                ErrorCode = isSuccess ? null : "ERR_INVALID_REQUEST"
+            };
             return apiResponse;
         }
 
@@ -43,30 +39,6 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
             { return false; }
             serviceRequest.RsvNo = request.RsvNo;
             return true;
-        }
-
-        public static AddToCartInput PreprocessServiceRequest(AddToCartApiRequest request)
-        {
-            return new AddToCartInput()
-            {
-                RsvNo = request.RsvNo
-            };
-        }
-
-        public static AddToCartApiResponse AssembleApiResponse(AddToCartOutput addToCartApiResponse)
-        {
-
-            var apiResponse = new AddToCartApiResponse();
-            if (!addToCartApiResponse.isSuccess)
-            {
-                apiResponse.StatusCode = HttpStatusCode.BadRequest;
-                apiResponse.ErrorCode = "ERR_INVALID_REQUEST";
-            }
-            else
-            {
-                apiResponse.StatusCode = HttpStatusCode.OK;
-            }
-            return apiResponse;
         }
 
     }

@@ -26,75 +26,90 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public Cart ViewCart()
+        public Cart GetCart()
         {
             var userId = HttpContext.Current.User.Identity.GetId();
             var cartId = GetCartId(userId);
-            return ViewCart(cartId);
+            return GetCart(cartId);
         }
 
-        public Cart ViewCart(string cartId)
+        public Cart GetCart(string cartId)
         {
-            var cart = new Cart();
-            cart.RsvNoList = new List<string>();
-            cart.TotalPrice = 0;
-            var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + cartId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            for (long i = 0; i < redisDb.ListLength(redisKey); i++)
+            var cart = new Cart
             {
-                string rsvNo = redisDb.ListGetByIndex(redisKey, i);         
-                cart.RsvNoList.Add(rsvNo);
-                var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
-                cart.TotalPrice += paymentDetail.OriginalPriceIdr;
-            }
-            cart.StatusCode = HttpStatusCode.OK;
-            cart.CartId = cartId;
+                Id = cartId,
+            };
+
+            GetCartContentFromCache(cart);
+            if (cart.RsvNoList == null || !cart.RsvNoList.Any())
+                GetCartContentFromDb(cart);
+            if (cart.RsvNoList == null || !cart.RsvNoList.Any())
+                return null;
+
             cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
             return cart;
         }
 
-        public AddToCartOutput AddToCart(AddToCartInput input, string userId)
+        private void GetCartContentFromDb(Cart cart)
         {
-            var response = new AddToCartOutput();
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var record = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord {CartId = cart.Id});
+                cart.RsvNoList = record.Select(r => r.RsvNoList).ToList();
+            }
+        }
+
+        private static void GetCartContentFromCache(Cart cart)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:RsvNoList:" + cart.Id;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            if (redisDb.ListLength(redisKey) == 0)
+                return;
+
+            var rsvNoList = redisDb.ListRange(redisKey).Select(val => val.ToString()).Distinct().ToList();
+            cart.RsvNoList = rsvNoList;
+            cart.TotalPrice = rsvNoList.Select(PaymentDetails.GetFromDb).Sum(p => p.OriginalPriceIdr);
+        }
+
+        public bool AddToCart(string rsvNo)
+        {
+            var userId = HttpContext.Current.User.Identity.GetId();
+            return AddToCart(userId, rsvNo);
+        }
+
+        public bool AddToCart(string userId, string rsvNo)
+        {
             var idCart = GetCartId(userId);
             if (idCart == null)
             {
-                AddIdCart(userId);
+                AddCartCache(userId);
                 idCart = GetCartId(userId);
             }
-            var checkRsv = ActivityService.GetInstance().GetReservation(input.RsvNo);
+            var checkRsv = ActivityService.GetInstance().GetReservation(rsvNo);
             if (checkRsv == null)
-                return new AddToCartOutput { isSuccess = false };
-            var paymentDetail = PaymentDetails.GetFromDb(input.RsvNo);
+                return false;
+            var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
             if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
-                return new AddToCartOutput { isSuccess = false };
-            AddRsvNoToIdCart(idCart, input.RsvNo);
-            return new AddToCartOutput { isSuccess = true };
+                return false;
+            AddRsvNoToCartCache(idCart, rsvNo);
+            return true;
         }
 
-        public DeleteRsvFromCartOutput DeleteFromCart(DeleteRsvFromCartInput request)
+        public void DeleteFromCart(string rsvNo)
         {
-            var response = new DeleteRsvFromCartOutput();
             var userId = HttpContext.Current.User.Identity.GetId();
-            if (userId == null)
-            {
-                response.StatusCode = HttpStatusCode.Unauthorized;
-                return response;
-            }
-            var idCart = GetCartId(userId);
+            var cartId = GetCartId(userId);
             var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + idCart;
+            var redisKey = "Cart:RsvNoList:" + cartId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.ListRemove(redisKey, request.RsvNo);
-            response.StatusCode = HttpStatusCode.OK;
-            return response;
+            redisDb.ListRemove(redisKey, rsvNo);
         }
 
         public string GetCartId(string userId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + userId;
+            var redisKey = "Cart:UserCartId:" + userId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             try
             {
@@ -108,19 +123,19 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
         
-        internal void AddIdCart(string userId)
+        internal void AddCartCache(string userId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "NameId:" + userId;
+            var redisKey = "Cart:UserCartId:" + userId;
             var redisValue = Guid.NewGuid();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, redisValue.ToString());            
         }
 
-        internal void AddRsvNoToIdCart(string idCart, string rsvNo)
+        internal void AddRsvNoToCartCache(string cartId, string rsvNo)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + idCart;
+            var redisKey = "Cart:RsvNoList:" + cartId;
             var redisValue = rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.ListRightPush(redisKey, redisValue);

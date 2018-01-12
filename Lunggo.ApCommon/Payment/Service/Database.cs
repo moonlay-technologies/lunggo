@@ -30,8 +30,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 else
                 {
                     var cartId = cartIdOrRsvNo;
-                    
-                    var cartRsvNos = ViewCart(cartId).RsvNoList;
+                    var cart = GetCart(cartId);
+                    if (cart == null)
+                        return null;
+
+                    var cartRsvNos = cart.RsvNoList;
                     if (cartRsvNos == null || !cartRsvNos.Any())
                     {
 
@@ -45,6 +48,8 @@ namespace Lunggo.ApCommon.Payment.Service
                     var payments = cartRsvNos.Select(PaymentDetails.GetFromDb).ToList();
                     var payment = payments[0];
                     payment.UniqueCode = payments.Sum(p => p.UniqueCode);
+                    payment.Surcharge = payments.Sum(p => p.Surcharge);
+                    payment.OriginalPriceIdr = payments.Sum(p => p.OriginalPriceIdr);
                     payment.FinalPriceIdr = payments.Sum(p => p.FinalPriceIdr);
                     payment.LocalFinalPrice = payments.Sum(p => p.LocalFinalPrice);
                     payment.PaidAmountIdr = payments.Sum(p => p.PaidAmountIdr);

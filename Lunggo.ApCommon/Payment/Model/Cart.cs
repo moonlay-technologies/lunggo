@@ -11,10 +11,9 @@ namespace Lunggo.ApCommon.Payment.Model
 {
     public class Cart 
     {
-        public List<string> RsvNoList;
-        public decimal TotalPrice;
-        public string CartId;
+        public List<string> RsvNoList { get; set; }
+        public decimal TotalPrice { get; set; }
+        public string Id { get; set; }
         public Contact Contact { get; set; }
-        public HttpStatusCode StatusCode;
     }
 }

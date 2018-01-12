@@ -712,14 +712,14 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult OrderHistory(string rsvNo)
         {
-            var regId = Generator.GenerateRsvNoId(rsvNo);
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
             return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
         }
 
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult SelectReservation(string rsvNo)
         {
-            var regId = Generator.GenerateRsvNoId(rsvNo);
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
             return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
         }
 
@@ -730,7 +730,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-            var signature = Generator.GenerateRsvNoId(rsvNo);
+            var signature = Generator.GenerateTrxIdRegId(rsvNo);
             if (regId.Equals(signature))
             {
                 var flightService = FlightService.GetInstance();
@@ -754,7 +754,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
             ReservationForDisplayBase rsv;
-            var regId = Generator.GenerateRsvNoId(rsvNo);
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
             var flightService = FlightService.GetInstance();
             var hotelService = HotelService.GetInstance();
             ReservationForDisplayBase displayReservation;

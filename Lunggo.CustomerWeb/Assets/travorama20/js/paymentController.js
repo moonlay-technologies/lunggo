@@ -572,7 +572,7 @@ app.controller('paymentController', [
                             tokenId: $scope.CreditCard.Token,
                             holderName: $scope.CreditCard.Name,
                             hashedPan: hex,
-                            reqBinDiscount: $scope.binDiscount.available
+                            //reqBinDiscount: $scope.binDiscount.available
                     };
                     break;
                 case "MandiriClickPay":
@@ -900,7 +900,7 @@ app.controller('paymentController', [
         }
         var a = mdr.filter(select)[0];
         ///// TODO : include discount
-        let price = $scope.totalPrice - $scope.voucher.amount + $scope.UniqueCodePaymentConfig.UniqueCode;
+        let price = $scope.totalPrice - $scope.voucher.amount;
             return a ? Math.ceil(price * a.Percentage / 100) : 0;
     }
 
