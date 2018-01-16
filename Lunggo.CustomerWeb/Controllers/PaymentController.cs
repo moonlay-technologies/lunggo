@@ -156,7 +156,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 else
                     rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
 
-                if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status != PaymentStatus.Settled)
+                if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status == PaymentStatus.Pending)
                 {
                     return Redirect(rsv.Payment.RedirectionUrl);
                 }
