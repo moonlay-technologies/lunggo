@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Activity.Model.Logic
 {
-    public class ActivityAddSessionInput
+    public class CustomDateOutput
     {
-        public long ActivityId { get; set; }
-        public List<AvailableDayAndHours> RegularAvailableDates { get; set; }
+        public bool isSuccess { get; set; }
     }
 }

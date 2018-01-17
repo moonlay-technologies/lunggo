@@ -280,6 +280,7 @@
     <Compile Include="ApiSrc\Activity\Model\ActivityAddSessionApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityDeleteSessionApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\AddToWishlistApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\CustomDateApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\LandingPageApiRequest.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="ApiSrc\Activity\Model\ActivityBookApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityBookApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetWishlistApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\SetOrUnsetCustomDateApiRequest.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />
