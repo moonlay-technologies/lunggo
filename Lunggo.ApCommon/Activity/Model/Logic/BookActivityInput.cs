@@ -13,6 +13,7 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
         public DateAndSession DateTime { get; set; }
         public List<Pax> Passengers { get; set; }
         public Contact Contact { get; set; }
-        public int? TicketCount { get; set; }
+        public long PackageId { get; set; }
+        public List<ActivityPricePackageReservation> TicketCount { get; set; }
     }
 }

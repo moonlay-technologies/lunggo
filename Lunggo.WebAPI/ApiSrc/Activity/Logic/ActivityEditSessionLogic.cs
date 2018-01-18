@@ -17,7 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         #region InsertRegularSession
         public static ApiResponseBase InsertRegularAvailableDates(ActivityAddSessionApiRequest apiRequest, ApplicationUserManager userManager)
         {
-            /*var user = HttpContext.Current.User;
+            var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new ApiResponseBase
@@ -34,7 +34,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     StatusCode = HttpStatusCode.Unauthorized,
                     ErrorCode = "ERR_NOT_OPERATOR"
                 };
-            }*/
+            }
 
             if (apiRequest == null)
             {
@@ -151,7 +151,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static ApiResponseBase SetOrUnsetCustomDate(SetOrUnsetCustomDateApiRequest apiRequest, ApplicationUserManager userManager)
         {
-            /*var user = HttpContext.Current.User;
+            var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new ApiResponseBase
@@ -168,7 +168,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     StatusCode = HttpStatusCode.Unauthorized,
                     ErrorCode = "ERR_NOT_OPERATOR"
                 };
-            }*/
+            }
 
             if (apiRequest == null)
             {
@@ -215,7 +215,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         #region AddCustomDate
         public static ApiResponseBase AddCustomDate(CustomDateApiRequest apiRequest, ApplicationUserManager userManager)
         {
-            /*var user = HttpContext.Current.User;
+            var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new ApiResponseBase
@@ -232,7 +232,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     StatusCode = HttpStatusCode.Unauthorized,
                     ErrorCode = "ERR_NOT_OPERATOR"
                 };
-            }*/
+            }
 
             if (apiRequest == null)
             {
@@ -254,8 +254,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 ActivityId = apiRequest.ActivityId,
                 CustomDate = apiRequest.CustomDate,
-                CustomHour = apiRequest.CustomHour,
-                DateStatus = apiRequest.DateStatus
+                StartCustomHour = apiRequest.StartCustomHour,
+                EndCustomHour = apiRequest.EndCustomHour
             };
         }
 
@@ -279,7 +279,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static ApiResponseBase DeleteCustomDate(CustomDateApiRequest apiRequest, ApplicationUserManager userManager)
         {
-            /*var user = HttpContext.Current.User;
+            var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
             {
                 return new ApiResponseBase
@@ -296,7 +296,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     StatusCode = HttpStatusCode.Unauthorized,
                     ErrorCode = "ERR_NOT_OPERATOR"
                 };
-            }*/
+            }
 
             if (apiRequest == null)
             {

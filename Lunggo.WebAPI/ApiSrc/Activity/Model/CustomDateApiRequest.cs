@@ -12,9 +12,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         public long ActivityId { get; set; }
         [JsonProperty("customDate", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime CustomDate { get; set; }
-        [JsonProperty("customHour", NullValueHandling = NullValueHandling.Ignore)]
-        public string CustomHour { get; set; }
-        [JsonProperty("dateStatus", NullValueHandling = NullValueHandling.Ignore)]
-        public string DateStatus { get; set; }
+        [JsonProperty("startCustomHour", NullValueHandling = NullValueHandling.Ignore)]
+        public string StartCustomHour { get; set; }
+        [JsonProperty("endCustomHour", NullValueHandling = NullValueHandling.Ignore)]
+        public string EndCustomHour { get; set; }
     }
 }

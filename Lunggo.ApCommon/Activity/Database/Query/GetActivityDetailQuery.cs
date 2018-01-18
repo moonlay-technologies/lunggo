@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE act.Id = @ActivityId");
+            clauseBuilder.Append("WHERE act.Id = @ActivityId AND asp.Flag = 1");
             return clauseBuilder.ToString();
         }
     }

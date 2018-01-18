@@ -22,8 +22,12 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime Date { get; set; }
         [JsonProperty("selectedSession", NullValueHandling = NullValueHandling.Ignore)]
         public string SelectedSession { get; set; }
+        [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
+        public long PackageId { get; set; }
+        [JsonProperty("packageName", NullValueHandling = NullValueHandling.Ignore)]
+        public string PackageName { get; set; }
         [JsonProperty("paxCount", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaxCount { get; set; }
+        public List<ActivityPricePackageReservation> PaxCount { get; set; }
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? Price { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
@@ -46,7 +50,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime? TimeLimit { get; set; }
         public DateTime Date { get; set; }
         public string SelectedSession { get; set; }
-        public string PaxCount { get; set; }
+        public long PackageId { get; set; }
+        public string PackageName { get; set; }
+        public List<ActivityPricePackageReservation> PaxCount { get; set; }
         public decimal Price { get; set; }
         public string MediaSrc { get; set; }
         public List<Pax> Passengers { get; set; }
@@ -54,5 +60,16 @@ namespace Lunggo.ApCommon.Activity.Model
         public double Latitude { get; set; }
         public double Longitude { get; set; }
     }
-    
+
+    public class ActivityPackageReservation
+    {
+        [JsonProperty("packageName", NullValueHandling = NullValueHandling.Ignore)]
+        public string PackageName { get; set; }
+        [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
+        public long PackageId { get; set; }
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
+        [JsonProperty("count", NullValueHandling = NullValueHandling.Ignore)]
+        public int Count { get; set; }
+    }
 }
