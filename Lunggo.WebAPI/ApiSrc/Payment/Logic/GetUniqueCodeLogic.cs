@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     ErrorCode = "ERPUQC01"
                 };
 
-            var transferFee = PaymentService.GetInstance().GetUniqueCode(request.RsvNo, request.Bin, request.DiscountCode);
+            var transferFee = PaymentService.GetInstance().GetUniqueCode(request.TrxId ?? request.RsvNo, request.Bin, request.DiscountCode);
 
             if (transferFee == 404404404.404404404M)
                 return new UniqueCodeApiResponse
@@ -36,7 +36,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             return
                 request != null &&
-                request.RsvNo != null;
+                (request.TrxId != null ||
+                request.RsvNo != null);
         }
     }
 }

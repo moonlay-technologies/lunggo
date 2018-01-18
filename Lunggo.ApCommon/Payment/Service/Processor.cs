@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI.WebControls;
 using DeathByCaptcha;
 using Lunggo.ApCommon.Campaign.Constant;
 using Lunggo.ApCommon.Campaign.Service;
@@ -30,29 +31,59 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPaymentCart(string user, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public PaymentDetails SubmitPaymentCart(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
-            var paymentDetails = new PaymentDetails();
-            var cartId = GetUserIdCart(user);
-            paymentDetails = GetFinalPriceCart(paymentData, discountCode);
-            if (paymentDetails == null)
-            {
+
+            var cart = GetCart(cartId);
+            if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
                 return null;
+
+            var cartRecordId = GetCartRecordId();
+            cart.Id = cartRecordId;
+            var paymentDetails = GetCartPaymentDetails(cart, method, submethod, paymentData, discountCode);
+            if (paymentDetails == null)
+                return null;
+
+            if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Method != PaymentMethod.BankTransfer)
+            {
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
+                return paymentDetails;
             }
+
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
             paymentDetails.Submethod = submethod;
             paymentDetails.Medium = GetPaymentMedium(method, submethod);
-            var transactionDetails = ConstructTransactionDetails(cartId, paymentDetails);
+
+            if (!string.IsNullOrEmpty(discountCode))
+            {
+                var campaign = CampaignService.GetInstance().UseVoucherRequest(cartId, discountCode);
+                if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    return paymentDetails;
+                }
+                paymentDetails.FinalPriceIdr -= campaign.TotalDiscount;
+                paymentDetails.Discount = campaign.Discount;
+                paymentDetails.DiscountCode = campaign.VoucherCode;
+                paymentDetails.DiscountNominal = campaign.TotalDiscount;
+            }
+
+            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+
+            var transactionDetails = ConstructTransactionDetails(cartRecordId, paymentDetails, cart.Contact);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);           
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
-                UpdateCartPayment(method, submethod, paymentData, discountCode, paymentDetails);
+                UpdateCartPayment(cart, method, submethod, paymentData, paymentDetails);
+                InsertCartToDb(cartRecordId, cart.RsvNoList);
+                DeleteCartCache(cartId);
             }
-            InsertCartToDb(cartId, ViewCart(user).RsvNoList);
-            DeleteCartIdRedis(cartId);
             isUpdated = true;
             return paymentDetails;
         }
@@ -103,126 +134,128 @@ namespace Lunggo.ApCommon.Payment.Service
                 paymentDetails.DiscountNominal = campaign.TotalDiscount;
             }
 
-            if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
-            {
-                var binDiscount = CampaignService.GetInstance()
-                    .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
-                        discountCode);
-                if (binDiscount == null)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
-                    return paymentDetails;
-                }
-                if (binDiscount.ReplaceMargin)
-                {
-                    var orders = reservation.Type == ProductType.Flight
-                        ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
-                        : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+            #region deprecatedMethodDiscount
+            //if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
+            //{
+            //    var binDiscount = CampaignService.GetInstance()
+            //        .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
+            //            discountCode);
+            //    if (binDiscount == null)
+            //    {
+            //        paymentDetails.Status = PaymentStatus.Failed;
+            //        paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
+            //        return paymentDetails;
+            //    }
+            //    if (binDiscount.ReplaceMargin)
+            //    {
+            //        var orders = reservation.Type == ProductType.Flight
+            //            ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
+            //            : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
 
-                    foreach (var order in orders)
-                    {
-                        var newOriginal = order.GetApparentOriginalPrice();
-                        order.Price.Margin = new UsedMargin
-                        {
-                            Name = "BIN Promo Margin Modify",
-                            Description = "Margin Modified by BIN Promo",
-                            Currency = order.Price.LocalCurrency,
-                            Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                        };
-                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                        order.Price.Rounding = 0;
-                        order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                        order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                    }
-                    paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                }
-                else
-                {
-                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+            //        foreach (var order in orders)
+            //        {
+            //            var newOriginal = order.GetApparentOriginalPrice();
+            //            order.Price.Margin = new UsedMargin
+            //            {
+            //                Name = "BIN Promo Margin Modify",
+            //                Description = "Margin Modified by BIN Promo",
+            //                Currency = order.Price.LocalCurrency,
+            //                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
+            //            };
+            //            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
+            //            order.Price.Rounding = 0;
+            //            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
+            //            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+            //        }
+            //        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+            //        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+            //    }
+            //    else
+            //    {
+            //        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
 
-                }
-                if (paymentDetails.Discount == null)
-                    paymentDetails.Discount = new UsedDiscount
-                    {
-                        DisplayName = binDiscount.DisplayName,
-                        Name = binDiscount.DisplayName,
-                        Constant = binDiscount.Amount,
-                        Percentage = 0M,
-                        Currency = new Currency("IDR"),
-                        Description = "BIN Promo",
-                        IsFlat = false
-                    };
-                else
-                    paymentDetails.Discount.Constant += binDiscount.Amount;
-                paymentDetails.DiscountNominal += binDiscount.Amount;
-                var contact = reservation.Contact;
-                if (contact == null)
-                    return null;
-                CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
-            }
+            //    }
+            //    if (paymentDetails.Discount == null)
+            //        paymentDetails.Discount = new UsedDiscount
+            //        {
+            //            DisplayName = binDiscount.DisplayName,
+            //            Name = binDiscount.DisplayName,
+            //            Constant = binDiscount.Amount,
+            //            Percentage = 0M,
+            //            Currency = new Currency("IDR"),
+            //            Description = "BIN Promo",
+            //            IsFlat = false
+            //        };
+            //    else
+            //        paymentDetails.Discount.Constant += binDiscount.Amount;
+            //    paymentDetails.DiscountNominal += binDiscount.Amount;
+            //    var contact = reservation.Contact;
+            //    if (contact == null)
+            //        return null;
+            //    CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
+            //}
 
-            if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
-            {
-                var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
-                if (binDiscount == null)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.MethodDiscountNoLongerEligible;
-                    return paymentDetails;
-                }
-                if (binDiscount.ReplaceMargin)
-                {
-                    var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+            //if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
+            //{
+            //    var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
+            //    if (binDiscount == null)
+            //    {
+            //        paymentDetails.Status = PaymentStatus.Failed;
+            //        paymentDetails.FailureReason = FailureReason.MethodDiscountNoLongerEligible;
+            //        return paymentDetails;
+            //    }
+            //    if (binDiscount.ReplaceMargin)
+            //    {
+            //        var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
 
-                    foreach (var order in orders)
-                    {
-                        var newOriginal = order.GetApparentOriginalPrice();
-                        order.Price.Margin = new UsedMargin
-                        {
-                            Name = "Payday Madness Margin Modify",
-                            Description = "Margin Modified by Payday Madness Promo",
-                            Currency = order.Price.LocalCurrency,
-                            Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                        };
-                        order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                        order.Price.Rounding = 0;
-                        order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                        order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                    }
-                    paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                    paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                }
-                else
-                {
-                    paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                }
-                if (paymentDetails.Discount == null)
-                    paymentDetails.Discount = new UsedDiscount
-                    {
-                        DisplayName = binDiscount.DisplayName,
-                        Name = binDiscount.DisplayName,
-                        Constant = binDiscount.Amount,
-                        Percentage = 0M,
-                        Currency = new Currency("IDR"),
-                        Description = "Payday Madness Bank Permata",
-                        IsFlat = false
-                    };
-                else
-                    paymentDetails.Discount.Constant += binDiscount.Amount;
-                paymentDetails.DiscountNominal += binDiscount.Amount;
-                var contact = reservation.Contact;
-                if (contact == null)
-                    return null;
-                var todayDate = new DateTime(2017, 3, 25);
-                //var todayDate = DateTime.Today;
-                if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
-                    (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
-                {
-                    CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                }
-            }
+            //        foreach (var order in orders)
+            //        {
+            //            var newOriginal = order.GetApparentOriginalPrice();
+            //            order.Price.Margin = new UsedMargin
+            //            {
+            //                Name = "Payday Madness Margin Modify",
+            //                Description = "Margin Modified by Payday Madness Promo",
+            //                Currency = order.Price.LocalCurrency,
+            //                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
+            //            };
+            //            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
+            //            order.Price.Rounding = 0;
+            //            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
+            //            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+            //        }
+            //        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+            //        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+            //    }
+            //    else
+            //    {
+            //        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+            //    }
+            //    if (paymentDetails.Discount == null)
+            //        paymentDetails.Discount = new UsedDiscount
+            //        {
+            //            DisplayName = binDiscount.DisplayName,
+            //            Name = binDiscount.DisplayName,
+            //            Constant = binDiscount.Amount,
+            //            Percentage = 0M,
+            //            Currency = new Currency("IDR"),
+            //            Description = "Payday Madness Bank Permata",
+            //            IsFlat = false
+            //        };
+            //    else
+            //        paymentDetails.Discount.Constant += binDiscount.Amount;
+            //    paymentDetails.DiscountNominal += binDiscount.Amount;
+            //    var contact = reservation.Contact;
+            //    if (contact == null)
+            //        return null;
+            //    var todayDate = new DateTime(2017, 3, 25);
+            //    //var todayDate = DateTime.Today;
+            //    if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
+            //        (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
+            //    {
+            //        CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
+            //    }
+            //}
+            #endregion
 
             var uniqueCode = GetUniqueCodeFromCache(rsvNo);
             if (uniqueCode == 0M)
@@ -236,7 +269,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
-            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails);
+            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails, reservation.Contact);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
@@ -329,7 +362,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         (sur.PaymentSubMethod == null || payment.Submethod == sur.PaymentSubMethod));
             return surcharge == null
                 ? 0
-                : Math.Ceiling((payment.OriginalPriceIdr + payment.UniqueCode - payment.DiscountNominal) * surcharge.Percentage / 100) +
+                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal) * surcharge.Percentage / 100) +
                   surcharge.Constant;
         }
 
@@ -457,46 +490,45 @@ namespace Lunggo.ApCommon.Payment.Service
             return itemDetails;
         }
 
-        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment)
+        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment, Contact contact)
         {
             return new TransactionDetails
             {
                 OrderId = rsvNo,
                 OrderTime = DateTime.UtcNow,
-                Amount = (long)payment.FinalPriceIdr
+                Amount = (long)payment.FinalPriceIdr,
+                Contact = contact
             };
         }
 
-        public decimal GetUniqueCode(string rsvNo, string bin, string discountCode)
+        public decimal GetUniqueCode(string trxId, string bin, string discountCode)
         {
-            decimal uniqueCode, finalPrice;
-            var voucher = CampaignService.GetInstance().ValidateVoucherRequest(rsvNo, discountCode);
-            if (voucher.VoucherStatus != VoucherStatus.Success)
+            var uniqueCode = 0M;
+            List<string> rsvNos;
+            if (trxId.Length >= 15)
             {
-                var payment = PaymentDetails.GetFromDb(rsvNo);
+                var cart = GetCart(trxId);
+                if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
+                    return 0;
 
-                if (payment == null)
-                    return 404404404.404404404M;
-
-                finalPrice = payment.OriginalPriceIdr;
+                rsvNos = cart.RsvNoList;
             }
             else
             {
-                finalPrice = voucher.DiscountedPrice;
+                rsvNos = new List<string> { trxId };
             }
-            if (finalPrice <= 999 && finalPrice >= 0)
-            {
-                uniqueCode = -finalPrice;
-            }
-            else
+
+            foreach (var rsvNo in rsvNos)
             {
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                uniqueCode = GetUniqueCodeFromCache(rsvNo);
-                if (uniqueCode != 0M)
+                var payment = PaymentDetails.GetFromDb(rsvNo);
+                var finalPrice = payment.OriginalPriceIdr;
+                var singleUniqueCode = GetUniqueCodeFromCache(rsvNo);
+                if (singleUniqueCode != 0M)
                 {
-                    candidatePrice = finalPrice + uniqueCode;
+                    candidatePrice = finalPrice + singleUniqueCode;
                     var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
                     isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
                     if (isExist)
@@ -506,15 +538,15 @@ namespace Lunggo.ApCommon.Payment.Service
                         {
                             if (cap < 999)
                                 cap += 50;
-                            uniqueCode = -rnd.Next(1, cap);
-                            candidatePrice = finalPrice + uniqueCode;
+                            singleUniqueCode = -rnd.Next(1, cap);
+                            candidatePrice = finalPrice + singleUniqueCode;
                             rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
                             isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
                         } while (isExist);
                     }
                     SaveTransferValue(candidatePrice, rsvNo);
 
-                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(rsvNo, singleUniqueCode);
                 }
                 else
                 {
@@ -523,204 +555,53 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         if (cap < 999)
                             cap += 50;
-                        uniqueCode = -rnd.Next(1, cap);
-                        candidatePrice = finalPrice + uniqueCode;
+                        singleUniqueCode = -rnd.Next(1, cap);
+                        candidatePrice = finalPrice + singleUniqueCode;
                         var rsvNoHavingTransferValue = GetRsvNoHavingTransferValue(candidatePrice);
                         isExist = rsvNoHavingTransferValue != null && rsvNoHavingTransferValue != rsvNo;
                     } while (isExist);
                     SaveTransferValue(candidatePrice, rsvNo);
-                    SaveUniqueCodeinCache(rsvNo, uniqueCode);
+                    SaveUniqueCodeinCache(rsvNo, singleUniqueCode);
                 }
+
+                uniqueCode += singleUniqueCode;
             }
 
             return uniqueCode;
         }
-        internal PaymentDetails GetFinalPriceCart(PaymentData paymentData, string discountCode)
+
+        internal PaymentDetails GetCartPaymentDetails(Cart cart, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode)
         {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            var rsvNoList = ViewCart(userId).RsvNoList;
-            var finalPrice = new PaymentDetails();
-            finalPrice.FinalPriceIdr = 0;
-            var originalTotalPrice = ViewCart(userId).TotalPrice;
-            var numberOfRsvNo = rsvNoList.Count();
-            foreach (string rsvNo in rsvNoList)
+            var rsvNoList = cart.RsvNoList;
+            var cartPayment = new PaymentDetails();
+            cartPayment.CartRecordId = cart.Id;
+
+            foreach (var rsvNo in rsvNoList)
             {
-                ReservationBase reservation;
-                reservation = ActivityService.GetInstance().GetReservation(rsvNo);
-                var paymentDetails = reservation.Payment;
+                var paymentDetails = GetPayment(rsvNo);
                 if (paymentDetails == null)
                     return null;
 
-                if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Method != PaymentMethod.BankTransfer)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.MethodNotAvailable;
-                    return paymentDetails;
-                }
-
-                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-
-                if (!string.IsNullOrEmpty(discountCode))
-                {
-                    var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-                    if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
-                    {
-                        paymentDetails.Status = PaymentStatus.Failed;
-                        paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
-                        return paymentDetails;
-                    }
-                    var totalDiscount = (campaign.OriginalPrice / originalTotalPrice) * campaign.TotalDiscount;
-                    paymentDetails.FinalPriceIdr = campaign.OriginalPrice - totalDiscount;
-                    paymentDetails.Discount = campaign.Discount;
-                    paymentDetails.DiscountCode = campaign.VoucherCode;
-                    paymentDetails.DiscountNominal = totalDiscount;
-                }
-
-                if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
-                {
-                    var binDiscount = CampaignService.GetInstance()
-                        .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
-                            discountCode);
-                    if (binDiscount == null)
-                    {
-                        paymentDetails.Status = PaymentStatus.Failed;
-                        paymentDetails.FailureReason = FailureReason.BinPromoNoLongerEligible;
-                        return paymentDetails;
-                    }
-                    if (binDiscount.ReplaceMargin)
-                    {
-                        var orders = reservation.Type == ProductType.Flight
-                            ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
-                            : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
-
-                        foreach (var order in orders)
-                        {
-                            var newOriginal = order.GetApparentOriginalPrice();
-                            order.Price.Margin = new UsedMargin
-                            {
-                                Name = "BIN Promo Margin Modify",
-                                Description = "Margin Modified by BIN Promo",
-                                Currency = order.Price.LocalCurrency,
-                                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                            };
-                            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                            order.Price.Rounding = 0;
-                            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                        }
-                        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                    }
-                    else
-                    {
-                        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-
-                    }
-                    if (paymentDetails.Discount == null)
-                        paymentDetails.Discount = new UsedDiscount
-                        {
-                            DisplayName = binDiscount.DisplayName,
-                            Name = binDiscount.DisplayName,
-                            Constant = binDiscount.Amount,
-                            Percentage = 0M,
-                            Currency = new Currency("IDR"),
-                            Description = "BIN Promo",
-                            IsFlat = false
-                        };
-                    else
-                        paymentDetails.Discount.Constant += binDiscount.Amount;
-                    paymentDetails.DiscountNominal += binDiscount.Amount;
-                    var contact = reservation.Contact;
-                    if (contact == null)
-                        return null;
-                    CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
-                }
-
-                if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
-                {
-                    var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
-                    if (binDiscount == null)
-                    {
-                        paymentDetails.Status = PaymentStatus.Failed;
-                        paymentDetails.FailureReason = FailureReason.MethodDiscountNoLongerEligible;
-                        return paymentDetails;
-                    }
-                    if (binDiscount.ReplaceMargin)
-                    {
-                        var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
-
-                        foreach (var order in orders)
-                        {
-                            var newOriginal = order.GetApparentOriginalPrice();
-                            order.Price.Margin = new UsedMargin
-                            {
-                                Name = "Payday Madness Margin Modify",
-                                Description = "Margin Modified by Payday Madness Promo",
-                                Currency = order.Price.LocalCurrency,
-                                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                            };
-                            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                            order.Price.Rounding = 0;
-                            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                        }
-                        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                    }
-                    else
-                    {
-                        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                    }
-                    if (paymentDetails.Discount == null)
-                        paymentDetails.Discount = new UsedDiscount
-                        {
-                            DisplayName = binDiscount.DisplayName,
-                            Name = binDiscount.DisplayName,
-                            Constant = binDiscount.Amount,
-                            Percentage = 0M,
-                            Currency = new Currency("IDR"),
-                            Description = "Payday Madness Bank Permata",
-                            IsFlat = false
-                        };
-                    else
-                        paymentDetails.Discount.Constant += binDiscount.Amount;
-                    paymentDetails.DiscountNominal += binDiscount.Amount;
-                    var contact = reservation.Contact;
-                    if (contact == null)
-                        return null;
-                    var todayDate = new DateTime(2017, 3, 25);
-                    //var todayDate = DateTime.Today;
-                    if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
-                    (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
-                    {
-                        CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                    }
-                }
+                cartPayment.OriginalPriceIdr += paymentDetails.OriginalPriceIdr;
+                cartPayment.FinalPriceIdr += paymentDetails.OriginalPriceIdr;
 
                 var uniqueCode = GetUniqueCodeFromCache(rsvNo);
                 if (uniqueCode == 0M)
                 {
                     uniqueCode = GetUniqueCode(rsvNo, null, discountCode);
                 }
-                paymentDetails.UniqueCode = uniqueCode;
-                paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
-
-                paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
-                paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
-
-                paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
-
-                finalPrice.FinalPriceIdr += paymentDetails.FinalPriceIdr;
+                cartPayment.UniqueCode += uniqueCode;
+                cartPayment.FinalPriceIdr += uniqueCode;
+                cartPayment.LocalCurrency = paymentDetails.LocalCurrency;
             }
-
-            return finalPrice;
+            cartPayment.LocalFinalPrice = cartPayment.FinalPriceIdr * cartPayment.LocalCurrency.Rate;
+            return cartPayment;
         }
-        internal void UpdateCartPayment(PaymentMethod method, PaymentSubmethod submethod,
-            PaymentData paymentData, string discountCode, PaymentDetails paymentDetailsCart)
+        internal void UpdateCartPayment(Cart cart, PaymentMethod method, PaymentSubmethod submethod,
+            PaymentData paymentData, PaymentDetails cartPayment)
         {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            var originalTotalPrice = ViewCart(userId).TotalPrice;
-            var rsvNoList = ViewCart(userId).RsvNoList;
+            var originalTotalPrice = cart.TotalPrice;
+            var rsvNoList = cart.RsvNoList;
             foreach (string rsvNo in rsvNoList)
             {
                 ReservationBase reservation;
@@ -731,7 +612,6 @@ namespace Lunggo.ApCommon.Payment.Service
                 else
                     reservation = ActivityService.GetInstance().GetReservation(rsvNo);
 
-
                 var paymentDetails = reservation.Payment;
                 paymentDetails.Data = paymentData;
                 paymentDetails.Method = method;
@@ -739,169 +619,141 @@ namespace Lunggo.ApCommon.Payment.Service
                 paymentDetails.Medium = GetPaymentMedium(method, submethod);
                 paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
 
-                if (!string.IsNullOrEmpty(discountCode))
-                {
-                    var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
-                    var totalDiscount = (campaign.OriginalPrice / originalTotalPrice) * campaign.TotalDiscount;
-                    paymentDetails.FinalPriceIdr = campaign.OriginalPrice - totalDiscount;
-                    paymentDetails.Discount = campaign.Discount;
-                    paymentDetails.DiscountCode = campaign.VoucherCode;
-                    paymentDetails.DiscountNominal = totalDiscount;
-                }
+                var discNominal = (paymentDetails.OriginalPriceIdr / originalTotalPrice) * cartPayment.DiscountNominal;
+                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - discNominal;
+                paymentDetails.Discount = cartPayment.Discount;
+                paymentDetails.DiscountCode = cartPayment.DiscountCode;
+                paymentDetails.DiscountNominal = discNominal;
 
-                if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
-                {
-                    var binDiscount = CampaignService.GetInstance()
-                        .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
-                            discountCode);
-                    if (binDiscount.ReplaceMargin)
-                    {
-                        var orders = reservation.Type == ProductType.Flight
-                            ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
-                            : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+                #region deprecatedMethodDiscount
+                //if (paymentDetails.Method == PaymentMethod.CreditCard && paymentDetails.Data.CreditCard.RequestBinDiscount)
+                //{
+                //    var binDiscount = CampaignService.GetInstance()
+                //        .CheckBinDiscount(rsvNo, paymentData.CreditCard.TokenId, paymentData.CreditCard.HashedPan,
+                //            discountCode);
+                //    if (binDiscount.ReplaceMargin)
+                //    {
+                //        var orders = reservation.Type == ProductType.Flight
+                //            ? (IEnumerable<OrderBase>)(reservation as FlightReservation).Itineraries.ToList()
+                //            : (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
 
-                        foreach (var order in orders)
-                        {
-                            var newOriginal = order.GetApparentOriginalPrice();
-                            order.Price.Margin = new UsedMargin
-                            {
-                                Name = "BIN Promo Margin Modify",
-                                Description = "Margin Modified by BIN Promo",
-                                Currency = order.Price.LocalCurrency,
-                                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                            };
-                            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                            order.Price.Rounding = 0;
-                            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                        }
-                        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                    }
-                    else
-                    {
-                        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                //        foreach (var order in orders)
+                //        {
+                //            var newOriginal = order.GetApparentOriginalPrice();
+                //            order.Price.Margin = new UsedMargin
+                //            {
+                //                Name = "BIN Promo Margin Modify",
+                //                Description = "Margin Modified by BIN Promo",
+                //                Currency = order.Price.LocalCurrency,
+                //                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
+                //            };
+                //            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
+                //            order.Price.Rounding = 0;
+                //            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
+                //            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+                //        }
+                //        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+                //        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                //    }
+                //    else
+                //    {
+                //        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
 
-                    }
-                    if (paymentDetails.Discount == null)
-                        paymentDetails.Discount = new UsedDiscount
-                        {
-                            DisplayName = binDiscount.DisplayName,
-                            Name = binDiscount.DisplayName,
-                            Constant = binDiscount.Amount,
-                            Percentage = 0M,
-                            Currency = new Currency("IDR"),
-                            Description = "BIN Promo",
-                            IsFlat = false
-                        };
-                    else
-                        paymentDetails.Discount.Constant += binDiscount.Amount;
-                    paymentDetails.DiscountNominal += binDiscount.Amount;
-                    var contact = reservation.Contact;
-                    CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
-                }
+                //    }
+                //    if (paymentDetails.Discount == null)
+                //        paymentDetails.Discount = new UsedDiscount
+                //        {
+                //            DisplayName = binDiscount.DisplayName,
+                //            Name = binDiscount.DisplayName,
+                //            Constant = binDiscount.Amount,
+                //            Percentage = 0M,
+                //            Currency = new Currency("IDR"),
+                //            Description = "BIN Promo",
+                //            IsFlat = false
+                //        };
+                //    else
+                //        paymentDetails.Discount.Constant += binDiscount.Amount;
+                //    paymentDetails.DiscountNominal += binDiscount.Amount;
+                //    var contact = reservation.Contact;
+                //    CampaignService.GetInstance().SavePanAndEmailInCache("btn", paymentData.CreditCard.HashedPan, contact.Email);
+                //}
 
-                if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
-                {
-                    var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
-                    if (binDiscount.ReplaceMargin)
-                    {
-                        var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
+                //if (paymentDetails.Method == PaymentMethod.VirtualAccount && rsvNo.StartsWith("2"))
+                //{
+                //    var binDiscount = CampaignService.GetInstance().CheckMethodDiscount(rsvNo, discountCode);
+                //    if (binDiscount.ReplaceMargin)
+                //    {
+                //        var orders = (reservation as HotelReservation).HotelDetails.Rooms.SelectMany(ro => ro.Rates).ToList();
 
-                        foreach (var order in orders)
-                        {
-                            var newOriginal = order.GetApparentOriginalPrice();
-                            order.Price.Margin = new UsedMargin
-                            {
-                                Name = "Payday Madness Margin Modify",
-                                Description = "Margin Modified by Payday Madness Promo",
-                                Currency = order.Price.LocalCurrency,
-                                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
-                            };
-                            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
-                            order.Price.Rounding = 0;
-                            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
-                            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
-                        }
-                        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
-                        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
-                    }
-                    else
-                    {
-                        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
-                    }
-                    if (paymentDetails.Discount == null)
-                        paymentDetails.Discount = new UsedDiscount
-                        {
-                            DisplayName = binDiscount.DisplayName,
-                            Name = binDiscount.DisplayName,
-                            Constant = binDiscount.Amount,
-                            Percentage = 0M,
-                            Currency = new Currency("IDR"),
-                            Description = "Payday Madness Bank Permata",
-                            IsFlat = false
-                        };
-                    else
-                        paymentDetails.Discount.Constant += binDiscount.Amount;
-                    paymentDetails.DiscountNominal += binDiscount.Amount;
-                    var contact = reservation.Contact;
-                    var todayDate = new DateTime(2017, 3, 25);
-                    //var todayDate = DateTime.Today;
-                    if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
-                        (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
-                    {
-                        CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
-                    }
-                }
+                //        foreach (var order in orders)
+                //        {
+                //            var newOriginal = order.GetApparentOriginalPrice();
+                //            order.Price.Margin = new UsedMargin
+                //            {
+                //                Name = "Payday Madness Margin Modify",
+                //                Description = "Margin Modified by Payday Madness Promo",
+                //                Currency = order.Price.LocalCurrency,
+                //                Constant = newOriginal - (order.Price.OriginalIdr / order.Price.LocalCurrency.Rate)
+                //            };
+                //            order.Price.Local = order.Price.OriginalIdr + (order.Price.Margin.Constant * order.Price.Margin.Currency.Rate);
+                //            order.Price.Rounding = 0;
+                //            order.Price.FinalIdr = order.Price.Local * order.Price.LocalCurrency.Rate;
+                //            order.Price.MarginNominal = order.Price.FinalIdr - order.Price.OriginalIdr;
+                //        }
+                //        paymentDetails.OriginalPriceIdr = orders.Sum(i => i.Price.FinalIdr);
+                //        paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr - binDiscount.Amount;
+                //    }
+                //    else
+                //    {
+                //        paymentDetails.FinalPriceIdr -= binDiscount.Amount;
+                //    }
+                //    if (paymentDetails.Discount == null)
+                //        paymentDetails.Discount = new UsedDiscount
+                //        {
+                //            DisplayName = binDiscount.DisplayName,
+                //            Name = binDiscount.DisplayName,
+                //            Constant = binDiscount.Amount,
+                //            Percentage = 0M,
+                //            Currency = new Currency("IDR"),
+                //            Description = "Payday Madness Bank Permata",
+                //            IsFlat = false
+                //        };
+                //    else
+                //        paymentDetails.Discount.Constant += binDiscount.Amount;
+                //    paymentDetails.DiscountNominal += binDiscount.Amount;
+                //    var contact = reservation.Contact;
+                //    var todayDate = new DateTime(2017, 3, 25);
+                //    //var todayDate = DateTime.Today;
+                //    if (todayDate >= new DateTime(2017, 3, 25) && todayDate <= new DateTime(2017, 8, 27) &&
+                //        (todayDate.Day >= 25 && todayDate.Day <= 27) && binDiscount.IsAvailable)
+                //    {
+                //        CampaignService.GetInstance().SaveEmailInCache("paydayMadness", contact.Email);
+                //    }
+                //}
+                #endregion
 
                 var uniqueCode = GetUniqueCodeFromCache(rsvNo);
                 if (uniqueCode == 0M)
                 {
-                    uniqueCode = GetUniqueCode(rsvNo, null, discountCode);
+                    uniqueCode = GetUniqueCode(rsvNo, null, cartPayment.DiscountCode);
                 }
                 paymentDetails.UniqueCode = uniqueCode;
-                paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
+                paymentDetails.FinalPriceIdr += uniqueCode;
 
                 paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
                 paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
                 paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
+                paymentDetails.PaidAmountIdr = paymentDetails.LocalFinalPrice;
+                paymentDetails.LocalPaidAmount = paymentDetails.LocalFinalPrice;
                 //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);
-                paymentDetails.Status = paymentDetailsCart.Status;
+                paymentDetails.Status = cartPayment.Status;
                 if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
                 {
                     UpdatePaymentToDb(rsvNo, paymentDetails);
                 }
             }
 
-        }
-
-        public void DeleteCartIdRedis(string cartId)
-        {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            var redisService = RedisService.GetInstance();
-            var redisKeyCartId = "CartId:" + cartId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            
-            var redisKeyNameId = "NameId:" + userId;
-            redisDb.KeyDelete(redisKeyNameId);
-            redisDb.KeyDelete(redisKeyCartId);
-        }
-
-        public void InsertCartToDb(string cartId, List<string> rsvNoList)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                foreach(string rsvNo in rsvNoList)
-                {
-                    var cartsRecord = new CartsTableRecord
-                    {
-                        CartId = cartId,
-                        RsvNoList = rsvNo
-                    };
-                    CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
-                }
-            }
         }
     }
 }

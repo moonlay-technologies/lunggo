@@ -143,14 +143,13 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
 
-        public List<Tuple<string, List<string>>> GetInstruction(ReservationForDisplayBase rsv)
+        public List<Tuple<string, List<string>>> GetInstruction(PaymentDetails payment)
         {
-            var rsvNo = rsv.RsvNo;
-            var medium = rsv.Payment.Medium;
-            var method = rsv.Payment.Method;
-            var submethod = rsv.Payment.Submethod;
-            var price = rsv.Payment.FinalPrice.ToString("####");
-            var account = rsv.Payment.TransferAccount;
+            var medium = payment.Medium;
+            var method = payment.Method;
+            var submethod = payment.Submethod;
+            var price = payment.FinalPriceIdr.ToString("####");
+            var account = payment.TransferAccount;
 
             if (medium == PaymentMedium.Direct &&
                 method == PaymentMethod.BankTransfer &&
@@ -413,7 +412,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Atur Rekening Tujuan</b>",
                         "Pilih <b>Tambah Rekening Tujuan</b>",
                         "Klik <b>Ok</b>",
-                        "Masukkan Nomor Order Sebagai <b>Nama Singkat</b>: <b>" + rsvNo + "</b>",
+                        "Masukkan Nomor Order Sebagai <b>Nama Singkat</b>: <b>Travorama</b>",
                         "Masukkan Nomor Virtual Account Sebagai Nomor Rekening: <b>" + account + "</b>",
                         "Lengkapi Semua Data Yang Diperlukan.",
                         "Klik <b>Lanjutkan</b>",
@@ -421,7 +420,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Rekening Tujuan Berhasil Ditambahkan.",
                         "Pilih <b>Menu Transfer</b>",
                         "Pilih <b>Transfer Antar Rek. BNI</b>",
-                        "Pilih Rekening Tujuan dengan <b>Nama Singkat</b> Yang Sudah Anda Tambahkan: <b>" + rsvNo + "</b>",
+                        "Pilih Rekening Tujuan dengan <b>Nama Singkat</b> Yang Sudah Anda Tambahkan: <b>Travorama</b>",
                         "Masukkan Nominal: <b>" + price + "</b>",
                         "Masukkan <b>Kode Otentikasi Token</b>",
                         "Bukti Pembayaran Ditampilkan.",

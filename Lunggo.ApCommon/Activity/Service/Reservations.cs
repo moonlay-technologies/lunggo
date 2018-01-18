@@ -59,14 +59,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public ActivityReservation GetReservation(string rsvNo)
         {
-            try
-            {
-                return GetReservationFromDb(rsvNo);
-            }
-            catch
-            {
-                return null;
-            }
+            return GetReservationFromDb(rsvNo);
         }
 
         public ActivityReservationForDisplay GetReservationForDisplay(string rsvNo)

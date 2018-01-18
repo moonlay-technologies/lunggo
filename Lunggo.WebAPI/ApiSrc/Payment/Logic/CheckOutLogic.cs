@@ -42,9 +42,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
 
             bool isUpdated;
-            var cartId = PaymentService.GetInstance().GetUserIdCart(user);
-            var paymentDetails = PaymentService.GetInstance().SubmitPaymentCart(user, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
-            var apiResponse = AssembleApiResponse(paymentDetails, isUpdated, cartId);
+            var paymentDetails = PaymentService.GetInstance().SubmitPaymentCart(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
+            var apiResponse = AssembleApiResponse(paymentDetails, isUpdated, request.CartId);
             return apiResponse;
         }
 
@@ -95,7 +94,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     paymentDetails.Status == PaymentStatus.Settled || paymentDetails.Status == PaymentStatus.Pending
                         ? HttpStatusCode.OK
                         : HttpStatusCode.Accepted,
-                CartId = cartId
+                CartRecordId = paymentDetails.CartRecordId
             };
         }
     }

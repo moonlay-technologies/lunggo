@@ -78,6 +78,11 @@ var FlightPayConfig = {
     working: false
 };
 
+var CartCheckoutConfig = {
+    Url: 'http://api.local.travorama.com/v1/payment/cart/checkout',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: 'http://api.local.travorama.com/v1/flight/rules',
     working: false

@@ -96,7 +96,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     var rsvNoSet = new
                     {
                         RsvNo = displayReservation.RsvNo,
-                        regId = Generator.GenerateRsvNoId(rsvNo)
+                        regId = Generator.GenerateTrxIdRegId(rsvNo)
                     };
 
 

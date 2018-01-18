@@ -757,7 +757,7 @@
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
-    <Compile Include="Payment\Model\ViewCartOutput.cs" />
+    <Compile Include="Payment\Model\Cart.cs" />
     <Compile Include="Payment\Query\CreateAccountByUserQuery.cs" />
     <Compile Include="Payment\Query\GetAccountUserQuery.cs" />
     <Compile Include="Payment\Query\GetBalanceQuery.cs" />

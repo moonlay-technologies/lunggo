@@ -18,16 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
     {
         public static ApiResponseBase ViewCart()
         {
-            var user = HttpContext.Current.User.Identity.GetId();
-            if (user == null)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERR_USER_UNDEFINED"
-                };
-            }
-            var viewCartResponse = PaymentService.GetInstance().ViewCart(user);
+            var viewCartResponse = PaymentService.GetInstance().GetCart();
             var apiResponse = AssembleApiResponse(viewCartResponse);
             return apiResponse;
         }
@@ -43,24 +34,15 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
             return true;
 
         }
-        public static ViewCartApiResponse AssembleApiResponse(ViewCartOutput viewCartApiResponse)
+        public static ViewCartApiResponse AssembleApiResponse(ApCommon.Payment.Model.Cart viewCartApiResponse)
         {
             var apiResponse = new ViewCartApiResponse();
-            var convertRsvNoList = new List<ActivityReservationForDisplay>();   
-            foreach (string rsvNo in viewCartApiResponse.RsvNoList)
-            {
-                convertRsvNoList.Add((ActivityService.GetInstance().GetReservationForDisplay(rsvNo)));
-            }
-            if (viewCartApiResponse.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                apiResponse.StatusCode = HttpStatusCode.Unauthorized;
-                return apiResponse;
-            }
+            var reservations = viewCartApiResponse.RsvNoList.Select(ActivityService.GetInstance().GetReservationForDisplay).ToList();
 
-            apiResponse.CartId = viewCartApiResponse.CartId;
+            apiResponse.CartId = viewCartApiResponse.Id;
             apiResponse.TotalPrice = viewCartApiResponse.TotalPrice;
-            apiResponse.RsvNoList = convertRsvNoList;
-            apiResponse.StatusCode = viewCartApiResponse.StatusCode;
+            apiResponse.RsvNoList = reservations;
+            apiResponse.StatusCode = HttpStatusCode.OK;
             return apiResponse;
         }
     }

@@ -22,9 +22,11 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
-            var serviceRequest = PreprocessServiceRequest(request);
-            var deleteRsvFromCartResponse = PaymentService.GetInstance().DeleteFromCart(serviceRequest);
-            var apiResponse = AssembleApiResponse(deleteRsvFromCartResponse);
+            PaymentService.GetInstance().DeleteFromCart(request.RsvNo);
+            var apiResponse = new ApiResponseBase
+            {
+                StatusCode = HttpStatusCode.OK
+            };
             return apiResponse;
 
         }
@@ -36,24 +38,6 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
             { return false; }
             serviceRequest.RsvNo = request.RsvNo;
             return true;
-        }
-
-        public static DeleteRsvFromCartInput PreprocessServiceRequest(DeleteRsvFromCartApiRequest request)
-        {
-            return new DeleteRsvFromCartInput()
-            {
-                RsvNo = request.RsvNo
-            };
-        }
-
-        public static DeleteRsvFromCartApiResponse AssembleApiResponse(DeleteRsvFromCartOutput addToCartApiResponse)
-        {
-            var apiResponse = new DeleteRsvFromCartApiResponse
-            {
-                ErrorCode = addToCartApiResponse.ErrorCode,
-                StatusCode = addToCartApiResponse.StatusCode
-            };
-            return apiResponse;
         }
     }
 }

@@ -5,7 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
+using Lunggo.Framework.Database;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Redis;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 using StackExchange.Redis;
 using Lunggo.ApCommon.Payment.Model;
 using System.Runtime.InteropServices;
@@ -22,97 +28,141 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public ViewCartOutput ViewCart(string userId)
+        public Cart GetCart()
         {
-            var cart = new ViewCartOutput();
-            cart.RsvNoList = new List<string>();
-            cart.TotalPrice = 0;
-            var idCart = GetUserIdCart(userId);
-            var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + idCart;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            for (long i = 0; i < redisDb.ListLength(redisKey); i++)
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var cartId = GetCartId(userId);
+            return GetCart(cartId);
+        }
+
+        public Cart GetCart(string cartId)
+        {
+            var cart = new Cart
             {
-                string rsvNo = redisDb.ListGetByIndex(redisKey, i);         
-                cart.RsvNoList.Add(rsvNo);
-                var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
-                cart.TotalPrice += paymentDetail.OriginalPriceIdr;
-            }
-            cart.StatusCode = HttpStatusCode.OK;
+                Id = cartId,
+            };
+
+            GetCartContentFromCache(cart);
+            if (cart.RsvNoList == null || !cart.RsvNoList.Any())
+                GetCartContentFromDb(cart);
+            if (cart.RsvNoList == null || !cart.RsvNoList.Any())
+                return cart;
+
+            cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
             return cart;
         }
 
-        public AddToCartOutput AddToCart(AddToCartInput input, string userId)
+        private void GetCartContentFromDb(Cart cart)
         {
-            var response = new AddToCartOutput();
-            var idCart = GetUserIdCart(userId);
-            if (idCart == null)
+            using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                AddIdCart(userId);
-                idCart = GetUserIdCart(userId);
+                var record = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord {CartId = cart.Id});
+                cart.RsvNoList = record.Select(r => r.RsvNoList).ToList();
             }
-            var checkRsv = ActivityService.GetInstance().GetReservation(input.RsvNo);
-            if (checkRsv == null)
-                return new AddToCartOutput { isSuccess = false };
-            var paymentDetail = PaymentDetails.GetFromDb(input.RsvNo);
-            if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
-                return new AddToCartOutput { isSuccess = false };
-            AddRsvNoToIdCart(idCart, input.RsvNo);
-            return new AddToCartOutput { isSuccess = true };
         }
 
-        public DeleteRsvFromCartOutput DeleteFromCart(DeleteRsvFromCartInput request)
+        private static void GetCartContentFromCache(Cart cart)
         {
-            var response = new DeleteRsvFromCartOutput();
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:RsvNoList:" + cart.Id;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            if (redisDb.ListLength(redisKey) == 0)
+                return;
+
+            var rsvNoList = redisDb.ListRange(redisKey).Select(val => val.ToString()).Distinct().ToList();
+            cart.RsvNoList = rsvNoList;
+            cart.TotalPrice = rsvNoList.Select(PaymentDetails.GetFromDb).Sum(p => p.OriginalPriceIdr);
+        }
+
+        public bool AddToCart(string rsvNo)
+        {
             var userId = HttpContext.Current.User.Identity.GetId();
-            if (userId == null)
-            {
-                response.StatusCode = HttpStatusCode.Unauthorized;
-                return response;
-            }
-            var idCart = GetUserIdCart(userId);
-            var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + idCart;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.ListRemove(redisKey, request.RsvNo);
-            response.StatusCode = HttpStatusCode.OK;
-            return response;
+            return AddToCart(userId, rsvNo);
         }
 
-        public string GetUserIdCart(string userId)
+        public bool AddToCart(string userId, string rsvNo)
         {
-            var redisService = RedisService.GetInstance();
-            var redisKey = "NameId:" + userId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            try
-            {
-                var value = redisDb.StringGet(redisKey);
-                return value;
-            }
-            catch
-            {
+            var checkRsv = ActivityService.GetInstance().GetReservation(rsvNo);
+            if (checkRsv == null)
+                return false;
+            var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
+            if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
+                return false;
 
+            var cartId = GetCartId(userId);
+            AddRsvNoToCartCache(cartId, rsvNo);
+            return true;
+        }
+
+        public void DeleteFromCart(string rsvNo)
+        {
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var cartId = GetCartId(userId);
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:RsvNoList:" + cartId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.ListRemove(redisKey, rsvNo);
+        }
+
+        public string GetCartId(string userId)
+        {
+            var hash = userId.Sha1Encode();
+            var stringBuilder = new StringBuilder();
+            foreach (var hashByte in hash)
+            {
+                stringBuilder.AppendFormat("{0:x2}", hashByte);
             }
-            return null;
+            return stringBuilder.ToString();
         }
         
-        internal void AddIdCart(string userId)
+        internal void AddCartCache(string userId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "NameId:" + userId;
+            var redisKey = "Cart:UserCartId:" + userId;
             var redisValue = Guid.NewGuid();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.StringSet(redisKey, redisValue.ToString());            
         }
 
-        internal void AddRsvNoToIdCart(string idCart, string rsvNo)
+        internal void AddRsvNoToCartCache(string cartId, string rsvNo)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "CartId:" + idCart;
+            var redisKey = "Cart:RsvNoList:" + cartId;
             var redisValue = rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.ListRightPush(redisKey, redisValue);
-        }        
+        }
+
+        public void DeleteCartCache(string cartId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKeyCartId = "Cart:RsvNoList:" + cartId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKeyCartId);
+        }
+
+        public void InsertCartToDb(string cartRecordId, List<string> rsvNoList)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                rsvNoList = rsvNoList.Distinct().ToList();
+                foreach (var rsvNo in rsvNoList)
+                {
+                    var cartsRecord = new CartsTableRecord
+                    {
+                        CartId = cartRecordId,
+                        RsvNoList = rsvNo
+                    };
+                    CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
+                }
+            }
+        }
+
+        private string GetCartRecordId()
+        {
+            var guid = Guid.NewGuid().ToString("N");
+            return guid;
+        }
     }
 }
 

@@ -10,7 +10,7 @@ namespace Lunggo.ApCommonTests.Cart.Service
         [TestMethod]
         public void ViewCart_Null_ReturnIsSuccessFalse()
         {
-            var expectedResult = new ViewCartOutput
+            var expectedResult = new ApCommon.Payment.Model.Cart
             {
 
             };

@@ -239,7 +239,7 @@
                             <div class="row text-group">
                                 <div class="col-xs-3 clear-left"><b>Input 3</b></div>
                                 <div class="col-xs-9">: 
-                                    @Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)
+                                    @(Model.TrxId.GetHashCode() % 100000)
                                 </div>
                             </div>
                         </div>

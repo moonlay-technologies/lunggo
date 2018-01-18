@@ -247,7 +247,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Checkout")]
         public ActionResult CheckoutPost(string rsvNo)
         {
-            var regId = Generator.GenerateRsvNoId(rsvNo);
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
             return RedirectToAction("Payment", "Payment", new { rsvNo, regId });
         }
 

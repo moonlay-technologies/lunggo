@@ -17,7 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         public string TransferAccount { get; set; }
         [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? TimeLimit { get; set; }
-        [JsonProperty("cartId", NullValueHandling = NullValueHandling.Ignore)]
-        public string CartId { get; set; }
+        [JsonProperty("cartRecordId", NullValueHandling = NullValueHandling.Ignore)]
+        public string CartRecordId { get; set; }
     }
 }

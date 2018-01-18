@@ -8,7 +8,7 @@
 @using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
-@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
+@model Lunggo.ApCommon.Payment.Model.PaymentDetails
 
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -19,9 +19,9 @@
 }
 
 @{
-    var payment = Model.Payment.Status;
+    var payment = Model.Status;
     var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
-    //Model.Payment.Status = PaymentStatus.Settled;
+    //Model.Status = PaymentStatus.Settled;
 
     var night = 0;
     var totalAdult = 0;
@@ -75,7 +75,7 @@
     <!-- angular controller -->
     <script src=@Fingerprint.Tag("/Assets/travorama20/js/ThankYouController.js")></script>
     <script>
-        @if (Model is FlightReservationForDisplay)
+        @*@if (Model is FlightReservationForDisplay)
         {
             var rsv = Model as FlightReservationForDisplay;
             @:var gtmContentType = 'flight';
@@ -117,12 +117,12 @@
             @:var gtmCurrency = 'IDR';
             @:var gtmValue = @rsv.Payment.FinalPrice;
             @:var gtmTravoramaReservationId = '@Model.RsvNo';
-        }
+        }*@
     </script>
 }
 
 <div ng-app="travorama" ng-controller="ThankyouController" class="page-loading" ng-class="{'page-loaded' : pageLoaded}">
-    @if (Model.Payment.Status == PaymentStatus.Expired)
+    @if (Model.Status == PaymentStatus.Expired)
     {
         <div class="bookfailed-popup">
             <div class="overlay-content">
@@ -136,8 +136,8 @@
             </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Verifying || Model.Payment.Status == PaymentStatus.Pending ||
-    Model.Payment.Status == PaymentStatus.Challenged)
+    else if (Model.Status == PaymentStatus.Verifying || Model.Status == PaymentStatus.Pending ||
+    Model.Status == PaymentStatus.Challenged)
     {
         <div class="bookfailed-popup" ng-init="refresh()">
             <div class="overlay-content">
@@ -151,7 +151,7 @@
         </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Denied || Model.Payment.Status == PaymentStatus.Failed)
+    else if (Model.Status == PaymentStatus.Denied || Model.Status == PaymentStatus.Failed)
     {
         <div class="bookfailed-popup">
             <div class="overlay-content">
@@ -165,7 +165,7 @@
             </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Cancelled || Model.Payment.Status == PaymentStatus.Undefined)
+    else if (Model.Status == PaymentStatus.Cancelled || Model.Status == PaymentStatus.Undefined)
     {
         <div class="bookfailed-popup">
             <div class="overlay-content">
@@ -179,13 +179,13 @@
             </div>
         </div>
     }
-    else if (Model.Payment.Status == PaymentStatus.Settled)
+    else if (Model.Status == PaymentStatus.Settled)
     {
         <div>
             <h2 class="section-title stripe text-center">TERIMA <span>KASIH</span></h2>
 
             <div class="container">
-                @if (Model is FlightReservationForDisplay)
+                @*@if (Model is FlightReservationForDisplay)
                 {
                     <p>Terima kasih telah memesan penerbangan di Travorama.com. Anda dapat mencetak e-tiket Anda melalui tombol berikut atau mengunduhnya di e-mail Anda:<b> @Model.Contact.Email</b> .</p>
                 }
@@ -196,7 +196,7 @@
                 else
                 {
                     <p>Terima kasih telah memesan di Travorama.com.</p>
-                }
+                }*@
 
                 <section class="countdown">
                     <div class="row">
@@ -234,7 +234,7 @@
 
                 </section><!-- .section -->
 
-                <section class="order-detail">
+                @*<section class="order-detail">
                     <header>
                         <h4><b>Detail Pesanan</b> <span class="pull-right">Nomor Pesanan: <b>@Model.RsvNo</b></span></h4>
                     </header>
@@ -260,11 +260,11 @@
                                                 }
                                             </ol>
                                         </div>
-                                        @if (Model.Payment.Method == PaymentMethod.VirtualAccount)
+                                        @if (Model.Method == PaymentMethod.VirtualAccount)
                                         {
                                             <div class="virtual-account col-xs-4">
                                                 <h4 class="va-text" style="font-size:11px;padding-bottom:2px;margin-bottom:8px;"><b>NO VIRTUAL ACCOUNT</b></h4>
-                                                <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.Payment.TransferAccount</b></h4>
+                                                <h4 class="va-number" style="font-size : 18px; color: #ff6900; padding:0;"><b>@Model.TransferAccount</b></h4>
                                             </div>
                                         }
                                     </div>
@@ -388,22 +388,22 @@
                                         {
                                             <dl>
                                                 <dt>Tiket Pesawat <span>(@Model.Pax.Count Penumpang)</span></dt>
-                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                                <dd>Rp @((Model.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
-                                            if (Model.Payment.DiscountNominal > 0)
+                                            if (Model.DiscountNominal > 0)
                                             {
                                                 <dl>
-                                                    <dt>@Model.Payment.DiscountName</dt>
-                                                    <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                                    <dt>@Model.DiscountName</dt>
+                                                    <dd>- Rp @Model.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                                 </dl>
                                             }
                                             <dl>
                                                 <dt>Kode Unik Pembayaran</dt>
-                                                <dd>- Rp @(Math.Abs(Model.Payment.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                                <dd>- Rp @(Math.Abs(Model.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
                                             <dl class="total-price">
                                                 <dt>Total</dt>
-                                                <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                                <dd>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                             </dl>
                                         }
                                         @if (Model is HotelReservationForDisplay)
@@ -425,28 +425,28 @@
                                                         </dl>
                                                     }
                                                 }
-                                            }*@
+                                            }
 
                                             <dl>
                                                 <dt>Kamar Hotel <span>(@rsv.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.RateCount))) Kamar)</span></dt>
-                                                <dd>Rp @((Model.Payment.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                                <dd>Rp @((Model.OriginalPrice).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
 
-                                            if (Model.Payment.DiscountNominal > 0)
+                                            if (Model.DiscountNominal > 0)
                                             {
                                                 <dl>
-                                                    <dt>@Model.Payment.DiscountName</dt>
-                                                    <dd>- Rp @Model.Payment.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                                    <dt>@Model.DiscountName</dt>
+                                                    <dd>- Rp @Model.DiscountNominal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                                 </dl>
                                             }
                                             
                                             <dl>
                                                 <dt>Kode Unik Pembayaran</dt>
-                                                <dd>- Rp @(Math.Abs(Model.Payment.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                                <dd>- Rp @(Math.Abs(Model.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                             </dl>
                                             <dl class="total-price">
                                                 <dt>Total</dt>
-                                                <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                                <dd>Rp @Model.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                             </dl>
                                         }
                                         
@@ -454,25 +454,25 @@
 
                                     <div class="payment-detail">
                                         <h4>METODE PEMBAYARAN</h4>
-                                        @switch (Model.Payment.Method)
+                                        @switch (Model.Method)
                                         {
                                             case PaymentMethod.CreditCard:
-                                                <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                                <h5>@EnumDisplay.PaymentMethod(Model.Method)</h5>
                                                 <img src="/Assets/images/payment-cc.jpg" alt="Credit Card" />
                                                 break;
                                             case PaymentMethod.VirtualAccount:
-                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Method)</h5>
                                             <img src="/Assets/images/atm-bersama.jpg" alt="Virtual Account" />
                                                 break;
                                             case PaymentMethod.BankTransfer:
-                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Method)</h5>
                                             <img src="/Assets/images/atm-bersama.jpg" alt="Bank Transfer" />
                                                 break;
                                             case PaymentMethod.CimbClicks:
                                             <img src="/Assets/images/cimb-clicks-transparan.png" alt="CIMB Clicks" />
                                                 break;
                                             case PaymentMethod.MandiriClickPay:
-                                            <h5>@EnumDisplay.PaymentMethod(Model.Payment.Method)</h5>
+                                            <h5>@EnumDisplay.PaymentMethod(Model.Method)</h5>
                                             <img src="/Assets/images/payment-mandiri.png" alt="Mandiri Click Pay" />
                                                 break;
                                         }
@@ -484,7 +484,7 @@
                         </div>
 
                     </section>
-                </section><!-- .order-detail -->
+                </section>*@<!-- .order-detail -->
 
             </div>
 
