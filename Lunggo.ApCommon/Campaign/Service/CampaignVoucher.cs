@@ -29,8 +29,12 @@ namespace Lunggo.ApCommon.Campaign.Service
             var isRsv = trxId.Length < 15;
             var cart = new Cart();
             if (!isRsv)
+            {
                 cart = PaymentService.GetInstance().GetCart(trxId);
-
+                if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
+                    return response;
+            }
+            
             var voucher = GetDb.GetCampaignVoucher(voucherCode);
 
             if (voucher == null)

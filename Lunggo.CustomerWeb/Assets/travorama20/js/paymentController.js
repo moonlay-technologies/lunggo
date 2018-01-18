@@ -640,8 +640,11 @@ app.controller('paymentController', [
                 }).then(function (returnData) {
                     if (returnData.data.status == '200') {
                         $scope.pay.isSuccess = true;
-                        $scope.pay.rsvNo = $scope.trxId;
-                        $scope.pay.trxId = $scope.trxId;
+                        if (returnData.data.cartRecordId) {
+                            $scope.pay.trxId = returnData.data.cartRecordId;
+                        } else {
+                            $scope.pay.trxId = $scope.trxId;
+                        }
                         $('form#rsvno input#rsvno-input').val($scope.pay.trxId);
                         $('form#rsvno input#url-input').val(returnData.data.redirectionUrl);
                         $('form#rsvno').submit();

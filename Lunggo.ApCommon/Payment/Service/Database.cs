@@ -36,14 +36,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
                     var cartRsvNos = cart.RsvNoList;
                     if (cartRsvNos == null || !cartRsvNos.Any())
-                    {
-
-                        cartRsvNos = CartsTableRepo.GetInstance()
-                            .Find(conn, new CartsTableRecord {CartId = cartId})
-                            .Select(r => r.RsvNoList).ToList();
-                        if (!cartRsvNos.Any())
-                            return null;
-                    }
+                        return null;
 
                     var payments = cartRsvNos.Select(PaymentDetails.GetFromDb).ToList();
                     var payment = payments[0];

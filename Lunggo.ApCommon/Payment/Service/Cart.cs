@@ -6,7 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Redis;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -44,7 +46,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (cart.RsvNoList == null || !cart.RsvNoList.Any())
                 GetCartContentFromDb(cart);
             if (cart.RsvNoList == null || !cart.RsvNoList.Any())
-                return null;
+                return cart;
 
             cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
             return cart;
@@ -80,19 +82,15 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public bool AddToCart(string userId, string rsvNo)
         {
-            var idCart = GetCartId(userId);
-            if (idCart == null)
-            {
-                AddCartCache(userId);
-                idCart = GetCartId(userId);
-            }
             var checkRsv = ActivityService.GetInstance().GetReservation(rsvNo);
             if (checkRsv == null)
                 return false;
             var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
             if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
                 return false;
-            AddRsvNoToCartCache(idCart, rsvNo);
+
+            var cartId = GetCartId(userId);
+            AddRsvNoToCartCache(cartId, rsvNo);
             return true;
         }
 
@@ -108,19 +106,13 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public string GetCartId(string userId)
         {
-            var redisService = RedisService.GetInstance();
-            var redisKey = "Cart:UserCartId:" + userId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            try
+            var hash = userId.Sha1Encode();
+            var stringBuilder = new StringBuilder();
+            foreach (var hashByte in hash)
             {
-                var value = redisDb.StringGet(redisKey);
-                return value;
+                stringBuilder.AppendFormat("{0:x2}", hashByte);
             }
-            catch
-            {
-
-            }
-            return null;
+            return stringBuilder.ToString();
         }
         
         internal void AddCartCache(string userId)
@@ -139,6 +131,37 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisValue = rsvNo;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             redisDb.ListRightPush(redisKey, redisValue);
+        }
+
+        public void DeleteCartCache(string cartId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKeyCartId = "Cart:RsvNoList:" + cartId;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.KeyDelete(redisKeyCartId);
+        }
+
+        public void InsertCartToDb(string cartRecordId, List<string> rsvNoList)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                rsvNoList = rsvNoList.Distinct().ToList();
+                foreach (var rsvNo in rsvNoList)
+                {
+                    var cartsRecord = new CartsTableRecord
+                    {
+                        CartId = cartRecordId,
+                        RsvNoList = rsvNo
+                    };
+                    CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
+                }
+            }
+        }
+
+        private string GetCartRecordId()
+        {
+            var guid = Guid.NewGuid().ToString("N");
+            return guid;
         }
     }
 }

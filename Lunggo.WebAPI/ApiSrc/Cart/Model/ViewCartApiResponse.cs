@@ -10,7 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Model
 {
     public class ViewCartApiResponse : ApiResponseBase
     {
-        [JsonProperty("rsvNoList", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("rsvList", NullValueHandling = NullValueHandling.Ignore)]
         public List<ActivityReservationForDisplay> RsvNoList;
         [JsonProperty("totalPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal TotalPrice;

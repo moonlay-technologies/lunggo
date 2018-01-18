@@ -96,9 +96,9 @@ namespace Lunggo.CustomerWeb.Controllers
 
         [HttpPost]
         [ActionName("Payment")]
-        public ActionResult PaymentPost(string rsvNo = null, string trxId = null, string cartId = null, string paymentUrl = null)
+        public ActionResult PaymentPost(string rsvNo = null, string trxId = null, string paymentUrl = null)
         {
-            trxId = cartId ?? trxId ?? rsvNo;
+            trxId = trxId ?? rsvNo;
             var payment = PaymentService.GetInstance().GetPayment(trxId);
             var regId = Generator.GenerateTrxIdRegId(trxId);
 

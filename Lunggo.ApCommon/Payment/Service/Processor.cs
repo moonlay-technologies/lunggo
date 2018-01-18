@@ -36,6 +36,11 @@ namespace Lunggo.ApCommon.Payment.Service
             isUpdated = false;
 
             var cart = GetCart(cartId);
+            if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
+                return null;
+
+            var cartRecordId = GetCartRecordId();
+            cart.Id = cartRecordId;
             var paymentDetails = GetCartPaymentDetails(cart, method, submethod, paymentData, discountCode);
             if (paymentDetails == null)
                 return null;
@@ -70,15 +75,15 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
-            var transactionDetails = ConstructTransactionDetails(cartId, paymentDetails, cart.Contact);
+            var transactionDetails = ConstructTransactionDetails(cartRecordId, paymentDetails, cart.Contact);
             //var itemDetails = ConstructItemDetails(rsvNo, paymentDetails);           
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
                 UpdateCartPayment(cart, method, submethod, paymentData, paymentDetails);
+                InsertCartToDb(cartRecordId, cart.RsvNoList);
+                DeleteCartCache(cartId);
             }
-            InsertCartToDb(cartId, GetCart(cartId).RsvNoList);
-            DeleteCartIdRedis(cartId);
             isUpdated = true;
             return paymentDetails;
         }
@@ -503,6 +508,9 @@ namespace Lunggo.ApCommon.Payment.Service
             if (trxId.Length >= 15)
             {
                 var cart = GetCart(trxId);
+                if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
+                    return 0;
+
                 rsvNos = cart.RsvNoList;
             }
             else
@@ -562,23 +570,11 @@ namespace Lunggo.ApCommon.Payment.Service
             return uniqueCode;
         }
 
-        internal PaymentDetails GetCartPaymentDetails(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode)
-        {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            var cartId = GetCartId(userId);
-            return GetCartPaymentDetails(cartId, method, submethod, paymentData, discountCode);
-        }
-
-        internal PaymentDetails GetCartPaymentDetails(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode)
-        {
-            var cart = GetCart(cartId);
-            return GetCartPaymentDetails(cart, method, submethod, paymentData, discountCode);
-        }
-
         internal PaymentDetails GetCartPaymentDetails(Cart cart, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode)
         {
             var rsvNoList = cart.RsvNoList;
             var cartPayment = new PaymentDetails();
+            cartPayment.CartRecordId = cart.Id;
 
             foreach (var rsvNo in rsvNoList)
             {
@@ -758,34 +754,6 @@ namespace Lunggo.ApCommon.Payment.Service
                 }
             }
 
-        }
-
-        public void DeleteCartIdRedis(string cartId)
-        {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            var redisService = RedisService.GetInstance();
-            var redisKeyCartId = "CartId:" + cartId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-
-            var redisKeyNameId = "NameId:" + userId;
-            redisDb.KeyDelete(redisKeyNameId);
-            redisDb.KeyDelete(redisKeyCartId);
-        }
-
-        public void InsertCartToDb(string cartId, List<string> rsvNoList)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                foreach (string rsvNo in rsvNoList)
-                {
-                    var cartsRecord = new CartsTableRecord
-                    {
-                        CartId = cartId,
-                        RsvNoList = rsvNo
-                    };
-                    CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
-                }
-            }
         }
     }
 }
