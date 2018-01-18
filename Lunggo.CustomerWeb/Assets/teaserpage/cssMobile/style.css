@@ -9,11 +9,11 @@ html {
   color:#000000;
 }
 body {
-  background: url('../img/bg1.svg') no-repeat center center fixed;
+  background: url('/Assets/teaserpage/imgMobile/bg1.svg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
-  -o-background-size: cover;\
+  -o-background-size: cover;
   font-family: 'Montserrat', sans-serif;
 
 }

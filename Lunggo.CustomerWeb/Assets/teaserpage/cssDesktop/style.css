@@ -9,13 +9,12 @@ html {
   color:#000000;
 }
 body {
-  background: url('../img/bg1.svg') no-repeat center center fixed;
+  background: url('/Assets/teaserpage/imgDesktop/bg1.svg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;\
   font-family: 'Montserrat', sans-serif;
-
 }
 .clearfix {
   *zoom: 1;
@@ -49,3 +48,19 @@ body {
 	-moz-box-shadow: 0px 2px 14px -2px rgba(0,0,0,0.4);
 	box-shadow: 0px 2px 14px -2px rgba(0,0,0,0.4);
 }
+
+.ballon {background-color: #fff; font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    right: 10px;
+    top: 70px;
+    width: 280px;    
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 15px;
+  -webkit-box-shadow:0px 2px 14px -2px rgba(0,0,0,0.4);
+  -moz-box-shadow: 0px 2px 14px -2px rgba(0,0,0,0.4);
+  box-shadow: 0px 2px 14px -2px rgba(0,0,0,0.4);
+border: 3px solid #46a7a7;}
+.triangle {position: absolute;
+    right: 118px;
+    top: 52px}
