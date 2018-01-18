@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Lunggo.ApCommon.Product.Model;
 using Newtonsoft.Json;
+using Lunggo.ApCommon.Activity.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
@@ -16,7 +17,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         public Contact Contact { get; set; }
         [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaxForDisplay> Passengers { get; set; }
+        [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
+        public long PackageId { get; set; }
         [JsonProperty("ticketCount", NullValueHandling = NullValueHandling.Ignore)]
-        public int? TicketCount { get; set; }
+        public List<ActivityPricePackageReservation> TicketCount { get; set; }
     }
 }

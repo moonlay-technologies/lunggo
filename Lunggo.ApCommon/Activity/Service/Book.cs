@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
+using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -27,9 +28,49 @@ namespace Lunggo.ApCommon.Activity.Service
                 ActivityId = Convert.ToInt32(input.ActivityId)
             });
 
+            var packageIds = ActivityService.GetInstance().GetPackageIdFromDb(Convert.ToInt64(input.ActivityId)).ToList();
+            if (!packageIds.Contains(input.PackageId))
+            {
+                return new BookActivityOutput
+                {
+                    IsValid = false
+                };
+            }
+
+            var dateAndSession = ActivityService.GetInstance().GetAvailableDatesFromDb(new GetAvailableDatesInput { ActivityId = Convert.ToInt32(input.ActivityId) }).AvailableDateTimes;
+            var dates = new List<DateTime?>();
+            foreach(var date in dateAndSession)
+            {
+                dates.Add(date.Date);
+            }
+
+            if (!dates.Contains(input.DateTime.Date))
+            {
+                return new BookActivityOutput
+                {
+                    IsValid = false
+                };
+            }
+
+            var sessions = dateAndSession.Where(session => session.Date == input.DateTime.Date).First().AvailableHours;
+            if (!sessions.Contains(input.DateTime.Session))
+            {
+                return new BookActivityOutput
+                {
+                    IsValid = false
+                };
+            }
+            
             getDetail.ActivityDetail.BookingStatus = BookingStatus.Booked;
             
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
+            if (rsvDetail == null)
+            {
+                return new BookActivityOutput
+                {
+                    IsValid = false
+                };
+            }
             InsertActivityRsvToDb(rsvDetail);
             ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookActivityOutput
@@ -61,19 +102,51 @@ namespace Lunggo.ApCommon.Activity.Service
                 deviceId = null;
             }
 
+            decimal originalPriceIdr = 0;
+            int allTicketCount = 0;
+            var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(input.PackageId);
+            var typePricePackages = new List<string>();
+            var packageAttribute = ActivityService.GetInstance().GetPackageAttributeFromDb(input.PackageId);
+
+            foreach (var pricePackage in pricePackages)
+            {
+                typePricePackages.Add(pricePackage.Type);
+            }
+            foreach (var ticketCount in input.TicketCount)
+            {
+                allTicketCount += ticketCount.Count;
+                if (!typePricePackages.Contains(ticketCount.Type))
+                {
+                    return null;
+                }
+                var price = pricePackages.Where(package => package.Type == ticketCount.Type).First();
+                if (ticketCount.Count < price.MinCount)
+                {
+                    return null;
+                }
+                originalPriceIdr += (price.Amount * ticketCount.Count);
+            }
+            
+            if (allTicketCount > packageAttribute[0].MaxCount || allTicketCount < packageAttribute[0].MinCount)
+            {
+                return null;
+            }
+
             var rsvDetail = new ActivityReservation
             {
                 RsvNo = rsvNo,
                 Contact = input.Contact,
                 ActivityDetails = activityInfo,
-                DateTime = input.DateTime,
+                PackageId = input.PackageId,
                 TicketCount = input.TicketCount,
+                DateTime = input.DateTime,
+                
                 Pax = input.Passengers,
                 Payment = new PaymentDetails
                 {
                     Status = PaymentStatus.Pending,
                     LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                    OriginalPriceIdr = activityInfo.Price,
+                    OriginalPriceIdr = originalPriceIdr,
                     TimeLimit = DateTime.UtcNow.AddHours(1)
                     //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
                 },

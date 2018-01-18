@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Activity.Model.Logic;
 using System.Web;
+using Lunggo.Framework.TableStorage;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -24,6 +25,7 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public AddToWishlistOutput AddToWishlist(AddToWishlistInput input, string user)
         {
+            WishlistAnalytics(input, user);
             return InsertActivityIdToWishlistDb(input.ActivityId, user);
         }
 
@@ -39,6 +41,17 @@ namespace Lunggo.ApCommon.Activity.Service
             activityId.Id = GetActivityListFromWishlistDb(user);
             input.ActivityFilter = activityId;
             return GetActivitiesFromDb(input);
+        }
+
+        public void WishlistAnalytics(AddToWishlistInput addToWishlistInput, string userId)
+        {
+            var param = new WishlistAnalyticsInput();
+            param.PartitionKey = "History";
+            param.RowKey = Guid.NewGuid().ToString();
+            param.UserId = userId;
+            param.ActivityId = addToWishlistInput.ActivityId;
+            param.WishlistTime = DateTime.UtcNow;
+            TableStorageService.GetInstance().InsertEntityToTableStorage(param, "WishlistSearchHistory");
         }
     }
 }

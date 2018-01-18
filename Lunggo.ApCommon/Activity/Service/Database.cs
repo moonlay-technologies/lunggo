@@ -19,6 +19,7 @@ using BookingStatus = Lunggo.ApCommon.Activity.Constant.BookingStatus;
 using BookingStatusCd = Lunggo.ApCommon.Activity.Constant.BookingStatusCd;
 using System.Data.SqlClient;
 using System.Text;
+using System.Globalization;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -275,8 +276,7 @@ namespace Lunggo.ApCommon.Activity.Service
         public GetMyBookingDetailOutput GetMyBookingDetailFromDb(GetMyBookingDetailInput input)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-
+            {              
                 var savedBooking = GetMyBookingDetailQuery.GetInstance()
                     .Execute(conn, new { input.RsvNo }).First();
 
@@ -288,6 +288,36 @@ namespace Lunggo.ApCommon.Activity.Service
                             passengers.Gender = GenderCd.Mnemonic(genderCd);
                             return passengers;
                         }, "TypeCd, TitleCd, GenderCd").ToList();
+
+                var savedPaxCountAndPackageId = GetPaxCountAndPackageIdDbQuery.GetInstance().Execute(conn, new { RsvNo = input.RsvNo }).ToList();
+                savedBooking.PackageId = savedPaxCountAndPackageId.First().PackageId;
+                savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
+                var savedPaxCounts = new List<ActivityPricePackageReservation>();
+                var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
+                foreach (var savedPaxCount in savedPaxCountAndPackageId)
+                {
+                    var saved = new ActivityPricePackageReservation
+                    {
+                        Type = savedPaxCount.Type,
+                        Count = savedPaxCount.Count,
+                        TotalPrice = savedPaxCount.Count * pricePackages.Where(package => package.Type == savedPaxCount.Type).First().Amount
+                    };
+                    savedPaxCounts.Add(saved);
+                }
+                savedBooking.PaxCount = savedPaxCounts;
+                decimal priceBook = 0;                
+                foreach (var ticketCount in savedPaxCountAndPackageId)
+                {
+                    foreach (var pricePackage in pricePackages)
+                    {
+                        if (pricePackage.Type == ticketCount.Type)
+                        {
+                            var price = pricePackage.Amount * ticketCount.Count;
+                            priceBook += price;
+                        }
+                    }
+                }
+                savedBooking.Price = priceBook;
                 savedBooking.Passengers = savedPassengers;
 
                 var output = new GetMyBookingDetailOutput
@@ -458,12 +488,24 @@ namespace Lunggo.ApCommon.Activity.Service
                     BookingStatusCd = BookingStatusCd.Mnemonic(reservation.ActivityDetails.BookingStatus),
                     Date = reservation.DateTime.Date,
                     SelectedSession = reservation.DateTime.Session,
-                    TicketCount = reservation.TicketCount,
-                    UserId = reservation.User.Id
+                    UserId = reservation.User.Id,
+                    TicketCount = null
                 };
 
                 ActivityReservationTableRepo.GetInstance().Insert(conn, activityRecord);
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
+                foreach(var ticketCount in reservation.TicketCount)
+                {
+                    var activityPackageReservation = new ActivityPackageReservationTableRecord
+                    {
+                        RsvId = activityRecord.Id,
+                        PackageId = reservation.PackageId,
+                        ActivityId = reservation.ActivityDetails.ActivityId,
+                        Type = ticketCount.Type,
+                        Count = ticketCount.Count
+                    };
+                    ActivityPackageReservationTableRepo.GetInstance().Insert(conn,activityPackageReservation);
+                }
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
@@ -668,16 +710,19 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var result = new List<ActivityPackage>();
-                var packageIds = GetActivityPackageIdDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
+                var packageIds = ActivityService.GetInstance().GetPackageIdFromDb(input.ActivityId);
                 foreach (var packageId in packageIds)
                 {
-                    var packageName = GetActivityPackageDbQuery.GetInstance().Execute(conn, new { PackageId = packageId }).ToList();
-                    var packagePrice = GetActivityTicketDetailDbQuery.GetInstance().Execute(conn, new { PackageId = packageId }).ToList();
+                    var packageAttribute = ActivityService.GetInstance().GetPackageAttributeFromDb(packageId);
+                    var packagePrice = ActivityService.GetInstance().GetPackagePriceFromDb(packageId);
                     var package = new ActivityPackage
                     {
-                        PackageName = packageName[0].PackageName,
-                        Description = packageName[0].Description,
-                        Price = packagePrice
+                        PackageId = packageId,
+                        PackageName = packageAttribute[0].PackageName,
+                        Description = packageAttribute[0].Description,
+                        MaxCount = packageAttribute[0].MaxCount,
+                        MinCount = packageAttribute[0].MinCount,
+                        Price = packagePrice,                        
                     };
                     result.Add(package);
                 }
@@ -689,10 +734,42 @@ namespace Lunggo.ApCommon.Activity.Service
             }            
         }
 
+
+        public List<long> GetPackageIdFromDb(long? ActivityId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetActivityPackageIdDbQuery.GetInstance().Execute(conn, new { ActivityId = ActivityId }).ToList();
+            }      
+        }
+
+        public List<ActivityPricePackage> GetPackagePriceFromDb(long PackageId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetActivityTicketDetailDbQuery.GetInstance().Execute(conn, new { PackageId = PackageId }).ToList();
+            }
+        }
+
+        public List<ActivityPackage> GetPackageAttributeFromDb (long PackageId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetActivityPackageDbQuery.GetInstance().Execute(conn, new { PackageId = PackageId }).ToList();
+            }
+
+        }
         public ActivityCustomDateOutput ActivityCustomDateSetOrUnsetDb(ActivityCustomDateInput activityCustomDateInput)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+                if (activityCustomDateInput.CustomDate == null || activityCustomDateInput.CustomHour == null || activityCustomDateInput.ActivityId == null)
+                {
+                    return new ActivityCustomDateOutput
+                    {
+                        isSuccess = false
+                    };
+                }
                 var regularDates = GetAvailableDatesFromDb(new GetAvailableDatesInput { ActivityId = (int)activityCustomDateInput.ActivityId }).AvailableDateTimes;
                 var customDateStatus = GetStatusDateDbQuery.GetInstance().Execute(conn, new { ActivityId = activityCustomDateInput.ActivityId, CustomDate = activityCustomDateInput.CustomDate, CustomHour = activityCustomDateInput.CustomHour }).ToList();
                 if (customDateStatus.Count() > 0)
@@ -741,6 +818,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+
                 if (customDateInput == null || customDateInput.CustomDate == null)
                 {
                     return new CustomDateOutput
@@ -749,12 +827,28 @@ namespace Lunggo.ApCommon.Activity.Service
                     };
                 }
 
+                DateTime startHour;
+                DateTime endHour;
+                if (!DateTime.TryParse(customDateInput.StartCustomHour, out startHour))
+                {
+                    return new CustomDateOutput
+                    {
+                        isSuccess = false
+                    };
+                }
+                if (!DateTime.TryParse(customDateInput.EndCustomHour, out endHour))
+                {
+                    return new CustomDateOutput
+                    {
+                        isSuccess = false
+                    };
+                }
                 var customDate = new ActivityCustomDateTableRecord
                 {
                     ActivityId = customDateInput.ActivityId,
                     CustomDate = customDateInput.CustomDate,
-                    AvailableHour = customDateInput.CustomHour,
-                    DateStatus = customDateInput.DateStatus
+                    AvailableHour = customDateInput.StartCustomHour + " - " + customDateInput.EndCustomHour,
+                    DateStatus = "whitelisted"
                 };
                 ActivityCustomDateTableRepo.GetInstance().Insert(conn, customDate);
                 return new CustomDateOutput
@@ -780,9 +874,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var customDate = new ActivityCustomDateTableRecord
                 {
                     ActivityId = customDateInput.ActivityId,
-                    CustomDate = customDateInput.CustomDate,
-                    AvailableHour = customDateInput.CustomHour,
-                    DateStatus = customDateInput.DateStatus
+                    CustomDate = customDateInput.CustomDate                   
                 };
                 ActivityCustomDateTableRepo.GetInstance().Delete(conn, customDate);
                 return new CustomDateOutput

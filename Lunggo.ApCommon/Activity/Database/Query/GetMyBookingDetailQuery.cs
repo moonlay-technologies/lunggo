@@ -20,9 +20,8 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT act.Id AS ActivityId, act.Name AS Name, ");
             clauseBuilder.Append("rsv.RsvStatusCd AS BookingStatus, rsv.RsvTime AS TimeLimit, ");
-            clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ar.SelectedSession AS SelectedSession, ");
+            clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS SelectedSession, ");
             clauseBuilder.Append("act.City AS City, act.Latitude AS Latitude, act.Longitude AS Longitude, ");
-            clauseBuilder.Append("(SELECT TOP 1 asp.Price FROM ActivitySellPrice AS asp WHERE asp.PackageId=(SELECT Id FROM ActivityPackage WHERE Id=act.Id)) AS Price, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();
         }
@@ -39,7 +38,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ar.RsvNo = @RsvNo ");
+            clauseBuilder.Append("WHERE ar.RsvNo = @RsvNo");
             return clauseBuilder.ToString();
         }
         

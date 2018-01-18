@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "Select ap.PackageName, ap.AdditionalNotes AS Description From ActivityPackage AS ap WHERE ap.Id = @PackageId";
+            return "Select ap.PackageName, ap.AdditionalNotes AS Description, ap.MaxCount, ap.MinCount From ActivityPackage AS ap WHERE ap.Id = @PackageId";
         }
     }
 }

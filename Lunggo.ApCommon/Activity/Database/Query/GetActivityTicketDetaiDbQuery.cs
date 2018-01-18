@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "Select asp.Type, asp.Description ,asp.Price AS Amount From ActivityPackage AS ap INNER JOIN ActivitySellPrice As asp ON asp.PackageId = ap.Id  WHERE ap.Id = @PackageId";
+            return "Select asp.Type, asp.Description ,asp.Price AS Amount, asp.MinCount From ActivityPackage AS ap INNER JOIN ActivitySellPrice As asp ON asp.PackageId = ap.Id  WHERE ap.Id = @PackageId";
         }
     }
 }

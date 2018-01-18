@@ -164,6 +164,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 Name = bookingDetails.Name,
                 BookingStatus = bookingDetails.BookingStatus,
                 TimeLimit = bookingDetails.TimeLimit,
+                PackageId = bookingDetails.PackageId,
+                PackageName = bookingDetails.PackageName,
                 PaxCount = bookingDetails.PaxCount,
                 Price = bookingDetails.Price,
                 Date = bookingDetails.Date,

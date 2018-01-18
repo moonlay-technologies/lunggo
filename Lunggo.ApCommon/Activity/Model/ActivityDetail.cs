@@ -121,10 +121,16 @@ namespace Lunggo.ApCommon.Activity.Model
 
     public class ActivityPackage
     {
+        [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
+        public long PackageId { get; set; }
         [JsonProperty("packageName", NullValueHandling = NullValueHandling.Ignore)]
         public string PackageName { get; set; }
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description{ get; set; }
+        [JsonProperty("maxCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int MaxCount { get; set; }
+        [JsonProperty("minCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int MinCount { get; set; }
         [JsonProperty("price", NullValueHandling = NullValueHandling.Ignore)]
         public List<ActivityPricePackage> Price { get; set; }
     }
@@ -143,6 +149,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Description { get; set; }
         [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Amount { get; set; }
+        [JsonProperty("minCount", NullValueHandling = NullValueHandling.Ignore)]
+        public int MinCount { get; set; }
     }
 
     public class CustomDate
@@ -153,4 +161,13 @@ namespace Lunggo.ApCommon.Activity.Model
         public string AvailableHours { get; set; }
     }
 
+    public class ActivityPricePackageReservation
+    {
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
+        public string Type { get; set; }
+        [JsonProperty("count", NullValueHandling = NullValueHandling.Ignore)]
+        public int Count { get; set; }
+        [JsonProperty("totalPrice", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal TotalPrice { get; set; }
+    }
 }

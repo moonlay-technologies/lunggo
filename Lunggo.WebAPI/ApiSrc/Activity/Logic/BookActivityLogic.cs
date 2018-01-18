@@ -72,7 +72,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Date = DateTime.Parse(request.Date),
                     Session = request.SelectedSession
                 },
-                TicketCount = request.TicketCount
+                TicketCount = request.TicketCount,
+                PackageId = request.PackageId
             };
             return selectServiceRequest;
         }
@@ -83,6 +84,14 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             if (bookActivityServiceResponse == null)
             {
                 return new ActivityBookApiResponse();
+            }
+            if (bookActivityServiceResponse.IsValid == false)
+            {
+                return new ActivityBookApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_INVALID_REQUEST"
+                };
             }
             if (!bookActivityServiceResponse.IsValid)
                 return new ActivityBookApiResponse

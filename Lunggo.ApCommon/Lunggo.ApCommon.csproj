@@ -185,6 +185,7 @@
     <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetCustomAvailableHoursBlacklistDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetCustomAvailableHoursWhitelistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetPaxCountAndPackageIdDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetWhitelistedDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
@@ -250,6 +251,7 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
+    <Compile Include="Activity\Model\Logic\WishlistAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Database.cs" />
