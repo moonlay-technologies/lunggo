@@ -15,8 +15,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         public string SelectedSession { get; set; }
         [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
         public Contact Contact { get; set; }
-        [JsonProperty("pax", NullValueHandling = NullValueHandling.Ignore)]
-        public List<PaxForDisplay> Passengers { get; set; }
         [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
         public long PackageId { get; set; }
         [JsonProperty("ticketCount", NullValueHandling = NullValueHandling.Ignore)]
