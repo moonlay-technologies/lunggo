@@ -61,10 +61,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static BookActivityInput PreprocessServiceRequest(ActivityBookApiRequest request)
         {
-            var pax = ActivityService.GetInstance().ConvertToPax(request.Passengers);
             var selectServiceRequest = new BookActivityInput
             {
-                Passengers = pax,
                 Contact = request.Contact,
                 ActivityId = request.ActivityId,
                 DateTime = new DateAndSession()
