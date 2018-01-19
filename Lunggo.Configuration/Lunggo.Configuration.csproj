@@ -900,6 +900,7 @@
     <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
     <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
     <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <None Include="HtmlTemplate\CartTransferInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
     <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />

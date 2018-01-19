@@ -19,8 +19,10 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Exception = System.Exception;
 using System.Web;
 using Lunggo.ApCommon.Identity.Users;
@@ -83,9 +85,18 @@ namespace Lunggo.ApCommon.Payment.Service
                 UpdateCartPayment(cart, method, submethod, paymentData, paymentDetails);
                 InsertCartToDb(cartRecordId, cart.RsvNoList);
                 DeleteCartCache(cartId);
+                if (paymentDetails.Method == PaymentMethod.BankTransfer || paymentDetails.Method == PaymentMethod.VirtualAccount)
+                    SendTransferInstructionToCustomer(cartRecordId);
             }
             isUpdated = true;
             return paymentDetails;
+        }
+
+        private void SendTransferInstructionToCustomer(string cartRecordId)
+        {
+            var queueService = QueueService.GetInstance();
+            var queue = queueService.GetQueueByReference("CartTransferInstructionEmail");
+            queue.AddMessage(new CloudQueueMessage(cartRecordId));
         }
 
         public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubmethod submethod,

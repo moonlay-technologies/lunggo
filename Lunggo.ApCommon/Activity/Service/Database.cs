@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Page = input.Page <= 0 ? 1 : input.Page,
                     PerPage = input.PerPage <= 0 ? 10 : input.PerPage,
                     Id = input.ActivityFilter.Id,
-                    userId = HttpContext.Current.User.Identity.GetId()
+                    userId = HttpContext.Current == null ? null : HttpContext.Current.User.Identity.GetId()
                 };
                 var savedActivities = GetSearchResultQuery.GetInstance()
                     .ExecuteMultiMap(conn, param, param,
