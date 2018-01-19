@@ -146,7 +146,7 @@ namespace Lunggo.ApCommon.Activity.Service
                
                         if (whitelistedDates.Contains(date))
                         {
-                            var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date }).ToList();
+                            var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
                             foreach(var customSavedHour in customSavedHours)
                             {
                                 savedHours.Add(customSavedHour);
@@ -156,7 +156,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                         if (blacklistedDates.Contains(date))
                         {
-                            var customSavedHours = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date }).ToList();
+                            var customSavedHours = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
                             foreach (var customSavedHour in customSavedHours)
                             {
                                 savedHours.Remove(customSavedHour);
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 
                 foreach (var whitelistedDate in whitelistedDates)
                 {
-                    var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate }).ToList();
+                    var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate, ActivityId = input.ActivityId }).ToList();
                     var customSavedDateAndHour = new DateAndAvailableHour
                     {
                         AvailableHours = customSavedHours,

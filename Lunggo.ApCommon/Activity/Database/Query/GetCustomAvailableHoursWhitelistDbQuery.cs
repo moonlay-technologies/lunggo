@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT DISTINCT acd.AvailableHour FROM ActivityCustomDate AS acd WHERE CustomDate = @CustomDate AND DateStatus = 'whitelisted'" ;
+            return "SELECT DISTINCT acd.AvailableHour FROM ActivityCustomDate AS acd WHERE CustomDate = @CustomDate AND DateStatus = 'whitelisted' AND ActivityId = @ActivityId" ;
         }
 
     }
