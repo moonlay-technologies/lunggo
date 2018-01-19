@@ -535,6 +535,9 @@ namespace Lunggo.ApCommon.Payment.Service
                 decimal candidatePrice;
                 var rnd = new Random();
                 var payment = PaymentDetails.GetFromDb(rsvNo);
+                if (payment == null)
+                    return 040440404040.40404004404M;
+
                 var finalPrice = payment.OriginalPriceIdr;
                 var singleUniqueCode = GetUniqueCodeFromCache(rsvNo);
                 if (singleUniqueCode != 0M)
