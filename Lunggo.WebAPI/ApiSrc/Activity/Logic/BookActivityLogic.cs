@@ -46,7 +46,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     request != null && request.Contact != null &&
                     !string.IsNullOrEmpty(request.ActivityId) &&
                     !string.IsNullOrEmpty(request.Date) &&
-                    request.Contact.Title != Title.Undefined &&
+                    //request.Contact.Title != Title.Undefined &&
                     !string.IsNullOrEmpty(request.Contact.Name) &&
                     !string.IsNullOrEmpty(request.Contact.Phone) &&
                     !string.IsNullOrEmpty(request.Contact.Email) &&
