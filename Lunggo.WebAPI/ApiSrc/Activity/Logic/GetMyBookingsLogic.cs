@@ -74,7 +74,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new GetMyBookingsApiResponse()
             {
-                MyBookings = serviceResponse.MyBookings.Select(bookList => ActivityService.GetInstance().ConvertToBookingDetailForDisplay(bookList)).ToList(),
+                MyBookings = serviceResponse.MyBookings,
                 Page = serviceResponse.Page,
                 PerPage = serviceResponse.PerPage,
                 StatusCode = HttpStatusCode.OK

@@ -226,6 +226,7 @@
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ForgetPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountBalanceLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
@@ -238,6 +239,8 @@
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
+    <Compile Include="ApiSrc\Account\Model\ForgetPasswordApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\ForgetPasswordApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetAccountBalanceApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetAccountStatementApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetAccountStatementApiRequest.cs" />

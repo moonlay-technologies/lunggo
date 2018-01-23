@@ -140,7 +140,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 PackageId = input.PackageId,
                 TicketCount = input.TicketCount,
                 DateTime = input.DateTime,
-                
                 Pax = input.Passengers,
                 Payment = new PaymentDetails
                 {

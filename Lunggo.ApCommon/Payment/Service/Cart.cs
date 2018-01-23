@@ -23,6 +23,7 @@ using System.Net;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Database;
 using Lunggo.ApCommon.Activity.Service;
+using Lunggo.ApCommon.Activity.Database.Query;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -145,13 +146,15 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+                var userId = GetUserIdFromActivityReservationDbQuery.GetInstance().Execute(conn, new { RsvNo = rsvNoList[0] }).First();
                 rsvNoList = rsvNoList.Distinct().ToList();
                 foreach (var rsvNo in rsvNoList)
                 {
                     var cartsRecord = new CartsTableRecord
                     {
                         CartId = cartRecordId,
-                        RsvNoList = rsvNo
+                        RsvNoList = rsvNo,
+                        UserId = userId
                     };
                     CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
                 }

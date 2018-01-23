@@ -259,9 +259,40 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userName = HttpContext.Current.User.Identity.GetUser();
-
-                var savedBookings = GetMyBookingsQuery.GetInstance()
+                var cartIdList = GetCartIdListDbQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage }).ToList();
+                var savedBookings = new List<CartList>();
+
+                foreach (var cartId in cartIdList)
+                {
+                    decimal totalOriginalPrice = 0;
+                    decimal totalFinalPrice = 0;
+                    decimal totalDiscount = 0;
+                    decimal totalUniqueCode = 0; 
+                    var bookingDetails = new List<BookingDetail>();
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+                    foreach (var rsvNo in rsvNoList)
+                    {
+                        var payment = GetReservationFromDb(rsvNo).Payment;
+                        var bookingDetail = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
+                        bookingDetail.BookingDetail.RsvNo = rsvNo;
+                        bookingDetails.Add(bookingDetail.BookingDetail);
+                        totalOriginalPrice += payment.OriginalPriceIdr;
+                        totalDiscount += payment.DiscountNominal;
+                        totalUniqueCode += payment.UniqueCode;
+                        totalFinalPrice += payment.FinalPriceIdr;
+                    }
+                    var cartList = new CartList
+                    {
+                        CartId = cartId,
+                        Activities = bookingDetails,
+                        TotalOriginalPrice = totalOriginalPrice,
+                        TotalDiscount = totalDiscount,
+                        TotalUniqueCode = totalUniqueCode,
+                        TotalFinalPrice = totalFinalPrice
+                    };
+                    savedBookings.Add(cartList);
+                }
 
                 var output = new GetMyBookingsOutput
                 {
@@ -276,7 +307,7 @@ namespace Lunggo.ApCommon.Activity.Service
         public GetMyBookingDetailOutput GetMyBookingDetailFromDb(GetMyBookingDetailInput input)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
-            {              
+            {                          
                 var savedBooking = GetMyBookingDetailQuery.GetInstance()
                     .Execute(conn, new { input.RsvNo }).First();
 
@@ -319,6 +350,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 savedBooking.Price = priceBook;
                 savedBooking.Passengers = savedPassengers;
+
 
                 var output = new GetMyBookingDetailOutput
                 {

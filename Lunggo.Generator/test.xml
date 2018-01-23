@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="ActivityPackageReservation" />
+  <table name="Carts" />
   <!--<table name="AccountBalance" />
   <table name="AccountUser" />
   <table name="TransactionJournal" />-->

@@ -18,11 +18,12 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Id AS ActivityId, act.Name AS Name, ");
+            clauseBuilder.Append("SELECT rsv.TicketNumber AS TicketNumber, act.Id AS ActivityId, act.Name AS Name, act.Address AS Address, ");
             clauseBuilder.Append("rsv.RsvStatusCd AS BookingStatus, rsv.RsvTime AS TimeLimit, ");
             clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS SelectedSession, ");
             clauseBuilder.Append("act.City AS City, act.Latitude AS Latitude, act.Longitude AS Longitude, ");
-            clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
+            clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc, ");
+            clauseBuilder.Append("act.OperatorName AS OperatorName, act.OperatorEmail AS OperatorEmail, act.OperatorPhone AS OperatorPhone ");
             return clauseBuilder.ToString();
         }
 

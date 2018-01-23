@@ -186,7 +186,9 @@
     <Compile Include="Activity\Database\Query\GetCustomAvailableHoursBlacklistDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetCustomAvailableHoursWhitelistDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetPaxCountAndPackageIdDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCartRsvNoListDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetUserIdFromActivityReservationDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetWhitelistedDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
@@ -198,7 +200,7 @@
     <Compile Include="Activity\Database\Query\GetActivityDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetMyBookingDetailQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAppointmentRequestQuery.cs" />
-    <Compile Include="Activity\Database\Query\GetMyBookingsQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCartIdListDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
     <Compile Include="Activity\Model\AppointmentDetail.cs" />

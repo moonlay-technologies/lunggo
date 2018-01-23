@@ -297,5 +297,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/forgetpassword")]
+        public ApiResponseBase ForgetPassword()
+        {
+            ForgetPasswordApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ForgetPasswordApiRequest>();
+                var apiResponse = AccountLogic.ForgetPassword(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }
