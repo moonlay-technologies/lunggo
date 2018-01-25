@@ -316,5 +316,43 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/checkotp")]
+        public ApiResponseBase CheckOtp()
+        {
+            CheckOtpApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckOtpApiRequest>();
+                var apiResponse = AccountLogic.CheckOtp(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/resetpassword")]
+        public ApiResponseBase ResettingPassword()
+        {
+            ResettingPasswordApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ResettingPasswordApiRequest>();
+                var apiResponse = AccountLogic.ResettingPassword(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

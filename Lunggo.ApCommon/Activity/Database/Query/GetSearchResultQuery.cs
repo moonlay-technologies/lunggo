@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("WHERE ");
             if (condition.Name != null)
-                clauseBuilder.Append("act.Name LIKE '%' + @Name + '%' AND ");
+                clauseBuilder.Append("(act.Name LIKE '%' + @Name + '%' OR (act.City = @Name OR act.Country = @Name OR act.Zone = @Name OR act.Area = @Name)) AND ");
             if (condition.Id != null)
                 clauseBuilder.Append("act.Id IN @Id AND ");
             if (condition.Id == null)

@@ -25,14 +25,14 @@ namespace Lunggo.ApCommon.Identity.Query
             long phone;
             bool IsNumeric = Int64.TryParse(condition.userName, out phone);
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT * FROM [User] WHERE LOWER(UserName) LIKE");
+            clauseBuilder.Append("SELECT * FROM [User] ");
             if (IsNumeric)
             {
-                clauseBuilder.Append(" '%' + @userName + ':%' ");
+                clauseBuilder.Append("WHERE PhoneNumber = @userName");
             }
             else
             {
-                clauseBuilder.Append(" LOWER('%:' + @userName + '%')");
+                clauseBuilder.Append("WHERE Email = @userName");
             }
             
             return clauseBuilder.ToString();

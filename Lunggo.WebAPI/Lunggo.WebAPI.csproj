@@ -226,6 +226,7 @@
   <ItemGroup>
     <Compile Include="ApiSrc\Account\AccountController.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\CheckOtpLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgetPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountBalanceLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
@@ -239,6 +240,8 @@
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ResettingPasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Model\CheckOtpApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgetPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgetPasswordApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetAccountBalanceApiResponse.cs" />
@@ -257,6 +260,7 @@
     <Compile Include="ApiSrc\Account\Model\ResendConfirmationEmailApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\RegisterApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ResetPasswordApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\ResettingPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TokenData.cs" />
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />

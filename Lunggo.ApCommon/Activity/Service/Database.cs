@@ -327,12 +327,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
                 foreach (var savedPaxCount in savedPaxCountAndPackageId)
                 {
-                    var saved = new ActivityPricePackageReservation
-                    {
-                        Type = savedPaxCount.Type,
-                        Count = savedPaxCount.Count,
-                        TotalPrice = savedPaxCount.Count * pricePackages.Where(package => package.Type == savedPaxCount.Type).First().Amount
-                    };
+                    var saved = new ActivityPricePackageReservation();
+                    saved.Type = savedPaxCount.Type;
+                    saved.Count = savedPaxCount.Count;
+                    saved.TotalPrice = savedPaxCount.Count * pricePackages.Where(package => package.Type == savedPaxCount.Type).First().Amount;
                     savedPaxCounts.Add(saved);
                 }
                 savedBooking.PaxCount = savedPaxCounts;

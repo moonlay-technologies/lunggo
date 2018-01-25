@@ -16,6 +16,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static LoginApiResponse Login(LoginApiRequest request)
         {
+            if (request.UserName.StartsWith("0"))
+            {
+                request.UserName = request.UserName.Substring(1);
+            }
             if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.UserName) || !string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
