@@ -301,7 +301,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [Level2Authorize]
-        [Route("v1/account/forgetpassword")]
+        [Route("v1/account/forgotpassword")]
         public ApiResponseBase ForgetPassword()
         {
             ForgetPasswordApiRequest request = null;
