@@ -56,14 +56,13 @@ namespace Lunggo.Framework.Encoder
 
         internal static string Hash(this string plain)
         {
-            var hash = plain;
-            return hash;
-        }
-
-        internal static string Unhash(this string hash)
-        {
-            var plain = hash;
-            return plain;
+            var data = Encoding.UTF8.GetBytes(input);
+            using (SHA1 shaM = new SHA1Managed())
+            {
+                var hash = shaM.ComputeHash(data);
+                var base64Hash = Convert.ToBase64String(hash);
+                return base64Hash;
+            }
         }
     }
 }

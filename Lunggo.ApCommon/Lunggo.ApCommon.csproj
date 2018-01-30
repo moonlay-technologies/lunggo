@@ -807,6 +807,9 @@
     <Compile Include="Payment\Service\ModelConversion.cs" />
     <Compile Include="Payment\Service\Processor.cs" />
     <Compile Include="Payment\Service\Settings.cs" />
+    <Compile Include="Payment\Wrapper\E2Pay\E2PayWrapper.cs" />
+    <Compile Include="Payment\Wrapper\E2Pay\Model\PaymentRequest.cs" />
+    <Compile Include="Payment\Wrapper\E2Pay\Model\PaymentResponse.cs" />
     <Compile Include="Payment\Wrapper\Nicepay\Model\Nicepay.cs" />
     <Compile Include="Payment\Wrapper\Nicepay\NicepayClass.cs">
       <SubType>ASPXCodeBehind</SubType>

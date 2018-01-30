@@ -5,14 +5,15 @@
         Undefined = 0,
         Direct = 1,
         Veritrans = 2,
-        Nicepay = 3
+        Nicepay = 3,
+        E2Pay = 4
     }
 
     internal class PaymentMediumCd
     {
         internal static string Mnemonic(PaymentMedium paymentMedium)
         {
-            
+
             switch (paymentMedium)
             {
                 case PaymentMedium.Direct:
@@ -21,6 +22,8 @@
                     return "VERI";
                 case PaymentMedium.Nicepay:
                     return "NICE";
+                case PaymentMedium.E2Pay:
+                    return "E2PA";
                 default:
                     return "";
             }
@@ -35,6 +38,8 @@
                     return PaymentMedium.Veritrans;
                 case "NICE":
                     return PaymentMedium.Nicepay;
+                case "E2PA":
+                    return PaymentMedium.E2Pay;
                 default:
                     return PaymentMedium.Undefined;
             }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Activity.Service;
+using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Identity.Users;
@@ -18,6 +19,7 @@ using Lunggo.ApCommon.Product.Model;
 using Lunggo.CustomerWeb.Helper;
 using Lunggo.CustomerWeb.Models;
 using Lunggo.Framework.Extension;
+using Lunggo.Framework.Redis;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -208,7 +210,57 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
+        public ActionResult OnlineDebit(string rsvNo, string id, int medium)
+        {
+            if (medium != (int)PaymentMedium.E2Pay)
+            {
+                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = GenerateId(rsvNo) });
+            }
+
+            var html = GetE2PayPaymentHtmlFromCache(id);
+            if (html == null)
+                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = GenerateId(rsvNo) });
+            return Content(html);
+        }
+
         #region Helpers
+
+        private string GetE2PayPaymentHtmlFromCache(string guid)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "e2pay:paymentPage:" + guid;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            {
+                try
+                {
+                    var html = redisDb.StringGet(redisKey);
+                    return html;
+                }
+                catch
+                {
+                    if (i >= ApConstant.RedisMaxRetry)
+                        throw;
+                }
+            }
+            return null;
+        }
+
+        public string GenerateId(string key)
+        {
+            string result = "";
+            if (key.Length > 7)
+            {
+                key = key.Substring(key.Length - 7);
+            }
+            int generatedNumber = (int)double.Parse(key);
+            for (int i = 1; i < 4; i++)
+            {
+                generatedNumber = new Random(generatedNumber).Next();
+                result = result + "" + generatedNumber;
+            }
+            return result;
+        }
 
         public string GetBankImageName(PaymentSubmethod submethod)
         {

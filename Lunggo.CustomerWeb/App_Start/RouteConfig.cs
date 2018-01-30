@@ -11,10 +11,16 @@ namespace Lunggo.CustomerWeb
 
             routes.MapMvcAttributeRoutes();
 
+            //routes.MapRoute(
+            //    name: "Index",
+            //    url: "{langCode}",
+            //    defaults: new { controller = "Index", action = "Index", langCode = "id" }
+            //);
+
             routes.MapRoute(
-                name: "Index",
+                name: "TeaserPage",
                 url: "{langCode}",
-                defaults: new { controller = "Index", action = "Index", langCode = "id" }
+                defaults: new { controller = "Index", action = "TeaserPage", langCode = "id" }
             );
 
             routes.MapRoute(

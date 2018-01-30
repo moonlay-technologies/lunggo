@@ -18,7 +18,12 @@
         MandiriBillPayment = 13,
         Indomaret = 14,
         Credit = 15,
-        Deposit = 16
+        Deposit = 16,
+        IbMuamalat = 17,
+        DanamonOnlineBanking = 18,
+        OnlineSbi = 19,
+        DooEtQnb = 20,
+        BtnMobileBanking = 21
     }
 
     internal class PaymentMethodCd
@@ -59,6 +64,16 @@
                     return "CRD";
                 case PaymentMethod.Deposit:
                     return "DPS";
+                case PaymentMethod.IbMuamalat:
+                    return "IBM";
+                case PaymentMethod.DanamonOnlineBanking:
+                    return "DOB";
+                case PaymentMethod.OnlineSbi:
+                    return "SBI";
+                case PaymentMethod.DooEtQnb:
+                    return "QNB";
+                case PaymentMethod.BtnMobileBanking:
+                    return "BTN";
                 default:
                     return "";
             }
@@ -99,6 +114,16 @@
                     return PaymentMethod.Credit;
                 case "DPS":
                     return PaymentMethod.Deposit;
+                case "IBM":
+                    return PaymentMethod.IbMuamalat;
+                case "DOB":
+                    return PaymentMethod.DanamonOnlineBanking;
+                case "SBI":
+                    return PaymentMethod.OnlineSbi;
+                case "QNB":
+                    return PaymentMethod.DooEtQnb;
+                case "BTN":
+                    return PaymentMethod.BtnMobileBanking;
                 default:
                     return PaymentMethod.Undefined;
             }

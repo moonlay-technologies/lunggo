@@ -6182,7 +6182,7 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
         margin-top: 10px;
     }
     .box-promo-kode {
-        background: #ffd632 !important;
+        background: rgba(255, 249, 50, 0.44) !important;
     }
     .judul-box-promo {
         font-size:14px;
@@ -6750,4 +6750,12 @@ input[type="text"], input[type="password"], input[type="number"], input[type="em
   font-weight: 700;
   font-size: 18px;
 
+}
+.promo-tab-content {
+  background: white;
+  padding-bottom: 15px;
+}
+.promo-tab-content h3 {
+  font-size: 14px;
+  font-weight: bold;
 }

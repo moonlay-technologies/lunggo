@@ -1,20 +1,18 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @model Lunggo.ApCommon.Hotel.Model.HotelDetailForDisplay
 @{
-   
+
     var night = (Model.CheckOutDate - Model.CheckInDate).Days;
     var hotelImg = "";
     var roomImg = "";
-    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl;
-   
+    var images = HotelService.GetInstance().GetHotelDetailFromDb(Model.HotelCode).ImageUrl ?? new List<Image>();
+
     var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-    if (firstOrDefault != null)
-    {
-        roomImg = images == null
-            ? null
-            : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-    }
+    roomImg = firstOrDefault == null
+        ? "/Assets/travorama20/images/Hotel/no-hotel.png"
+        : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
 
     var listAges = new List<int>();
     var sumAdult = 0;
@@ -22,7 +20,7 @@
     var orderedRooms = new List<Tuple<string, int>>();
     try
     {
-       
+
         foreach (var room in Model.Rooms)
         {
             var roomName = room.RoomName;
@@ -37,13 +35,13 @@
                 //    continue;
                 //}
                 //listAges.AddRange(rate.ChildrenAges);
-                }
+            }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
     }
     catch (Exception)
     {
-  
+
         throw;
     }
 }
@@ -65,68 +63,69 @@
                         <div class="rh-table clearfix">
                             <div class="cols-1 col-2 clearfix">
                                 <div class="cols-title bold-txt white-txt">Kamar</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value semibold-txt">@config.RateCount</div>
-                                    }                        
-                                </div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value semibold-txt">@config.RateCount</div>
+                                }
+                            </div>
                             <div class="cols-2 col-2 clearfix">
                                 <div class="cols-title bold-txt white-txt">Dewasa</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value semibold-txt">@config.AdultCount</div>
-                                    }
-                                </div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value semibold-txt">@config.AdultCount</div>
+                                }
+                            </div>
                             <div class="cols-3 col-4 clearfix">
                                 <div class="cols-title bold-txt white-txt">Anak</div>
-                                  @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value semibold-txt">
-                                            @if (@config.ChildCount > 0)
-                                            {
-                                                <span>@config.ChildCount </span>
-                                                <span>
-                                                    (@for (var a = 0; a < config.ChildrenAges.Count; a++)
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value semibold-txt">
+                                        @if (@config.ChildCount > 0)
+                                        {
+                                            <span>@config.ChildCount </span>
+                                            <span>
+                                                (@for (var a = 0; a < config.ChildrenAges.Count; a++)
+                                                {
+                                                    if (a != config.ChildrenAges.Count - 1)
                                                     {
-                                                        if (a != config.ChildrenAges.Count - 1)
-                                                        {
-                                                            @config.ChildrenAges[a]
-                                                            <span>th, </span>
-                                                        }
-                                                        else
-                                                        {
-                                                            @config.ChildrenAges[a]
-                                                            <span>th)</span>
-                                                        }
-                                                    }</span>
-                                            }
-                                            else
-                                            {
-                                                <span>-</span>
-                                            }
-                                        </div>
-                                    }
-                                   
-                                </div>
+                                                        @config.ChildrenAges[a]
+                                                        <span>th, </span>
+                                                    }
+                                                    else
+                                                    {
+                                                        @config.ChildrenAges[a]
+                                                        <span>th)</span>
+                                                    }
+                                                }
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </div>
+                                }
+
+                            </div>
                             <div class="cols-4 col-2 clearfix">
                                 <div class="cols-title bold-txt white-txt">Board</div>
-                                    @foreach (var config in rate.Breakdowns)
-                                    {
-                                        <div class="cols-value semibold-txt">@ToTitleCase.ConvertToTitleCase(config.BoardDescription)</div>
-                                    }
-                                </div>
+                                @foreach (var config in rate.Breakdowns)
+                                {
+                                    <div class="cols-value semibold-txt">@ToTitleCase.ConvertToTitleCase(config.BoardDescription)</div>
+                                }
                             </div>
+                        </div>
                         <ul class="blue-list blue-txt">
                             @if (rate.IsFreeCancel)
                             {
                                 <li>
-                                    Gratis pembatalan sebelum tanggal 
+                                    Gratis pembatalan sebelum tanggal
                                     <span style="color:#1daee4">
                                         @rate.FreeUntil.GetValueOrDefault().AddHours(7).ToString("dd MMMM yyyy HH:mm", CultureInfo.CreateSpecificCulture("id-ID"))
                                     </span> WIB.
                                 </li>
                             }
-                            
+
                             @foreach (var cancellation in rate.Cancellation)
                             {
                                 <li>

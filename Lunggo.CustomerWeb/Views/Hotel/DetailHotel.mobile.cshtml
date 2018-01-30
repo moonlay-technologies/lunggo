@@ -359,7 +359,7 @@
                                 <span class="meal"></span>
                                 <span class="ac"></span>
                             </div>*@
-                                <a ng-click="bookRoom(room.rate)" class="checkout-btn btn btn-yellow small">PESAN</a>
+                                <a ng-click="bookRate(room.rate)" class="checkout-btn btn btn-yellow small">PESAN</a>
                             </div>
                         </div>
                     </li>
@@ -562,7 +562,7 @@
                                     <div class="lg-txt"><b><sup>Rp</sup> {{selectedRoom.rate.breakdowns[0].netFare | number}}</b></div>
                                 <span class="xs-txt">(*Termasuk Pajak)</span>
                             </div>
-                            <a ng-click="bookRoom(selectedRoom)" class="btn btn-yellow small">PESAN</a>
+                            <a ng-click="bookRate(selectedRoom.rate)" class="btn btn-yellow small">PESAN</a>
                         </div>
                             <div class="dr-policy" ng-show="selectedRoom.rate.cancellation != null && selectedRoom.rate.cancellation.length > 0">
                             <div class="bold-txt lg-txt darkgrey-txt">Kebijakan Pembatalan</div>

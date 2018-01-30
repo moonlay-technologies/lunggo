@@ -1,0 +1,142 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/Assets/teaserpage/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/Assets/teaserpage/cssDesktop/full.css" rel="stylesheet">
+    <link href="/Assets/teaserpage/cssDesktop/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg bg-white">
+        <div class="container">
+            <a class="navbar-brand container-logo" href="#">
+                <img class="img-logo" src="/Assets/teaserpage/imgDesktop/travorama-logo.png">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/tiket-pesawat">Pesawat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/hotel">Hotel</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div id="balloon" style="display:none">
+        <div class="ballon">
+            Kamu masih bisa pesan tiket pesawat dan hotel di sini
+        </div>
+        <div class="triangle">
+            <img style="width:21px" src="/Assets/teaserpage/imgMobile/triangel.png">
+        </div>
+    </div>
+
+    <div class="container-content">
+        <div style="text-align: center; font-size: 26px; font-weight:600;">THE NEW FACE IS COMING</div>
+        <div class="container-timer clearfix" id="timer">
+            <div class="box-timer">
+                <div class="time" id="days">30</div>
+                <div class="day">hari</div>
+            </div>
+            <div class="box-divider">
+                <div class="divider">:</div>
+            </div>
+            <div class="box-timer">
+                <div class="time" id="hour">14</div>
+                <div class="day">jam</div>
+            </div>
+            <div class="box-divider">
+                <div class="divider">:</div>
+            </div>
+            <div class="box-timer">
+                <div class="time" id="minute">01</div>
+                <div class="day">menit</div>
+            </div>
+            <div class="box-divider">
+                <div class="divider">:</div>
+            </div>
+            <div class="box-timer">
+                <div class="time" id="second">22</div>
+                <div class="day">detik</div>
+            </div>
+        </div>
+        <div class="container-timer clearfix">
+            <form id="form">
+                <div style="font-size: 22px; font-weight:400; color:#494949; float: left; margin-top: 5px;">Penasaran?</div>
+                <div style="float:left; width: 350px; margin-left: 30px;">
+                    <div class="form-group">
+                        <input type="text" id="form-input" name="input" class="form-control subscribe-form" placeholder="Alamat email atau nomor telepon">
+                    </div>
+                </div>
+                <div style="float:left; margin-left: 20px">
+                    <input type="submit" class="btn btn-default btn-submit" value="Tell me!">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="/Assets/teaserpage/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/Assets/js/jquery.countdown.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $('#balloon').removeAttr('style');
+            }, 7000);
+        });
+
+        var paymentTimeout = new Date('@((new DateTime(2018,3,1)).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'"))');
+        // countdown timer
+        var now = new Date();
+        $('#timer').countdown(paymentTimeout, function (event) {
+            $('#day').text(event.strftime('%d'));
+            $('#hour').text(event.strftime('%H'));
+            $('#minute').text(event.strftime('%M'));
+            $('#second').text(event.strftime('%S'));
+        });
+
+        $('#form').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/id/TeaserPageSubscribe?input=' + $('#form-input').val(),
+                method: 'get',
+            }).done(function () {
+                window.alert('Terima kasih telah bergabung! Kami akan hubungi kamu kembali melalui ' + $('#form-input').val());
+            }).fail(function () {
+                window.alert('Terjadi kesalahan pada server');
+            });
+            $('#form-input').val('');
+        });
+    </script>
+
+</body>
+
+</html>
