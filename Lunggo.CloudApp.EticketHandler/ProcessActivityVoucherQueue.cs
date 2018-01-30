@@ -12,6 +12,8 @@ using SelectPdf;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.ApCommon.Activity.Model.Logic;
+using Lunggo.ApCommon.Activity.Model;
 
 namespace Lunggo.Worker.EticketHandler
 {
@@ -28,7 +30,8 @@ namespace Lunggo.Worker.EticketHandler
                 return;
             }
             var rsvNo = message.AsString;
-            /*Trace.WriteLine("Processing Voucher for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Processing Voucher for RsvNo " + rsvNo + "...");
+
             var sw = new Stopwatch();
             var activityService = ActivityService.GetInstance();
             var templateService = HtmlTemplateService.GetInstance();
@@ -36,18 +39,22 @@ namespace Lunggo.Worker.EticketHandler
             var converter = new SelectPdf.HtmlToPdf();
             converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
             converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.NoAdjustment;
-            var reservation = activityService.GetActivityInvoice(rsvNo);
+            var reservation = activityService.GetReservationForDisplay(rsvNo);
+            var bookingDetail = activityService.GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
+            var activityEVoucher = new ActivityEVoucher();
+            activityEVoucher.BookingDetail = bookingDetail.BookingDetail;
+            activityEVoucher.ActivityReservation = reservation;
 
-            Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Parsing EVoucher Template for RsvNo " + rsvNo + "...");
             sw.Start();
-            var voucherTemplate = templateService.GenerateTemplateFromTable(reservation, "ActivityVoucher");
+            var eVoucherTemplate = templateService.GenerateTemplateFromTable(activityEVoucher, "ActivityEVoucher");
             sw.Stop();
-            Trace.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+            Trace.WriteLine("Done Parsing EVoucher Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            Trace.WriteLine("Generating Eticket File for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Generating EVoucher File for RsvNo " + rsvNo + "...");
             sw.Start();
-            var VoucherFile = converter.ConvertHtmlString(voucherTemplate).Save();
+            var eVoucherFile = converter.ConvertHtmlString(eVoucherTemplate).Save();
             sw.Stop();
             Trace.WriteLine("Done Generating Voucher File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -62,7 +69,7 @@ namespace Lunggo.Worker.EticketHandler
                     {
                         FileName = rsvNo + ".pdf",
                         ContentType = "application/pdf",
-                        FileData = eticketFile
+                        FileData = eVoucherFile
                     },
                     Container = "Eticket"
                 },
@@ -71,12 +78,7 @@ namespace Lunggo.Worker.EticketHandler
             sw.Stop();
             Trace.WriteLine("Done Saving Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
-            */
-            var sw = new Stopwatch();
-            var activityService = ActivityService.GetInstance();
-            var templateService = HtmlTemplateService.GetInstance();
-            var blobService = BlobStorageService.GetInstance();
-            var converter = new SelectPdf.HtmlToPdf();
+            
             var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
             var activityReservation = activityService.GetActivityInvoice(cartId);
             Trace.WriteLine("Parsing Invoice for CartId " + cartId + "...");

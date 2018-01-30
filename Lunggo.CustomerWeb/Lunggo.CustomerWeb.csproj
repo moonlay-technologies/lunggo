@@ -1821,6 +1821,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\common\ActivityInvoice.cshtml" />
     <Content Include="Views\common\HotelVoucherEmail.cshtml" />
+    <Content Include="Views\common\ActivityEVoucher.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

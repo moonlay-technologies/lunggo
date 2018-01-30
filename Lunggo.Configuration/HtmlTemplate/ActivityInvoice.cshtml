@@ -130,7 +130,7 @@
                                     { @(pax.Count + "x " + pax.Type) <br />}</td>
                                     <td class="qty">1</td>
                                     <td class="price"></td>
-                                    <td class="total">@activity.Price</td>
+                                    <td class="total">@activity.Price.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 </tr>
 
                             }

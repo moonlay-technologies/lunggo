@@ -28,7 +28,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            //var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Voucher");
+            var eVoucherFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
             var activity = ActivityService.GetInstance();
             var summary = activity.GetReservationForDisplay(rsvNo);
             var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
@@ -50,12 +50,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama",
                 ListFileInfo = new List<FileInfo>
                 {
-                    /*new FileInfo
+                    new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
-                        FileData = eticketFile
-                    },*/
+                        FileName = "E-Voucher Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
+                        FileData = eVoucherFile
+                    },
                     new FileInfo
                     {
                         ContentType = "PDF",

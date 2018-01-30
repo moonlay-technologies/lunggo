@@ -17,4 +17,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public CartList CartList { get; set; }
         public List<ActivityReservationForDisplay> ActivityReservations { get; set; }
     }
+
+    public class ActivityEVoucher
+    {
+        public BookingDetail BookingDetail { get; set; }
+        public ActivityReservationForDisplay ActivityReservation { get; set; }
+    }
 }

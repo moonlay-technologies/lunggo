@@ -915,7 +915,7 @@
     <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
-    <None Include="HtmlTemplate\ActivityETicket.cshtml" />
+    <None Include="HtmlTemplate\ActivityEVoucher.cshtml" />
     <Content Include="Template\Web.Debug.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
