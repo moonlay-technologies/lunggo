@@ -106,6 +106,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Address = actList.Address,
                     City = actList.City,
                     Country = actList.Country,
+                    Zone = actList.Zone,
+                    Area = actList.Area,
                     Price = actList.Price,
                     PriceDetail = actList.PriceDetail,
                     Duration = actList.Duration,

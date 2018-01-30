@@ -11,46 +11,45 @@ using Newtonsoft.Json;
 using SelectPdf;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
 using Lunggo.ApCommon.Activity.Service;
+using Lunggo.ApCommon.Payment.Service;
 
-namespace Lunggo.CloudApp.EticketHandler
+namespace Lunggo.Worker.EticketHandler
 {
-    public class ProcessEticketQueue
+    public class ProcessActivityVoucherQueue
     {
-
         public static async Task ProcessQueue()
         {
-            var queue = QueueService.GetInstance().GetQueueByReference("FlightEticket");
-            Trace.WriteLine("Checking Eticket Queue...");
+            var queue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");
+            Trace.WriteLine("Checking Voucher Queue...");
             var message = await queue.GetMessageAsync();
             if (message == null)
             {
-                Trace.WriteLine("No Waiting Eticket Message.");
+                Trace.WriteLine("No Waiting Voucher Message.");
                 return;
             }
             var rsvNo = message.AsString;
-
-            Trace.WriteLine("Processing Eticket for RsvNo " + rsvNo + "...");
+            /*Trace.WriteLine("Processing Voucher for RsvNo " + rsvNo + "...");
             var sw = new Stopwatch();
-            var flightService = FlightService.GetInstance();
+            var activityService = ActivityService.GetInstance();
             var templateService = HtmlTemplateService.GetInstance();
             var blobService = BlobStorageService.GetInstance();
             var converter = new SelectPdf.HtmlToPdf();
             converter.Options.AutoFitHeight = HtmlToPdfPageFitMode.NoAdjustment;
             converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.NoAdjustment;
-            var reservation = flightService.GetReservationForDisplay(rsvNo);
+            var reservation = activityService.GetActivityInvoice(rsvNo);
 
             Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
             sw.Start();
-            var eticketTemplate = templateService.GenerateTemplateFromTable(reservation, "FlightEticket");
+            var voucherTemplate = templateService.GenerateTemplateFromTable(reservation, "ActivityVoucher");
             sw.Stop();
             Trace.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
             Trace.WriteLine("Generating Eticket File for RsvNo " + rsvNo + "...");
             sw.Start();
-            var eticketFile = converter.ConvertHtmlString(eticketTemplate).Save();
+            var VoucherFile = converter.ConvertHtmlString(voucherTemplate).Save();
             sw.Stop();
-            Trace.WriteLine("Done Generating Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+            Trace.WriteLine("Done Generating Voucher File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
             Trace.WriteLine("Saving Eticket File for RsvNo " + rsvNo + "...");
@@ -59,7 +58,7 @@ namespace Lunggo.CloudApp.EticketHandler
             {
                 FileBlobModel = new FileBlobModel
                 {
-                    FileInfo = new FileInfo
+                    FileInfo = new Framework.SharedModel.FileInfo
                     {
                         FileName = rsvNo + ".pdf",
                         ContentType = "application/pdf",
@@ -72,15 +71,22 @@ namespace Lunggo.CloudApp.EticketHandler
             sw.Stop();
             Trace.WriteLine("Done Saving Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
-
-            Trace.WriteLine("Parsing Invoice for RsvNo " + rsvNo + "...");
+            */
+            var sw = new Stopwatch();
+            var activityService = ActivityService.GetInstance();
+            var templateService = HtmlTemplateService.GetInstance();
+            var blobService = BlobStorageService.GetInstance();
+            var converter = new SelectPdf.HtmlToPdf();
+            var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
+            var activityReservation = activityService.GetActivityInvoice(cartId);
+            Trace.WriteLine("Parsing Invoice for CartId " + cartId + "...");
             sw.Start();
-            var invoiceTemplate = templateService.GenerateTemplateFromTable(reservation, "FlightInvoice");
+            var invoiceTemplate = templateService.GenerateTemplateFromTable(activityReservation, "ActivityInvoice");
             sw.Stop();
-            Trace.WriteLine("Done Parsing Invoice Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+            Trace.WriteLine("Done Parsing Invoice Template for RsvNo " + cartId + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            Trace.WriteLine("Generating Invoice File for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Generating Invoice File for RsvNo " + cartId + "...");
             sw.Start();/*
                 converter.Margins = new PageMargins
                 {
@@ -91,10 +97,10 @@ namespace Lunggo.CloudApp.EticketHandler
                 };*/
             var invoiceFile = converter.ConvertHtmlString(invoiceTemplate).Save();
             sw.Stop();
-            Trace.WriteLine("Done Generating Invoice File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+            Trace.WriteLine("Done Generating Invoice File for RsvNo " + cartId + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            Trace.WriteLine("Saving Invoice File for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Saving Invoice File for RsvNo " + cartId + "...");
             sw.Start();
             blobService.WriteFileToBlob(new BlobWriteDto
             {
@@ -102,7 +108,7 @@ namespace Lunggo.CloudApp.EticketHandler
                 {
                     FileInfo = new FileInfo
                     {
-                        FileName = rsvNo + ".pdf",
+                        FileName = cartId + ".pdf",
                         ContentType = "application/pdf",
                         FileData = invoiceFile
                     },
@@ -111,40 +117,40 @@ namespace Lunggo.CloudApp.EticketHandler
                 SaveMethod = SaveMethod.Force
             });
             sw.Stop();
-            Trace.WriteLine("Done Saving Invoice File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+            Trace.WriteLine("Done Saving Invoice File for RsvNo " + cartId + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            Trace.WriteLine("Saving Flight Reservation Data for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Saving Flight Reservation Data for RsvNo " + cartId + "...");
             sw.Start();
-            var reservationJson = JsonConvert.SerializeObject(reservation);
-            var reservationContent = Encoding.UTF8.GetBytes(reservationJson);
+            var activityReservationJson = JsonConvert.SerializeObject(activityReservation);
+            var activityReservationContent = Encoding.UTF8.GetBytes(activityReservationJson);
             blobService.WriteFileToBlob(new BlobWriteDto
             {
                 FileBlobModel = new FileBlobModel
                 {
                     FileInfo = new FileInfo
                     {
-                        FileName = rsvNo,
+                        FileName = cartId,
                         ContentType = "application/json",
-                        FileData = reservationContent
+                        FileData = activityReservationContent
                     },
-                    Container = "Reservation"
+                    Container = "AcivityCart"
                 },
                 SaveMethod = SaveMethod.Force
             });
             sw.Stop();
-            Trace.WriteLine("Done Saving Flight Reservation Data for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
+            Trace.WriteLine("Done Saving Activity Data for CartId " + cartId + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            Trace.WriteLine("Pushing Eticket Email Queue for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Pushing Eticket Email Queue for CartId " + cartId + "...");
             var queueService = QueueService.GetInstance();
-            var emailQueue = queueService.GetQueueByReference("FlightEticketEmail");
+            var emailQueue = queueService.GetQueueByReference("ActivityEVoucherAndInvoiceEmail");
             emailQueue.AddMessage(new CloudQueueMessage(rsvNo));
 
-            Trace.WriteLine("Pushing Eticket Eticket Notification for RsvNo " + rsvNo + "...");
+            Trace.WriteLine("Pushing Eticket Eticket Notification for CartId " + rsvNo + "...");
             //flightService.PushEticketIssuedNotif(rsvNo);
 
-            Trace.WriteLine("Done Processing Eticket for RsvNo " + rsvNo);
+            Trace.WriteLine("Done Processing Eticket for CartId " + rsvNo);
 
             await queue.DeleteMessageAsync(message);
         }

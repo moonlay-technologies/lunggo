@@ -1,35 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using Lunggo.ApCommon.Flight.Model;
+﻿using Lunggo.ApCommon.Activity.Model.Logic;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Flight.Service;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void FlightEticketEmail([QueueTrigger("flighteticketemail")] string rsvNo)
+        public static void ActivityVoucherAndInvoiceEmail([QueueTrigger("activityevoucherandinvoiceemail")] string rsvNo)
         {
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var sw = new Stopwatch();
-            Console.WriteLine("Processing Flight Eticket Email for RsvNo " + rsvNo + "...");
-
+            Console.WriteLine("Processing Activity Voucher And Invoice Email for RsvNo " + rsvNo + "...");
             Console.WriteLine("Getting Required Files and Data from Storage...");
             sw.Start();
             var blobService = BlobStorageService.GetInstance();
-            var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
-            var flight = FlightService.GetInstance();
-            var summary = flight.GetReservationForDisplay(rsvNo);
-            var invoiceFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Invoice");
+            //var eticketFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Voucher");
+            var activity = ActivityService.GetInstance();
+            var summary = activity.GetReservationForDisplay(rsvNo);
+            var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
+            var invoiceFile = blobService.GetByteArrayByFileInContainer(cartId + ".pdf", "Invoice");
             //var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             //var summaryJson = Encoding.UTF8.GetString(summaryBytes);
             //var summary = JsonConvert.DeserializeObject<FlightReservationForDisplay>(summaryJson);
@@ -47,24 +50,24 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama",
                 ListFileInfo = new List<FileInfo>
                 {
-                    new FileInfo
+                    /*new FileInfo
                     {
                         ContentType = "PDF",
                         FileName = "E-ticket Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
                         FileData = eticketFile
-                    },
+                    },*/
                     new FileInfo
                     {
                         ContentType = "PDF",
-                        FileName = "Invoice Anda - No. Pemesanan " + summary.RsvNo + ".pdf",
+                        FileName = "Invoice Anda - No. Pemesanan " + cartId + ".pdf",
                         FileData = invoiceFile
                     }
                 }
             };
             Console.WriteLine("Sending Flight Eticket Email...");
-            mailService.SendEmailWithTableTemplate(summary, mailModel, "FlightEticketEmail");
+            mailService.SendEmailWithTableTemplate(summary, mailModel, "ActivityEVoucherAndInvoiceEmail");
             //FlightService.GetInstance().UpdateIssueProgress(rsvNo, "Eticket Email Sent. Ticket Issuance Complete.");
-            
+
             Console.WriteLine("Done Processing Flight Eticket Email for RsvNo " + rsvNo);
         }
     }

@@ -166,6 +166,11 @@ namespace Lunggo.ApCommon.Payment.Service
             var guid = Guid.NewGuid().ToString("N");
             return guid;
         }
+
+        public string GetCartIdByRsvNo(string rsvNo)
+        {
+            return GetCartIdByRsvNoFromDb(rsvNo);
+        }
     }
 }
 

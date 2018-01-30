@@ -25,9 +25,14 @@
             return Instance;
         }
 
-        public string GenerateTemplate<T>(T objectParam, string type)
+        public string GenerateTemplate<T>(T objectParam, string template)
         {
-            return Client.GenerateTemplate(objectParam, type);
+            return Client.GenerateTemplate(objectParam, template);
+        }
+
+        public string GenerateTemplateFromTable<T>(T objectParam, string type)
+        {
+            return Client.GenerateTemplateFromTable(objectParam, type);
         }
     }
 }

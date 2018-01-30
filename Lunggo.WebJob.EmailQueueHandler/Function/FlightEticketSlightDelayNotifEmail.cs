@@ -36,7 +36,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             };
             Console.WriteLine("Sending Notification Email...");
 
-            mailService.SendEmail(reservation, mailModel, "FlightEticketSlightDelayNotifEmail");
+            mailService.SendEmailWithTableTemplate(reservation, mailModel, "FlightEticketSlightDelayNotifEmail");
 
             Console.WriteLine("Done Processing Flight Eticket Slight Delay Notif Email for RsvNo " + rsvNo);
         }

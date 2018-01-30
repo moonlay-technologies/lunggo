@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\ActivityVoucherAndInvoiceEmail.cs" />
     <Compile Include="Function\FlightDepositWarningNotifEmail.cs" />
     <Compile Include="Function\FlightIssueTimeoutNotifEmail.cs" />
     <Compile Include="Function\ActivityIssueTicketNotifEmail.cs" />
@@ -204,6 +205,8 @@
     <None Include="Properties\PublishProfiles\travorama-qa-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
+    <None Include="Views\HotelInvoice.cshtml" />
+    <None Include="Views\HotelVoucherEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
@@ -232,6 +235,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.1.0\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.1.0\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

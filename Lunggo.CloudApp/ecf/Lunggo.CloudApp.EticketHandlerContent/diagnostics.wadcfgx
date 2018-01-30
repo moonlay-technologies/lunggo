@@ -2,7 +2,7 @@
 <DiagnosticsConfiguration xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
   <PublicConfig xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
     <WadCfg>
-      <DiagnosticMonitorConfiguration overallQuotaInMB="4096">
+      <DiagnosticMonitorConfiguration overallQuotaInMB="4096" sinks="applicationInsights.errors">
         <DiagnosticInfrastructureLogs scheduledTransferLogLevelFilter="Error" />
         <Directories scheduledTransferPeriod="PT1M">
           <IISLogs containerName="wad-iis-logfiles" />
@@ -28,11 +28,19 @@
         </CrashDumps>
         <Logs scheduledTransferPeriod="PT1M" scheduledTransferLogLevelFilter="Error" />
       </DiagnosticMonitorConfiguration>
+      <SinksConfig>
+        <Sink name="applicationInsights">
+          <ApplicationInsights>1f91c866-d6b4-4663-a799-12c7f17d4383</ApplicationInsights>
+          <Channels>
+            <Channel logLevel="Error" name="errors" />
+          </Channels>
+        </Sink>
+      </SinksConfig>
     </WadCfg>
-    <StorageAccount />
+    <StorageAccount>lunggostorageqa</StorageAccount>
   </PublicConfig>
   <PrivateConfig xmlns="http://schemas.microsoft.com/ServiceHosting/2010/10/DiagnosticsConfiguration">
-    <StorageAccount endpoint="" />
+    <StorageAccount endpoint="https://core.windows.net" name="lunggostorageqa" key="ECUAdynBjM6ttLekJLBMNCoXHEUEulWkLwT5r8iTDXeW9GuHCD7sx5IOF9CtdI6/vyJbfX6XHxPbgiao8a2Umw==" />
   </PrivateConfig>
   <IsEnabled>true</IsEnabled>
 </DiagnosticsConfiguration>

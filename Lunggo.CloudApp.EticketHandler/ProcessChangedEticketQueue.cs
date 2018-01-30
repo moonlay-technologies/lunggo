@@ -37,7 +37,7 @@ namespace Lunggo.CloudApp.EticketHandler
 
             Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
             sw.Start();
-            var eticketTemplate = templateService.GenerateTemplate(reservation, "FlightEticket");
+            var eticketTemplate = templateService.GenerateTemplateFromTable(reservation, "FlightEticket");
             sw.Stop();
             Trace.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();

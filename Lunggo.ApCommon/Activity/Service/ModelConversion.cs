@@ -67,6 +67,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 ShortDesc = activityDetail.ShortDesc,
                 City = activityDetail.City,
                 Country = activityDetail.Country,
+                Zone = activityDetail.Zone,
+                Area = activityDetail.Area,
                 Address = activityDetail.Address,
                 Latitude = activityDetail.Latitude,
                 Longitude = activityDetail.Longitude,

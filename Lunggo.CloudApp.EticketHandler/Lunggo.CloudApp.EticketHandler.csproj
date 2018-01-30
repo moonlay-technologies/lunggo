@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Init.cs" />
+    <Compile Include="ProcessActivityVoucherQueue.cs" />
     <Compile Include="ProcessChangedEticketQueue.cs" />
     <Compile Include="ProcessHotelVoucherQueue.cs" />
     <Compile Include="ProcessEticketQueue.cs" />

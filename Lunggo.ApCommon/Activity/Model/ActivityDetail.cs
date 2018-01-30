@@ -16,10 +16,14 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Category { get; set; }
         [JsonProperty("shortDesc", NullValueHandling = NullValueHandling.Ignore)]
         public string ShortDesc { get; set; }
-        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
-        public string City { get; set; }
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
+        [JsonProperty("city", NullValueHandling = NullValueHandling.Ignore)]
+        public string City { get; set; }
+        [JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]
+        public string Zone { get; set; }
+        [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
+        public string Area { get; set; }
         [JsonProperty("address", NullValueHandling = NullValueHandling.Ignore)]
         public string Address { get; set; }
         [JsonProperty("lat", NullValueHandling = NullValueHandling.Ignore)]
@@ -62,6 +66,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string ShortDesc { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public string Area { get; set; }
+        public string Zone { get; set; }
         public string Address { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }

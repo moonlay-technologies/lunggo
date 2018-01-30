@@ -45,9 +45,16 @@ namespace Lunggo.Framework.Mail
                 }
             }
 
-            internal override void SendEmail<T>(T objectParam, MailModel mailModel, string template)
+            internal void SendEmail<T>(T objectParam, MailModel mailModel, string template)
             {
                 var emailMessage = GenerateMessage(objectParam, mailModel, template);
+                _apiOfSendGrid.DeliverAsync(emailMessage);
+
+            }
+
+            internal override void SendEmailWithTableTemplate<T>(T objectParam, MailModel mailModel, string template)
+            {
+                var emailMessage = GenerateMessageWithTableTemplate(objectParam, mailModel, template);
                 _apiOfSendGrid.DeliverAsync(emailMessage);
 
             }
@@ -59,7 +66,25 @@ namespace Lunggo.Framework.Mail
                     Subject = mailModel.Subject,
                     From = new MailAddress(mailModel.FromMail, mailModel.FromName),
                     To = GenerateMessageAddressTo(mailModel),
-                    Html = HtmlTemplate.HtmlTemplateService.GetInstance().GenerateTemplate(objectParam, template)
+                    Html = template
+                };
+                if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
+                    foreach (var file in mailModel.ListFileInfo)
+                    {
+                        sendGridMessage.AddAttachment(new MemoryStream(file.FileData), file.FileName);
+                    }
+
+                return sendGridMessage;
+            }
+
+            private SendGridMessage GenerateMessageWithTableTemplate<T>(T objectParam, MailModel mailModel, string template)
+            {
+                var sendGridMessage = new SendGridMessage
+                {
+                    Subject = mailModel.Subject,
+                    From = new MailAddress(mailModel.FromMail, mailModel.FromName),
+                    To = GenerateMessageAddressTo(mailModel),
+                    Html = HtmlTemplate.HtmlTemplateService.GetInstance().GenerateTemplateFromTable(objectParam, template)
                 };
                 if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
                     foreach (var file in mailModel.ListFileInfo)

@@ -221,6 +221,7 @@
     <Compile Include="Activity\Database\Query\GetCartIdListDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
+    <Compile Include="Activity\Model\ActivityInvoice.cs" />
     <Compile Include="Activity\Model\AppointmentDetail.cs" />
     <Compile Include="Activity\Model\BookingDetail.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
@@ -275,7 +276,9 @@
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Database.cs" />
+    <Compile Include="Activity\Service\GetActivityInvoice.cs" />
     <Compile Include="Activity\Service\GetActivityTicketDetail.cs" />
+    <Compile Include="Activity\Service\GetCartListData.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
     <Compile Include="Activity\Service\LandingPage.cs" />
@@ -781,6 +784,7 @@
     <Compile Include="Payment\Query\CreateAccountByUserQuery.cs" />
     <Compile Include="Payment\Query\GetAccountUserQuery.cs" />
     <Compile Include="Payment\Query\GetBalanceQuery.cs" />
+    <Compile Include="Payment\Query\GetCartIdFromDbQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentByRsvNoQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentStatusQuery.cs" />
     <Compile Include="Payment\Query\GetRefundQuery.cs" />

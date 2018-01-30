@@ -26,6 +26,8 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.Address AS Address, ");
             clauseBuilder.Append("act.City AS City, ");
             clauseBuilder.Append("act.Country AS Country, ");
+            clauseBuilder.Append("act.Zone AS Zone, ");
+            clauseBuilder.Append("act.Area AS Area, ");
             clauseBuilder.Append("asp.Price AS Price, ");
             clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc, ");
@@ -50,11 +52,11 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("WHERE ");
             if (condition.Name != null)
-                clauseBuilder.Append("(act.Name LIKE '%' + @Name + '%' OR (act.City = @Name OR act.Country = @Name OR act.Zone = @Name OR act.Area = @Name)) AND ");
+                clauseBuilder.Append("(act.Name LIKE '%' + @Name + '%' OR (act.City = @Name OR act.Country = @Name OR act.Zone = @Name OR act.Area = @Name)) AND asp.Flag = 1 AND ");
             if (condition.Id != null)
-                clauseBuilder.Append("act.Id IN @Id AND ");
+                clauseBuilder.Append("(act.Id IN @Id AND asp.Flag = 1) AND ");
             if (condition.Id == null)
-                clauseBuilder.Append("ad.Date BETWEEN @StartDate AND @EndDate AND asp.Flag = 1 AND ");
+                clauseBuilder.Append("ad.Date BETWEEN @StartDate AND @EndDate AND ");
             clauseBuilder.Remove(clauseBuilder.Length - 4, 4);
             return clauseBuilder.ToString();
         }

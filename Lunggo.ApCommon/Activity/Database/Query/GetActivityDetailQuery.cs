@@ -21,6 +21,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("SELECT act.Id AS ActivityId, act.Name AS Name, act.Category AS Category, ");
             clauseBuilder.Append("act.Description AS ShortDesc, act.Address AS Address, ");
             clauseBuilder.Append("act.City AS City, act.Country AS Country, ");
+            clauseBuilder.Append("act.Zone AS Zone, act.Area AS Area, ");
             clauseBuilder.Append("act.Latitude AS Latitude, act.Longitude AS Longitude, ");
             clauseBuilder.Append("act.OperationTime AS OperationTime, asp.Price AS Price, ");
             clauseBuilder.Append("act.OperatorName AS OperatorName, act.OperatorEmail AS OperatorEmail, act.OperatorPhone AS OperatorPhone, ");

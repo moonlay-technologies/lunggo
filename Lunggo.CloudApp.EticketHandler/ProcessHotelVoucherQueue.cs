@@ -77,7 +77,7 @@ namespace Lunggo.CloudApp.EticketHandler
                 "https://maps.googleapis.com/maps/api/staticmap?center="+ reservation.HotelDetail.Latitude +",+"+ reservation.HotelDetail.Longitude+ "&zoom=16&scale=false&size=640x180&maptype=roadmap&key=AIzaSyCRAmMz6GPXsXi1pZAl5QUsjNTcY0ZfqVA&visual_refresh=true";
             Trace.WriteLine("Parsing Voucher Template for RsvNo " + rsvNo + "...");
             sw.Start();
-            var voucherTemplate = templateService.GenerateTemplate(reservation, "HotelVoucher");
+            var voucherTemplate = templateService.GenerateTemplateFromTable(reservation, "HotelVoucher");
             sw.Stop();
             Trace.WriteLine("Done Parsing Voucher Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -111,7 +111,7 @@ namespace Lunggo.CloudApp.EticketHandler
             
             Trace.WriteLine("Parsing Invoice for RsvNo " + rsvNo + "...");
             sw.Start();
-            var invoiceTemplate = templateService.GenerateTemplate(reservation, "HotelInvoice");
+            var invoiceTemplate = templateService.GenerateTemplateFromTable(reservation, "HotelInvoice");
             sw.Stop();
             Trace.WriteLine("Done Parsing Invoice Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();

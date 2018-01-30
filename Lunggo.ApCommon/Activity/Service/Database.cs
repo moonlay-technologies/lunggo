@@ -211,13 +211,13 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     RsvNo = rsvNo,
                     Contact = Contact.GetFromDb(rsvNo),
-                    Pax = new List<Pax>(),
                     Payment = PaymentDetails.GetFromDb(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     ActivityDetails = new ActivityDetail(),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
                     RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd)
                 };
+
 
                 if (activityReservation.Contact == null || activityReservation.Payment == null)
                     return null;
@@ -911,8 +911,49 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     isSuccess = true
                 };
-            }
+            }                       
+        }
 
+        public CartList GetCartListDataFromDb(string cartId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                decimal totalOriginalPrice = 0;
+                decimal totalFinalPrice = 0;
+                decimal totalDiscount = 0;
+                decimal totalUniqueCode = 0;
+                var bookingDetails = new List<BookingDetail>();
+                var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+                foreach (var rsvNo in rsvNoList)
+                {
+                    var payment = GetReservationFromDb(rsvNo).Payment;
+                    var bookingDetail = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
+                    bookingDetail.BookingDetail.RsvNo = rsvNo;
+                    bookingDetails.Add(bookingDetail.BookingDetail);
+                    totalOriginalPrice += payment.OriginalPriceIdr;
+                    totalDiscount += payment.DiscountNominal;
+                    totalUniqueCode += payment.UniqueCode;
+                    totalFinalPrice += payment.FinalPriceIdr;
+                }
+                var cartList = new CartList
+                {
+                    CartId = cartId,
+                    Activities = bookingDetails,
+                    TotalOriginalPrice = totalOriginalPrice,
+                    TotalDiscount = totalDiscount,
+                    TotalUniqueCode = totalUniqueCode,
+                    TotalFinalPrice = totalFinalPrice
+                };
+                return cartList;
+            }
+        }
+        public List<string> GetCartRsvNoListFromDb(string cartId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                return GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+            }
+                
         }
     }
 }

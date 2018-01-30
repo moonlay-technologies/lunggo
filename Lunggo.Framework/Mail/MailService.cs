@@ -26,9 +26,14 @@
             return Instance;
         }
 
-        public void SendEmail<T>(T objectParam, MailModel mailModel, string type)
+        public void SendEmailWithTableTemplate<T>(T objectParam, MailModel mailModel, string type)
         {
-            Client.SendEmail(objectParam, mailModel, type);
+            Client.SendEmailWithTableTemplate(objectParam, mailModel, type);
+        }
+
+        public void SendEmail<T>(T objectParam, MailModel mailModel, string template)
+        {
+            Client.SendEmail(objectParam, mailModel, template);
         }
 
         //public void SendPlainEmail(MailModel mailModel, string content)

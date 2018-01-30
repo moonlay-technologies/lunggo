@@ -44,7 +44,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var instruction = paymentService.GetInstruction(payment);
             var reservations = cart.RsvNoList.Select(ActivityService.GetInstance().GetReservation).ToList();
             Console.WriteLine("Sending Bank Transfer Instruction Email...");
-            mailService.SendEmail(new { Payment = payment, cart.Contact, Instruction = instruction, reservations}, mailModel, "CartTransferInstructionEmail");
+            mailService.SendEmailWithTableTemplate(new { Payment = payment, cart.Contact, Instruction = instruction, reservations}, mailModel, "CartTransferInstructionEmail");
 
             Console.WriteLine("Done Processing Transfer Instruction Email for CartRecordId " + cartRecordId);
 

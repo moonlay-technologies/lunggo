@@ -41,12 +41,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                 {
                     Console.WriteLine("Sending Bank Transfer Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "BankTransferInstructionEmail");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "BankTransferInstructionEmail");
                 }
                 else if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
                 {
                     Console.WriteLine("Sending Virtual Account Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmail");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "VirtualAccountInstructionEmail");
                 }
 
                 Console.WriteLine("Done Processing Transfer Instruction Email for RsvNo " + rsvNo);
@@ -76,12 +76,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                 {
                     Console.WriteLine("Sending Bank Transfer Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "BankTransferInstructionEmailHotel");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "BankTransferInstructionEmailHotel");
                 }
                 else if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
                 {
                     Console.WriteLine("Sending Virtual Account Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmailHotel");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "VirtualAccountInstructionEmailHotel");
                 }
 
                 Console.WriteLine("Done Processing Transfer Instruction Email for RsvNo " + rsvNo);

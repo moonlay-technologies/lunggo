@@ -82,6 +82,7 @@
     <Reference Include="System.Spatial">
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,6 +92,7 @@
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
     <Compile Include="HtmlTemplateGenerator.cs" />
+    <None Include="HtmlTemplate\ActivityEVoucherAndInvoiceEmail.cshtml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -879,6 +881,7 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="HtmlTemplate\ActivityInvoice.cshtml" />
     <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
     <None Include="HtmlTemplate\FlightDepositWarningNotifEmail.cshtml" />
     <None Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
@@ -912,6 +915,7 @@
     <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
+    <None Include="HtmlTemplate\ActivityETicket.cshtml" />
     <Content Include="Template\Web.Debug.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

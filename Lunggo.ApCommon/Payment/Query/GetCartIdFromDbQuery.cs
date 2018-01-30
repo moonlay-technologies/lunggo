@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lunggo.ApCommon.Activity.Database.Query
+namespace Lunggo.ApCommon.Payment.Query
 {
-    public class GetActivityListFromWishlistDbQuery : DbQueryBase<GetActivityListFromWishlistDbQuery, long>
+    internal class GetCartIdFromDbQuery : DbQueryBase<GetCartIdFromDbQuery, string>
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "Select DISTINCT ActivityId From Wishlist WHERE UserId = @user";
+            return "SELECT DISTINCT CartId FROM Carts WHERE RsvNoList = @RsvNo";
         }
     }
 }

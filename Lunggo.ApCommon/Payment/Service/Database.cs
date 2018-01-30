@@ -195,5 +195,15 @@ namespace Lunggo.ApCommon.Payment.Service
                 return payments;
             }
         }
+
+        private string GetCartIdByRsvNoFromDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var cartId = GetCartIdFromDbQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).First();
+                return cartId;
+            }
+        }
+        
     }
 }

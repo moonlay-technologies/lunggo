@@ -34,7 +34,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = name
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(emailData, mailModel, "contactusemail");
+            mailService.SendEmailWithTableTemplate(emailData, mailModel, "contactusemail");
             Console.WriteLine("Done Sending Notification Email...");
         }
     }
