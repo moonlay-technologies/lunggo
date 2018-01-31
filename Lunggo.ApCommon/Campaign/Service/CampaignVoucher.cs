@@ -18,6 +18,7 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Http;
+using Lunggo.ApCommon.Activity.Service;
 
 namespace Lunggo.ApCommon.Campaign.Service
 {
@@ -74,7 +75,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var paymentDetails = PaymentService.GetInstance().GetPayment(trxId);
             if (paymentDetails == null)
             {
-                paymentDetails = PaymentDetails.GetFromDb(rsvNo);
+                paymentDetails = PaymentDetails.GetFromDb(trxId);
                 if (paymentDetails == null)
                 {
                     response.VoucherStatus = VoucherStatus.ReservationNotFound;
@@ -107,325 +108,337 @@ namespace Lunggo.ApCommon.Campaign.Service
             //else
             //    rsv = HotelService.GetInstance().GetReservation(rsvNo);
 
-            var cost = rsv.GetTotalSupplierPrice();
-            if (voucher.MaxBudget.HasValue &&
-                (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr * 0.97M))
+            if (isRsv)
             {
-                response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
-                return response;
-            }
+                ReservationBase rsv;
+                if (trxId.StartsWith("1"))
+                    rsv = FlightService.GetInstance().GetReservation(trxId);
+                else if (trxId.StartsWith("2"))
+                    rsv = HotelService.GetInstance().GetReservation(trxId);
+                else
+                    rsv = ActivityService.GetInstance().GetReservation(trxId);
 
-            //////////////  HARDCODED VALIDATION /////////////////
-
-            if (voucher.CampaignId == 66 || voucher.CampaignName == "Good Monday") // Good Monday
-            {
-                var valid = true;
-
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-                var platform = Client.GetPlatformType(clientId);
-                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                var cost = rsv.GetTotalSupplierPrice();
+                if (voucher.MaxBudget.HasValue &&
+                    (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr * 0.97M))
                 {
-                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
-                    valid = false;
+                    response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+                    return response;
                 }
 
+                //////////////  HARDCODED VALIDATION /////////////////
 
-                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                    .Any(t =>
-                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                if (voucher.CampaignId == 66 || voucher.CampaignName == "Good Monday") // Good Monday
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
+                    var valid = true;
+
+                    var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                    var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                    var platform = Client.GetPlatformType(clientId);
+                    if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    {
+                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        valid = false;
+                    }
 
 
-                if (!(new[] { "JKT", "CGK", "HLP", "SRG", "JOG", "TNJ", "SUB" }
-                    .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                var airlines =
-                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .SelectMany(t => t.Segments)
-                        .Select(s => s.AirlineCode);
-                foreach (var airline in airlines)
-                {
-                    if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                    if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .Any(t =>
+                            FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                            FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     {
                         response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
                     }
-                }
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Monday)
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
 
 
-                if (!valid)
-                {
-                    return response;
-                }
-            }
-
-            if (voucher.CampaignId == 71 || voucher.CampaignName == "Selasa Spesial") // Selasa Spesial
-            {
-                var valid = true;
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Tuesday)
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                if (!valid)
-                {
-                    return response;
-                }
-            }
-
-            if (voucher.CampaignId == 67 || voucher.CampaignName == "Promo Rabu") // Promo Rabu
-            {
-                var valid = true;
-
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-                var platform = Client.GetPlatformType(clientId);
-                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
-                {
-                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
-                    valid = false;
-                }
-
-
-                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                    .Any(t =>
-                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                var airlines =
-                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .SelectMany(t => t.Segments)
-                        .Select(s => s.AirlineCode);
-                foreach (var airline in airlines)
-                {
-                    if (!(new[] { "SJ", "IN" }.Contains(airline)))
+                    if (!(new[] { "JKT", "CGK", "HLP", "SRG", "JOG", "TNJ", "SUB" }
+                        .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
                     {
                         response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
                     }
-                }
-
-                if (paymentDetails.Method != PaymentMethod.BankTransfer &&
-                    paymentDetails.Method != PaymentMethod.VirtualAccount &&
-                    paymentDetails.Method != PaymentMethod.Undefined)
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Wednesday)
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
 
 
-                if (!valid)
-                {
-                    return response;
-                }
-            }
+                    var airlines =
+                        (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                            .SelectMany(t => t.Segments)
+                            .Select(s => s.AirlineCode);
+                    foreach (var airline in airlines)
+                    {
+                        if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                        {
+                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            valid = false;
+                        }
+                    }
 
-            if (voucher.CampaignId == 68 || voucher.CampaignName == "Kamis Ceria") // Kamis Ceria
-            {
-                var valid = true;
-
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-                var platform = Client.GetPlatformType(clientId);
-                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
-                {
-                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
-                    valid = false;
-                }
-
-
-                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                    .Any(t =>
-                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                if (!(new[] { "DPS", "LOP", "LBJ", "BTH", "BTJ" }
-                    .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                var airlines =
-                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .SelectMany(t => t.Segments)
-                        .Select(s => s.AirlineCode);
-                foreach (var airline in airlines)
-                {
-                    if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Monday)
                     {
                         response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
                     }
+
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
                 }
 
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Thursday)
+                if (voucher.CampaignId == 71 || voucher.CampaignName == "Selasa Spesial") // Selasa Spesial
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
+                    var valid = true;
 
-
-                if (!valid)
-                {
-                    return response;
-                }
-            }
-
-            if (voucher.CampaignId == 72 || voucher.CampaignName == "Jumat Hemat") // Jumat Hemat
-            {
-                var valid = true;
-
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var userId = identity.Name == "anonymous" ? null : identity.GetUser().Id;
-                var userEmail = identity.Name == "anonymous" ? null : identity.GetEmail();
-                var rsvs1 = FlightService.GetInstance()
-                    .GetOverviewReservationsByUserIdOrEmail(userId, contact.Email, null, null, null, null)
-                    .Where(r => r.Payment.Status == PaymentStatus.Settled);
-                var rsvs2 = FlightService.GetInstance()
-                    .GetOverviewReservationsByUserIdOrEmail(userId, userEmail, null, null, null, null)
-                    .Where(r => r.Payment.Status == PaymentStatus.Settled);
-                if (!rsvs1.Concat(rsvs2).Any())
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Friday)
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-                if (!valid)
-                {
-                    return response;
-                }
-            }
-
-            if (voucher.CampaignId == 69 || voucher.CampaignName == "Jalan-Jalan Sabtu") // Jalan-Jalan Sabtu
-            {
-                var valid = true;
-
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-                var platform = Client.GetPlatformType(clientId);
-                if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
-                {
-                    response.VoucherStatus = VoucherStatus.PlatformNotEligible;
-                    valid = false;
-                }
-
-
-                if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                    .Any(t =>
-                        FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
-                        FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                var airlines =
-                    (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
-                        .SelectMany(t => t.Segments)
-                        .Select(s => s.AirlineCode);
-                foreach (var airline in airlines)
-                {
-                    if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Tuesday)
                     {
                         response.VoucherStatus = VoucherStatus.ReservationNotEligible;
                         valid = false;
                     }
+
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
                 }
 
-
-                if (paymentDetails.Method != PaymentMethod.BankTransfer &&
-                    paymentDetails.Method != PaymentMethod.VirtualAccount &&
-                    paymentDetails.Method != PaymentMethod.Undefined)
+                if (voucher.CampaignId == 67 || voucher.CampaignName == "Promo Rabu") // Promo Rabu
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
+                    var valid = true;
+
+                    var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                    var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                    var platform = Client.GetPlatformType(clientId);
+                    if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    {
+                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        valid = false;
+                    }
+
+
+                    if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .Any(t =>
+                            FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                            FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    var airlines =
+                        (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                            .SelectMany(t => t.Segments)
+                            .Select(s => s.AirlineCode);
+                    foreach (var airline in airlines)
+                    {
+                        if (!(new[] { "SJ", "IN" }.Contains(airline)))
+                        {
+                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            valid = false;
+                        }
+                    }
+
+                    if (paymentDetails.Method != PaymentMethod.BankTransfer &&
+                        paymentDetails.Method != PaymentMethod.VirtualAccount &&
+                        paymentDetails.Method != PaymentMethod.Undefined)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Wednesday)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
                 }
 
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
+                if (voucher.CampaignId == 68 || voucher.CampaignName == "Kamis Ceria") // Kamis Ceria
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
+                    var valid = true;
+
+                    var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                    var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                    var platform = Client.GetPlatformType(clientId);
+                    if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    {
+                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        valid = false;
+                    }
+
+
+                    if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .Any(t =>
+                            FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                            FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    if (!(new[] { "DPS", "LOP", "LBJ", "BTH", "BTJ" }
+                        .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    var airlines =
+                        (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                            .SelectMany(t => t.Segments)
+                            .Select(s => s.AirlineCode);
+                    foreach (var airline in airlines)
+                    {
+                        if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                        {
+                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            valid = false;
+                        }
+                    }
+
+
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Thursday)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
                 }
 
-
-                if (!valid)
+                if (voucher.CampaignId == 72 || voucher.CampaignName == "Jumat Hemat") // Jumat Hemat
                 {
-                    return response;
+                    var valid = true;
+
+                    var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                    var userId = identity.Name == "anonymous" ? null : identity.GetUser().Id;
+                    var userEmail = identity.Name == "anonymous" ? null : identity.GetEmail();
+                    var rsvs1 = FlightService.GetInstance()
+                        .GetOverviewReservationsByUserIdOrEmail(userId, contact.Email, null, null, null, null)
+                        .Where(r => r.Payment.Status == PaymentStatus.Settled);
+                    var rsvs2 = FlightService.GetInstance()
+                        .GetOverviewReservationsByUserIdOrEmail(userId, userEmail, null, null, null, null)
+                        .Where(r => r.Payment.Status == PaymentStatus.Settled);
+                    if (!rsvs1.Concat(rsvs2).Any())
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Friday)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
                 }
+
+                if (voucher.CampaignId == 69 || voucher.CampaignName == "Jalan-Jalan Sabtu") // Jalan-Jalan Sabtu
+                {
+                    var valid = true;
+
+                    var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                    var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+                    var platform = Client.GetPlatformType(clientId);
+                    if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
+                    {
+                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        valid = false;
+                    }
+
+
+                    if ((rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                        .Any(t =>
+                            FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
+                            FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    var airlines =
+                        (rsv as FlightReservation).Itineraries.SelectMany(i => i.Trips)
+                            .SelectMany(t => t.Segments)
+                            .Select(s => s.AirlineCode);
+                    foreach (var airline in airlines)
+                    {
+                        if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
+                        {
+                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            valid = false;
+                        }
+                    }
+
+
+                    if (paymentDetails.Method != PaymentMethod.BankTransfer &&
+                        paymentDetails.Method != PaymentMethod.VirtualAccount &&
+                        paymentDetails.Method != PaymentMethod.Undefined)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
+                }
+
+                if (voucher.CampaignId == 73 || voucher.CampaignName == "Sunday Funday") // Sunday Funday
+                {
+                    var valid = true;
+
+                    if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Sunday)
+                    {
+                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        valid = false;
+                    }
+
+
+                    if (!valid)
+                    {
+                        return response;
+                    }
+                }
+
+                //////////////  HARDCODED VALIDATION /////////////////
+
             }
-
-            if (voucher.CampaignId == 73 || voucher.CampaignName == "Sunday Funday") // Sunday Funday
-            {
-                var valid = true;
-
-                if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Sunday)
-                {
-                    response.VoucherStatus = VoucherStatus.ReservationNotEligible;
-                    valid = false;
-                }
-
-
-                if (!valid)
-                {
-                    return response;
-                }
-            }
-
-            //////////////  HARDCODED VALIDATION /////////////////
 
             response.VoucherStatus = validationStatus;
             return response;
         }
 
-        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode, PaymentDetails paymentDetails = null)
+        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
         {
-            var response = ValidateVoucherRequest(rsvNo, voucherCode, paymentDetails);
+            var response = ValidateVoucherRequest(rsvNo, voucherCode);
             if (response.VoucherStatus == VoucherStatus.Success)
             {
                 var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);

@@ -20,6 +20,7 @@ using BookingStatusCd = Lunggo.ApCommon.Activity.Constant.BookingStatusCd;
 using System.Data.SqlClient;
 using System.Text;
 using System.Globalization;
+using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -276,6 +277,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         var payment = GetReservationFromDb(rsvNo).Payment;
                         var bookingDetail = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
                         bookingDetail.BookingDetail.RsvNo = rsvNo;
+                        bookingDetail.BookingDetail.PaymentStatus = PaymentStatusCd.Mnemonic(payment.Status);
                         bookingDetails.Add(bookingDetail.BookingDetail);
                         totalOriginalPrice += payment.OriginalPriceIdr;
                         totalDiscount += payment.DiscountNominal;

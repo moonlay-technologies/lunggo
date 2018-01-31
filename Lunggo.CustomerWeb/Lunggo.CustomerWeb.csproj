@@ -1205,6 +1205,7 @@
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
     <Content Include="Assets\teaserpage\cssDesktop\full.css" />
+    <Content Include="Assets\teaserpage\cssDesktop\style-pdf.css" />
     <Content Include="Assets\teaserpage\cssDesktop\style.css" />
     <Content Include="Assets\teaserpage\cssMobile\full.css" />
     <Content Include="Assets\teaserpage\cssMobile\style.css" />

@@ -54,6 +54,7 @@ namespace Lunggo.Worker.EticketHandler
 
             Trace.WriteLine("Generating EVoucher File for RsvNo " + rsvNo + "...");
             sw.Start();
+            converter.Options.AutoFitWidth = HtmlToPdfPageFitMode.AutoFit;
             var eVoucherFile = converter.ConvertHtmlString(eVoucherTemplate).Save();
             sw.Stop();
             Trace.WriteLine("Done Generating Voucher File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");

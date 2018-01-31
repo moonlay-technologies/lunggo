@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Product.Model;
+using Lunggo.ApCommon.Payment.Constant;
 
 namespace Lunggo.ApCommon.Activity.Model
 {
@@ -91,6 +92,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorEmail { get; set; }
         [JsonProperty("operatorPhone", NullValueHandling = NullValueHandling.Ignore)]
         public string OperatorPhone { get; set; }
+        [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
+        public string PaymentStatus { get; set; }
     }
 
     public class ActivityPackageReservation

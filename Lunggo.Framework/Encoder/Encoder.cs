@@ -54,7 +54,7 @@ namespace Lunggo.Framework.Encoder
             }
         }
 
-        internal static string Hash(this string plain)
+        public static string Sha1Base64Encode(this string input)
         {
             var data = Encoding.UTF8.GetBytes(input);
             using (SHA1 shaM = new SHA1Managed())

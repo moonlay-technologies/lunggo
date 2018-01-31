@@ -3,192 +3,105 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Untitled Document</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background-color: #fff;
-        }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-        .top-header {
-            margin: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            padding-top: 10px;
-        }
+    <title></title>
 
-        .btn {
-            border-radius: 5px;
-            background-color: #f26522;
-            padding: 10px;
-            color: #fff;
-            width: 400px;
-            margin: 0 auto;
-            margin-top: 20px;
-        }
+    <!-- Bootstrap core CSS -->
+    <link href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserpage/vendor/bootstrap/css/bootstrap.css")" rel="stylesheet" />
 
-            .btn:hover {
-                background: #D0581F;
-            }
-
-            .btn a {
-                color: inherit;
-                text-decoration: none;
-            }
-
-        tr {
-            padding: 0;
-            border: none;
-        }
-    </style>
+    <!-- Custom styles for this template -->
+    <link href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserpage/cssDesktop/style-pdf.css")" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
 
 </head>
 
 <body>
 
-    <table style="width:100%; max-width: 600px; padding:0 15px; margin:0 auto; background-color:#fff; " cellpadding="0" cellspacing="0">
 
-        <tr>
-            <td></td>
-            <td style="background-color:#f8f8f8; text-align:center ; padding: 20px 0;"><img src="http://i66.tinypic.com/35ltef5.png" /></td>
-            <td></td>
-        </tr>
+    <!-- Page Content -->
+    <div class="container-pdf">
+        <header>
+            <div class="tag">
+                <div class="text-tag">Voucher</div>
+            </div>
+            <div class="date">
+                No. Pesanan: @Model.ActivityReservation.RsvNo
+            </div>
+            <div class="clearfix"></div>
+            <div class="container-logo">
+                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/logo.png")">
+            </div>
+        </header>
 
-        <tr style="font-weight:300;">
-            <td></td>
-            <td style="padding: 30px 0; padding-top:30px; text-align:center; color:#7d7e7e;font-size: 15px;">
-                Hai <span style="color:#2A9394;"><strong>@Model.ActivityReservation.Contact.Name</strong></span>,<br />
-                Selamat, voucher kamu telah terbit
-            </td>
-            <td></td>
-        </tr>
+        <main class="clearfix">
+            <div class="img-activity" style="width: 400px; height: 400px; background: url('@Model.BookingDetail.MediaSrc'); background-size: cover; float:left; "></div>
+            <div class="right-content">
+                <div class="judul-activity">@Model.BookingDetail.Name</div>
+                <div class="alamat-activity">@Model.BookingDetail.Address</div>
+                <div class="container-barcode">
+                    <div class="barcode"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/barcode.jpg")"></div>
+                    <div class="kode-barcode">Kode voucher: @Model.BookingDetail.TicketNumber</div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="container-detail-pesanan">
+                <div class="category">Detail Pesanan</div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Nama Pemesan:</div>
+                    <div class="jawaban">@Model.ActivityReservation.Contact.Name</div>
+                </div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Nama Activity:</div>
+                    <div class="jawaban">@Model.BookingDetail.Name</div>
+                </div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Tanggal Activity:</div>
+                    <div class="jawaban">@Model.BookingDetail.Date.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                </div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Jumlah Peserta:</div>
+                    <div class="jawaban">
+                        @string.Join(", ", Model.BookingDetail.PaxCount.Select(pax => pax.Count + " " + pax.Type))
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="container-catatan">
+                <p>Catatan khusus:</p>
+                <ul>
+                    <li>Pee in human's bed until he cleans the</li>
+                    <li>If human is on laptop sit on the keyboard</li>
+                    <li>let me out i'm lonely outside, let me in i can't make up my mind whether to go in or out, guess</li>
+                </ul>
+            </div>
+        </main>
 
-        <tr style="font-weight:300;">
-            <td></td>
-            <td style=" margin:10px 0; width:100%; background: #ececec; height: 1px"></td>
-            <td></td>
-        </tr>
+        <footer>
+            <div class="container-footer">
+                <a href=“#”>www.travorama.com</a>
+                <a href=“#”>|</a>
+                <a href=“#”>021-12324456</a>
+                <a href=“#”>|</a>
+                <a href=“#”>cs@travorama.com</a>
 
+            </div>
+        </footer>
 
-        <tr style="font-weight:300;">
-            <td></td>
-            <td style="padding: 30px 0 30px 20px; text-align:left; font-size:14px;">
-                <table>
-                    <tr>
-                        <td style="width: 35%; vertical-align:top;"><img style="width:200px" src="http://i66.tinypic.com/qno6ll.jpg"></td>
-                        <td style="vertical-align:top; padding-left: 15px; width: 65%; text-align: center;">
-                            <p style="font-weight: 500; font-size: 22px; color:#323232; margin:0; margin-bottom: 10px; text-align: left">@Model.BookingDetail.Name</p>
-                            <p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 20px ">@Model.BookingDetail.Address</p>
-                            <img style="width:70px; text-align: center;" src="http://i65.tinypic.com/qpjm1j.jpgs">
-                            <p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; margin:0; margin-top: 5px ">Kode voucher: @Model.BookingDetail.TicketNumber</p>
-
-                        </td>
-                        <td></td>
-                    </tr>
-                </table>
-            </td>
-            <td></td>
-        </tr>
-
-        <!--     <tr style="font-weight:300;">
-                <td ></td>
-                <td style=" margin:10px 0; width:100%; background: #ececec; height: 1px"></td>
-                <td></td>
-            </tr> -->
-
-        <tr>
-            <td></td>
-            <td style="padding-bottom:15px; padding-top:30px; text-align:center; color:#7d7e7e; font-size: 15px;">
-                <p style="font-weight: 500; font-size: 22px; color:#323232; margin:0; margin-bottom: 20px; text-align: left; border-bottom:1px solid #ececec; padding-bottom:15px">Detail Pesanan</p>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="width:30%"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 15px">Nama Pemesan:</p></td>
-                        <td style="width:30%"></td>
-                        <td style="width:30%;"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: right; margin:0; margin-bottom: 15px">@Model.ActivityReservation.Contact.Name</p></td>
-                    </tr>
-                    <tr>
-                        <td style="width:30%"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 15px">Nama activity:</p></td>
-                        <td style="width:30%"></td>
-                        <td style="width:30%;"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: right; margin:0; margin-bottom: 15px">@Model.BookingDetail.Name</p></td>
-                    </tr>
-                    <tr>
-                        <td style="width:30%"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 15px">Tanggal Activity:</p></td>
-                        <td style="width:30%"></td>
-                        <td style="width:30%;"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: right; margin:0; margin-bottom: 15px">@Model.BookingDetail.Date</p></td>
-                    </tr>
-                    <tr>
-                        <td style="width:30%"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 15px">Jumlah Peserta:</p></td>
-                        <td style="width:30%"></td>
-                        <td style="width:30%;"><p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: right; margin:0; margin-bottom: 15px">@foreach (var pax in Model.BookingDetail.PaxCount) { @(pax.Count + " " + pax.Type + ", ")} </p></td>
-                    </tr>
-                </table>
-            </td>
-            <td></td>
-        </tr>
-
-        <tr style="font-weight:400;">
-            <td></td>
-            <td style=" margin:10px 0; width:100%; background: #ececec; height: 1px"></td>
-            <td></td>
-        </tr>
-
-        <tr style="font-weight:300;">
-            <td></td>
-            <td style="padding-top: 30px; padding-bottom: 50px">
-                <p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 10px">Catatan khusus: </p>
-                <p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 10px">1. Pee in human's bed until he cleans the</p>
-                <p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 10px">1. Pee in human's bed until he cleans the</p>
-                <p style="color:#7d7e7e; line-height: 1.4; font-size: 14px; text-align: left; margin:0; margin-bottom: 10px">1. Pee in human's bed until he cleans the</p>
-            </td>
-            <td></td>
-        </tr>
-        <tr style="background-color:#f8f8f8; text-align:center;">
-            <td></td>
-            <td style="width:100%; padding-top:30px;">
-                <a href="#" target="_blank" " style="margin-right: 20px"><img width="25px" src="http://i67.tinypic.com/2dslfnb.jpg"></a>
-                <a href="#" target="_blank" " style="margin-right: 20px"><img width="25px" src="http://i64.tinypic.com/no7uaf.png"></a>
-                <a href="#" target="_blank" " style="margin-right: 20px"><img width="25px" src="http://i66.tinypic.com/v7v0h5.jpg"></a>
-            </td>
-            <td></td>
-        </tr>
-        <tr style="background-color:#f8f8f8; text-align:center;">
-            <td></td>
-            <td style="width:100%; padding-bottom:10px; padding-top:20px;">
-                <p style="color:#7d7e7e; line-height: 1.4; font-size: 13px; text-align: center; width: 400px; margin: 0 auto; margin-bottom: 15px">
-                    Hate dog behind the couch a nice warm laptop for me to sit on but sleep so chase imaginary bugs
-                    <a href="#" style="color: #fb536b;">Unsubscribe</a>
-                </p>
-            </td>
-            <td></td>
-        </tr>
-        <tr style="background-color:#f8f8f8; text-align:center;">
-            <td></td>
-            <td style="width:100%; padding-bottom: 20px;">
-                <a href="#" target="_blank" " style="margin-right: 20px"><img width="150px" src="http://i66.tinypic.com/2ds4m6s.png"></a>
-                <a href="#" target="_blank" " style="margin-right: 20px"><img width="150px" src="http://i65.tinypic.com/5ybuox.png"></a>
-            </td>
-            <td></td>
-        </tr>
-        <tr style="background-color:#f8f8f8; text-align:center;">
-            <td></td>
-            <td style="width:100%; padding-bottom:20px; padding-top:20px; border-top: 1px solid #eceaea;">
-                <a href="#" target="_blank" style="color:#fb536c; text-decoration: none; font-weight: 400; margin-right: 20px; font-size: 14px; ">www.travorama.com</a>
-                <a style="color:#fb536c; text-decoration: none; font-weight: 400; margin-right: 20px; font-size: 14px;">021-1234567</a>
-                <a href="mailto:ics@travorama.com" target="_blank" style="color:#fb536c; text-decoration: none; font-weight: 400; font-size: 14px; ">cs@travorama.com</a>
-            </td>
-            <td></td>
-        </tr>
-    </table>
-
+    </div>
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/Assets/teaserpage/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>
-<!-- <p style="color:#229699; text-align:center;">Complete Your Registration Process</p> -->
 
+</html>

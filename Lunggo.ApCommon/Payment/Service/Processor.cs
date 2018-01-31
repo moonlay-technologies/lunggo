@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerEligible;
+                    paymentDetails.FailureReason = FailureReason.VoucherNoLongerAvailable;
                     return paymentDetails;
                 }
                 paymentDetails.FinalPriceIdr -= campaign.TotalDiscount;
@@ -132,7 +132,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             if (!string.IsNullOrEmpty(discountCode))
             {
-                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode, paymentDetails);
+                var campaign = CampaignService.GetInstance().UseVoucherRequest(rsvNo, discountCode);
                 if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;

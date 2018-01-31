@@ -60,7 +60,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             if (paymentDetails.Status == PaymentStatus.Failed)
             {
-                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerEligible)
+                if (paymentDetails.FailureReason == FailureReason.VoucherNoLongerAvailable)
                     return new CheckOutApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,

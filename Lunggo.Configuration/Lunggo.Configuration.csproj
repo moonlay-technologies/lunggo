@@ -92,7 +92,7 @@
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
     <Compile Include="HtmlTemplateGenerator.cs" />
-    <None Include="HtmlTemplate\ActivityEVoucherAndInvoiceEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityEVoucherAndInvoiceEmail.cshtml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -962,40 +962,40 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="HtmlTemplate\ActivityInvoice.cshtml" />
-    <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
-    <None Include="HtmlTemplate\FlightDepositWarningNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\ActivityIssueTicketNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelInternalFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
-    <None Include="HtmlTemplate\HotelVoucher.cshtml" />
-    <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightSaySorryFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\ImlekPromoEmail.cshtml" />
-    <None Include="HtmlTemplate\GetCalendarEmail.cshtml" />
-    <None Include="HtmlTemplate\RegisterSubscribeEmail.cshtml" />
-    <None Include="HtmlTemplate\ReservationNotice.cshtml" />
-    <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\CartTransferInstructionEmail.cshtml" />
-    <None Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
-    <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
-    <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
-    <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
-    <None Include="HtmlTemplate\Subscribe.cshtml" />
-    <None Include="HtmlTemplate\Newsletter.cshtml" />
-    <None Include="HtmlTemplate\VoucherEmail.cshtml" />
-    <None Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
-    <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
+    <Content Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <Content Include="HtmlTemplate\FlightDepositWarningNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityIssueTicketNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelInternalFailedIssueNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelInvoice.cshtml" />
+    <Content Include="HtmlTemplate\HotelVoucher.cshtml" />
+    <Content Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\ContactUsEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightSaySorryFailedIssueNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\ImlekPromoEmail.cshtml" />
+    <Content Include="HtmlTemplate\GetCalendarEmail.cshtml" />
+    <Content Include="HtmlTemplate\RegisterSubscribeEmail.cshtml" />
+    <Content Include="HtmlTemplate\ReservationNotice.cshtml" />
+    <Content Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <Content Include="HtmlTemplate\CartTransferInstructionEmail.cshtml" />
+    <Content Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
+    <Content Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
+    <Content Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
+    <Content Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
+    <Content Include="HtmlTemplate\Subscribe.cshtml" />
+    <Content Include="HtmlTemplate\Newsletter.cshtml" />
+    <Content Include="HtmlTemplate\VoucherEmail.cshtml" />
+    <Content Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
+    <Content Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
-    <None Include="HtmlTemplate\ActivityEVoucher.cshtml" />
+    <Content Include="HtmlTemplate\ActivityEVoucher.cshtml" />
     <Content Include="Template\Web.Debug.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1040,11 +1040,11 @@
     <Content Include="Config\Common\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="HtmlTemplate\FlightInvoice.cshtml" />
+    <Content Include="HtmlTemplate\FlightInvoice.cshtml" />
     <Content Include="Template\JsConfig.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="HtmlTemplate\FlightEticket.cshtml" />
+    <Content Include="HtmlTemplate\FlightEticket.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Activity.Model.Logic;
+﻿using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Service;
@@ -45,7 +46,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             {
                 RecipientList = new[] { summary.Contact.Email },
                 BccList = new[] { "maillog.travorama@gmail.com" },
-                Subject = envPrefix + "[Travorama] E-tiket Anda - No. Pemesanan " + summary.RsvNo,
+                Subject = envPrefix + "[Travorama] E-Voucher Anda - No. Pemesanan " + summary.RsvNo,
                 FromMail = "booking@travorama.com",
                 FromName = "Travorama",
                 ListFileInfo = new List<FileInfo>
@@ -64,8 +65,11 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                     }
                 }
             };
+            var activityEVoucher = new ActivityEVoucher();
+            activityEVoucher.ActivityReservation = summary;
+            activityEVoucher.BookingDetail = activity.GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail;
             Console.WriteLine("Sending Flight Eticket Email...");
-            mailService.SendEmailWithTableTemplate(summary, mailModel, "ActivityEVoucherAndInvoiceEmail");
+            mailService.SendEmailWithTableTemplate(activityEVoucher, mailModel, "ActivityEVoucherAndInvoiceEmail");
             //FlightService.GetInstance().UpdateIssueProgress(rsvNo, "Eticket Email Sent. Ticket Issuance Complete.");
 
             Console.WriteLine("Done Processing Flight Eticket Email for RsvNo " + rsvNo);
