@@ -52,9 +52,16 @@ namespace Lunggo.ApCommon.Activity.Model
         public List<string> RequiredPaxData { get; set; }
         [JsonProperty("package", NullValueHandling = NullValueHandling.Ignore)]
         public List<ActivityPackage> Package { get; set; }
+        [JsonProperty("operatorName", NullValueHandling = NullValueHandling.Ignore)]
+        public string OperatorName { get; set; }
+        [JsonProperty("operatorEmail", NullValueHandling = NullValueHandling.Ignore)]
+        public string OperatorEmail { get; set; }
+        [JsonProperty("operatorPhone", NullValueHandling = NullValueHandling.Ignore)]
+        public string OperatorPhone { get; set; }
         [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
         public bool Wishlisted { get; set; }
         
+
 
     }
     public class ActivityDetail

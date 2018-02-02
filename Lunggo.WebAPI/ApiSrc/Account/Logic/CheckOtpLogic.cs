@@ -37,17 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var input = PreProcess(apiRequest);
-
-
-            if (AccountService.GetInstance().CheckOtp(input) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_NOT_VALID"
-                };
-            }            
+            var input = PreProcess(apiRequest);    
 
             if (AccountService.GetInstance().CheckExpireTime(input) == false)
             {
@@ -55,6 +45,15 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_OTP_EXPIRED"
+                };
+            }
+
+            if (AccountService.GetInstance().CheckOtp(input) == false)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_OTP_NOT_VALID"
                 };
             }
 

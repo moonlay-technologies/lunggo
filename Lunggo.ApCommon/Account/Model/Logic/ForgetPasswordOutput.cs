@@ -12,5 +12,6 @@ namespace Lunggo.ApCommon.Account.Model.Logic
         public string PhoneNumber { get; set; }
         public string Otp { get; set; }
         public DateTime ExpireTime { get; set; }
+        public bool isSuccess { get; set; }
     }
 }

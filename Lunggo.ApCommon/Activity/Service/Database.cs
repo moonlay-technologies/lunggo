@@ -266,6 +266,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 foreach (var cartId in cartIdList)
                 {
+                    PaymentStatus paymentStatusEnum = PaymentStatus.Undefined;
                     decimal totalOriginalPrice = 0;
                     decimal totalFinalPrice = 0;
                     decimal totalDiscount = 0;
@@ -277,13 +278,14 @@ namespace Lunggo.ApCommon.Activity.Service
                         var payment = GetReservationFromDb(rsvNo).Payment;
                         var bookingDetail = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
                         bookingDetail.BookingDetail.RsvNo = rsvNo;
-                        bookingDetail.BookingDetail.PaymentStatus = PaymentStatusCd.Mnemonic(payment.Status);
+                        paymentStatusEnum = payment.Status;
                         bookingDetails.Add(bookingDetail.BookingDetail);
                         totalOriginalPrice += payment.OriginalPriceIdr;
                         totalDiscount += payment.DiscountNominal;
                         totalUniqueCode += payment.UniqueCode;
                         totalFinalPrice += payment.FinalPriceIdr;
                     }
+                    var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
                     var cartList = new CartList
                     {
                         CartId = cartId,
@@ -291,7 +293,8 @@ namespace Lunggo.ApCommon.Activity.Service
                         TotalOriginalPrice = totalOriginalPrice,
                         TotalDiscount = totalDiscount,
                         TotalUniqueCode = totalUniqueCode,
-                        TotalFinalPrice = totalFinalPrice
+                        TotalFinalPrice = totalFinalPrice,
+                        PaymentStatus = paymentStatus
                     };
                     savedBookings.Add(cartList);
                 }

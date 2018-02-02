@@ -45,6 +45,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 Otp = input.Otp
             };
 
+            if (AccountService.GetInstance().CheckExpireTime(checkOtpInput) == false)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_OTP_EXPIRED"
+                };
+            }
+
+
             if (AccountService.GetInstance().CheckOtp(checkOtpInput) == false)
             {
                 return new ApiResponseBase
@@ -54,14 +64,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            if (AccountService.GetInstance().CheckExpireTime(checkOtpInput) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_EXPIRED"
-                };
-            }
 
             var userIds = AccountService.GetInstance().GetIdsByPhoneNumber(input);
             foreach (var userId in userIds)

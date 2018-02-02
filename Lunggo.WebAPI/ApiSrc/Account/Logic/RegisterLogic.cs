@@ -30,13 +30,22 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             
             var foundUser = userManager.FindByEmail(request.Email);
             var foundUserByPhone = userManager.FindByName(request.Phone);
-            var isUserAlreadyExist = foundUser != null || foundUserByPhone != null;
-            if (isUserAlreadyExist)
+
+            if (foundUser != null)
             {
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_ALREADY_EXIST"
+                    ErrorCode = "ERR_EMAIL_ALREADY_EXIST"
+                };
+            }
+
+            if (foundUserByPhone != null)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_PHONENUMBER_ALREADY_EXIST"
                 };
             }
 

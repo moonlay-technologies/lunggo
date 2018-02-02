@@ -24,6 +24,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_INVALID_REQUEST"
+
+                };
+            }
+            
+            if (AccountService.GetInstance().CheckTimerSms(apiRequest.PhoneNumber, out int? resendCooldown) == false)
+            {
+                return new ForgetPasswordApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_TOO_MANY_SEND_SMS_IN_A_TIME",
+                    ResendCooldown = resendCooldown
                 };
             }
 
@@ -50,9 +61,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERR_PHONENUMBER_NOT_REGISTERED"
                 };
             }
-
-
-
+            
             var output = AccountService.GetInstance().ForgetPassword(input);
             var apiResponse = AssambleApiResponse(output);
             return apiResponse;
@@ -68,6 +77,14 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
         public static ForgetPasswordApiResponse AssambleApiResponse(ForgetPasswordOutput output)
         {
+            if (output.isSuccess == false)
+            {
+                return new ForgetPasswordApiResponse
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERR_INTERNAL"
+                };
+            }
             return new ForgetPasswordApiResponse
             {
                 CountryCallCd = output.CountryCallCd,

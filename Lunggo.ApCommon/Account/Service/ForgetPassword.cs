@@ -1,5 +1,8 @@
 ﻿using Lunggo.ApCommon.Account.Model.Logic;
+using Lunggo.ApCommon.Constant;
+using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Pattern;
+using Lunggo.Framework.Redis;
 using Lunggo.Framework.SmsGateway;
 using System;
 using System.Collections.Generic;
@@ -30,6 +33,14 @@ namespace Lunggo.ApCommon.Account.Service
         {
             
             var otp = GenerateOtp();
+            var isSendSmsSuccess = SendOtpToUser(forgetPasswordInput.PhoneNumber, otp);
+            if (isSendSmsSuccess == false)
+            {
+                return new ForgetPasswordOutput
+                {
+                    isSuccess = false
+                };
+            }
             var expireTime = DateTime.UtcNow.AddMinutes(30);
             if (CheckPhoneNumberFromResetPasswordDb(forgetPasswordInput) == false)
             {
@@ -40,14 +51,24 @@ namespace Lunggo.ApCommon.Account.Service
                 UpdateDateResetPasswordToDb(forgetPasswordInput, otp, expireTime);
             }
 
-            SendOtpToUser(forgetPasswordInput.PhoneNumber, otp);
+            
+            if(isSendSmsSuccess == false)
+            {
+                return new ForgetPasswordOutput
+                {
+                    isSuccess = false
+                };
+            }
+            InsertSmsTimeToCache(forgetPasswordInput.PhoneNumber, otp);
+
 
             return new ForgetPasswordOutput
             {
                 CountryCallCd = forgetPasswordInput.CountryCallCd,
                 PhoneNumber = forgetPasswordInput.PhoneNumber,
                 Otp = otp,
-                ExpireTime = expireTime
+                ExpireTime = expireTime,
+                isSuccess = true
             };
         }
         
@@ -75,11 +96,55 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public void SendOtpToUser (string phoneNumber, string otp)
+        public bool SendOtpToUser (string phoneNumber, string otp)
         {
             var message = "Your Otp Is : " + otp;
             var smsGateway = new SmsGateway();
             var response = smsGateway.SendSms(phoneNumber, message);
+            //if (response.Content.Contains("<text>Success</text>"))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            return true;
+        }
+
+        public void InsertSmsTimeToCache (string phoneNumber, string otp)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "ForgotPasswordSmsTimer:" + phoneNumber;
+            var redisValue = DateTime.UtcNow.AddSeconds(90).ToString();
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            redisDb.StringSet(redisKey, redisValue, TimeSpan.FromSeconds(90));
+        }
+
+        public bool CheckTimerSms(string phoneNumber, out int? resendCooldownSeconds)
+        {
+            if (phoneNumber.StartsWith("0"))
+            {
+                phoneNumber = phoneNumber.Substring(1);
+            }
+            
+            var redisService = RedisService.GetInstance();
+            var redisKey = "ForgotPasswordSmsTimer:" + phoneNumber;
+            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var result = redisDb.KeyExists(redisKey);
+            var resendCooldown = redisDb.StringGetWithExpiry(redisKey).Expiry;
+            
+            if (result == false)
+            {
+                resendCooldownSeconds = null;
+                return true;
+                
+            }
+            else
+            {
+                resendCooldownSeconds = Convert.ToInt32(resendCooldown.Value.TotalSeconds) + 30;
+                return false;              
+            }
         }
     }
 }

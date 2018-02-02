@@ -100,7 +100,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 Date = activityDetail.Date,
                 RequiredPaxData = requiredPaxData,
                 Package = activityDetail.Package,
-                Wishlisted = activityDetail.Wishlisted
+                Wishlisted = activityDetail.Wishlisted,
+                OperatorName = activityDetail.OperatorName,
+                OperatorEmail = activityDetail.OperatorEmail,
+                OperatorPhone = activityDetail.OperatorPhone
             };
 
             return convertedActivity;
@@ -218,5 +221,30 @@ namespace Lunggo.ApCommon.Activity.Service
             return RsvDisplayStatus.Undefined;
         }
 
+
+        public static string PaymentStatusConversion (PaymentStatus paymentStatus)
+        {
+            switch (paymentStatus)
+            {
+                case PaymentStatus.Settled:
+                    return "SETTLED";
+                case PaymentStatus.Cancelled:
+                    return "CANCELLED";
+                case PaymentStatus.Pending:
+                    return "PENDING";
+                case PaymentStatus.Denied:
+                    return "DENIED";
+                case PaymentStatus.Expired:
+                    return "EXPIRED";
+                case PaymentStatus.Verifying:
+                    return "VERIFYING";
+                case PaymentStatus.Challenged:
+                    return "CHALLENGED";
+                case PaymentStatus.Failed:
+                    return "FAILED";
+                default:
+                    return null;
+            }
+        }
     }
 }

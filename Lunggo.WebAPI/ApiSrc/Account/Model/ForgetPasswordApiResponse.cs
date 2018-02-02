@@ -13,5 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string CountryCallCd { get; set; }
         [JsonProperty("phoneNumber", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
+        [JsonProperty("resendCooldown", NullValueHandling = NullValueHandling.Ignore)]
+        public int? ResendCooldown { get; set; }
     }
 }

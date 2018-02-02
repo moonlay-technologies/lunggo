@@ -92,8 +92,6 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorEmail { get; set; }
         [JsonProperty("operatorPhone", NullValueHandling = NullValueHandling.Ignore)]
         public string OperatorPhone { get; set; }
-        [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaymentStatus { get; set; }
     }
 
     public class ActivityPackageReservation
@@ -122,5 +120,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal TotalUniqueCode { get; set; }
         [JsonProperty("totalFinalPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal TotalFinalPrice { get; set; }
+        [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
+        public string PaymentStatus { get; set; }
+
+        
     }
 }
