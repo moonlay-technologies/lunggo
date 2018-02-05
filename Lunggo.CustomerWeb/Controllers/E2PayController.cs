@@ -122,7 +122,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 case "14":
                     return PaymentMethod.Indomaret;
                 case "16":
-                    return PaymentMethod.OnlineSbi;
+                    return PaymentMethod.SbiiOnlineShopping;
                 case "18":
                     return PaymentMethod.BcaKlikpay;
                 case "19":

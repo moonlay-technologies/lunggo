@@ -21,7 +21,7 @@
         Deposit = 16,
         IbMuamalat = 17,
         DanamonOnlineBanking = 18,
-        OnlineSbi = 19,
+        SbiiOnlineShopping = 19,
         DooEtQnb = 20,
         BtnMobileBanking = 21
     }
@@ -68,7 +68,7 @@
                     return "IBM";
                 case PaymentMethod.DanamonOnlineBanking:
                     return "DOB";
-                case PaymentMethod.OnlineSbi:
+                case PaymentMethod.SbiiOnlineShopping:
                     return "SBI";
                 case PaymentMethod.DooEtQnb:
                     return "QNB";
@@ -119,7 +119,7 @@
                 case "DOB":
                     return PaymentMethod.DanamonOnlineBanking;
                 case "SBI":
-                    return PaymentMethod.OnlineSbi;
+                    return PaymentMethod.SbiiOnlineShopping;
                 case "QNB":
                     return PaymentMethod.DooEtQnb;
                 case "BTN":

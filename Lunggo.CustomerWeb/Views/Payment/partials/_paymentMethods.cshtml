@@ -374,6 +374,28 @@
                     @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.IbMuamalat)
                 </div>
             </div><!-- /IB MUAMALAT -->
+            
+            <!-- SBII ONLINE SHOPPING -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.SbiiOnlineShopping')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/sbii-online-shopping.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>SBII Online Shopping</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran SBII Online Shopping akan diproses di situs Bank SBII. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.SbiiOnlineShopping)
+                </div>
+            </div><!-- /SBII ONLINE SHOPPING -->
         </div>
     </div><!-- .payment-wrapper -->
 </div><!-- .content.step#step-4 -->

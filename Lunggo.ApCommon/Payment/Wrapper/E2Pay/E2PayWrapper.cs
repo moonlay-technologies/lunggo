@@ -255,7 +255,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
                     return 13;
                 case PaymentMethod.IndosatDompetku:
                     return 14;
-                case PaymentMethod.OnlineSbi:
+                case PaymentMethod.SbiiOnlineShopping:
                     return 16;
                 case PaymentMethod.BcaKlikpay:
                     return 18;
