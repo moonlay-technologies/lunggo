@@ -321,9 +321,13 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {                          
-                var savedBooking = GetMyBookingDetailQuery.GetInstance()
-                    .Execute(conn, new { input.RsvNo }).First();
-
+                var savedBookingCheck = GetMyBookingDetailQuery.GetInstance()
+                    .Execute(conn, new { input.RsvNo });
+                if (savedBookingCheck.Count() == 0)
+                {
+                    return null;
+                }
+                var savedBooking = savedBookingCheck.First();
                 var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { input.RsvNo }, null,
                         (passengers, typeCd, titleCd, genderCd) =>
                         {
@@ -1023,6 +1027,48 @@ namespace Lunggo.ApCommon.Activity.Service
                 return reviews;
             }
                
+        }
+
+        public InsertActivityRatingOutput InsertActivityRatingToDb (InsertActivityRatingInput insertActivityRatingInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                foreach (var answer in insertActivityRatingInput.Answers)
+                {
+                    var activityRatingInputData = new ActivityRatingTableRecord
+                    {
+                        ActivityId = insertActivityRatingInput.ActivityId,
+                        Date = answer.Date,
+                        Question = answer.Question,
+                        Rating = answer.Rate,
+                        RsvNo = insertActivityRatingInput.RsvNo,
+                        UserId = insertActivityRatingInput.UserId
+                    };
+                    ActivityRatingTableRepo.GetInstance().Insert(conn, activityRatingInputData);
+                }
+
+                return new InsertActivityRatingOutput
+                {
+                    isSuccess = true
+                };
+            }
+        }
+
+        public void InsertActivityReviewToDb (InsertActivityReviewInput insertActivityReviewInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activityReviewInputData = new ActivityReviewTableRecord
+                {
+                    ActivityId = insertActivityReviewInput.ActivityId,
+                    Date = insertActivityReviewInput.Date,
+                    Review = insertActivityReviewInput.Review,
+                    RsvNo = insertActivityReviewInput.RsvNo,
+                    UserId = insertActivityReviewInput.UserId
+                };
+
+                ActivityReviewTableRepo.GetInstance().Insert(conn,activityReviewInputData);
+            }
         }
     }
 }

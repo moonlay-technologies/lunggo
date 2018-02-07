@@ -338,6 +338,84 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/{rsvNo}/ratingquestion")]
+
+        public ApiResponseBase GenerateQuestion(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GenerateQuestionApiRequest()
+                {
+                    RsvNo = rsvNo
+                };
+                var apiResponse = ActivityLogic.GenerateQuestion(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/{rsvNo}/ratinganswer")]
+
+        public ApiResponseBase InsertActivityRating(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            InsertActivityRatingApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<InsertActivityRatingApiRequest>();
+                request.RsvNo = rsvNo;
+                var apiResponse = ActivityLogic.InsertActivityRating(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/{rsvNo}/review")]
+
+        public ApiResponseBase InsertActivityReview(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            InsertActivityReviewApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<InsertActivityReviewApiRequest>();
+                request.RsvNo = rsvNo;
+                var apiResponse = ActivityLogic.InsertActivityReview(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
 
         #endregion
 

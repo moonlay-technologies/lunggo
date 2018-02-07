@@ -21,5 +21,33 @@ namespace Lunggo.ApCommon.Activity.Service
                 ActivityReviews = GetReviewFromDb(getActivityReviewInput.ActivityId)
             };
         }
+
+        public GenerateQuestionOutput GenerateQuestion(string rsvNo) 
+        {
+            var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = rsvNo });
+            if (bookingDetail == null)
+            {
+                return null;
+            }
+            var activityId = bookingDetail.BookingDetail.ActivityId;
+            var questions = new List<string>();
+            questions.Add("pulupulupulupuluplu?");
+            questions.Add("pulupulupulupulupulu?");
+            questions.Add("pulupulpulupulupaulaupuuu?");
+            return new GenerateQuestionOutput
+            {
+                Questions = questions
+            };
+        }
+
+        public InsertActivityRatingOutput InsertActivityRating(InsertActivityRatingInput insertActivityRatingInput)
+        {
+            return InsertActivityRatingToDb(insertActivityRatingInput);
+        }
+
+        public void InsertActivityReview (InsertActivityReviewInput insertActivityReviewInput)
+        {
+            InsertActivityReviewToDb(insertActivityReviewInput);
+        }
     }
 }

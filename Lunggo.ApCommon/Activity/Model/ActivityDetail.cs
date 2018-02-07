@@ -66,8 +66,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public long RatingCount { get; set; }
         [JsonProperty("reviewCount", NullValueHandling = NullValueHandling.Ignore)]
         public long ReviewCount { get; set; }
-        [JsonProperty("reviews", NullValueHandling = NullValueHandling.Ignore)]
-        public ActivityReview Reviews { get; set; }
+        [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
+        public ActivityReview Review { get; set; }
 
 
     }
@@ -200,7 +200,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("userId", NullValueHandling = NullValueHandling.Ignore)]
         public string UserId { get; set; }
         [JsonProperty("dateTime", NullValueHandling = NullValueHandling.Ignore)]
-        public string DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
         public string Review { get; set; }
     }
@@ -212,8 +212,18 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
         public string Avatar { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
-        public string Date { get; set; }
+        public DateTime Date { get; set; }
         [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
         public string Content { get; set; }
+    }
+
+    public class ActivityRatingAnswer
+    {
+        [JsonProperty("question", NullValueHandling = NullValueHandling.Ignore)]
+        public string Question { get; set; }
+        [JsonProperty("rate", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Rate { get; set; }
+        [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime Date { get; set; }
     }
 }

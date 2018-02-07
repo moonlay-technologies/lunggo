@@ -109,7 +109,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 Rating = activityDetail.Rating,
                 RatingCount = activityDetail.RatingCount,
                 ReviewCount = activityDetail.ReviewCount,
-                Reviews = activityDetail.Review
+                Review = activityDetail.Review
             };
 
             return convertedActivity;

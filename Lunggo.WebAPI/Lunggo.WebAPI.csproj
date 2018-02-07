@@ -269,8 +269,11 @@
     <Compile Include="ApiSrc\Activity\Logic\DeclineAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountStatementLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GenerateQuestionLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityReviewsLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityTicketDetailLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\InsertActivityRatingLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\InsertActivityReviewLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\LandingPageLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\UpdateActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListLogic.cs" />
@@ -289,10 +292,14 @@
     <Compile Include="ApiSrc\Activity\Model\ActivityDeleteSessionApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\AddToWishlistApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\CustomDateApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GenerateQuestionApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GenerateQuestionApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\InsertActivityReviewApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\LandingPageApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\DeleteFromWishlistApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetBookedActivitiesResponse.cs" />

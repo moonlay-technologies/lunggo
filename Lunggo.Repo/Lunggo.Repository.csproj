@@ -52,8 +52,10 @@
     <Compile Include="TableRecord\ActivityCustomDateTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPackageReservationTableRecord.cs" />
     <Compile Include="TableRecord\ActivityPackageTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityRatingTableRecord.cs" />
     <Compile Include="TableRecord\ActivityRegularDateTableRecord.cs" />
     <Compile Include="TableRecord\ActivityReservationTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityReviewTableRecord.cs" />
     <Compile Include="TableRecord\ActivitySellPriceTableRecord.cs" />
     <Compile Include="TableRecord\ActivityTableRecord.cs" />
     <Compile Include="TableRecord\AgeClassificationTableRecord.cs" />
@@ -140,9 +142,11 @@
     <Compile Include="TableRepository\ActivityCustomDateRepository.cs" />
     <Compile Include="TableRepository\ActivityPackageRepository.cs" />
     <Compile Include="TableRepository\ActivityPackageReservationRepository.cs" />
+    <Compile Include="TableRepository\ActivityRatingRepository.cs" />
     <Compile Include="TableRepository\ActivityRegularDateRepository.cs" />
     <Compile Include="TableRepository\ActivityRepository.cs" />
     <Compile Include="TableRepository\ActivityReservationRepository.cs" />
+    <Compile Include="TableRepository\ActivityReviewRepository.cs" />
     <Compile Include="TableRepository\ActivitySellPriceRepository.cs" />
     <Compile Include="TableRepository\AgeClassificationRepository.cs" />
     <Compile Include="TableRepository\CartsRepository.cs" />

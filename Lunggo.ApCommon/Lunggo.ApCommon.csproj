@@ -245,6 +245,7 @@
     <Compile Include="Activity\Model\Logic\CustomDateOutput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistInput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GenerateQuestionOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityReviewInput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityReviewOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityTicketDetailInput.cs" />
@@ -265,6 +266,9 @@
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertActivityRatingInput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertActivityRatingOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertActivityReviewInput.cs" />
     <Compile Include="Activity\Model\Logic\InsertRatingAndReviewInput.cs" />
     <Compile Include="Activity\Model\Logic\InsertRatingAndReviewOutput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
