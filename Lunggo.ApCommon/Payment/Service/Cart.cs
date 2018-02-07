@@ -24,6 +24,7 @@ using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Database;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Activity.Database.Query;
+using Lunggo.ApCommon.Activity.Model.Logic;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -50,6 +51,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 return cart;
 
             cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
+            
             return cart;
         }
 

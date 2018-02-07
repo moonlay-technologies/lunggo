@@ -20,6 +20,9 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT act.Id AS ActivityId, act.Name AS Name, act.Category AS Category, ");
             clauseBuilder.Append("act.Description AS ShortDesc, act.Address AS Address, ");
+            clauseBuilder.Append("act.Rating AS Rating, ");
+            clauseBuilder.Append("(SELECT COUNT (DISTINCT RsvNo) FROM ActivityRating AS actr WHERE actr.ActivityId = act.Id ) AS RatingCount, ");
+            clauseBuilder.Append("(SELECT COUNT (DISTINCT RsvNo) FROM ActivityReview AS actre WHERE actre.ActivityId = act.Id ) AS ReviewCount, ");
             clauseBuilder.Append("act.City AS City, act.Country AS Country, ");
             clauseBuilder.Append("act.Zone AS Zone, act.Area AS Area, ");
             clauseBuilder.Append("act.Latitude AS Latitude, act.Longitude AS Longitude, ");

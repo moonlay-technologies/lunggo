@@ -21,8 +21,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public ActivityDetailForDisplay ActivityDetail { get; set; }
         [JsonProperty("selectedDateTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateAndSession DateTime { get; set; }
+        [JsonProperty("packageId", NullValueHandling = NullValueHandling.Ignore)]
+        public long PackageId{ get; set; }
         [JsonProperty("ticketCount", NullValueHandling = NullValueHandling.Ignore)]
-        public int? TicketCount { get; set; }
+        public List<ActivityPricePackageReservation> TicketCount { get; set; }
     }
     public class ActivityReservation : ReservationBase
     {

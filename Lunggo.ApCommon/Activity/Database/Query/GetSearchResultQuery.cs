@@ -22,6 +22,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("SELECT DISTINCT act.Id AS Id, ");
             clauseBuilder.Append("act.Name AS Name, ");
             clauseBuilder.Append("act.Category AS Category, ");
+            clauseBuilder.Append("act.Rating AS Rating, ");
             clauseBuilder.Append("act.Description AS ShortDesc, ");
             clauseBuilder.Append("act.Address AS Address, ");
             clauseBuilder.Append("act.City AS City, ");
@@ -30,10 +31,12 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.Area AS Area, ");
             clauseBuilder.Append("asp.Price AS Price, ");
             clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
+            clauseBuilder.Append("(SELECT COUNT (DISTINCT RsvNo) FROM ActivityRating AS actr WHERE actr.ActivityId = act.Id ) AS RatingCount, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc, ");
             clauseBuilder.Append("(SELECT CASE WHEN (count(*) > 0) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END from wishlist where UserId=@userId and ActivityId=act.id) AS Wishlisted, ");
             clauseBuilder.Append("act.AmountDuration AS Amount, ");
-            clauseBuilder.Append("act.UnitDuration AS Unit ");            
+            clauseBuilder.Append("act.UnitDuration AS Unit ");
+            
             return clauseBuilder.ToString();
         }
 

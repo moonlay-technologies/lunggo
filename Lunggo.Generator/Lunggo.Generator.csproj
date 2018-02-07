@@ -37,7 +37,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Lunggo.Generator.Tester</StartupObject>
+    <StartupObject>Lunggo.Generator.TableRepo.TableRepoGenerator</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.StringTemplate">

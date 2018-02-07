@@ -49,11 +49,15 @@
                                 @rsv.ActivityDetails.Name
                             </td>
                             <td>
-                                @rsv.DateTime.Date<br/>
+                                @rsv.DateTime.Date.Value.ToString("d")<br/>
                                 @rsv.DateTime.Session
                             </td>
                             <td>
-                                @rsv.Pax.Count orang
+                                @{int count = 0;
+
+                                foreach (var pax in rsv.TicketCount) { count += pax.Count; } 
+                                    }
+                                @count  orang
                             </td>
                             <td>
                                 @rsv.Contact.Name

@@ -37,8 +37,13 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
         public static ViewCartApiResponse AssembleApiResponse(ApCommon.Payment.Model.Cart viewCartApiResponse)
         {
             var apiResponse = new ViewCartApiResponse();
+            //List<ActivityReservationForDisplay> reservations = null;
+            //foreach (var rsvNo in viewCartApiResponse.RsvNoList)
+            //{
+            //    var reservation = ActivityService.GetInstance().GetReservationForDisplay(rsvNo);
+            //    reservations.Add(reservation);
+            //}
             var reservations = viewCartApiResponse.RsvNoList.Select(ActivityService.GetInstance().GetReservationForDisplay).ToList();
-
             apiResponse.CartId = viewCartApiResponse.Id;
             apiResponse.TotalPrice = viewCartApiResponse.TotalPrice;
             apiResponse.RsvNoList = reservations;

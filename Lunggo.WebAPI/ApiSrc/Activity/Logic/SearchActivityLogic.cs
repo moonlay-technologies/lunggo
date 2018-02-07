@@ -112,7 +112,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     PriceDetail = actList.PriceDetail,
                     Duration = actList.Duration,
                     MediaSrc = actList.MediaSrc,
-                    Wishlisted = actList.Wishlisted
+                    Wishlisted = actList.Wishlisted,
+                    Rating = actList.Rating,
+                    RatingCount = actList.RatingCount
                 }).ToList(),
                 Page = searchServiceResponse.Page,
                 PerPage = searchServiceResponse.PerPage

@@ -314,6 +314,31 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/activities/{activityId}/reviews")]
+        public ApiResponseBase GetActivityReviews(string activityId = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetActivityReviewsApiRequest { ActivityId = Int64.Parse(activityId) };
+
+                var apiResponse = ActivityLogic.GetActivityReviews(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+
         #endregion
 
         #region Operator

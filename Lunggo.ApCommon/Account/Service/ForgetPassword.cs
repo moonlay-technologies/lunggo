@@ -101,15 +101,14 @@ namespace Lunggo.ApCommon.Account.Service
             var message = "Your Otp Is : " + otp;
             var smsGateway = new SmsGateway();
             var response = smsGateway.SendSms(phoneNumber, message);
-            //if (response.Content.Contains("<text>Success</text>"))
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-            return true;
+            if (response.Content.Contains("<text>Success</text>"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void InsertSmsTimeToCache (string phoneNumber, string otp)

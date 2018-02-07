@@ -105,6 +105,12 @@ namespace Lunggo.ApCommon.Activity.Service
                 activityDetail.Wishlisted = wishlistedList[0].Wishlisted;
 
                 activityDetail.Package = GetActivityTicketDetailFromDb(input).Package;
+
+                var review = GetReviewFromDb(input.ActivityId);
+                if (review.Count() != 0)
+                {
+                    activityDetail.Review = review[0];
+                }
                 var output = new GetDetailActivityOutput
                 {
                     ActivityDetail = activityDetail
@@ -250,7 +256,9 @@ namespace Lunggo.ApCommon.Activity.Service
                         };
                         activityReservation.Pax.Add(passenger);
                     }
-
+                var reservationData = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail;
+                activityReservation.PackageId = reservationData.PackageId;
+                activityReservation.TicketCount = reservationData.PaxCount;
                 return activityReservation;
             }
         }
@@ -326,8 +334,11 @@ namespace Lunggo.ApCommon.Activity.Service
                         }, "TypeCd, TitleCd, GenderCd").ToList();
 
                 var savedPaxCountAndPackageId = GetPaxCountAndPackageIdDbQuery.GetInstance().Execute(conn, new { RsvNo = input.RsvNo }).ToList();
-                savedBooking.PackageId = savedPaxCountAndPackageId.First().PackageId;
-                savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
+                if (savedPaxCountAndPackageId.Count() != 0)
+                {
+                    savedBooking.PackageId = savedPaxCountAndPackageId.First().PackageId;
+                    savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
+                }
                 var savedPaxCounts = new List<ActivityPricePackageReservation>();
                 var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
                 foreach (var savedPaxCount in savedPaxCountAndPackageId)
@@ -335,7 +346,11 @@ namespace Lunggo.ApCommon.Activity.Service
                     var saved = new ActivityPricePackageReservation();
                     saved.Type = savedPaxCount.Type;
                     saved.Count = savedPaxCount.Count;
-                    saved.TotalPrice = savedPaxCount.Count * pricePackages.Where(package => package.Type == savedPaxCount.Type).First().Amount;
+                    var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type);
+                    if (amountType.Count() != 0)
+                    {
+                        saved.TotalPrice = savedPaxCount.Count * amountType.First().Amount;
+                    }
                     savedPaxCounts.Add(saved);
                 }
                 savedBooking.PaxCount = savedPaxCounts;
@@ -353,7 +368,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 savedBooking.Price = priceBook;
                 savedBooking.Passengers = savedPassengers;
-
 
                 var output = new GetMyBookingDetailOutput
                 {
@@ -959,6 +973,56 @@ namespace Lunggo.ApCommon.Activity.Service
                 return GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
             }
                 
+        }
+
+        public InsertRatingAndReviewOutput InsertRatingAndReviewToDb(InsertRatingAndReviewInput insertRatingAndReviewInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activityId = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = insertRatingAndReviewInput.RsvNo }).BookingDetail.ActivityId;
+                //var insertParam = new ActivityRatingAndReviewTableRecord
+                //{
+                //    UserId = insertRatingAndReviewInput.UserId,
+                //    ActivityId = activityId,
+                //    Rating = insertRatingAndReviewInput.Rating,
+                //    Review = insertRatingAndReviewInput.Review,
+                //    Date = DateTime.UtcNow
+                //};
+                //
+                //ActivityRatingAndReviewTableRepo.GetInstance().Insert(conn, insertParam);
+                return new InsertRatingAndReviewOutput
+                {
+                    isSuccess = true
+                };
+            }
+            
+        }
+
+        public List<ActivityReview> GetReviewFromDb (long? activityId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                List<ActivityReview> reviews = new List<ActivityReview>();
+                var preReviews = GetActivityReviewFromDbQuery.GetInstance().Execute(conn,new { ActivityId = activityId }).ToList();
+                foreach(var preReview in preReviews)
+                {
+                    var preUser = GetUserByIdQuery.GetInstance().Execute(conn, new { Id = preReview.UserId });
+                    if (preUser.Count() == 0)
+                    {
+                        return reviews;
+                    }
+                    var user = preUser.ToList()[0];
+                    var review = new ActivityReview
+                    {
+                        Name = user.FirstName + " " + user.LastName,
+                        Content = preReview.Review,
+                        Date = preReview.DateTime
+                    };
+                    reviews.Add(review);
+                }
+                return reviews;
+            }
+               
         }
     }
 }

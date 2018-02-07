@@ -76,8 +76,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
             var apiResponse = new GetMyBookingDetailApiResponse
             {
-                BookingDetail = ActivityService.GetInstance().ConvertToBookingDetailForDisplay(serviceResponse.BookingDetail, paxForDisplay),
-                StatusCode = HttpStatusCode.OK
+                BookingDetail = serviceResponse.BookingDetail,
+                StatusCode = HttpStatusCode.Accepted
             };
 
             return apiResponse;

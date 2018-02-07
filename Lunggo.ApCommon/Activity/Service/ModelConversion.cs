@@ -31,6 +31,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 ActivityDetail = ConvertToActivityDetailForDisplay(activityReservation.ActivityDetails),
                 DateTime = activityReservation.DateTime,
                 Pax = ConvertToPaxForDisplay(activityReservation.Pax),
+                PackageId = activityReservation.PackageId,
+                TicketCount = activityReservation.TicketCount,
                 RsvNo = activityReservation.RsvNo,
                 Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(activityReservation.Payment),
                 RsvTime = activityReservation.RsvTime,
@@ -103,7 +105,11 @@ namespace Lunggo.ApCommon.Activity.Service
                 Wishlisted = activityDetail.Wishlisted,
                 OperatorName = activityDetail.OperatorName,
                 OperatorEmail = activityDetail.OperatorEmail,
-                OperatorPhone = activityDetail.OperatorPhone
+                OperatorPhone = activityDetail.OperatorPhone,
+                Rating = activityDetail.Rating,
+                RatingCount = activityDetail.RatingCount,
+                ReviewCount = activityDetail.ReviewCount,
+                Reviews = activityDetail.Review
             };
 
             return convertedActivity;

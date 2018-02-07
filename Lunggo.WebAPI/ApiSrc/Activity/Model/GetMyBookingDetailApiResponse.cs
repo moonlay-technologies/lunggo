@@ -8,6 +8,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     public class GetMyBookingDetailApiResponse : ApiResponseBase
     {
         [JsonProperty("bookingDetail", NullValueHandling = NullValueHandling.Ignore)]
-        public BookingDetailForDisplay BookingDetail { get; set; }
+        public BookingDetail BookingDetail { get; set; }
     }
 }

@@ -60,7 +60,14 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorPhone { get; set; }
         [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
         public bool Wishlisted { get; set; }
-        
+        [JsonProperty("rating", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal Rating { get; set; }
+        [JsonProperty("ratingCount", NullValueHandling = NullValueHandling.Ignore)]
+        public long RatingCount { get; set; }
+        [JsonProperty("reviewCount", NullValueHandling = NullValueHandling.Ignore)]
+        public long ReviewCount { get; set; }
+        [JsonProperty("reviews", NullValueHandling = NullValueHandling.Ignore)]
+        public ActivityReview Reviews { get; set; }
 
 
     }
@@ -98,6 +105,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public AdditionalContent AdditionalContents { get; set; }
         public List<ActivityPackage> Package { get; set; }
         public bool Wishlisted { get; set; }
+        public decimal Rating { get; set; }
+        public long RatingCount { get; set; }
+        public long ReviewCount { get; set; }
+        public ActivityReview Review { get; set; }
     }
 
     public class AdditionalContent
@@ -182,5 +193,27 @@ namespace Lunggo.ApCommon.Activity.Model
         public int Count { get; set; }
         [JsonProperty("totalPrice", NullValueHandling = NullValueHandling.Ignore)]
         public decimal TotalPrice { get; set; }
+    }
+
+    public class PreActivityReview
+    {
+        [JsonProperty("userId", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserId { get; set; }
+        [JsonProperty("dateTime", NullValueHandling = NullValueHandling.Ignore)]
+        public string DateTime { get; set; }
+        [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
+        public string Review { get; set; }
+    }
+
+    public class ActivityReview
+    {
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+        [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
+        public string Avatar { get; set; }
+        [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
+        public string Date { get; set; }
+        [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
+        public string Content { get; set; }
     }
 }

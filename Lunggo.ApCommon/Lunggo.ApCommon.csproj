@@ -205,9 +205,11 @@
     <Compile Include="Activity\Database\Query\GetCustomAvailableHoursWhitelistDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetPaxCountAndPackageIdDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetCartRsvNoListDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityReviewFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetUserIdFromActivityReservationDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetWhitelistedDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\InsertRatingAndReviewToDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
@@ -243,6 +245,8 @@
     <Compile Include="Activity\Model\Logic\CustomDateOutput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistInput.cs" />
     <Compile Include="Activity\Model\Logic\DeleteFromWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityReviewInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityReviewOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityTicketDetailInput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityTicketDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListInput.cs" />
@@ -261,6 +265,8 @@
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertRatingAndReviewInput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertRatingAndReviewOutput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
@@ -293,6 +299,7 @@
     <Compile Include="Activity\Service\GetActivityDetail.cs" />
     <Compile Include="Activity\Service\Book.cs" />
     <Compile Include="Activity\Service\ModelConversion.cs" />
+    <Compile Include="Activity\Service\RatingAndReview.cs" />
     <Compile Include="Activity\Service\Reservations.cs" />
     <Compile Include="Activity\Service\GetMyBookings.cs" />
     <Compile Include="Activity\Service\Search.cs" />
