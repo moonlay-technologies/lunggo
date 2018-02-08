@@ -221,6 +221,7 @@
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
+    <Compile Include="Controllers\WebviewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
     <Compile Include="Helper\Generator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -1748,6 +1749,23 @@
     <Content Include="Views\LandingPage\vendor\bootstrap\js\bootstrap.min.js" />
     <Content Include="Views\LandingPage\vendor\jquery\jquery.js" />
     <Content Include="Views\LandingPage\vendor\jquery\jquery.min.js" />
+    <Content Include="Views\Webview\css\style-activity-edit-detail.css" />
+    <Content Include="Views\Webview\img\chat.jpg" />
+    <Content Include="Views\Webview\img\email.jpg" />
+    <Content Include="Views\Webview\img\icon.png" />
+    <Content Include="Views\Webview\img\whatsapp.jpg" />
+    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Views\Webview\vendor\jquery\jquery.js" />
+    <Content Include="Views\Webview\vendor\jquery\jquery.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1934,6 +1952,10 @@
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="Views\Webview\RedirectContact.cshtml" />
+    <Content Include="Views\Webview\fonts\hind-light.ttf" />
+    <Content Include="Views\Webview\fonts\hind-regular.ttf" />
+    <Content Include="Views\Webview\fonts\hind-semibold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />

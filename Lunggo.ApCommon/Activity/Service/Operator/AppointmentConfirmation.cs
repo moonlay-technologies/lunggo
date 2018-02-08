@@ -14,6 +14,14 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
+                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+                if(status == "CONF")
+                {
+                    return new AppointmentConfirmationOutput
+                    {
+                        IsSuccess = false
+                    };
+                }
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
                 var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");               
                 activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
