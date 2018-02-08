@@ -127,7 +127,7 @@
             e.preventDefault();
             if ($('#form-input').val() != '') {
                 $.ajax({
-                    url: '/id/TeaserPageSubscribe?input=' + $('#form-input').val(),
+                    url: '/id/index/TeaserPageSubscribe?input=' + $('#form-input').val(),
                     method: 'get',
                 });
                 window.alert('Terima kasih telah bergabung! Kami akan hubungi kamu kembali melalui ' + $('#form-input').val());
