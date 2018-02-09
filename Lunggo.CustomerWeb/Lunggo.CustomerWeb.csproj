@@ -229,7 +229,6 @@
     <Compile Include="Controllers\HelpSectionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HotelController.cs" />
-    <Compile Include="Controllers\WebViewController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\PromoController.cs" />
