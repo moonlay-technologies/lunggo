@@ -366,6 +366,7 @@
     <Content Include="Assets\css\promo.css" />
     <Content Include="Assets\css\promo.min.css" />
     <Content Include="Assets\css\promo.scss" />
+    <Content Include="Assets\css\style-activity-edit-detail.css" />
     <Content Include="Assets\css\travorama-mobileApp.css" />
     <Content Include="Assets\css\travorama-mobileApp.min.css" />
     <Content Include="Assets\css\travorama-mobileApp.scss" />
@@ -1240,6 +1241,10 @@
     <Content Include="Assets\images\yellow-stripe-small.png" />
     <Content Include="Assets\images\yellow-stripe.png" />
     <Content Include="Assets\images\youtube-icon.png" />
+    <Content Include="Assets\img\chat.jpg" />
+    <Content Include="Assets\img\email.jpg" />
+    <Content Include="Assets\img\icon.png" />
+    <Content Include="Assets\img\whatsapp.jpg" />
     <Content Include="Assets\js\CryptoJS\components\aes-min.js" />
     <Content Include="Assets\js\CryptoJS\components\aes.js" />
     <Content Include="Assets\js\CryptoJS\components\cipher-core-min.js" />
@@ -1641,6 +1646,16 @@
     <Content Include="Assets\travorama20\js\singleFlightController.js" />
     <Content Include="Assets\travorama20\js\ThankyouController.js" />
     <Content Include="Assets\travorama20\js\travorama20.js" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Assets\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Assets\vendor\bootstrap\js\bootstrap.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.css" />
     <Content Include="Assets\vendor\datepicker\jquery.datepick.min.js" />
     <Content Include="Assets\vendor\datepicker\jquery.plugin.min.js" />
@@ -1665,6 +1680,8 @@
     <Content Include="Assets\vendor\fullcalendar\fullcalendar-id.min.js" />
     <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.css" />
     <Content Include="Assets\vendor\fullcalendar\fullcalendar.min.js" />
+    <Content Include="Assets\vendor\jquery\jquery.js" />
+    <Content Include="Assets\vendor\jquery\jquery.min.js" />
     <Content Include="Assets\vendor\lightslider\lightslider.css" />
     <Content Include="Assets\vendor\lightslider\lightslider.js" />
     <Content Include="Assets\vendor\slick\slick.css" />
@@ -1872,6 +1889,9 @@
     <Content Include="Assets\travorama20\css\_screenLarge.scss" />
     <Content Include="Assets\travorama20\css\_screenSmall.scss" />
     <Content Include="App_Data\wurfl-latest.zip" />
+    <Content Include="Assets\fonts\hind-light.ttf" />
+    <Content Include="Assets\fonts\hind-regular.ttf" />
+    <Content Include="Assets\fonts\hind-semibold.ttf" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />

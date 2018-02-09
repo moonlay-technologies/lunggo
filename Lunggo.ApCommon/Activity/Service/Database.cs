@@ -1059,16 +1059,22 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var activityReviewInputData = new ActivityReviewTableRecord
+                if (string.IsNullOrWhiteSpace(insertActivityReviewInput.Review))
                 {
-                    ActivityId = insertActivityReviewInput.ActivityId,
-                    Date = insertActivityReviewInput.Date,
-                    Review = insertActivityReviewInput.Review,
-                    RsvNo = insertActivityReviewInput.RsvNo,
-                    UserId = insertActivityReviewInput.UserId
-                };
 
-                ActivityReviewTableRepo.GetInstance().Insert(conn,activityReviewInputData);
+                }
+                else
+                {
+                    var activityReviewInputData = new ActivityReviewTableRecord
+                    {
+                        ActivityId = insertActivityReviewInput.ActivityId,
+                        Date = insertActivityReviewInput.Date,
+                        Review = insertActivityReviewInput.Review,
+                        RsvNo = insertActivityReviewInput.RsvNo,
+                        UserId = insertActivityReviewInput.UserId
+                    };
+                    ActivityReviewTableRepo.GetInstance().Insert(conn, activityReviewInputData);
+                } 
             }
         }
 
