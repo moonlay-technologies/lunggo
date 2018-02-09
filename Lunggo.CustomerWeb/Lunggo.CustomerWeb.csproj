@@ -221,6 +221,7 @@
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
+    <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\WebviewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
     <Compile Include="Helper\Generator.cs" />

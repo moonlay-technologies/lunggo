@@ -10,16 +10,11 @@ using Lunggo.Framework.SharedModel;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
-    public class WebViewController : Controller
+    public class WebviewController : Controller
     {
-        public ActionResult Contact(string title = null, string description = null)
+        public ActionResult RedirectContact(string text)
         {
-            title = title ?? "Hubungi Kami";
-            description = description ??
-                          "Jika Anda ingin mengubah deskripsi aktivitas Anda, silakan hubungi kami. Kami akan membantu Anda merangkai kata agar lebih menarik bagi pengunjung.";
-            ViewBag.Title = title;
-            ViewBag.Description = description;
-            return View();
+            return View(model: text);
         }
     }
 }
