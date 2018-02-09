@@ -94,6 +94,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorPhone { get; set; }
         [JsonProperty("requestReview", NullValueHandling = NullValueHandling.Ignore)]
         public bool RequestReview { get; set; }
+        [JsonProperty("requestRating", NullValueHandling = NullValueHandling.Ignore)]
+        public bool RequestRating { get; set; }
     }
 
     public class ActivityPackageReservation

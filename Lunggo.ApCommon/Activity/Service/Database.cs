@@ -286,6 +286,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         var payment = GetReservationFromDb(rsvNo).Payment;
                         var bookingDetail = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
                         bookingDetail.BookingDetail.RequestReview = CheckReview(rsvNo, bookingDetail.BookingDetail.Date, bookingDetail.BookingDetail.SelectedSession);
+                        bookingDetail.BookingDetail.RequestRating = CheckRating(rsvNo, bookingDetail.BookingDetail.Date, bookingDetail.BookingDetail.SelectedSession);
                         bookingDetail.BookingDetail.RsvNo = rsvNo;
                         paymentStatusEnum = payment.Status;
                         bookingDetails.Add(bookingDetail.BookingDetail);
@@ -1087,6 +1088,25 @@ namespace Lunggo.ApCommon.Activity.Service
                 var dateCheck = date.Date.Add(sessionHour.TimeOfDay);
                 var reviews = GetReviewFromDbByRsvNoQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
                 if (reviews.Count() == 0 && DateTime.UtcNow > dateCheck)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool CheckRating(string rsvNo, DateTime date, string session)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var stringSessionHour = session.Substring(8);
+                var sessionHour = DateTime.Parse(stringSessionHour);
+                var dateCheck = date.Date.Add(sessionHour.TimeOfDay);
+                var rating = GetRatingFromDbByRsvNoQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
+                if (rating.Count() == 0 && DateTime.UtcNow > dateCheck)
                 {
                     return true;
                 }
