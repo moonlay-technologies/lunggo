@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 case PaymentMethod.EpayBri:
                 case PaymentMethod.DanamonOnlineBanking:
                 case PaymentMethod.IndosatDompetku:
-                case PaymentMethod.OnlineSbi:
+                case PaymentMethod.SbiiOnlineShopping:
                 case PaymentMethod.BcaKlikpay:
                 case PaymentMethod.DooEtQnb:
                 case PaymentMethod.BtnMobileBanking:
