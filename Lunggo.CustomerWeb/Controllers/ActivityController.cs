@@ -25,7 +25,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
-                
+                return View();
             }
             catch (Exception ex)
             {
