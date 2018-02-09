@@ -31,9 +31,9 @@ namespace Lunggo.ApCommon.Activity.Service
             }
             var activityId = bookingDetail.BookingDetail.ActivityId;
             var questions = new List<string>();
-            questions.Add("pulupulupulupuluplu?");
-            questions.Add("pulupulupulupulupulu?");
-            questions.Add("pulupulpulupulupaulaupuuu?");
+            questions.Add("Apakah aktifitas anda menyenangkan?");
+            questions.Add("Apakah pelayanan yang diberikan baik?");
+            questions.Add("Apakah keamanan dari aktifitas yang anda lakukan baik?");
             return new GenerateQuestionOutput
             {
                 Questions = questions
