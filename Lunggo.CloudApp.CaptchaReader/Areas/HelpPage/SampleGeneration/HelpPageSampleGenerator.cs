@@ -188,19 +188,11 @@ namespace Lunggo.CloudApp.CaptchaReader.Areas.HelpPage
                     {
                         continue;
                     }
-
-                    try
-                    {
                         sampleObject = factory(this, type);
                         if (sampleObject != null)
                         {
                             break;
                         }
-                    }
-                    catch
-                    {
-                        // Ignore any problems encountered in the factory; go on to the next one (if any).
-                    }
                 }
             }
 

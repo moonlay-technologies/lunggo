@@ -23,6 +23,7 @@ using Lunggo.Repository.TableRepository;
 using Microsoft.WindowsAzure.Storage.Queue;
 using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
 using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {
@@ -291,18 +292,22 @@ namespace Lunggo.ApCommon.Hotel.Service
             };
         }
 
+
         private static void LogIssuanceFailure(string rsvNo, string message)
         {
+            var TableLog = new GlobalLog();
+            TableLog.PartitionKey = "HOTEL ISSUANCE FAILURE";
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            log.Post(
-                "```Hotel Issuance Failure```"
+            TableLog.Log = "```Hotel Issuance Failure```"
                 + "\n*Environment :* " + env.ToUpper()
                 + "\n*Reservation :* \n"
                 + rsvNo
                 + "\n*Message :* \n"
-                + message,
+                + message;
+            log.Post(TableLog.Log,
                 env == "production" ? "#logging-prod" : "#logging-dev");
+            TableLog.Logging();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Web.Http;
 using Lunggo.ApCommon.Activity.Model;
 using System.Web;
 using Microsoft.AspNet.Identity.Owin;
+using static Lunggo.WebAPI.App_Start.FilterConfig;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity
 {

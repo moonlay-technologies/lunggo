@@ -16,12 +16,9 @@
     new List<Tuple<string, int>>();
     var totalRoom = 0;
 
-    try
-    {
-        totalRoom += Model.Rooms.Sum(room => room.Rates.Sum(rate => rate.Breakdowns.Sum(config => config.RateCount)));
-    }
-    catch (Exception)
-    { }
+
+    totalRoom += Model.Rooms.Sum(room => room.Rates.Sum(rate => rate.Breakdowns.Sum(config => config.RateCount)));
+
 }
 
 <div class="fb-hotel">

@@ -16,6 +16,7 @@ using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Newtonsoft.Json;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -25,18 +26,25 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public ActionResult ResponsePage()
         {
+            var TableLog = new GlobalLog();
+            
+            TableLog.PartitionKey = "E2PAY RESPONSE PAGE LOG";
+            
+
             var form = Request.Form;
 
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            log.Post(
-                "```E2Pay Response Page```"
+            TableLog.Log = "```E2Pay Response Page```"
                 + "\n`*Environment :* " + env.ToUpper()
                 + "\n*FORM :*\n"
                 + form
                 + "\n*Platform :* "
-                + Client.GetPlatformType(System.Web.HttpContext.Current.User.Identity.GetClientId()),
+                + Client.GetPlatformType(System.Web.HttpContext.Current.User.Identity.GetClientId());
+            log.Post(TableLog.Log
+                ,
                 env == "production" ? "#logging-prod" : "#logging-dev");
+            TableLog.Logging();
 
             var isSuccess = ProcessResponse(form);
             var param = new { rsvNo = form["RefNo"], regId = new PaymentController().GenerateId(form["RefNo"]) };
@@ -46,18 +54,25 @@ namespace Lunggo.CustomerWeb.Controllers
         [HttpPost]
         public string BackendPost()
         {
+            var TableLog = new GlobalLog();
+            
+            TableLog.PartitionKey = "E2PAY RESPONSE PAGE LOG";
+            
             var form = Request.Form;
 
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            log.Post(
-                "```E2Pay Backend Post```"
+
+            TableLog.Log = "```E2Pay Backend Post```"
                 + "\n`*Environment :* " + env.ToUpper()
                 + "\n*FORM :*\n"
                 + form
                 + "\n*Platform :* "
-                + Client.GetPlatformType(System.Web.HttpContext.Current.User.Identity.GetClientId()),
+                + Client.GetPlatformType(System.Web.HttpContext.Current.User.Identity.GetClientId());
+            log.Post(TableLog.Log
+                ,
                 env == "production" ? "#logging-prod" : "#logging-dev");
+            TableLog.Logging();
 
             var isSuccess = ProcessResponse(form);
             return isSuccess ? "OK" : "Failed";

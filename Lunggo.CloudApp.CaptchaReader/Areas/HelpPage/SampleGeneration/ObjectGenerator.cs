@@ -38,8 +38,6 @@ namespace Lunggo.CloudApp.CaptchaReader.Areas.HelpPage
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Here we just want to return null if anything goes wrong.")]
         private object GenerateObject(Type type, Dictionary<Type, object> createdObjectReferences)
         {
-            try
-            {
                 if (SimpleTypeObjectGenerator.CanGenerateObject(type))
                 {
                     return SimpleObjectGenerator.GenerateObject(type);
@@ -91,12 +89,7 @@ namespace Lunggo.CloudApp.CaptchaReader.Areas.HelpPage
                 {
                     return GenerateComplexObject(type, createdObjectReferences);
                 }
-            }
-            catch
-            {
-                // Returns null if anything fails
-                return null;
-            }
+            
 
             return null;
         }

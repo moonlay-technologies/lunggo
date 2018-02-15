@@ -16,22 +16,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
         }
 
-        public ActionResult Index()
-        {
-            throw new Exception();
-            try
-            {
-                //LunggoLogger.Info("test aja");
-                //LunggoLogger.Error("error boong");
-                return View();
-            }
-            catch (Exception exception)
-            {
-                LunggoLogger.Error("error aja");
-            }
-
-            return new EmptyResult();
-        }
+       
         //public ActionResult Index()
         //{
         //    var coba = Session["test"];

@@ -15,6 +15,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
 {
@@ -24,6 +25,10 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
         {
             if (IsValid(request))
             {
+                var TableLog = new GlobalLog();
+               
+                TableLog.PartitionKey = "BOOKING API LOG";
+         
                 OnlineContext.SetActiveLanguageCode(request.LanguageCode);
                 var bookServiceRequest = PreprocessServiceRequest(request);
                 var bookServiceResponse = FlightService.GetInstance().BookFlight(bookServiceRequest);
@@ -32,11 +37,12 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 {
                     var log = LogService.GetInstance();
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                        log.Post(
-                            "```Booking API Log```"
+                    TableLog.Log = "```Booking API Log```"
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*Platform :* "
-                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId());                            
+                        log.Post(TableLog.Log
+                            ,
                             env == "production" ? "#logging-prod" : "#logging-dev",
                             new List<LogAttachment>
                             {
@@ -45,6 +51,11 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                                 new LogAttachment("LOGIC RESPONSE", bookServiceResponse.Serialize()),
                                 new LogAttachment("ITINERARY", FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize())
                             });
+                    TableLog.Log = TableLog.Log + "\n*REQUEST:*" + request.Serialize()
+                            + "\n*RESPONSE:*" + apiResponse.Serialize()
+                            + "\n*LOGIC RESPONSE:*" + bookServiceResponse.Serialize()
+                            + "\n*ITINERARY:*" + FlightService.GetInstance().GetItineraryForDisplay(request.Token).Serialize();
+                    TableLog.Logging();
                 }
                 return apiResponse;
             }

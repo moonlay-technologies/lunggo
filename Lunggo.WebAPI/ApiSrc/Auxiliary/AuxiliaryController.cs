@@ -97,5 +97,25 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("checkversion")]
+        public ApiResponseBase CheckVersion()
+        {
+            CheckVersionApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckVersionApiRequest>();
+                var apiResponse = AuxiliaryLogic.CheckVersion(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

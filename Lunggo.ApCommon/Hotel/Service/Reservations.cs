@@ -28,21 +28,12 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         public HotelDetailForDisplay GetSelectionFromCache(string token)
         {
-            try
-            {
                 var rsv = GetSelectedHotelDetailsFromCache(token);
                 return ConvertToHotelDetailForDisplay(rsv);
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         public HotelReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
-            try
-            {
                 var rsv = GetReservation(rsvNo);
                 rsv.HotelDetails.PostalCode = GetHotelDetailFromTableStorage(rsv.HotelDetails.HotelCode).PostalCode;
                 foreach (var r in rsv.HotelDetails.Rooms)
@@ -63,23 +54,11 @@ namespace Lunggo.ApCommon.Hotel.Service
                 
                 var rsvfordisplay = ConvertToReservationForDisplay(rsv);
                 return rsvfordisplay;
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         public HotelReservation GetReservation(string rsvNo)
         {
-            try
-            {
                 return GetReservationFromDb(rsvNo);
-            }
-            catch
-            {
-                return null;
-            }
         }
 
         public List<HotelReservationForDisplay> GetOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
@@ -264,14 +243,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var storageName = azureConnString.Split(';')[1].Split('=')[1];
             var url = @"https://" + storageName + @".blob.core.windows.net/voucher/" + rsvNo + ".pdf";
             var client = new WebClient();
-            try
-            {
-                return client.DownloadData(url);
-            }
-            catch
-            {
-                return null;
-            }
+            return client.DownloadData(url);
         }
 
         public List<HotelReservationForDisplay> SearchReservations(HotelReservationSearch search)

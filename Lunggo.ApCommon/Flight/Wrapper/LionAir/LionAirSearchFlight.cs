@@ -19,6 +19,7 @@ using RestSharp;
 using CabinClass = Lunggo.ApCommon.Flight.Constant.CabinClass;
 using FareType = Lunggo.ApCommon.Flight.Constant.FareType;
 using FlightSegment = Lunggo.ApCommon.Flight.Model.FlightSegment;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
@@ -44,8 +45,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var client = CreateCustomerClient();
 
                 if (conditions.AdultCount == 0)
-                {
-                    //log.Post("[Lion Air Search]request must be at least one adult passenger", "#logging-dev");
+                {                   
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -54,8 +54,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     };
                 }
                 if (conditions.AdultCount + conditions.ChildCount > 7)
-                {
-                    //log.Post("[Lion Air Search] Total adult and children passenger must be not more than seven", "#logging-dev");
+                {                    
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -64,8 +63,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     };
                 }
                 if (conditions.AdultCount < conditions.InfantCount)
-                {
-                    //log.Post("[Lion Air Search] Every infant must be accompanied by one adult", "#logging-dev");
+                {                   
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -74,8 +72,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     };
                 }
                 if (conditions.Trips[0].DepartureDate > DateTime.Now.AddDays(331).Date)
-                {
-                    //log.Post("[Lion Air Search] Booking is allowed to max 331 days before the departure date", "#logging-dev");
+                {                    
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -128,7 +125,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         (searchResponse0.StatusCode == HttpStatusCode.OK ||
                          searchResponse0.StatusCode == HttpStatusCode.Redirect))
                     {
-                        //log.Post("[Lion Air Search] Error while requesting at Default.aspx. Unexpected RensponseUri absolute path", "#logging-dev");
+                       
                         return new SearchFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -170,7 +167,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         (searchResponse.StatusCode == HttpStatusCode.OK ||
                          searchResponse.StatusCode == HttpStatusCode.Redirect))
                     {
-                        //log.Post("[Lion Air Search] Error while requesting at lionairibe2/OnlineBooking.aspx at first page. Unexpected RensponseUri absolute path", "#logging-dev");
+                        
                         return new SearchFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -206,7 +203,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                             (searchResponse2.StatusCode == HttpStatusCode.OK ||
                              searchResponse2.StatusCode == HttpStatusCode.Redirect))
                         {
-                            //log.Post("[Lion Air Search] Error while requesting at lionairibe2/OnlineBooking.aspx at second Page. Unexpected RensponseUri absolute path", "#logging-dev");
+                            
                             return new SearchFlightResult
                             {
                                 Errors = new List<FlightError> { FlightError.InvalidInputData },
@@ -704,7 +701,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     }
                     catch (Exception e)
                     {
-                        //log.Post("[Lion Air Search] Technical Error happened. Exception : " + e.Message, "#logging-dev");
+                        
                         return new SearchFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.TechnicalError },

@@ -44,14 +44,7 @@ namespace Lunggo.ApCommon.Notifications
                     Handle = notificationHandle,
                     DeviceId = deviceId
                 };
-                try
-                {
-                    NotificationTableRepo.GetInstance().Insert(conn, notificationRecord);
-                }
-                catch
-                {
-
-                }
+                NotificationTableRepo.GetInstance().Insert(conn, notificationRecord);
             }
             return RegisterId;
         }

@@ -419,34 +419,28 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             var i = 0;
             foreach (var tripInfo in conditions.Trips)
             {
-                try
-                {
-                    if (segments[i].DepartureAirportLocationCode != tripInfo.OriginAirport &&
-                            FlightService.GetInstance().GetAirportCityCode(segments[i].DepartureAirportLocationCode) !=
-                                 tripInfo.OriginAirport)
-                    {
-                        return null;
-                    }
-                    var fareTrip = new FlightTrip
-                    {
-                        OriginAirport = tripInfo.OriginAirport,
-                        DestinationAirport = tripInfo.DestinationAirport,
-                        DepartureDate = DateTime.SpecifyKind(tripInfo.DepartureDate,DateTimeKind.Utc),
-                        Segments = new List<FlightSegment>()
-                    };
-                    do
-                    {
-                        fareTrip.Segments.Add(MapFlightSegment(segments[i], isPscIncluded));
-                        i++;
-                    } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
-                             FlightService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
-                                tripInfo.DestinationAirport);
-                    flightTrips.Add(fareTrip);
-                }
-                catch (IndexOutOfRangeException)
+                if (segments[i].DepartureAirportLocationCode != tripInfo.OriginAirport &&
+                        FlightService.GetInstance().GetAirportCityCode(segments[i].DepartureAirportLocationCode) !=
+                             tripInfo.OriginAirport)
                 {
                     return null;
                 }
+                var fareTrip = new FlightTrip
+                {
+                    OriginAirport = tripInfo.OriginAirport,
+                    DestinationAirport = tripInfo.DestinationAirport,
+                    DepartureDate = DateTime.SpecifyKind(tripInfo.DepartureDate,DateTimeKind.Utc),
+                    Segments = new List<FlightSegment>()
+                };
+                do
+                {
+                    fareTrip.Segments.Add(MapFlightSegment(segments[i], isPscIncluded));
+                    i++;
+                } while (segments[i - 1].ArrivalAirportLocationCode != tripInfo.DestinationAirport &&
+                         FlightService.GetInstance().GetAirportCityCode(segments[i - 1].ArrivalAirportLocationCode) !=
+                            tripInfo.DestinationAirport);
+                flightTrips.Add(fareTrip);
+                
             }
             return flightTrips;
         }

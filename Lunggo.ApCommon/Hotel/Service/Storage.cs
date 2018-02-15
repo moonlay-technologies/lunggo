@@ -184,10 +184,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             //}
 
             for (var i = 533962; i < 700001; i++)
-            {
-                try
-                {
-                    
+            {  
                     var newValue = new HotelAutoComplete("hotelAutoComplete", index.ToString());
                     Console.WriteLine("hotel code: " + i);
                     var hotelDetail = GetHotelDetailFromTableStorage(i);
@@ -206,11 +203,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                     hotelCdTable.Execute(insertHotelCd);
                     Console.WriteLine("Success inserting hotelCd to Table: " + hotelDetail.HotelCode);
                     index++;
-                }
-                catch
-                {
-
-                }
 
             }
         }
@@ -347,8 +339,6 @@ namespace Lunggo.ApCommon.Hotel.Service
         
         public void DivideData(HotelDetailWrapper hotel, IEnumerable<string> splittedData)
         {
-            try
-            {
                 var separatedData = splittedData.ToList();
                 hotel.Data1 = separatedData[0];
                 hotel.Data2 = separatedData[1];
@@ -370,11 +360,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 hotel.Data18 = separatedData[17];
                 hotel.Data19 = separatedData[18];
                 hotel.Data20 = separatedData[19];
-            }
-            catch (Exception e)
-            {
-
-            }
+            
         }
 
         public static IEnumerable<string> SplitByLength(string str, int maxLength)
@@ -504,33 +490,26 @@ namespace Lunggo.ApCommon.Hotel.Service
         public string ConcateData(HotelDetailWrapper hotel)
         {
             var data = new StringBuilder();
-            try
-            {
-                data.Append(hotel.Data1);
-                data.Append(hotel.Data2);
-                data.Append(hotel.Data3);
-                data.Append(hotel.Data4);
-                data.Append(hotel.Data5);
-                data.Append(hotel.Data6);
-                data.Append(hotel.Data7);
-                data.Append(hotel.Data8);
-                data.Append(hotel.Data9);
-                data.Append(hotel.Data10);
-                data.Append(hotel.Data11);
-                data.Append(hotel.Data12);
-                data.Append(hotel.Data13);
-                data.Append(hotel.Data14);
-                data.Append(hotel.Data15);
-                data.Append(hotel.Data16);
-                data.Append(hotel.Data17);
-                data.Append(hotel.Data18);
-                data.Append(hotel.Data19);
-                data.Append(hotel.Data20);
-            }
-            catch
-            {
-
-            }
+            data.Append(hotel.Data1);
+            data.Append(hotel.Data2);
+            data.Append(hotel.Data3);
+            data.Append(hotel.Data4);
+            data.Append(hotel.Data5);
+            data.Append(hotel.Data6);
+            data.Append(hotel.Data7);
+            data.Append(hotel.Data8);
+            data.Append(hotel.Data9);
+            data.Append(hotel.Data10);
+            data.Append(hotel.Data11);
+            data.Append(hotel.Data12);
+            data.Append(hotel.Data13);
+            data.Append(hotel.Data14);
+            data.Append(hotel.Data15);
+            data.Append(hotel.Data16);
+            data.Append(hotel.Data17);
+            data.Append(hotel.Data18);
+            data.Append(hotel.Data19);
+            data.Append(hotel.Data20);
 
             return data.ToString();
 

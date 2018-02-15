@@ -132,22 +132,17 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var childTax = childPsc + childIns + childVat;
 
                     var taxTable = ambilDataAjax[".itern-rgt-txt-2>p>span"];
-                    try
+                    var iIdx = conditions.Itinerary.ChildCount > 0 ? 2 : 1;
+                    hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
+                    if (conditions.Itinerary.ChildCount > 0)
+                        hargaChild = decimal.Parse(taxTable[1].InnerText.Split('.')[1]) + childTax;
+                    if (conditions.Itinerary.InfantCount > 0)
+                        hargaInfant = decimal.Parse(taxTable[iIdx].InnerText.Split('.')[1]);
+                    if (infantCount > 0)
                     {
-                        var iIdx = conditions.Itinerary.ChildCount > 0 ? 2 : 1;
-                        hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
-                        if (conditions.Itinerary.ChildCount > 0)
-                            hargaChild = decimal.Parse(taxTable[1].InnerText.Split('.')[1]) + childTax;
-                        if (conditions.Itinerary.InfantCount > 0)
-                            hargaInfant = decimal.Parse(taxTable[iIdx].InnerText.Split('.')[1]);
-                        if (infantCount > 0)
-                        {
-                            var infantTax = harga - (hargaAdult + hargaChild + hargaInfant);
-                            hargaInfant += infantTax;
-                        }
-
+                        var infantTax = harga - (hargaAdult + hargaChild + hargaInfant);
+                        hargaInfant += infantTax;
                     }
-                    catch { }
 
                     var prefix =
                         "" + origin + "" +

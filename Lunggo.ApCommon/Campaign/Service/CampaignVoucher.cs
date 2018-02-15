@@ -524,17 +524,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             }
         }
 
-        //private bool VoucherDecrement(string voucherCode)
-        //{
-        //    try
-        //    {
-        //        return UpdateDb.VoucherDecrement(voucherCode);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-        //}
+
         private bool VoucherIncrement(string voucherCode)
         {
             try

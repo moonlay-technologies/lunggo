@@ -9,6 +9,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using RestSharp;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -16,6 +17,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static LoginApiResponse Login(LoginApiRequest request)
         {
+            var TableLog = new GlobalLog();
+
+            TableLog.PartitionKey = "TOKEN ERROR LOG";
+
             if (request.UserName != null && request.UserName.StartsWith("0"))
             {
                 request.UserName = request.UserName.Substring(1);
@@ -110,10 +115,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                log.Post(
-                    "```Token Error " + env.ToUpper() + "```\n"
-                    + tokenResponse.Content,
+                TableLog.Log = "```Token Error " + env.ToUpper() + "```\n"
+                    + tokenResponse.Content;
+                log.Post(TableLog.Log
+                    ,
                     env == "production" ? "#logging-prod" : "#logging-dev");
+                TableLog.Logging();
                 throw;
             }
         }

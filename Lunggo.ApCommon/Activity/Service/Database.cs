@@ -657,14 +657,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     UserId = user,
                     ActivityId = activityId
                 };
-                try
-                {
-                    WishlistTableRepo.GetInstance().Insert(conn, wishlistRecord);
-                }
-                catch
-                {
-
-                }
+                WishlistTableRepo.GetInstance().Insert(conn, wishlistRecord);
             }
             var response = new AddToWishlistOutput { isSuccess = true };
             return response;

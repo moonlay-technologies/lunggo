@@ -21,53 +21,27 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public FlightItineraryForDisplay GetItineraryForDisplay(string token)
         {
-            try
-            {
-                var itins = GetItinerariesFromCache(token);
-                return ConvertToItineraryForDisplay(itins);
-            }
-            catch
-            {
-                return null;
-            }
+            var itins = GetItinerariesFromCache(token);
+            return ConvertToItineraryForDisplay(itins);
         }
 
         public FlightReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
-            try
-            {
-                var rsv = GetReservation(rsvNo);
-                return ConvertToReservationForDisplay(rsv);
-            }
-            catch
-            {
-                return null;
-            }
+
+            var rsv = GetReservation(rsvNo);
+            return ConvertToReservationForDisplay(rsv);
+
         }
 
         public FlightReservation GetReservation(string rsvNo)
         {
-            try
-            {
-                return GetReservationFromDb(rsvNo);
-            }
-            catch
-            {
-                return null;
-            }
+            return GetReservationFromDb(rsvNo);
         }
 
         public FlightReservationForDisplay GetOverviewReservation(string rsvNo)
         {
-            try
-            {
-                var rsv = GetOverviewReservationFromDb(rsvNo);
-                return ConvertToReservationForDisplay(rsv);
-            }
-            catch
-            {
-                return null;
-            }
+            var rsv = GetOverviewReservationFromDb(rsvNo);
+            return ConvertToReservationForDisplay(rsv);
         }
 
         public List<FlightReservationForDisplay> GetOverviewReservationsByUserIdOrEmail(string userId, string email, string filter, string sort, int? page, int? itemsPerPage)
@@ -129,14 +103,9 @@ namespace Lunggo.ApCommon.Flight.Service
             var storageName = azureConnString.Split(';')[1].Split('=')[1];
             var url = @"https://" + storageName + @".blob.core.windows.net/eticket/" + rsvNo + ".pdf";
             var client = new WebClient();
-            try
-            {
-                return client.DownloadData(url);
-            }
-            catch
-            {
-                return null;
-            }
+
+            return client.DownloadData(url);
+
         }
 
         //public void UpdateIssueProgress(string rsvNo, string progressMessage)

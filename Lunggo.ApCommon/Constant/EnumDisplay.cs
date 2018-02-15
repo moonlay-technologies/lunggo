@@ -23,11 +23,9 @@ namespace Lunggo.ApCommon.Constant
         public static string Title(Title title)
         {
             var lang = "en_US";
-            try
-            {
+            
                 lang = LangToIsoCodeMapper.GetIsoCode(OnlineContext.GetActiveLanguageCode());
-            }
-            catch { }
+            
             switch (title)
             {
                 case Product.Constant.Title.Mister:
@@ -49,11 +47,10 @@ namespace Lunggo.ApCommon.Constant
         public static string PassengerType(PaxType type)
         {
             var lang = "en_US";
-            try
-            {
+            
                 lang = LangToIsoCodeMapper.GetIsoCode(OnlineContext.GetActiveLanguageCode());
-            }
-            catch { }
+            
+           
             switch (type)
             {
                 case Flight.Constant.PaxType.Adult:
@@ -70,11 +67,9 @@ namespace Lunggo.ApCommon.Constant
         public static string PaymentMethod(PaymentMethod method)
         {
             var lang = "en_US";
-            try
-            {
+            
                 lang = LangToIsoCodeMapper.GetIsoCode(OnlineContext.GetActiveLanguageCode());
-            }
-            catch { }
+            
             switch (method)
             {
                 case Payment.Constant.PaymentMethod.BankTransfer:
@@ -113,11 +108,9 @@ namespace Lunggo.ApCommon.Constant
         public static string PaymentStatus(PaymentStatus status)
         {
             var lang = "en_US";
-            try
-            {
+            
                 lang = LangToIsoCodeMapper.GetIsoCode(OnlineContext.GetActiveLanguageCode());
-            }
-            catch { }
+            
             switch (status)
             {
                 case Payment.Constant.PaymentStatus.Pending:

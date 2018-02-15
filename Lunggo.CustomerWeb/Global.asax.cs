@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.CustomerWeb
 {
@@ -47,6 +48,20 @@ namespace Lunggo.CustomerWeb
                 Response.Redirect(redirectTo);
             }
 
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            if (exception != null)
+            {
+                var log = "Exception : " + exception.Message
+                    + "\nStackTrace : \n" + exception.StackTrace;
+                var TableLog = new GlobalLog();
+                TableLog.PartitionKey = "GLOBAL UNHANDLED EXCEPTION LOG";
+                TableLog.Log = log;
+                TableLog.Logging();
+            }
         }
 
     }

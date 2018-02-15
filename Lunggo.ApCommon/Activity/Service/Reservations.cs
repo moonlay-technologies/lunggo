@@ -47,14 +47,11 @@ namespace Lunggo.ApCommon.Activity.Service
             var storageName = azureConnString.Split(';')[1].Split('=')[1];
             var url = @"https://" + storageName + @".blob.core.windows.net/voucher/" + rsvNo + ".pdf";
             var client = new WebClient();
-            try
-            {
-                return client.DownloadData(url);
-            }
-            catch
-            {
-                return null;
-            }
+            
+            
+            return client.DownloadData(url);
+            
+            
         }
 
         public ActivityReservation GetReservation(string rsvNo)
@@ -64,17 +61,12 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public ActivityReservationForDisplay GetReservationForDisplay(string rsvNo)
         {
-            try
-            {
+            
                 var rsv = GetReservation(rsvNo);
 
                 var rsvfordisplay = ConvertToReservationForDisplay(rsv);
                 return rsvfordisplay;
-            }
-            catch
-            {
-                return null;
-            }
+            
         }
     }
 }

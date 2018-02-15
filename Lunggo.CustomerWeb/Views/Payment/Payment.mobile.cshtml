@@ -190,14 +190,13 @@
                                 </p>
                                 <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
                             </div>
-                            @*@{Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");}*@
+                            @Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");}*@
                         </div>
-                    }*@
                     <!-- ========================= PAYMENT METHOD ========================= -->
                     <div class="summary summary--payment">
                         @{Html.RenderPartial("/Views/Payment/partials/_paymentMethods.cshtml");}
                     </div><!-- .summary--payment -->
-                </div>
+
             </section><!-- .checkout-content -->
             <!-- Syarat & Ketentuan -->
             <div class="popup__wrapper" ng-class="{'active' : pay.showPopup}">

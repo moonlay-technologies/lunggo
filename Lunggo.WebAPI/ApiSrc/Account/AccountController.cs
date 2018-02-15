@@ -8,6 +8,7 @@ using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity.Owin;
 using Lunggo.Framework.Cors;
+using static Lunggo.WebAPI.App_Start.FilterConfig;
 
 namespace Lunggo.WebAPI.ApiSrc.Account
 {

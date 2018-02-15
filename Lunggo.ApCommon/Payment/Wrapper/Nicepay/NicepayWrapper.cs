@@ -15,7 +15,9 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
-
+using Microsoft.WindowsAzure.Storage.Table;
+using Lunggo.Framework.TableStorage;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
 {
@@ -57,6 +59,11 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
 
         internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
         {
+            JavaScriptSerializer JsonSerializer = new JavaScriptSerializer();
+            var TableLog = new GlobalLog();
+            
+            TableLog.PartitionKey = "PAYMENT LOG";
+            
             if (payment.Method == PaymentMethod.VirtualAccount)
             {
                 objNicepay.currency = "IDR";
@@ -110,59 +117,60 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                 {
                     //API data Not correct, you can redirect back to checkout page Or echo error message.
                     //In this sample, we echo error message
-                    JavaScriptSerializer JsonSerializer = new JavaScriptSerializer();
+                    
 
                     payment.Status = PaymentStatus.Failed;
                     payment.FailureReason = FailureReason.PaymentFailure;
 
                     var log = LogService.GetInstance();
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                    log.Post(
-                        "```Payment Log```"
+                    TableLog.Log = "```Payment Log```"
                         + "\n`*Environment :* " + env.ToUpper()
                         + "\n*PAYMENT DETAILS :*\n"
                         + payment.Serialize()
                             + "\n*TRANSAC DETAILS :*\n"
                             + transactionDetail.Serialize()
-                        //+ "\n*ITEM DETAILS :*\n"
-                        //+ itemDetails.Serialize()
+                            //+ "\n*ITEM DETAILS :*\n"
+                            //+ itemDetails.Serialize()
                             + "\n*REQUEST :*\n"
                             + JsonSerializer.Serialize(objNicepay)
                         + "\n*RESPONSE :*\n"
                         + JsonSerializer.Serialize(objResult)
                         + "\n*Platform :* "
-                        + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                        + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId());
+                    log.Post(TableLog.Log,
                         env == "production" ? "#logging-prod" : "#logging-dev");
+                    TableLog.Logging();
                 }
                 else
                 {
                     //Timeout, you can redirect back to checkout page Or echo error message.
                     //In this sample, we echo error message
-                    JavaScriptSerializer JsonSerializer = new JavaScriptSerializer();
 
                     payment.Status = PaymentStatus.Failed;
                     payment.FailureReason = FailureReason.PaymentFailure;
 
                     var log = LogService.GetInstance();
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                    log.Post(
-                        "```Payment Log, Connection Time out to Nicepay```"
+                    TableLog.Log = "```Payment Log, Connection Time out to Nicepay```"
                         + "\n`*Environment :* " + env.ToUpper()
                         + "\n*PAYMENT DETAILS :*\n"
                         + payment.Serialize()
                             + "\n*TRANSAC DETAILS :*\n"
                             + transactionDetail.Serialize()
-                        //+ "\n*ITEM DETAILS :*\n"
-                        //+ itemDetails.Serialize()
+                            //+ "\n*ITEM DETAILS :*\n"
+                            //+ itemDetails.Serialize()
                             + "\n*REQUEST :*\n"
                             + JsonSerializer.Serialize(objNicepay)
                         + "\n*RESPONSE :*\n"
                         + JsonSerializer.Serialize(objResult)
                         + "\n*Platform :* "
-                        + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                        + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId());
+                    log.Post(
+                        TableLog.Log,
                         env == "production" ? "#logging-prod" : "#logging-dev");
-                }
-
+                    TableLog.Logging();
+                }  
             }
             return payment;
         }
@@ -196,4 +204,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
 
         }
     }
+
+
 }

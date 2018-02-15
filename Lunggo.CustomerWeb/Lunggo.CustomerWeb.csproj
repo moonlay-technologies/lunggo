@@ -136,6 +136,9 @@
     <Reference Include="System.Spatial">
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
@@ -222,6 +225,7 @@
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Controllers\WebviewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
     <Compile Include="Helper\Generator.cs" />
@@ -1949,6 +1953,7 @@
     </None>
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
+    <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />
     <Content Include="Views\Index\TeaserPage.cshtml" />
     <Content Include="Views\Index\TeaserPage.mobile.cshtml" />

@@ -54,19 +54,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                 
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            //log.Post(
-            //    "```Booking API Log```"
-            //    + "\n`*Environment :* " + env.ToUpper()
-            //    + "\n*REQUEST :*\n"
-            //    + request.Serialize()
-            //    + "\n*RESPONSE :*\n"
-            //    + apiResponse.Serialize()
-            //    + "\n*LOGIC RESPONSE :*\n"
-            //    + selectRateServiceResponse.Serialize()
-            //    + "\n*Platform :* "
-            //    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId())
-            //    + "\n*Itinerary :* \n"
-            //    + HotelService.GetInstance().GetItineraryForDisplay(request.Token).Serialize());
+            
             return apiResponse;
         }
 

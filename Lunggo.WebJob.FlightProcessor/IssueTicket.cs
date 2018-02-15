@@ -8,6 +8,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
 using Microsoft.Azure.WebJobs;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.WebJob.FlightProcessor
 {
@@ -17,12 +18,18 @@ namespace Lunggo.WebJob.FlightProcessor
         // on an Azure Queue called queue.
         public static void FlightIssueTicket([QueueTrigger("flightissueticket")] string rsvNo)
         {
+            var TableLog = new GlobalLog();
+            
+            TableLog.PartitionKey = "FLIGHT ISSUE LOG";
+            
             var flight = FlightService.GetInstance();
             Console.WriteLine("Processing Flight Issue Ticket for RsvNo " + rsvNo + "...");
             var sw = Stopwatch.StartNew();
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            log.Post("Logging Issue for *Rsv No : " + rsvNo + "*", "#logging-issueflight");
+            TableLog.Log = "Logging Issue for *Rsv No : " + rsvNo + "*";
+            log.Post(TableLog.Log, "#logging-issueflight");
+            TableLog.Logging();
             var issueTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "issueTimeout"));
             var issueCancellationSource = new CancellationTokenSource();
             var issueCancellation = issueCancellationSource.Token;

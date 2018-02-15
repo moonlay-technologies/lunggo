@@ -11,6 +11,7 @@ using Lunggo.Framework.Log;
 using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
@@ -91,7 +92,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                 while (msgLogin == "Your login name is inuse" || msgLogin == "There was an error logging you in")
                 {
-                    
+                    var TableLog = new GlobalLog();
+
+                    TableLog.PartitionKey = "FLIGHT LOGIN RETRY LOG";
+
                     bool successLogin;
                     userName = GetUsername(out errorMessage, timeoutSeconds/5);
                     if (errorMessage != null)
@@ -104,7 +108,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         prevCaptchaId = captchaId;
                         retryCounter++;
                         if (retryCounter > 10)
-                            LogService.GetInstance().Post("[Lion Air] Login Retry #" + retryCounter + ": User Name = " + userName + ", Login Message = " + msgLogin);
+                        {
+                            TableLog.Log = "[Lion Air] Login Retry #" + retryCounter + ": User Name = " + userName + ", Login Message = " + msgLogin;
+                            LogService.GetInstance().Post(TableLog.Log);
+                            TableLog.Logging();
+                        }
                         Thread.Sleep(1000);
                     } while (!successLogin && sw.Elapsed.TotalSeconds <= timeoutSeconds*3/5 && (msgLogin != "Your login name is inuse"
                         && msgLogin != "There was an error logging you in"));
@@ -256,38 +264,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 var userRs = (RestResponse)userClient.Execute(userRq);
             }
 
-            /* USING DEATHBYCAPTCHA */
-            //private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
-            //{
-            //    try
-            //    {
-            //        var username = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "userName");
-            //        var password = ConfigManager.GetInstance().GetConfigValue("deathbycaptcha", "password");
-            //        var client = (Client)new SocketClient(username, password);
-
-            //        //Report Incorrect
-            //        if (msgLogin == "Invalid Captcha" && prevCaptchaId != null)
-            //            client.Report(int.Parse(prevCaptchaId));
-
-            //        var captcha = client.Decode(captchaImg, 20);
-            //        if (captcha != null)
-            //        {
-            //            captchaId = captcha.Id.ToString(CultureInfo.InvariantCulture);
-            //            return captcha.Text;
-            //        }
-            //        else
-            //        {
-            //            captchaId = null;
-            //            return "";
-            //        }
-                    
-            //    }
-            //    catch
-            //    {
-            //        captchaId = null;
-            //        return "";
-            //    }
-            //}
 
             /* USING CLOUD APP */
             private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)

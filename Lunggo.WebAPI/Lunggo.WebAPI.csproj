@@ -152,6 +152,9 @@
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Cors">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -344,8 +347,11 @@
     <Compile Include="ApiSrc\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
     <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\CheckVersionLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetPromoLogic.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\CheckVersionApiRequest.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Model\CheckVersionApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\PromoDetailsApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\AllPromoApiResponse.cs" />
     <Compile Include="ApiSrc\Auxiliary\Model\FeaturedPromoApiResponse.cs" />
@@ -460,6 +466,7 @@
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiRequest.cs" />
     <Compile Include="ApiSrc\Payment\Model\CheckVoucherApiResponse.cs" />
     <Compile Include="App_Start\AppInitializer.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

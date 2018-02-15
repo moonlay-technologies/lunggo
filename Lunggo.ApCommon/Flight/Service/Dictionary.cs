@@ -65,11 +65,12 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string GetAirlineName(string code)
         {
-            try
+            var isSuccess = _airlineNameDict.TryGetValue(code, out string airlineName);
+            if (isSuccess == true)
             {
                 return _airlineNameDict[code];
             }
-            catch
+            else
             {
                 return "";
             }
@@ -99,12 +100,13 @@ namespace Lunggo.ApCommon.Flight.Service
         }
 
         public string GetAirportName(string code)
-        {
-            try
+        {            
+            var isSuccess = _airportNameDict.TryGetValue(code, out string airportName);
+            if(isSuccess == true)
             {
-                return _airportNameDict[code];
+                return airportName;
             }
-            catch
+            else
             {
                 return "";
             }
@@ -112,23 +114,26 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string GetAirportCityCode(string code)
         {
-            try
+            var isSuccess = _airportCityCodeDict.TryGetValue(code, out string airportCityCode);
+            if (isSuccess == true)
             {
-                return _airportCityCodeDict[code];
+                return airportCityCode;
             }
-            catch
+            else
             {
                 return "";
             }
+
         }
 
         public string GetAirportCity(string code)
         {
-            try
+            var isSuccess = _airportCityDict.TryGetValue(code, out string airportCity);
+            if (isSuccess == true)
             {
-                return _airportCityDict[code];
+                return airportCity;
             }
-            catch
+            else
             {
                 return "";
             }
@@ -136,11 +141,13 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string GetAirportCountryCode(string code)
         {
-            try
+
+            var isSuccess = _airportCountryCodeDict.TryGetValue(code, out string airportCountryCode);
+            if (isSuccess == true)
             {
-                return _airportCountryCodeDict[code];
+                return airportCountryCode;
             }
-            catch
+            else
             {
                 return "";
             }
@@ -148,11 +155,12 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string GetAirportCountry(string code)
         {
-            try
+            var isSuccess = _airportCountryDict.TryGetValue(code, out string airportCountry);
+            if (isSuccess == true)
             {
-                return _airportCountryDict[code];
+                return airportCountry;
             }
-            catch
+            else
             {
                 return "";
             }
@@ -172,26 +180,32 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public string GetCountryName(string code)
         {
-            try
+
+            var isSuccess = _countryNameDict.TryGetValue(code, out string countryName);
+            if (isSuccess == true)
             {
-                return _countryNameDict[code];
+                return countryName;
             }
-            catch
+            else
             {
                 return "";
             }
+
         }
 
         public string GetCountryCallingCode(string code)
         {
-            try
+
+            var isSuccess = _countryCallingCodeDict.TryGetValue(code, out string countryCallingCode);
+            if (isSuccess == true)
             {
-                return _countryCallingCodeDict[code];
+                return countryCallingCode;
             }
-            catch
+            else
             {
                 return "";
             }
+
         }
 
         private static Dictionary<long, AirlineDict> PopulateAirlineDict(String airlineFilePath)

@@ -22,8 +22,7 @@
     var listAges = new List<int>();
     var hotelMainImage = Model.HotelDetail.MainImage;
     var totalRoom = 0;
-    try
-    {
+    
         
         foreach (var room in Model.HotelDetail.Rooms)
         {
@@ -49,12 +48,8 @@
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
-    }
-    catch (Exception)
-    {
+    
 
-        throw;
-    }
     
 }
 
