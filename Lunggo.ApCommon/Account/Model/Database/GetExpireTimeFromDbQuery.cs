@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Account.Model.Database
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "Select rp.ExpireTime AS OtpHash FROM ResetPassword AS rp WHERE PhoneNumber = @PhoneNumber";
+            return "Select rp.ExpireTime AS OtpHash FROM ResetPassword AS rp WHERE PhoneNumber = @Contact OR Email = @Contact";
         }
     }
 }

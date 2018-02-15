@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Account.Model.Database
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "DELETE FROM ResetPassword WHERE PhoneNumber = @PhoneNumber";
+            return "DELETE FROM ResetPassword WHERE PhoneNumber = @Contact OR Email = @Contact";
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Account.Service
         public bool CheckOtp(CheckOtpInput checkOtpInput)
         {
             var otpHash = checkOtpInput.Otp.Sha512Encode();
-            var otpHashDb = GetOtpHashFromDb(new ForgetPasswordInput { CountryCallCd = checkOtpInput.CountryCallCd, PhoneNumber = checkOtpInput.PhoneNumber });
+            var otpHashDb = GetOtpHashFromDb(new ForgetPasswordInput { CountryCallCd = checkOtpInput.CountryCallCd, PhoneNumber = checkOtpInput.PhoneNumber, Email = checkOtpInput.Email });
             if (otpHashDb.Count() < 1)
             {
                 return false;
@@ -27,12 +27,17 @@ namespace Lunggo.ApCommon.Account.Service
             {
                 return true;
             }
+
         }
 
         public bool CheckExpireTime(CheckOtpInput checkOtpInput)
         {
-            var expireTimeDb = GetExpireTimeFromDb(checkOtpInput).First();
-            if(DateTime.UtcNow > expireTimeDb)
+            var expireTimeDb = GetExpireTimeFromDb(checkOtpInput);
+            if (expireTimeDb.Count() < 1)
+            {
+                return false;
+            }
+            if(DateTime.UtcNow > expireTimeDb.First())
             {
                 return false;
             }

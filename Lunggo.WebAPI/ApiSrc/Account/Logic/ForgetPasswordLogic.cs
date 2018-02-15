@@ -18,7 +18,85 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ForgetPasswordApiResponse ForgetPassword(ForgetPasswordApiRequest apiRequest)
         {
-            if (apiRequest == null)
+            var input = new ForgetPasswordInput();
+            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber) && !string.IsNullOrEmpty(apiRequest.Email)) 
+            {
+                apiRequest.Email = null;
+            }
+
+            var apiResponse = new ForgetPasswordApiResponse();
+
+            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
+            {
+                if (AccountService.GetInstance().CheckTimerSms(apiRequest.PhoneNumber, out int? resendCooldown) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_TOO_MANY_SEND_SMS_IN_A_TIME",
+                        ResendCooldown = resendCooldown
+                    };
+                }
+
+                if (apiRequest.PhoneNumber.StartsWith("0"))
+                {
+                    apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
+                }
+
+                if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
+                    };
+                }
+
+                input = PreProcess(apiRequest);
+                if (AccountService.GetInstance().CheckContactData(input) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_PHONENUMBER_NOT_REGISTERED"
+                    };
+                }
+
+                
+            }
+
+            if (!string.IsNullOrEmpty(apiRequest.Email))
+            {
+                if (AccountService.GetInstance().CheckTimerEmail(apiRequest.Email, out int? resendCooldown) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_TOO_MANY_SEND_EMAIL_IN_A_TIME",
+                        ResendCooldown = resendCooldown
+                    };
+                }
+
+                if (AccountService.GetInstance().CheckEmailFormat(apiRequest.Email) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_FORMAT_EMAIL"
+                    };
+                }
+
+                input = PreProcess(apiRequest);
+                if (AccountService.GetInstance().CheckContactData(input) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_EMAIL_NOT_REGISTERED"
+                    };
+                }
+            }
+            else
             {
                 return new ForgetPasswordApiResponse
                 {
@@ -27,43 +105,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
                 };
             }
-            
-            if (AccountService.GetInstance().CheckTimerSms(apiRequest.PhoneNumber, out int? resendCooldown) == false)
-            {
-                return new ForgetPasswordApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_TOO_MANY_SEND_SMS_IN_A_TIME",
-                    ResendCooldown = resendCooldown
-                };
-            }
 
-            if (apiRequest.PhoneNumber.StartsWith("0"))
-            {
-                apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
-            }
-
-            if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
-            {
-                return new ForgetPasswordApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
-                };
-            }
-
-            var input = PreProcess(apiRequest);
-            if (AccountService.GetInstance().CheckPhoneNumber(input) == false)
-            {
-                return new ForgetPasswordApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_PHONENUMBER_NOT_REGISTERED"
-                };
-            }
-            
             var output = AccountService.GetInstance().ForgetPassword(input);
-            var apiResponse = AssambleApiResponse(output);
+            apiResponse = AssambleApiResponse(output);
             return apiResponse;
         }
 
@@ -71,7 +115,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         {
             return new ForgetPasswordInput
             {
-                PhoneNumber = apiRequest.PhoneNumber
+                PhoneNumber = apiRequest.PhoneNumber,
+                Email = apiRequest.Email
             };
         }
 
@@ -89,6 +134,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 CountryCallCd = output.CountryCallCd,
                 PhoneNumber = output.PhoneNumber,
+                Email = output.Email,
                 StatusCode = HttpStatusCode.OK
             };
         }

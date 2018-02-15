@@ -19,11 +19,12 @@ namespace Lunggo.ApCommon.Account.Service
             };
         }
 
-        public List<string> GetIdsByPhoneNumber(ResettingPasswordInput resettingPasswordInput)
+        public List<string> GetIdsByContact(ResettingPasswordInput resettingPasswordInput)
         {
             var forgetPasswordInput = new ForgetPasswordInput
             {
-                PhoneNumber = resettingPasswordInput.PhoneNumber
+                PhoneNumber = resettingPasswordInput.PhoneNumber,
+                Email = resettingPasswordInput.Email
             };
             return GetUserIdFromDb(forgetPasswordInput).ToList();
         }

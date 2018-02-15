@@ -1953,6 +1953,7 @@
     </None>
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
+    <None Include="Views\common\ForgotPasswordByOtpEmail.cshtml" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />
     <Content Include="Views\Index\TeaserPage.cshtml" />

@@ -10,5 +10,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
     {
         [JsonProperty("phoneNumber", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
+        [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
+        public string Email { get; set; }
     }
 }

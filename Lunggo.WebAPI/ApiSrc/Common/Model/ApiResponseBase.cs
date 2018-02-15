@@ -75,7 +75,6 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             inputException.Request = requestString;
             inputException.PartitionKey = "ERROR LOG";
             inputException.RowKey = Guid.NewGuid().ToString();
-            throw e;
             TableStorageService.GetInstance().InsertEntityToTableStorage(inputException, "LogExceptionError");
             return e.GetType() == typeof(JsonReaderException)
                 ? ErrorInvalidJson(e.Message)

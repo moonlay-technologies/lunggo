@@ -116,6 +116,7 @@
     <Compile Include="Function\FlightDepositWarningNotifEmail.cs" />
     <Compile Include="Function\FlightIssueTimeoutNotifEmail.cs" />
     <Compile Include="Function\ActivityIssueTicketNotifEmail.cs" />
+    <Compile Include="Function\ForgotPasswordByOtpEmail.cs" />
     <Compile Include="Function\HotelInternalFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelVoucherEmail.cs" />

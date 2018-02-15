@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Account.Model.Database
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "UPDATE ResetPassword SET OtpHash = @OtpHash, ExpireTime = @ExpireTime WHERE PhoneNumber = @PhoneNumber";
+            return "UPDATE ResetPassword SET OtpHash = @OtpHash, ExpireTime = @ExpireTime WHERE PhoneNumber = @Contact OR Email = @Contact";
         }
     }
 }

@@ -18,8 +18,17 @@ namespace Lunggo.ApCommon.Account.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { PhoneNumber = forgetPasswordInput.PhoneNumber }).ToList();
-                return userId;
+                if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+                {
+                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.PhoneNumber }).ToList();
+                    return userId;
+                }
+                else
+                {
+                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.Email }).ToList();
+                    return userId;
+                }
+                
             }
         }
 
@@ -27,7 +36,15 @@ namespace Lunggo.ApCommon.Account.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new {PhoneNumber = forgetPasswordInput.PhoneNumber }).ToList();
+                var otpHash = new List<string>();
+                if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+                {
+                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.PhoneNumber }).ToList();
+                }
+                else
+                {
+                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.Email }).ToList();
+                }
                 return otpHash;
             }
         }
@@ -40,6 +57,7 @@ namespace Lunggo.ApCommon.Account.Service
                 {
                     PhoneNumber = forgetPasswordInput.PhoneNumber,
                     ExpireTime = expireTime,
+                    Email = forgetPasswordInput.Email,
                     OtpHash = otp.Sha512Encode()
                 };
                 ResetPasswordTableRepo.GetInstance().Insert(conn,resetPasswordInput);
@@ -50,7 +68,14 @@ namespace Lunggo.ApCommon.Account.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, PhoneNumber = forgetPasswordInput.PhoneNumber });
+                if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+                {
+                    UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, Contact = forgetPasswordInput.PhoneNumber });
+                }
+                else
+                {
+                    UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, Contact = forgetPasswordInput.Email });
+                }
             }
         }
 
@@ -58,7 +83,15 @@ namespace Lunggo.ApCommon.Account.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = checkOtpInput.CountryCallCd, PhoneNumber = checkOtpInput.PhoneNumber }).ToList();
+                var expireTime = new List<DateTime>();
+                if (!string.IsNullOrEmpty(checkOtpInput.PhoneNumber))
+                {
+                    expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = checkOtpInput.CountryCallCd, Contact = checkOtpInput.PhoneNumber }).ToList();
+                }
+                else
+                {
+                    expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = checkOtpInput.CountryCallCd, Contact = checkOtpInput.Email }).ToList();
+                }
                 return expireTime;
             }                
         }
@@ -71,11 +104,11 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
         
-        public void DeleteDataOtpFromDb(string phoneNumber)
+        public void DeleteDataOtpFromDb(string contact)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                DeleteDataOtpFromDbQuery.GetInstance().Execute(conn, new { PhoneNumber = phoneNumber });
+                DeleteDataOtpFromDbQuery.GetInstance().Execute(conn, new { Contact = contact });
             }
         }
     }

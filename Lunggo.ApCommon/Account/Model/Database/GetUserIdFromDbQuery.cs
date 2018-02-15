@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Account.Model.Database
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT u.Id AS UserId FROM [User] AS u WHERE u.PhoneNumber = @PhoneNumber";
+            return "SELECT u.Id AS UserId FROM [User] AS u WHERE u.PhoneNumber = @Contact OR u.Email = @Contact";
         }
     }
 }

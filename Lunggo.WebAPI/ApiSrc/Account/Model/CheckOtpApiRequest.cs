@@ -12,5 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string Otp { get; set; }
         [JsonProperty("phoneNumber", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
+        [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
+        public string Email { get; set; }
     }
 }

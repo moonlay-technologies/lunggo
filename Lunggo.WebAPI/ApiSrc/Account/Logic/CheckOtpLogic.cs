@@ -14,7 +14,41 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase CheckOtp(CheckOtpApiRequest apiRequest)
         {
-            if (apiRequest == null)
+            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber) && !string.IsNullOrEmpty(apiRequest.Email))
+            {
+                apiRequest.Email = null;
+            }
+            
+            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
+            {
+                if (apiRequest.PhoneNumber.StartsWith("0"))
+                {
+                    apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
+                }
+
+                if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
+                    };
+                }               
+            }
+
+            else if (!string.IsNullOrEmpty(apiRequest.Email))
+            {
+                if (AccountService.GetInstance().CheckEmailFormat(apiRequest.Email) == false)
+                {
+                    return new ForgetPasswordApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_FORMAT_EMAIL"
+                    };
+                }
+            }
+
+            else
             {
                 return new ApiResponseBase
                 {
@@ -23,22 +57,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            if (apiRequest.PhoneNumber.StartsWith("0"))
-            {
-                apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
-            }
-
-            if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
-                };
-            }
-
-            var input = PreProcess(apiRequest);    
-
+            var input = PreProcess(apiRequest);
             if (AccountService.GetInstance().CheckExpireTime(input) == false)
             {
                 return new ApiResponseBase
@@ -56,11 +75,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERR_OTP_NOT_VALID"
                 };
             }
-
             return new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.OK
             };
+
         }
 
 
@@ -69,6 +88,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             return new CheckOtpInput
             {
                 PhoneNumber = apiRequest.PhoneNumber,
+                Email = apiRequest.Email,
                 Otp = apiRequest.Otp
             };
         }

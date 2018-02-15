@@ -29,7 +29,16 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PhoneNumber");
 		    }
 		}
-		public String OtpHash
+        public String Email
+        {
+            get { return _Email; }
+            set
+            {
+                _Email = value;
+                IncrementLog("Email");
+            }
+        }
+        public String OtpHash
 		{
 		    get { return _OtpHash; }
 		    set
@@ -51,6 +60,7 @@ namespace Lunggo.Repository.TableRecord
 		
 		private String _CountryCallCd;
 		private String _PhoneNumber;
+        private String _Email;
 		private String _OtpHash;
 		private DateTime? _ExpireTime;
 
@@ -86,7 +96,8 @@ namespace Lunggo.Repository.TableRecord
             {
 				new ColumnMetadata("CountryCallCd", false),
 				new ColumnMetadata("PhoneNumber", false),
-				new ColumnMetadata("OtpHash", false),
+                new ColumnMetadata("Email", false),
+                new ColumnMetadata("OtpHash", false),
 				new ColumnMetadata("ExpireTime", false),
 
             };

@@ -31,5 +31,17 @@ namespace Lunggo.ApCommon.Account.Service
                 return true;
             }
         }
+
+        public bool CheckEmailFormat (string email)
+        {
+            if (email.Contains("@"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

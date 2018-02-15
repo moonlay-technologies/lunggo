@@ -996,6 +996,7 @@
     <Content Include="HtmlTemplate\VoucherEmail.cshtml" />
     <Content Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
     <Content Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
+    <Content Include="HtmlTemplate\ForgotPasswordByOtpEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
     <Content Include="HtmlTemplate\ActivityEVoucher.cshtml" />

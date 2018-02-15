@@ -8,9 +8,9 @@ namespace Lunggo.ApCommon.Account.Service
 {
     public partial class AccountService
     {
-        public void DeleteDataOtp(string phoneNumber)
+        public void DeleteDataOtp(string contact)
         {
-            DeleteDataOtpFromDb(phoneNumber);
+            DeleteDataOtpFromDb(contact);
         }
     }
 }
