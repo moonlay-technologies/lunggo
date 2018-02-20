@@ -31,7 +31,7 @@ namespace Lunggo.Framework.BrowserDetection
 
         public bool IsRequestFromAndroidOrIphone(HttpRequest httpRequest)
         {
-            var isApp = httpRequest.Headers["X-Client-ID"] != null;
+            var isApp = httpRequest.Headers["X-Client-ID"] != null || httpRequest.Headers["X-Requested-With"] != "host.exp.exponent";
             var userAgent = httpRequest.UserAgent.ToLower();
             return !isApp && (userAgent.Contains("android") || userAgent.Contains("iphone"));
         }

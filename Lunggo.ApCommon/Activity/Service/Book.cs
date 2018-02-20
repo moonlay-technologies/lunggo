@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 };
             }
             InsertActivityRsvToDb(rsvDetail);
-            ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
+            //ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookActivityOutput
             {
                 IsPriceChanged = false,
@@ -146,7 +146,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Status = PaymentStatus.Pending,
                     LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
                     OriginalPriceIdr = originalPriceIdr,
-                    TimeLimit = DateTime.UtcNow.AddHours(1)
+                    TimeLimit = DateTime.UtcNow.AddYears(1)
                     //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
                 },
                 RsvStatus = RsvStatus.InProcess,

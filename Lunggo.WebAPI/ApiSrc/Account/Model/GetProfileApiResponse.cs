@@ -5,6 +5,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
 {
     public class GetProfileApiResponse : ApiResponseBase
     {
+        [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
+        public string Avatar { get; set; }
         [JsonProperty("email", NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]

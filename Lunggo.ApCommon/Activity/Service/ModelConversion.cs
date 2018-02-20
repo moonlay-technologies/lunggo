@@ -23,21 +23,21 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 return null;
 
-            var convertedRsv = new ActivityReservationForDisplay
-            {
-                CancellationTime = activityReservation.CancellationTime,
-                CancellationType = activityReservation.CancellationType,
-                Contact = activityReservation.Contact,
-                ActivityDetail = ConvertToActivityDetailForDisplay(activityReservation.ActivityDetails),
-                DateTime = activityReservation.DateTime,
-                Pax = ConvertToPaxForDisplay(activityReservation.Pax),
-                PackageId = activityReservation.PackageId,
-                TicketCount = activityReservation.TicketCount,
-                RsvNo = activityReservation.RsvNo,
-                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(activityReservation.Payment),
-                RsvTime = activityReservation.RsvTime,
-                RsvDisplayStatus = MapReservationStatus(activityReservation)
-            };
+            var convertedRsv = new ActivityReservationForDisplay();
+
+            convertedRsv.CancellationTime = activityReservation.CancellationTime;
+            convertedRsv.CancellationType = activityReservation.CancellationType;
+            convertedRsv.Contact = activityReservation.Contact;
+            convertedRsv.ActivityDetail = ConvertToActivityDetailForDisplay(activityReservation.ActivityDetails);
+            convertedRsv.DateTime = activityReservation.DateTime;
+            convertedRsv.Pax = ConvertToPaxForDisplay(activityReservation.Pax);
+            convertedRsv.PackageId = activityReservation.PackageId;
+            convertedRsv.TicketCount = activityReservation.TicketCount;
+            convertedRsv.RsvNo = activityReservation.RsvNo;
+            convertedRsv.Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(activityReservation.Payment);
+            convertedRsv.RsvTime = activityReservation.RsvTime;
+            convertedRsv.RsvDisplayStatus = MapReservationStatus(activityReservation);
+            
 
             return convertedRsv;
         }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Web;
 using System.Web.Http.Controllers;
@@ -32,8 +33,9 @@ namespace Lunggo.WebAPI.App_Start
                 actionFilterTable.Url = actionExecutedContext.Request.RequestUri.AbsoluteUri;
                 actionFilterTable.Parameter = actionExecutedContext.ActionContext.ActionArguments.Serialize();
                 actionFilterTable.User = HttpContext.Current.User.Identity.GetId();
-                
-                var clientId = HttpContext.Current.Request.Headers["X-Client-ID"];
+
+                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                var clientId = identity.Claims.SingleOrDefault(claim => claim.Type == "Client ID")?.Value;
                 actionFilterTable.ClientID = clientId;
                 HttpContext.Current.Request.RequestContext.RouteData.Values.TryGetValue("body", out object body);
                 actionFilterTable.Body = (string)body;
