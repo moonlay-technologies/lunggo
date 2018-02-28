@@ -33,7 +33,8 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 return new BookActivityOutput
                 {
-                    IsValid = false
+                    IsValid = false,
+                    errStatus = "ERR_INVALID_PACKAGE_ID"
                 };
             }
 
@@ -48,29 +49,33 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 return new BookActivityOutput
                 {
-                    IsValid = false
+                    IsValid = false,
+                    errStatus ="ERR_INVALID_DATE"
                 };
             }
 
             var sessions = dateAndSession.Where(session => session.Date == input.DateTime.Date).First().AvailableHours;
-            if (!sessions.Contains(input.DateTime.Session))
+            if (!sessions.Contains(input.DateTime.Session) && sessions.Count() != 0)
             {
                 return new BookActivityOutput
                 {
-                    IsValid = false
+                    IsValid = false,
+                    errStatus = "ERR_INVALID_SESSION"
                 };
             }
-            
+
             getDetail.ActivityDetail.BookingStatus = BookingStatus.Booked;
             
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
-            if (rsvDetail == null)
+            if (rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE" || rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE_COUNT" || rsvDetail.RsvNo == "ERR_INVALID_ALL_TICKET_COUNT")
             {
                 return new BookActivityOutput
                 {
-                    IsValid = false
+                    IsValid = false,
+                    errStatus = rsvDetail.RsvNo
                 };
             }
+
             InsertActivityRsvToDb(rsvDetail);
             //ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookActivityOutput
@@ -117,19 +122,28 @@ namespace Lunggo.ApCommon.Activity.Service
                 allTicketCount += ticketCount.Count;
                 if (!typePricePackages.Contains(ticketCount.Type))
                 {
-                    return null;
+                    return new ActivityReservation
+                    {
+                        RsvNo = "ERR_INVALID_TICKET_TYPE"
+                    };
                 }
                 var price = pricePackages.Where(package => package.Type == ticketCount.Type).First();
                 if (ticketCount.Count < price.MinCount)
                 {
-                    return null;
+                    return new ActivityReservation
+                    {
+                        RsvNo = "ERR_INVALID_TICKET_TYPE_COUNT"
+                    };
                 }
                 originalPriceIdr += (price.Amount * ticketCount.Count);
             }
             
             if (allTicketCount > packageAttribute[0].MaxCount || allTicketCount < packageAttribute[0].MinCount)
             {
-                return null;
+                return new ActivityReservation
+                {
+                    RsvNo = "ERR_INVALID_ALL_TICKET_COUNT"
+                }; 
             }
 
             var rsvDetail = new ActivityReservation

@@ -25,6 +25,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERR_UNAUTHORIZED"
                 };
             }
+            if (String.IsNullOrWhiteSpace(request.Contact.CountryCallingCode))
+            {
+                request.Contact.CountryCallingCode = "62";
+            }
             if (!IsValid(request))
                 return new ActivityBookApiResponse
                 {
@@ -88,15 +92,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return new ActivityBookApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_REQUEST"
+                    ErrorCode = bookActivityServiceResponse.errStatus
                 };
             }
-            if (!bookActivityServiceResponse.IsValid)
-                return new ActivityBookApiResponse
-                {
-                    IsValid = bookActivityServiceResponse.IsValid,
-                    StatusCode = HttpStatusCode.OK,
-                };
             //if (bookActivityServiceResponse.IsPriceChanged)
             //{
             //    return new ActivityBookApiResponse

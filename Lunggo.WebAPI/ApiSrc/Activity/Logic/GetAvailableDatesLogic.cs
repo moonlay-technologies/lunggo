@@ -6,6 +6,7 @@ using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Activity.Model.Logic;
+using System.Collections.Generic;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
@@ -53,10 +54,17 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new GetAvailableDatesApiResponse
             {
-                AvailableDateTimes = searchServiceResponse.AvailableDateTimes.Select(e => new DateAndAvailableHourApi
+                AvailableDateTimes = searchServiceResponse.AvailableDateTimes.Select(e => 
                 {
-                    Date = e.Date.HasValue ? e.Date.Value.ToString("yyyy-MM-dd") : null,
-                    AvailableHours = e.AvailableHours
+                    var date = e.Date;
+                    var dateAndAvailableHours = new DateAndAvailableHourApi();
+                    dateAndAvailableHours.AvailableHours = null;
+                    if (e.AvailableHours.Count() > 0)
+                    {
+                        dateAndAvailableHours.AvailableHours = e.AvailableHours;
+                    }
+                    dateAndAvailableHours.Date = e.Date.HasValue ? e.Date.Value.ToString("yyyy-MM-dd") : null;
+                    return dateAndAvailableHours;
                 }).ToList(),
                 StatusCode = HttpStatusCode.OK
             };

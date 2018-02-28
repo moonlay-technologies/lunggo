@@ -13,5 +13,6 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
         public decimal? NewPrice { get; set; }
         public string RsvNo { get; set; }
         public DateTime TimeLimit { get; set; }
+        public string errStatus { get; set; }
     }
 }

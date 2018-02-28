@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Identity.Auth
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
-            return true; // OVERRIDE (comment to disable)
+            //return true; // OVERRIDE (comment to disable)
 
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Identity.Auth
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
-            return true; // OVERRIDE (comment to disable)
+            //return true; // OVERRIDE (comment to disable)
 
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 

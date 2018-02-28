@@ -1,4 +1,6 @@
-﻿using Lunggo.ApCommon.Activity.Model.Logic;
+﻿using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Activity.Model.Logic;
+using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -6,7 +8,8 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public GetMyBookingsOutput GetMyBookings(GetMyBookingsInput input)
         {
-            return GetMyBookingsFromDb(input);
+            var getMyBookingsOutput = GetMyBookingsFromDb(input);
+            return getMyBookingsOutput;
         }
         
     }

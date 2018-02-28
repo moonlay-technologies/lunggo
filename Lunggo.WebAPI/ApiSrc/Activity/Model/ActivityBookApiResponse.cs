@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? TimeLimit { get; set; }
         [JsonProperty("isValid", NullValueHandling = NullValueHandling.Ignore)]
-        public bool IsValid { get; set; }
+        public bool? IsValid { get; set; }
         //[JsonProperty("isPriceChanged", NullValueHandling = NullValueHandling.Ignore)]
         //public bool IsPriceChanged { get; set; }
         //[JsonProperty("newPrice", NullValueHandling = NullValueHandling.Ignore)]

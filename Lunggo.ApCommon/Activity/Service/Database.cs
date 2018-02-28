@@ -150,27 +150,29 @@ namespace Lunggo.ApCommon.Activity.Service
                     {
                         var savedHours = GetAvailableSessionQuery.GetInstance()
                          .Execute(conn, new { ActivityId = input.ActivityId, AvailableDay = date.DayOfWeek.ToString() }).ToList();
-               
-                        if (whitelistedDates.Contains(date))
-                        {
-                            var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
-                            foreach(var customSavedHour in customSavedHours)
+                        var customSavedHoursWL = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
+                        var customSavedHoursBL = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
+                        savedHours.Remove("");
+                        customSavedHoursBL.Remove("");
+                        customSavedHoursWL.Remove("");
+                        if (whitelistedDates.Contains(date) && customSavedHoursWL.Count() != 0)
+                        {             
+                            foreach(var customSavedHour in customSavedHoursWL)
                             {
                                 savedHours.Add(customSavedHour);
                                 whitelistedDates.Remove(date);
                             }
                         }
 
-                        if (blacklistedDates.Contains(date))
-                        {
-                            var customSavedHours = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
-                            foreach (var customSavedHour in customSavedHours)
+                        if (blacklistedDates.Contains(date) && customSavedHoursBL.Count() != 0)
+                        {  
+                            foreach (var customSavedHour in customSavedHoursBL)
                             {
                                 savedHours.Remove(customSavedHour);
                             }
                         }
 
-                        if (savedHours.Count > 0)
+                        if (!blacklistedDates.Contains(date) || savedHours.Count > 0)
                         {
                             var savedDateAndHour = new DateAndAvailableHour
                             {
@@ -186,6 +188,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 foreach (var whitelistedDate in whitelistedDates)
                 {
                     var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate, ActivityId = input.ActivityId }).ToList();
+                    customSavedHours.Remove("");
                     var customSavedDateAndHour = new DateAndAvailableHour
                     {
                         AvailableHours = customSavedHours,
@@ -198,8 +201,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     AvailableDateTimes = result
                 };
-               
-                
+
                 return output;
             }
         }
@@ -268,54 +270,40 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userName = HttpContext.Current.User.Identity.GetUser();
+                var cartList = new List<CartList>();
                 var cartIdList = GetCartIdListDbQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage }).ToList();
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
                 var savedBookings = new List<CartList>();
-
                 foreach (var cartId in cartIdList)
                 {
-                    PaymentStatus paymentStatusEnum = PaymentStatus.Undefined;
-                    decimal totalOriginalPrice = 0;
-                    decimal totalFinalPrice = 0;
-                    decimal totalDiscount = 0;
-                    decimal totalUniqueCode = 0; 
-                    var bookingDetails = new List<BookingDetail>();
-                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
-                    foreach (var rsvNo in rsvNoList)
-                    {
-                        var payment = GetReservationFromDb(rsvNo).Payment;
-                        var bookingDetail = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo });
-                        bookingDetail.BookingDetail.RequestReview = CheckReview(rsvNo, bookingDetail.BookingDetail.Date, bookingDetail.BookingDetail.SelectedSession);
-                        bookingDetail.BookingDetail.RequestRating = CheckRating(rsvNo, bookingDetail.BookingDetail.Date, bookingDetail.BookingDetail.SelectedSession);
-                        bookingDetail.BookingDetail.RsvNo = rsvNo;
-                        paymentStatusEnum = payment.Status;
-                        bookingDetails.Add(bookingDetail.BookingDetail);
-                        totalOriginalPrice += payment.OriginalPriceIdr;
-                        totalDiscount += payment.DiscountNominal;
-                        totalUniqueCode += payment.UniqueCode;
-                        totalFinalPrice += payment.FinalPriceIdr;
-                    }
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId });
+                    var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail);
+                    var payments = rsvNoList.Select(rsvNo => PaymentDetails.GetFromDb(rsvNo)).ToList();
+                    decimal totalOriginalPrice = payments.Sum(payment => payment.OriginalPriceIdr);
+                    decimal totalFinalPrice = payments.Sum(payment => payment.FinalPriceIdr);
+                    decimal totalDiscount = payments.Sum(payment => payment.DiscountNominal);
+                    decimal totalUniqueCode = payments.Sum(payment => payment.UniqueCode);
+                    PaymentStatus paymentStatusEnum = payments.First().Status;
                     var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
-                    var cartList = new CartList
-                    {
-                        CartId = cartId,
-                        Activities = bookingDetails,
-                        TotalOriginalPrice = totalOriginalPrice,
-                        TotalDiscount = totalDiscount,
-                        TotalUniqueCode = totalUniqueCode,
-                        TotalFinalPrice = totalFinalPrice,
-                        PaymentStatus = paymentStatus
-                    };
-                    savedBookings.Add(cartList);
+                    var cart = new CartList();
+
+                    cart.CartId = cartId;
+                    cart.Activities = bookingDetails.ToList();
+                    cart.TotalOriginalPrice = totalOriginalPrice;
+                    cart.TotalDiscount = totalDiscount;
+                    cart.TotalUniqueCode = totalUniqueCode;
+                    cart.TotalFinalPrice = totalFinalPrice;
+                    cart.PaymentStatus = paymentStatus;
+                    
+                    cartList.Add(cart);
                 }
 
-                var output = new GetMyBookingsOutput
+                return new GetMyBookingsOutput
                 {
-                    MyBookings = savedBookings,
+                    MyBookings = cartList,
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
-                return output;
             }
         }
 
@@ -374,6 +362,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 savedBooking.Price = priceBook;
                 savedBooking.Passengers = savedPassengers;
+                savedBooking.RequestReview = CheckReview(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
+                savedBooking.RequestRating = CheckRating(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
 
                 var output = new GetMyBookingDetailOutput
                 {
@@ -701,16 +691,29 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 foreach (var date in input.RegularAvailableDates)
                 {
-                    foreach(var availableHours in date.AvailableHours)
+                    if (date.AvailableHours != null)
+                    {
+                        foreach (var availableHours in date.AvailableHours)
+                        {
+                            var activityAddSessionRecord = new ActivityRegularDateTableRecord
+                            {
+                                ActivityId = input.ActivityId,
+                                AvailableDay = date.Day,
+                                AvailableHour = availableHours
+                            };
+                            ActivityRegularDateTableRepo.GetInstance().Insert(conn, activityAddSessionRecord);
+                        }
+                    }
+                    else
                     {
                         var activityAddSessionRecord = new ActivityRegularDateTableRecord
                         {
                             ActivityId = input.ActivityId,
                             AvailableDay = date.Day,
-                            AvailableHour = availableHours
+                            AvailableHour = ""
                         };
                         ActivityRegularDateTableRepo.GetInstance().Insert(conn, activityAddSessionRecord);
-                    }   
+                    }
                 }                      
             }
             var response = new ActivityAddSessionOutput { isSuccess = true };
@@ -877,27 +880,35 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 DateTime startHour;
                 DateTime endHour;
-                if (!DateTime.TryParse(customDateInput.StartCustomHour, out startHour))
+                if (!string.IsNullOrWhiteSpace(customDateInput.StartCustomHour) && !DateTime.TryParse(customDateInput.StartCustomHour, out startHour))
                 {
                     return new CustomDateOutput
                     {
                         isSuccess = false
                     };
                 }
-                if (!DateTime.TryParse(customDateInput.EndCustomHour, out endHour))
+                if (!string.IsNullOrWhiteSpace(customDateInput.EndCustomHour) && !DateTime.TryParse(customDateInput.EndCustomHour, out endHour))
                 {
                     return new CustomDateOutput
                     {
                         isSuccess = false
                     };
                 }
-                var customDate = new ActivityCustomDateTableRecord
+                var customDate = new ActivityCustomDateTableRecord();
+                customDate.ActivityId = customDateInput.ActivityId;
+                customDate.CustomDate = customDateInput.CustomDate;
+                customDate.DateStatus = "whitelisted";
+                if (string.IsNullOrWhiteSpace(customDateInput.StartCustomHour) || string.IsNullOrWhiteSpace(customDateInput.EndCustomHour))
                 {
-                    ActivityId = customDateInput.ActivityId,
-                    CustomDate = customDateInput.CustomDate,
-                    AvailableHour = customDateInput.StartCustomHour + " - " + customDateInput.EndCustomHour,
-                    DateStatus = "whitelisted"
-                };
+                    customDate.AvailableHour = "";
+                }
+                else
+                {
+                    customDate.AvailableHour = customDateInput.StartCustomHour + " - " + customDateInput.EndCustomHour;
+                }
+                    
+                    
+                
                 ActivityCustomDateTableRepo.GetInstance().Insert(conn, customDate);
                 return new CustomDateOutput
                 {
@@ -1013,6 +1024,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     var user = preUser.ToList()[0];
                     var review = new ActivityReview
                     {
+                        Avatar = "https://static.giantbomb.com/uploads/original/0/4317/611184-warcraft_peon__medium_.png",
                         Name = user.FirstName + " " + user.LastName,
                         Content = preReview.Review,
                         Date = preReview.DateTime
@@ -1076,9 +1088,18 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var stringSessionHour = session.Substring(8);
-                var sessionHour = DateTime.Parse(stringSessionHour);
-                var dateCheck = date.Date.Add(sessionHour.TimeOfDay);
+                DateTime dateCheck;
+                if (!string.IsNullOrWhiteSpace(session))
+                {
+                    var stringSessionHour = session.Substring(8);
+                    var sessionHour = DateTime.Parse(stringSessionHour);
+                    dateCheck = date.Date.Add(sessionHour.TimeOfDay);
+                }
+                else
+                {
+                    TimeSpan time = new TimeSpan(23, 59, 59);
+                    dateCheck = date.Date.Add(time);
+                }
                 var reviews = GetReviewFromDbByRsvNoQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
                 if (reviews.Count() == 0 && DateTime.UtcNow > dateCheck)
                 {
@@ -1095,9 +1116,18 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var stringSessionHour = session.Substring(8);
-                var sessionHour = DateTime.Parse(stringSessionHour);
-                var dateCheck = date.Date.Add(sessionHour.TimeOfDay);
+                DateTime dateCheck;
+                if (!string.IsNullOrWhiteSpace(session))
+                {
+                    var stringSessionHour = session.Substring(8);
+                    var sessionHour = DateTime.Parse(stringSessionHour);
+                    dateCheck = date.Date.Add(sessionHour.TimeOfDay);
+                }
+                else
+                {
+                    TimeSpan time = new TimeSpan(23, 59, 59);
+                    dateCheck = date.Date.Add(time);
+                }
                 var rating = GetRatingFromDbByRsvNoQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
                 if (rating.Count() == 0 && DateTime.UtcNow > dateCheck)
                 {
