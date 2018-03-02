@@ -21,6 +21,8 @@ using System.Data.SqlClient;
 using System.Text;
 using System.Globalization;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.Framework.BlobStorage;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -105,7 +107,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 activityDetail.Wishlisted = wishlistedList[0].Wishlisted;
 
                 activityDetail.Package = GetActivityTicketDetailFromDb(input).Package;
-
                 var review = GetReviewFromDb(input.ActivityId);
                 if (review.Count() != 0)
                 {
@@ -245,7 +246,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
-
+                var pax = new List<Pax>();
                 if (paxRecords.Count != 0)
                     foreach (var passengerRecord in paxRecords)
                     {
@@ -256,8 +257,9 @@ namespace Lunggo.ApCommon.Activity.Service
                             LastName = passengerRecord.LastName,
                             Type = PaxTypeCd.Mnemonic(passengerRecord.TypeCd)
                         };
-                        activityReservation.Pax.Add(passenger);
+                        pax.Add(passenger);
                     }
+                activityReservation.Pax = pax;
                 var reservationData = GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail;
                 activityReservation.PackageId = reservationData.PackageId;
                 activityReservation.TicketCount = reservationData.PaxCount;
@@ -270,14 +272,13 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userName = HttpContext.Current.User.Identity.GetUser();
-                var cartList = new List<CartList>();
                 var cartIdList = GetCartIdListDbQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage }).ToList();
                 var savedBookings = new List<CartList>();
                 foreach (var cartId in cartIdList)
-                {
-                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId });
-                    var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail);
+                {                                    
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+                    var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo}).BookingDetail).ToList();
                     var payments = rsvNoList.Select(rsvNo => PaymentDetails.GetFromDb(rsvNo)).ToList();
                     decimal totalOriginalPrice = payments.Sum(payment => payment.OriginalPriceIdr);
                     decimal totalFinalPrice = payments.Sum(payment => payment.FinalPriceIdr);
@@ -285,25 +286,27 @@ namespace Lunggo.ApCommon.Activity.Service
                     decimal totalUniqueCode = payments.Sum(payment => payment.UniqueCode);
                     PaymentStatus paymentStatusEnum = payments.First().Status;
                     var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
-                    var cart = new CartList();
-
-                    cart.CartId = cartId;
-                    cart.Activities = bookingDetails.ToList();
-                    cart.TotalOriginalPrice = totalOriginalPrice;
-                    cart.TotalDiscount = totalDiscount;
-                    cart.TotalUniqueCode = totalUniqueCode;
-                    cart.TotalFinalPrice = totalFinalPrice;
-                    cart.PaymentStatus = paymentStatus;
                     
-                    cartList.Add(cart);
+                    var cartList = new CartList
+                    {
+                        CartId = cartId,
+                        Activities = bookingDetails,
+                        TotalOriginalPrice = totalOriginalPrice,
+                        TotalDiscount = totalDiscount,
+                        TotalUniqueCode = totalUniqueCode,
+                        TotalFinalPrice = totalFinalPrice,
+                        PaymentStatus = paymentStatus
+                    };
+                    savedBookings.Add(cartList);
                 }
 
-                return new GetMyBookingsOutput
+                var output = new GetMyBookingsOutput
                 {
-                    MyBookings = cartList,
+                    MyBookings = savedBookings,
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
+                return output;
             }
         }
 
@@ -360,10 +363,15 @@ namespace Lunggo.ApCommon.Activity.Service
                         }
                     }
                 }
+                savedBooking.RsvNo = input.RsvNo;
                 savedBooking.Price = priceBook;
                 savedBooking.Passengers = savedPassengers;
                 savedBooking.RequestReview = CheckReview(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
                 savedBooking.RequestRating = CheckRating(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
+                if (savedBooking.HasPdfVoucher && savedBooking.IsPdfUploaded)
+                {
+                    savedBooking.PdfUrl = ConfigManager.GetInstance().GetConfigValue("azureStorage", "rootUrl") + "/eticket/" + input.RsvNo + ".pdf";
+                }               
 
                 var output = new GetMyBookingDetailOutput
                 {
@@ -1137,6 +1145,14 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     return false;
                 }
+            }
+        }
+
+        public void UpdateRsvNoPdfFlag(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                UpdateRsvNoPdfFlagQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo });
             }
         }
     }

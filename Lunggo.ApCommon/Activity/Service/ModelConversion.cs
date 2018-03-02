@@ -103,6 +103,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 RequiredPaxData = requiredPaxData,
                 Package = activityDetail.Package,
                 Wishlisted = activityDetail.Wishlisted,
+                HasPdfVoucher = activityDetail.HasPdfVoucher,
                 OperatorName = activityDetail.OperatorName,
                 OperatorEmail = activityDetail.OperatorEmail,
                 OperatorPhone = activityDetail.OperatorPhone,

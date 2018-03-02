@@ -33,17 +33,13 @@ namespace Lunggo.WebAPI.App_Start
                 actionFilterTable.Url = actionExecutedContext.Request.RequestUri.AbsoluteUri;
                 actionFilterTable.Parameter = actionExecutedContext.ActionContext.ActionArguments.Serialize();
                 actionFilterTable.User = HttpContext.Current.User.Identity.GetId();
-
                 var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                 var clientId = identity.Claims.SingleOrDefault(claim => claim.Type == "Client ID")?.Value;
                 actionFilterTable.ClientID = clientId;
                 HttpContext.Current.Request.RequestContext.RouteData.Values.TryGetValue("body", out object body);
                 actionFilterTable.Body = (string)body;
-                
-                
                 string platformType = null;
                 string platformVersion = null;
-
                 if (!string.IsNullOrEmpty(clientId))
                 {
                     var platform = Client.GetPlatform(clientId);
@@ -67,7 +63,12 @@ namespace Lunggo.WebAPI.App_Start
                 var response = actionExecutedContext.Response;
                 if (response != null)
                 {
-                    actionFilterTable.Response = response.Content.ReadAsStringAsync().Result;
+                    var Response = response.Content.ReadAsStringAsync().Result;
+                    if (Response.Length > 30000)
+                    {
+                        Response = Response.Substring(0, 30000);
+                    }
+                    actionFilterTable.Response = Response;
                 }
                 actionFilterTable.InsertActionFilter();
             }
@@ -104,8 +105,7 @@ namespace Lunggo.WebAPI.App_Start
         public void InsertActionFilter()
         {
             RowKey = Guid.NewGuid().ToString();
-            TableStorageService.GetInstance().InsertEntityToTableStorage(this, "ApiAnalyticsHit");
-            
+            TableStorageService.GetInstance().InsertEntityToTableStorage(this, "ApiAnalyticsHit");  
         }
     }
 }

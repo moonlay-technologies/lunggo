@@ -79,7 +79,8 @@ namespace Lunggo.Worker.EticketHandler
             sw.Stop();
             Trace.WriteLine("Done Saving Eticket File for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
-            
+
+            ActivityService.GetInstance().UpdateRsvNoPdfFlag(rsvNo);
             var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
             var activityReservation = activityService.GetActivityInvoice(cartId);
             Trace.WriteLine("Parsing Invoice for CartId " + cartId + "...");
@@ -146,6 +147,7 @@ namespace Lunggo.Worker.EticketHandler
             sw.Reset();
 
             Trace.WriteLine("Pushing Eticket Email Queue for CartId " + cartId + "...");
+            
             var queueService = QueueService.GetInstance();
             var emailQueue = queueService.GetQueueByReference("ActivityEVoucherAndInvoiceEmail");
             emailQueue.AddMessage(new CloudQueueMessage(rsvNo));

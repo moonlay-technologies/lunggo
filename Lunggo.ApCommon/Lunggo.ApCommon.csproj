@@ -228,6 +228,7 @@
     <Compile Include="Activity\Database\Query\GetCartIdListDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateRsvNoPdfFlagQuery.cs" />
     <Compile Include="Activity\Model\ActivityEvoucherAndInvoice.cs" />
     <Compile Include="Activity\Model\AppointmentDetail.cs" />
     <Compile Include="Activity\Model\BookingDetail.cs" />

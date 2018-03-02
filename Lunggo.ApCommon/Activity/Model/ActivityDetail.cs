@@ -60,6 +60,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorPhone { get; set; }
         [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
         public bool Wishlisted { get; set; }
+        [JsonProperty("hasPdfVoucher", NullValueHandling = NullValueHandling.Ignore)]
+        public bool HasPdfVoucher { get; set; }
         [JsonProperty("rating", NullValueHandling = NullValueHandling.Ignore)]
         public decimal Rating { get; set; }
         [JsonProperty("ratingCount", NullValueHandling = NullValueHandling.Ignore)]
@@ -108,7 +110,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal Rating { get; set; }
         public long RatingCount { get; set; }
         public long ReviewCount { get; set; }
-        public ActivityReview Review { get; set; }
+        public bool HasPdfVoucher { get; set; }
+        public ActivityReview Review { get; set; }        
     }
 
     public class AdditionalContent

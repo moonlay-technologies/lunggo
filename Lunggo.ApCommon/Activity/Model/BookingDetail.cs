@@ -92,10 +92,16 @@ namespace Lunggo.ApCommon.Activity.Model
         public string OperatorEmail { get; set; }
         [JsonProperty("operatorPhone", NullValueHandling = NullValueHandling.Ignore)]
         public string OperatorPhone { get; set; }
+        [JsonProperty("hasPdfVoucher", NullValueHandling = NullValueHandling.Ignore)]
+        public bool HasPdfVoucher { get; set; }
         [JsonProperty("requestReview", NullValueHandling = NullValueHandling.Ignore)]
         public bool RequestReview { get; set; }
         [JsonProperty("requestRating", NullValueHandling = NullValueHandling.Ignore)]
         public bool RequestRating { get; set; }
+        [JsonProperty("isPdfUploaded", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsPdfUploaded { get; set; }
+        [JsonProperty("pdfUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string PdfUrl { get; set; }        
     }
 
     public class ActivityPackageReservation
