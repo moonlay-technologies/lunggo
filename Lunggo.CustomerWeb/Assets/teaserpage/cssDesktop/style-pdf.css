@@ -41,5 +41,6 @@ footer {padding:0 150px 0 150px; background-color: #f8f8f8; position: absolute; 
 .jawaban {float:right;}
 .container-catatan {color:#7d7e7e; font-size: 19px; margin-top: 40px;}
 .container-footer {text-align: center; color:#fb536c; font-weight: 500; font-size: 19px; padding-top: 70px;}
+.container-footer a {color:#fb536c;  margin: 0 15px;}
 .container-footer ul {list-style: none; display: inline-flex;}
 .container-footer li {padding:0 20px;}
