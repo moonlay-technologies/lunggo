@@ -25,6 +25,15 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 };                
             }
             var user = HttpContext.Current.User;
+            if (user == null)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERR_UNAUTHORIZED"
+                };
+            }
+
             var role = userManager.GetRoles(user.Identity.GetUser().Id).FirstOrDefault();
             if (role != "Admin")
             {
