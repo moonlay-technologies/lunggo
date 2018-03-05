@@ -736,7 +736,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [LunggoCorsPolicy]
         [Level2Authorize]
         [Route("v1/operator/transactionstatement")]
-        public ApiResponseBase GetTransactionStatement()
+        public ApiResponseBase GetTransactionStatement(string startDate = "", string endDate = "")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
@@ -744,7 +744,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             OnlineContext.SetActiveCurrencyCode(currency);
             try
             {
-                var apiResponse = ActivityLogic.GetTransactionStatement(UserManager);
+                var request = new GetTransactionStatementApiRequest
+                {
+                    StartDate = startDate,
+                    EndDate = endDate
+                };
+                var apiResponse = ActivityLogic.GetTransactionStatement(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)

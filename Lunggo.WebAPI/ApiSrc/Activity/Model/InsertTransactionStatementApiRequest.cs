@@ -11,10 +11,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         [JsonProperty("remarks", NullValueHandling = NullValueHandling.Ignore)]
         public string Remarks { get; set; }
         [JsonProperty("amount", NullValueHandling = NullValueHandling.Ignore)]
-        public Decimal Amount { get; set; }
+        public Decimal? Amount { get; set; }
         [JsonProperty("operatorId", NullValueHandling = NullValueHandling.Ignore)]
         public string OperatorId { get; set; }
         [JsonProperty("dateTime", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime DateTime { get; set; }
+        public DateTime? DateTime { get; set; }
     }
 }

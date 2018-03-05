@@ -24,6 +24,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using System.Security.Cryptography;
+using Lunggo.ApCommon.Identity.Query.Record;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -1165,11 +1166,11 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
-        public GetTransactionStatementOutput GetTransactionStatementFromDb(string operatorId)
+        public GetTransactionStatementOutput GetTransactionStatementFromDb(string operatorId, DateTime startDate, DateTime endDate)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var transactionStatement = GetTransactionStatementOutputFromDbQuery.GetInstance().Execute(conn, new { OperatorId = operatorId }).ToList();
+                var transactionStatement = GetTransactionStatementOutputFromDbQuery.GetInstance().Execute(conn, new { OperatorId = operatorId, StartDate = startDate.Date, EndDate = endDate.Date  }).ToList();
                 var getTransactionStatementOutput = new GetTransactionStatementOutput
                 {
                     TransactionStatements = transactionStatement
@@ -1190,6 +1191,20 @@ namespace Lunggo.ApCommon.Activity.Service
                 var ticketNumber = intTicketNumber.ToString("D10");
                 UpdateTicketNumberReservationDbQuery.GetInstance().Execute(conn, new { TicketNumber = ticketNumber, RsvNo = rsvNo });
             }
+        }
+
+        public GetUserByAnyQueryRecord GetUserByIdFromDb (string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var user = GetUserByIdQuery.GetInstance().Execute(conn, new { Id = userId }).ToList();
+                if(user.Count == 0)
+                {
+                    return null;
+                }
+                return user.First();
+            }
+                
         }
     }
 }

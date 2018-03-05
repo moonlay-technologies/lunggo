@@ -304,6 +304,7 @@
     <Compile Include="Activity\Service\GetCartListData.cs" />
     <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
+    <Compile Include="Activity\Service\GetUserById.cs" />
     <Compile Include="Activity\Service\LandingPage.cs" />
     <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
     <Compile Include="Activity\Service\Operator\GetTransactionStatement.cs" />

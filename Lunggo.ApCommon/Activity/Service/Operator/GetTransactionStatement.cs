@@ -9,9 +9,14 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public GetTransactionStatementOutput GetTransactionStatement(string operatorId)
+        public GetTransactionStatementOutput GetTransactionStatement(string operatorId, DateTime startDate, DateTime endDate)
         {
-            var getTransactionStatementOutput = GetTransactionStatementFromDb(operatorId);
+            if(startDate.Equals(value: default(DateTime)))
+            {
+                endDate = DateTime.UtcNow;
+                startDate = endDate.AddDays(-30);
+            }
+            var getTransactionStatementOutput = GetTransactionStatementFromDb(operatorId, startDate, endDate);
             return getTransactionStatementOutput;    
         }
     }

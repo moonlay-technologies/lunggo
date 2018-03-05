@@ -10,8 +10,8 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
     {
         public string TrxNo { get; set; }
         public string Remarks { get; set; }
-        public DateTime DateTime { get; set; }
-        public Decimal Amount { get; set; }
+        public DateTime? DateTime { get; set; }
+        public Decimal? Amount { get; set; }
         public string OperatorId { get; set; }
     }
 }

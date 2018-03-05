@@ -13,7 +13,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT TrxNo AS TrxNo, Remarks AS Remarks, DateTime AS DateTime, Amount AS Amount FROM TransactionStatement WHERE OperatorId = @OperatorId";
+            return "SELECT TrxNo AS TrxNo, Remarks AS Remarks, DateTime AS DateTime, Amount AS Amount FROM TransactionStatement WHERE OperatorId = @OperatorId AND [DateTime] BETWEEN @StartDate AND @EndDate";
         }
     }
 }

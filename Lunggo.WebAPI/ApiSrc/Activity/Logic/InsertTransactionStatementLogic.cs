@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
     {
         public static ApiResponseBase InsertTransactionStatement(InsertTransactionStatementApiRequest apiRequest, ApplicationUserManager userManager)
         {
-            if (apiRequest == null)
+            if (apiRequest == null || string.IsNullOrWhiteSpace(apiRequest.Remarks) || apiRequest.Amount == null || apiRequest.DateTime == null || string.IsNullOrWhiteSpace(apiRequest.OperatorId))
             {
                 return new ApiResponseBase
                 {
@@ -43,6 +43,16 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERR_UNAUTHORIZED"
                 };
             }
+            var isValidOpId = ActivityService.GetInstance().GetUserById(apiRequest.OperatorId);
+            if(isValidOpId == null)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_INVALID_OPERATOR_ID"
+                };
+            }
+            
             var input = PreProcess(apiRequest);
             var isSuccess = ActivityService.GetInstance().InsertTransactionStatement(input);
             if (isSuccess)

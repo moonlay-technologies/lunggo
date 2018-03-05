@@ -303,6 +303,7 @@
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityReviewApiRequest.cs" />

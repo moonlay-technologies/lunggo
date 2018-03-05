@@ -48,7 +48,6 @@
                 <div class="judul-activity">@Model.BookingDetail.Name</div>
                 <div class="alamat-activity">@Model.BookingDetail.Address</div>
                 <div class="container-barcode">
-                    <div class="barcode"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/barcode.jpg")"></div>
                     <div class="kode-barcode">Kode voucher: @Model.BookingDetail.TicketNumber</div>
                 </div>
             </div>
