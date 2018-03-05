@@ -23,6 +23,7 @@ using System.Globalization;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
+using System.Security.Cryptography;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -285,8 +286,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     decimal totalDiscount = payments.Sum(payment => payment.DiscountNominal);
                     decimal totalUniqueCode = payments.Sum(payment => payment.UniqueCode);
                     PaymentStatus paymentStatusEnum = payments.First().Status;
-                    var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
-                    
+                    var paymentStatus = PaymentStatusConversion(paymentStatusEnum);                                       
                     var cartList = new CartList
                     {
                         CartId = cartId,
@@ -1153,6 +1153,42 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 UpdateRsvNoPdfFlagQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo });
+            }
+        }
+
+        public bool InsertTransactionStatementToDb(InsertTransactionStatementInput dbInput)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                InsertTransactionStatementToDbQuery.GetInstance().Execute(conn, new { TrxNo = dbInput.TrxNo, Remarks = dbInput.Remarks, DateTime = dbInput.DateTime, Amount = dbInput.Amount, OperatorId = dbInput.OperatorId });
+                return true;
+            }
+        }
+
+        public GetTransactionStatementOutput GetTransactionStatementFromDb(string operatorId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var transactionStatement = GetTransactionStatementOutputFromDbQuery.GetInstance().Execute(conn, new { OperatorId = operatorId }).ToList();
+                var getTransactionStatementOutput = new GetTransactionStatementOutput
+                {
+                    TransactionStatements = transactionStatement
+                };
+                return getTransactionStatementOutput;
+            }
+        }
+
+        public void UpdateTicketNumberReservationDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rng = new RNGCryptoServiceProvider();
+                byte[] randomByte = new byte[8];
+                rng.GetBytes(randomByte);
+                var randomInt = Math.Abs(BitConverter.ToInt32(randomByte, 0));
+                var intTicketNumber = randomInt % 100000000;
+                var ticketNumber = intTicketNumber.ToString("D10");
+                UpdateTicketNumberReservationDbQuery.GetInstance().Execute(conn, new { TicketNumber = ticketNumber, RsvNo = rsvNo });
             }
         }
     }

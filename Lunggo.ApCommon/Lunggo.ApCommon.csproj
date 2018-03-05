@@ -212,9 +212,11 @@
     <Compile Include="Activity\Database\Query\GetRatingFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetReviewFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetTransactionMutationOutputFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetUserIdFromActivityReservationDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetWhitelistedDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\InsertRatingAndReviewToDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\InsertTransactionStatementToDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateRsvNoPdfFlagQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateTicketNumberReservationDbQuery.cs" />
     <Compile Include="Activity\Model\ActivityEvoucherAndInvoice.cs" />
     <Compile Include="Activity\Model\AppointmentDetail.cs" />
     <Compile Include="Activity\Model\BookingDetail.cs" />
@@ -271,12 +274,14 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetTransactionStatementOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\InsertActivityRatingInput.cs" />
     <Compile Include="Activity\Model\Logic\InsertActivityRatingOutput.cs" />
     <Compile Include="Activity\Model\Logic\InsertActivityReviewInput.cs" />
     <Compile Include="Activity\Model\Logic\InsertRatingAndReviewInput.cs" />
     <Compile Include="Activity\Model\Logic\InsertRatingAndReviewOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertTransactionStatementInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
     <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
@@ -288,9 +293,11 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
+    <Compile Include="Activity\Model\TransactionStatement.cs" />
     <Compile Include="Activity\Model\Logic\WishlistAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
+    <Compile Include="Activity\Service\Admin\InsertTransactionStatement.cs" />
     <Compile Include="Activity\Service\Database.cs" />
     <Compile Include="Activity\Service\GetActivityInvoice.cs" />
     <Compile Include="Activity\Service\GetActivityTicketDetail.cs" />
@@ -299,6 +306,7 @@
     <Compile Include="Activity\Service\GetAvailableDates.cs" />
     <Compile Include="Activity\Service\LandingPage.cs" />
     <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
+    <Compile Include="Activity\Service\Operator\GetTransactionStatement.cs" />
     <Compile Include="Activity\Service\Operator\UpdateActivity.cs" />
     <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />
     <Compile Include="Activity\Service\Operator\GetAppointmentList.cs" />
@@ -896,6 +904,7 @@
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />
+    <Compile Include="Sequence\TrxNoSequence.cs" />
     <Compile Include="Sequence\VoucherSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -1123,7 +1132,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Activity\Service\Admin\" />
     <Folder Include="Hotel\Logic\Search\" />
     <Folder Include="Payment\Model\Logic\" />
   </ItemGroup>

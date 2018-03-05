@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal Price { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
-        [JsonProperty("passengers", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("paxes", NullValueHandling = NullValueHandling.Ignore)]
         public List<Pax> Passengers { get; set; }
         [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
         public string Area { get; set; }

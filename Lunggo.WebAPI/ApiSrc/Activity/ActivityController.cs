@@ -732,9 +732,57 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/transactionstatement")]
+        public ApiResponseBase GetTransactionStatement()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var apiResponse = ActivityLogic.GetTransactionStatement(UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+
+
+
+
         #endregion
 
         #region Admin
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/operator/transactionstatement")]
+        public ApiResponseBase InsertTransactionStatement()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            InsertTransactionStatementApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<InsertTransactionStatementApiRequest>();
+                var apiResponse = ActivityLogic.InsertTransactionStatement(request,UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
 
         #endregion
 

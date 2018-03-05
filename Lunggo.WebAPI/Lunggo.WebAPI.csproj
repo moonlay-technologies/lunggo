@@ -275,8 +275,10 @@
     <Compile Include="ApiSrc\Activity\Logic\GenerateQuestionLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityReviewsLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityTicketDetailLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetTransactionStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityRatingLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityReviewLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\InsertTransactionStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\LandingPageLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\UpdateActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListLogic.cs" />
@@ -301,8 +303,10 @@
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityReviewApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\InsertTransactionStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\LandingPageApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\DeleteFromWishlistApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetBookedActivitiesResponse.cs" />
