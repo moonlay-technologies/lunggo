@@ -366,7 +366,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 savedBooking.RsvNo = input.RsvNo;
                 savedBooking.Price = priceBook;
-                savedBooking.Passengers = savedPassengers;
+                savedBooking.Passengers = ConvertToPaxForDisplay(savedPassengers);
                 savedBooking.RequestReview = CheckReview(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
                 savedBooking.RequestRating = CheckRating(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
                 if (savedBooking.HasPdfVoucher && savedBooking.IsPdfUploaded)

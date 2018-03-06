@@ -72,7 +72,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
         public static GetMyBookingDetailApiResponse AssembleApiResponse(GetMyBookingDetailOutput serviceResponse)
         {
-            var paxForDisplay = ActivityService.GetInstance().ConvertToPaxForDisplay(serviceResponse.BookingDetail.Passengers);
+            var paxForDisplay = serviceResponse.BookingDetail.Passengers;
 
             var apiResponse = new GetMyBookingDetailApiResponse
             {

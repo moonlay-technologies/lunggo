@@ -73,7 +73,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
         [JsonProperty("paxes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Pax> Passengers { get; set; }
+        public List<PaxForDisplay> Passengers { get; set; }
         [JsonProperty("area", NullValueHandling = NullValueHandling.Ignore)]
         public string Area { get; set; }
         [JsonProperty("zone", NullValueHandling = NullValueHandling.Ignore)]

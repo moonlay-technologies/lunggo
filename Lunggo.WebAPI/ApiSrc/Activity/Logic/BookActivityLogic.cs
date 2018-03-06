@@ -75,7 +75,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Session = request.SelectedSession
                 },
                 TicketCount = request.TicketCount,
-                PackageId = request.PackageId
+                PackageId = request.PackageId,
+                Passengers = request.Paxes                
             };
             return selectServiceRequest;
         }
