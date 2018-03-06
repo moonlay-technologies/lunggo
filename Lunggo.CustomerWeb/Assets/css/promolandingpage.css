@@ -1,0 +1,47 @@
+/*!
+ * Start Bootstrap - 3 Col Portfolio (https://startbootstrap.com/template-overviews/3-col-portfolio)
+ * Copyright 2013-2017 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio/blob/master/LICENSE)
+ */
+
+body {
+}
+
+@media (min-width: 992px) {
+  body {
+  }
+}
+
+@font-face {
+    font-family: Hind-Regular;
+    src: url(../fonts/hind-regular.ttf);
+}
+@font-face {
+    font-family: Hind-SemiBold;
+    src: url(../fonts/hind-semibold.ttf);
+}
+@font-face {
+    font-family: Hind-Light;
+    src: url(../fonts/hind-light.ttf);
+}
+
+.align-center {text-align: center;}
+.no-margin {margin:0 !important;}
+.no-padding {padding:0 !important;}
+.judul-landing-page {color:#333333; font-family: hind-semibold; font-size: 20px; margin:25px 0 10px 0}
+.desc-landing-page {color:#454545; font-family: hind-light; font-size:13px; margin-bottom: 15px}
+.container-label-promo {font-family: hind-semibold; background-color: #00d3c5; margin: 0 15px; padding: 10px 20px;color:#ffffff; margin-top: 10px;
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.37);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.37);
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.1)
+}
+.container-isi-promo {margin: 0 15px; padding: 20px 20px; border: 1px solid #e6e6e6; 
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.37);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.37);
+    box-shadow: 0px 1px 10px 0px rgba(0,0,0,0.1)
+}
+.label-collapse {border-bottom: 1px solid #e6e6e6; padding-bottom: 6px; padding-left: 15px;}
+.label-collapse a:active, a:visited, a:hover {text-decoration: none !important; }
+.separator {margin: 10px 0 10px 0;}
+.isi-collapse ul {margin-top: 15px; padding-left: 18px; font-family: hind-light; font-size:13px; color:#454545;}
+.isi-collapse li {}

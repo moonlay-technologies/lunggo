@@ -4,7 +4,7 @@ using System.Web.Mvc;
 namespace Lunggo.CustomerWeb.Controllers
 {
     public class PromoController : Controller
-    {
+    {        
         [Route("{langCode}/Promo/{name}")]
         public ActionResult Promo(string name)
         {
@@ -319,6 +319,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.Terms = termList;
 
                     return View("Promo");
+
+                case "promolandingpage":
+                    return View("PromoLandingPage");
+
+
                 default:
                     return RedirectToAction("Index", "Index");
             }
