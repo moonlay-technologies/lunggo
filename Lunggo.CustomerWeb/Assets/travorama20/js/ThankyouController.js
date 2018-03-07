@@ -2,7 +2,7 @@
 
     
     angular.element(document).ready(function () {
-        $scope.rsvNo = window.location.search.toString().split('=')[1];
+        $scope.rsvNo = window.location.search.toString().split('=')[1].split('&')[0];
     });
     $scope.hide = false;
     $scope.returnUrl = window.location.origin;

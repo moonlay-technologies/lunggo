@@ -55,10 +55,11 @@ namespace Lunggo.ApCommon.Payment.Service
                     return PaymentMedium.Direct;
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:
+                case PaymentMethod.BcaKlikpay:
+                case PaymentMethod.CimbClicks:
                     return PaymentMedium.Veritrans;
                 case PaymentMethod.VirtualAccount:
                     return PaymentMedium.Nicepay;
-                case PaymentMethod.CimbClicks:
                 case PaymentMethod.XlTunai:
                 case PaymentMethod.TelkomselTcash:
                 case PaymentMethod.IbMuamalat:
@@ -66,9 +67,9 @@ namespace Lunggo.ApCommon.Payment.Service
                 case PaymentMethod.DanamonOnlineBanking:
                 case PaymentMethod.IndosatDompetku:
                 case PaymentMethod.SbiiOnlineShopping:
-                case PaymentMethod.BcaKlikpay:
                 case PaymentMethod.DooEtQnb:
                 case PaymentMethod.BtnMobileBanking:
+                case PaymentMethod.MaybankVa:
                     return PaymentMedium.E2Pay;
                 default:
                     return PaymentMedium.Undefined;

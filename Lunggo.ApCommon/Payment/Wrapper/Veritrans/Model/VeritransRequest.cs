@@ -6,37 +6,37 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
 {
     internal class VeritransRequest
     {
-        [JsonProperty("payment_type")]
+        [JsonProperty("payment_type", NullValueHandling = NullValueHandling.Ignore)]
         internal string PaymentType { get; set; }
-        [JsonProperty("vtweb")]
+        [JsonProperty("vtweb", NullValueHandling = NullValueHandling.Ignore)]
         internal VtWeb VtWeb { get; set; }
-        [JsonProperty("credit_card")]
+        [JsonProperty("credit_card", NullValueHandling = NullValueHandling.Ignore)]
         internal CreditCard CreditCard { get; set; }
-        [JsonProperty("bank_transfer")]
+        [JsonProperty("bank_transfer", NullValueHandling = NullValueHandling.Ignore)]
         internal BankTransfer BankTransfer { get; set; }
-        [JsonProperty("echannel")]
+        [JsonProperty("echannel", NullValueHandling = NullValueHandling.Ignore)]
         internal MandiriBillPayment MandiriBillPayment { get; set; }
-        [JsonProperty("mandiri_clickpay")]
+        [JsonProperty("mandiri_clickpay", NullValueHandling = NullValueHandling.Ignore)]
         internal MandiriClickPay MandiriClickPay { get; set; }
-        [JsonProperty("cimb_clicks")]
+        [JsonProperty("cimb_clicks", NullValueHandling = NullValueHandling.Ignore)]
         internal CimbClicks CimbClicks { get; set; }
-        [JsonProperty("bca_klikpay")]
+        [JsonProperty("bca_klikpay", NullValueHandling = NullValueHandling.Ignore)]
         internal BcaKlikPay BcaKlikPay{ get; set; }
-        [JsonProperty("telkomsel_cash")]
+        [JsonProperty("telkomsel_cash", NullValueHandling = NullValueHandling.Ignore)]
         internal TelkomselTcash TelkomselTcash { get; set; }
-        [JsonProperty("indosat_dompetku")]
+        [JsonProperty("indosat_dompetku", NullValueHandling = NullValueHandling.Ignore)]
         internal IndosatDompetku IndosatDompetku { get; set; }
-        [JsonProperty("mandiri_ecash")]
+        [JsonProperty("mandiri_ecash", NullValueHandling = NullValueHandling.Ignore)]
         internal MandiriEcash MandiriEcash { get; set; }
-        [JsonProperty("cstore")]
+        [JsonProperty("cstore", NullValueHandling = NullValueHandling.Ignore)]
         internal Indomaret Indomaret { get; set; }
-        [JsonProperty("custom_expiry")]
+        [JsonProperty("custom_expiry", NullValueHandling = NullValueHandling.Ignore)]
         internal PaymentExpiry PaymentExpiry { get; set; }
-        [JsonProperty("transaction_details")]
+        [JsonProperty("transaction_details", NullValueHandling = NullValueHandling.Ignore)]
         internal TransactionDetails TransactionDetail { get; set; }
-        [JsonProperty("item_details")]
+        [JsonProperty("item_details", NullValueHandling = NullValueHandling.Ignore)]
         internal List<ItemDetails> ItemDetail { get; set; }
-        [JsonProperty("customer_details")]
+        [JsonProperty("customer_details", NullValueHandling = NullValueHandling.Ignore)]
         internal CustomerDetails CustomerDetail { get; set; }
     }
 }

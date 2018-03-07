@@ -261,6 +261,8 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
                     return 18;
                 case PaymentMethod.DooEtQnb:
                     return 19;
+                case PaymentMethod.MaybankVa:
+                    return 20;
                 case PaymentMethod.BtnMobileBanking:
                     return 22;
                 default:

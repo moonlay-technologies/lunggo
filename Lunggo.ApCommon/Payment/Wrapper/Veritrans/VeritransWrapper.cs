@@ -224,6 +224,42 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     }
                     return payment;
 
+                case PaymentMethod.BcaKlikpay:
+                    request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
+                    response = SubmitRequest(request);
+                    content = GetResponseContent(response);
+                    if (content != null && content.StatusCode.StartsWith("2"))
+                    {
+                        payment.RedirectionUrl = content.RedirectUrl;
+                        payment.ExternalId = content.TransactionId;
+                        payment.Status = PaymentResult(content);
+                    }
+                    else
+                    {
+                        payment.Status = PaymentStatus.Failed;
+                        payment.FailureReason = FailureReason.PaymentFailure;
+
+                        var log = LogService.GetInstance();
+                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        log.Post(
+                            "```Payment Log```"
+                            + "\n`*Environment :* " + env.ToUpper()
+                            + "\n*PAYMENT DETAILS :*\n"
+                            + payment.Serialize()
+                                + "\n*TRANSAC DETAILS :*\n"
+                                + transactionDetail.Serialize()
+                            //+ "\n*ITEM DETAILS :*\n"
+                            //+ itemDetails.Serialize()
+                                + "\n*REQUEST :*\n"
+                                + _temp
+                            + "\n*RESPONSE :*\n"
+                            + content.Serialize()
+                            + "\n*Platform :* "
+                            + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
+                            env == "production" ? "#logging-prod" : "#logging-dev");
+                    }
+                    return payment;
+
                 case PaymentMethod.MandiriBillPayment:
                     request = CreateVtDirectRequest(authorizationKey, payment.Data, transactionDetail, payment.Method);
                     response = SubmitRequest(request);
@@ -467,7 +503,21 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             {
                 requestParams.CimbClicks = new CimbClicks
                 {
-                    Description = data.CimbClicks.Description,
+                    Description = "Pembayaran Travorama No. Pesanan " + transactionDetail.RsvNo,
+                    FinishRedirectUrl = FinishRedirectPath,
+                    UnfinishRedirectUrl = UnfinishRedirectPath,
+                    ErrorRedirectUrl = ErrorRedirectPath
+                };
+
+            }
+
+            //BcaKlikPay
+            else if (method == PaymentMethod.BcaKlikpay)
+            {
+                requestParams.BcaKlikPay = new BcaKlikPay
+                {
+                    Type = 1,
+                    Description = "Pembayaran Travorama No. Pesanan " + transactionDetail.RsvNo,
                     FinishRedirectUrl = FinishRedirectPath,
                     UnfinishRedirectUrl = UnfinishRedirectPath,
                     ErrorRedirectUrl = ErrorRedirectPath

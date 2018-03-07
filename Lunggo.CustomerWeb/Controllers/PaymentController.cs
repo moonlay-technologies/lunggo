@@ -54,7 +54,11 @@ namespace Lunggo.CustomerWeb.Controllers
                     else if ((rsv.Payment.Method == PaymentMethod.Undefined && rsv.Payment.Status == PaymentStatus.Pending) ||
                         rsv.Payment.Status == PaymentStatus.Failed)
                     {
+                        ViewBag.UniqueCode = PaymentService.GetInstance().GetUniqueCode(rsvNo, null, null);
                         ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+                        if (TempData["PaymentFailed"] != null)
+                            ViewBag.PaymentFailed = true;
+
                         return View(new PaymentData
                         {
                             RsvNo = rsvNo,
@@ -98,7 +102,6 @@ namespace Lunggo.CustomerWeb.Controllers
             }
             else
             {
-                TempData["AllowThisThankyouPage"] = rsvNo;
                 return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId });
             }
         }
@@ -126,8 +129,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     ViewBag.BankImageName = GetBankImageName(rsv.Payment.Submethod);
                     return View(rsv);
                 }
-                else
-                    TempData["AllowThisThankyouPage"] = rsvNo;
+
                 return RedirectToAction("Thankyou", "Payment", new { rsvNo, regId = signature });
             }
             return RedirectToAction("Index", "Index");
@@ -153,6 +155,18 @@ namespace Lunggo.CustomerWeb.Controllers
                     rsv = FlightService.GetInstance().GetReservationForDisplay(rsvNo);
                 else
                     rsv = HotelService.GetInstance().GetReservationForDisplay(rsvNo);
+
+                if (rsv.Payment.RedirectionUrl != null && rsv.Payment.Status == PaymentStatus.Pending)
+                {
+                    return Redirect(rsv.Payment.RedirectionUrl);
+                }
+
+                if (rsv.Payment.Status == PaymentStatus.Failed)
+                {
+                    TempData["PaymentFailed"] = true;
+                    return RedirectToAction("Payment", "Payment", new {rsvNo = rsvNo, regId = GenerateId(rsvNo)});
+                }
+
                 return View(rsv);
             }
             return RedirectToAction("Index", "Index");
@@ -162,7 +176,6 @@ namespace Lunggo.CustomerWeb.Controllers
         [ActionName("Thankyou")]
         public ActionResult ThankyouPost(string rsvNo)
         {
-            TempData["AllowThisReservationCheck"] = rsvNo;
             return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo });
         }
 
