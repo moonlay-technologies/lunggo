@@ -454,7 +454,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     {
                         Id = a.Id,
                         Name = a.Name,
-                        MediaSrc = a.MediaSrc
+                        MediaSrc = a.MediaSrc,
+                        Price = a.Price                        
                     }).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage

@@ -76,7 +76,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 },
                 TicketCount = request.TicketCount,
                 PackageId = request.PackageId,
-                Passengers = request.Paxes                
+                Passengers = ActivityService.GetInstance().ConvertToPax(request.Paxes)                
             };
             return selectServiceRequest;
         }
