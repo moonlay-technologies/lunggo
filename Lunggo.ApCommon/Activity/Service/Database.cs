@@ -109,6 +109,15 @@ namespace Lunggo.ApCommon.Activity.Service
                 activityDetail.Wishlisted = wishlistedList[0].Wishlisted;
 
                 activityDetail.Package = GetActivityTicketDetailFromDb(input).Package;
+                if (activityDetail.Package.Count > 0)
+                {
+                    var minPaxes = activityDetail.Package.Select(package => package.MinCount).OrderBy(paxes => paxes).ToList();
+                    activityDetail.MinPax = minPaxes.First();
+
+                    var maxPaxes = activityDetail.Package.Select(package => package.MaxCount).OrderByDescending(paxes => paxes).ToList();
+                    activityDetail.MaxPax = maxPaxes.First();
+                }
+                
                 var review = GetReviewFromDb(input.ActivityId);
                 if (review.Count() != 0)
                 {
