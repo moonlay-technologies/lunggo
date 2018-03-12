@@ -402,6 +402,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 var savedBookings = GetAppointmentRequestQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
 
+
+
                 var output = new GetAppointmentRequestOutput
                 {
                     Appointments = savedBookings.Select(a => new AppointmentDetail()
@@ -1270,8 +1272,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     return null;
                 }
                 return user.First();
-            }
-                
+            }                
         }
     }
 }

@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Product.Constant;
 using System.Security.Claims;
 using Lunggo.ApCommon.Identity.Auth;
 using System.Linq;
+using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -87,7 +88,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
-
+                AccountService.GetInstance().GenerateReferralCode(user.Id, request.ReferrerCode);
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK

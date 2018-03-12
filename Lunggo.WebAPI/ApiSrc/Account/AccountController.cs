@@ -1,4 +1,5 @@
 ﻿using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
@@ -353,6 +354,50 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             catch (Exception e)
             {
                 return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/referral")]
+        public ApiResponseBase GetReferral()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var apiResponse = AccountLogic.GetReferral();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/referraldetail")]
+        public ApiResponseBase GetReferralDetail()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var apiResponse = AccountLogic.GetReferralDetail();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
             }
         }
     }

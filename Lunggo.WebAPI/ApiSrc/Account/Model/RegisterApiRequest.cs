@@ -16,5 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [Required]
         [JsonProperty("password")]
         public string Password { get; set; }
+        [JsonProperty("referrerCode", NullValueHandling = NullValueHandling.Ignore)]
+        public string ReferrerCode { get; set; }
     }
 }
