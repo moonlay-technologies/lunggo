@@ -115,7 +115,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 ActivityDuration = activityDetail.ActivityDuration,
                 MustPrinted = activityDetail.MustPrinted,
                 MinPax = activityDetail.MinPax,
-                MaxPax = activityDetail.MaxPax
+                MaxPax = activityDetail.MaxPax,
+                ViewCount = activityDetail.ViewCount
             };
 
             return convertedActivity;

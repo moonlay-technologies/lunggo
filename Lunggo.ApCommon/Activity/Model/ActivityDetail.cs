@@ -80,6 +80,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public int MinPax { get; set; }
         [JsonProperty("maxPax", NullValueHandling = NullValueHandling.Ignore)]
         public int MaxPax { get; set; }
+        [JsonProperty("viewCount", NullValueHandling = NullValueHandling.Ignore)]
+        public long? ViewCount { get; set; }
 
 
     }
@@ -127,6 +129,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string ActivityDuration { get; set; }
         public int MinPax { get; set; }
         public int MaxPax { get; set; }
+        public long? ViewCount { get; set; }
     }
 
     public class AdditionalContent

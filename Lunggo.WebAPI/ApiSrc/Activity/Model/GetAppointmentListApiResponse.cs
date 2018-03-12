@@ -8,7 +8,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     public class GetAppointmentListApiResponse : ApiResponseBase
     {
         [JsonProperty("appointments", NullValueHandling = NullValueHandling.Ignore)]
-        public List<AppointmentDetailForDisplay> Appointments { get; set; }
+        public List<AppointmentListForDisplay> Appointments { get; set; }
         [JsonProperty("page", NullValueHandling = NullValueHandling.Ignore)]
         public int? Page { get; set; }
         [JsonProperty("perPage", NullValueHandling = NullValueHandling.Ignore)]

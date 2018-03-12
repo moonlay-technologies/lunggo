@@ -98,7 +98,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Session = serviceResponse.AppointmentDetail.Session,
                     MediaSrc = serviceResponse.AppointmentDetail.MediaSrc,
                     PaxGroup = serviceResponse.AppointmentDetail.PaxGroup
-                }
+                },
+                StatusCode = HttpStatusCode.OK
             };
 
             return apiResponse;

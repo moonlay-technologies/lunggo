@@ -1,20 +1,19 @@
-﻿using System;
-using System.Web;
-using System.Web.Http;
-using Lunggo.ApCommon.Identity.Auth;
-using Lunggo.Framework.Extension;
+﻿using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity.Owin;
-using Lunggo.Framework.Cors;
-using static Lunggo.WebAPI.App_Start.FilterConfig;
+using System;
+using System.Web;
+using System.Web.Http;
 
 namespace Lunggo.WebAPI.ApiSrc.Account
 {
     public class AccountController : ApiController
     {
         #region Managers
+
         public AccountController()
         {
         }
@@ -40,7 +39,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>(); }
             private set { _signInManager = value; }
         }
-        #endregion
+
+        #endregion Managers
 
         [HttpPost]
         [Level0Authorize]

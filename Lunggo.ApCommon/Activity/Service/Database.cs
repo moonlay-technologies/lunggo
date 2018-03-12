@@ -107,7 +107,9 @@ namespace Lunggo.ApCommon.Activity.Service
                 inputWishlist.ActivityFilter = activityIdWishlist;
                 var wishlistedList = GetActivitiesFromDb(inputWishlist).ActivityList;
                 activityDetail.Wishlisted = wishlistedList[0].Wishlisted;
+                activityDetail.ViewCount = activityDetail.ViewCount + 1;
 
+                UpdateViewCountDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId, ViewCount = activityDetail.ViewCount });
                 activityDetail.Package = GetActivityTicketDetailFromDb(input).Package;
                 if (activityDetail.Package.Count > 0)
                 {
@@ -427,14 +429,70 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
                 var savedBookings = GetAppointmentListQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, DateLimit = DateTime.UtcNow }).ToList();
+                var saved2 = savedBookings.Select(savedBooking => new AppointmentList { ActivityId = savedBooking.ActivityId, Date = savedBooking.Date, Name = savedBooking.Name, Session = savedBooking.Session, MediaSrc = savedBooking.MediaSrc });
+                var saved1 = saved2.GroupBy(p => new { p.ActivityId, p.Date, p.Session, p.MediaSrc, p.AppointmentReservations })
+                            .Select(g => g.First());
+                var saved = saved1.OrderBy(a => a.Date).ToList();
+
+
+
+                foreach (var savedBooking in savedBookings)
+                {                    
+                    var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = savedBooking.RsvNo,  }, null,
+                        (passengers, typeCd, titleCd, genderCd) =>
+                        {
+                            passengers.Type = PaxTypeCd.Mnemonic(typeCd);
+                            passengers.Title = TitleCd.Mnemonic(titleCd);
+                            passengers.Gender = GenderCd.Mnemonic(genderCd);
+                            return passengers;
+                        }, "TypeCd, TitleCd, GenderCd").ToList();
+                    var contact = Contact.GetFromDb(savedBooking.RsvNo);
+                    var savedPaxCountAndPackageId = GetPaxCountAndPackageIdDbQuery.GetInstance().Execute(conn, new { RsvNo = savedBooking.RsvNo}).ToList();
+                    if (savedPaxCountAndPackageId.Count() != 0)
+                    {
+                        savedBooking.PackageId = savedPaxCountAndPackageId.First().PackageId;
+                        savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
+                    }
+                    var savedPaxCounts = new List<ActivityPricePackageReservation>();
+                    var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
+                    foreach (var savedPaxCount in savedPaxCountAndPackageId)
+                    {
+                        var saveds = new ActivityPricePackageReservation();
+                        saveds.Type = savedPaxCount.Type;
+                        saveds.Count = savedPaxCount.Count;
+                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type);
+                        if (amountType.Count() != 0)
+                        {
+                            saveds.TotalPrice = savedPaxCount.Count * amountType.First().Amount;
+                        }
+                        savedPaxCounts.Add(saveds);
+                    }
+                    var paxGroup = new PaxGroup();
+                    paxGroup.Passengers = ActivityService.GetInstance().ConvertToPaxForDisplay(savedPassengers);
+                    paxGroup.Contact = contact;
+                    paxGroup.PaxCounts = savedPaxCounts;
+                    savedBooking.PaxGroup = paxGroup;
+
+                }
+
+                foreach (var save in saved)
+                {
+                    var appointmentDetail = savedBookings.Where(saving => save.ActivityId == saving.ActivityId && save.Date == saving.Date && save.Session == saving.Session).ToList();
+                    save.AppointmentReservations = appointmentDetail.Select(appointment => new AppointmentReservation { RsvNo = appointment.RsvNo, Contact = appointment.PaxGroup.Contact, Passengers = appointment.PaxGroup.Passengers, PaxCounts = appointment.PaxGroup.PaxCounts }).ToList();
+                }
+
+
+
 
                 var output = new GetAppointmentListOutput
                 {
-                    Appointments = savedBookings.ToList(),
+                    Appointments = saved,
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
+
+
                 return output;
             }
         }
@@ -483,7 +541,6 @@ namespace Lunggo.ApCommon.Activity.Service
                     Date = savedAppointment.Date,
                     Session = savedAppointment.Session,
                     MediaSrc = savedAppointment.MediaSrc,
-                    PaxGroup = new PaxGroup()
                 };
 
                 foreach (var appointment in savedAppointments.ToList())
@@ -503,7 +560,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         Passengers = ConvertToPaxForDisplay(savedPassengers)
                     };
 
-                    appointmentDetail.PaxGroup = paxgroup;
+                    //appointmentDetail.PaxGroup = paxgroup;
                 }
 
                 var output = new GetAppointmentDetailOutput
