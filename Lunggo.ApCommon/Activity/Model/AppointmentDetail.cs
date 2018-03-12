@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public long? ActivityId { get; set; }
         [JsonProperty("appointmentId", NullValueHandling = NullValueHandling.Ignore)]
         public long? AppointmentId { get; set; }
-        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("activityName", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
         [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvNo { get; set; }
@@ -20,6 +20,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime Date { get; set; }
         [JsonProperty("requestTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime RequestTime { get; set; }
+        [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime TimeLimit { get; set; }
         [JsonProperty("session", NullValueHandling = NullValueHandling.Ignore)]
         public string Session { get; set; }
         [JsonProperty("paxCount", NullValueHandling = NullValueHandling.Ignore)]
@@ -30,6 +32,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public PaxGroup PaxGroup { get; set; }
         [JsonProperty("appointmentReservations", NullValueHandling = NullValueHandling.Ignore)]
         public List<AppointmentReservation> AppointmentReservations { get; set; }
+        [JsonProperty("contactName", NullValueHandling = NullValueHandling.Ignore)]
+        public string ContactName { get; set; }
 
     }
 
@@ -58,11 +62,13 @@ namespace Lunggo.ApCommon.Activity.Model
         public string RsvNo { get; set; }
         public string PackageName { get; set; }
         public DateTime Date { get; set; }
-        public string RequestTime { get; set; }
+        public DateTime RequestTime { get; set; }
         public string Session { get; set; }
         public string MediaSrc { get; set; }
         public PaxGroup PaxGroup { get; set; }
         public List<AppointmentReservation> AppointmentReservations { get; set; }
+        public string ContactName { get; set; }
+        public DateTime TimeLimit { get; set; }
     }
 
     public class AppointmentList

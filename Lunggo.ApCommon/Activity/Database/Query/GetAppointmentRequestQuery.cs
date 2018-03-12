@@ -22,6 +22,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("SELECT act.Id AS ActivityId, ar.RsvNo AS RsvNo, act.Name AS Name, ");
             clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ");
             clauseBuilder.Append("ar.SelectedSession AS Session, ");
+            clauseBuilder.Append("r.RsvTime AS RequestTime, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();
         }
@@ -29,8 +30,9 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateJoinClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("FROM ActivityReservation AS ar ");
-            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=ar.ActivityId ");
+            clauseBuilder.Append("FROM ((ActivityReservation AS ar ");
+            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=ar.ActivityId) ");
+            clauseBuilder.Append("INNER JOIN Reservation AS r ON r.RsvNo=ar.RsvNo) ");
             return clauseBuilder.ToString();
         }
 

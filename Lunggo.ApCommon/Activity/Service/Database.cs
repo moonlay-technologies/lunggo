@@ -412,8 +412,10 @@ namespace Lunggo.ApCommon.Activity.Service
                         Date = a.Date,
                         Session = a.Session,
                         RequestTime = a.RequestTime,
+                        TimeLimit = a.RequestTime.AddDays(3),
                         PaxCount = a.PaxCount,
-                        MediaSrc = a.MediaSrc
+                        MediaSrc = a.MediaSrc,
+                        ContactName = Contact.GetFromDb(a.RsvNo).Name
                     }).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
