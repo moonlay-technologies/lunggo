@@ -25,7 +25,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("session", NullValueHandling = NullValueHandling.Ignore)]
         public string Session { get; set; }
         [JsonProperty("paxCount", NullValueHandling = NullValueHandling.Ignore)]
-        public string PaxCount { get; set; }
+        public List<ActivityPricePackageReservation> PaxCount { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
         [JsonProperty("paxGroups", NullValueHandling = NullValueHandling.Ignore)]
@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public long AppointmentId { get; set; }
         public string Name { get; set; }
         public long PackageId { get; set; }
-        public string PaxCount { get; set; }
+        public List<ActivityPricePackageReservation> PaxCount { get; set; }
         public string RsvNo { get; set; }
         public string PackageName { get; set; }
         public DateTime Date { get; set; }

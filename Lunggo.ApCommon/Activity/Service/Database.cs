@@ -402,6 +402,30 @@ namespace Lunggo.ApCommon.Activity.Service
                 var savedBookings = GetAppointmentRequestQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
 
+                foreach(var savedBooking in savedBookings)
+                {
+                    var savedPaxCountAndPackageId = GetPaxCountAndPackageIdDbQuery.GetInstance().Execute(conn, new { RsvNo = savedBooking.RsvNo }).ToList();
+                    if (savedPaxCountAndPackageId.Count() != 0)
+                    {
+                        savedBooking.PackageId = savedPaxCountAndPackageId.First().PackageId;
+                        savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
+                    }
+                    var savedPaxCounts = new List<ActivityPricePackageReservation>();
+                    var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
+                    foreach (var savedPaxCount in savedPaxCountAndPackageId)
+                    {
+                        var saveds = new ActivityPricePackageReservation();
+                        saveds.Type = savedPaxCount.Type;
+                        saveds.Count = savedPaxCount.Count;
+                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type);
+                        if (amountType.Count() != 0)
+                        {
+                            saveds.TotalPrice = savedPaxCount.Count * amountType.First().Amount;
+                        }
+                        savedPaxCounts.Add(saveds);
+                    }
+                    savedBooking.PaxCount = savedPaxCounts;
+                }
                 var output = new GetAppointmentRequestOutput
                 {
                     Appointments = savedBookings.Select(a => new AppointmentDetail()
