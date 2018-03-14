@@ -87,6 +87,11 @@ namespace Lunggo.ApCommon.Account.Service
             {
                 return;
             }
+            var referral = GetReferralCodeByIdFromDb(userId);
+            if(referral.ReferrerCode == null)
+            {
+                return;
+            }
             AddCreditReferralFromDb(userId, referralCredit);
             InsertReferralHistoryToDb(userId, history, referralCredit);
         }
