@@ -81,6 +81,7 @@
     <Compile Include="TableRecord\PaymentTableRecord.cs" />
     <Compile Include="TableRecord\PriceTableRecord.cs" />
     <Compile Include="TableRecord\ReferralCodeTableRecord.cs" />
+    <Compile Include="TableRecord\ReferralCreditTableRecord.cs" />
     <Compile Include="TableRecord\ReferralHistoryTableRecord.cs" />
     <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
     <Compile Include="TableRecord\RefundTableRecord.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="TableRepository\PaymentRepository.cs" />
     <Compile Include="TableRepository\PriceRepository.cs" />
     <Compile Include="TableRepository\ReferralCodeRepository.cs" />
+    <Compile Include="TableRepository\ReferralCreditRepository.cs" />
     <Compile Include="TableRepository\ReferralHistoryRepository.cs" />
     <Compile Include="TableRepository\RefreshTokenRepository.cs" />
     <Compile Include="TableRepository\RefundRepository.cs" />

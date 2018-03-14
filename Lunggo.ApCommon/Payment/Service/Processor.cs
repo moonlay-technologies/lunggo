@@ -28,6 +28,8 @@ using System.Web;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Redis;
 using Lunggo.ApCommon.Constant;
+using Lunggo.ApCommon.Account.Service;
+using Microsoft.AspNet.Identity;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -47,6 +49,8 @@ namespace Lunggo.ApCommon.Payment.Service
             if (paymentDetails == null)
                 return null;
 
+            var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(cart.RsvNoList[0]);
+            var accountService = AccountService.GetInstance();
             if (paymentDetails.Method != PaymentMethod.Undefined && paymentDetails.Method != PaymentMethod.BankTransfer)
             {
                 paymentDetails.Status = PaymentStatus.Failed;
@@ -60,13 +64,27 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Medium = GetPaymentMedium(method, submethod);
 
             if (!string.IsNullOrEmpty(discountCode))
-            {
+            {                
                 var campaign = CampaignService.GetInstance().UseVoucherRequest(cartId, discountCode);
                 if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
                 {
                     paymentDetails.Status = PaymentStatus.Failed;
                     paymentDetails.FailureReason = FailureReason.VoucherNoLongerAvailable;
                     return paymentDetails;
+                }
+                if (discountCode == "REFERRALCREDIT")
+                {
+                    var referral = AccountService.GetInstance().GetReferral(userId);
+                    if (referral.ReferralCredit <= 0)
+                    {
+                        paymentDetails.Status = PaymentStatus.Failed;
+                        paymentDetails.FailureReason = FailureReason.VoucherNotEligible;
+                        return paymentDetails;
+                    }
+                    if (referral.ReferralCredit < campaign.TotalDiscount)
+                    {
+                        campaign.TotalDiscount = referral.ReferralCredit;
+                    }
                 }
                 paymentDetails.FinalPriceIdr -= campaign.TotalDiscount;
                 paymentDetails.Discount = campaign.Discount;
@@ -82,6 +100,7 @@ namespace Lunggo.ApCommon.Payment.Service
             ProcessPayment(paymentDetails, transactionDetails);
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
+                accountService.UseReferralCredit(userId, paymentDetails.DiscountNominal);
                 UpdateCartPayment(cart, method, submethod, paymentData, paymentDetails);
                 InsertCartToDb(cartRecordId, cart.RsvNoList);
                 DeleteCartCache(cartId);
@@ -340,7 +359,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (rsvNo.StartsWith("2"))
                     HotelService.GetInstance().Issue(rsvNo);
                 if (rsvNo.StartsWith("3"))
+                {
                     ActivityService.GetInstance().Issue(rsvNo);
+                    var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(rsvNo);
+                    AccountService.GetInstance().InsertBookingReferralHistory(userId);
+                }                    
             }
         }
 
@@ -753,7 +776,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 paymentDetails.Status = cartPayment.Status;
                 if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
                 {
-                    UpdatePaymentToDb(rsvNo, paymentDetails);
+                    UpdatePayment(rsvNo, paymentDetails);
                 }
             }
 

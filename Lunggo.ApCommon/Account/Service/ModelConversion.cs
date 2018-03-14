@@ -17,9 +17,8 @@ namespace Lunggo.ApCommon.Account.Service
             var username = ActivityService.GetInstance().ConvertToPaxForDisplay(new Pax { FirstName = user.FirstName, LastName = user.LastName }).Name;
             return new ReferralHistoryModelForDisplay
             {
-                History = referralHistoryModel.History,
+                stepName = referralHistoryModel.History,
                 ReferralCredit = referralHistoryModel.ReferralCredit,
-                User = username,
                 DateTime = referralHistoryModel.TimeStamp
             };
         }
@@ -33,10 +32,54 @@ namespace Lunggo.ApCommon.Account.Service
                 var username = ActivityService.GetInstance().ConvertToPaxForDisplay(new Pax { FirstName = user.FirstName, LastName = user.LastName }).Name;
                 var display = new ReferralHistoryModelForDisplay
                 {
-                    History = refer.History,
+                    stepName = refer.History,
                     ReferralCredit = refer.ReferralCredit,
-                    User = username,
                     DateTime = refer.TimeStamp
+                };
+                displays.Add(display);
+            }
+            return displays;
+        }
+
+        public List<ReferralDetail> ConvertFromReferralHistoryToReferralDetail(List<ReferralHistoryModel> referralHistory)
+        {
+            var displays = new List<ReferralDetail>();
+            var referreeIds = referralHistory.Select(refer => refer.ReferreeId).Distinct().ToList();
+            var steps = new List<ReferralHistoryModelForDisplay>();
+            steps.Add(new ReferralHistoryModelForDisplay
+            {
+                stepName = "First Time Login",
+                StepDetail = "Login For The First Time",
+                DateTime = null,
+                ReferralCredit = 100000,
+                StepStatus = false
+            });
+            steps.Add(new ReferralHistoryModelForDisplay
+            {
+                stepName = "First Time Booking",
+                StepDetail = "Booking For The First Time",
+                DateTime = null,
+                ReferralCredit = 100000,
+                StepStatus = false
+            });
+            foreach (var referreeId in referreeIds)
+            {
+                var user = ActivityService.GetInstance().GetUserByIdFromDb(referreeId);
+                var username = ActivityService.GetInstance().ConvertToPaxForDisplay(new Pax { FirstName = user.FirstName, LastName = user.LastName }).Name;
+                var historyModel = referralHistory.Where(refer => refer.ReferreeId == referreeId).ToList();
+                foreach (var step in steps)
+                {
+                    var history = historyModel.Where(his => his.History == step.stepName).ToList();
+                    if (history.Count > 0)
+                    {
+                        step.StepStatus = true;
+                        step.DateTime = history[0].TimeStamp;
+                    }
+                }
+                var display = new ReferralDetail
+                {
+                    Name = username,
+                    History = steps,
                 };
                 displays.Add(display);
             }

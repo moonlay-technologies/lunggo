@@ -104,8 +104,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_NOT_REGISTERED" //ERALOG05
                     };
-                var id = AccountService.GetInstance().GetIdByEmailOrPhoneNumber(request.UserName);
-                AccountService.GetInstance().InsertLoginReferralHistory(id);
+                if(request.UserName != null)
+                {
+                    var id = AccountService.GetInstance().GetIdByEmailOrPhoneNumber(request.UserName);
+                    AccountService.GetInstance().InsertLoginReferralHistory(id);
+                }                
                 return new LoginApiResponse
                 {
                     AccessToken = tokenData.AccessToken,

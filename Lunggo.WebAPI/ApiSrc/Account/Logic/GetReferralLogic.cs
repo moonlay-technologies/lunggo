@@ -16,7 +16,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         public static ApiResponseBase GetReferral()
         {
             var user = HttpContext.Current.User;
-            if(user == null)
+            var a = user.Identity.GetId();
+            if(a == null)
             {
                 return new ApiResponseBase
                 {
@@ -44,6 +45,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 ReferralCode = getReferralOutput.ReferralCode,
                 ReferralCredit = getReferralOutput.ReferralCredit,
+                ExpDate = getReferralOutput.ExpDate,
+                ShareableLink = getReferralOutput.ShareableLink,
                 StatusCode = HttpStatusCode.OK
             };
         }

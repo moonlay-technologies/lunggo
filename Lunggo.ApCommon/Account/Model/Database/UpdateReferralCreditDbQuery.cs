@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Account.Model.Database
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "UPDATE ReferralCode SET ReferralCredit = @ReferralCredit WHERE UserId = @UserId";
+            return "UPDATE ReferralCredit SET ReferralCredit = @ReferralCredit, ExpDate = @ExpDate WHERE UserId = @UserId";
         }
     }
 }

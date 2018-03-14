@@ -11,7 +11,10 @@ namespace Lunggo.ApCommon.Account.Model.Database
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "Select * FROM ReferralCode WHERE UserId = @UserId";
+            return "Select rco.ReferralCode AS ReferralCode, " +
+                "rco.ReferrerCode AS ReferrerCode, rco.UserId AS UserId, rcr.ReferralCredit AS ReferralCredit, " +
+                "rcr.ExpDate AS ExpDate FROM ReferralCode AS rco INNER JOIN " +
+                "ReferralCredit AS rcr ON rcr.UserId = rco.UserId WHERE rco.UserId = @UserId";
         }
     }
 }

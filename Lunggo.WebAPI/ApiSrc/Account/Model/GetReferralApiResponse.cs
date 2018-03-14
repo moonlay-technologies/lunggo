@@ -13,5 +13,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public decimal? ReferralCredit { get; set; }
         [JsonProperty("referralCode", NullValueHandling = NullValueHandling.Ignore)]
         public string ReferralCode { get; set; }
+        [JsonProperty("expDate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime ExpDate { get; set; }
+        [JsonProperty("shareableLink", NullValueHandling = NullValueHandling.Ignore)]
+        public string ShareableLink { get; set; }
     }
 }

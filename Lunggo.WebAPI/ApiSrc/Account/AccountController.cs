@@ -400,5 +400,43 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/account/validatereferral")]
+        public ApiResponseBase ValidateReferral()
+        {
+            ValidateReferralApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ValidateReferralApiRequest>();
+                var apiResponse = AccountLogic.ValidateReferral(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/account/referral")]
+        public ApiResponseBase InsertReferral()
+        {
+            InsertReferralApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<InsertReferralApiRequest>();
+                var apiResponse = AccountLogic.InsertReferral(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }

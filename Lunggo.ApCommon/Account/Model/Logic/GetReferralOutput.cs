@@ -8,7 +8,10 @@ namespace Lunggo.ApCommon.Account.Model.Logic
 {
     public class GetReferralOutput
     {
-        public decimal? ReferralCredit { get; set; }
+        public string UserId { get; set; }
+        public decimal ReferralCredit { get; set; }
         public string ReferralCode { get; set; }
+        public DateTime ExpDate { get; set; }
+        public string ShareableLink { get; set; }
     }
 }

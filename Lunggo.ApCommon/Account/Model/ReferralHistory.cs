@@ -18,14 +18,24 @@ namespace Lunggo.ApCommon.Account.Model
 
     public class ReferralHistoryModelForDisplay
     {
-        [JsonProperty("history", NullValueHandling = NullValueHandling.Ignore)]
-        public string History { get; set; }
-        [JsonProperty("user", NullValueHandling = NullValueHandling.Ignore)]
-        public string User { get; set; }
+        [JsonProperty("stepName", NullValueHandling = NullValueHandling.Ignore)]
+        public string stepName { get; set; }
+        [JsonProperty("stepDetail", NullValueHandling = NullValueHandling.Ignore)]
+        public string StepDetail { get; set; }
         [JsonProperty("referralCredit", NullValueHandling = NullValueHandling.Ignore)]
         public decimal? ReferralCredit { get; set; }
         [JsonProperty("dateTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DateTime { get; set; }
+        [JsonProperty("stepStatus", NullValueHandling = NullValueHandling.Ignore)]
+        public bool StepStatus { get; set; }
+    }
+
+    public class ReferralDetail
+    {
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
+        [JsonProperty("history", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ReferralHistoryModelForDisplay> History { get; set; }
     }
     
 }

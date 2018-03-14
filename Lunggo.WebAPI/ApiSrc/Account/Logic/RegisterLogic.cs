@@ -50,6 +50,20 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
+            if (!string.IsNullOrWhiteSpace(request.ReferrerCode))
+            {
+                var referrer = AccountService.GetInstance().GetReferralCodeDataFromDb(request.ReferrerCode);
+                if (referrer == null)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_REFERRAL_NOT_VALID"
+                    };
+                }
+            }
+
+
             string first, last;
             var splittedName = request.Name.Split(' ');
             if (splittedName.Length == 1)
@@ -71,6 +85,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
             Platform = Client.GetPlatformType(clientId);
 
+            
             var user = new User
             {
                 FirstName = first,
@@ -88,7 +103,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
-                AccountService.GetInstance().GenerateReferralCode(user.Id, request.ReferrerCode);
+                        
+                AccountService.GetInstance().GenerateReferralCode(user.Id, first, request.ReferrerCode);
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK

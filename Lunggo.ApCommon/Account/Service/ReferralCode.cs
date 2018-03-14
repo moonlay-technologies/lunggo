@@ -10,9 +10,13 @@ namespace Lunggo.ApCommon.Account.Service
 {
     public partial class AccountService
     {
-        public void GenerateReferralCode(string userId, string referrerCode)
+        public void GenerateReferralCode(string userId, string firstName, string referrerCode)
         {
-            var referralCode = RandomString(10);
+            if(firstName.Length > 4)
+            {
+                firstName = firstName.Substring(4);
+            }
+            var referralCode = firstName + RandomString(10);
             InsertReferralCodeToDb(userId, referralCode, referrerCode);
         }
 
@@ -44,7 +48,7 @@ namespace Lunggo.ApCommon.Account.Service
             {
                 return;
             }
-            UpdateCreditReferralFromDb(userId, referralCredit);
+            AddCreditReferralFromDb(userId, referralCredit);
             InsertReferralHistoryToDb(userId, history, referralCredit);
         }
 
@@ -67,8 +71,44 @@ namespace Lunggo.ApCommon.Account.Service
             return new GetReferralOutput
             {
                 ReferralCode = referralCode.ReferralCode,
-                ReferralCredit = referralCode.ReferralCredit
+                ReferralCredit = referralCode.ReferralCredit,
+                ExpDate = referralCode.ExpDate,
+                ShareableLink = "travorama.com/register/" + referralCode.ReferralCode,
+                UserId = referralCode.UserId
             };
+        }
+
+        public void InsertBookingReferralHistory(string userId)
+        {
+            var history = "First Time Booking";
+            decimal referralCredit = 100000M;
+            var referree = GetUserByRefereeIdAndHistoryFromDb(userId, history);
+            if (referree != null)
+            {
+                return;
+            }
+            AddCreditReferralFromDb(userId, referralCredit);
+            InsertReferralHistoryToDb(userId, history, referralCredit);
+        }
+
+        public void InsertReferralHistory(string userId, string history, decimal referralCredit)
+        {
+            InsertReferralHistoryToDb(userId, history, referralCredit);
+        }
+
+        public void AddCreditReferral(string userId, decimal referralCredit)
+        {
+            AddCreditReferralFromDb(userId, referralCredit);
+        }
+
+        public void UseReferralCredit(string userId, decimal referralCreditUsed)
+        {
+            UseReferralCreditFromDb(userId, referralCreditUsed);
+        }
+
+        public void UpdateReferrerCode(string userId, string referrerCode)
+        {
+            UpdateReferrerCodeDb(userId, referrerCode);
         }
     }
 }

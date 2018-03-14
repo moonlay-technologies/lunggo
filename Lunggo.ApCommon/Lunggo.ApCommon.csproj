@@ -185,6 +185,8 @@
     <Compile Include="Account\Model\Database\UpdateDateResetPasswordToDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdatePasswordToDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdateReferralCreditDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UseReferralCreditFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateReferrerCodeDbQuery.cs" />
     <Compile Include="Account\Model\Logic\CheckOtpInput.cs" />
     <Compile Include="Account\Model\Logic\CheckOtpOutput.cs" />
     <Compile Include="Account\Model\Logic\ForgetPasswordInput.cs" />

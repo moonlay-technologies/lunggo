@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Account.Model
         public string UserId { get; set; }
         public string ReferralCode { get; set; }
         public string ReferrerCode { get; set; }
-        public decimal? ReferralCredit { get; set; }
+        public decimal ReferralCredit { get; set; }
+        public DateTime ExpDate { get; set; }
     }
 }

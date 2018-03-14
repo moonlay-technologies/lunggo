@@ -11,7 +11,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
     public class GetReferralDetailApiResponse : ApiResponseBase
     {
 
-        [JsonProperty("referralDetail", NullValueHandling = NullValueHandling.Ignore)]
-        public List<ReferralHistoryModelForDisplay> ReferralDetail { get; set; }
+        [JsonProperty("referralDetails", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ReferralDetail> ReferralDetails { get; set; }
     }
 }

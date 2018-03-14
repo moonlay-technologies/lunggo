@@ -31,10 +31,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
         public static GetReferralDetailApiResponse AssambleApiResponse(GetReferralDetailOutput output)
         {
-            var response = AccountService.GetInstance().ConvertToReferralHistoryModelDisplay(output.ReferralDetail);
+            var response = AccountService.GetInstance().ConvertFromReferralHistoryToReferralDetail(output.ReferralDetail);
             return new GetReferralDetailApiResponse
             {
-                ReferralDetail = response,
+                ReferralDetails = response,
                 StatusCode = HttpStatusCode.OK,
             };
         }

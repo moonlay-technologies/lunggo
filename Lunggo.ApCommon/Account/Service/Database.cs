@@ -131,9 +131,16 @@ namespace Lunggo.ApCommon.Account.Service
                     UserId = userId,
                     ReferralCode = referralCode,
                     ReferrerCode = referrerCode,
-                    ReferralCredit = 0M
                 };
                 ReferralCodeTableRepo.GetInstance().Insert(conn, tableRecord);
+
+                var tableRecordCredit = new ReferralCreditTableRecord
+                {
+                    UserId = userId,
+                    ReferralCredit = 0,
+                    ExpDate = new DateTime(DateTime.UtcNow.Year, 12, 31, 16, 59, 59)
+                };
+                ReferralCreditTableRepo.GetInstance().Insert(conn, tableRecordCredit);
             }
         }
 
@@ -146,12 +153,12 @@ namespace Lunggo.ApCommon.Account.Service
                 {
                     return;
                 }
-
-                var referrerId = GetIdByReferralCodeFromDb(referralCode.ReferrerCode);
-                if (referrerId == null)
+                string referrerId = null;
+                if (referralCode.ReferrerCode != null)
                 {
-                    return;
+                    referrerId = GetIdByReferralCodeFromDb(referralCode.ReferrerCode);
                 }
+                
                 var tableRecord = new ReferralHistoryTableRecord
                 {
                     UserId = referrerId,
@@ -169,9 +176,21 @@ namespace Lunggo.ApCommon.Account.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var referralCode = GetReferralCodeFromDbQuery.GetInstance().Execute(conn, new { UserId = userId }).ToList();
-                if(referralCode.Count > 0)
+                if(referralCode.Count == 1)
                 {
                     return referralCode.First();
+                }
+                else if (referralCode.Count > 1)
+                {
+                    var refer = referralCode.Where(referral => referral.ExpDate > DateTime.UtcNow).ToList();
+                    if(refer.Count > 0)
+                    {
+                        return refer.First();
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
@@ -185,15 +204,16 @@ namespace Lunggo.ApCommon.Account.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var referralCodeRecord = ReferralCodeTableRepo.GetInstance().Find1(conn, new ReferralCodeTableRecord { ReferralCode = referralCode });
-                if(referralCode == null)
+                if(referralCodeRecord == null)
                 {
                     return null;
                 }
+                var referralCredit = ReferralCreditTableRepo.GetInstance().Find1(conn, new ReferralCreditTableRecord { UserId = referralCodeRecord.UserId });
                 return new ReferralCodeModel
                 {
                     ReferralCode = referralCodeRecord.ReferralCode,
                     ReferrerCode = referralCodeRecord.ReferrerCode,
-                    ReferralCredit = referralCodeRecord.ReferralCredit,
+                    ReferralCredit = (decimal)referralCredit.ReferralCredit,
                     UserId = referralCodeRecord.UserId
                 };
             }
@@ -244,20 +264,57 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public void UpdateCreditReferralFromDb(string userId, decimal referralCredit)
+        public void AddCreditReferralFromDb(string userId, decimal referralCredit)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var referral = GetReferralCodeByIdFromDb(userId);
-                if(referral.ReferrerCode == null)
+                if(referral == null)
+                {
+                    return;
+                }                                
+                referral.ReferralCredit = referral.ReferralCredit + referralCredit;                
+                var year = DateTime.UtcNow.AddHours(7).Year;
+                var expDate = new DateTime(year, 12, 31, 16, 59, 59, 59);
+                UpdateReferralCreditDbQuery.GetInstance().Execute(conn, new { UserId = userId, ReferralCredit = referral.ReferralCredit, ExpDate = expDate });                
+                if(referral.ReferrerCode != null)
+                {
+                    var referrerId = GetIdByReferralCodeFromDb(referral.ReferrerCode);
+                    var referrer = GetReferralCodeByIdFromDb(referrerId);
+                    referrer.ReferralCredit = referrer.ReferralCredit + referralCredit;
+                    UpdateReferralCreditDbQuery.GetInstance().Execute(conn, new { UserId = referrer.UserId, ReferralCredit = referrer.ReferralCredit, ExpDate = expDate });
+                }
+            }
+        }
+
+        public void UpdateCreditReferralFirstTimeBooking(string userId, decimal referralCredit)
+        {
+
+        }
+
+        public void UpdateReferrerCodeDb(string userId, string referrerCode)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                UpdateReferrerCodeDbQuery.GetInstance().Execute(conn, new { UserId = userId, ReferrerCode = referrerCode });
+            }                
+        }
+
+        public void UseReferralCreditFromDb(string userId, decimal referralCreditUsed)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var referral = GetReferralCodeByIdFromDb(userId);
+                if (referral == null)
                 {
                     return;
                 }
-                var referrer = GetReferralCodeDataFromDb(referral.ReferrerCode);
-                referral.ReferralCredit = referral.ReferralCredit + referralCredit;
-                referrer.ReferralCredit = referrer.ReferralCredit + referralCredit;
-                UpdateReferralCreditDbQuery.GetInstance().Execute(conn, new { UserId = userId, ReferralCredit = referral.ReferralCredit });
-                UpdateReferralCreditDbQuery.GetInstance().Execute(conn, new { UserId = referrer.UserId, ReferralCredit = referrer.ReferralCredit });
+                if (referral.ExpDate < DateTime.UtcNow)
+                {
+                    return;
+                }
+                referral.ReferralCredit = referral.ReferralCredit - referralCreditUsed;
+                UseReferralCreditFromDbQuery.GetInstance().Execute(conn, new { UserId = userId, ReferralCredit = referral.ReferralCredit });
             }
         }
     }
