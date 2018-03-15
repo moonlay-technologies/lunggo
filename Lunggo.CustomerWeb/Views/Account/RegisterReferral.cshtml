@@ -12,10 +12,10 @@
     <title></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/Assets/bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="/Assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/Assets/css/register-referral.css" rel="stylesheet">
+    <link href="/Assets/css/promolandingpage.css" rel="stylesheet">
 
   </head>
 
@@ -50,25 +50,29 @@
         <div class="col-12 col-md-4 container-form">
           <div class="judul-landing-page" style="font-size:26px; margin-top:0; padding-bottom:20px; text-align:center;">Register</div>
           <form method="post" action="http://localhost:23321/id/account/registerreferral">
-            <div class="form-group">
-              <input type="text" name="Name" class="form-control form-input" placeholder="Nama Lengkap">
-            </div>
-            <div class="form-group">
-              <input type="email" name="Email" class="form-control form-input" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <input type="number" name="Phone" class="form-control form-input" placeholder="No Handphone">
-            </div>
-            <div class="form-group">
-              <input type="password" name="Password" class="form-control form-input" placeholder="Password">
-            </div>
-            <div class="form-group">
-              <input type="text" name="ReferrerCode" class="form-control form-input" placeholder="Kode Referral" value="@Model">
-            </div>
-              <p>@ViewBag.Message</p>
-            <div style="margin-top: 40px">
-              <button type="submit" class="btn btn-gradient">Submit</button>
-            </div>
+              <div class="form-group">
+                  <label style="font-family: hind-semibold">Nama Lengkap</label>
+                  <input type="text" name="Name" class="form-control form-input">
+              </div>
+              <div class="form-group">
+                  <label style="font-family: hind-semibold">Email</label>
+                  <input type="email" name="Email" class="form-control form-input">
+              </div>
+              <div class="form-group">
+                  <label style="font-family: hind-semibold">No Handphone</label>
+                  <input type="number" name="Phone" class="form-control form-input">
+              </div>
+              <div class="form-group">
+                  <label style="font-family: hind-semibold">Password</label>
+                  <input type="password" name="Password" class="form-control form-input">
+              </div>
+              <div class="form-group">
+                  <label style="font-family: hind-semibold">Kode Referral</label>
+                  <input type="text" name="ReferrerCode" class="form-control form-input">
+              </div>
+              <div style="margin-top: 40px">
+                  <button type="submit" class="btn btn-gradient">Submit</button>
+              </div>
           </form>
         </div> <!-- /.container form -->
         <div class="col-12 col-md-4"></div>
