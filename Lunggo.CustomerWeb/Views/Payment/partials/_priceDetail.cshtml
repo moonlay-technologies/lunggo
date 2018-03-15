@@ -2,15 +2,15 @@
     <div class="kode-voucher">
         
         <div style="margin-bottom: 20px;">
-            <div style="margin-bottom: 14px; @(ViewBag.CreditsAvailable == 0 ? "display: none" : "")" class="form-check useCreditsCheckbox">
-                <input style="float:left; margin-right:10px" class="form-check-input useCredits" type="checkbox" name="creditsSelection" value="useCredits">
-                <label style="color: #000; padding-top:1px" class="form-check-label" disabled="@(ViewBag.CreditsAvailable == 0)">
+            <div style="margin-bottom: 14px; @(ViewBag.CreditsAvailable == 0 ? "display: none" : "")" class="form-check" ng-click="useCreditsFunction()">
+                <input style="float:left; margin-right:10px" class="form-check-input useCredits" type="checkbox" name="creditsSelection">
+                <label style="color: #000; padding-top:1px" class="form-check-label useCredits" disabled="@(ViewBag.CreditsAvailable == 0)">
                     Gunakan credits (@ViewBag.CreditsAvailable.ToString("Rp #,##0"))
                 </label>
             </div>
-            <div class="form-check useVoucherCheckbox">
-                <input style="float:left; margin-right:10px" class="form-check-input useVoucher" type="checkbox" name="voucherSelection" value="useVoucher">
-                <label style="color: #000; padding-top:1px" class="form-check-label">
+            <div class="form-check" ng-click="useVoucherFunction()">
+                <input style="float:left; margin-right:10px" class="form-check-input useVoucher" type="checkbox" name="voucherSelection">
+                <label style="color: #000; padding-top:1px" class="form-check-label useVoucher">
                     Gunakan kode voucher
                 </label>
             </div>
