@@ -367,7 +367,7 @@
                                 <dt>Harga Subtotal: </dt>
                                 <dd><sup>Rp</sup> {{CheckoutConfig.OriginalPrice| number}}</dd>
                             </dl>
-                            <dl>
+                            <dl ng-show="CheckoutConfig.OriginalPrice - CheckoutConfig.Price != 0">
                                 <dt>Diskon Travorama</dt>
                                 <dd>-<sup>Rp</sup> {{CheckoutConfig.OriginalPrice - CheckoutConfig.Price | number}}</dd>
                             </dl>

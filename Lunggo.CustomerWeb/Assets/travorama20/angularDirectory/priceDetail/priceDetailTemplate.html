@@ -28,8 +28,8 @@
             <div class="segment-price-total clearer">
                 <h5 class="segment-price-left">Harga Subtotal</h5>
                 <h5 class="segment-price-right">Rp {{flight.originalTotalFare | number:0}}</h5>
-                <h5 class="segment-price-left discount">Diskon Travorama</h5>
-                <h5 class="segment-price-right discount">Rp {{flight.netTotalFare - flight.originalTotalFare | number:0}}</h5>
+                <h5 class="segment-price-left discount" ng-show="flight.netTotalFare - flight.originalTotalFare != 0">Diskon Travorama</h5>
+                <h5 class="segment-price-right discount" ng-show="flight.netTotalFare - flight.originalTotalFare != 0">Rp {{flight.netTotalFare - flight.originalTotalFare | number:0}}</h5>
             </div>
 
             <div class="segment-netprice-total clearer">
