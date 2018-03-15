@@ -9,7 +9,6 @@ namespace Lunggo.CustomerWeb.Models
     public class RegisterReferralViewModel
     {
         [Required()]
-        [EmailAddress]
         [Display(Name = "Name")]
         public string Name { get; set; }
 
@@ -19,17 +18,15 @@ namespace Lunggo.CustomerWeb.Models
         public string Email { get; set; }
 
         [Required()]
-        [EmailAddress]
+        [Phone]
         [Display(Name = "Phone")]
         public string Phone { get; set; }
 
         [Required()]
-        [EmailAddress]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Required()]
-        [EmailAddress]
+        
         [Display(Name = "ReferrerCode")]
         public string ReferrerCode { get; set; }
     }

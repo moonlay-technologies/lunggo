@@ -14,9 +14,9 @@ namespace Lunggo.ApCommon.Account.Service
         {
             if(firstName.Length > 4)
             {
-                firstName = firstName.Substring(4);
+                firstName = firstName.Substring(0,4);
             }
-            var referralCode = firstName + RandomString(10);
+            var referralCode = firstName + RandomString(7);
             InsertReferralCodeToDb(userId, referralCode, referrerCode);
         }
 

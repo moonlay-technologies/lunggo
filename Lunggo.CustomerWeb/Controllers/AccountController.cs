@@ -861,10 +861,14 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult RegisterReferral(RegisterReferralViewModel model)
         {
+            ViewBag.Name = model.Name;
+            ViewBag.Email = model.Email;
+            ViewBag.ReferrerCode = model.ReferrerCode;
+            ViewBag.Phone = model.Phone;
             if (!IsValid(model))
             {
                 ViewBag.Message = "invalid request";
-                return Redirect("http://www.google.com");
+                return View(model: model.ReferrerCode);
             }
 
             var foundUser = UserManager.FindByEmail(model.Email);
@@ -873,13 +877,13 @@ namespace Lunggo.CustomerWeb.Controllers
             if (foundUser != null)
             {
                 ViewBag.Message = "Email Already Exist";
-                return View();
+                return View(model: model.ReferrerCode);
             }
 
             if (foundUserByPhone != null)
             {
                 ViewBag.Message = "Phone Number Already Exist";
-                return View();
+                return View(model: model.ReferrerCode);
             }
 
             if (!string.IsNullOrWhiteSpace(model.ReferrerCode))
@@ -888,7 +892,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (referrer == null)
                 {
                     ViewBag.Message = "Referral Not Valid";
-                    return View();
+                    return View(model: model.ReferrerCode);
                 }
             }
 
@@ -908,12 +912,6 @@ namespace Lunggo.CustomerWeb.Controllers
 
 
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-            PlatformType Platform;
-
-            var identity = System.Web.HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
-            Platform = Client.GetPlatformType(clientId);
-
 
             var user = new User
             {
@@ -922,7 +920,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 UserName = model.Phone + ":" + model.Email,
                 Email = model.Email,
                 PhoneNumber = model.Phone,
-                PlatformCd = PlatformTypeCd.Mnemonic(Platform)
+                PlatformCd = PlatformTypeCd.Mnemonic(PlatformType.MobileWebsite)
             };
             var result = UserManager.Create(user, model.Password);
             if (result.Succeeded)
@@ -934,7 +932,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
 
                 AccountService.GetInstance().GenerateReferralCode(user.Id, first, model.ReferrerCode);
-                return Redirect("http://www.google.com");
+                return View("downloadreferral");
             }
             else
             {
@@ -947,6 +945,12 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var vc = new ValidationContext(request, null, null);
             return Validator.TryValidateObject(request, vc, null, true);
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult DownloadReferral()
+        {
+            return View();
         }
     }
 }

@@ -353,6 +353,7 @@
     <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
     <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
     <Content Include="Assets\bootstrap\bootstrap_difference.css" />
+    <Content Include="Assets\css\landingpage.css" />
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
@@ -1962,6 +1963,7 @@
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
     <Content Include="Views\Account\RegisterReferral.cshtml" />
+    <Content Include="Views\Account\DownloadReferral.cshtml" />
     <None Include="Views\common\ForgotPasswordByOtpEmail.cshtml" />
     <None Include="Views\RegisterReferral\RegisterReferral.cshtml" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />

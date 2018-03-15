@@ -12,10 +12,10 @@
     <title></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/Assets/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/Assets/teaserpage/vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/Assets/css/promolandingpage.css" rel="stylesheet">
+    <link href="/Assets/css/landingpage.css" rel="stylesheet">
 
   </head>
 
@@ -52,15 +52,15 @@
           <form method="post" action="http://localhost:23321/id/account/registerreferral">
               <div class="form-group">
                   <label style="font-family: hind-semibold">Nama Lengkap</label>
-                  <input type="text" name="Name" class="form-control form-input">
+                  <input type="text" name="Name" class="form-control form-input" value="@ViewBag.Name">
               </div>
               <div class="form-group">
                   <label style="font-family: hind-semibold">Email</label>
-                  <input type="email" name="Email" class="form-control form-input">
+                  <input type="email" name="Email" class="form-control form-input" value="@ViewBag.Email">
               </div>
               <div class="form-group">
                   <label style="font-family: hind-semibold">No Handphone</label>
-                  <input type="number" name="Phone" class="form-control form-input">
+                  <input type="number" name="Phone" class="form-control form-input" value="@ViewBag.Phone">
               </div>
               <div class="form-group">
                   <label style="font-family: hind-semibold">Password</label>
@@ -68,8 +68,11 @@
               </div>
               <div class="form-group">
                   <label style="font-family: hind-semibold">Kode Referral</label>
-                  <input type="text" name="ReferrerCode" class="form-control form-input">
+                  <input type="text" class="form-control form-input" value=@Model disabled>                
+                  <input type="hidden" name="ReferrerCode" class="form-control form-input" value=@Model>                
+
               </div>
+              <p style="color:red">@ViewBag.Message </p>
               <div style="margin-top: 40px">
                   <button type="submit" class="btn btn-gradient">Submit</button>
               </div>
