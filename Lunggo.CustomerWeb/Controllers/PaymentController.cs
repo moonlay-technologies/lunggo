@@ -18,14 +18,27 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.CustomerWeb.Helper;
 using Lunggo.CustomerWeb.Models;
+using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
+using RestSharp;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
     public partial class PaymentController : Controller
     {
+        private decimal GetAvailableCredits(string trxId, out string voucherCode)
+        {
+            voucherCode = "REFERRALCREDIT";
+            var client = new RestClient(ConfigManager.GetInstance().GetConfigValue("api", "apiUrl"));
+            var rq = new RestRequest("v1/payment/checkvoucher", Method.POST);
+            rq.AddJsonBody(new { rsvNo = trxId, code = voucherCode });
+            var rs = client.Execute(rq);
+            var rsContent = rs.Content.Deserialize<dynamic>();
+            return rsContent.status != 200 ? 0 : rsContent.discount;
+        }
+
         public ActionResult Payment(string rsvNo = null, string regId = null, string trxId = null, string cartId = null)
         {
             if (!string.IsNullOrEmpty(cartId))
@@ -80,6 +93,12 @@ namespace Lunggo.CustomerWeb.Controllers
                      payment.Status == PaymentStatus.Failed)
             {
                 ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+
+                string creditsVoucherCode;
+                var creditsAvailable = GetAvailableCredits(trxId, out creditsVoucherCode);
+                ViewBag.CreditsAvailable = creditsAvailable;
+                ViewBag.CreditsVoucherCode = creditsVoucherCode;
+
                 return View(new PaymentData
                 {
                     //RsvNo = rsvNo,
