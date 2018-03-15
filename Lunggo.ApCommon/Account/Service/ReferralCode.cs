@@ -1,4 +1,5 @@
 ﻿using Lunggo.ApCommon.Account.Model.Logic;
+using Lunggo.Framework.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +74,7 @@ namespace Lunggo.ApCommon.Account.Service
                 ReferralCode = referralCode.ReferralCode,
                 ReferralCredit = referralCode.ReferralCredit,
                 ExpDate = referralCode.ExpDate,
-                ShareableLink = "travorama.com/register/" + referralCode.ReferralCode,
+                ShareableLink = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/id/account/registerreferral?referrercode=" + referralCode.ReferralCode,
                 UserId = referralCode.UserId
             };
         }

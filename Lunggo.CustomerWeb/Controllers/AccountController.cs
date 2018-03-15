@@ -937,7 +937,7 @@ namespace Lunggo.CustomerWeb.Controllers
             else
             {
                 ViewBag.Message = "internal server error";
-                return View();
+                return View(model.ReferrerCode);
             }
         }
 
