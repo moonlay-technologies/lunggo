@@ -225,6 +225,7 @@
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Controllers\WebviewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
@@ -2205,6 +2206,7 @@
     <Folder Include="Assets\images\_sample\" />
     <Folder Include="Assets\travorama20\fonts\" />
     <Folder Include="Assets\travorama20\js\fonts\" />
+    <Folder Include="Views\Register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
