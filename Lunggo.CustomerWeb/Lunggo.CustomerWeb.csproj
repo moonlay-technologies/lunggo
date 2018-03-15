@@ -705,6 +705,7 @@
     <Content Include="Assets\images\Bank-Mandiri.png" />
     <Content Include="Assets\images\bank-transfer.png" />
     <Content Include="Assets\images\bank\bank-lainnya.png" />
+    <Content Include="Assets\images\bank\bca-klikpay.png" />
     <Content Include="Assets\images\bank\bca.png" />
     <Content Include="Assets\images\bank\bni.png" />
     <Content Include="Assets\images\bank\bri.png" />
@@ -1686,6 +1687,7 @@
     <None Include="Properties\PublishProfiles\prod-cw__staging.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-cw.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw - Web Deploy %283%29.pubxml" />
@@ -1707,6 +1709,11 @@
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2 %285%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-cw__staging2.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %2810%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %2811%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %2812%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %2813%29.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %2814%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %284%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-cw - Web Deploy %285%29.pubxml" />

@@ -23,7 +23,8 @@
         DanamonOnlineBanking = 18,
         SbiiOnlineShopping = 19,
         DooEtQnb = 20,
-        BtnMobileBanking = 21
+        BtnMobileBanking = 21,
+        MaybankVa = 22
     }
 
     internal class PaymentMethodCd
@@ -74,6 +75,8 @@
                     return "QNB";
                 case PaymentMethod.BtnMobileBanking:
                     return "BTN";
+                case PaymentMethod.MaybankVa:
+                    return "MAY";
                 default:
                     return "";
             }
@@ -124,6 +127,8 @@
                     return PaymentMethod.DooEtQnb;
                 case "BTN":
                     return PaymentMethod.BtnMobileBanking;
+                case "MAY":
+                    return PaymentMethod.MaybankVa;
                 default:
                     return PaymentMethod.Undefined;
             }

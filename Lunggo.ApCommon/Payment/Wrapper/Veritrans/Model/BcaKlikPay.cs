@@ -11,5 +11,11 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans.Model
         public int MiscFee { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
+        [JsonProperty("finish_redirect_url")]
+        internal string FinishRedirectUrl { get; set; }
+        [JsonProperty("unfinish_redirect_url")]
+        internal string UnfinishRedirectUrl { get; set; }
+        [JsonProperty("error_redirect_url")]
+        internal string ErrorRedirectUrl { get; set; }
     }
 }
