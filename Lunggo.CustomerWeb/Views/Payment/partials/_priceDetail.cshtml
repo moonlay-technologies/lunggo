@@ -1,32 +1,47 @@
 <div class="content-right-payment content-right-payment-edit">
     <div class="kode-voucher">
-        <a>Punya kode Voucher ?</a>
-        <form name="voucherForm" class="form-group" style="display: none;">
-            <input type="text" name="code" class="form-control form-kode-voucher" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)">
-            <input type="submit" value="GUNAKAN" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
-            <input type="submit" value="BATALKAN" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.reset()" ng-show="voucher.checked" />
-            <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher tidak dapat digunakan</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Syarat dan ketentuan voucher tidak terpenuhi</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH08'">Syarat dan ketentuan voucher tidak terpenuhi</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH09'">Voucher sudah habis</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH10'">Syarat dan ketentuan voucher tidak terpenuhi</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH11'">Syarat dan ketentuan voucher tidak terpenuhi</p>
-            <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
-        </form>
+        
+        <div style="margin-bottom: 20px;">
+            <div style="margin-bottom: 14px; @(ViewBag.CreditsAvailable == 0 ? "display: none" : "")" class="form-check" ng-click="useCreditsFunction()">
+                <input style="float:left; margin-right:10px" class="form-check-input useCredits" type="checkbox" name="creditsSelection">
+                <label style="color: #000; padding-top:1px" class="form-check-label useCredits" disabled="@(ViewBag.CreditsAvailable == 0)">
+                    Gunakan credits (@ViewBag.CreditsAvailable.ToString("Rp #,##0"))
+                </label>
+            </div>
+            <div class="form-check" ng-click="useVoucherFunction()">
+                <input style="float:left; margin-right:10px" class="form-check-input useVoucher" type="checkbox" name="voucherSelection">
+                <label style="color: #000; padding-top:1px" class="form-check-label useVoucher">
+                    Gunakan kode voucher
+                </label>
+            </div>
+            <form name="voucherForm" class="form-group" style="display: none;">
+                <input type="text" name="code" class="form-control form-kode-voucher" ng-model="voucher.code" ng-disabled="voucher.checking || voucher.confirmedCode || (voucher.checked && !voucher.received)">
+                <input type="submit" value="GUNAKAN" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.check()" ng-disabled="!voucher.code || voucher.checking" ng-hide="voucher.checked" />
+                <input type="submit" value="BATALKAN" class="btn btn-yellow form-control normal-txt sm-btn" ng-click="voucher.reset()" ng-show="voucher.checked" />
+                <p class="bg-success" ng-show="voucher.checked && voucher.status == 'Success'">Voucher valid</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH01'">Voucher tidak dapat digunakan</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH02'">Kode voucher salah</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH03'">Voucher sudah habis</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH04'">Syarat dan ketentuan voucher tidak terpenuhi</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH05'">Voucher tidak dapat digunakan</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH06'">Voucher sudah digunakan</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH08'">Syarat dan ketentuan voucher tidak terpenuhi</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH09'">Voucher sudah habis</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH10'">Syarat dan ketentuan voucher tidak terpenuhi</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH11'">Syarat dan ketentuan voucher tidak terpenuhi</p>
+                <p class="bg-danger" ng-show="voucher.checked && voucher.status == 'ERPVCH99'">Voucher tidak dapat digunakan</p>
+            </form>
+        </div>
+
     </div>
     <div class="rincian-harga">
         <p><b>Harga Tiket : </b><span>Rp {{originalPrice | number}}</span></p>
-        <p>
+        <p ng-show="originalPrice - totalPrice != 0">
             <b>Diskon Travorama : </b>
             <span class="diskon" ng-if="!((binDiscount.replaceDiscount || methodDiscount.replaceDiscount)
-                && !voucher.confirmedCode)">- Rp {{originalPrice - totalPrice| number}}</span>
+                && !voucher.confirmedCode)">- Rp{{originalPrice - totalPrice| number}}</span>
             <span ng-if="(binDiscount.replaceDiscount || methodDiscount.replaceDiscount)
-                && !voucher.confirmedCode"> Rp 0</span>
+                && !voucher.confirmedCode">Rp 0</span>
         </p>
         <p ng-if="voucher.confirmedCode">
             <b>{{voucher.displayName}} :</b>

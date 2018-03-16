@@ -655,7 +655,7 @@
                                         <dt>Harga Subtotal: </dt>
                                         <dd>Rp {{originalPrice| number}}</dd>
                                     </dl>
-                                    <dl style="color: #1daee4">
+                                    <dl style="color: #1daee4" ng-show="originalPrice - totalPrice != 0">
                                         <dt>Diskon Travorama</dt>
                                         <dd>- Rp {{originalPrice - totalPrice | number}}</dd>
                                     </dl>

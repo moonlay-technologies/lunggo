@@ -4,6 +4,10 @@ using Lunggo.ApCommon.Campaign.Model;
 using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Payment.Model;
+using Lunggo.ApCommon.Activity.Service;
+using Lunggo.ApCommon.Account.Service;
+using System;
+using Lunggo.ApCommon.Payment.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 {
@@ -14,7 +18,29 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             if (IsValid(request))
             {
                 var service = CampaignService.GetInstance();
-                var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);
+                var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);                
+                if(request.DiscountCode == "REFERRALCREDIT")
+                {
+                    var cart = PaymentService.GetInstance().GetCart(request.RsvNo);
+                    var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(cart.RsvNoList[0]);
+                    var referral = AccountService.GetInstance().GetReferral(userId);
+                    if(referral == null)
+                    {
+                        response.VoucherStatus = VoucherStatus.ProductNotEligible;
+                    }
+                    else if (referral.ReferralCredit <= 0M)
+                    {
+                        response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+                    }
+                    else if (DateTime.UtcNow > referral.ExpDate)
+                    {
+                        response.VoucherStatus = VoucherStatus.NoVoucherRemaining;
+                    }
+                    else if (referral.ReferralCredit < response.TotalDiscount)
+                    {
+                        response.TotalDiscount = referral.ReferralCredit;
+                    }
+                }
                 var apiResponse = AssembleApiResponse(response);
                 return apiResponse;
             }

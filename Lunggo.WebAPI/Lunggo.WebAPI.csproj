@@ -235,15 +235,19 @@
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ChangeProfileLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetReferralDetailLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\GetReferralLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetTransactionHistoryLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetReservationLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ConfirmEmailLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\InsertReferralLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginOperatorLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ResetPasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ResendConfirmationEmailLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\RegisterLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\LoginLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ResettingPasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\ValidateReferralLogic.cs" />
     <Compile Include="ApiSrc\Account\Model\CheckOtpApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgetPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\ForgetPasswordApiResponse.cs" />
@@ -257,6 +261,9 @@
     <Compile Include="ApiSrc\Account\Model\ForgotPasswordApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\GetProfileApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\ConfirmEmailApiRequest.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetReferralApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\GetReferralDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\InsertReferralApiRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\GetReservationApiResponse.cs" />
     <Compile Include="ApiSrc\Account\Model\LoginApiRequest.cs" />
@@ -267,6 +274,7 @@
     <Compile Include="ApiSrc\Account\Model\TokenData.cs" />
     <Compile Include="ApiSrc\Account\Model\TokenRequest.cs" />
     <Compile Include="ApiSrc\Account\Model\TransactionHistoryApiResponse.cs" />
+    <Compile Include="ApiSrc\Account\Model\ValidateReferralApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ActivityEditSessionLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\DeclineAppointmentLogic.cs" />

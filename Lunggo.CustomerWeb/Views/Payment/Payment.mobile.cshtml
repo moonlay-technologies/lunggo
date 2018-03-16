@@ -40,6 +40,8 @@
 @section PageJS{
     <script>
         var mdr = JSON.parse('@ViewBag.SurchargeList'.replace(/&quot;/g,'"'));
+        var creditsAvailable = @ViewBag.CreditsAvailable;
+        var creditsVoucherCode = '@ViewBag.CreditsVoucherCode';
         var langCode = 'en';
         // development only start
         var paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
@@ -158,7 +160,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src=@Fingerprint.Tag("/Assets/travorama20/js/paymentController.js")></script>
+    <script src="@Fingerprint.Tag("/Assets/travorama20/js/paymentController.js")"></script>
 }
 
 @switch ((string)ViewBag.Message)

@@ -36,6 +36,9 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Account.Service;
+using Lunggo.ApCommon.Identity.Auth;
+using System.Security.Claims;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -845,6 +848,109 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OrderFlightHistoryDetailPrint(string rsvNo)
         {
             return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult RegisterReferral(string ReferrerCode)
+        {
+            return View(model: ReferrerCode);
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult RegisterReferral(RegisterReferralViewModel model)
+        {
+            ViewBag.Name = model.Name;
+            ViewBag.Email = model.Email;
+            ViewBag.ReferrerCode = model.ReferrerCode;
+            ViewBag.Phone = model.Phone;
+            if (!IsValid(model))
+            {
+                ViewBag.Message = "invalid request";
+                return View(model: model.ReferrerCode);
+            }
+
+            var foundUser = UserManager.FindByEmail(model.Email);
+            var foundUserByPhone = UserManager.FindByName(model.Phone);
+
+            if (foundUser != null)
+            {
+                ViewBag.Message = "Email Already Exist";
+                return View(model: model.ReferrerCode);
+            }
+
+            if (foundUserByPhone != null)
+            {
+                ViewBag.Message = "Phone Number Already Exist";
+                return View(model: model.ReferrerCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.ReferrerCode))
+            {
+                var referrer = AccountService.GetInstance().GetReferralCodeDataFromDb(model.ReferrerCode);
+                if (referrer == null)
+                {
+                    ViewBag.Message = "Referral Not Valid";
+                    return View(model: model.ReferrerCode);
+                }
+            }
+
+
+            string first, last;
+            var splittedName = model.Name.Split(' ');
+            if (splittedName.Length == 1)
+            {
+                first = model.Name;
+                last = model.Name;
+            }
+            else
+            {
+                first = model.Name.Substring(0, model.Name.LastIndexOf(' '));
+                last = splittedName[splittedName.Length - 1];
+            }
+
+
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+
+            var user = new User
+            {
+                FirstName = first,
+                LastName = last,
+                UserName = model.Phone + ":" + model.Email,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                PlatformCd = PlatformTypeCd.Mnemonic(PlatformType.MobileWebsite)
+            };
+            var result = UserManager.Create(user, model.Password);
+            if (result.Succeeded)
+            {
+                var code = HttpUtility.UrlEncode(UserManager.GenerateEmailConfirmationToken(user.Id));
+                var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                var apiUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+                var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
+                UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
+
+                AccountService.GetInstance().GenerateReferralCode(user.Id, first, model.ReferrerCode);
+                return View("downloadreferral");
+            }
+            else
+            {
+                ViewBag.Message = "internal server error";
+                return View(model.ReferrerCode);
+            }
+        }
+
+        private static bool IsValid(RegisterReferralViewModel request)
+        {
+            var vc = new ValidationContext(request, null, null);
+            return Validator.TryValidateObject(request, vc, null, true);
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult DownloadReferral()
+        {
+            return View();
         }
     }
 }

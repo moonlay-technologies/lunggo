@@ -38,7 +38,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -46,6 +46,8 @@
     <WarningLevel>4</WarningLevel>
     <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>1024</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
@@ -225,6 +227,7 @@
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
+    <Compile Include="Controllers\RegisterReferralController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Controllers\WebviewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
@@ -258,6 +261,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PaymentData.cs" />
+    <Compile Include="Models\RegisterReferralViewModel.cs" />
     <Compile Include="Models\StringSearchParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -349,6 +353,7 @@
     <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
     <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
     <Content Include="Assets\bootstrap\bootstrap_difference.css" />
+    <Content Include="Assets\css\landingpage.css" />
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-sprockets.scss" />
@@ -371,6 +376,7 @@
     <Content Include="Assets\css\promo.min.css" />
     <Content Include="Assets\css\promo.scss" />
     <Content Include="Assets\css\promolandingpage.css" />
+    <Content Include="Assets\css\register-referral.css" />
     <Content Include="Assets\css\style-activity-edit-detail.css" />
     <Content Include="Assets\css\travorama-mobileApp.css" />
     <Content Include="Assets\css\travorama-mobileApp.min.css" />
@@ -1062,6 +1068,7 @@
     <Content Include="Assets\images\location.png" />
     <Content Include="Assets\images\lock-image.png" />
     <Content Include="Assets\images\login-bg.jpg" />
+    <Content Include="Assets\images\logo-baru2.png" />
     <Content Include="Assets\images\logo-color.png" />
     <Content Include="Assets\images\logo-garuda.jpg" />
     <Content Include="Assets\images\logo-promo.jpg" />
@@ -1955,7 +1962,10 @@
     </None>
     <Content Include="robots.txt" />
     <Content Include="sitemap.xml" />
+    <Content Include="Views\Account\RegisterReferral.cshtml" />
+    <Content Include="Views\Account\DownloadReferral.cshtml" />
     <None Include="Views\common\ForgotPasswordByOtpEmail.cshtml" />
+    <None Include="Views\RegisterReferral\RegisterReferral.cshtml" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <Content Include="Views\Promo\PromoLandingPage.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />

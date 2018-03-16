@@ -238,7 +238,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     State = ReservationState.GetFromDb(rsvNo),
                     ActivityDetails = new ActivityDetail(),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
-                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd)
+                    RsvStatus = RsvStatusCd.Mnemonic(reservationRecord.RsvStatusCd),
                 };
 
 
@@ -278,6 +278,19 @@ namespace Lunggo.ApCommon.Activity.Service
                 activityReservation.TicketCount = reservationData.PaxCount;
                 return activityReservation;
             }
+        }
+
+        public string GetReservationUserIdFromDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservationRecord = ReservationTableRepo.GetInstance()
+                    .Find1(conn, new ReservationTableRecord { RsvNo = rsvNo });
+
+                if (reservationRecord == null)
+                    return null;
+                return reservationRecord.UserId;
+            }                
         }
 
         public GetMyBookingsOutput GetMyBookingsFromDb(GetMyBookingsInput input)
@@ -1296,8 +1309,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     return null;
                 }
                 return user.First();
-            }
-                
+            }                
         }
     }
 }

@@ -20,12 +20,12 @@
 
         }
     }
-    
+
     @{
         var oriTotal = Model.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.OriginalTotalFare)));
-        var netTotal = Model.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.NetTotalFare)));   
+        var netTotal = Model.HotelDetail.Rooms.Sum(ro => ro.Rates.Sum(ra => ra.Breakdowns.Sum(b => b.NetTotalFare)));
     }
-    
+
     @if (Model.Payment != null)
     {
         <div class="rr-row clearfix subtotal">
@@ -64,10 +64,13 @@
             <div class="col-half bold-txt lg-txt">Harga Subtotal</div>
             <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @oriTotal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>
         </div>
-        <div class="rr-row clearfix">
-            <div class="col-half">Diskon Travorama</div>
-            <div class="col-half right-txt semibold-txt">- Rp @((oriTotal - netTotal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
-        </div>
+        if (oriTotal - netTotal != 0)
+        {
+            <div class="rr-row clearfix">
+                <div class="col-half">Diskon Travorama</div>
+                <div class="col-half right-txt semibold-txt">- Rp @((oriTotal - netTotal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</div>
+            </div>
+        }
         <div class="rr-row clearfix total">
             <div class="col-half bold-txt lg-txt">Total</div>
             <div class="col-half bold-txt lg-txt right-txt orange-txt">Rp @Model.HotelDetail.NetTotalFare.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</div>

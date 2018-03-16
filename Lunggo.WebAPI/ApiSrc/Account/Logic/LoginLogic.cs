@@ -10,6 +10,7 @@ using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using RestSharp;
 using Lunggo.ApCommon.Log;
+using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -103,6 +104,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_NOT_REGISTERED" //ERALOG05
                     };
+                if(request.UserName != null)
+                {
+                    var id = AccountService.GetInstance().GetIdByEmailOrPhoneNumber(request.UserName);
+                    AccountService.GetInstance().InsertLoginReferralHistory(id);
+                }                
                 return new LoginApiResponse
                 {
                     AccessToken = tokenData.AccessToken,
