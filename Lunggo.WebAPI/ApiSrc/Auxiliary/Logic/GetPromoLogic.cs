@@ -67,31 +67,37 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
         private static List<FeaturedPromo> GetFeaturePromos()
         {
             var promos = new List<FeaturedPromo>();
-            promos.Add(
-                new FeaturedPromo
-                {
-                    Id = "1",
-                    BannerUrl = "http://www.travorama.com/Assets/images/banner/standard-web-banner.jpg",
-                    DetailsUrl = ""
-                });
-            if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
-                promos.Add(
-                    new FeaturedPromo
-                    {
-                        Id = "3",
-                        BannerUrl =
-                            "http://www.travorama.com/Assets/images/campaign/HutBTN/HutBTN-slider-mobile.jpg",
-                        DetailsUrl = "http://www.travorama.com/id/promo/HutBTNWebview"
-                    });
-            if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31) && !(DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10)))
-                promos.Add(
-                    new FeaturedPromo
-                    {
-                        Id = "3",
-                        BannerUrl =
-                            "http://www.travorama.com/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg",
-                        DetailsUrl = "http://www.travorama.com/id/promo/BTNTerbanginHematWebview"
-                    });
+            //promos.Add(
+            //    new FeaturedPromo
+            //    {
+            //        Id = "1",
+            //        BannerUrl = "http://www.travorama.com/Assets/images/banner/standard-web-banner.jpg",
+            //        DetailsUrl = ""
+            //    });
+            //if (DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10))
+            //    promos.Add(
+            //        new FeaturedPromo
+            //        {
+            //            Id = "3",
+            //            BannerUrl =
+            //                "http://www.travorama.com/Assets/images/campaign/HutBTN/HutBTN-slider-mobile.jpg",
+            //            DetailsUrl = "http://www.travorama.com/id/promo/HutBTNWebview"
+            //        });
+            //if (DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 03, 31) && !(DateTime.UtcNow.AddHours(7).Date >= new DateTime(2017, 02, 08) && DateTime.UtcNow.AddHours(7).Date <= new DateTime(2017, 02, 10)))
+            //    promos.Add(
+            //        new FeaturedPromo
+            //        {
+            //            Id = "3",
+            //            BannerUrl =
+            //                "http://www.travorama.com/Assets/images/campaign/TerbanginHemat/TerbanginHemat-slider-mobile.jpg",
+            //            DetailsUrl = "http://www.travorama.com/id/promo/BTNTerbanginHematWebview"
+            //        });
+            promos.Add(new FeaturedPromo
+            {
+                Id = "4",
+                BannerUrl = "http://www.travorama-local-cw.azurewebsites.net/Assets/images/dummypromo.jpg",
+                DetailsUrl = "http://www.travorama-local-cw.azurewebsites.net/id/promo/promolandingpage"
+            });
             return promos;
         }
     }

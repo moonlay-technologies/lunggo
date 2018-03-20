@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Id AS Id, act.Name AS Name, ");
+            clauseBuilder.Append("SELECT act.Id AS Id, act.Name AS Name, asp.Price AS Price, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();
         }
@@ -27,15 +27,17 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateJoinClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("FROM (Operator AS op ");
-            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=op.ActivityId) ");
+            clauseBuilder.Append("FROM (((Operator AS op ");
+            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=op.ActivityId)");
+            clauseBuilder.Append("INNER JOIN ActivityPackage AS ap ON ap.Id=act.Id)");
+            clauseBuilder.Append("INNER JOIN ActivitySellPrice AS asp ON asp.PackageId=ap.Id) ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE op.UserId = @UserId ");
+            clauseBuilder.Append("WHERE op.UserId = @UserId AND asp.Flag = 1 ");
             return clauseBuilder.ToString();
         }
 

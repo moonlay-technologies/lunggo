@@ -70,6 +70,18 @@ namespace Lunggo.ApCommon.Activity.Model
         public long ReviewCount { get; set; }
         [JsonProperty("review", NullValueHandling = NullValueHandling.Ignore)]
         public ActivityReview Review { get; set; }
+        [JsonProperty("isInstantConfirmation", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsInstantConfirmation { get; set; }
+        [JsonProperty("mustPrinted", NullValueHandling = NullValueHandling.Ignore)]
+        public bool MustPrinted { get; set; }
+        [JsonProperty("activityDuration", NullValueHandling = NullValueHandling.Ignore)]
+        public string ActivityDuration { get; set; }
+        [JsonProperty("minPax", NullValueHandling = NullValueHandling.Ignore)]
+        public int MinPax { get; set; }
+        [JsonProperty("maxPax", NullValueHandling = NullValueHandling.Ignore)]
+        public int MaxPax { get; set; }
+        [JsonProperty("viewCount", NullValueHandling = NullValueHandling.Ignore)]
+        public long? ViewCount { get; set; }
 
 
     }
@@ -111,7 +123,13 @@ namespace Lunggo.ApCommon.Activity.Model
         public long RatingCount { get; set; }
         public long ReviewCount { get; set; }
         public bool HasPdfVoucher { get; set; }
-        public ActivityReview Review { get; set; }        
+        public ActivityReview Review { get; set; } 
+        public bool IsInstantConfirmation { get; set; }
+        public bool MustPrinted { get; set; }
+        public string ActivityDuration { get; set; }
+        public int MinPax { get; set; }
+        public int MaxPax { get; set; }
+        public long? ViewCount { get; set; }
     }
 
     public class AdditionalContent

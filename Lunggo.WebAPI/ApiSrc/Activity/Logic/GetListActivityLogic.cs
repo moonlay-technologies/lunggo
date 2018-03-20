@@ -88,10 +88,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 {
                     Id = AppointmentList.Id,
                     Name = AppointmentList.Name,
-                    MediaSrc = AppointmentList.MediaSrc
+                    MediaSrc = AppointmentList.MediaSrc,
+                    Price = AppointmentList.Price
                 }).ToList(),
                 Page = serviceResponse.Page,
-                PerPage = serviceResponse.PerPage
+                PerPage = serviceResponse.PerPage,
+                StatusCode = HttpStatusCode.OK
             };
 
             return apiResponse;

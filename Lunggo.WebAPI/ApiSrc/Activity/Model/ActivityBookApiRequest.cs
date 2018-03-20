@@ -20,6 +20,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         [JsonProperty("ticketCount", NullValueHandling = NullValueHandling.Ignore)]
         public List<ActivityPricePackageReservation> TicketCount { get; set; }
         [JsonProperty("paxes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Pax> Paxes { get; set; }
+        public List<PaxForDisplay> Paxes { get; set; }
     }
 }

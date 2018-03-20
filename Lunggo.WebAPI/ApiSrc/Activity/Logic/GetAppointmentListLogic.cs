@@ -84,17 +84,18 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
         {
             var apiResponse = new GetAppointmentListApiResponse()
             {
-                Appointments = serviceResponse.Appointments.Select(AppointmentList => new AppointmentDetailForDisplay()
+                Appointments = serviceResponse.Appointments.Select(AppointmentList => new AppointmentListForDisplay()
                 {
                     ActivityId = AppointmentList.ActivityId,
                     Name = AppointmentList.Name,
-                    PaxCount = AppointmentList.PaxCount,
                     Date = AppointmentList.Date,
                     Session = AppointmentList.Session,
-                    MediaSrc = AppointmentList.MediaSrc
+                    MediaSrc = AppointmentList.MediaSrc,
+                    AppointmentReservations = AppointmentList.AppointmentReservations
                 }).ToList(),
                 Page = serviceResponse.Page,
-                PerPage = serviceResponse.PerPage
+                PerPage = serviceResponse.PerPage,
+                StatusCode = HttpStatusCode.OK
             };
 
             return apiResponse;

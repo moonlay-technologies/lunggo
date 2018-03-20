@@ -93,10 +93,14 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Date = appointmentList.Date,
                     Session = appointmentList.Session,
                     MediaSrc = appointmentList.MediaSrc,
+                    RequestTime = appointmentList.RequestTime,
+                    TimeLimit = appointmentList.TimeLimit,
+                    ContactName = appointmentList.ContactName
                     //RequestTime = DateTime.Parse(appointmentList.RequestTime).AddHours(5)
                 }).ToList(),
                 Page = serviceResponse.Page,
-                PerPage = serviceResponse.PerPage
+                PerPage = serviceResponse.PerPage,
+                StatusCode = HttpStatusCode.OK
             };
 
             return apiResponse;

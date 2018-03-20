@@ -370,6 +370,7 @@
     <Content Include="Assets\css\promo.css" />
     <Content Include="Assets\css\promo.min.css" />
     <Content Include="Assets\css\promo.scss" />
+    <Content Include="Assets\css\promolandingpage.css" />
     <Content Include="Assets\css\style-activity-edit-detail.css" />
     <Content Include="Assets\css\travorama-mobileApp.css" />
     <Content Include="Assets\css\travorama-mobileApp.min.css" />
@@ -888,6 +889,7 @@
     <Content Include="Assets\images\danamon.png" />
     <Content Include="Assets\images\default-banner-2.jpg" />
     <Content Include="Assets\images\default-banner.jpg" />
+    <Content Include="Assets\images\dummypromo.jpg" />
     <Content Include="Assets\images\email-facebook.jpg" />
     <Content Include="Assets\images\email-image.jpg" />
     <Content Include="Assets\images\email-instagram.jpg" />
@@ -1955,6 +1957,7 @@
     <Content Include="sitemap.xml" />
     <None Include="Views\common\ForgotPasswordByOtpEmail.cshtml" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
+    <Content Include="Views\Promo\PromoLandingPage.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />
     <Content Include="Views\Index\TeaserPage.cshtml" />
     <Content Include="Views\Index\TeaserPage.mobile.cshtml" />

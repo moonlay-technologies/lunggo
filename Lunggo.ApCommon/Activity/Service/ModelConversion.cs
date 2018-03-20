@@ -110,7 +110,13 @@ namespace Lunggo.ApCommon.Activity.Service
                 Rating = activityDetail.Rating,
                 RatingCount = activityDetail.RatingCount,
                 ReviewCount = activityDetail.ReviewCount,
-                Review = activityDetail.Review
+                Review = activityDetail.Review,
+                IsInstantConfirmation = activityDetail.IsInstantConfirmation,
+                ActivityDuration = activityDetail.ActivityDuration,
+                MustPrinted = activityDetail.MustPrinted,
+                MinPax = activityDetail.MinPax,
+                MaxPax = activityDetail.MaxPax,
+                ViewCount = activityDetail.ViewCount
             };
 
             return convertedActivity;
