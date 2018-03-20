@@ -163,7 +163,4 @@ Lunggo.Driver/Config/
 
 /Lunggo.Generator/Repository
 /Lunggo.Generator/TableRecord
-/.vs/lunggo/v15/sqlite3
-/.vs/VSWorkspaceState.json
-/.vs/slnx.sqlite
-.vs/Lunggo/v15/sqlite3/storage.ide
+/.vs
