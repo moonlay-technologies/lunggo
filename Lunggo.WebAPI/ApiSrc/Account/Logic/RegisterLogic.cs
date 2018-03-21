@@ -63,7 +63,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return Error(BadRequest, "ERR_COUNTRYCALLCD_MUST_BE_FILLED");
             }
 
-            if (IsNullOrWhiteSpace(request.ReferrerCode))
+            if (!IsNullOrWhiteSpace(request.ReferrerCode))
             {
                 var referrer = accountService.GetReferralCodeDataFromDb(request.ReferrerCode);
                 if (referrer == null)
