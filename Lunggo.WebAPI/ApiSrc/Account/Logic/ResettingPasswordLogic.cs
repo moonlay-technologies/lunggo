@@ -60,43 +60,58 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
+            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
+            {
+
+                if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_EXPIRED"
+                    };
+                }
+
+                if (AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_NOT_VALID"
+                    };
+                }
+            }
+            else
+            {
+                if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.Email) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_EXPIRED"
+                    };
+                }
+
+                if (AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.Email) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_NOT_VALID"
+                    };
+                }
+            }
+
             var input = PreProcess(apiRequest);
-            var checkOtpInput = new CheckOtpInput
-            {
-                PhoneNumber = input.PhoneNumber,
-                Email = input.Email,
-                Otp = input.Otp
-            };
-
-            if (AccountService.GetInstance().CheckExpireTime(checkOtpInput) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_EXPIRED"
-                };
-            }
-
-
-            if (AccountService.GetInstance().CheckOtp(checkOtpInput) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_NOT_VALID"
-                };
-            }
-
-
             var userIds = AccountService.GetInstance().GetIdsByContact(input);
             foreach (var userId in userIds)
             {
-               userManager.RemovePasswordAsync(userId).Wait();
-               userManager.AddPasswordAsync(userId, input.NewPassword).Wait();
+                userManager.RemovePasswordAsync(userId).Wait();
+                userManager.AddPasswordAsync(userId, input.NewPassword).Wait();
             }
 
             AccountService.GetInstance().DeleteDataOtp(contact);
-            
+
             return new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.OK

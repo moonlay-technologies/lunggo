@@ -34,7 +34,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
                     };
-                }               
+                }
             }
 
             else if (!string.IsNullOrEmpty(apiRequest.Email))
@@ -63,12 +63,14 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var isOtpExpired = accountService.CheckExpireTime(input);
             if (isOtpExpired == false)
             {
-                return new ApiResponseBase
+                if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_EXPIRED"
-                };
-            }
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_EXPIRED"
+                    };
+                }
 
             var isOtpValid = accountService.CheckOtp(input);
             if (isOtpValid == false)

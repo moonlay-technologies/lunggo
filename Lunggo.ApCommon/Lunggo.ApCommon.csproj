@@ -184,6 +184,7 @@
     <Compile Include="Account\Model\Database\GetReferreeCodeFromDbQuery.cs" />
     <Compile Include="Account\Model\Database\GetUserIdFromDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdateDateResetPasswordToDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateProfileToDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdatePasswordToDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdateReferralCreditDbQuery.cs" />
     <Compile Include="Account\Model\Database\UseReferralCreditFromDbQuery.cs" />

@@ -15,5 +15,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string CountryCallingCd { get; set; }
         [JsonProperty("phone", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
+        [JsonProperty("isPhoneVerified", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsPhoneVerified { get; set; }
+        [JsonProperty("isEmailVerified", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsEmailVerified { get; set; }
     }
 }
