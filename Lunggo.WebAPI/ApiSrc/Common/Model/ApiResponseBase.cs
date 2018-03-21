@@ -81,6 +81,15 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                 : Error500();
         }
 
+        public static ApiResponseBase Error(HttpStatusCode statusCode, string errorMessage)
+        {
+            return new ApiResponseBase
+            {
+                StatusCode = statusCode,
+                ErrorCode = errorMessage
+            };
+        }
+
         public static ApiResponseBase Error500()
         {
             return new ApiResponseBase
