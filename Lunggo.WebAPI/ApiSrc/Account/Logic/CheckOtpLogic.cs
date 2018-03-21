@@ -19,7 +19,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 apiRequest.Email = null;
             }
-                        
+
             if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
             {
                 if (apiRequest.PhoneNumber.StartsWith("0"))
@@ -59,20 +59,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var input = PreProcess(apiRequest);
-            var isOtpExpired = accountService.CheckExpireTime(input);
-            if (isOtpExpired == false)
+            if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
             {
-                if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
+                return new ApiResponseBase
                 {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_OTP_EXPIRED"
-                    };
-                }
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_OTP_EXPIRED"
+                };
+            }
 
-            var isOtpValid = accountService.CheckOtp(input);
+            var isOtpValid = accountService.CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
             if (isOtpValid == false)
             {
                 return new ApiResponseBase
@@ -83,22 +79,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
             return new ApiResponseBase
             {
-                StatusCode = HttpStatusCode.OK
-            };
-
-        }
-
-
-        public static CheckOtpInput PreProcess(CheckOtpApiRequest apiRequest)
-        {
-            return new CheckOtpInput
-            {
-                PhoneNumber = apiRequest.PhoneNumber,
-                Email = apiRequest.Email,
-                Otp = apiRequest.Otp
+               StatusCode = HttpStatusCode.OK
             };
         }
-
-
     }
 }

@@ -37,6 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             updatedUser.LastName = last;
             updatedUser.CountryCallCd = request.CountryCallingCd ?? updatedUser.CountryCallCd;
             updatedUser.PhoneNumber = request.PhoneNumber ?? updatedUser.PhoneNumber;
+            updatedUser.Email = request.Email ?? updatedUser.Email;
             var result = userManager.Update(updatedUser);
             if (result.Succeeded)
             {

@@ -20,6 +20,14 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
             var foundUser = user.Identity.GetUser();
+            if (string.IsNullOrWhiteSpace(foundUser.Id)) 
+            {
+                return new GetProfileApiResponse
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERR_UNDEFINED_USER"
+                };
+            }
             string name;
             var first = foundUser.FirstName ?? "";
             var last = foundUser.LastName ?? "";
