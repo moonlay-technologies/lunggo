@@ -15,68 +15,20 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase VerifyPhone(VerifyPhoneApiRequest apiRequest)
         {
-            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
-            {
-                if (apiRequest.PhoneNumber.StartsWith("0"))
-                {
-                    apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
-                }
-
-                if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
-                {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
-                    };
-                }
-            }
-
-            else
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_REQUEST"
-                };
-            }
+            if (!ValidateInputFormat()) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_INVALID_REQUEST");
+            if (!ValidatePhoneNumberFormat()) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
 
             var user = HttpContext.Current.User.Identity.GetUser();
-            if (user.CountryCallCd != apiRequest.CountryCallCd || user.PhoneNumber != apiRequest.PhoneNumber)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.Unauthorized,
-                    ErrorCode = "ERR_UNAUTHORIZED"
-                };
-            }
+            if (!ValidateAuthorization()) return ApiResponseBase.Error(HttpStatusCode.Unauthorized, "ERR_UNAUTHORIZED");
 
-            if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_EXPIRED"
-                };
-            }
+            var isOtpExpired = !AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
+            if (isOtpExpired) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_OTP_EXPIRED");
 
-            if (AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_NOT_VALID"
-                };
-            }
+            var isOtpValid = AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
+            if (!isOtpValid) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_OTP_NOT_VALID");
 
-            if (AccountService.GetInstance().VerifyPhoneWithOtp(apiRequest.Otp, user) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.InternalServerError,
-                    ErrorCode = "ERR_INTERNAL"
-                };
-            }
+            var isSuccessVerify = AccountService.GetInstance().VerifyPhoneWithOtp(apiRequest.Otp, user);
+            if (!isSuccessVerify) return ApiResponseBase.Error(HttpStatusCode.InternalServerError, "ERR_INTERNAL");
 
             AccountService.GetInstance().DeleteDataOtp(apiRequest.PhoneNumber);
 
@@ -85,6 +37,38 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 StatusCode = HttpStatusCode.OK
             };
 
+            #region Validation
+
+            bool ValidateInputFormat()
+            {
+                return !string.IsNullOrEmpty(apiRequest.PhoneNumber);
+            }
+
+            bool ValidatePhoneNumberFormat()
+            {
+                if (apiRequest.PhoneNumber.StartsWith("0"))
+                {
+                    apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
+                }
+
+                if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            bool ValidateAuthorization()
+            {
+                if (user.CountryCallCd != apiRequest.CountryCallCd || user.PhoneNumber != apiRequest.PhoneNumber)
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            #endregion
         }
     }
 }
