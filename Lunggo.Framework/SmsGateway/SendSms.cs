@@ -10,7 +10,7 @@ namespace Lunggo.Framework.SmsGateway
     public class SmsGateway
     {
 
-        public const string _userName = "k43yap";
+        public const string _userName = "yi2e1z";
         public const string _password = "Standar1234";
 
         public IRestResponse SendSms(string phoneNumber, string message)
