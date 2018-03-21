@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using static Lunggo.WebAPI.ApiSrc.Common.Model.ApiResponseBase;
+using static System.Net.HttpStatusCode;
+using static System.String;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
@@ -22,11 +25,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         {
             if (!IsValid(request))
             {
-                return new ApiResponseBase
+                return Error(BadRequest, "ERR_INVALID_REQUEST");                
+            }
+            var accountService = AccountService.GetInstance();
+            if (!IsNullOrEmpty(request.Phone))
+            {
+                if (request.Phone.StartsWith("0"))
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_REQUEST"
-                };
+                    request.Phone = request.Phone.Substring(1);
+                }
+                else if (request.Phone.StartsWith("+62"))
+                {
+                    request.Phone = request.Phone.Substring(3);
+                }
+                var isValidFormatNumber = accountService.CheckPhoneNumberFormat(request.Phone);
+                if (isValidFormatNumber == false)
+                {
+                    return Error(BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
+                }
             }
 
             var foundUser = userManager.FindByEmail(request.Email);
@@ -34,36 +50,28 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
             if (foundUser != null)
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_EMAIL_ALREADY_EXIST"
-                };
+                return Error(BadRequest, "ERR_EMAIL_ALREADY_EXIST");                
             }
 
             if (foundUserByPhone != null)
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_PHONENUMBER_ALREADY_EXIST"
-                };
+                return Error(BadRequest, "ERR_PHONENUMBER_ALREADY_EXIST");
             }
 
-            if (!string.IsNullOrWhiteSpace(request.ReferrerCode))
+            if (IsNullOrWhiteSpace(request.CountryCallCd))
             {
-                var referrer = AccountService.GetInstance().GetReferralCodeDataFromDb(request.ReferrerCode);
+                return Error(BadRequest, "ERR_COUNTRYCALLCD_MUST_BE_FILLED");
+            }
+
+            if (IsNullOrWhiteSpace(request.ReferrerCode))
+            {
+                var referrer = accountService.GetReferralCodeDataFromDb(request.ReferrerCode);
                 if (referrer == null)
                 {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_REFERRAL_NOT_VALID"
-                    };
+                    return Error(BadRequest, "ERR_REFERRAL_NOT_VALID");                   
                 }
             }
-
-
+            
             string first, last;
             var splittedName = request.Name.Split(' ');
             if (splittedName.Length == 1)
@@ -77,9 +85,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 last = splittedName[splittedName.Length - 1];
             }
 
-            if (string.IsNullOrEmpty(request.CountryCallCd))
-                request.CountryCallCd = "62";
-
 
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             PlatformType Platform;
@@ -88,7 +93,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
             Platform = Client.GetPlatformType(clientId);
 
-            
             var user = new User
             {
                 FirstName = first,
@@ -96,7 +100,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 UserName = request.CountryCallCd + "-" + request.Phone + ":" + request.Email,
                 Email = request.Email,
                 PhoneNumber = request.Phone,
-                PlatformCd = PlatformTypeCd.Mnemonic(Platform)
+                PlatformCd = PlatformTypeCd.Mnemonic(Platform),
+                CountryCallCd = request.CountryCallCd
             };
             var result = userManager.Create(user, request.Password);
             if (result.Succeeded)

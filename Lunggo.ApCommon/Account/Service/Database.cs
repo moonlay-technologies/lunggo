@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Account.Service
 {
     public partial class AccountService
     {
-        public List<string> GetUserIdFromDb (ForgetPasswordInput forgetPasswordInput)
+        public List<string> GetUserIdFromDb (RequestOtpInput forgetPasswordInput)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -43,7 +43,7 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public List<string> GetOtpHashFromDb (ForgetPasswordInput forgetPasswordInput)
+        public List<string> GetOtpHashFromDb (RequestOtpInput forgetPasswordInput)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -60,7 +60,7 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public void InsertDataResetPasswordToDb(ForgetPasswordInput forgetPasswordInput, string otp, DateTime expireTime)
+        public void InsertDataResetPasswordToDb(RequestOtpInput forgetPasswordInput, string otp, DateTime expireTime)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public void UpdateDateResetPasswordToDb(ForgetPasswordInput forgetPasswordInput, string otp, DateTime expireTime)
+        public void UpdateDateResetPasswordToDb(RequestOtpInput forgetPasswordInput, string otp, DateTime expireTime)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

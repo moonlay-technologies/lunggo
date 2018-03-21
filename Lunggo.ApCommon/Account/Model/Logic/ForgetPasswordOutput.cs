@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Account.Model.Logic
 {
-    public class ForgetPasswordOutput
+    public class RequestOtpOutput
     {
         public string CountryCallCd { get; set; }
         public string PhoneNumber { get; set; }

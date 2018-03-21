@@ -871,6 +871,12 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View(model: model.ReferrerCode);
             }
 
+            if (!model.Phone.StartsWith("0"))
+            {
+                ViewBag.Message = "Phone Number Must 0 First";
+                return View(model: model.ReferrerCode);
+            }
+
             var foundUser = UserManager.FindByEmail(model.Email);
             var foundUserByPhone = UserManager.FindByName(model.Phone);
 
@@ -920,7 +926,8 @@ namespace Lunggo.CustomerWeb.Controllers
                 UserName = model.Phone + ":" + model.Email,
                 Email = model.Email,
                 PhoneNumber = model.Phone,
-                PlatformCd = PlatformTypeCd.Mnemonic(PlatformType.MobileWebsite)
+                PlatformCd = PlatformTypeCd.Mnemonic(PlatformType.MobileWebsite),
+                CountryCallCd = "62"
             };
             var result = UserManager.Create(user, model.Password);
             if (result.Succeeded)

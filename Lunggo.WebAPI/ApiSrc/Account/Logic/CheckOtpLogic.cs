@@ -2,6 +2,9 @@
 using Lunggo.ApCommon.Account.Service;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
+using static Lunggo.WebAPI.ApiSrc.Common.Model.ApiResponseBase;
+using static System.Net.HttpStatusCode;
+using static System.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +18,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         public static ApiResponseBase CheckOtp(CheckOtpApiRequest apiRequest)
         {
             var accountService = AccountService.GetInstance();
-            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber) && !string.IsNullOrEmpty(apiRequest.Email))
+            if (!IsNullOrEmpty(apiRequest.PhoneNumber) && !IsNullOrEmpty(apiRequest.Email))
             {
                 apiRequest.Email = null;
             }
 
-            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
+            if (!IsNullOrEmpty(apiRequest.PhoneNumber))
             {
                 if (apiRequest.PhoneNumber.StartsWith("0"))
                 {
@@ -29,57 +32,37 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var isValidFormatNumber = accountService.CheckPhoneNumberFormat(apiRequest.PhoneNumber);
                 if (isValidFormatNumber == false)
                 {
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
-                    };
+                    return Error(BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
                 }
             }
 
-            else if (!string.IsNullOrEmpty(apiRequest.Email))
+            else if (!IsNullOrEmpty(apiRequest.Email))
             {
                 var isValidEmailFormat = accountService.CheckEmailFormat(apiRequest.Email);
                 if (isValidEmailFormat == false)
                 {
-                    return new ForgetPasswordApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_INVALID_FORMAT_EMAIL"
-                    };
+                    return Error(BadRequest, "ERR_INVALID_FORMAT_EMAIL");
                 }
             }
 
             else
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_REQUEST"
-                };
+                return Error(BadRequest, "ERR_INVALID_REQUEST");
             }
 
             if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_EXPIRED"
-                };
+                return Error(BadRequest, "ERR_OTP_EXPIRED");
             }
 
             var isOtpValid = accountService.CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
             if (isOtpValid == false)
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_NOT_VALID"
-                };
+                return Error(BadRequest, "ERR_OTP_NOT_VALID");
             }
             return new ApiResponseBase
             {
-               StatusCode = HttpStatusCode.OK
+               StatusCode = OK
             };
         }
     }

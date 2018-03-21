@@ -201,7 +201,7 @@
     <Compile Include="Account\Service\CheckPhoneNumber.cs" />
     <Compile Include="Account\Service\Database.cs" />
     <Compile Include="Account\Service\DeleteDataOtp.cs" />
-    <Compile Include="Account\Service\ForgetPassword.cs" />
+    <Compile Include="Account\Service\RequestOtp.cs" />
     <Compile Include="Account\Service\GetUserIdByEmailOrPhoneNumber.cs" />
     <Compile Include="Account\Service\ModelConversion.cs" />
     <Compile Include="Account\Service\ResettingPassword.cs" />

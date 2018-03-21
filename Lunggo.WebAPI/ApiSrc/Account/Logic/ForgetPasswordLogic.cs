@@ -16,9 +16,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static ForgetPasswordApiResponse ForgetPassword(ForgetPasswordApiRequest apiRequest)
+        public static ForgetPasswordApiResponse RequestOtp(ForgetPasswordApiRequest apiRequest)
         {
-            var input = new ForgetPasswordInput();
+            var input = new RequestOtpInput();
             if (!string.IsNullOrEmpty(apiRequest.PhoneNumber) && !string.IsNullOrEmpty(apiRequest.Email)) 
             {
                 apiRequest.Email = null;
@@ -106,21 +106,21 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var output = AccountService.GetInstance().ForgetPassword(input);
+            var output = AccountService.GetInstance().RequestOtp(input);
             apiResponse = AssambleApiResponse(output);
             return apiResponse;
         }
 
-        public static ForgetPasswordInput PreProcess(ForgetPasswordApiRequest apiRequest)
+        public static RequestOtpInput PreProcess(ForgetPasswordApiRequest apiRequest)
         {
-            return new ForgetPasswordInput
+            return new RequestOtpInput
             {
                 PhoneNumber = apiRequest.PhoneNumber,
                 Email = apiRequest.Email
             };
         }
 
-        public static ForgetPasswordApiResponse AssambleApiResponse(ForgetPasswordOutput output)
+        public static ForgetPasswordApiResponse AssambleApiResponse(RequestOtpOutput output)
         {
             if (output.isSuccess == false)
             {

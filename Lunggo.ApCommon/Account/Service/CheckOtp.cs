@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Account.Service
         private bool CheckOtp(string otp, string countryCallCd = null, string phoneNumber = null, string email = null)
         {
             var otpHash = otp.Sha512Encode();
-            var otpHashDb = GetOtpHashFromDb(new ForgetPasswordInput { CountryCallCd = countryCallCd, PhoneNumber = phoneNumber, Email = email });
+            var otpHashDb = GetOtpHashFromDb(new RequestOtpInput { CountryCallCd = countryCallCd, PhoneNumber = phoneNumber, Email = email });
             if (otpHashDb.Count() < 1)
             {
                 return false;

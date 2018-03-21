@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Account.Service
 
         public List<string> GetIdsByContact(ResettingPasswordInput resettingPasswordInput)
         {
-            var forgetPasswordInput = new ForgetPasswordInput
+            var forgetPasswordInput = new RequestOtpInput
             {
                 PhoneNumber = resettingPasswordInput.PhoneNumber,
                 Email = resettingPasswordInput.Email

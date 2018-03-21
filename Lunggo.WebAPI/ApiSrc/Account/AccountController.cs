@@ -303,14 +303,14 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [HttpPost]
         [LunggoCorsPolicy]
         [Level2Authorize]
-        [Route("v1/account/forgotpassword")]
-        public ApiResponseBase ForgetPassword()
+        [Route("v1/account/requestotp")]
+        public ApiResponseBase RequestOtp()
         {
             ForgetPasswordApiRequest request = null;
             try
             {
                 request = ApiRequestBase.DeserializeRequest<ForgetPasswordApiRequest>();
-                var apiResponse = AccountLogic.ForgetPassword(request);
+                var apiResponse = AccountLogic.RequestOtp(request);
                 return apiResponse;
             }
             catch (Exception e)

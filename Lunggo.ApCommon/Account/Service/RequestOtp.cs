@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Account.Service
 {
     public partial class AccountService : SingletonBase<AccountService>
     {
-        public bool CheckContactData (ForgetPasswordInput forgetPasswordInput)
+        public bool CheckContactData (RequestOtpInput forgetPasswordInput)
         {
             var userId = GetUserIdFromDb(forgetPasswordInput);
             if (userId.Count() == 0)
@@ -31,45 +31,45 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public ForgetPasswordOutput ForgetPassword(ForgetPasswordInput forgetPasswordInput)
+        public RequestOtpOutput RequestOtp(RequestOtpInput requestOtpInput)
         {
             var otp = GenerateOtp();
-            if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+            if (!string.IsNullOrEmpty(requestOtpInput.PhoneNumber))
             {
                 
-                var isSendSmsSuccess = SendOtpToUser(forgetPasswordInput.PhoneNumber, otp);
+                var isSendSmsSuccess = SendOtpToUser(requestOtpInput.PhoneNumber, otp);
                 if (isSendSmsSuccess == false)
                 {
-                    return new ForgetPasswordOutput
+                    return new RequestOtpOutput
                     {
                         isSuccess = false
                     };
                 }
                 var expireTime = DateTime.UtcNow.AddMinutes(30);
-                if (CheckPhoneNumberFromResetPasswordDb(forgetPasswordInput) == false)
+                if (CheckPhoneNumberFromResetPasswordDb(requestOtpInput) == false)
                 {
-                    InsertDataResetPasswordToDb(forgetPasswordInput, otp, expireTime);
+                    InsertDataResetPasswordToDb(requestOtpInput, otp, expireTime);
                 }
                 else
                 {
-                    UpdateDateResetPasswordToDb(forgetPasswordInput, otp, expireTime);
+                    UpdateDateResetPasswordToDb(requestOtpInput, otp, expireTime);
                 }
 
 
                 if (isSendSmsSuccess == false)
                 {
-                    return new ForgetPasswordOutput
+                    return new RequestOtpOutput
                     {
                         isSuccess = false
                     };
                 }
-                InsertSmsTimeToCache(forgetPasswordInput.PhoneNumber, otp);
+                InsertSmsTimeToCache(requestOtpInput.PhoneNumber, otp);
 
 
-                return new ForgetPasswordOutput
+                return new RequestOtpOutput
                 {
-                    CountryCallCd = forgetPasswordInput.CountryCallCd,
-                    PhoneNumber = forgetPasswordInput.PhoneNumber,
+                    CountryCallCd = requestOtpInput.CountryCallCd,
+                    PhoneNumber = requestOtpInput.PhoneNumber,
                     Otp = otp,
                     ExpireTime = expireTime,
                     isSuccess = true
@@ -77,23 +77,23 @@ namespace Lunggo.ApCommon.Account.Service
             }
             else
             {
-                SendOtpToUserByEmail(forgetPasswordInput.Email, otp);
+                SendOtpToUserByEmail(requestOtpInput.Email, otp);
                 var expireTime = DateTime.UtcNow.AddMinutes(30);
-                if (CheckPhoneNumberFromResetPasswordDb(forgetPasswordInput) == false)
+                if (CheckPhoneNumberFromResetPasswordDb(requestOtpInput) == false)
                 {
-                    InsertDataResetPasswordToDb(forgetPasswordInput, otp, expireTime);
+                    InsertDataResetPasswordToDb(requestOtpInput, otp, expireTime);
                 }
                 else
                 {
-                    UpdateDateResetPasswordToDb(forgetPasswordInput, otp, expireTime);
+                    UpdateDateResetPasswordToDb(requestOtpInput, otp, expireTime);
                 }
-                InsertEmailTimeToCache(forgetPasswordInput.Email, otp);
+                InsertEmailTimeToCache(requestOtpInput.Email, otp);
 
 
-                return new ForgetPasswordOutput
+                return new RequestOtpOutput
                 {
-                    CountryCallCd = forgetPasswordInput.CountryCallCd,
-                    Email = forgetPasswordInput.Email,
+                    CountryCallCd = requestOtpInput.CountryCallCd,
+                    Email = requestOtpInput.Email,
                     Otp = otp,
                     ExpireTime = expireTime,
                     isSuccess = true
@@ -113,7 +113,7 @@ namespace Lunggo.ApCommon.Account.Service
             return otp;
         }
 
-        public bool CheckPhoneNumberFromResetPasswordDb(ForgetPasswordInput forgetPasswordInput)
+        public bool CheckPhoneNumberFromResetPasswordDb(RequestOtpInput forgetPasswordInput)
         {
             var OtpHash = GetOtpHashFromDb(forgetPasswordInput);
             if (OtpHash.Count() == 0)
