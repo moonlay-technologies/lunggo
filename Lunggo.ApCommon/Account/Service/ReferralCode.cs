@@ -116,5 +116,10 @@ namespace Lunggo.ApCommon.Account.Service
         {
             UpdateReferrerCodeDb(userId, referrerCode);
         }
+
+        public List<string> GetReferreeIds(string referrerCode)
+        {
+            return GetReferreeIdsFromDb(referrerCode);
+        }
     }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Product.Model;
+using System.Web;
+using Lunggo.ApCommon.Identity.Users;
 
 namespace Lunggo.ApCommon.Account.Service
 {
@@ -43,8 +45,10 @@ namespace Lunggo.ApCommon.Account.Service
 
         public List<ReferralDetail> ConvertFromReferralHistoryToReferralDetail(List<ReferralHistoryModel> referralHistory)
         {
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var referral = GetReferralCodeByIdFromDb(userId);
+            var referreeIds = GetReferreeIds(referral.ReferralCode);
             var displays = new List<ReferralDetail>();
-            var referreeIds = referralHistory.Select(refer => refer.ReferreeId).Distinct().ToList();
             var steps = new List<ReferralHistoryModelForDisplay>();
             steps.Add(new ReferralHistoryModelForDisplay
             {
@@ -67,19 +71,41 @@ namespace Lunggo.ApCommon.Account.Service
                 var user = ActivityService.GetInstance().GetUserByIdFromDb(referreeId);
                 var username = ActivityService.GetInstance().ConvertToPaxForDisplay(new Pax { FirstName = user.FirstName, LastName = user.LastName }).Name;
                 var historyModel = referralHistory.Where(refer => refer.ReferreeId == referreeId).ToList();
+                var stepsThis = new List<ReferralHistoryModelForDisplay>();
                 foreach (var step in steps)
                 {
                     var history = historyModel.Where(his => his.History == step.stepName).ToList();
-                    if (history.Count > 0)
+                    if (history.Count > 0 && step.stepName == "First Time Login")
                     {
-                        step.StepStatus = true;
-                        step.DateTime = history[0].TimeStamp;
+                        stepsThis.Add(new ReferralHistoryModelForDisplay
+                        {
+                            stepName = "First Time Login",
+                            StepDetail = "Login For The First Time",
+                            DateTime = history[0].TimeStamp,
+                            ReferralCredit = 100000,
+                            StepStatus = true
+                        });                        
+                    }
+                    else if(history.Count > 0 && step.stepName == "First Time Booking")
+                    {
+                        stepsThis.Add(new ReferralHistoryModelForDisplay
+                        {
+                            stepName = "First Time Login",
+                            StepDetail = "Login For The First Time",
+                            DateTime = history[0].TimeStamp,
+                            ReferralCredit = 100000,
+                            StepStatus = true
+                        });
+                    }
+                    else
+                    {
+                        stepsThis.Add(step);
                     }
                 }
                 var display = new ReferralDetail
                 {
                     Name = username,
-                    History = steps,
+                    History = stepsThis,
                 };
                 displays.Add(display);
             }

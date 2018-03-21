@@ -14,19 +14,20 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase CheckOtp(CheckOtpApiRequest apiRequest)
         {
+            var accountService = AccountService.GetInstance();
             if (!string.IsNullOrEmpty(apiRequest.PhoneNumber) && !string.IsNullOrEmpty(apiRequest.Email))
             {
                 apiRequest.Email = null;
             }
-            
+                        
             if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
             {
                 if (apiRequest.PhoneNumber.StartsWith("0"))
                 {
                     apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
                 }
-
-                if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
+                var isValidFormatNumber = accountService.CheckPhoneNumberFormat(apiRequest.PhoneNumber);
+                if (isValidFormatNumber == false)
                 {
                     return new ApiResponseBase
                     {
@@ -38,7 +39,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
             else if (!string.IsNullOrEmpty(apiRequest.Email))
             {
-                if (AccountService.GetInstance().CheckEmailFormat(apiRequest.Email) == false)
+                var isValidEmailFormat = accountService.CheckEmailFormat(apiRequest.Email);
+                if (isValidEmailFormat == false)
                 {
                     return new ForgetPasswordApiResponse
                     {
@@ -58,7 +60,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
 
             var input = PreProcess(apiRequest);
-            if (AccountService.GetInstance().CheckExpireTime(input) == false)
+            var isOtpExpired = accountService.CheckExpireTime(input);
+            if (isOtpExpired == false)
             {
                 return new ApiResponseBase
                 {
@@ -67,7 +70,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            if (AccountService.GetInstance().CheckOtp(input) == false)
+            var isOtpValid = accountService.CheckOtp(input);
+            if (isOtpValid == false)
             {
                 return new ApiResponseBase
                 {

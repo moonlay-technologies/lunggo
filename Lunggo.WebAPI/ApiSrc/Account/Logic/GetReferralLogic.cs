@@ -47,6 +47,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 ReferralCredit = getReferralOutput.ReferralCredit,
                 ExpDate = getReferralOutput.ExpDate,
                 ShareableLink = getReferralOutput.ShareableLink,
+                ReferralContent = "Bagikan kode referral kamu ke seluruh teman-teman kamu",
+                ShareDialog = "Gabung disini dan menangkan bonus kreditnya",
                 StatusCode = HttpStatusCode.OK
             };
         }

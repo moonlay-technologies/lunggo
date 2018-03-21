@@ -275,7 +275,7 @@ namespace Lunggo.ApCommon.Account.Service
                 }                                
                 referral.ReferralCredit = referral.ReferralCredit + referralCredit;                
                 var year = DateTime.UtcNow.AddHours(7).Year;
-                var expDate = new DateTime(year, 12, 31, 16, 59, 59, 59);
+                var expDate = new DateTime(year, 12, 31, 16, 59, 59);
                 UpdateReferralCreditDbQuery.GetInstance().Execute(conn, new { UserId = userId, ReferralCredit = referral.ReferralCredit, ExpDate = expDate });                
                 if(referral.ReferrerCode != null)
                 {
@@ -315,6 +315,15 @@ namespace Lunggo.ApCommon.Account.Service
                 }
                 referral.ReferralCredit = referral.ReferralCredit - referralCreditUsed;
                 UseReferralCreditFromDbQuery.GetInstance().Execute(conn, new { UserId = userId, ReferralCredit = referral.ReferralCredit });
+            }
+        }
+
+        public List<string> GetReferreeIdsFromDb(string referrerCode)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                List<string> referreesIds = GetReferreeCodeFromDbQuery.GetInstance().Execute(conn, new { ReferrerCode = referrerCode }).ToList();
+                return referreesIds;
             }
         }
     }

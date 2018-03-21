@@ -17,5 +17,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public DateTime ExpDate { get; set; }
         [JsonProperty("shareableLink", NullValueHandling = NullValueHandling.Ignore)]
         public string ShareableLink { get; set; }
+        [JsonProperty("referralContent", NullValueHandling = NullValueHandling.Ignore)]
+        public string ReferralContent { get; set; }
+        [JsonProperty("shareDialog", NullValueHandling = NullValueHandling.Ignore)]
+        public string ShareDialog { get; set; }
     }
 }
