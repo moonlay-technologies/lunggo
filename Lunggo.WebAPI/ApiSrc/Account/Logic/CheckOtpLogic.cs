@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 apiRequest.Email = null;
             }
-            
+
             if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
             {
                 if (apiRequest.PhoneNumber.StartsWith("0"))
@@ -33,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
                     };
-                }               
+                }
             }
 
             else if (!string.IsNullOrEmpty(apiRequest.Email))
@@ -57,42 +57,56 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var input = PreProcess(apiRequest);
-            if (AccountService.GetInstance().CheckExpireTime(input) == false)
+            if (!string.IsNullOrEmpty(apiRequest.PhoneNumber))
             {
+                if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_EXPIRED"
+                    };
+                }
+
+                if (AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_NOT_VALID"
+                    };
+                }
+
                 return new ApiResponseBase
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_EXPIRED"
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
+            {
+                if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.Email) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_EXPIRED"
+                    };
+                }
+                if (AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.Email) == false)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_OTP_NOT_VALID"
+                    };
+                }
+
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.OK
                 };
             }
 
-            if (AccountService.GetInstance().CheckOtp(input) == false)
-            {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_OTP_NOT_VALID"
-                };
-            }
-            return new ApiResponseBase
-            {
-                StatusCode = HttpStatusCode.OK
-            };
-
         }
-
-
-        public static CheckOtpInput PreProcess(CheckOtpApiRequest apiRequest)
-        {
-            return new CheckOtpInput
-            {
-                PhoneNumber = apiRequest.PhoneNumber,
-                Email = apiRequest.Email,
-                Otp = apiRequest.Otp
-            };
-        }
-
-
     }
 }

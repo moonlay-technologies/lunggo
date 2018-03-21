@@ -27,7 +27,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
-            
+
             var foundUser = userManager.FindByEmail(request.Email);
             var foundUserByPhone = userManager.FindByName(request.Phone);
 
@@ -62,6 +62,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 last = splittedName[splittedName.Length - 1];
             }
 
+            if (string.IsNullOrEmpty(request.CountryCallCd))
+                request.CountryCallCd = "62";
+
 
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
             PlatformType Platform;
@@ -74,7 +77,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 FirstName = first,
                 LastName = last,
-                UserName = request.Phone + ":" + request.Email,
+                UserName = request.CountryCallCd + "-" + request.Phone + ":" + request.Email,
                 Email = request.Email,
                 PhoneNumber = request.Phone,
                 PlatformCd = PlatformTypeCd.Mnemonic(Platform)

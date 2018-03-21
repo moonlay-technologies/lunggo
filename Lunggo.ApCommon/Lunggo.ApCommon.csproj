@@ -180,9 +180,8 @@
     <Compile Include="Account\Model\Database\GetOtpHashFromDbQuery.cs" />
     <Compile Include="Account\Model\Database\GetUserIdFromDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdateDateResetPasswordToDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateProfileToDbQuery.cs" />
     <Compile Include="Account\Model\Database\UpdatePasswordToDbQuery.cs" />
-    <Compile Include="Account\Model\Logic\CheckOtpInput.cs" />
-    <Compile Include="Account\Model\Logic\CheckOtpOutput.cs" />
     <Compile Include="Account\Model\Logic\ForgetPasswordInput.cs" />
     <Compile Include="Account\Model\Logic\ForgetPasswordOutput.cs" />
     <Compile Include="Account\Model\Logic\ResettingPasswordInput.cs" />

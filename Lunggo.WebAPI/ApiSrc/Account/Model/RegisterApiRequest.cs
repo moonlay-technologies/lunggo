@@ -11,6 +11,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         [EmailAddress]
         [JsonProperty("email")]
         public string Email { get; set; }
+        [JsonProperty("countryCallCd")]
+        public string CountryCallCd { get; set; }
         [JsonProperty("phone")]
         public string Phone { get; set; }
         [Required]

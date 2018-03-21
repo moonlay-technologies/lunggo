@@ -10,6 +10,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
     {
         [JsonProperty("otp", NullValueHandling = NullValueHandling.Ignore)]
         public string Otp { get; set; }
+        [JsonProperty("countryCallCd", NullValueHandling = NullValueHandling.Ignore)]
+        public string CountryCallCd { get; set; }
         [JsonProperty("phoneNumber", NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumber { get; set; }
     }

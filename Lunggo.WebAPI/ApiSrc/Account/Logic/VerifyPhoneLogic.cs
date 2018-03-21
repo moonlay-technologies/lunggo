@@ -1,5 +1,6 @@
 ﻿using Lunggo.ApCommon.Account.Model.Logic;
 using Lunggo.ApCommon.Account.Service;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System;
@@ -28,7 +29,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_INVALID_FORMAT_PHONENUMBER"
                     };
-                }               
+                }
             }
 
             else
@@ -40,8 +41,17 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var input = PreProcess(apiRequest);
-            if (AccountService.GetInstance().CheckExpireTime(input) == false)
+            var user = HttpContext.Current.User.Identity.GetUser();
+            if (user.CountryCallCd != apiRequest.CountryCallCd || user.PhoneNumber != apiRequest.PhoneNumber)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.Unauthorized,
+                    ErrorCode = "ERR_UNAUTHORIZED"
+                };
+            }
+
+            if (AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
             {
                 return new ApiResponseBase
                 {
@@ -50,7 +60,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            if (AccountService.GetInstance().CheckOtp(input) == false)
+            if (AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber) == false)
             {
                 return new ApiResponseBase
                 {
@@ -58,24 +68,23 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERR_OTP_NOT_VALID"
                 };
             }
+
+            if (AccountService.GetInstance().VerifyPhoneWithOtp(apiRequest.Otp, user) == false)
+            {
+                return new ApiResponseBase
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    ErrorCode = "ERR_INTERNAL"
+                };
+            }
+
+            AccountService.GetInstance().DeleteDataOtp(apiRequest.PhoneNumber);
+
             return new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.OK
             };
 
         }
-
-
-        public static CheckOtpInput PreProcess(CheckOtpApiRequest apiRequest)
-        {
-            return new CheckOtpInput
-            {
-                PhoneNumber = apiRequest.PhoneNumber,
-                Email = apiRequest.Email,
-                Otp = apiRequest.Otp
-            };
-        }
-
-
     }
 }

@@ -9,6 +9,7 @@ using Lunggo.Framework.Encoder;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Repository.TableRepository;
+using Lunggo.ApCommon.Identity.Users;
 
 namespace Lunggo.ApCommon.Account.Service
 {
@@ -79,18 +80,18 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public List<DateTime> GetExpireTimeFromDb(CheckOtpInput checkOtpInput)
+        public List<DateTime> GetExpireTimeFromDb(string otp, string countryCallCd = null, string phoneNumber = null, string email = null)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var expireTime = new List<DateTime>();
-                if (!string.IsNullOrEmpty(checkOtpInput.PhoneNumber))
+                if (!string.IsNullOrEmpty(phoneNumber))
                 {
-                    expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = checkOtpInput.CountryCallCd, Contact = checkOtpInput.PhoneNumber }).ToList();
+                    expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = countryCallCd, Contact = phoneNumber }).ToList();
                 }
                 else
                 {
-                    expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = checkOtpInput.CountryCallCd, Contact = checkOtpInput.Email }).ToList();
+                    expireTime = GetExpireTimeFromDbQuery.GetInstance().Execute(conn, new { CountryCallCd = countryCallCd, Contact = email }).ToList();
                 }
                 return expireTime;
             }                
@@ -109,6 +110,14 @@ namespace Lunggo.ApCommon.Account.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 DeleteDataOtpFromDbQuery.GetInstance().Execute(conn, new { Contact = contact });
+            }
+        }
+
+        public void UpdateProfileToDb(User user)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                UpdateProfileToDbQuery.GetInstance().Execute(conn, user);
             }
         }
     }

@@ -35,6 +35,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 CountryCallingCd = foundUser.CountryCallCd ?? "",
                 PhoneNumber = foundUser.PhoneNumber ?? "",
                 Avatar = avatar ?? "http://www.personalbrandingblog.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640-300x300.png",
+                IsEmailVerified = foundUser.EmailConfirmed,
+                IsPhoneVerified = foundUser.PhoneNumberConfirmed,
                 StatusCode = HttpStatusCode.OK
             };
         }

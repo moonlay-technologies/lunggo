@@ -355,5 +355,24 @@ namespace Lunggo.WebAPI.ApiSrc.Account
                 return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/verifyphone")]
+        public ApiResponseBase VerifyPhone()
+        {
+            VerifyPhoneApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<VerifyPhoneApiRequest>();
+                var apiResponse = AccountLogic.VerifyPhone(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
     }
 }
