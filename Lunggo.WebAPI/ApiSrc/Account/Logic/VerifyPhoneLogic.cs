@@ -3,11 +3,15 @@ using Lunggo.ApCommon.Account.Service;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
+using static Lunggo.WebAPI.ApiSrc.Common.Model.ApiResponseBase;
+using static System.Net.HttpStatusCode;
+using static System.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -15,33 +19,35 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase VerifyPhone(VerifyPhoneApiRequest apiRequest)
         {
-            if (!ValidateInputFormat()) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_INVALID_REQUEST");
-            if (!ValidatePhoneNumberFormat()) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
+            var account = AccountService.GetInstance();
+
+            if (!ValidateInputFormat()) return Error(BadRequest, "ERR_INVALID_REQUEST");
+            if (!ValidatePhoneNumberFormat()) return Error(BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
 
             var user = HttpContext.Current.User.Identity.GetUser();
-            if (!ValidateAuthorization()) return ApiResponseBase.Error(HttpStatusCode.Unauthorized, "ERR_UNAUTHORIZED");
+            if (!ValidateAuthorization()) return Error(Unauthorized, "ERR_UNAUTHORIZED");
 
-            var isOtpExpired = !AccountService.GetInstance().CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
-            if (isOtpExpired) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_OTP_EXPIRED");
+            var isOtpExpired = !account.CheckExpireTime(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
+            if (isOtpExpired) return Error(BadRequest, "ERR_OTP_EXPIRED");
 
-            var isOtpValid = AccountService.GetInstance().CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
-            if (!isOtpValid) return ApiResponseBase.Error(HttpStatusCode.BadRequest, "ERR_OTP_NOT_VALID");
+            var isOtpValid = account.CheckOtp(apiRequest.Otp, apiRequest.CountryCallCd, apiRequest.PhoneNumber);
+            if (!isOtpValid) return Error(BadRequest, "ERR_OTP_NOT_VALID");
 
-            var isSuccessVerify = AccountService.GetInstance().VerifyPhoneWithOtp(apiRequest.Otp, user);
-            if (!isSuccessVerify) return ApiResponseBase.Error(HttpStatusCode.InternalServerError, "ERR_INTERNAL");
+            var isSuccessVerify = account.VerifyPhoneWithOtp(apiRequest.Otp, user);
+            if (!isSuccessVerify) return Error(InternalServerError, "ERR_INTERNAL");
 
-            AccountService.GetInstance().DeleteDataOtp(apiRequest.PhoneNumber);
+            account.DeleteDataOtp(apiRequest.PhoneNumber);
 
             return new ApiResponseBase
             {
-                StatusCode = HttpStatusCode.OK
+                StatusCode = OK
             };
 
             #region Validation
 
             bool ValidateInputFormat()
             {
-                return !string.IsNullOrEmpty(apiRequest.PhoneNumber);
+                return !IsNullOrEmpty(apiRequest.PhoneNumber);
             }
 
             bool ValidatePhoneNumberFormat()
@@ -51,7 +57,9 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     apiRequest.PhoneNumber = apiRequest.PhoneNumber.Substring(1);
                 }
 
-                if (AccountService.GetInstance().CheckPhoneNumberFormat(apiRequest.PhoneNumber) == false)
+                var isPhoneNumberFormatValid = account.CheckPhoneNumberFormat(apiRequest.PhoneNumber);
+
+                if (!isPhoneNumberFormatValid)
                 {
                     return false;
                 }
