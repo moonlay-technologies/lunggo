@@ -30,13 +30,19 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
                 };
             long result;
-            if (!Int64.TryParse(request.UserName, out result))
-                if(!request.UserName.Contains("@"))
+            if (!string.IsNullOrWhiteSpace(request.UserName) && !Int64.TryParse(request.UserName, out result))
+            {
+                if (!request.UserName.Contains("@"))
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_USER_FORMAT"
                     };
+            }                
+            else if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
+                {
+                    request.UserName = request.CountryCallCd + " " + request.PhoneNumber;
+                }
             var foundUser = userManager.FindByName(request.UserName);
             var role = userManager.GetRoles(foundUser.Id).FirstOrDefault();
 
@@ -82,6 +88,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_INVALID" //ERALOG02
+                    };
+                if (tokenData.Error == "invalid_password")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_PASSWORD" 
                     };
                 if (tokenData.Error == "not_active")
                     return new LoginApiResponse
