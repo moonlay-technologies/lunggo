@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Account.Model.Database
         protected override string GetQuery(dynamic condition = null)
         {
             return 
-                "UPDATE [User] SET Email = @Email, EmailConfirmed = @EmailConfirmed, CountryCallCd = @CountryCallCd, PhoneNumber = @PhoneNumber " +
+                "UPDATE [User] SET Email = @Email, EmailConfirmed = @EmailConfirmed, CountryCallCd = @CountryCallCd, PhoneNumber = @PhoneNumber, " +
                 "PhoneNumberConfirmed = @PhoneNumberConfirmed, FirstName = @FirstName, LastName = @LastName WHERE Id = @Id";
         }
     }

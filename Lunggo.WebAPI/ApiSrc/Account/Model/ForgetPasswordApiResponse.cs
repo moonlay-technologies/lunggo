@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Model
 {
-    public class ForgetPasswordApiResponse : ApiResponseBase
+    public class RequestOtpApiResponse : ApiResponseBase
     {
         [JsonProperty("countryCallCd", NullValueHandling = NullValueHandling.Ignore)]
         public string CountryCallCd { get; set; }

@@ -14,22 +14,22 @@ namespace Lunggo.ApCommon.Account.Service
     {
         public bool CheckOtp(string otp, string email)
         {
-            return CheckOtp(otp, email: email);
+            return CheckOtp(otp, null, null, email);
         }
 
         public bool CheckOtp(string otp, string countryCallCd, string phoneNumber)
         {
-            return CheckOtp(otp, countryCallCd, phoneNumber);
+            return CheckOtp(otp, countryCallCd, phoneNumber, null);
         }
 
         public bool CheckExpireTime(string otp, string countryCallCd, string phoneNumber)
         {
-            return CheckExpireTime(otp, countryCallCd, phoneNumber);
+            return CheckExpireTime(otp, countryCallCd, phoneNumber, null);
         }
 
         public bool CheckExpireTime(string otp, string email)
         {
-            return CheckExpireTime(otp, email: email);
+            return CheckExpireTime(otp, null, null, email);
         }
 
         public bool VerifyPhoneWithOtp(string otp, User user)
@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Account.Service
             return false;
         }
 
-        private bool CheckExpireTime(string otp, string countryCallCd = null, string phoneNumber = null, string email = null)
+        private bool CheckExpireTime(string otp, string countryCallCd, string phoneNumber, string email)
         {
             var expireTimeDb = GetExpireTimeFromDb(otp, countryCallCd, phoneNumber, email);
             if (expireTimeDb.Count() < 1)
@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        private bool CheckOtp(string otp, string countryCallCd = null, string phoneNumber = null, string email = null)
+        private bool CheckOtp(string otp, string countryCallCd, string phoneNumber, string email)
         {
             var otpHash = otp.Sha512Encode();
             var otpHashDb = GetOtpHashFromDb(new RequestOtpInput { CountryCallCd = countryCallCd, PhoneNumber = phoneNumber, Email = email });

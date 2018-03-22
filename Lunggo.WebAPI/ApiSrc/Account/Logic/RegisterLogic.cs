@@ -97,7 +97,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 FirstName = first,
                 LastName = last,
-                UserName = request.CountryCallCd + "-" + request.Phone + ":" + request.Email,
+                UserName = Guid.NewGuid().ToString(),
                 Email = request.Email,
                 PhoneNumber = request.Phone,
                 PlatformCd = PlatformTypeCd.Mnemonic(Platform),

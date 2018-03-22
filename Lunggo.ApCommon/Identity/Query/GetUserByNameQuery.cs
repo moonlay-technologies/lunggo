@@ -28,11 +28,15 @@ namespace Lunggo.ApCommon.Identity.Query
             clauseBuilder.Append("SELECT * FROM [User] ");
             if (IsNumeric)
             {
-                clauseBuilder.Append("WHERE PhoneNumber = @userName");
+                clauseBuilder.Append("WHERE PhoneNumber = @PhoneNumber AND CountryCallCd = @CountryCallCd");
+            }
+            else if (condition.userName.Contains("@") && !condition.userName.Contains(":"))
+            {
+                clauseBuilder.Append("WHERE Email = @userName");
             }
             else
             {
-                clauseBuilder.Append("WHERE Email = @userName");
+                clauseBuilder.Append("WHERE UserName = @userName");
             }
             
             return clauseBuilder.ToString();

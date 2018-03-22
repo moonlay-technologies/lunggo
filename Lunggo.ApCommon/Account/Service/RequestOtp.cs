@@ -18,9 +18,9 @@ namespace Lunggo.ApCommon.Account.Service
 {
     public partial class AccountService : SingletonBase<AccountService>
     {
-        public bool CheckContactData (RequestOtpInput forgetPasswordInput)
+        public bool CheckContactData (RequestOtpInput requestOtpInput)
         {
-            var userId = GetUserIdFromDb(forgetPasswordInput);
+            var userId = GetUserIdFromDb(requestOtpInput);
             if (userId.Count() == 0)
             {
                 return false;
@@ -113,9 +113,9 @@ namespace Lunggo.ApCommon.Account.Service
             return otp;
         }
 
-        public bool CheckPhoneNumberFromResetPasswordDb(RequestOtpInput forgetPasswordInput)
+        public bool CheckPhoneNumberFromResetPasswordDb(RequestOtpInput requestOtpInput)
         {
-            var OtpHash = GetOtpHashFromDb(forgetPasswordInput);
+            var OtpHash = GetOtpHashFromDb(requestOtpInput);
             if (OtpHash.Count() == 0)
             {
                 return false;

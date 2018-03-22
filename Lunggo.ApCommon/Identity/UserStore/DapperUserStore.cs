@@ -225,8 +225,17 @@ namespace Lunggo.ApCommon.Identity.UserStore
 
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
+                    string countryCallCd = null;
+                    string phoneNumber = null;
+                    if (userName.Contains(" "))
+                    {
+                        var phone = userName.Split(' ');
+                        countryCallCd = phone[0];
+                        phoneNumber = phone[1];
+                        userName = userName.Replace(" ", string.Empty);
+                    }
                     var query = GetUserByNameQuery.GetInstance();
-                    var record = query.Execute(connection, new {userName = userName}, new { userName = userName }).SingleOrDefault();
+                    var record = query.Execute(connection, new {userName = userName, CountryCallCd = countryCallCd, PhoneNumber = phoneNumber }, new { userName = userName }).SingleOrDefault();
                     var user = ToUser(record);
                     return user;
                 }

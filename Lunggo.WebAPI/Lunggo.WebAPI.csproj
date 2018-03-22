@@ -231,7 +231,7 @@
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\VerifyPhoneLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\CheckOtpLogic.cs" />
-    <Compile Include="ApiSrc\Account\Logic\ForgetPasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\RequestOtpLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountBalanceLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />

@@ -11,21 +11,18 @@ using Lunggo.WebAPI.ApiSrc.Account.Model;
 using RestSharp;
 using Lunggo.ApCommon.Log;
 using Lunggo.ApCommon.Account.Service;
+using Microsoft.AspNet.Identity;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static LoginApiResponse Login(LoginApiRequest request)
+        public static LoginApiResponse Login(LoginApiRequest request, ApplicationUserManager userManager)
         {
             var TableLog = new GlobalLog();
 
             TableLog.PartitionKey = "TOKEN ERROR LOG";
 
-            if (request.UserName != null && request.UserName.StartsWith("0"))
-            {
-                request.UserName = request.UserName.Substring(1);
-            }
             if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.UserName) || !string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
@@ -43,7 +40,20 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                             ErrorCode = "ERR_USER_FORMAT"
                         };
             }
-            
+            else if(!string.IsNullOrWhiteSpace(request.CountryCallCd) && !string.IsNullOrWhiteSpace(request.PhoneNumber))
+            {
+                request.UserName = request.CountryCallCd + " " + request.PhoneNumber;
+            }
+            else
+            {
+                return new LoginApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_INVALID_REQUEST"
+                };
+            }
+
+
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
             var tokenRequest = new RestRequest("/oauth/token", Method.POST);
             var postData =
@@ -106,7 +116,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     };
                 if(request.UserName != null)
                 {
-                    var id = AccountService.GetInstance().GetIdByEmailOrPhoneNumber(request.UserName);
+                    var id = userManager.FindByName(request.UserName).Id;
                     AccountService.GetInstance().InsertLoginReferralHistory(id);
                 }                
                 return new LoginApiResponse

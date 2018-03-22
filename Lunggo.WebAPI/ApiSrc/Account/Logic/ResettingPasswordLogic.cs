@@ -42,7 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 if (AccountService.GetInstance().CheckEmailFormat(apiRequest.Email) == false)
                 {
-                    return new ForgetPasswordApiResponse
+                    return new RequestOtpApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_INVALID_FORMAT_EMAIL"

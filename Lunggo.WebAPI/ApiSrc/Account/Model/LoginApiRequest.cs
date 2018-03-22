@@ -6,6 +6,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
     {
         [JsonProperty("userName")]
         public string UserName { get; set; }
+        [JsonProperty("phoneNumber")]
+        public string PhoneNumber { get; set; }
+        [JsonProperty("countryCallCd")]
+        public string CountryCallCd { get; set; }
         [JsonProperty("password")]
         public string Password { get; set; }
         [JsonProperty("refreshToken")]
