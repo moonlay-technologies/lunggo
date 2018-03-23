@@ -125,6 +125,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 PhoneNumber = apiRequest.PhoneNumber,
                 Email = apiRequest.Email,
+                CountryCallCd = apiRequest.CountryCallCd,
                 Otp = apiRequest.Otp,
                 NewPassword = apiRequest.NewPassword
             };

@@ -23,26 +23,36 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
             TableLog.PartitionKey = "TOKEN ERROR lOG";
 
-            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password)))
+            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
                 };
             long result;
-            if (!string.IsNullOrWhiteSpace(request.UserName) && !Int64.TryParse(request.UserName, out result))
+            if (!string.IsNullOrWhiteSpace(request.Email) && !Int64.TryParse(request.Email, out result))
             {
-                if (!request.UserName.Contains("@"))
+                if (!request.Email.Contains("@"))
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_USER_FORMAT"
                     };
-            }                
-            else if (!string.IsNullOrWhiteSpace(request.PhoneNumber))
-                {
-                    request.UserName = request.CountryCallCd + " " + request.PhoneNumber;
-                }
+                request.UserName = request.Email;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.PhoneNumber) && !string.IsNullOrWhiteSpace(request.CountryCallCd))
+            {
+                request.UserName = request.CountryCallCd + " " + request.PhoneNumber;
+            }
+            //else if (string.IsNullOrWhiteSpace(request.PhoneNumber) && string.IsNullOrWhiteSpace(request.CountryCallCd) && string.IsNullOrWhiteSpace(request.Email))
+            //{
+            //    return new LoginApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERR_INVALID_REQUEST"
+            //    };
+            //}
+
             var foundUser = userManager.FindByName(request.UserName);
             var role = userManager.GetRoles(foundUser.Id).FirstOrDefault();
 

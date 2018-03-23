@@ -27,6 +27,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 return Error(BadRequest, "ERR_INVALID_REQUEST");                
             }
+
             var accountService = AccountService.GetInstance();
             if (!IsNullOrEmpty(request.Phone))
             {
@@ -44,6 +45,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     return Error(BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
                 }
             }
+            
+            
 
             var foundUser = userManager.FindByEmail(request.Email);
             var foundUserByPhone = userManager.FindByName(request.Phone);
@@ -111,8 +114,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
+                userManager.AddToRole(user.Id, "Customer");
+                accountService.RegisterAnalytics(user.Id, "RegisterFromApp");
+                
                         
-                AccountService.GetInstance().GenerateReferralCode(user.Id, first, request.ReferrerCode);
+                accountService.GenerateReferralCode(user.Id, first, request.ReferrerCode);
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK

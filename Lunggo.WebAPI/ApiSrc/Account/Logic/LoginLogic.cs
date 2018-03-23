@@ -23,36 +23,39 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
             TableLog.PartitionKey = "TOKEN ERROR LOG";
 
-            if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.UserName) || !string.IsNullOrEmpty(request.Password)))
+            if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
                 };
-            if(!string.IsNullOrEmpty(request.UserName))
+            if(!string.IsNullOrEmpty(request.Email))
             {
                 long result;
-                if (!Int64.TryParse(request.UserName, out result))
-                    if (!request.UserName.Contains("@"))
+                if (!Int64.TryParse(request.Email, out result))
+                {
+                    if (!request.Email.Contains("@"))
                         return new LoginApiResponse
                         {
                             StatusCode = HttpStatusCode.BadRequest,
                             ErrorCode = "ERR_USER_FORMAT"
                         };
+                    request.UserName = request.Email;
+                }
+                    
             }
             else if(!string.IsNullOrWhiteSpace(request.CountryCallCd) && !string.IsNullOrWhiteSpace(request.PhoneNumber))
             {
                 request.UserName = request.CountryCallCd + " " + request.PhoneNumber;
             }
-            else
-            {
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_INVALID_REQUEST"
-                };
-            }
-
+            //else if(string.IsNullOrWhiteSpace(request.CountryCallCd) && string.IsNullOrWhiteSpace(request.PhoneNumber) && string.IsNullOrEmpty(request.Email))
+            //{
+            //    return new LoginApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERR_INVALID_REQUEST"
+            //    };
+            //}
 
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
             var tokenRequest = new RestRequest("/oauth/token", Method.POST);

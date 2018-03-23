@@ -23,6 +23,7 @@ namespace Lunggo.ApCommon.Account.Service
         {
             var requestOtpInput = new RequestOtpInput
             {
+                CountryCallCd = resettingPasswordInput.CountryCallCd,
                 PhoneNumber = resettingPasswordInput.PhoneNumber,
                 Email = resettingPasswordInput.Email
             };

@@ -8,6 +8,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Model
         public string UserName { get; set; }
         [JsonProperty("phoneNumber")]
         public string PhoneNumber { get; set; }
+        [JsonProperty("email")]
+        public string Email { get; set; }
         [JsonProperty("countryCallCd")]
         public string CountryCallCd { get; set; }
         [JsonProperty("password")]

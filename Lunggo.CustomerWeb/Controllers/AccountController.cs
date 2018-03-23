@@ -871,10 +871,19 @@ namespace Lunggo.CustomerWeb.Controllers
                 return View(model: model.ReferrerCode);
             }
 
-            if (!model.Phone.StartsWith("0"))
+            if (!model.Phone.StartsWith("0") && !model.Phone.StartsWith("62"))
             {
-                ViewBag.Message = "Phone Number Must 0 First";
+                ViewBag.Message = "Phone Number Must 0 Or 62 First";
                 return View(model: model.ReferrerCode);
+            }
+
+            if (model.Phone.StartsWith("0"))
+            {
+                model.Phone = model.Phone.Substring(0);
+            }
+            else if (model.Phone.StartsWith("62"))
+            {
+                model.Phone = model.Phone.Substring(2);
             }
 
             var foundUser = UserManager.FindByEmail(model.Email);
@@ -937,8 +946,9 @@ namespace Lunggo.CustomerWeb.Controllers
                 var apiUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
-
-                AccountService.GetInstance().GenerateReferralCode(user.Id, first, model.ReferrerCode);
+                var accountService = AccountService.GetInstance();
+                accountService.GenerateReferralCode(user.Id, first, model.ReferrerCode);
+                accountService.RegisterAnalytics(user.Id, "RegisterFromReferral");
                 return View("downloadreferral");
             }
             else

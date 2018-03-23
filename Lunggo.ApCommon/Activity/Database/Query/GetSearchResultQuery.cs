@@ -58,8 +58,6 @@ namespace Lunggo.ApCommon.Activity.Database.Query
                 clauseBuilder.Append("(act.Name LIKE '%' + @Name + '%' OR (act.City = @Name OR act.Country = @Name OR act.Zone = @Name OR act.Area = @Name)) AND asp.Flag = 1 AND ");
             if (condition.Id != null)
                 clauseBuilder.Append("(act.Id IN @Id AND asp.Flag = 1) AND ");
-            if (condition.Id == null)
-                clauseBuilder.Append("ad.Date BETWEEN @StartDate AND @EndDate AND ");
             clauseBuilder.Remove(clauseBuilder.Length - 4, 4);
             return clauseBuilder.ToString();
         }

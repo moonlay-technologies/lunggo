@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Account.Service
                 }
                 else
                 {
-                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.Email }, new { Contact = requestOtpInput.Email }).ToList();
+                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.Email, PhoneNumber = "1", CountryCallCd = "1"}, new { Contact = requestOtpInput.Email }).ToList();
                     return userId;
                 }
                 
@@ -63,7 +63,7 @@ namespace Lunggo.ApCommon.Account.Service
                 }
                 else
                 {
-                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.Email }).ToList();
+                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.Email, CountryCallCd = requestOtpInput.CountryCallCd }).ToList();
                 }
                 return otpHash;
             }
