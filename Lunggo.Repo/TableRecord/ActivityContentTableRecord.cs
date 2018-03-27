@@ -5,30 +5,12 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class ActivityPackageReservationTableRecord : Lunggo.Framework.Database.TableRecord
+    public class ActivityContentTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? RsvId
-		{
-		    get { return _RsvId; }
-		    set
-		    {
-		        _RsvId = value;
-		        IncrementLog("RsvId");
-		    }
-		}
-		public long? PackageId
-		{
-		    get { return _PackageId; }
-		    set
-		    {
-		        _PackageId = value;
-		        IncrementLog("PackageId");
-		    }
-		}
 		public long? ActivityId
 		{
 		    get { return _ActivityId; }
@@ -38,67 +20,45 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ActivityId");
 		    }
 		}
-		public String Type
+		public String Title
 		{
-		    get { return _Type; }
+		    get { return _Title; }
 		    set
 		    {
-		        _Type = value;
-		        IncrementLog("Type");
+		        _Title = value;
+		        IncrementLog("Title");
 		    }
 		}
-		public int? Count
+		public String Description
 		{
-		    get { return _Count; }
+		    get { return _Description; }
 		    set
 		    {
-		        _Count = value;
-		        IncrementLog("Count");
-		    }
-		}
-		public Decimal? Amount
-		{
-		    get { return _Amount; }
-		    set
-		    {
-		        _Amount = value;
-		        IncrementLog("Amount");
-		    }
-		}
-		public String RsvNo
-		{
-		    get { return _RsvNo; }
-		    set
-		    {
-		        _RsvNo = value;
-		        IncrementLog("RsvNo");
+		        _Description = value;
+		        IncrementLog("Description");
 		    }
 		}
 
 		
-		private long? _RsvId;
-		private long? _PackageId;
 		private long? _ActivityId;
-		private String _Type;
-		private int? _Count;
-		private Decimal? _Amount;
-		private String _RsvNo;
+		private String _Title;
+		private String _Description;
 
 
-		public static ActivityPackageReservationTableRecord CreateNewInstance()
+		public static ActivityContentTableRecord CreateNewInstance()
         {
-            var record = new ActivityPackageReservationTableRecord();
+            var record = new ActivityContentTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public ActivityPackageReservationTableRecord()
+		public ActivityContentTableRecord()
         {
             ;
         }
 
-        static ActivityPackageReservationTableRecord()
+        static ActivityContentTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -107,20 +67,16 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "ActivityPackageReservation";
+            _tableName = "ActivityContent";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("RsvId", false),
-				new ColumnMetadata("PackageId", false),
 				new ColumnMetadata("ActivityId", false),
-				new ColumnMetadata("Type", false),
-				new ColumnMetadata("Count", false),
-				new ColumnMetadata("Amount", false),
-				new ColumnMetadata("RsvNo", false),
+				new ColumnMetadata("Title", false),
+				new ColumnMetadata("Description", false),
 
             };
         }

@@ -95,8 +95,8 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
             promos.Add(new FeaturedPromo
             {
                 Id = "4",
-                BannerUrl = "http://www.travorama-local-cw.azurewebsites.net/Assets/images/dummypromo.jpg",
-                DetailsUrl = "http://www.travorama-local-cw.azurewebsites.net/id/promo/promolandingpage"
+                BannerUrl = "http://travorama-local-cw.azurewebsites.net/Assets/images/dummypromo.jpg",
+                DetailsUrl = "http://travorama-local-cw.azurewebsites.net/id/promo/promolandingpage"
             });
             return promos;
         }

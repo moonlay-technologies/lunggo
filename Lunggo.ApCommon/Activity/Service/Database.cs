@@ -362,7 +362,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
                 }
                 var savedPaxCounts = new List<ActivityPricePackageReservation>();
-                var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
+                var pricePackages = GetPackagePriceFromDb(savedBooking.PackageId);
                 foreach (var savedPaxCount in savedPaxCountAndPackageId)
                 {
                     var saved = new ActivityPricePackageReservation();
@@ -473,8 +473,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var saved1 = saved2.GroupBy(p => new { p.ActivityId, p.Date, p.Session, p.MediaSrc, p.AppointmentReservations })
                             .Select(g => g.First());
                 var saved = saved1.OrderBy(a => a.Date).ToList();
-
-
+                
 
                 foreach (var savedBooking in savedBookings)
                 {                    
@@ -512,13 +511,21 @@ namespace Lunggo.ApCommon.Activity.Service
                     paxGroup.Contact = contact;
                     paxGroup.PaxCounts = savedPaxCounts;
                     savedBooking.PaxGroup = paxGroup;
-
+                    var reservationRecord = ReservationTableRepo.GetInstance()
+                    .Find1(conn, new ReservationTableRecord { RsvNo = savedBooking.RsvNo });
+                    savedBooking.RequestTime = (DateTime)reservationRecord.RsvTime;
+                    if (input.OrderParam)
+                    {
+                        var paymentStepsDb = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord() { RsvNo = savedBooking.RsvNo }).ToList();
+                        var paymentSteps = paymentStepsDb.Select(a => new PaymentStep { StepDescription = a.StepDescription, StepAmount = a.StepAmount ?? 0, StepDate = a.StepDate }).ToList();
+                        savedBooking.PaymentSteps = paymentSteps;
+                    }                    
                 }
 
                 foreach (var save in saved)
                 {
                     var appointmentDetail = savedBookings.Where(saving => save.ActivityId == saving.ActivityId && save.Date == saving.Date && save.Session == saving.Session).ToList();
-                    save.AppointmentReservations = appointmentDetail.Select(appointment => new AppointmentReservation { RsvNo = appointment.RsvNo, Contact = appointment.PaxGroup.Contact, Passengers = appointment.PaxGroup.Passengers, PaxCounts = appointment.PaxGroup.PaxCounts }).ToList();
+                    save.AppointmentReservations = appointmentDetail.Select(appointment => new AppointmentReservation { RsvNo = appointment.RsvNo, Contact = appointment.PaxGroup.Contact, Passengers = appointment.PaxGroup.Passengers, PaxCounts = appointment.PaxGroup.PaxCounts, RsvTime = appointment.RequestTime, PaymentSteps = appointment.PaymentSteps}).ToList();
                 }
 
 
@@ -640,6 +647,11 @@ namespace Lunggo.ApCommon.Activity.Service
                     InsertPgId = "0"
                 };
 
+
+                var activityDetailNowDb = ActivityTableRepo.GetInstance().Find1(conn, new ActivityTableRecord { Id = reservation.ActivityDetails.ActivityId });
+                var activityContentsNowDb = ActivityContentTableRepo.GetInstance().Find(conn, new ActivityContentTableRecord { ActivityId = reservation.ActivityDetails.ActivityId }).ToList();
+
+
                 var activityRecord = new ActivityReservationTableRecord
                 {
                     Id = ActivityReservationIdSequence.GetInstance().GetNext(),
@@ -649,23 +661,83 @@ namespace Lunggo.ApCommon.Activity.Service
                     Date = reservation.DateTime.Date,
                     SelectedSession = reservation.DateTime.Session,
                     UserId = reservation.User.Id,
-                    TicketCount = null
+                    TicketCount = null,
                 };
+
+                var activityDetialReservation = new ActivityDetailReservationTableRecord
+                {
+                    RsvNo = reservation.RsvNo,
+                    ActivityId = activityDetailNowDb.Id,
+                    ActivityDuration = activityDetailNowDb.ActivityDuration,
+                    ActivityMedia = reservation.ActivityDetails.MediaSrc[0],
+                    AdditionalNotes = activityDetailNowDb.AdditionalNotes,
+                    Address = activityDetailNowDb.Address,
+                    AmountDuration = activityDetailNowDb.AmountDuration,
+                    Area = activityDetailNowDb.Area,
+                    Cancellation = activityDetailNowDb.Cancellation,
+                    Category = activityDetailNowDb.Category,
+                    City = activityDetailNowDb.City,
+                    Country = activityDetailNowDb.Country,
+                    Description = activityDetailNowDb.Description,
+                    HasPDFVoucher = activityDetailNowDb.HasPDFVoucher,
+                    ImportantNotice = activityDetailNowDb.ImportantNotice,
+                    IsDateOfBirthNeeded = activityDetailNowDb.IsDateOfBirthNeeded,
+                    IsFixedDate = activityDetailNowDb.IsFixedDate,
+                    IsInstantConfirmation = activityDetailNowDb.IsInstantConfirmation,
+                    IsNameAccordingToPassport = activityDetailNowDb.IsNameAccordingToPassport,
+                    IsPassportIssueDateNeeded = activityDetailNowDb.IsPassportIssueDateNeeded,
+                    IsPassportNeeded = activityDetailNowDb.IsPassportNeeded,
+                    IsPhoneNumberAccordingToPassport = activityDetailNowDb.IsPhoneNumberAccordingToPassport,
+                    IsRedemptionNeeded = activityDetailNowDb.IsRedemptionNeeded,
+                    Latitude = activityDetailNowDb.Latitude,
+                    Longitude = activityDetailNowDb.Longitude,
+                    MustPrinted = activityDetailNowDb.MustPrinted,
+                    Name = activityDetailNowDb.Name,
+                    OperationTime = activityDetailNowDb.OperationTime,
+                    OperatorEmail = activityDetailNowDb.OperatorEmail,
+                    OperatorName = activityDetailNowDb.OperatorName,
+                    OperatorPhone = activityDetailNowDb.OperatorPhone,
+                    PriceDetail = activityDetailNowDb.PriceDetail,
+                    Rating = activityDetailNowDb.Rating,
+                    RefundRegulationId = activityDetailNowDb.RefundRegulationId,
+                    UnitDuration = activityDetailNowDb.UnitDuration,
+                    viewCount = activityDetailNowDb.viewCount,
+                    Warning = activityDetailNowDb.Warning,
+                    Zone = activityDetailNowDb.Zone
+                };
+
+                foreach (var activityContentNow in activityContentsNowDb)
+                {
+                    var activityContentRsv = new ActivityReservationContentTableRecord
+                    {
+                        ActivityId = activityContentNow.ActivityId,
+                        Description = activityContentNow.Description,
+                        Title = activityContentNow.Title
+                    };
+                    ActivityReservationContentTableRepo.GetInstance().Insert(conn, activityContentRsv);
+                }
 
                 ActivityReservationTableRepo.GetInstance().Insert(conn, activityRecord);
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
-                foreach(var ticketCount in reservation.TicketCount)
+                ActivityDetailReservationTableRepo.GetInstance().Insert(conn, activityDetialReservation);
+                var package = GetPackagePriceFromDb(reservation.PackageId).ToList();
+                foreach (var ticketCount in reservation.TicketCount)
                 {
+                    var amount = package.Where(a => a.Type == ticketCount.Type).First().Amount;
+                    var totalAmount = amount * ticketCount.Count;
                     var activityPackageReservation = new ActivityPackageReservationTableRecord
                     {
                         RsvId = activityRecord.Id,
                         PackageId = reservation.PackageId,
                         ActivityId = reservation.ActivityDetails.ActivityId,
                         Type = ticketCount.Type,
-                        Count = ticketCount.Count
+                        Count = ticketCount.Count,
+                        RsvNo = reservation.RsvNo,
+                        Amount = totalAmount
                     };
                     ActivityPackageReservationTableRepo.GetInstance().Insert(conn,activityPackageReservation);
                 }
+
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
                 reservation.Payment.InsertToDb(reservation.RsvNo);
@@ -695,7 +767,6 @@ namespace Lunggo.ApCommon.Activity.Service
                         PaxTableRepo.GetInstance().Insert(conn, passengerRecord);
                     }
                 }
-
             }
         }
         #endregion
@@ -736,9 +807,9 @@ namespace Lunggo.ApCommon.Activity.Service
                     OperationTime = input.OperationTime,
                     //TODO: ImportantNotices, Warning, AdditionalNotes missing
                     Cancellation = input.Cancellation,
-                    IsPaxDoBNeeded = input.IsPaxDoBNeeded,
-                    IsPassportIssuedDateNeeded = input.IsPassportIssuedDateNeeded,
-                    IsPassportNumberNeeded = input.IsPassportNumberNeeded
+                    IsDateOfBirthNeeded = input.IsPaxDoBNeeded,
+                    IsPassportIssueDateNeeded = input.IsPassportIssuedDateNeeded,
+                    IsPassportNeeded = input.IsPassportNumberNeeded
                 });
                 UpdatePriceQuery.GetInstance().Execute(conn, new { Price = input.Price, ActivityId = input.ActivityId });
             }
@@ -1310,6 +1381,194 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 return user.First();
             }                
+        }
+
+        public void GeneratePayStepOperatorDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservationRecord = ActivityReservationTableRepo.GetInstance().Find1(conn,
+                    new ActivityReservationTableRecord { RsvNo = rsvNo });
+                var reservationRecord2 = ReservationTableRepo.GetInstance().Find1(conn, new ReservationTableRecord { RsvNo = rsvNo });
+                var activityRules = ActivityPayRulesOperatorTableRepo.GetInstance().Find(conn, new ActivityPayRulesOperatorTableRecord { ActivityId = reservationRecord.ActivityId }).ToList();
+                var rsvPayment = PaymentDetails.GetFromDb(rsvNo).OriginalPriceIdr; 
+                if (activityRules[0].IsCash == true)
+                {
+                    var stepDate = new DateTime();
+                    if(activityRules[0].PayState == "Jalan")
+                    {
+                        stepDate = (DateTime)reservationRecord.Date;
+                        stepDate = stepDate.AddDays((double)activityRules[0].PayDateLimit);
+                    }
+                    else if(activityRules[0].PayState == "Book")
+                    {
+                        stepDate = (DateTime)reservationRecord2.RsvTime;
+                        stepDate = stepDate.AddDays((double)activityRules[0].PayDateLimit);
+                    }
+                    if(stepDate < DateTime.UtcNow)
+                    {
+                        stepDate = DateTime.UtcNow;
+                    }
+                    var tableRecord = new ActivityReservationStepOperatorTableRecord
+                    {
+                        RsvNo = rsvNo,
+                        ActivityId = reservationRecord.ActivityId,
+                        StepAmount = rsvPayment,
+                        StepDate = stepDate,
+                        StepDescription = activityRules[0].Description,
+                        StepName = activityRules[0].RuleName,
+                        StepStatus = false
+                    };
+                    ActivityReservationStepOperatorTableRepo.GetInstance().Insert(conn, tableRecord);
+                }
+                else
+                {
+                    var sisaAmount = rsvPayment;
+                    foreach (var activityRule in activityRules)
+                    {
+                        var stepDate = new DateTime();
+                        if (activityRule.PayState == "Jalan")
+                        {
+                            stepDate = (DateTime)reservationRecord.Date;
+                            stepDate = stepDate.AddDays((double)activityRule.PayDateLimit);
+                        }
+                        else if (activityRule.PayState == "Book")
+                        {
+                            stepDate = (DateTime)reservationRecord2.RsvTime;
+                            stepDate = stepDate.AddDays((double)activityRule.PayDateLimit);
+                        }
+                        if (stepDate < DateTime.UtcNow)
+                        {
+                            stepDate = DateTime.UtcNow;
+                        }
+                        decimal stepAmount = 0;                        
+                        if(activityRule.ValuePercentage != null || activityRule.ValueConstant != null)
+                        {
+                            var valuePercentage = activityRule.ValuePercentage ?? 0M;
+                            valuePercentage = valuePercentage / 100M;
+                            var valueConstant = activityRule.ValueConstant ?? 0M;
+
+                            stepAmount = valuePercentage * rsvPayment + valueConstant;
+                            if (activityRule.MinValue != null &&  stepAmount < activityRule.MinValue)
+                            {
+                                var minValue = activityRule.MinValue ?? 0M;
+                                stepAmount = minValue;
+                            }
+                        }
+                        else if (activityRule.MinValue != null)
+                        {
+                            var minValue = activityRule.MinValue ?? 0M;
+                            stepAmount = minValue;
+                        }
+                        else
+                        {
+                            stepAmount = sisaAmount;
+                        }
+
+                        {
+                            var tableRecord = new ActivityReservationStepOperatorTableRecord
+                            {
+                                RsvNo = rsvNo,
+                                ActivityId = reservationRecord.ActivityId,
+                                StepAmount = stepAmount,
+                                StepDate = DateTime.UtcNow.AddDays((double)activityRule.PayDateLimit),
+                                StepDescription = activityRule.Description,
+                                StepName = activityRule.RuleName,
+                                StepStatus = false
+                            };
+                            ActivityReservationStepOperatorTableRepo.GetInstance().Insert(conn, tableRecord);
+                        }
+
+                        sisaAmount = sisaAmount - stepAmount;
+                    }
+                }
+                
+            }
+        }
+
+        public GetReservationListOutput GetReservationListFromDb(GetAppointmentListInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservationsOutput = new List<Reservation>();
+                var userName = HttpContext.Current.User.Identity.GetUser();
+
+                var savedBookings = GetAppointmentListQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, DateLimit = DateTime.UtcNow }).ToList();
+
+                foreach(var savedBooking in savedBookings)
+                {
+                    var savedPassengers = GetPassengersQuery.GetInstance().ExecuteMultiMap(conn, new { RsvNo = savedBooking.RsvNo, }, null,
+                       (passengers, typeCd, titleCd, genderCd) =>
+                       {
+                           passengers.Type = PaxTypeCd.Mnemonic(typeCd);
+                           passengers.Title = TitleCd.Mnemonic(titleCd);
+                           passengers.Gender = GenderCd.Mnemonic(genderCd);
+                           return passengers;
+                       }, "TypeCd, TitleCd, GenderCd").ToList();
+                    var contact = Contact.GetFromDb(savedBooking.RsvNo);
+                    var savedPaxCountAndPackageId = GetPaxCountAndPackageIdDbQuery.GetInstance().Execute(conn, new { RsvNo = savedBooking.RsvNo }).ToList();
+                    if (savedPaxCountAndPackageId.Count() != 0)
+                    {
+                        savedBooking.PackageId = savedPaxCountAndPackageId.First().PackageId;
+                        savedBooking.PackageName = savedPaxCountAndPackageId.First().PackageName;
+                    }
+                    var savedPaxCounts = new List<ActivityPricePackageReservation>();
+                    var pricePackages = ActivityService.GetInstance().GetPackagePriceFromDb(savedBooking.PackageId);
+                    foreach (var savedPaxCount in savedPaxCountAndPackageId)
+                    {
+                        var saveds = new ActivityPricePackageReservation();
+                        saveds.Type = savedPaxCount.Type;
+                        saveds.Count = savedPaxCount.Count;
+                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type);
+                        if (amountType.Count() != 0)
+                        {
+                            saveds.TotalPrice = savedPaxCount.Count * amountType.First().Amount;
+                        }
+                        savedPaxCounts.Add(saveds);
+                    }
+
+                    var reservationRecord = ReservationTableRepo.GetInstance()
+                    .Find1(conn, new ReservationTableRecord { RsvNo = savedBooking.RsvNo });
+                    var rsvTime = (DateTime)reservationRecord.RsvTime;
+                    var paymentStepsDb = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord() { RsvNo = savedBooking.RsvNo }).ToList();
+                    var paymentSteps = paymentStepsDb.Select(a => new PaymentStep { StepDescription = a.StepDescription, StepAmount = a.StepAmount ?? 0, StepDate = a.StepDate }).ToList();
+
+                    var activityReservation = new ReservationActivityDetail
+                    {
+                        ActivityId = savedBooking.ActivityId,
+                        Date = savedBooking.Date,
+                        MediaSrc = savedBooking.MediaSrc,
+                        Name = savedBooking.Name,
+                        Session = savedBooking.Session
+                    };
+
+                    var reservation = new Reservation
+                    {
+                        Activity = activityReservation,
+                        Contact = contact,
+                        Passengers = ActivityService.GetInstance().ConvertToPaxForDisplay(savedPassengers),
+                        PaxCounts = savedPaxCounts,
+                        PaymentSteps = paymentSteps,
+                        RsvNo = savedBooking.RsvNo,
+                        RsvTime = rsvTime,
+                    };
+
+                    reservationsOutput.Add(reservation);
+                }
+
+                var rsvOutput = reservationsOutput.OrderBy(a => a.RsvTime).ToList();
+
+                var output = new GetReservationListOutput
+                {
+                    Reservations = rsvOutput,
+                    Page = input.Page,
+                    PerPage = input.PerPage
+                };
+
+
+                return output;
+            }
         }
     }
 }

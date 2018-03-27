@@ -37,6 +37,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateAndSession DateTime { get; set; }
         public long PackageId { get; set; }
         public List<ActivityPricePackageReservation> TicketCount { get; set; }
+        public decimal TotalTicketAmount { get; set; }
         public override decimal GetTotalSupplierPrice()
         {
             throw new NotImplementedException();

@@ -77,6 +77,11 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             
             serviceRequest.Page = pageValid;
             serviceRequest.PerPage = perPageValid;
+            serviceRequest.OrderParam = false;
+            if(request.OrderParam != null)
+            {
+                serviceRequest.OrderParam = true;
+            }
             return true;
         }
         
@@ -91,7 +96,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Date = AppointmentList.Date,
                     Session = AppointmentList.Session,
                     MediaSrc = AppointmentList.MediaSrc,
-                    AppointmentReservations = AppointmentList.AppointmentReservations
+                    AppointmentReservations = AppointmentList.AppointmentReservations,
+                    
                 }).ToList(),
                 Page = serviceResponse.Page,
                 PerPage = serviceResponse.PerPage,

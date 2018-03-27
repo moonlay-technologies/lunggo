@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Account.Service
 
         public void InsertLoginReferralHistory(string userId)
         {
-            var history = "First Time Login";
+            var history = "Phone Verification";
             decimal referralCredit = 100000M;
             var referree = GetUserByRefereeIdAndHistoryFromDb(userId, history);
             if(referree != null)

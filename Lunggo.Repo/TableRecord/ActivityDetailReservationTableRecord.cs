@@ -5,21 +5,12 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class ActivityReservationTableRecord : Lunggo.Framework.Database.TableRecord
+    public class ActivityDetailReservationTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public long? Id
-		{
-		    get { return _Id; }
-		    set
-		    {
-		        _Id = value;
-		        IncrementLog("Id");
-		    }
-		}
 		public String RsvNo
 		{
 		    get { return _RsvNo; }
@@ -38,67 +29,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ActivityId");
 		    }
 		}
-		public DateTime? Date
+		public String Name
 		{
-		    get { return _Date; }
+		    get { return _Name; }
 		    set
 		    {
-		        _Date = value;
-		        IncrementLog("Date");
-		    }
-		}
-		public int? TicketCount
-		{
-		    get { return _TicketCount; }
-		    set
-		    {
-		        _TicketCount = value;
-		        IncrementLog("TicketCount");
-		    }
-		}
-		public String SelectedSession
-		{
-		    get { return _SelectedSession; }
-		    set
-		    {
-		        _SelectedSession = value;
-		        IncrementLog("SelectedSession");
-		    }
-		}
-		public String UserId
-		{
-		    get { return _UserId; }
-		    set
-		    {
-		        _UserId = value;
-		        IncrementLog("UserId");
-		    }
-		}
-		public String BookingStatusCd
-		{
-		    get { return _BookingStatusCd; }
-		    set
-		    {
-		        _BookingStatusCd = value;
-		        IncrementLog("BookingStatusCd");
-		    }
-		}
-		public Boolean? IsPdfUploaded
-		{
-		    get { return _IsPdfUploaded; }
-		    set
-		    {
-		        _IsPdfUploaded = value;
-		        IncrementLog("IsPdfUploaded");
-		    }
-		}
-		public String ActivityName
-		{
-		    get { return _ActivityName; }
-		    set
-		    {
-		        _ActivityName = value;
-		        IncrementLog("ActivityName");
+		        _Name = value;
+		        IncrementLog("Name");
 		    }
 		}
 		public String Description
@@ -398,13 +335,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ActivityDuration");
 		    }
 		}
-		public long? ViewCount
+		public long? viewCount
 		{
-		    get { return _ViewCount; }
+		    get { return _viewCount; }
 		    set
 		    {
-		        _ViewCount = value;
-		        IncrementLog("ViewCount");
+		        _viewCount = value;
+		        IncrementLog("viewCount");
 		    }
 		}
 		public String ActivityMedia
@@ -418,16 +355,9 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
-		private long? _Id;
 		private String _RsvNo;
 		private long? _ActivityId;
-		private DateTime? _Date;
-		private int? _TicketCount;
-		private String _SelectedSession;
-		private String _UserId;
-		private String _BookingStatusCd;
-		private Boolean? _IsPdfUploaded;
-		private String _ActivityName;
+		private String _Name;
 		private String _Description;
 		private String _City;
 		private String _Country;
@@ -461,24 +391,24 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _IsInstantConfirmation;
 		private Boolean? _MustPrinted;
 		private String _ActivityDuration;
-		private long? _ViewCount;
+		private long? _viewCount;
 		private String _ActivityMedia;
 
 
-		public static ActivityReservationTableRecord CreateNewInstance()
+		public static ActivityDetailReservationTableRecord CreateNewInstance()
         {
-            var record = new ActivityReservationTableRecord();
+            var record = new ActivityDetailReservationTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public ActivityReservationTableRecord()
+		public ActivityDetailReservationTableRecord()
         {
             ;
         }
 
-        static ActivityReservationTableRecord()
+        static ActivityDetailReservationTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -487,23 +417,16 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "ActivityReservation";
+            _tableName = "ActivityDetailReservation";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("Id", true),
 				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("ActivityId", false),
-				new ColumnMetadata("Date", false),
-				new ColumnMetadata("TicketCount", false),
-				new ColumnMetadata("SelectedSession", false),
-				new ColumnMetadata("UserId", false),
-				new ColumnMetadata("BookingStatusCd", false),
-				new ColumnMetadata("IsPdfUploaded", false),
-				new ColumnMetadata("ActivityName", false),
+				new ColumnMetadata("Name", false),
 				new ColumnMetadata("Description", false),
 				new ColumnMetadata("City", false),
 				new ColumnMetadata("Country", false),
@@ -537,7 +460,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("IsInstantConfirmation", false),
 				new ColumnMetadata("MustPrinted", false),
 				new ColumnMetadata("ActivityDuration", false),
-				new ColumnMetadata("ViewCount", false),
+				new ColumnMetadata("viewCount", false),
 				new ColumnMetadata("ActivityMedia", false),
 
             };

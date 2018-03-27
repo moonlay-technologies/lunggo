@@ -449,7 +449,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             try
             {
                 request = ApiRequestBase.DeserializeRequest<VerifyPhoneApiRequest>();
-                var apiResponse = AccountLogic.VerifyPhone(request);
+                var apiResponse = AccountLogic.VerifyPhone(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)

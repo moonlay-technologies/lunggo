@@ -119,13 +119,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RefundRegulationId");
 		    }
 		}
-		public Boolean? IsPassportNumberNeeded
+		public Boolean? IsPassportNeeded
 		{
-		    get { return _IsPassportNumberNeeded; }
+		    get { return _IsPassportNeeded; }
 		    set
 		    {
-		        _IsPassportNumberNeeded = value;
-		        IncrementLog("IsPassportNumberNeeded");
+		        _IsPassportNeeded = value;
+		        IncrementLog("IsPassportNeeded");
 		    }
 		}
 		public Boolean? IsNameAccordingToPassport
@@ -218,22 +218,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UnitDuration");
 		    }
 		}
-		public Boolean? IsPaxDoBNeeded
+		public Boolean? IsDateOfBirthNeeded
 		{
-		    get { return _IsPaxDoBNeeded; }
+		    get { return _IsDateOfBirthNeeded; }
 		    set
 		    {
-		        _IsPaxDoBNeeded = value;
-		        IncrementLog("IsPaxDoBNeeded");
+		        _IsDateOfBirthNeeded = value;
+		        IncrementLog("IsDateOfBirthNeeded");
 		    }
 		}
-		public Boolean? IsPassportIssuedDateNeeded
+		public Boolean? IsPassportIssueDateNeeded
 		{
-		    get { return _IsPassportIssuedDateNeeded; }
+		    get { return _IsPassportIssueDateNeeded; }
 		    set
 		    {
-		        _IsPassportIssuedDateNeeded = value;
-		        IncrementLog("IsPassportIssuedDateNeeded");
+		        _IsPassportIssueDateNeeded = value;
+		        IncrementLog("IsPassportIssueDateNeeded");
 		    }
 		}
 		public String OperatorName
@@ -263,6 +263,78 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("OperatorPhone");
 		    }
 		}
+		public String Zone
+		{
+		    get { return _Zone; }
+		    set
+		    {
+		        _Zone = value;
+		        IncrementLog("Zone");
+		    }
+		}
+		public String Area
+		{
+		    get { return _Area; }
+		    set
+		    {
+		        _Area = value;
+		        IncrementLog("Area");
+		    }
+		}
+		public Decimal? Rating
+		{
+		    get { return _Rating; }
+		    set
+		    {
+		        _Rating = value;
+		        IncrementLog("Rating");
+		    }
+		}
+		public Boolean? HasPDFVoucher
+		{
+		    get { return _HasPDFVoucher; }
+		    set
+		    {
+		        _HasPDFVoucher = value;
+		        IncrementLog("HasPDFVoucher");
+		    }
+		}
+		public Boolean? IsInstantConfirmation
+		{
+		    get { return _IsInstantConfirmation; }
+		    set
+		    {
+		        _IsInstantConfirmation = value;
+		        IncrementLog("IsInstantConfirmation");
+		    }
+		}
+		public Boolean? MustPrinted
+		{
+		    get { return _MustPrinted; }
+		    set
+		    {
+		        _MustPrinted = value;
+		        IncrementLog("MustPrinted");
+		    }
+		}
+		public String ActivityDuration
+		{
+		    get { return _ActivityDuration; }
+		    set
+		    {
+		        _ActivityDuration = value;
+		        IncrementLog("ActivityDuration");
+		    }
+		}
+		public long? viewCount
+		{
+		    get { return _viewCount; }
+		    set
+		    {
+		        _viewCount = value;
+		        IncrementLog("viewCount");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -277,7 +349,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _IsFixedDate;
 		private Boolean? _IsRedemptionNeeded;
 		private long? _RefundRegulationId;
-		private Boolean? _IsPassportNumberNeeded;
+		private Boolean? _IsPassportNeeded;
 		private Boolean? _IsNameAccordingToPassport;
 		private Boolean? _IsPhoneNumberAccordingToPassport;
 		private String _Address;
@@ -288,11 +360,19 @@ namespace Lunggo.Repository.TableRecord
 		private String _PriceDetail;
 		private int? _AmountDuration;
 		private String _UnitDuration;
-		private Boolean? _IsPaxDoBNeeded;
-		private Boolean? _IsPassportIssuedDateNeeded;
+		private Boolean? _IsDateOfBirthNeeded;
+		private Boolean? _IsPassportIssueDateNeeded;
 		private String _OperatorName;
 		private String _OperatorEmail;
 		private String _OperatorPhone;
+		private String _Zone;
+		private String _Area;
+		private Decimal? _Rating;
+		private Boolean? _HasPDFVoucher;
+		private Boolean? _IsInstantConfirmation;
+		private Boolean? _MustPrinted;
+		private String _ActivityDuration;
+		private long? _viewCount;
 
 
 		public static ActivityTableRecord CreateNewInstance()
@@ -336,7 +416,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("IsFixedDate", false),
 				new ColumnMetadata("IsRedemptionNeeded", false),
 				new ColumnMetadata("RefundRegulationId", false),
-				new ColumnMetadata("IsPassportNumberNeeded", false),
+				new ColumnMetadata("IsPassportNeeded", false),
 				new ColumnMetadata("IsNameAccordingToPassport", false),
 				new ColumnMetadata("IsPhoneNumberAccordingToPassport", false),
 				new ColumnMetadata("Address", false),
@@ -347,11 +427,19 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("PriceDetail", false),
 				new ColumnMetadata("AmountDuration", false),
 				new ColumnMetadata("UnitDuration", false),
-				new ColumnMetadata("IsPaxDoBNeeded", false),
-				new ColumnMetadata("IsPassportIssuedDateNeeded", false),
+				new ColumnMetadata("IsDateOfBirthNeeded", false),
+				new ColumnMetadata("IsPassportIssueDateNeeded", false),
 				new ColumnMetadata("OperatorName", false),
 				new ColumnMetadata("OperatorEmail", false),
 				new ColumnMetadata("OperatorPhone", false),
+				new ColumnMetadata("Zone", false),
+				new ColumnMetadata("Area", false),
+				new ColumnMetadata("Rating", false),
+				new ColumnMetadata("HasPDFVoucher", false),
+				new ColumnMetadata("IsInstantConfirmation", false),
+				new ColumnMetadata("MustPrinted", false),
+				new ColumnMetadata("ActivityDuration", false),
+				new ColumnMetadata("viewCount", false),
 
             };
         }

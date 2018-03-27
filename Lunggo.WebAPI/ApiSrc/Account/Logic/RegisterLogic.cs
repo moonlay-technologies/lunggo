@@ -49,7 +49,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             
 
             var foundUser = userManager.FindByEmail(request.Email);
-            var foundUserByPhone = userManager.FindByName(request.Phone);
+            var foundUserByPhone = userManager.FindByName(request.CountryCallCd + " " + request.Phone);
 
             if (foundUser != null)
             {

@@ -206,7 +206,10 @@
     <Compile Include="Account\Service\GetUserIdByEmailOrPhoneNumber.cs" />
     <Compile Include="Account\Service\ModelConversion.cs" />
     <Compile Include="Account\Service\ResettingPassword.cs" />
+    <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
+    <Compile Include="Activity\Constant\ActivityTypeEnum.cs" />
     <Compile Include="Activity\Constant\BookingStatus.cs" />
+    <Compile Include="Activity\Constant\SearchActivityType.cs" />
     <Compile Include="Activity\Database\Query\DeleteCustomDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\DeleteDaySessionFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityListFromWishlistDbQuery.cs" />
@@ -247,6 +250,8 @@
     <Compile Include="Activity\Database\Query\UpdateTicketNumberReservationDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateViewCountDbQuery.cs" />
     <Compile Include="Activity\Model\ActivityEvoucherAndInvoice.cs" />
+    <Compile Include="Activity\Model\ActivityFilterDisplayInfo.cs" />
+    <Compile Include="Activity\Model\ActivityModel.cs" />
     <Compile Include="Activity\Model\AppointmentDetail.cs" />
     <Compile Include="Activity\Model\BookingDetail.cs" />
     <Compile Include="Activity\Model\ActivityDetail.cs" />
@@ -288,6 +293,9 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetOrderDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetReservationListInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetReservationListOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetTransactionStatementOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetWishlistOutput.cs" />
     <Compile Include="Activity\Model\Logic\InsertActivityRatingInput.cs" />
@@ -321,6 +329,7 @@
     <Compile Include="Activity\Service\GetUserById.cs" />
     <Compile Include="Activity\Service\LandingPage.cs" />
     <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
+    <Compile Include="Activity\Service\Operator\GeneratePayStepOperator.cs" />
     <Compile Include="Activity\Service\Operator\GetTransactionStatement.cs" />
     <Compile Include="Activity\Service\Operator\UpdateActivity.cs" />
     <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />

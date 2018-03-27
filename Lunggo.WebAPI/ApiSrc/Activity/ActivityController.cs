@@ -512,7 +512,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [Level2Authorize]
         [Route("v1/operator/appointments")]
 
-        public ApiResponseBase AppointmentList(string page = "1", string perPage = "10")
+        public ApiResponseBase AppointmentList(string page = "1", string perPage = "10", string orderParam = null)
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
@@ -523,6 +523,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             {
                 var request = new GetAppointmentListApiRequest()
                 {
+                    OrderParam = orderParam,
                     Page = page,
                     PerPage = perPage
                 };
@@ -758,7 +759,33 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
-
+        //[HttpGet]
+        //[LunggoCorsPolicy]
+        //[Level2Authorize]
+        //[Route("v1/operator/reservations")]
+        //
+        //public ApiResponseBase GetReservationList(string page = "1", string perPage = "10")
+        //{
+        //    var lang = ApiRequestBase.GetHeaderValue("Language");
+        //    OnlineContext.SetActiveLanguageCode(lang);
+        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
+        //    OnlineContext.SetActiveCurrencyCode(currency);
+        //
+        //    try
+        //    {
+        //        var request = new GetAppointmentListApiRequest()
+        //        {
+        //            Page = page,
+        //            PerPage = perPage
+        //        };
+        //        var apiResponse = ActivityLogic.GetReservationList(request, UserManager);
+        //        return apiResponse;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return ApiResponseBase.ExceptionHandling(e);
+        //    }
+        //}
 
 
 
