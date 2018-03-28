@@ -341,6 +341,7 @@
     <Compile Include="Activity\Service\GetActivityDetail.cs" />
     <Compile Include="Activity\Service\Book.cs" />
     <Compile Include="Activity\Service\ModelConversion.cs" />
+    <Compile Include="Activity\Service\Operator\VerifyTicketNumber.cs" />
     <Compile Include="Activity\Service\RatingAndReview.cs" />
     <Compile Include="Account\Service\ReferralCode.cs" />
     <Compile Include="Activity\Service\Reservations.cs" />

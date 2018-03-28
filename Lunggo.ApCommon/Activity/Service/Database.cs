@@ -468,7 +468,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
                 var savedBookings = GetAppointmentListQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, DateLimit = DateTime.UtcNow }).ToList();
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, StartDate = input.StartDate, EndDate = input.EndDate }).ToList();
                 var saved2 = savedBookings.Select(savedBooking => new AppointmentList { ActivityId = savedBooking.ActivityId, Date = savedBooking.Date, Name = savedBooking.Name, Session = savedBooking.Session, MediaSrc = savedBooking.MediaSrc });
                 var saved1 = saved2.GroupBy(p => new { p.ActivityId, p.Date, p.Session, p.MediaSrc, p.AppointmentReservations })
                             .Select(g => g.First());
@@ -525,7 +525,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 foreach (var save in saved)
                 {
                     var appointmentDetail = savedBookings.Where(saving => save.ActivityId == saving.ActivityId && save.Date == saving.Date && save.Session == saving.Session).ToList();
-                    save.AppointmentReservations = appointmentDetail.Select(appointment => new AppointmentReservation { RsvNo = appointment.RsvNo, Contact = appointment.PaxGroup.Contact, Passengers = appointment.PaxGroup.Passengers, PaxCounts = appointment.PaxGroup.PaxCounts, RsvTime = appointment.RequestTime, PaymentSteps = appointment.PaymentSteps}).ToList();
+                    save.AppointmentReservations = appointmentDetail.Select(appointment => new AppointmentReservation { RsvNo = appointment.RsvNo, Contact = appointment.PaxGroup.Contact, Passengers = appointment.PaxGroup.Passengers, PaxCounts = appointment.PaxGroup.PaxCounts, RsvTime = appointment.RequestTime, RsvStatus = appointment.RsvStatus, PaymentSteps = appointment.PaymentSteps}).ToList();
                 }
 
 
@@ -710,6 +710,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     var activityContentRsv = new ActivityReservationContentTableRecord
                     {
+                        RsvNo = reservation.RsvNo,
                         ActivityId = activityContentNow.ActivityId,
                         Description = activityContentNow.Description,
                         Title = activityContentNow.Title
@@ -1471,7 +1472,7 @@ namespace Lunggo.ApCommon.Activity.Service
                                 RsvNo = rsvNo,
                                 ActivityId = reservationRecord.ActivityId,
                                 StepAmount = stepAmount,
-                                StepDate = DateTime.UtcNow.AddDays((double)activityRule.PayDateLimit),
+                                StepDate = stepDate,
                                 StepDescription = activityRule.Description,
                                 StepName = activityRule.RuleName,
                                 StepStatus = false
@@ -1568,6 +1569,26 @@ namespace Lunggo.ApCommon.Activity.Service
 
 
                 return output;
+            }
+        }
+
+        public bool VerifyTicketNumberDb(long activityId, string ticketNumber)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservation = ActivityReservationTableRepo.GetInstance().Find(conn, new ActivityReservationTableRecord
+                {
+                    ActivityId = activityId,
+                    TicketNumber = ticketNumber
+                }).ToList();
+                if(reservation.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
         }
     }

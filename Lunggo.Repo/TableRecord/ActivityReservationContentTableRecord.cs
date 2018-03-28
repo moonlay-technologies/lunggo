@@ -11,6 +11,15 @@ namespace Lunggo.Repository.TableRecord
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
+		public String RsvNo
+		{
+		    get { return _RsvNo; }
+		    set
+		    {
+		        _RsvNo = value;
+		        IncrementLog("RsvNo");
+		    }
+		}
 		public long? ActivityId
 		{
 		    get { return _ActivityId; }
@@ -40,6 +49,7 @@ namespace Lunggo.Repository.TableRecord
 		}
 
 		
+		private String _RsvNo;
 		private long? _ActivityId;
 		private String _Title;
 		private String _Description;
@@ -74,6 +84,7 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
+				new ColumnMetadata("RsvNo", false),
 				new ColumnMetadata("ActivityId", false),
 				new ColumnMetadata("Title", false),
 				new ColumnMetadata("Description", false),

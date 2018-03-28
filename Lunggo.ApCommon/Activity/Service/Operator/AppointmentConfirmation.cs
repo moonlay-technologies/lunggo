@@ -24,6 +24,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
                 UpdateTicketNumberReservationDb(input.RsvNo);
+                GeneratePayStepOperator(input.RsvNo);
                 var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");               
                 activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 return new AppointmentConfirmationOutput { IsSuccess = true };

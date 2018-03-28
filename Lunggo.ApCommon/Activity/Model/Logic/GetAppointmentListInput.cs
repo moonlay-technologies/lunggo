@@ -12,9 +12,10 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
         }
 
         public bool OrderParam { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public int Page { get; set; }
         public int PerPage { get; set; }
-
         public override decimal GetTotalSupplierPrice()
         {
             throw new NotImplementedException();

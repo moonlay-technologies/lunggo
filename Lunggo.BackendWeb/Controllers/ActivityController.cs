@@ -23,10 +23,8 @@ namespace Lunggo.BackendWeb.Controllers
         [HttpPost]
         public ActionResult ForwardReservation(string rsvNo)
         {
-            var activityService = ActivityService.GetInstance();
-            activityService.GeneratePayStepOperator(rsvNo);
-            activityService.ForwardAppointment(new AppointmentConfirmationInput { RsvNo = rsvNo });
-            
+            var activityService = ActivityService.GetInstance();            
+            activityService.ForwardAppointment(new AppointmentConfirmationInput { RsvNo = rsvNo });            
             return RedirectToAction("List");
         }
 

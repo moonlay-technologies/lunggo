@@ -89,6 +89,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string ContactName { get; set; }
         public DateTime TimeLimit { get; set; }
         public List<PaymentStep> PaymentSteps { get; set; }
+        public string RsvStatus { get; set; }
     }
 
     public class AppointmentList
@@ -127,6 +128,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string RsvNo { get; set; }
         [JsonProperty("rsvTime", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? RsvTime { get; set; }
+        [JsonProperty("rsvStatus", NullValueHandling = NullValueHandling.Ignore)]
+        public string RsvStatus { get; set; }
         [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
         public Contact Contact { get; set; }
         [JsonProperty("paxes", NullValueHandling = NullValueHandling.Ignore)]
