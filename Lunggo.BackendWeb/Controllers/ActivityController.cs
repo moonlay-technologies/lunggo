@@ -31,7 +31,7 @@ namespace Lunggo.BackendWeb.Controllers
         [HttpPost]
         public ActionResult CancelReservation(string rsvNo)
         {
-            ActivityService.GetInstance().DeclineAppointment(new AppointmentConfirmationInput { RsvNo = rsvNo });
+            ActivityService.GetInstance().CancelAppointmentByAdmin(new AppointmentConfirmationInput { RsvNo = rsvNo });
             return RedirectToAction("List");
         }
 

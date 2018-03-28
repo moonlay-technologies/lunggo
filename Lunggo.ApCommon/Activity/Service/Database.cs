@@ -518,6 +518,23 @@ namespace Lunggo.ApCommon.Activity.Service
                     {
                         var paymentStepsDb = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord() { RsvNo = savedBooking.RsvNo }).ToList();
                         var paymentSteps = paymentStepsDb.Select(a => new PaymentStep { StepDescription = a.StepDescription, StepAmount = a.StepAmount ?? 0, StepDate = a.StepDate }).ToList();
+                        if(savedBooking.RsvStatus == "CACU" || savedBooking.RsvStatus == "CAOP" || savedBooking.RsvStatus == "CAAD" || savedBooking.RsvStatus == "CANC")
+                        {
+                            var newPaymentSteps = paymentSteps.Where(a => a.StepStatus == true).ToList();
+                            var statusHistory = ReservationStatusHistoryTableRepo.GetInstance().Find1(conn, new ReservationStatusHistoryTableRecord
+                            {
+                                BookingStatusCd = savedBooking.RsvStatus,
+                                RsvNo = savedBooking.RsvNo
+                            });
+                            newPaymentSteps.Add(new PaymentStep
+                            {
+                                StepDescription = savedBooking.RsvStatus,
+                                StepDate = statusHistory.TimeStamp,
+                                StepAmount = 0,
+                                StepStatus = true,
+                            });
+                            paymentSteps = newPaymentSteps;
+                        }
                         savedBooking.PaymentSteps = paymentSteps;
                     }                    
                 }
@@ -647,6 +664,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     InsertPgId = "0"
                 };
 
+                
+                
 
                 var activityDetailNowDb = ActivityTableRepo.GetInstance().Find1(conn, new ActivityTableRecord { Id = reservation.ActivityDetails.ActivityId });
                 var activityContentsNowDb = ActivityContentTableRepo.GetInstance().Find(conn, new ActivityContentTableRecord { ActivityId = reservation.ActivityDetails.ActivityId }).ToList();
@@ -768,6 +787,8 @@ namespace Lunggo.ApCommon.Activity.Service
                         PaxTableRepo.GetInstance().Insert(conn, passengerRecord);
                     }
                 }
+
+                InsertStatusHistoryToDb(reservation.RsvNo, reservation.ActivityDetails.BookingStatus);
             }
         }
         #endregion
@@ -820,9 +841,11 @@ namespace Lunggo.ApCommon.Activity.Service
 
         private void UpdateActivityBookingStatusInDb(string rsvNo, BookingStatus bookingStatus)
         {
-            var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
             using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
                 UpdateActivityBookingStatusQuery.GetInstance().Execute(conn, new { rsvNo, bookingStatusCd });
+            }                         
         }
 
         public AddToWishlistOutput InsertActivityIdToWishlistDb(long activityId, string user)
@@ -838,6 +861,21 @@ namespace Lunggo.ApCommon.Activity.Service
             }
             var response = new AddToWishlistOutput { isSuccess = true };
             return response;
+        }
+
+        public void InsertStatusHistoryToDb(string rsvNo, BookingStatus bookingStatus)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
+                var statusHistory = new ReservationStatusHistoryTableRecord
+                {
+                    BookingStatusCd = bookingStatusCd,
+                    RsvNo = rsvNo,
+                    TimeStamp = DateTime.UtcNow
+                };
+                ReservationStatusHistoryTableRepo.GetInstance().Insert(conn, statusHistory);
+            }
         }
 
         public DeleteFromWishlistOutput DeleteActivityIdFromWishlistDb(long activityId, string user)

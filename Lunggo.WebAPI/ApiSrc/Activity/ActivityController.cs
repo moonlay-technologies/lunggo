@@ -507,6 +507,35 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/appointments/cancel/{rsvNo}")]
+
+        public ApiResponseBase AppointmentCancellation(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            //ConfirmationStatusApiRequest request = null;
+            try
+            {
+                //request = ApiRequestBase.DeserializeRequest<ConfirmationStatusApiRequest>();
+                //var a = new ConfirmationStatusApiRequest()
+                //{
+                //    RsvNo = rsvNo,
+                //    Status = request.Status
+                //};
+                var apiResponse = ActivityLogic.DeclineAppointment(rsvNo, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]

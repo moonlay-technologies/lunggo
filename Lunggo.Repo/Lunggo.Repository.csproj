@@ -93,6 +93,7 @@
     <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
     <Compile Include="TableRecord\RefundTableRecord.cs" />
     <Compile Include="TableRecord\ReservationStateTableRecord.cs" />
+    <Compile Include="TableRecord\ReservationStatusHistoryTableRecord.cs" />
     <Compile Include="TableRecord\ReservationTableRecord.cs" />
     <Compile Include="TableRecord\ResetPasswordTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="TableRepository\RefundRepository.cs" />
     <Compile Include="TableRepository\ReservationRepository.cs" />
     <Compile Include="TableRepository\ReservationStateRepository.cs" />
+    <Compile Include="TableRepository\ReservationStatusHistoryRepository.cs" />
     <Compile Include="TableRepository\ResetPasswordRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
