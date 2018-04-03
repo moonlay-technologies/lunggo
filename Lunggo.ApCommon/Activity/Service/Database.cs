@@ -1713,9 +1713,20 @@ namespace Lunggo.ApCommon.Activity.Service
                     RefundStatus = false
                 };
                 RefundHistoryTableRepo.GetInstance().Insert(conn, rule);
-
-            }
-           
+            }           
         }
+
+        public List<RefundHistoryTableRecord> GetRefundHistoryFromDb(GetRefundHistoryInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+
+                var refundHistory = GetRefundHistoryFromDbQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, StartDate = input.StartDate, EndDate = input.EndDate }).ToList();
+                return refundHistory;
+            }
+        }
+
     }
 }

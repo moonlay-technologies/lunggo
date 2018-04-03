@@ -226,6 +226,7 @@
     <Compile Include="Activity\Database\Query\GetCartRsvNoListDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetActivityReviewFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetRatingFromDbByRsvNoQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetRefundHistoryFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetReviewFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetTransactionMutationOutputFromDbQuery.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetOrderDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetRefundHistoryInput.cs" />
     <Compile Include="Activity\Model\Logic\GetReservationListInput.cs" />
     <Compile Include="Activity\Model\Logic\GetReservationListOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetTransactionStatementOutput.cs" />
@@ -331,7 +333,7 @@
     <Compile Include="Activity\Service\LandingPage.cs" />
     <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
     <Compile Include="Activity\Service\Operator\GeneratePayStepOperator.cs" />
-    <Compile Include="Activity\Service\Operator\GetRefundAmountOperator.cs" />
+    <Compile Include="Activity\Service\Operator\GetRefundHistory.cs" />
     <Compile Include="Activity\Service\Operator\GetTransactionStatement.cs" />
     <Compile Include="Activity\Service\Operator\UpdateActivity.cs" />
     <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />

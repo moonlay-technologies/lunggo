@@ -78,15 +78,15 @@ namespace Lunggo.ApCommon.Payment.Model
             //return 0;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rate = CurrencyTableRepo.GetInstance().Find1(conn, new CurrencyTableRecord
+                var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
                 {
                     Symbol = Symbol,
-                    SupplierCd = SupplierCd.Mnemonic(Supplier)
-                });
-                if (rate == null)
+                }).ToList();
+                if (rates.Count < 1)
                 {
                     return 100000;
                 }
+                var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();
                 return (decimal)rate.RoundingOrder;
             }
         }
@@ -104,15 +104,15 @@ namespace Lunggo.ApCommon.Payment.Model
             //return 100000;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rate = CurrencyTableRepo.GetInstance().Find1(conn, new CurrencyTableRecord
+                var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
                 {
                     Symbol = Symbol,
-                    SupplierCd = SupplierCd.Mnemonic(Supplier)
-                });
-                if(rate == null)
+                }).ToList();
+                if (rates.Count < 1)
                 {
                     return 100000;
                 }
+                var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();          
                 return (decimal)rate.Rate;
             }
         }
