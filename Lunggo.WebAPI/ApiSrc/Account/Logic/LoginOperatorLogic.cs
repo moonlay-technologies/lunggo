@@ -54,6 +54,16 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             //}
 
             var foundUser = userManager.FindByName(request.UserName);
+            
+            if(foundUser == null)
+            {
+                return new LoginApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_UNREGISTERED"
+                };
+            }
+
             var role = userManager.GetRoles(foundUser.Id).FirstOrDefault();
 
             if(role != "Operator")
