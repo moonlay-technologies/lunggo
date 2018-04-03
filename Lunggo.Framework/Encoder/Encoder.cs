@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -21,6 +23,35 @@ namespace Lunggo.Framework.Encoder
         {
             var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return Encoding.UTF8.GetString(base64EncodedBytes);
+        }
+
+        public static string Base36Encode(this long input)
+        {
+            var CharList = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (input < 0) throw new ArgumentOutOfRangeException("input", input, "input cannot be negative");
+
+            char[] clistarr = CharList.ToCharArray();
+            var result = new Stack<char>();
+            while (input != 0)
+            {
+                result.Push(clistarr[input % 36]);
+                input /= 36;
+            }
+            return new string(result.ToArray());
+        }
+
+        public static long Base36Decode(this string input)
+        {
+            var CharList = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var reversed = input.ToUpper().Reverse();
+            long result = 0;
+            int pos = 0;
+            foreach (char c in reversed)
+            {
+                result += CharList.IndexOf(c) * (long)Math.Pow(36, pos);
+                pos++;
+            }
+            return result;
         }
 
         public static string Sha512Encode(this string input)

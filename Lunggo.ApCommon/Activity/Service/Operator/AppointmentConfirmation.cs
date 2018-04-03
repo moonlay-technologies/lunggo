@@ -99,6 +99,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelledByOperator);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByOperator);
+                InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             }
             catch
@@ -122,6 +123,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelledByAdmin);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByAdmin);
+                InsertRefundAmountOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             }
             catch
@@ -146,6 +148,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelledByCustomer);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByCustomer);
+                InsertRefundAmountOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             }
             catch

@@ -25,6 +25,7 @@ using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.Config;
 using System.Security.Cryptography;
 using Lunggo.ApCommon.Identity.Query.Record;
+using Lunggo.Framework.Encoder;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -1399,12 +1400,10 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var rng = new RNGCryptoServiceProvider();
-                byte[] randomByte = new byte[8];
-                rng.GetBytes(randomByte);
-                var randomInt = Math.Abs(BitConverter.ToInt32(randomByte, 0));
-                var intTicketNumber = randomInt % 100000000;
-                var ticketNumber = intTicketNumber.ToString("D10");
+                var rsvCode = long.Parse(rsvNo).Base36Encode();
+                var random = new Random();
+                var randomNumberCode = ((long)random.Next(0, 1296)).Base36Encode();
+                var ticketNumber = rsvCode + randomNumberCode;
                 UpdateTicketNumberReservationDbQuery.GetInstance().Execute(conn, new { TicketNumber = ticketNumber, RsvNo = rsvNo });
             }
         }
@@ -1610,14 +1609,15 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
-        public bool VerifyTicketNumberDb(long activityId, string ticketNumber)
+        public bool VerifyTicketNumberDb(long activityId, string ticketNumber, string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var reservation = ActivityReservationTableRepo.GetInstance().Find(conn, new ActivityReservationTableRecord
                 {
                     ActivityId = activityId,
-                    TicketNumber = ticketNumber
+                    TicketNumber = ticketNumber,
+                    RsvNo = rsvNo
                 }).ToList();
                 if(reservation.Count == 0)
                 {
@@ -1628,6 +1628,94 @@ namespace Lunggo.ApCommon.Activity.Service
                     return true;
                 }
             }
+        }
+
+        public void InsertRefundAmountOperatorToDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservation = GetReservationFromDb(rsvNo);
+                var rules = RefundRulesOperatorTableRepo.GetInstance().Find(conn, new RefundRulesOperatorTableRecord
+                {
+                    ActivityId = reservation.ActivityDetails.ActivityId
+                }).ToList();
+                var selectedRules = new List<RefundRulesOperatorTableRecord>();
+                var jalanRules = rules.Where(a => a.PayState == "Jalan" && (DateTime.UtcNow < reservation.DateTime.Date.Value  && DateTime.UtcNow > reservation.DateTime.Date.Value.AddDays((double)a.PayDateLimit))).ToList();
+                if(jalanRules.Count > 0)
+                {
+                    selectedRules = jalanRules.OrderBy(a => a.PayDateLimit).ToList();
+                }
+                else
+                {
+                    var bookRules = rules.Where(a => a.PayState == "Book" && (DateTime.UtcNow > reservation.RsvTime && DateTime.UtcNow < reservation.RsvTime.AddDays((double)a.PayDateLimit))).ToList();
+                    selectedRules = bookRules.OrderByDescending(a => a.PayDateLimit).ToList();
+                }             
+                if(selectedRules.Count < 1)
+                {
+                    selectedRules = rules.Where(a => a.PayState == "Treshold").ToList();
+                }
+                var selectedRule = selectedRules.First();
+                var amounts = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord
+                {
+                    RsvNo = rsvNo,
+                    StepStatus = true
+                }).ToList();
+                decimal refundAmount = 0;
+
+                if(amounts.Count > 0)
+                {
+                    var amount = amounts.Sum(a => a.StepAmount);
+                    refundAmount = (decimal)(selectedRule.ValuePercentage * amount + selectedRule.ValueConstant);
+                    if (refundAmount < selectedRule.MinValue)
+                    {
+                        refundAmount = (decimal)selectedRule.MinValue;
+                    }
+                }                                
+
+                var rule = new RefundHistoryTableRecord()
+                {
+                    ActivityId = reservation.ActivityDetails.ActivityId,
+                    RsvNo = rsvNo,
+                    RefundAmount = refundAmount,
+                    RefundDate = DateTime.UtcNow.AddMonths(1),
+                    RefundDescription = selectedRule.Description,
+                    RefundName = selectedRule.RuleName,
+                    RefundStatus = false
+                };
+                RefundHistoryTableRepo.GetInstance().Insert(conn, rule);                
+            }
+        }
+
+        public void InsertRefundAmountCancelByOperatorToDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservation = GetReservation(rsvNo);
+                var amounts = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord
+                {
+                    RsvNo = rsvNo,
+                    StepStatus = true
+                }).ToList();
+                decimal refundAmount = 0;
+                if (amounts.Count > 0)
+                {
+                    refundAmount = (decimal)amounts.Sum(a => a.StepAmount);
+                }
+
+                var rule = new RefundHistoryTableRecord()
+                {
+                    ActivityId = reservation.ActivityDetails.ActivityId,
+                    RsvNo = rsvNo,
+                    RefundAmount = refundAmount,
+                    RefundDate = DateTime.UtcNow.AddMonths(1),
+                    RefundDescription = "Cancelled By Operator",
+                    RefundName = "Cancelled By Operator",
+                    RefundStatus = false
+                };
+                RefundHistoryTableRepo.GetInstance().Insert(conn, rule);
+
+            }
+           
         }
     }
 }
