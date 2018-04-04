@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    internal class GetRefundHistoryFromDbQuery : DbQueryBase<GetRefundHistoryFromDbQuery, RefundHistoryTableRecord>
+    internal class GetRefundPendingFromDbQuery : DbQueryBase<GetRefundPendingFromDbQuery, RefundHistoryTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ");
+            clauseBuilder.Append("WHERE rh.RefundStatus = false AND ");
             clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId AND rh.RefundDate BETWEEN @StartDate AND @EndDate ");
             return clauseBuilder.ToString();
         }

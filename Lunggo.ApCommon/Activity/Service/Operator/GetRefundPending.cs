@@ -10,9 +10,9 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public List<RefundHistoryTableRecord> GetRefundHistory(GetRefundHistoryInput input)
+        public List<RefundHistoryTableRecord> GetRefundPending(GetRefundPendingInput input)
         {
-            var output = GetRefundHistoryFromDb(input);
+            var output = GetRefundPendingFromDb(input);
             return output;
         }
     }

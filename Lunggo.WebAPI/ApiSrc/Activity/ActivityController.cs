@@ -527,7 +527,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
                 //    RsvNo = rsvNo,
                 //    Status = request.Status
                 //};
-                var apiResponse = ActivityLogic.DeclineAppointment(rsvNo, UserManager);
+                var apiResponse = ActivityLogic.CancelAppointment(rsvNo, UserManager);
                 return apiResponse;
             }
             catch (Exception e)

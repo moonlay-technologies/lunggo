@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lunggo.ApCommon.Activity.Model.Logic
 {
-    public class GetRefundHistoryInput
+    public class GetRefundPendingInput
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

@@ -18,18 +18,8 @@ namespace Lunggo.ApCommon.Identity.Auth
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             //return true; // OVERRIDE (comment to disable)
-
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-
-            if (env == "production")
-            {
                 var identity = actionContext.RequestContext.Principal.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                 return base.IsAuthorized(actionContext) && identity.HasClaim(ClaimTypes.Authentication, "password");
-            }
-            else
-            {
-                return true;
-            }
         }
     }
 
@@ -39,17 +29,7 @@ namespace Lunggo.ApCommon.Identity.Auth
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
             //return true; // OVERRIDE (comment to disable)
-
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-
-            if (env == "production")
-            {
-                return base.IsAuthorized(actionContext);
-            }
-            else
-            {
-                return true;
-            }
+            return base.IsAuthorized(actionContext);
         }
     }
 

@@ -149,8 +149,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal StepAmount { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? StepDate { get; set; }
-        [JsonProperty("isCompleted", NullValueHandling = NullValueHandling.Ignore)]
-        public bool StepStatus { get; set; }
+        [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
+        public string StepStatus { get; set; }
     }
     
     public class ReservationActivityDetail

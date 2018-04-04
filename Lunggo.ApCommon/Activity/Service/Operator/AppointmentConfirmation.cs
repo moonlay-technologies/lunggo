@@ -15,9 +15,9 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD" };
+                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if(status == "CONF" || cancel.Contains(status))
+                if(status == "CONF" || rejectStatus.Contains(status))
                 {
                     return new AppointmentConfirmationOutput
                     {
@@ -42,8 +42,9 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
+                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status == "CANC")
+                if (status == "CANC" || rejectStatus.Contains(status))
                 {
                     return new AppointmentConfirmationOutput
                     {
@@ -64,8 +65,9 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
+                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status == "DENY")
+                if (status == "DENY" || rejectStatus.Contains(status))
                 {
                     return new AppointmentConfirmationOutput
                     {
@@ -88,7 +90,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD" };
+                var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
                 {
@@ -112,7 +114,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD" };
+                var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
                 {
@@ -137,7 +139,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD" };
+                var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
                 {
@@ -161,8 +163,9 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
+                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status == "FORW")
+                if (status == "FORW" || rejectStatus.Contains(status))
                 {
                     return new AppointmentConfirmationOutput
                     {
