@@ -791,7 +791,28 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
-
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/verifyticket")]
+        public ApiResponseBase VerifyTicket()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            VerifyTicketApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<VerifyTicketApiRequest>();
+                var apiResponse = ActivityLogic.VerifyTicket(request,UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
 
         //[HttpGet]
         //[LunggoCorsPolicy]

@@ -8,9 +8,9 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public bool VerifyTicketNumber(long activityId, string ticketNumber, string rsvNo)
+        public bool VerifyTicketNumber(string ticketNumber, string rsvNo)
         {
-            var output = VerifyTicketNumberDb(activityId, ticketNumber, rsvNo);
+            var output = VerifyTicketNumberDb(ticketNumber, rsvNo);
             return output;
         }
     }

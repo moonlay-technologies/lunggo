@@ -34,6 +34,9 @@ namespace Lunggo.ApCommon.Activity.Model
         public List<AppointmentReservation> AppointmentReservations { get; set; }
         [JsonProperty("contactName", NullValueHandling = NullValueHandling.Ignore)]
         public string ContactName { get; set; }
+        [JsonProperty("isVerified", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsVerified { get; set; }
+
 
     }
 
@@ -90,6 +93,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime TimeLimit { get; set; }
         public List<PaymentStep> PaymentSteps { get; set; }
         public string RsvStatus { get; set; }
+        public bool? IsVerified { get; set; }
     }
 
     public class AppointmentList
@@ -138,6 +142,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public List<ActivityPricePackageReservation> PaxCounts { get; set; }
         [JsonProperty("paymentSteps", NullValueHandling = NullValueHandling.Ignore)]
         public List<PaymentStep> PaymentSteps { get; set; }
+        [JsonProperty("isVerified", NullValueHandling = NullValueHandling.Ignore)]
+        public bool IsVerified { get; set; }
 
     }
 

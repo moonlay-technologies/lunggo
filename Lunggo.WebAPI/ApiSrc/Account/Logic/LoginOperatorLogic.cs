@@ -70,7 +70,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_NOT_OPERATOR"
+                    ErrorCode = "ERR_UNREGISTERED"
                 };
 
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));

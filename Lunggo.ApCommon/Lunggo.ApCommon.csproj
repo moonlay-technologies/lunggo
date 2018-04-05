@@ -235,6 +235,7 @@
     <Compile Include="Activity\Database\Query\InsertRatingAndReviewToDbQuery.cs" />
     <Compile Include="Activity\Database\Query\InsertTransactionStatementToDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateIsVerifiedDbQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
     <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
     <Compile Include="Activity\Database\Query\GetListActivityQuery.cs" />
