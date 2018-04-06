@@ -31,13 +31,14 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("FROM RefundHistory AS rh ");
+            clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id = rh.ActivityId ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE rh.RefundStatus = false AND ");
+            clauseBuilder.Append("WHERE rh.RefundStatus = 0 AND ");
             clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId AND rh.RefundDate BETWEEN @StartDate AND @EndDate ");
             return clauseBuilder.ToString();
         }

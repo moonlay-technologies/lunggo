@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             try
             {
-                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
+                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "TKTD" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if(status == "CONF" || rejectStatus.Contains(status))
                 {

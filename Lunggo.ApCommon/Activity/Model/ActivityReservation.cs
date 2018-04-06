@@ -51,4 +51,28 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("session", NullValueHandling = NullValueHandling.Ignore)]
         public string Session { get; set; }
     }
+
+    public class PendingRefund
+    {
+        [JsonProperty("activityName", NullValueHandling = NullValueHandling.Ignore)]
+        public string ActivityName { get; set; }
+        [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
+        public string MediaSrc { get; set; }
+        [JsonProperty("activityDate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ActivityDate { get; set; }
+        [JsonProperty("session", NullValueHandling = NullValueHandling.Ignore)]
+        public string Session { get; set; }
+        [JsonProperty("refundAmount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal RefundAmount { get; set; }
+        [JsonProperty("dueDate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime RefundDate { get; set; }
+        [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
+        public Contact Contact { get; set; }
+        [JsonProperty("paxCount", NullValueHandling = NullValueHandling.Ignore)]
+        public List<ActivityPricePackageReservation> PaxCount { get; set; }
+        [JsonProperty("paymentSteps", NullValueHandling = NullValueHandling.Ignore)]
+        public List<PaymentStep> PaymentSteps { get; set; }
+        [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
+        public string RsvNo { get; set; }
+    }
 }

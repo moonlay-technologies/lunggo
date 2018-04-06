@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Activity.Model.Logic;
+﻿using Lunggo.ApCommon.Activity.Model;
+using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.Repository.TableRecord;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public List<RefundHistoryTableRecord> GetRefundPending(GetRefundPendingInput input)
+        public List<PendingRefund> GetPendingRefunds(GetPendingRefundsInput input)
         {
-            var output = GetRefundPendingFromDb(input);
+            var output = GetPendingRefundsFromDb(input);            
             return output;
         }
     }

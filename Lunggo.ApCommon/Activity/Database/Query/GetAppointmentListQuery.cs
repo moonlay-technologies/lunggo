@@ -20,7 +20,6 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT DISTINCT act.Id AS ActivityId, act.Name AS Name, ar.RsvNo AS RsvNo, ar.BookingStatusCd AS RsvStatus, ");
-            clauseBuilder.Append("SUM(ar.TicketCount) OVER(PARTITION BY act.Id) AS PaxCount, ");
             clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS Session, ar.IsVerified AS IsVerified, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();

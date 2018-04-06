@@ -233,12 +233,12 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (medium != (int)PaymentMedium.E2Pay)
             {
-                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = GenerateId(rsvNo) });
+                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = Generator.GenerateTrxIdRegId(rsvNo) });
             }
 
             var html = GetE2PayPaymentHtmlFromCache(id);
             if (html == null)
-                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = GenerateId(rsvNo) });
+                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = Generator.GenerateTrxIdRegId(rsvNo) });
             return Content(html);
         }
 
@@ -263,22 +263,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
             }
             return null;
-        }
-
-        public string GenerateId(string key)
-        {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
         }
 
         public string GetBankImageName(PaymentSubmethod submethod)

@@ -94,6 +94,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public List<PaymentStep> PaymentSteps { get; set; }
         public string RsvStatus { get; set; }
         public bool? IsVerified { get; set; }
+        public decimal? RefundAmount { get; set; }
+        public DateTime? RefundDate { get; set; }
     }
 
     public class AppointmentList

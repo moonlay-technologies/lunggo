@@ -814,6 +814,36 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/pendingrefunds")]
+        public ApiResponseBase GetPendingRefunds(string page = "1", string perPage = "10", string type = null, string startDate = "", string endDate = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetPendingRefundApiRequest()
+                {
+                    Page = page,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    PerPage = perPage
+                };
+                var apiResponse = ActivityLogic.GetPendingRefunds(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         //[HttpGet]
         //[LunggoCorsPolicy]
         //[Level2Authorize]

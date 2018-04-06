@@ -334,7 +334,7 @@
     <Compile Include="Activity\Service\LandingPage.cs" />
     <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
     <Compile Include="Activity\Service\Operator\GeneratePayStepOperator.cs" />
-    <Compile Include="Activity\Service\Operator\GetRefundPending.cs" />
+    <Compile Include="Activity\Service\Operator\GetPendingRefunds.cs" />
     <Compile Include="Activity\Service\Operator\GetTransactionStatement.cs" />
     <Compile Include="Activity\Service\Operator\UpdateActivity.cs" />
     <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />

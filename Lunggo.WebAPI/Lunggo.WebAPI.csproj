@@ -286,6 +286,7 @@
     <Compile Include="ApiSrc\Activity\Logic\GenerateQuestionLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityReviewsLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityTicketDetailLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetPendingRefundLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetTransactionStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityRatingLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityReviewLogic.cs" />
@@ -315,6 +316,8 @@
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
