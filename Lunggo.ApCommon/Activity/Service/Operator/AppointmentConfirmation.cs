@@ -16,7 +16,8 @@ namespace Lunggo.ApCommon.Activity.Service
             try
             {
                 var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "TKTD" };
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+                var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
+                var status = bookingDetail.BookingDetail.BookingStatus;
                 if(status == "CONF" || rejectStatus.Contains(status))
                 {
                     return new AppointmentConfirmationOutput
@@ -28,8 +29,15 @@ namespace Lunggo.ApCommon.Activity.Service
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Confirmed);
                 UpdateTicketNumberReservationDb(input.RsvNo);
                 GeneratePayStepOperator(input.RsvNo);
-                var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");               
-                activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                var activityDetail = GetActivityDetailFromDb(new GetDetailActivityInput { ActivityId = bookingDetail.BookingDetail.ActivityId });
+                if(activityDetail.ActivityDetail.IsInstantConfirmation == true)
+                {
+                    var statusTicket = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
+                    var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");
+                    activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                    UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketed);
+                    InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketed);
+                }                                             
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             }
             catch
