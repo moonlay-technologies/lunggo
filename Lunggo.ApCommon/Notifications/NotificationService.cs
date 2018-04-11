@@ -1,7 +1,9 @@
 ﻿using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Lunggo.ApCommon.Notifications
 {
@@ -9,7 +11,6 @@ namespace Lunggo.ApCommon.Notifications
     {
         private static readonly NotificationService Instance = new NotificationService();
         private bool _isInitialized;
-        //private static readonly AzureNotificationClient Client = AzureNotificationClient.GetClientInstance();
 
         private NotificationService()
         {
@@ -19,7 +20,6 @@ namespace Lunggo.ApCommon.Notifications
         {
             if (!_isInitialized)
             {
-                //Client.Init(connString, hubName);
                 _isInitialized = true;
             }
         }
@@ -28,47 +28,35 @@ namespace Lunggo.ApCommon.Notifications
             return Instance;
         }
 
-        public string RegisterDevice(string notificationHandle, string deviceId)
+        public void RegisterDevice(string handle, string deviceId, string userId, params string[] tags)
         {
-            //return Client.RegisterDevice(notificationHandle, deviceId);
-            return RegisterDeviceExpoToDb(notificationHandle, deviceId);
-        }
-
-        internal string RegisterDeviceExpoToDb(string notificationHandle, string deviceId)
-        {
-            var RegisterId = "";
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var notificationRecord = new NotificationTableRecord
+                NotificationTableRecord TableRecord = prepareQueryParams(handle, deviceId, userId, tags);
+                var deviceRegistered = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = handle });
+                if (deviceRegistered == null)
                 {
-                    Handle = notificationHandle,
-                    DeviceId = deviceId
-                };
-                NotificationTableRepo.GetInstance().Insert(conn, notificationRecord);
+                    NotificationTableRepo.GetInstance().Insert(conn, TableRecord);
+                }
+                else
+                {
+                    NotificationTableRepo.GetInstance().Update(conn, TableRecord);
+                }
             }
-            return RegisterId;
         }
 
-        public bool UpdateTags(string registrationId, string notificationHandle, Platform platform,
-            Dictionary<string, string> tags)
+        private static NotificationTableRecord prepareQueryParams(string handle, string deviceId, string userId, string[] tags)
         {
-            //return Client.UpdateTags(registrationId, notificationHandle, platform, tags);
-            return false;
-        }
-
-        public void DeleteRegistration(string registrationId)
-        {
-            //Client.DeleteRegistration(registrationId);
-        }
-
-        public void PushNotification(Notification notification, Dictionary<string, string> tags)
-        {
-            //Client.PushNotification(notification, tags);
-        }
-
-        public void PushSilentNotification(object data, Dictionary<string, string> tags)
-        {
-            //Client.PushSilentNotification(data, tags);
+            var tagString = string.Join(",", tags);
+            tagString = "," + tagString + ",";
+            var TableRecord = new NotificationTableRecord
+            {
+                Handle = handle,
+                DeviceId = deviceId,
+                UserId = userId,
+                Tags = tagString
+            };
+            return TableRecord;
         }
     }
 }

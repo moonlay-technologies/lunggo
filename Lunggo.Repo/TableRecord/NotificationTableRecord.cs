@@ -29,10 +29,30 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DeviceId");
 		    }
 		}
+		public String UserId
+		{
+		    get { return _UserId; }
+		    set
+		    {
+		        _UserId = value;
+		        IncrementLog("UserId");
+		    }
+		}
+		public String Tags
+		{
+		    get { return _Tags; }
+		    set
+		    {
+		        _Tags = value;
+		        IncrementLog("Tags");
+		    }
+		}
 
 		
 		private String _Handle;
 		private String _DeviceId;
+		private String _UserId;
+		private String _Tags;
 
 
 		public static NotificationTableRecord CreateNewInstance()
@@ -66,6 +86,8 @@ namespace Lunggo.Repository.TableRecord
             {
 				new ColumnMetadata("Handle", true),
 				new ColumnMetadata("DeviceId", true),
+				new ColumnMetadata("UserId", false),
+				new ColumnMetadata("Tags", false),
 
             };
         }

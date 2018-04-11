@@ -59,28 +59,28 @@
         <div style="text-align: center; font-size: 26px; font-weight:600;">Psst, akan ada yang baru di Travorama!</div>
         <div class="container-timer clearfix" id="timer">
             <div class="box-timer">
-                <div class="time" id="day">XX</div>
+                <div class="time" id="day"></div>
                 <div class="day">hari</div>
             </div>
             <div class="box-divider">
                 <div class="divider">:</div>
             </div>
             <div class="box-timer">
-                <div class="time" id="hour">XX</div>
+                <div class="time" id="hour"></div>
                 <div class="day">jam</div>
             </div>
             <div class="box-divider">
                 <div class="divider">:</div>
             </div>
             <div class="box-timer">
-                <div class="time" id="minute">XX</div>
+                <div class="time" id="minute"></div>
                 <div class="day">menit</div>
             </div>
             <div class="box-divider">
                 <div class="divider">:</div>
             </div>
             <div class="box-timer">
-                <div class="time" id="second">XX</div>
+                <div class="time" id="second"></div>
                 <div class="day">detik</div>
             </div>
         </div>
@@ -113,7 +113,7 @@
             }, 7000);
         });
 
-        var launchTime = new Date('@((new DateTime(2018,4,1)).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'"))');
+        var launchTime = new Date('@((new DateTime(2018,4,22)).ToString("yyyy-MM-dd'T'HH:mm:ss'Z'"))');
         // countdown timer
         var now = new Date();
         $('#timer').countdown(launchTime, function (event) {
