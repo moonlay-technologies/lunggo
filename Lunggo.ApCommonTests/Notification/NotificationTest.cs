@@ -4,59 +4,96 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Notifications;
+using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
+using System.Data;
 
 namespace Lunggo.ApCommonTests.Notification
 {
     [TestClass]
     class NotificationTest
     {
-        [TestMethod]
-        public void Notification_RegisterDeviceIfDeviceHaventRegisteredBefore()
+        public void ManipulateDB(Action<IDbConnection> callback)
         {
-            var expectedResult = new GetAvailableDatesApiResponse
+            using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERASEA01"
-            };
-            var actualResult = RegisterDevice(handle, deviceId, userId, tags);
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
-            Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
+                callback(conn);
+            }
+        }
+
+        public void AssertRegisterDevice(string dummyHandle = "TEST_HANDLE", string dummyDeviceId = "TEST_DEVICEID", string dummyUserId = "TEST_USERID", params string[] tags)
+        {
+            NotificationTableRecord actualResult;
+            NotificationService.GetInstance().RegisterDevice(dummyHandle, dummyDeviceId, dummyUserId);
+            ManipulateDB((conn) =>
+            {
+                actualResult = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = dummyHandle });
+                Assert.IsTrue(dummyHandle == actualResult.Handle &&
+                            dummyDeviceId == actualResult.DeviceId &&
+                            dummyUserId == actualResult.UserId
+                );
+            });
         }
 
         [TestMethod]
-        public void GetAvailableDates_ValidInput_ReturnSomething()
+        public void Should_Success_On_Register_New_Device()
         {
-            Initializer.Init();
-
-            var input = new GetAvailableDatesApiRequest()
+            ManipulateDB((conn) =>
             {
-                ActivityId = "1"
-            };
-
-            var actualResult = ActivityLogic.GetAvailable(input);
-            Assert.IsNotNull(actualResult);
+               NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = "TEST_HANDLE" });
+            });
+            AssertRegisterDevice();
         }
 
         [TestMethod]
-        public void AssembleApiResponse_GetAvailableDatesOutput_ReturnGetAvailableDatesApiResponse()
+        public void Should_Success_On_Register_Existing_Device_With_Changed_Paramter()
         {
-            var activityDateTimes = new DateAndAvailableHour()
-            {
-                Date = DateTime.Parse("2017/02/18")
-            };
-            var input = new GetAvailableDatesOutput()
-            {
-                AvailableDateTimes = new List<DateAndAvailableHour>() { activityDateTimes }
-            };
+            AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID");
+            AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID_2");
+        }
 
-            var actualResult = ActivityLogic.AssembleApiResponse(input);
+        [TestMethod]
+        public void Should_Error_On_Register_Device_When_Handle_Params_Is_Null_Or_Empty_Or_Whitespace()
+        {
+            AssertRegisterDevice("", "TEST_DEVICEID");
+            AssertRegisterDevice(null, "TEST_DEVICEID");
+            AssertRegisterDevice(" ", "TEST_DEVICEID");
+        }
 
-            var expectedResult = new GetAvailableDatesApiResponse()
-            {
-                // AvailableDateTimes = new List<DateAndAvailableHour>() { activityDateTimes }
-            };
+        [TestMethod]
+        public void Should_Error_On_Register_Device_When_DeviceID_Params_Is_Null_Or_Empty_Or_Whitespace()
+        {
+            AssertRegisterDevice("TEST_HANDLE", "");
+            AssertRegisterDevice("TEST_HANDLE", null);
+            AssertRegisterDevice("TEST_HANDLE", " ");
 
-            Assert.AreEqual(expectedResult.AvailableDateTimes[0].Date, actualResult.AvailableDateTimes[0].Date);
+        }
+
+        // [TestMethod]
+        // public void Should_Error_On_Register_Device_When_UserID_Params_Is_Null_Or_Empty_Or_Whitespace()
+        // {
+
+        //     AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", null);
+        //     AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", "");
+        //     AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", " ");
+        // }
+
+        // [TestMethod]
+        // public void Should_RegisterDuplicateDeviceWithOneDifferentParam()
+        // {
+        //     AssertRegisterDevice("TEST_HANDLE_2", "TEST_DEVICEID", "TEST_USERID");
+        //     AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID_2", "TEST_USERID");
+        //     AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", "TEST_USERID_2");
+        // }
+
+        [TestMethod]
+        public void Should_Success_When_Register_Device_With_Tags()
+        {
+            AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", "TEST_USERID", "tag1");
+            AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", "TEST_USERID", "tag1", "tag2");
+            AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID", "TEST_USERID", "tag1", "tag2", "tag3");
         }
     }
 }

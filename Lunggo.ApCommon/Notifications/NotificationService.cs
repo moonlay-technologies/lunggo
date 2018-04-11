@@ -32,8 +32,8 @@ namespace Lunggo.ApCommon.Notifications
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                NotificationTableRecord TableRecord = prepareQueryParams(handle, deviceId, userId, tags);
                 var deviceRegistered = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = handle });
+                NotificationTableRecord TableRecord = prepareQueryParams(handle, deviceId, userId, tags);
                 if (deviceRegistered == null)
                 {
                     NotificationTableRepo.GetInstance().Insert(conn, TableRecord);
