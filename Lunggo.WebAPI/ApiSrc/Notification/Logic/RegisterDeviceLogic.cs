@@ -16,38 +16,26 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {
     public static partial class RegistrationLogic
     {
-        public static async Task<ApiResponseBase> RegisterDevice(RegisterDeviceApiRequest request)
+        public static ApiResponseBase RegisterDevice(RegisterDeviceApiRequest request)
         {
             if (IsValid(request))
             {
                 var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                 var clientId = identity.GetClientId();
                 var deviceId = identity.GetDeviceId();
-                var platformType = Client.GetPlatformType(clientId);
-                Platform platform;
-                var isSupported = TryMapPlatform(platformType, out platform);
-                if (!isSupported)
-                        return new ApiResponseBase
-                        {
-                            StatusCode = HttpStatusCode.Forbidden,
-                            ErrorCode = "ERNREG02"
-                        };
-
-                var notif = NotificationService.GetInstance();
-                var newRegistrationId = notif.RegisterDevice(request.Handle, deviceId);
-
+                var userId = identity.GetUser().Id;
+                NotificationService.GetInstance().RegisterDevice(request.Handle, deviceId, userId);
                 return new RegisterDeviceApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,
-                    RegistrationId = newRegistrationId
                 };
             }
             else
             {
-                return new FlightIssuanceApiResponse
+                return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERNREG01"
+                    ErrorCode = "ERR_BAD_REQUEST"
                 };
             }
         }

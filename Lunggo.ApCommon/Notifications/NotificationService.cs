@@ -28,12 +28,12 @@ namespace Lunggo.ApCommon.Notifications
             return Instance;
         }
 
-        public void RegisterDevice(string handle, string deviceId, string userId, params string[] tags)
+        public void RegisterDevice(string token, string deviceId, string userId, params string[] tags)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var deviceRegistered = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = handle });
-                NotificationTableRecord TableRecord = prepareQueryParams(handle, deviceId, userId, tags);
+                var deviceRegistered = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = token });
+                NotificationTableRecord TableRecord = prepareQueryParams(token, deviceId, userId, tags);
                 if (deviceRegistered == null)
                 {
                     NotificationTableRepo.GetInstance().Insert(conn, TableRecord);
@@ -45,13 +45,21 @@ namespace Lunggo.ApCommon.Notifications
             }
         }
 
-        private static NotificationTableRecord prepareQueryParams(string handle, string deviceId, string userId, string[] tags)
+        public void DeleteRegistration(string token)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var deletedId = NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = token });
+            }
+        }
+
+        private static NotificationTableRecord prepareQueryParams(string token, string deviceId, string userId, string[] tags)
         {
             var tagString = string.Join(",", tags);
             tagString = "," + tagString + ",";
             var TableRecord = new NotificationTableRecord
             {
-                Handle = handle,
+                Handle = token,
                 DeviceId = deviceId,
                 UserId = userId,
                 Tags = tagString
