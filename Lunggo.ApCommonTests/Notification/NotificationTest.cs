@@ -9,14 +9,17 @@ using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using System.Data;
+using Lunggo.ApCommonTests.Init;
+using System.Data.SqlClient;
 
 namespace Lunggo.ApCommonTests.Notification
 {
     [TestClass]
-    class NotificationTest
+    public class NotificationTest
     {
         public void ManipulateDB(Action<IDbConnection> callback)
         {
+            Initializer.Init();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 callback(conn);
@@ -25,6 +28,7 @@ namespace Lunggo.ApCommonTests.Notification
 
         public void AssertRegisterDevice(string dummyHandle = "TEST_HANDLE", string dummyDeviceId = "TEST_DEVICEID", string dummyUserId = "TEST_USERID", params string[] tags)
         {
+            Initializer.Init();
             NotificationTableRecord actualResult;
             NotificationService.GetInstance().RegisterDevice(dummyHandle, dummyDeviceId, dummyUserId);
             ManipulateDB((conn) =>
@@ -42,7 +46,7 @@ namespace Lunggo.ApCommonTests.Notification
         {
             ManipulateDB((conn) =>
             {
-               NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = "TEST_HANDLE" });
+                NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = "TEST_HANDLE" });
             });
             AssertRegisterDevice();
         }
@@ -58,7 +62,7 @@ namespace Lunggo.ApCommonTests.Notification
         public void Should_Error_On_Register_Device_When_Handle_Params_Is_Null_Or_Empty_Or_Whitespace()
         {
             AssertRegisterDevice("", "TEST_DEVICEID");
-            AssertRegisterDevice(null, "TEST_DEVICEID");
+            Assert.ThrowsException<SqlException>(() => AssertRegisterDevice(null, "TEST_DEVICEID"));
             AssertRegisterDevice(" ", "TEST_DEVICEID");
         }
 

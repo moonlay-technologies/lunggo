@@ -449,7 +449,6 @@
     <Compile Include="ApiSrc\Hotel\Model\HotelRateApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
-    <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
     <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\RegisterDeviceLogic.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiResponse.cs" />

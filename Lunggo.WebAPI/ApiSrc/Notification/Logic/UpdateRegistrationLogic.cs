@@ -14,6 +14,7 @@ using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Lunggo.WebAPI.ApiSrc.Notification.Model;
 using Microsoft.Azure.NotificationHubs;
 using Microsoft.Azure.NotificationHubs.Messaging;
+using System;
 
 namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {
@@ -21,42 +22,43 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
     {
         public static async Task<ApiResponseBase> UpdateRegistration(UpdateRegistrationApiRequest request)
         {
-            if (IsValid(request))
-            {
-                var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
-                var clientId = identity.GetClientId();
-                var platformType = Client.GetPlatformType(clientId);
-                Platform platform;
-                var isSupported = TryMapPlatform(platformType, out platform);
-                if (!isSupported)
-                    return new ApiResponseBase
-                    {
-                        StatusCode = HttpStatusCode.Forbidden,
-                        ErrorCode = "ERNADT02"
-                    };
+            throw new NotImplementedException();
+            //if (IsValid(request))
+            //{
+            //    var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            //    var clientId = identity.GetClientId();
+            //    var platformType = Client.GetPlatformType(clientId);
+            //    Platform platform;
+            //    var isSupported = TryMapPlatform(platformType, out platform);
+            //    if (!isSupported)
+            //        return new ApiResponseBase
+            //        {
+            //            StatusCode = HttpStatusCode.Forbidden,
+            //            ErrorCode = "ERNADT02"
+            //        };
 
-                var notif = NotificationService.GetInstance();
-                var succeeded = notif.UpdateTags(request.RegistrationId, request.Handle, platform, request.Tags);
-                if (!succeeded)
-                    return new FlightIssuanceApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERNADT03"
-                    };
+            //    var notif = NotificationService.GetInstance();
+            //    var succeeded = notif.UpdateTags(request.RegistrationId, request.Handle, platform, request.Tags);
+            //    if (!succeeded)
+            //        return new FlightIssuanceApiResponse
+            //        {
+            //            StatusCode = HttpStatusCode.BadRequest,
+            //            ErrorCode = "ERNADT03"
+            //        };
 
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.OK
-                };
-            }
-            else
-            {
-                return new FlightIssuanceApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERNADT01"
-                };
-            }
+            //    return new ApiResponseBase
+            //    {
+            //        StatusCode = HttpStatusCode.OK
+            //    };
+            //}
+            //else
+            //{
+            //    return new FlightIssuanceApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERNADT01"
+            //    };
+            //}
         }
 
         private static bool IsValid(UpdateRegistrationApiRequest request)

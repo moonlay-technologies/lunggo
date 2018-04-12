@@ -229,7 +229,6 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\RegisterReferralController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
-    <Compile Include="Controllers\WebviewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
     <Compile Include="Helper\Generator.cs" />
     <Compile Include="Controllers\AccountController.cs" />

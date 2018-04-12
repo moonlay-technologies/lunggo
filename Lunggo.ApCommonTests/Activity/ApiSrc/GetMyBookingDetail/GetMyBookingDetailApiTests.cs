@@ -72,7 +72,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingDetailLogic.Tests
 
             var actualResult = ActivityLogic.AssembleApiResponse(test);
 
-            var bookDisplay = new BookingDetailForDisplay()
+            var bookDisplay = new BookingDetail()
             { Name = "", Price = 2000 };
             var expectedResult = new GetMyBookingDetailApiResponse()
             {

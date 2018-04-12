@@ -61,33 +61,33 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
             Assert.IsNotNull(actualResult);
         }
 
-        [TestMethod]
-        public void AssembleApiResponse_GetMyBookingsOutput_ReturnGetMyBookingsApiResponse()
-        {
-            var bookList1 = new BookingDetail()
-            { Name = "", Price = 2000 };
-            var test = new GetMyBookingsOutput()
-            {
-                MyBookings = new List<BookingDetail>() { bookList1 },
-                Page = 1,
-                PerPage = 10
-            };
+        //[TestMethod]
+        //public void AssembleApiResponse_GetMyBookingsOutput_ReturnGetMyBookingsApiResponse()
+        //{
+        //    var bookList1 = new BookingDetail()
+        //    { Name = "", Price = 2000 };
+        //    var test = new GetMyBookingsOutput()
+        //    {
+        //        MyBookings = new List<BookingDetail>() { bookList1 },
+        //        Page = 1,
+        //        PerPage = 10
+        //    };
 
-            var actualResult = ActivityLogic.AssembleApiResponse(test);
+        //    var actualResult = ActivityLogic.AssembleApiResponse(test);
 
-            var bookListDisplay = new BookingDetailForDisplay()
-            { Name = "", Price = 2000 };
-            var expectedResult = new GetMyBookingsApiResponse()
-            {
-                MyBookings = new List<BookingDetailForDisplay>() { bookListDisplay },
-                Page = 1,
-                PerPage = 10
-            };
+        //    var bookListDisplay = new BookingDetailForDisplay()
+        //    { Name = "", Price = 2000 };
+        //    var expectedResult = new GetMyBookingsApiResponse()
+        //    {
+        //        MyBookings = new List<BookingDetailForDisplay>() { bookListDisplay },
+        //        Page = 1,
+        //        PerPage = 10
+        //    };
             
-            Assert.AreEqual(expectedResult.Page, actualResult.Page);
-            Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
-            Assert.AreEqual(expectedResult.MyBookings[0].Name, actualResult.MyBookings[0].Name);
-            Assert.AreEqual(expectedResult.MyBookings[0].Price, actualResult.MyBookings[0].Price);
-        }
+        //    Assert.AreEqual(expectedResult.Page, actualResult.Page);
+        //    Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
+        //    Assert.AreEqual(expectedResult.MyBookings[0].Name, actualResult.MyBookings[0].Name);
+        //    Assert.AreEqual(expectedResult.MyBookings[0].Price, actualResult.MyBookings[0].Price);
+        //}
     }
 }

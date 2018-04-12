@@ -84,33 +84,33 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentListLogic.
             Assert.IsNotNull(actualResult);
         }
 
-        [TestMethod]
-        public void AssembleApiResponse_GetAppointmentListOutput_ReturnGetAppointmentListApiResponse()
-        {
-            var appointment1 = new AppointmentDetail()
-            { Name = "" };
-            var test = new GetAppointmentListOutput()
-            {
-                Appointments = new List<AppointmentDetail>() { appointment1 },
-                Page = 1,
-                PerPage = 10
-            };
+        //[TestMethod]
+        //public void AssembleApiResponse_GetAppointmentListOutput_ReturnGetAppointmentListApiResponse()
+        //{
+        //    var appointment1 = new AppointmentDetail()
+        //    { Name = "" };
+        //    var test = new GetAppointmentListOutput()
+        //    {
+        //        Appointments = new List<AppointmentDetail>() { appointment1 },
+        //        Page = 1,
+        //        PerPage = 10
+        //    };
 
-            var actualResult = ActivityLogic.AssembleApiResponse(test);
+        //    var actualResult = ActivityLogic.AssembleApiResponse(test);
 
-            var appointmentListDisplay = new AppointmentDetailForDisplay()
-            { Name = "" };
+        //    var appointmentListDisplay = new AppointmentDetailForDisplay()
+        //    { Name = "" };
 
-            var expectedResult = new GetAppointmentListApiResponse()
-            {
-                Appointments = new List<AppointmentDetailForDisplay>() { appointmentListDisplay },
-                Page = 1,
-                PerPage = 10
-            };
+        //    var expectedResult = new GetAppointmentListApiResponse()
+        //    {
+        //        Appointments = new List<AppointmentDetailForDisplay>() { appointmentListDisplay },
+        //        Page = 1,
+        //        PerPage = 10
+        //    };
             
-            Assert.AreEqual(expectedResult.Page, actualResult.Page);
-            Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
-            Assert.AreEqual(expectedResult.Appointments[0].Name, actualResult.Appointments[0].Name);
-        }
+        //    Assert.AreEqual(expectedResult.Page, actualResult.Page);
+        //    Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
+        //    Assert.AreEqual(expectedResult.Appointments[0].Name, actualResult.Appointments[0].Name);
+        //}
     }
 }
