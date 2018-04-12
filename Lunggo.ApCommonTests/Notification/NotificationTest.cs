@@ -34,6 +34,7 @@ namespace Lunggo.ApCommonTests.Notification
             ManipulateDB((conn) =>
             {
                 actualResult = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = dummyHandle });
+                NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = dummyHandle });
                 Assert.IsTrue(dummyHandle == actualResult.Handle &&
                             dummyDeviceId == actualResult.DeviceId &&
                             dummyUserId == actualResult.UserId
@@ -54,7 +55,10 @@ namespace Lunggo.ApCommonTests.Notification
         [TestMethod]
         public void Should_Success_On_Register_Existing_Device_With_Changed_Paramter()
         {
-            AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID");
+            ManipulateDB((conn) =>
+            {
+               NotificationTableRepo.GetInstance().Insert(conn, new NotificationTableRecord { Handle = "TEST_HANDLE", DeviceId = "TEST_DEVICEID" });
+            });
             AssertRegisterDevice("TEST_HANDLE", "TEST_DEVICEID_2");
         }
 
