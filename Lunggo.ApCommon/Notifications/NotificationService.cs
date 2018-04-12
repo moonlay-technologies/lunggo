@@ -30,6 +30,7 @@ namespace Lunggo.ApCommon.Notifications
 
         public void RegisterDevice(string token, string deviceId, string userId, params string[] tags)
         {
+            if ( !string.IsNullOrWhiteSpace(token) ) throw new Exception ("Notification Registration token is null or white space, expected string");
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var deviceRegistered = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = token });
