@@ -199,8 +199,9 @@ namespace Lunggo.ApCommon.Activity.Service
                     }
                 }
 
+                var validWhiteListedDates = whitelistedDates.Where(a => a.Date > DateTime.UtcNow);
 
-                foreach (var whitelistedDate in whitelistedDates)
+                foreach (var whitelistedDate in validWhiteListedDates)
                 {
                     var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate, ActivityId = input.ActivityId }).ToList();
                     customSavedHours.Remove("");
@@ -564,7 +565,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     save.AppointmentReservations = appointmentReservations;
                     if (!input.OrderParam)
                     {
-                        save.AppointmentReservations = appointmentReservations.Where(a => a.RsvStatus == "CONF").ToList();
+                        save.AppointmentReservations = appointmentReservations.Where(a => a.RsvStatus == "CONF" || a.RsvStatus == "TKTD").ToList();
                     }
                 }
 
@@ -1851,6 +1852,16 @@ namespace Lunggo.ApCommon.Activity.Service
                 var output = refunds.OrderBy(a => a.RefundDate).ToList();
                 return output;
             }
+        }
+
+        public string GetUserIdByRsvNo(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activityReservation = ActivityReservationTableRepo.GetInstance().Find1(conn, new ActivityReservationTableRecord { RsvNo = rsvNo });
+                return activityReservation.UserId;
+            }
+               
         }
 
     }

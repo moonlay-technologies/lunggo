@@ -23,6 +23,8 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using RestSharp;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
+using Lunggo.ApCommon.Campaign.Service;
+using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -31,12 +33,16 @@ namespace Lunggo.CustomerWeb.Controllers
         private decimal GetAvailableCredits(string trxId, out string voucherCode)
         {
             voucherCode = "REFERRALCREDIT";
-            var client = new RestClient(ConfigManager.GetInstance().GetConfigValue("api", "apiUrl"));
-            var rq = new RestRequest("v1/payment/checkvoucher", Method.POST);
-            rq.AddJsonBody(new { rsvNo = trxId, code = voucherCode });
-            var rs = client.Execute(rq);
-            var rsContent = rs.Content.Deserialize<dynamic>();
-            return rsContent.status != 200 ? 0 : rsContent.discount;
+            var activityService = ActivityService.GetInstance();
+            var rsvList = PaymentService.GetInstance().GetCart(trxId);
+            var userId = activityService.GetUserIdByRsvNo(rsvList.RsvNoList[0]);
+            var voucherRs = CampaignService.GetInstance().ValidateVoucherRequest(trxId, voucherCode);
+            var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
+            if(voucherRsLimit < voucherRs.TotalDiscount)
+            {
+                return voucherRsLimit;
+            }
+            return voucherRs.TotalDiscount;
         }
 
         public ActionResult Payment(string rsvNo = null, string regId = null, string trxId = null, string cartId = null)
