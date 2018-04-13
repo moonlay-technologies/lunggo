@@ -85,7 +85,7 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("Handle", true),
-				new ColumnMetadata("DeviceId", true),
+				new ColumnMetadata("DeviceId", false),
 				new ColumnMetadata("UserId", false),
 				new ColumnMetadata("Tags", false),
 

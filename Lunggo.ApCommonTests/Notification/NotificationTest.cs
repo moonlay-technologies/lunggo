@@ -65,18 +65,11 @@ namespace Lunggo.ApCommonTests.Notification
         [TestMethod]
         public void Should_Error_On_Register_Device_When_Handle_Params_Is_Null_Or_Empty_Or_Whitespace()
         {
-            AssertRegisterDevice("", "TEST_DEVICEID");
-            Assert.ThrowsException<SqlException>(() => AssertRegisterDevice(null, "TEST_DEVICEID"));
-            AssertRegisterDevice(" ", "TEST_DEVICEID");
-        }
-
-        [TestMethod]
-        public void Should_Error_On_Register_Device_When_DeviceID_Params_Is_Null_Or_Empty_Or_Whitespace()
-        {
-            AssertRegisterDevice("TEST_HANDLE", "");
-            AssertRegisterDevice("TEST_HANDLE", null);
-            AssertRegisterDevice("TEST_HANDLE", " ");
-
+            //AssertRegisterDevice("", "TEST_DEVICEID");
+            Assert.ThrowsException<ArgumentException>(() => AssertRegisterDevice(null, "TEST_DEVICEID"));
+            Assert.ThrowsException<ArgumentException>(() => AssertRegisterDevice("", "TEST_DEVICEID"));
+            Assert.ThrowsException<ArgumentException>(() => AssertRegisterDevice(" ", "TEST_DEVICEID"));
+            //AssertRegisterDevice(" ", "TEST_DEVICEID");
         }
 
         // [TestMethod]
