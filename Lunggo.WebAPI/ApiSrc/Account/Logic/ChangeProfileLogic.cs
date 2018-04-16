@@ -33,6 +33,60 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     last = splittedName[splittedName.Length - 1];
                 }
             }
+
+            if(request.Email != null && request.Email != updatedUser.Email)
+            {
+                var emailExisted = userManager.FindByEmail(request.Email);
+                if (emailExisted != null)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_EMAIL_EXISTED"
+                    };
+                }
+                else
+                {
+                    updatedUser.EmailConfirmed = false;
+                }
+            }
+
+            User phoneExisted;
+
+            if (request.PhoneNumber != null && request.CountryCallingCd != null && (request.PhoneNumber != updatedUser.PhoneNumber && request.CountryCallingCd != updatedUser.CountryCallCd))
+            {
+                phoneExisted = userManager.FindByName(request.CountryCallingCd + " " + request.PhoneNumber);
+                if (phoneExisted != null)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_PHONE_NUMBER_EXISTED"
+                    };
+                }
+                else
+                {
+                    updatedUser.PhoneNumberConfirmed = false;
+                }
+            }     
+            
+            else if(request.PhoneNumber != null && request.PhoneNumber != updatedUser.PhoneNumber)
+            {
+                phoneExisted = userManager.FindByName(updatedUser.CountryCallCd + " " + request.PhoneNumber);
+                if (phoneExisted != null)
+                {
+                    return new ApiResponseBase
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_PHONE_NUMBER_EXISTED"
+                    };
+                }
+                else
+                {
+                    updatedUser.PhoneNumberConfirmed = false;
+                }
+            }
+
             updatedUser.FirstName = first;
             updatedUser.LastName = last;
             updatedUser.CountryCallCd = request.CountryCallingCd ?? updatedUser.CountryCallCd;

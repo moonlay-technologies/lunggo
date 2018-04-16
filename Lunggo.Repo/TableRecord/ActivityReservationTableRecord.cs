@@ -83,6 +83,24 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("BookingStatusCd");
 		    }
 		}
+		public Boolean? IsPdfUploaded
+		{
+		    get { return _IsPdfUploaded; }
+		    set
+		    {
+		        _IsPdfUploaded = value;
+		        IncrementLog("IsPdfUploaded");
+		    }
+		}
+		public String TicketNumber
+		{
+		    get { return _TicketNumber; }
+		    set
+		    {
+		        _TicketNumber = value;
+		        IncrementLog("TicketNumber");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -93,6 +111,8 @@ namespace Lunggo.Repository.TableRecord
 		private String _SelectedSession;
 		private String _UserId;
 		private String _BookingStatusCd;
+		private Boolean? _IsPdfUploaded;
+		private String _TicketNumber;
 
 
 		public static ActivityReservationTableRecord CreateNewInstance()
@@ -132,6 +152,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("SelectedSession", false),
 				new ColumnMetadata("UserId", false),
 				new ColumnMetadata("BookingStatusCd", false),
+				new ColumnMetadata("IsPdfUploaded", false),
+				new ColumnMetadata("TicketNumber", false),
 
             };
         }

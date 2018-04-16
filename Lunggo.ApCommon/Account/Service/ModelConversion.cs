@@ -52,8 +52,8 @@ namespace Lunggo.ApCommon.Account.Service
             var steps = new List<ReferralHistoryModelForDisplay>();
             steps.Add(new ReferralHistoryModelForDisplay
             {
-                stepName = "First Time Login",
-                StepDetail = "Login For The First Time",
+                stepName = "Phone Verification",
+                StepDetail = "Verifikasi nomor telepon",
                 DateTime = null,
                 ReferralCredit = 100000,
                 StepStatus = false
@@ -75,12 +75,12 @@ namespace Lunggo.ApCommon.Account.Service
                 foreach (var step in steps)
                 {
                     var history = historyModel.Where(his => his.History == step.stepName).ToList();
-                    if (history.Count > 0 && step.stepName == "First Time Login")
+                    if (history.Count > 0 && step.stepName == "Phone Verification")
                     {
                         stepsThis.Add(new ReferralHistoryModelForDisplay
                         {
-                            stepName = "First Time Login",
-                            StepDetail = "Login For The First Time",
+                            stepName = "Phone Verification",
+                            StepDetail = "Verifikasi nomor telepon",
                             DateTime = history[0].TimeStamp,
                             ReferralCredit = 100000,
                             StepStatus = true

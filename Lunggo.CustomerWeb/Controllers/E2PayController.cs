@@ -17,6 +17,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Log;
+using Lunggo.CustomerWeb.Helper;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -47,7 +48,7 @@ namespace Lunggo.CustomerWeb.Controllers
             TableLog.Logging();
 
             var isSuccess = ProcessResponse(form);
-            var param = new { rsvNo = form["RefNo"], regId = new PaymentController().GenerateId(form["RefNo"]) };
+            var param = new { rsvNo = form["RefNo"], regId = Generator.GenerateTrxIdRegId(form["RefNo"]) };
             return RedirectToAction(isSuccess ? "Thankyou" : "Payment", "Payment", param);
         }
 

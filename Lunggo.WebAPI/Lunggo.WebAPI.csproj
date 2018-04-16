@@ -231,7 +231,7 @@
     <Compile Include="ApiSrc\Account\Logic\ChangePasswordLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\VerifyPhoneLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\CheckOtpLogic.cs" />
-    <Compile Include="ApiSrc\Account\Logic\ForgetPasswordLogic.cs" />
+    <Compile Include="ApiSrc\Account\Logic\RequestOtpLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountBalanceLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetProfileLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\ForgotPasswordLogic.cs" />
@@ -279,12 +279,14 @@
     <Compile Include="ApiSrc\Account\Model\ValidateReferralApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ActivityEditSessionLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\CancelAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\DeclineAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Account\Logic\GetAccountStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GenerateQuestionLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityReviewsLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityTicketDetailLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetPendingRefundLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetTransactionStatementLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityRatingLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityReviewLogic.cs" />
@@ -301,6 +303,7 @@
     <Compile Include="ApiSrc\Activity\Logic\BookActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetDetailActivityLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SearchActivityLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\VerifyTicketLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\WishlistLogic.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityAddSessionApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityAddSessionApiResponse.cs" />
@@ -313,6 +316,8 @@
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
@@ -347,6 +352,7 @@
     <Compile Include="ApiSrc\Activity\Model\ActivityBookApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetWishlistApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\SetOrUnsetCustomDateApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\VerifyTicketApiRequest.cs" />
     <Compile Include="ApiSrc\Autocomplete\AutocompleteController.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetHotelAutocompleteLogic.cs" />
     <Compile Include="ApiSrc\Autocomplete\Logic\GetAirlineAutocompleteLogic.cs" />

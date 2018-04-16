@@ -53,7 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             try
             {
                 request = ApiRequestBase.DeserializeRequest<LoginApiRequest>();
-                var apiResponse = AccountLogic.Login(request);
+                var apiResponse = AccountLogic.Login(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)
@@ -306,10 +306,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         [Route("v1/account/requestotp")]
         public ApiResponseBase RequestOtp()
         {
-            ForgetPasswordApiRequest request = null;
+            RequestOtpApiRequest request = null;
             try
             {
-                request = ApiRequestBase.DeserializeRequest<ForgetPasswordApiRequest>();
+                request = ApiRequestBase.DeserializeRequest<RequestOtpApiRequest>();
                 var apiResponse = AccountLogic.RequestOtp(request);
                 return apiResponse;
             }
@@ -449,7 +449,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             try
             {
                 request = ApiRequestBase.DeserializeRequest<VerifyPhoneApiRequest>();
-                var apiResponse = AccountLogic.VerifyPhone(request);
+                var apiResponse = AccountLogic.VerifyPhone(request, UserManager);
                 return apiResponse;
             }
             catch (Exception e)

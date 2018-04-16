@@ -23,14 +23,15 @@ namespace Lunggo.BackendWeb.Controllers
         [HttpPost]
         public ActionResult ForwardReservation(string rsvNo)
         {
-            ActivityService.GetInstance().ForwardAppointment(new AppointmentConfirmationInput { RsvNo = rsvNo });
+            var activityService = ActivityService.GetInstance();            
+            activityService.ForwardAppointment(new AppointmentConfirmationInput { RsvNo = rsvNo });            
             return RedirectToAction("List");
         }
 
         [HttpPost]
         public ActionResult CancelReservation(string rsvNo)
         {
-            ActivityService.GetInstance().DeclineAppointment(new AppointmentConfirmationInput { RsvNo = rsvNo });
+            ActivityService.GetInstance().CancelAppointmentByAdmin(new AppointmentConfirmationInput { RsvNo = rsvNo });
             return RedirectToAction("List");
         }
 

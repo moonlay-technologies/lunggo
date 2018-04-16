@@ -10,7 +10,11 @@
         Ticketed = 5,
         Cancelled = 6,
         ScheduleChanged = 7,
-        Failed = 8
+        Failed = 8,
+        Denied = 9,
+        CancelledByCustomer = 10,
+        CancelledByAdmin = 11,
+        CancelledByOperator = 12
     }
     internal class BookingStatusCd
     {
@@ -34,6 +38,14 @@
                     return "CHGD";
                 case BookingStatus.Failed:
                     return "FAIL";
+                case BookingStatus.Denied:
+                    return "DENY";
+                case BookingStatus.CancelledByCustomer:
+                    return "CACU";
+                case BookingStatus.CancelledByOperator:
+                    return "CAOP";
+                case BookingStatus.CancelledByAdmin:
+                    return "CAAD";
                 default:
                     return null;
             }
@@ -59,6 +71,14 @@
                     return BookingStatus.ScheduleChanged;
                 case "FAIL":
                     return BookingStatus.Failed;
+                case "DENY":
+                    return BookingStatus.Denied;
+                case "CACU":
+                    return BookingStatus.CancelledByCustomer;
+                case "CAOP":
+                    return BookingStatus.CancelledByOperator;
+                case "CAAD":
+                    return BookingStatus.CancelledByAdmin;
                 default:
                     return BookingStatus.Undefined;
             }

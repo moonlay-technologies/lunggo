@@ -48,6 +48,11 @@
                 <div class="judul-activity">@Model.BookingDetail.Name</div>
                 <div class="alamat-activity">@Model.BookingDetail.Address</div>
                 <div class="container-barcode">
+                    <p style="position: relative; height: 100px; ">
+                        <img style="width: 100px;/* text-align: center; */position: absolute;left: 110px;" src="@("https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + Model.BookingDetail.TicketNumber)" alt="" />
+                        <img style="width: 100px;/* text-align: center; */position: absolute;left: 110px;" src="@("https://chart.googleapis.com/chart?cht=qr&chs=100x100&chl=" + Model.BookingDetail.TicketNumber)" alt="" />
+                    </p>
+
                     <div class="kode-barcode">Kode voucher: @Model.BookingDetail.TicketNumber</div>
                 </div>
             </div>
@@ -88,7 +93,7 @@
             <div class="container-footer">
                 <a href=“#”>www.travorama.com</a>
                 <a href=“#”>|</a>
-                <a href=“#”>021-12324456</a>
+                <a href=“#”>0855-7467-9737</a>
                 <a href=“#”>|</a>
                 <a href=“#”>cs@travorama.com</a>
 

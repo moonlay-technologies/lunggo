@@ -23,6 +23,8 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using RestSharp;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
+using Lunggo.ApCommon.Campaign.Service;
+using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -31,12 +33,16 @@ namespace Lunggo.CustomerWeb.Controllers
         private decimal GetAvailableCredits(string trxId, out string voucherCode)
         {
             voucherCode = "REFERRALCREDIT";
-            var client = new RestClient(ConfigManager.GetInstance().GetConfigValue("api", "apiUrl"));
-            var rq = new RestRequest("v1/payment/checkvoucher", Method.POST);
-            rq.AddJsonBody(new { rsvNo = trxId, code = voucherCode });
-            var rs = client.Execute(rq);
-            var rsContent = rs.Content.Deserialize<dynamic>();
-            return rsContent.status != 200 ? 0 : rsContent.discount;
+            var activityService = ActivityService.GetInstance();
+            var rsvList = PaymentService.GetInstance().GetCart(trxId);
+            var userId = activityService.GetUserIdByRsvNo(rsvList.RsvNoList[0]);
+            var voucherRs = CampaignService.GetInstance().ValidateVoucherRequest(trxId, voucherCode);
+            var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
+            if(voucherRsLimit < voucherRs.TotalDiscount)
+            {
+                return voucherRsLimit;
+            }
+            return voucherRs.TotalDiscount;
         }
 
         public ActionResult Payment(string rsvNo = null, string regId = null, string trxId = null, string cartId = null)
@@ -233,12 +239,12 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (medium != (int)PaymentMedium.E2Pay)
             {
-                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = GenerateId(rsvNo) });
+                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = Generator.GenerateTrxIdRegId(rsvNo) });
             }
 
             var html = GetE2PayPaymentHtmlFromCache(id);
             if (html == null)
-                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = GenerateId(rsvNo) });
+                return RedirectToAction("Payment", "Payment", new { rsvNo = rsvNo, regId = Generator.GenerateTrxIdRegId(rsvNo) });
             return Content(html);
         }
 
@@ -263,22 +269,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 }
             }
             return null;
-        }
-
-        public string GenerateId(string key)
-        {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
         }
 
         public string GetBankImageName(PaymentSubmethod submethod)

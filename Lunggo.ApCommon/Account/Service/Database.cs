@@ -16,18 +16,18 @@ namespace Lunggo.ApCommon.Account.Service
 {
     public partial class AccountService
     {
-        public List<string> GetUserIdFromDb (RequestOtpInput forgetPasswordInput)
+        public List<string> GetUserIdFromDb (RequestOtpInput requestOtpInput)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+                if (!string.IsNullOrEmpty(requestOtpInput.PhoneNumber))
                 {
-                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.PhoneNumber }).ToList();
+                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.PhoneNumber, PhoneNumber = requestOtpInput.PhoneNumber, CountryCallCd = requestOtpInput.CountryCallCd }, new { Contact = requestOtpInput.PhoneNumber }).ToList();
                     return userId;
                 }
                 else
                 {
-                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.Email }).ToList();
+                    var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.Email, PhoneNumber = "1", CountryCallCd = "1"}, new { Contact = requestOtpInput.Email }).ToList();
                     return userId;
                 }
                 
@@ -37,55 +37,65 @@ namespace Lunggo.ApCommon.Account.Service
         public List<string> GetUserIdFromDb(string input)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
-            {               
-                var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = input }).ToList();
+            {
+                string countryCallCd = null;
+                string phoneNumber = null;
+                if(input.Contains(" "))
+                {
+                    var phone = input.Split(' ');
+                    countryCallCd = phone[0];
+                    phoneNumber = phone[1];
+                    input = input.Replace(" ", string.Empty);
+                }
+                var userId = GetUserIdFromDbQuery.GetInstance().Execute(conn, new { Contact = input, PhoneNumber = phoneNumber, CountryCallCd = countryCallCd }, new { Contact = input }).ToList();
                 return userId;
             }
         }
 
-        public List<string> GetOtpHashFromDb (RequestOtpInput forgetPasswordInput)
+        public List<string> GetOtpHashFromDb (RequestOtpInput requestOtpInput)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var otpHash = new List<string>();
-                if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+                if (!string.IsNullOrEmpty(requestOtpInput.PhoneNumber))
                 {
-                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.PhoneNumber }).ToList();
+                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.PhoneNumber, CountryCallCd = requestOtpInput.CountryCallCd }).ToList();
                 }
                 else
                 {
-                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = forgetPasswordInput.Email }).ToList();
+                    otpHash = GetOtpHashFromDbQuery.GetInstance().Execute(conn, new { Contact = requestOtpInput.Email, CountryCallCd = requestOtpInput.CountryCallCd }).ToList();
                 }
                 return otpHash;
             }
         }
 
-        public void InsertDataResetPasswordToDb(RequestOtpInput forgetPasswordInput, string otp, DateTime expireTime)
+        public void InsertDataResetPasswordToDb(RequestOtpInput requestOtpInput, string otp, DateTime expireTime)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var resetPasswordInput = new ResetPasswordTableRecord
                 {
-                    PhoneNumber = forgetPasswordInput.PhoneNumber,
+                    PhoneNumber = requestOtpInput.PhoneNumber,
                     ExpireTime = expireTime,
-                    Email = forgetPasswordInput.Email,
+                    Email = requestOtpInput.Email,
+                    CountryCallCd = requestOtpInput.CountryCallCd,
                     OtpHash = otp.Sha512Encode()
                 };
                 ResetPasswordTableRepo.GetInstance().Insert(conn,resetPasswordInput);
             }
         }
 
-        public void UpdateDateResetPasswordToDb(RequestOtpInput forgetPasswordInput, string otp, DateTime expireTime)
+        public void UpdateDateResetPasswordToDb(RequestOtpInput requestOtpInput, string otp, DateTime expireTime)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (!string.IsNullOrEmpty(forgetPasswordInput.PhoneNumber))
+                if (!string.IsNullOrEmpty(requestOtpInput.PhoneNumber))
                 {
-                    UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, Contact = forgetPasswordInput.PhoneNumber });
+                    UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, Contact = requestOtpInput.PhoneNumber, CountryCallCd = requestOtpInput.CountryCallCd });
                 }
                 else
                 {
-                    UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, Contact = forgetPasswordInput.Email });
+                    UpdateDateResetPasswordToDbQuery.GetInstance().Execute(conn, new { OtpHash = otp.Sha512Encode(), ExpireTime = expireTime, Contact = requestOtpInput.Email });
                 }
             }
         }

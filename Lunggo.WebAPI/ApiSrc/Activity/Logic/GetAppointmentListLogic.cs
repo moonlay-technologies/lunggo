@@ -77,6 +77,28 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             
             serviceRequest.Page = pageValid;
             serviceRequest.PerPage = perPageValid;
+            serviceRequest.OrderParam = false;
+            if (string.IsNullOrWhiteSpace(request.StartDate))
+            {
+                request.StartDate = DateTime.UtcNow.ToString();
+            }
+            if (string.IsNullOrWhiteSpace(request.EndDate))
+            {
+                request.EndDate = DateTime.MaxValue.ToString();
+            }
+        
+            var tryStartDate = DateTime.TryParse(request.StartDate, out DateTime startDate);
+            var tryEndDate = DateTime.TryParse(request.EndDate, out DateTime endDate);
+            if(!tryStartDate || !tryEndDate)
+            {
+                return false;
+            }
+            serviceRequest.StartDate = startDate;
+            serviceRequest.EndDate = endDate;
+            if(request.Type != null && request.Type.ToLower() == "order")
+            {
+                serviceRequest.OrderParam = true;
+            }
             return true;
         }
         
@@ -91,7 +113,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     Date = AppointmentList.Date,
                     Session = AppointmentList.Session,
                     MediaSrc = AppointmentList.MediaSrc,
-                    AppointmentReservations = AppointmentList.AppointmentReservations
+                    AppointmentReservations = AppointmentList.AppointmentReservations,
+                    
                 }).ToList(),
                 Page = serviceResponse.Page,
                 PerPage = serviceResponse.PerPage,

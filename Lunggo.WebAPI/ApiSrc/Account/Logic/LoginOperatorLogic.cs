@@ -23,28 +23,54 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
             TableLog.PartitionKey = "TOKEN ERROR lOG";
 
-            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password)))
+            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
                 };
             long result;
-            if (!Int64.TryParse(request.UserName, out result))
-                if(!request.UserName.Contains("@"))
+            if (!string.IsNullOrWhiteSpace(request.Email) && !Int64.TryParse(request.Email, out result))
+            {
+                if (!request.Email.Contains("@"))
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_USER_FORMAT"
                     };
+                request.UserName = request.Email;
+            }
+            else if (!string.IsNullOrWhiteSpace(request.PhoneNumber) && !string.IsNullOrWhiteSpace(request.CountryCallCd))
+            {
+                request.UserName = request.CountryCallCd + " " + request.PhoneNumber;
+            }
+            //else if (string.IsNullOrWhiteSpace(request.PhoneNumber) && string.IsNullOrWhiteSpace(request.CountryCallCd) && string.IsNullOrWhiteSpace(request.Email))
+            //{
+            //    return new LoginApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERR_INVALID_REQUEST"
+            //    };
+            //}
+
             var foundUser = userManager.FindByName(request.UserName);
+            
+            if(foundUser == null)
+            {
+                return new LoginApiResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    ErrorCode = "ERR_UNREGISTERED"
+                };
+            }
+
             var role = userManager.GetRoles(foundUser.Id).FirstOrDefault();
 
             if(role != "Operator")
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_NOT_OPERATOR"
+                    ErrorCode = "ERR_UNREGISTERED"
                 };
 
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
@@ -82,6 +108,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERR_INVALID" //ERALOG02
+                    };
+                if (tokenData.Error == "invalid_password")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_PASSWORD" 
                     };
                 if (tokenData.Error == "not_active")
                     return new LoginApiResponse

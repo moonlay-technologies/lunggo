@@ -2,6 +2,7 @@
 <tables>
   <table name="Notification" />
   <!--<table name="ReferralCredit" />-->
+<!--   <table name="Currency" /> -->
   <!--<table name="AccountBalance" />
   <table name="AccountUser" />
   <table name="TransactionJournal" />-->

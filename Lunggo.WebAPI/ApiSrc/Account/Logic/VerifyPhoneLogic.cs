@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
-
+using Microsoft.AspNet.Identity;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
     public static partial class AccountLogic
     {
-        public static ApiResponseBase VerifyPhone(VerifyPhoneApiRequest apiRequest)
+        public static ApiResponseBase VerifyPhone(VerifyPhoneApiRequest apiRequest, ApplicationUserManager userManager)
         {
             var account = AccountService.GetInstance();
 
@@ -37,7 +37,10 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (!isSuccessVerify) return Error(InternalServerError, "ERR_INTERNAL");
 
             account.DeleteDataOtp(apiRequest.PhoneNumber);
-
+            var userName = apiRequest.CountryCallCd + " " + apiRequest.PhoneNumber;
+            var id = userManager.FindByName(userName).Id;
+            AccountService.GetInstance().InsertLoginReferralHistory(id);
+            
             return new ApiResponseBase
             {
                 StatusCode = OK

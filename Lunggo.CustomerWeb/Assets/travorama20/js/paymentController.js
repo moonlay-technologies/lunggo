@@ -688,7 +688,7 @@ app.controller('paymentController', [
                         data: $scope.pay.postData,
                         headers: { 'Authorization': 'Bearer ' + getCookie('accesstoken') }
                     }).then(function (returnData) {
-                        if (returnData.data.status == '200') {
+                        if (returnData.data.status == '200' || returnData.data.status == '202') {
                             $scope.pay.isSuccess = true;
                             if (returnData.data.cartRecordId) {
                                 $scope.pay.trxId = returnData.data.cartRecordId;

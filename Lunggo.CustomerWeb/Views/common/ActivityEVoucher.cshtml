@@ -43,12 +43,12 @@
         </header>
 
         <main class="clearfix">
-            <div class="img-activity" style="width: 400px; height: 400px; background: url('@Model.BookingDetail.MediaSrc'); background-size: cover; float:left; "></div>
+            <div class="img-activity" style="width: 400px; height: 400px; background: url('@Model.BookingDetail.MediaSrc'); background-size: cover; float:left;"></div>
             <div class="right-content">
                 <div class="judul-activity">@Model.BookingDetail.Name</div>
                 <div class="alamat-activity">@Model.BookingDetail.Address</div>
                 <div class="container-barcode">
-                    <div class="barcode"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/barcode.jpg")"></div>
+                    <div class="barcode"><img src="@("https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + Model.BookingDetail.TicketNumber)" ></div>
                     <div class="kode-barcode">Kode voucher: @Model.BookingDetail.TicketNumber</div>
                 </div>
             </div>
@@ -89,7 +89,7 @@
             <div class="container-footer">
                 <a href=“#”>www.travorama.com</a>
                 <a href=“#”>|</a>
-                <a href=“#”>021-12324456</a>
+                <a href=“#”>0855-7467-9737</a>
                 <a href=“#”>|</a>
                 <a href=“#”>cs@travorama.com</a>
 

@@ -56,13 +56,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Count");
 		    }
 		}
-		public Decimal? TotalPrice
+		public Decimal? Amount
 		{
-		    get { return _TotalPrice; }
+		    get { return _Amount; }
 		    set
 		    {
-		        _TotalPrice = value;
-		        IncrementLog("TotalPrice");
+		        _Amount = value;
+		        IncrementLog("Amount");
+		    }
+		}
+		public String RsvNo
+		{
+		    get { return _RsvNo; }
+		    set
+		    {
+		        _RsvNo = value;
+		        IncrementLog("RsvNo");
 		    }
 		}
 
@@ -72,7 +81,8 @@ namespace Lunggo.Repository.TableRecord
 		private long? _ActivityId;
 		private String _Type;
 		private int? _Count;
-		private Decimal? _TotalPrice;
+		private Decimal? _Amount;
+		private String _RsvNo;
 
 
 		public static ActivityPackageReservationTableRecord CreateNewInstance()
@@ -109,7 +119,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("ActivityId", false),
 				new ColumnMetadata("Type", false),
 				new ColumnMetadata("Count", false),
-				new ColumnMetadata("TotalPrice", false),
+				new ColumnMetadata("Amount", false),
+				new ColumnMetadata("RsvNo", false),
 
             };
         }

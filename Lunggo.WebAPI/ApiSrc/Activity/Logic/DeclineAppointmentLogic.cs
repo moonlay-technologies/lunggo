@@ -45,8 +45,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
+
             var serviceRequest = PreprocessServiceRequest(rsvNo);
-            var serviceResponse = ActivityService.GetInstance().DeclineAppointment(serviceRequest);
+            var serviceResponse = ActivityService.GetInstance().DenyAppointment(serviceRequest);
             var apiResponse = AssembleApiResponse(serviceResponse);
 
             return apiResponse;

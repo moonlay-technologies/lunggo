@@ -67,28 +67,54 @@ namespace Lunggo.ApCommon.Payment.Model
 
         public decimal GetRoundingOrder()
         {
-            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            //for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            //{
+            //        var redis = RedisService.GetInstance();
+            //        var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            //        var redisKey = "currencyRoundingOrder:" + Symbol + ":" + Supplier;
+            //        var roundingOrder = Convert.ToDecimal(redisDb.StringGet(redisKey));
+            //        return roundingOrder;
+            //}
+            //return 0;
+            using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                    var redis = RedisService.GetInstance();
-                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                    var redisKey = "currencyRoundingOrder:" + Symbol + ":" + Supplier;
-                    var roundingOrder = Convert.ToDecimal(redisDb.StringGet(redisKey));
-                    return roundingOrder;
+                var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
+                {
+                    Symbol = Symbol,
+                }).ToList();
+                if (rates.Count < 1)
+                {
+                    return 100000;
+                }
+                var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();
+                return (decimal)rate.RoundingOrder;
             }
-            return 0;
         }
 
         public decimal GetLatestRate()
         {
-            for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            //for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
+            //{
+            //        var redis = RedisService.GetInstance();
+            //        var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            //        var redisKey = "currencyRate:" + Symbol + ":" + Supplier;
+            //        var rate = Convert.ToDecimal(redisDb.StringGet(redisKey));
+            //        return rate;
+            //}
+            //return 100000;
+            using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                    var redis = RedisService.GetInstance();
-                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                    var redisKey = "currencyRate:" + Symbol + ":" + Supplier;
-                    var rate = Convert.ToDecimal(redisDb.StringGet(redisKey));
-                    return rate;
+                var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
+                {
+                    Symbol = Symbol,
+                }).ToList();
+                if (rates.Count < 1)
+                {
+                    return 100000;
+                }
+                var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();          
+                return (decimal)rate.Rate;
             }
-            return 100000;
         }
 
         public static Dictionary<string, Currency> GetAllCurrencies(Supplier supplier = Supplier.Travorama)

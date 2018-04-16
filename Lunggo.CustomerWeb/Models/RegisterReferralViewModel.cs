@@ -29,5 +29,8 @@ namespace Lunggo.CustomerWeb.Models
         
         [Display(Name = "ReferrerCode")]
         public string ReferrerCode { get; set; }
+
+        [Display(Name = "ReferrerName")]
+        public string ReferrerName { get; set; }
     }
 }

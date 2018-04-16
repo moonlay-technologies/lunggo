@@ -263,7 +263,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (isPasswordSet)
                 {
                     ViewBag.PasswordIsSet = true;
-                    return View();
+                    return Redirect("travorama://");
                 }
                 else
                 {
@@ -853,6 +853,16 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult RegisterReferral(string ReferrerCode)
         {
+            var id = AccountService.GetInstance().GetIdByReferralCodeFromDb(ReferrerCode);
+            var user = UserManager.FindById(id);
+            string name;
+            var first = user.FirstName ?? "";
+            var last = user.LastName ?? "";
+            if (first == last)
+                name = last;
+            else
+                name = first + " " + last;
+            ViewBag.ReferrerName = name;
             return View(model: ReferrerCode);
         }
 
@@ -865,30 +875,40 @@ namespace Lunggo.CustomerWeb.Controllers
             ViewBag.Email = model.Email;
             ViewBag.ReferrerCode = model.ReferrerCode;
             ViewBag.Phone = model.Phone;
+            ViewBag.ReferrerName = model.ReferrerName;
             if (!IsValid(model))
             {
-                ViewBag.Message = "invalid request";
+                ViewBag.Message = "Terdapat kesalahan pengisian data";
                 return View(model: model.ReferrerCode);
             }
 
-            if (!model.Phone.StartsWith("0"))
+            if (!model.Phone.StartsWith("0") && !model.Phone.StartsWith("62"))
             {
-                ViewBag.Message = "Phone Number Must 0 First";
+                ViewBag.Message = "Format nomor telepon harus dimulai dengan angka 0";
                 return View(model: model.ReferrerCode);
+            }
+
+            if (model.Phone.StartsWith("0"))
+            {
+                model.Phone = model.Phone.Substring(1);
+            }
+            else if (model.Phone.StartsWith("62"))
+            {
+                model.Phone = model.Phone.Substring(2);
             }
 
             var foundUser = UserManager.FindByEmail(model.Email);
-            var foundUserByPhone = UserManager.FindByName(model.Phone);
+            var foundUserByPhone = UserManager.FindByName("62 " + model.Phone);
 
             if (foundUser != null)
             {
-                ViewBag.Message = "Email Already Exist";
+                ViewBag.Message = "Email sudah terdaftar";
                 return View(model: model.ReferrerCode);
             }
 
             if (foundUserByPhone != null)
             {
-                ViewBag.Message = "Phone Number Already Exist";
+                ViewBag.Message = "Nomor telepon sudah terdaftar";
                 return View(model: model.ReferrerCode);
             }
 
@@ -897,7 +917,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 var referrer = AccountService.GetInstance().GetReferralCodeDataFromDb(model.ReferrerCode);
                 if (referrer == null)
                 {
-                    ViewBag.Message = "Referral Not Valid";
+                    ViewBag.Message = "Kode referral tidak valid";
                     return View(model: model.ReferrerCode);
                 }
             }
@@ -937,13 +957,14 @@ namespace Lunggo.CustomerWeb.Controllers
                 var apiUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
-
-                AccountService.GetInstance().GenerateReferralCode(user.Id, first, model.ReferrerCode);
+                var accountService = AccountService.GetInstance();
+                accountService.GenerateReferralCode(user.Id, first, model.ReferrerCode);
+                accountService.RegisterAnalytics(user.Id, "RegisterFromReferral");
                 return View("downloadreferral");
             }
             else
             {
-                ViewBag.Message = "internal server error";
+                ViewBag.Message = "Terdapat kesalahan pada server";
                 return View(model.ReferrerCode);
             }
         }

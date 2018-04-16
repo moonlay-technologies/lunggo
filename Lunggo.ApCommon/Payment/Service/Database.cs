@@ -204,6 +204,19 @@ namespace Lunggo.ApCommon.Payment.Service
                 return cartId;
             }
         }
-        
+
+        public decimal GetLatestRateFromDb(string symbol, Supplier supplier)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rate = CurrencyTableRepo.GetInstance().Find1(conn, new CurrencyTableRecord
+                {
+                    Symbol = symbol,
+                    SupplierCd = SupplierCd.Mnemonic(supplier)
+                });
+                return (decimal)rate.Rate;
+            }
+        }
+
     }
 }

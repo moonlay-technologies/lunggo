@@ -507,12 +507,42 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/appointments/cancel/{rsvNo}")]
+
+        public ApiResponseBase AppointmentCancellation(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            //ConfirmationStatusApiRequest request = null;
+            try
+            {
+                //request = ApiRequestBase.DeserializeRequest<ConfirmationStatusApiRequest>();
+                //var a = new ConfirmationStatusApiRequest()
+                //{
+                //    RsvNo = rsvNo,
+                //    Status = request.Status
+                //};
+                var apiResponse = ActivityLogic.CancelAppointment(rsvNo, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]
         [Route("v1/operator/appointments")]
 
-        public ApiResponseBase AppointmentList(string page = "1", string perPage = "10")
+        public ApiResponseBase AppointmentList(string page = "1", string perPage = "10", string type = null, string startDate = "", string endDate = "")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
@@ -523,7 +553,10 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             {
                 var request = new GetAppointmentListApiRequest()
                 {
+                    Type = type,
                     Page = page,
+                    StartDate = startDate,
+                    EndDate = endDate,
                     PerPage = perPage
                 };
                 var apiResponse = ActivityLogic.GetAppointmentList(request, UserManager);
@@ -758,7 +791,86 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/verifyticket")]
+        public ApiResponseBase VerifyTicket()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            VerifyTicketApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<VerifyTicketApiRequest>();
+                var apiResponse = ActivityLogic.VerifyTicket(request,UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
 
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/operator/pendingrefunds")]
+        public ApiResponseBase GetPendingRefunds(string page = "1", string perPage = "10", string type = null, string startDate = "", string endDate = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetPendingRefundApiRequest()
+                {
+                    Page = page,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    PerPage = perPage
+                };
+                var apiResponse = ActivityLogic.GetPendingRefunds(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        //[HttpGet]
+        //[LunggoCorsPolicy]
+        //[Level2Authorize]
+        //[Route("v1/operator/reservations")]
+        //
+        //public ApiResponseBase GetReservationList(string page = "1", string perPage = "10")
+        //{
+        //    var lang = ApiRequestBase.GetHeaderValue("Language");
+        //    OnlineContext.SetActiveLanguageCode(lang);
+        //    var currency = ApiRequestBase.GetHeaderValue("Currency");
+        //    OnlineContext.SetActiveCurrencyCode(currency);
+        //
+        //    try
+        //    {
+        //        var request = new GetAppointmentListApiRequest()
+        //        {
+        //            Page = page,
+        //            PerPage = perPage
+        //        };
+        //        var apiResponse = ActivityLogic.GetReservationList(request, UserManager);
+        //        return apiResponse;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        return ApiResponseBase.ExceptionHandling(e);
+        //    }
+        //}
 
 
 
