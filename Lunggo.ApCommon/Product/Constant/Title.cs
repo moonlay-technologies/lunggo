@@ -10,7 +10,7 @@
 
     internal class TitleCd
     {
-        internal static string Mnemonic(Title title)
+        internal static string Mnemonic(Title? title)
         {
             switch (title)
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -19,26 +20,47 @@ namespace Lunggo.ApCommon.Payment.Service
                 : (DateTime?) null;
             var timeLimit = payment.TimeLimit.AddMilliseconds(-payment.TimeLimit.Millisecond);
 
-            return new PaymentDetailsForDisplay
+            var paymentForDisplay = new PaymentDetailsForDisplay();
+            paymentForDisplay.Medium = payment.Medium;
+            paymentForDisplay.Method = payment.Method;
+            paymentForDisplay.Submethod = payment.Submethod;
+            paymentForDisplay.Status = payment.Status;
+            paymentForDisplay.Time = time;
+            paymentForDisplay.TimeLimit = timeLimit;
+            paymentForDisplay.TransferAccount = payment.TransferAccount;
+            paymentForDisplay.RedirectionUrl = payment.RedirectionUrl;
+            paymentForDisplay.OriginalPrice = payment.OriginalPriceIdr / payment.LocalCurrency.Rate;
+            paymentForDisplay.DiscountCode = payment.DiscountCode;
+            paymentForDisplay.DiscountNominal = payment.DiscountNominal / payment.LocalCurrency.Rate;
+            paymentForDisplay.DiscountName = payment.Discount != null ? payment.Discount.DisplayName : null;
+            paymentForDisplay.UniqueCode = payment.UniqueCode / payment.LocalCurrency.Rate;
+            paymentForDisplay.TransferFee = payment.UniqueCode / payment.LocalCurrency.Rate;
+            paymentForDisplay.Currency = payment.LocalCurrency;
+            paymentForDisplay.FinalPrice = payment.LocalFinalPrice;
+            paymentForDisplay.Refund = ConvertToRefundForDisplay(payment.Refund);
+            paymentForDisplay.InvoiceNo = payment.InvoiceNo;
+            
+            return paymentForDisplay;
+        }
+
+        internal Transaction ConvertToTransaction(TransactionJournalTableRecord record)
+        {
+            return new Transaction
             {
-                Medium = payment.Medium,
-                Method = payment.Method,
-                Submethod = payment.Submethod,
-                Status = payment.Status,
-                Time = time,
-                TimeLimit = timeLimit,
-                TransferAccount = payment.TransferAccount,
-                RedirectionUrl = payment.RedirectionUrl,
-                OriginalPrice = payment.OriginalPriceIdr / payment.LocalCurrency.Rate,
-                DiscountCode = payment.DiscountCode,
-                DiscountNominal = payment.DiscountNominal / payment.LocalCurrency.Rate,
-                DiscountName = payment.Discount != null ? payment.Discount.DisplayName : null,
-                UniqueCode = payment.UniqueCode / payment.LocalCurrency.Rate,
-                TransferFee = payment.UniqueCode / payment.LocalCurrency.Rate,
-                Currency = payment.LocalCurrency,
-                FinalPrice = payment.LocalFinalPrice,
-                Refund = ConvertToRefundForDisplay(payment.Refund),
-                InvoiceNo = payment.InvoiceNo
+                Id = record.Id,
+                Time = record.Time.GetValueOrDefault(),
+                Amount = record.Amount.GetValueOrDefault(),
+                BalanceAfter = record.BalanceAfter.GetValueOrDefault(),
+                Remark = record.Remark
+            };
+        }
+
+        internal AccountBalance ConvertToAccountBalance(AccountBalanceTableRecord record)
+        {
+            return new AccountBalance
+            {
+                Balance = record.Balance.GetValueOrDefault(),
+                Withdrawable = record.Withdrawable.GetValueOrDefault()
             };
         }
 

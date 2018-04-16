@@ -75,6 +75,17 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UserId");
 		    }
 		}
+
+        public String TicketNumber
+        {
+            get { return _TicketNumber; }
+            set
+            {
+                _TicketNumber = value;
+                IncrementLog("TicketNumber");
+            }
+        }
+
 		public String InsertBy
 		{
 		    get { return _InsertBy; }
@@ -138,6 +149,7 @@ namespace Lunggo.Repository.TableRecord
 		private DateTime? _CancellationTime;
         private String _CancellationReference;
 		private String _UserId;
+        private String _TicketNumber;
 		private String _InsertBy;
 		private DateTime? _InsertDate;
 		private String _InsertPgId;
@@ -182,6 +194,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("CancellationTime", false),
                 new ColumnMetadata("CancellationReference", false),
 				new ColumnMetadata("UserId", false),
+                new ColumnMetadata("TicketNumber", false),
 				new ColumnMetadata("InsertBy", false),
 				new ColumnMetadata("InsertDate", false),
 				new ColumnMetadata("InsertPgId", false),

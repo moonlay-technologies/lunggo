@@ -15,6 +15,7 @@ using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Query;
+using Lunggo.ApCommon.Payment.Wrapper.E2Pay;
 using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
 using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
 using Lunggo.ApCommon.Product.Constant;
@@ -34,12 +35,44 @@ namespace Lunggo.ApCommon.Payment.Service
     {
         private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
         private static readonly NicepayWrapper NicepayWrapper = NicepayWrapper.GetInstance();
+        private static readonly E2PayWrapper E2PayWrapper = E2PayWrapper.GetInstance();
 
         public void Init()
         {
             Currency.SyncCurrencyData();
             VeritransWrapper.Init();
             NicepayWrapper.Init();
+            E2PayWrapper.Init();
+        }
+
+        private static PaymentMedium GetPaymentMedium(PaymentMethod method, PaymentSubmethod submethod)
+        {
+            switch (method)
+            {
+                case PaymentMethod.BankTransfer:
+                case PaymentMethod.Credit:
+                case PaymentMethod.Deposit:
+                    return PaymentMedium.Direct;
+                case PaymentMethod.CreditCard:
+                case PaymentMethod.MandiriClickPay:
+                    return PaymentMedium.Veritrans;
+                case PaymentMethod.VirtualAccount:
+                    return PaymentMedium.Nicepay;
+                case PaymentMethod.CimbClicks:
+                case PaymentMethod.XlTunai:
+                case PaymentMethod.TelkomselTcash:
+                case PaymentMethod.IbMuamalat:
+                case PaymentMethod.EpayBri:
+                case PaymentMethod.DanamonOnlineBanking:
+                case PaymentMethod.IndosatDompetku:
+                case PaymentMethod.SbiiOnlineShopping:
+                case PaymentMethod.BcaKlikpay:
+                case PaymentMethod.DooEtQnb:
+                case PaymentMethod.BtnMobileBanking:
+                    return PaymentMedium.E2Pay;
+                default:
+                    return PaymentMedium.Undefined;
+            }
         }
 
         public List<Surcharge> GetSurchargeList()
@@ -160,14 +193,13 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
 
-        public List<Tuple<string, List<string>>> GetInstruction(ReservationForDisplayBase rsv)
+        public List<Tuple<string, List<string>>> GetInstruction(PaymentDetails payment)
         {
-            var rsvNo = rsv.RsvNo;
-            var medium = rsv.Payment.Medium;
-            var method = rsv.Payment.Method;
-            var submethod = rsv.Payment.Submethod;
-            var price = rsv.Payment.FinalPrice.ToString("####");
-            var account = rsv.Payment.TransferAccount;
+            var medium = payment.Medium;
+            var method = payment.Method;
+            var submethod = payment.Submethod;
+            var price = payment.FinalPriceIdr.ToString("####");
+            var account = payment.TransferAccount;
 
             if (medium == PaymentMedium.Direct &&
                 method == PaymentMethod.BankTransfer &&
@@ -430,7 +462,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Pilih <b>Atur Rekening Tujuan</b>",
                         "Pilih <b>Tambah Rekening Tujuan</b>",
                         "Klik <b>Ok</b>",
-                        "Masukkan Nomor Order Sebagai <b>Nama Singkat</b>: <b>" + rsvNo + "</b>",
+                        "Masukkan Nomor Order Sebagai <b>Nama Singkat</b>: <b>Travorama</b>",
                         "Masukkan Nomor Virtual Account Sebagai Nomor Rekening: <b>" + account + "</b>",
                         "Lengkapi Semua Data Yang Diperlukan.",
                         "Klik <b>Lanjutkan</b>",
@@ -438,7 +470,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Rekening Tujuan Berhasil Ditambahkan.",
                         "Pilih <b>Menu Transfer</b>",
                         "Pilih <b>Transfer Antar Rek. BNI</b>",
-                        "Pilih Rekening Tujuan dengan <b>Nama Singkat</b> Yang Sudah Anda Tambahkan: <b>" + rsvNo + "</b>",
+                        "Pilih Rekening Tujuan dengan <b>Nama Singkat</b> Yang Sudah Anda Tambahkan: <b>Travorama</b>",
                         "Masukkan Nominal: <b>" + price + "</b>",
                         "Masukkan <b>Kode Otentikasi Token</b>",
                         "Bukti Pembayaran Ditampilkan.",

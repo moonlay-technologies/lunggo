@@ -48,7 +48,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 }
             };
             Console.WriteLine("Sending Eticket Email...");
-            mailService.SendEmail(summary, mailModel, "FlightChangedEticketEmail");
+            mailService.SendEmailWithTableTemplate(summary, mailModel, "FlightChangedEticketEmail");
 
             Console.WriteLine("Deleting Data in Storage...");
             sw.Start();

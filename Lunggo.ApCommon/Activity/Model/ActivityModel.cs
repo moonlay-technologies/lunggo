@@ -7,7 +7,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public long SupplierId { get; set; }
         public int AreaCd { get; set; }
         public string ActivityName { get; set; }
-        public ActivityTypeEnum ActivityType { get; set; }
+        //public ActivityTypeEnum ActivityType { get; set; }
         public string ActivityShortDesc { get; set; }
         public string HotelMeetLocation { get; set; }
         public string ToKnow { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.Framework.Database;
+using System;
 
 namespace Lunggo.ApCommon.Identity.Query
 {
@@ -15,8 +16,26 @@ namespace Lunggo.ApCommon.Identity.Query
         protected override string GetQuery(dynamic condition = null)
         {
             var queryBuilder = new StringBuilder();
-            queryBuilder.Append("SELECT * FROM [User] WHERE LOWER(UserName) = LOWER(@userName)");
+            queryBuilder.Append(CreateConditionClause(condition));
             return queryBuilder.ToString();
+        }
+
+        private static string CreateConditionClause(dynamic condition)
+        {
+            long phone;
+            bool IsNumeric = Int64.TryParse(condition.userName, out phone);
+            var clauseBuilder = new StringBuilder();
+            clauseBuilder.Append("SELECT * FROM [User] ");
+            if (IsNumeric)
+            {
+                clauseBuilder.Append("WHERE PhoneNumber = @userName");
+            }
+            else
+            {
+                clauseBuilder.Append("WHERE Email = @userName");
+            }
+            
+            return clauseBuilder.ToString();
         }
     }
 }			

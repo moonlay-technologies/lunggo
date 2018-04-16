@@ -10,6 +10,7 @@ using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Web;
 using RestSharp;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {
@@ -35,17 +36,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
             internal IssueTicketResult OrderTicket(string bookingId)
             {
                 var log = LogService.GetInstance();
+                var TableLog = new GlobalLog();
+                
+                TableLog.PartitionKey = "FLIGHT ISSUE LOG";
+                
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 var clientx = CreateAgentClient();
                 var untukEncode = "ticketing:" + bookingId + ":STEP2";
                 var encode = untukEncode.Base64Encode();
                 var encode2 = encode.Base64Encode();
-                log.Post("[Sriwijaya] Login", "#logging-issueflight");
+                TableLog.Log = "[Sriwijaya] Login";
+                log.Post(TableLog.Log, "#logging-issueflight");
+                TableLog.Logging();
                 Login(clientx);
                 try
                 {
 
-                    log.Post("[Sriwijaya] Check Booking Id. Url : SJ-Eticket/application/?action=CheckBCode", "#logging-issueflight");
+                    TableLog.Log = "[Sriwijaya] Check Booking Id. Url : SJ-Eticket/application/?action=CheckBCode";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     var url = "SJ-Eticket/application/?action=CheckBCode";
                     var submitRequest1 = new RestRequest(url, Method.POST);
                     var postData = //reffNo=XBTGQQ&Submit=Go
@@ -72,7 +81,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     submitRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                     var submitResponse = clientx.Execute(submitRequest);
 
-                    log.Post("[Sriwijaya] Post Booking Id. Url : SJ-Eticket/application/?", "#logging-issueflight");
+                    TableLog.Log = "[Sriwijaya] Post Booking Id. Url : SJ-Eticket/application/?";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
+
                     url = "SJ-Eticket/application/?action=CheckBCode&reffNo=" + bookingId;
                     var checkRequest = new RestRequest(url, Method.POST);
                     postData = //reffNo=XBTGQQ&action=CheckBCode&step=STEP2
@@ -90,18 +102,25 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     var tunjukStatusBook = tunjukClassTarget.MakeRoot()[".bookingCode"];
                     var statusBook = tunjukClassTarget.Select(x => x.Cq().Text()).FirstOrDefault();
 
-                    log.Post("[Sriwijaya] Cek Booking Status", "#logging-issueflight");
+                    TableLog.Log = "[Sriwijaya] Cek Booking Status";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
+
                     var hasil = new IssueTicketResult();
                     if ((statusBook == "Confirm") || (statusBook == "Confirmed"))
                     {
-                        log.Post("[Sriwijaya] Success", "#logging-issueflight");
+                        TableLog.Log = "[Sriwijaya] Success";
+                        log.Post(TableLog.Log, "#logging-issueflight");
+                        TableLog.Logging();
                         hasil.BookingId = bookingId;
                         hasil.IsSuccess = true;
                         hasil.IsInstantIssuance = true;
                     }
                     else
                     {
-                        log.Post("[Sriwijaya] Error because status book is not Confirm or confirmed", "#logging-issueflight");
+                        TableLog.Log = "[Sriwijaya] Error because status book is not Confirm or confirmed";
+                        log.Post(TableLog.Log, "#logging-issueflight");
+                        TableLog.Logging();
                         hasil.CurrentBalance = GetCurrentBalance();
                         hasil.IsSuccess = false;
                         hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };

@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
-                //log.Post("[Citilink Test] This is a test", "#logging-dev");
+                
                 // WAIT
                 var client = CreateCustomerClient();
                 var hasil = new SearchFlightResult();
@@ -65,7 +65,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 if (searchResponse.ResponseUri.AbsolutePath != "/ScheduleSelect.aspx")
                 {
-                    log.Post("[Citilink Search] Error while requesting at Search.aspx. Unexpected RensponseUri absolute path", "#logging-dev");
+                    
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.FareIdNoLongerValid },
@@ -161,8 +161,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                     var childTax = childPsc + childIns + childVat;
 
                                     var taxTable = ambilDataAjax[".twoblocks.resume-block>div:last-of-type>strong"];
-                                try
-                                {
+
                                     var iIdx = conditions.ChildCount > 0 ? 2 : 1;
                                     hargaAdult = decimal.Parse(taxTable[0].InnerText.Split('.')[1]) + adultTax;
                                     if (conditions.ChildCount > 0)
@@ -174,12 +173,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                                         var infantTax = harga - (hargaAdult + hargaChild + hargaInfant);
                                         hargaInfant += infantTax;
                                     }
-
-                                }
-                                catch
-                                {
-                                    log.Post("[Citilink Search] Error while processing flight price form data crawling", "#logging-dev");
-                                }
 
                                     var segments = new List<FlightSegment>();
 
@@ -319,7 +312,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 }
                 catch(Exception e)
                 {
-                    log.Post("[Citilink Search] Error while processing data flight", "#logging-dev");
+
                     return new SearchFlightResult
                     {
                         IsSuccess = false,

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Lunggo.Framework.Database;
+using System.Collections.Generic;
+using Lunggo.Repository.TableRecord;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.Framework.Notifications
 {
@@ -27,7 +30,30 @@ namespace Lunggo.Framework.Notifications
 
         public string RegisterDevice(string notificationHandle, string deviceId)
         {
-            return Client.RegisterDevice(notificationHandle, deviceId);
+            //return Client.RegisterDevice(notificationHandle, deviceId);
+            return RegisterDeviceExpoToDb(notificationHandle, deviceId);
+        }
+
+        internal string RegisterDeviceExpoToDb(string notificationHandle, string deviceId)
+        {
+            var RegisterId = "";
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var notificationRecord = new NotificationTableRecord
+                {
+                    UserId = user,
+                    ActivityId = activityId
+                };
+                try
+                {
+                    WishlistTableRepo.GetInstance().Insert(conn, wishlistRecord);
+                }
+                catch
+                {
+
+                }
+            }
+            return RegisterId;
         }
 
         public bool UpdateTags(string registrationId, string notificationHandle, Platform platform,

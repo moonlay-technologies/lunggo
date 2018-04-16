@@ -65,6 +65,12 @@ namespace Lunggo.ApCommon.Identity.Users
         public string Address { get; set; }
 
         /// <summary>
+        /// Platform of the user
+        /// 
+        /// </summary>
+        public string PlatformCd { get; set; }
+
+        /// <summary>
         /// Is two factor enabled for the user
         /// 
         /// </summary>

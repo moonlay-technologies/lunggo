@@ -78,6 +78,78 @@ namespace Lunggo.ApCommon.Flight.Service
                 searchedItinLists.ForEach(list => list.ForEach(itin => itin.Price.CalculateFinalAndLocal(localCurrency)));
                 searchedItinLists.ForEach(list => list.ForEach(RoundFinalAndLocalPrice));
 
+                // TODO: TESTING E2Pay
+
+                var conditions = DecodeSearchConditions(input.SearchId);
+
+                if (conditions.Trips[0].OriginAirport == "XXX" &&
+                    conditions.Trips[0].DestinationAirport == "XXX")
+                {
+                    var itin = new FlightItinerary
+                    {
+                        AdultCount = conditions.AdultCount,
+                        ChildCount = conditions.ChildCount,
+                        InfantCount = conditions.InfantCount,
+                        CanHold = true,
+                        FareType = FareType.Published,
+                        RequireBirthDate = false,
+                        RequirePassport = false,
+                        RequireSameCheckIn = false,
+                        RequireNationality = false,
+                        RequestedCabinClass = conditions.CabinClass,
+                        TripType = TripType.OneWay,
+                        Supplier = Supplier.LionAir,
+                        Price = new Price(),
+                        AdultPricePortion = 1,
+                        ChildPricePortion = 0,
+                        InfantPricePortion = 0,
+                        NetAdultPricePortion = 1,
+                        FareId = "TEST",
+                        Trips = new List<FlightTrip>
+                            {
+                                new FlightTrip
+                                {
+                                    OriginAirport = conditions.Trips[0].OriginAirport,
+                                    DestinationAirport = conditions.Trips[0].DestinationAirport,
+                                    DepartureDate = conditions.Trips[0].DepartureDate.Date,
+                                    DestinationCity = GetAirportCity(conditions.Trips[0].DestinationAirport),
+                                    OriginCity = GetAirportCity(conditions.Trips[0].OriginAirport),
+                                    Segments = new List<FlightSegment>
+                                    {
+                                        new FlightSegment
+                                        {
+                                            AirlineCode = "XX",
+                                            FlightNumber = "1234",
+                                            CabinClass = conditions.CabinClass,
+                                            AirlineType = AirlineType.Lcc,
+                                            DepartureAirport = "XXX",
+                                            DepartureTime = new DateTime(2000,1,1,0,0,0),
+                                            ArrivalAirport = "XXX",
+                                            ArrivalTime = new DateTime(2000,1,1,0,0,0),
+                                            OperatingAirlineCode = "XX",
+                                            //StopQuantity = Convert.ToInt32(stopNo),
+                                            Duration = new TimeSpan(0),
+                                            //AircraftCode = aircraftNo,
+                                            DepartureCity = "XXX",
+                                            ArrivalCity = "XXX",
+                                            AirlineName = "XXX",
+                                            OperatingAirlineName = "XXX",
+                                            IsMealIncluded = false,
+                                            IsPscIncluded = true,
+                                            IsBaggageIncluded = false,
+                                            BaggageCapacity = "0"
+
+                                        }
+                                    }
+                                }
+                            }
+                    };
+                    itin.Price.LocalCurrency = new Currency("IDR");
+                    itin.Price.SetSupplier(11000, new Currency("IDR"));
+                    itin.Price.Local = 11000;
+                    searchedItinLists[0].Add(itin);
+                }
+
                 var seachedItinListsForDisplay =
                     searchedItinLists.Skip(ParseTripType(input.SearchId) != TripType.OneWay ? 1 : 0).Select(lists => lists.Select(ConvertToItineraryForDisplay).ToList()).ToArray();
 

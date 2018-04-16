@@ -19,9 +19,30 @@ namespace Lunggo.ApCommon.Identity.Users
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var userRecord = GetUserByNameQuery.GetInstance().Execute(conn, new {userName = identity.Name}).Single();
-                var customUser = ToCustomUser(userRecord);
-                return customUser;
+                var userRecords = GetUserByNameQuery.GetInstance().Execute(conn, new {userName = identity.Name}, new { userName = identity.Name });
+                if(userRecords.Count() != 0)
+                {
+                    var userRecord = userRecords.First();
+                    var customUser = ToCustomUser(userRecord);
+                    return customUser;
+                }
+                else
+                {
+                    return new User();
+                }
+            }
+        }
+
+        public static string GetId(this IIdentity identity)
+        {
+            if (identity.IsUserAuthorized())
+            {
+                var customUser = GetUser(identity);
+                return customUser.Id;
+            }
+            else
+            {
+                return null;
             }
         }
 

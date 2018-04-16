@@ -6,6 +6,7 @@ using Lunggo.ApCommon.Flight.Service;
 
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Voucher;
+using Lunggo.CustomerWeb.Helper;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
@@ -35,6 +36,9 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Account.Service;
+using Lunggo.ApCommon.Identity.Auth;
+using System.Security.Claims;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -711,17 +715,15 @@ namespace Lunggo.CustomerWeb.Controllers
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult OrderHistory(string rsvNo)
         {
-            var RsvNo = rsvNo;
-            var RegId = GenerateId(rsvNo);
-            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo, regId = RegId });
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
         }
 
         [System.Web.Mvc.AllowAnonymous]
         public ActionResult SelectReservation(string rsvNo)
         {
-            var RsvNo = rsvNo;
-            var RegId = GenerateId(rsvNo);
-            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo = RsvNo, regId = RegId });
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
+            return RedirectToAction("OrderFlightHistoryDetail", "Account", new { rsvNo, regId });
         }
 
         [System.Web.Mvc.AllowAnonymous]
@@ -731,7 +733,7 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Index", "Index");
             }
-            var signature = GenerateId(rsvNo);
+            var signature = Generator.GenerateTrxIdRegId(rsvNo);
             if (regId.Equals(signature))
             {
                 var flightService = FlightService.GetInstance();
@@ -755,7 +757,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult OrderFlightHistoryDetail(string rsvNo)
         {
             ReservationForDisplayBase rsv;
-            var regId = GenerateId(rsvNo);
+            var regId = Generator.GenerateTrxIdRegId(rsvNo);
             var flightService = FlightService.GetInstance();
             var hotelService = HotelService.GetInstance();
             ReservationForDisplayBase displayReservation;
@@ -848,24 +850,114 @@ namespace Lunggo.CustomerWeb.Controllers
             return Redirect("https://lunggostorageqa.blob.core.windows.net/eticket/" + rsvNo + ".pdf");
         }
 
-        #region Helpers
-
-        public string GenerateId(string key)
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult RegisterReferral(string ReferrerCode)
         {
-            string result = "";
-            if (key.Length > 7)
-            {
-                key = key.Substring(key.Length - 7);
-            }
-            int generatedNumber = (int)double.Parse(key);
-            for (int i = 1; i < 4; i++)
-            {
-                generatedNumber = new Random(generatedNumber).Next();
-                result = result + "" + generatedNumber;
-            }
-            return result;
+            return View(model: ReferrerCode);
         }
 
-        #endregion
+
+        [System.Web.Mvc.HttpPost]
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult RegisterReferral(RegisterReferralViewModel model)
+        {
+            ViewBag.Name = model.Name;
+            ViewBag.Email = model.Email;
+            ViewBag.ReferrerCode = model.ReferrerCode;
+            ViewBag.Phone = model.Phone;
+            if (!IsValid(model))
+            {
+                ViewBag.Message = "invalid request";
+                return View(model: model.ReferrerCode);
+            }
+
+            if (!model.Phone.StartsWith("0"))
+            {
+                ViewBag.Message = "Phone Number Must 0 First";
+                return View(model: model.ReferrerCode);
+            }
+
+            var foundUser = UserManager.FindByEmail(model.Email);
+            var foundUserByPhone = UserManager.FindByName(model.Phone);
+
+            if (foundUser != null)
+            {
+                ViewBag.Message = "Email Already Exist";
+                return View(model: model.ReferrerCode);
+            }
+
+            if (foundUserByPhone != null)
+            {
+                ViewBag.Message = "Phone Number Already Exist";
+                return View(model: model.ReferrerCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.ReferrerCode))
+            {
+                var referrer = AccountService.GetInstance().GetReferralCodeDataFromDb(model.ReferrerCode);
+                if (referrer == null)
+                {
+                    ViewBag.Message = "Referral Not Valid";
+                    return View(model: model.ReferrerCode);
+                }
+            }
+
+
+            string first, last;
+            var splittedName = model.Name.Split(' ');
+            if (splittedName.Length == 1)
+            {
+                first = model.Name;
+                last = model.Name;
+            }
+            else
+            {
+                first = model.Name.Substring(0, model.Name.LastIndexOf(' '));
+                last = splittedName[splittedName.Length - 1];
+            }
+
+
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+
+            var user = new User
+            {
+                FirstName = first,
+                LastName = last,
+                UserName = model.Phone + ":" + model.Email,
+                Email = model.Email,
+                PhoneNumber = model.Phone,
+                PlatformCd = PlatformTypeCd.Mnemonic(PlatformType.MobileWebsite),
+                CountryCallCd = "62"
+            };
+            var result = UserManager.Create(user, model.Password);
+            if (result.Succeeded)
+            {
+                var code = HttpUtility.UrlEncode(UserManager.GenerateEmailConfirmationToken(user.Id));
+                var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                var apiUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+                var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
+                UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
+
+                AccountService.GetInstance().GenerateReferralCode(user.Id, first, model.ReferrerCode);
+                return View("downloadreferral");
+            }
+            else
+            {
+                ViewBag.Message = "internal server error";
+                return View(model.ReferrerCode);
+            }
+        }
+
+        private static bool IsValid(RegisterReferralViewModel request)
+        {
+            var vc = new ValidationContext(request, null, null);
+            return Validator.TryValidateObject(request, vc, null, true);
+        }
+
+        [System.Web.Mvc.AllowAnonymous]
+        public ActionResult DownloadReferral()
+        {
+            return View();
+        }
     }
 }

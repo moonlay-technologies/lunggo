@@ -18,8 +18,7 @@
     var sumAdult = 0;
     var sumChild = 0;
     var orderedRooms = new List<Tuple<string, int>>();
-    try
-    {
+
 
         foreach (var room in Model.Rooms)
         {
@@ -38,12 +37,8 @@
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
-    }
-    catch (Exception)
-    {
+    
 
-        throw;
-    }
 }
 
 <div class="form-group">

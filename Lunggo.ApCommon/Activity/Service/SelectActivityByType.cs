@@ -1,7 +1,7 @@
 ﻿namespace Lunggo.ApCommon.Activity.Service
 {
-    //public static class SelectActivityByType
-    //{
+    public partial class SelectActivityByType
+    {
     //    public static List<ActivityForDisplayModel> SelectActivityForDisplay(string activityType, string city, DateTime startDate, DateTime finishDate)
     //    {
     //        var conn = DbService.GetInstance().GetOpenConnection();
@@ -13,5 +13,5 @@
     //            Cheapest = resultActivity.Cheapest
     //        }).ToList();
     //    }
-    //}
+    }
 }

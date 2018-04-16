@@ -10,9 +10,9 @@
         WindowsPhoneApp = 5
     }
 
-    internal class PlatformTypeCd
+    public class PlatformTypeCd
     {
-        internal static string Mnemonic(PlatformType platformType)
+        public static string Mnemonic(PlatformType platformType)
         {
             switch (platformType)
             {
@@ -31,7 +31,7 @@
             }
         }
 
-        internal static PlatformType Mnemonic(string platformType)
+        public static PlatformType Mnemonic(string platformType)
         {
             switch (platformType)
             {

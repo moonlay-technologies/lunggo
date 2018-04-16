@@ -9,6 +9,8 @@ using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using RestSharp;
+using Lunggo.ApCommon.Log;
+using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -16,13 +18,32 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static LoginApiResponse Login(LoginApiRequest request)
         {
-            if (request.RefreshToken != null && (request.UserName != null || request.Password != null))
+            var TableLog = new GlobalLog();
+
+            TableLog.PartitionKey = "TOKEN ERROR LOG";
+
+            if (request.UserName != null && request.UserName.StartsWith("0"))
+            {
+                request.UserName = request.UserName.Substring(1);
+            }
+            if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.UserName) || !string.IsNullOrEmpty(request.Password)))
                 return new LoginApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERALOG01"
+                    ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
                 };
-
+            if(!string.IsNullOrEmpty(request.UserName))
+            {
+                long result;
+                if (!Int64.TryParse(request.UserName, out result))
+                    if (!request.UserName.Contains("@"))
+                        return new LoginApiResponse
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            ErrorCode = "ERR_USER_FORMAT"
+                        };
+            }
+            
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
             var tokenRequest = new RestRequest("/oauth/token", Method.POST);
             var postData =
@@ -53,30 +74,41 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             try
             {
                 var tokenData = tokenResponse.Content.Deserialize<TokenData>();
+                if (tokenData.Error == "invalid_password")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_PASSWORD"
+                    };
                 if (tokenData.Error == "invalid_grant")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG02"
+                        ErrorCode = "ERR_INVALID" //ERALOG02
                     };
                 if (tokenData.Error == "not_active")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG03"
+                        ErrorCode = "ERR_NOT_ACTIVE" //ERALOG03
                     };
                 if (tokenData.Error == "invalid_clientId")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG04"
+                        ErrorCode = "ERR_INVALID_CLIENTID" //ERALOG04
                     };
                 if (tokenData.Error == "not_registered")
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERALOG05"
+                        ErrorCode = "ERR_NOT_REGISTERED" //ERALOG05
                     };
+                if(request.UserName != null)
+                {
+                    var id = AccountService.GetInstance().GetIdByEmailOrPhoneNumber(request.UserName);
+                    AccountService.GetInstance().InsertLoginReferralHistory(id);
+                }                
                 return new LoginApiResponse
                 {
                     AccessToken = tokenData.AccessToken,
@@ -89,10 +121,12 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             {
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                log.Post(
-                    "```Token Error " + env.ToUpper() + "```\n"
-                    + tokenResponse.Content,
+                TableLog.Log = "```Token Error " + env.ToUpper() + "```\n"
+                    + tokenResponse.Content;
+                log.Post(TableLog.Log
+                    ,
                     env == "production" ? "#logging-prod" : "#logging-dev");
+                TableLog.Logging();
                 throw;
             }
         }

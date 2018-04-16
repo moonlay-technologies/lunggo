@@ -20,6 +20,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Id");
 		    }
 		}
+		public String CompanyId
+		{
+		    get { return _CompanyId; }
+		    set
+		    {
+		        _CompanyId = value;
+		        IncrementLog("CompanyId");
+		    }
+		}
 		public String Email
 		{
 		    get { return _Email; }
@@ -155,9 +164,82 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("Address");
 		    }
 		}
+		public String ApproverId
+		{
+		    get { return _ApproverId; }
+		    set
+		    {
+		        _ApproverId = value;
+		        IncrementLog("ApproverId");
+		    }
+		}
+		public String Position
+		{
+		    get { return _Position; }
+		    set
+		    {
+		        _Position = value;
+		        IncrementLog("Position");
+		    }
+		}
+		public String Department
+		{
+		    get { return _Department; }
+		    set
+		    {
+		        _Department = value;
+		        IncrementLog("Department");
+		    }
+		}
+		public String Branch
+		{
+		    get { return _Branch; }
+		    set
+		    {
+		        _Branch = value;
+		        IncrementLog("Branch");
+		    }
+		}
+		public String InsertBy
+		{
+		    get { return _InsertBy; }
+		    set
+		    {
+		        _InsertBy = value;
+		        IncrementLog("InsertBy");
+		    }
+		}
+		public DateTime? InsertDate
+		{
+		    get { return _InsertDate; }
+		    set
+		    {
+		        _InsertDate = value;
+		        IncrementLog("InsertDate");
+		    }
+		}
+		public String InsertPgId
+		{
+		    get { return _InsertPgId; }
+		    set
+		    {
+		        _InsertPgId = value;
+		        IncrementLog("InsertPgId");
+		    }
+		}
+		public String PlatformCd
+		{
+		    get { return _PlatformCd; }
+		    set
+		    {
+		        _PlatformCd = value;
+		        IncrementLog("PlatformCd");
+		    }
+		}
 
 		
 		private String _Id;
+		private String _CompanyId;
 		private String _Email;
 		private Boolean? _EmailConfirmed;
 		private String _PasswordHash;
@@ -173,6 +255,14 @@ namespace Lunggo.Repository.TableRecord
 		private String _FirstName;
 		private String _LastName;
 		private String _Address;
+		private String _ApproverId;
+		private String _Position;
+		private String _Department;
+		private String _Branch;
+		private String _InsertBy;
+		private DateTime? _InsertDate;
+		private String _InsertPgId;
+		private String _PlatformCd;
 
 
 		public static UserTableRecord CreateNewInstance()
@@ -205,6 +295,7 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("Id", true),
+				new ColumnMetadata("CompanyId", false),
 				new ColumnMetadata("Email", false),
 				new ColumnMetadata("EmailConfirmed", false),
 				new ColumnMetadata("PasswordHash", false),
@@ -220,6 +311,14 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("FirstName", false),
 				new ColumnMetadata("LastName", false),
 				new ColumnMetadata("Address", false),
+				new ColumnMetadata("ApproverId", false),
+				new ColumnMetadata("Position", false),
+				new ColumnMetadata("Department", false),
+				new ColumnMetadata("Branch", false),
+				new ColumnMetadata("InsertBy", false),
+				new ColumnMetadata("InsertDate", false),
+				new ColumnMetadata("InsertPgId", false),
+				new ColumnMetadata("PlatformCd", false),
 
             };
         }

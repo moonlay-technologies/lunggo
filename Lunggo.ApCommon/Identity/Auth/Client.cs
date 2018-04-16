@@ -12,32 +12,58 @@ namespace Lunggo.ApCommon.Identity.Auth
         public bool IsActive { get; set; }
         public string AllowedOrigin { get; set; }
 
+        public static (PlatformType type, string version) GetPlatform(string clientId)
+        { 
+            var decodedClientId = DecodeClientId(clientId);
+            var splitClientId = decodedClientId.Split(':');
+            var platformType = ParsePlatformType(splitClientId[0]);
+            var version = splitClientId[1];
+            return (platformType,version);
+        }
+
+        public static string GetPlatfromVersion(string clientId)
+        {
+            var decodedClientId = DecodeClientId(clientId);
+            var version = decodedClientId.Split(':')[1];
+            return version;
+        }
+
         public static PlatformType GetPlatformType(string clientId)
         {
             try
             {
-                var decodedClientId = clientId.Base64Decode().Base64Decode().Base64Decode();
+                var decodedClientId = DecodeClientId(clientId);
                 var platformCode = decodedClientId.Split(':')[0];
-                switch (platformCode)
-                {
-                    case "mpns":
-                        return PlatformType.WindowsPhoneApp;
-                    case "gcm":
-                        return PlatformType.AndroidApp;
-                    case "apns":
-                        return PlatformType.IosApp;
-                    case "dws":
-                        return PlatformType.DesktopWebsite;
-                    case "mws":
-                        return PlatformType.MobileWebsite;
-                    default:
-                        return PlatformType.Undefined;
-                }
+                return ParsePlatformType(platformCode);
             }
             catch
             {
                 return PlatformType.Undefined;
             }
+        }
+
+        private static PlatformType ParsePlatformType(string platformCode)
+        {
+            switch (platformCode)
+            {
+                case "mpns":
+                    return PlatformType.WindowsPhoneApp;
+                case "gcm":
+                    return PlatformType.AndroidApp;
+                case "apns":
+                    return PlatformType.IosApp;
+                case "dws":
+                    return PlatformType.DesktopWebsite;
+                case "mws":
+                    return PlatformType.MobileWebsite;
+                default:
+                    return PlatformType.Undefined;
+            }
+        }
+
+        private static string DecodeClientId(string clientId)
+        {
+            return clientId.Base64Decode().Base64Decode().Base64Decode();
         }
     }
 }

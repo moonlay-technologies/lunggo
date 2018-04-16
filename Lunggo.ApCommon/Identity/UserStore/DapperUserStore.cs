@@ -12,6 +12,11 @@ using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
 using Microsoft.AspNet.Identity;
+using System.Web;
+using System.Security.Claims;
+using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Identity.UserStore
 {
@@ -93,7 +98,8 @@ namespace Lunggo.ApCommon.Identity.UserStore
 
         private UserTableRecord ToUsersTableRecordForInsert(TUser user)
         {
-            var record = new UserTableRecord
+
+        var record = new UserTableRecord
             {
                 AccessFailedCount = user.AccessFailedCount,
                 Email = user.Email,
@@ -110,7 +116,11 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 UserName = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Address = user.Address
+                Address = user.Address,
+                InsertBy = "LunggoSystem",
+                InsertDate = DateTime.UtcNow,
+                InsertPgId = "0",
+                PlatformCd = user.PlatformCd
             };
             return record;
         }
@@ -216,7 +226,7 @@ namespace Lunggo.ApCommon.Identity.UserStore
                 using (var connection = DbService.GetInstance().GetOpenConnection())
                 {
                     var query = GetUserByNameQuery.GetInstance();
-                    var record = query.Execute(connection, new {userName = userName}).SingleOrDefault();
+                    var record = query.Execute(connection, new {userName = userName}, new { userName = userName }).SingleOrDefault();
                     var user = ToUser(record);
                     return user;
                 }

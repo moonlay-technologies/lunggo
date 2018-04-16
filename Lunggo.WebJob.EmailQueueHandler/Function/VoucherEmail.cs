@@ -26,7 +26,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama",
                 Subject = "Selamat! Voucher Diskon Hingga Rp 500.000 untuk Anda"
             };
-            mailService.SendEmail(message, mailModel, "VoucherEmail");
+            mailService.SendEmailWithTableTemplate(message, mailModel, "VoucherEmail");
             sw.Stop();
 
             Console.WriteLine("Done Processing Voucher Email for " + address + " (" + sw.Elapsed.TotalSeconds + "s).");

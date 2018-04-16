@@ -35,8 +35,8 @@ namespace Lunggo.WebJob.EmailQueueHandler
             InitI18NMessageManager();
             InitMailService();
             InitBlobStorageService();
-            InitFlightService();
-            InitHotelService();
+            //InitFlightService();
+            //InitHotelService();
             //InitTraceListener();
         }
 

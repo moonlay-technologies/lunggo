@@ -76,6 +76,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal LocalPaidAmount { get; set; }
         public Refund Refund { get; set; }
         public string InvoiceNo { get; set; }
+        public string CartRecordId { get; set; }
 
         internal void InsertToDb(string rsvNo)
         {

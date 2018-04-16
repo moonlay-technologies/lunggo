@@ -31,7 +31,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama",
                 Subject = envPrefix + "[Travorama] Forgotten Password"
             };
-            mailService.SendEmail(message, mailModel, "ForgotPasswordEmail");
+            mailService.SendEmailWithTableTemplate(message, mailModel, "ForgotPasswordEmail");
             sw.Stop();
 
             Console.WriteLine("Done Processing Forgot Password Email for " + address + " (" + sw.Elapsed.TotalSeconds + "s).");

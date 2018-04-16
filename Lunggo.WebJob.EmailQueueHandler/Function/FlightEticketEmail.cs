@@ -62,7 +62,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 }
             };
             Console.WriteLine("Sending Flight Eticket Email...");
-            mailService.SendEmail(summary, mailModel, "FlightEticketEmail");
+            mailService.SendEmailWithTableTemplate(summary, mailModel, "FlightEticketEmail");
             //FlightService.GetInstance().UpdateIssueProgress(rsvNo, "Eticket Email Sent. Ticket Issuance Complete.");
             
             Console.WriteLine("Done Processing Flight Eticket Email for RsvNo " + rsvNo);

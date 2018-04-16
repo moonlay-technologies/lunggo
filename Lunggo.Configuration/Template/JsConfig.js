@@ -78,6 +78,11 @@ var FlightPayConfig = {
     working: false
 };
 
+var CartCheckoutConfig = {
+    Url: '$apiUrl$$cartCheckoutPath$',
+    working: false
+};
+
 var GetRulesConfig = {
     Url: '$apiUrl$$flightRulesPath$',
     working: false

@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     
                     var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
 
-                    //log.Post("[Air Asia Test] This is a test", "#logging-dev");
+
 
                     var client = CreateCustomerClient();
 
@@ -174,7 +174,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             (searchResponse.StatusCode == HttpStatusCode.OK ||
                              searchResponse.StatusCode == HttpStatusCode.Redirect))
                         {
-                            log.Post("[Airasia Search] Error while requesting at Flight/Select. Unexpected RensponseUri absolute path", "#logging-dev");
+                            
                         }
                         searchedHtml = html;
                         stillWaiting = html.Length < 1000 || html.Contains("welcome") || html.Contains("<h1>403</h1>") || html.Contains("Kesalahan");
@@ -229,7 +229,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                 (response2.StatusCode == HttpStatusCode.OK ||
                                  response2.StatusCode == HttpStatusCode.Redirect))
                             {
-                                log.Post("[Airasia Search] Error while requesting atFlight/PriceItinerary. Unexpected RensponseUri absolute path", "#logging-dev");
+                                
                             }
                             var price =
                                 decimal.Parse(itinHtml[".section-total-display-price > span:first"].Text().Trim(' ', '\n'));
@@ -237,8 +237,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             var adultPrice = 0M;
                             var childPrice = 0M;
                             var infantPrice = 0M;
-                            try
-                            {
                                 var x = breakdownPrice[0].LastElementChild;
                                 var y = x.InnerText.Trim();
                                 var iIdx = conditions.ChildCount > 0 ? 2 : 1;
@@ -247,8 +245,6 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                     childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Trim().Split(' ')[2]);
                                 if (conditions.InfantCount > 0)
                                     infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Trim().Split(' ')[2]);
-                            }
-                            catch { }
                             var currency = itinHtml[".section-total-display-currency>span>strong"].Text().Substring(0, 3);
                             var itinHtmlText = itinHtml.Text();
                             var isPscIncluded = itinHtmlText.Contains("Pajak Bandara") ||
@@ -351,15 +347,15 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                             //cek apa jumlah rownya sama dengan segmen
                             if (rows.Count > segments.Count)
                             {
-                                for (var x = 1; x < rows.Count - 1; x++)
+                                for (var z = 1; z < rows.Count - 1; z++)
                                 {
                                     //ambil data kode airport nya dan jamnya
                                     var deptArpt =
-                                        rows[x].ChildElements.ToList()[1].
+                                        rows[z].ChildElements.ToList()[1].
                                             ChildElements.ToList()[0].
                                                 ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
                                     var arrvArpt =
-                                        rows[x].ChildElements.ToList()[3].
+                                        rows[z].ChildElements.ToList()[3].
                                             ChildElements.ToList()[0].
                                                 ChildElements.ToList()[1].InnerHTML.SubstringBetween(1, 4);
 
@@ -369,10 +365,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                     if (deptArpt == segments.ElementAt(0).ArrivalAirport)
                                     {
                                         //STOP ADA DI SEGMEN 2
-                                        var arrvHrAtStop = rows[x].ChildElements.ToList()[3].
+                                        var arrvHrAtStop = rows[z].ChildElements.ToList()[3].
                                                 ChildElements.ToList()[0].
                                                     ChildElements.ToList()[0].InnerHTML;
-                                        var deptHrAtStop = rows[x + 1].ChildElements.ToList()[1].
+                                        var deptHrAtStop = rows[z + 1].ChildElements.ToList()[1].
                                                 ChildElements.ToList()[0].
                                                     ChildElements.ToList()[0].InnerHTML;
 
@@ -433,10 +429,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                                     if (arrvArpt == segments.ElementAt(0).ArrivalAirport)
                                     {
                                         //STOP ADA DI SEGMEN 1
-                                        var arrvHrAtStop = rows[x - 1].ChildElements.ToList()[3].
+                                        var arrvHrAtStop = rows[z - 1].ChildElements.ToList()[3].
                                                  ChildElements.ToList()[0].
                                                      ChildElements.ToList()[0].InnerHTML;
-                                        var deptHrAtStop = rows[x].ChildElements.ToList()[1].
+                                        var deptHrAtStop = rows[z].ChildElements.ToList()[1].
                                                 ChildElements.ToList()[0].
                                                     ChildElements.ToList()[0].InnerHTML;
 
@@ -505,7 +501,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                     }
                     catch (Exception e)
                     {
-                        log.Post("[Airasia Search] Error while processing data flight. Error  Message:  "+ e.Message, "#logging-dev");
+                        
                         return new SearchFlightResult
                         {
                             Errors = new List<FlightError> { FlightError.TechnicalError },
@@ -515,7 +511,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 }
                 catch (Exception e)
                 {
-                    log.Post("[Airasia Search] Error while processing data flight. Error  Message:  " + e.Message, "#logging-dev");
+                   
                     return new SearchFlightResult
                     {
                         Errors = new List<FlightError> { FlightError.TechnicalError },

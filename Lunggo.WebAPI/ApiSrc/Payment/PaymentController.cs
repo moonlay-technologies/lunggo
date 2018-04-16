@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -12,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
     {
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/pay")]
         public ApiResponseBase Pay()
         {
@@ -29,9 +30,28 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/payment/cart/checkout")]
+        public ApiResponseBase CheckOut()
+        {
+            CheckOutApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckOutApiRequest>();
+                var apiResponse = PaymentLogic.CheckOut(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/methods")]
         public ApiResponseBase GetMethods()
         {
@@ -48,7 +68,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/check/{rsvNo}")]
         public ApiResponseBase CheckPayment(string rsvNo)
         {
@@ -65,7 +85,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/uniquecode")]
         public ApiResponseBase GetUniqueCode()
         {
@@ -84,7 +104,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/checkvoucher")]
         public ApiResponseBase CheckVoucher()
         {
@@ -103,7 +123,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/checkbindiscount")]
         public ApiResponseBase CheckBinDiscount()
         {
@@ -122,7 +142,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/payment/checkmethoddiscount")]
         public ApiResponseBase CheckMethodDiscount()
         {
@@ -142,6 +162,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         //CallbackNotif Nicepay
         [HttpPost]
+        [Level1Authorize]
         [Route("v1/payment/nicepay/paymentnotification")]
         public ApiResponseBase NicepayPaymentNotification([FromBody] NotificationResult request)
         {

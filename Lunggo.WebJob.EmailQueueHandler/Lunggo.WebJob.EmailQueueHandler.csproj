@@ -71,13 +71,11 @@
     <Reference Include="Microsoft.Azure.KeyVault.Core">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.WebJobs, Version=1.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Azure.WebJobs.Core.1.0.1\lib\net45\Microsoft.Azure.WebJobs.dll</HintPath>
+    <Reference Include="Microsoft.Azure.WebJobs, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.WebJobs.Core.2.0.0\lib\net45\Microsoft.Azure.WebJobs.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Azure.WebJobs.Host, Version=1.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.Azure.WebJobs.1.0.1\lib\net45\Microsoft.Azure.WebJobs.Host.dll</HintPath>
+    <Reference Include="Microsoft.Azure.WebJobs.Host, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.WebJobs.2.0.0\lib\net45\Microsoft.Azure.WebJobs.Host.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm">
       <HintPath>..\packages\Microsoft.Data.Edm.5.8.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -100,6 +98,9 @@
     <Reference Include="System.Spatial">
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -111,8 +112,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\ActivityVoucherAndInvoiceEmail.cs" />
     <Compile Include="Function\FlightDepositWarningNotifEmail.cs" />
     <Compile Include="Function\FlightIssueTimeoutNotifEmail.cs" />
+    <Compile Include="Function\ActivityIssueTicketNotifEmail.cs" />
+    <Compile Include="Function\ForgotPasswordByOtpEmail.cs" />
     <Compile Include="Function\HotelInternalFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelVoucherEmail.cs" />
@@ -122,6 +126,7 @@
     <Compile Include="Function\FlightIssueSlightDelayNotifEmail.cs" />
     <Compile Include="Function\FlightSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\RegisterSubscribeEmail.cs" />
+    <Compile Include="Function\CartTransferInstructionEmail.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="Function\FlightChangedEticketEmail.cs" />
     <Compile Include="Function\FlightEticketEmail.cs" />
@@ -195,14 +200,18 @@
     <None Include="Properties\PublishProfiles\dv1-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\prod-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-dv2-webjob.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-cw - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob %283%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-local-webjob.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-qa-webjob.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
+    <None Include="Views\HotelInvoice.cshtml" />
+    <None Include="Views\HotelVoucherEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
@@ -231,8 +240,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.7\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.7\tools\webjobs.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.1.0\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.1.0\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -177,16 +177,12 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         var adultPrice = 0M;
                         var childPrice = 0M;
                         var infantPrice = 0M;
-                        try
-                        {
-                            var iIdx = conditions.Itinerary.ChildCount > 0 ? 2 : 1;
-                            adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                            if (conditions.Itinerary.ChildCount > 0)
-                                childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                            if (conditions.Itinerary.InfantCount > 0)
-                                infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
-                        }
-                        catch { }
+                        var iIdx = conditions.Itinerary.ChildCount > 0 ? 2 : 1;
+                        adultPrice = decimal.Parse(breakdownPrice[0].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                        if (conditions.Itinerary.ChildCount > 0)
+                            childPrice = decimal.Parse(breakdownPrice[1].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
+                        if (conditions.Itinerary.InfantCount > 0)
+                            infantPrice = decimal.Parse(breakdownPrice[iIdx].LastElementChild.InnerText.Split(' ')[2], CultureInfo.CreateSpecificCulture("id-ID"));
                         var currency = itinHtml[".section-total-display-currency>span>strong"].Text();
                         var isPscIncluded =
                             itinHtml.Is(":contains('Pajak Bandara'), :contains('Biaya Layanan Penumpang')");

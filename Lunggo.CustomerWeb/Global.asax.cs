@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BrowserDetection;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.CustomerWeb
 {
@@ -31,9 +32,8 @@ namespace Lunggo.CustomerWeb
             var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
             var host = httpRequest.Url.Host;
             var path = httpRequest.Url.PathAndQuery;
-            var userAgent = httpRequest.UserAgent;
             var browserDetectionService = BrowserDetectionService.GetInstance();
-            var isSmartphone = browserDetectionService.IsRequestFromAndroidOrIphone(userAgent);
+            var isSmartphone = browserDetectionService.IsRequestFromAndroidOrIphone(httpRequest);
             var isOnMobilePage = host == mobileUrl || host == "192.168.0.139";
             if (!isOnMobilePage && isSmartphone)
             {
@@ -48,6 +48,20 @@ namespace Lunggo.CustomerWeb
                 Response.Redirect(redirectTo);
             }
 
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            if (exception != null)
+            {
+                var log = "Exception : " + exception.Message
+                    + "\nStackTrace : \n" + exception.StackTrace;
+                var TableLog = new GlobalLog();
+                TableLog.PartitionKey = "GLOBAL UNHANDLED EXCEPTION LOG";
+                TableLog.Log = log;
+                TableLog.Logging();
+            }
         }
 
     }

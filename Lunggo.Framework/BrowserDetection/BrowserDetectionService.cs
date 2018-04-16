@@ -29,10 +29,11 @@ namespace Lunggo.Framework.BrowserDetection
             return Instance;
         }
 
-        public bool IsRequestFromAndroidOrIphone(String userAgent)
+        public bool IsRequestFromAndroidOrIphone(HttpRequest httpRequest)
         {
-            var lowerAgent = userAgent.ToLower();
-            return lowerAgent.Contains("android") || lowerAgent.Contains("iphone");
+            var isApp = httpRequest.Headers["X-Client-ID"] != null || httpRequest.Headers["X-Requested-With"] != "host.exp.exponent";
+            var userAgent = httpRequest.UserAgent.ToLower();
+            return !isApp && (userAgent.Contains("android") || userAgent.Contains("iphone"));
         }
 
         public bool IsRequestFromTablet()

@@ -18,9 +18,39 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails GetPayment(string rsvNo)
+        public PaymentDetails GetPayment(string cartIdOrRsvNo)
         {
-            return PaymentDetails.GetFromDb(rsvNo);
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                if (cartIdOrRsvNo.Length < 15)
+                {
+                    var rsvNo = cartIdOrRsvNo;
+                    return PaymentDetails.GetFromDb(rsvNo);
+                }
+                else
+                {
+                    var cartId = cartIdOrRsvNo;
+                    var cart = GetCart(cartId);
+                    if (cart == null)
+                        return null;
+
+                    var cartRsvNos = cart.RsvNoList;
+                    if (cartRsvNos == null || !cartRsvNos.Any())
+                        return null;
+
+                    var payments = cartRsvNos.Select(PaymentDetails.GetFromDb).ToList();
+                    var payment = payments[0];
+                    payment.UniqueCode = payments.Sum(p => p.UniqueCode);
+                    payment.Surcharge = payments.Sum(p => p.Surcharge);
+                    payment.OriginalPriceIdr = payments.Sum(p => p.OriginalPriceIdr);
+                    payment.FinalPriceIdr = payments.Sum(p => p.FinalPriceIdr);
+                    payment.LocalFinalPrice = payments.Sum(p => p.LocalFinalPrice);
+                    payment.PaidAmountIdr = payments.Sum(p => p.PaidAmountIdr);
+                    payment.LocalPaidAmount = payments.Sum(p => p.LocalPaidAmount);
+                    payment.TimeLimit = payments.Min(p => p.TimeLimit);
+                    return payment;
+                }   
+            }
         }
 
         private PaymentStatus GetStatusFromDb(string rsvNo)
@@ -165,5 +195,15 @@ namespace Lunggo.ApCommon.Payment.Service
                 return payments;
             }
         }
+
+        private string GetCartIdByRsvNoFromDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var cartId = GetCartIdFromDbQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).First();
+                return cartId;
+            }
+        }
+        
     }
 }

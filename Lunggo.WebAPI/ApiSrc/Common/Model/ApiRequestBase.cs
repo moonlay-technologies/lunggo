@@ -29,6 +29,7 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             using (var sr = new StreamReader(HttpContext.Current.Request.GetBufferedInputStream()))
             {
                 var requestString = sr.ReadToEnd();
+                HttpContext.Current.Request.RequestContext.RouteData.Values["body"] = requestString;
                 return requestString.Deserialize<T>();
             }
 

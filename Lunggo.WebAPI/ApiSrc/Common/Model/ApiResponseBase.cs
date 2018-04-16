@@ -16,6 +16,9 @@ using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
 using Lunggo.WebAPI.ApiSrc.Flight.Model;
 using Newtonsoft.Json;
+using Microsoft.WindowsAzure.Storage.Table;
+using Lunggo.Framework.TableStorage;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.WebAPI.ApiSrc.Common.Model
 {
@@ -31,6 +34,8 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
 
         public static ApiResponseBase ExceptionHandling(Exception e, object request = null)
         {
+            var TableLog = new GlobalLog();
+            TableLog.PartitionKey = "ERROR LOG";
             while (e.InnerException != null)
                 e = e.InnerException;
 
@@ -45,22 +50,44 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             }
             var log = LogService.GetInstance();
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
-                log.Post(
-                    "```Error 500 API Log```"
-                    + "\n*Environment :* " + env.ToUpper()
-                    + "\n*Exception :* "
-                    + e.Message
-                    + "\n*Platform :* "
-                    + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()),
-                    env == "production" ? "#logging-prod" : "#logging-dev",
-                    new List<LogAttachment>
-                    {
+            TableLog.Log = "```Error 500 API Log```"
+                + "\n*Environment :* " + env.ToUpper()
+                + "\n*Exception :* "
+                + e.Message
+                + "\n*Platform :* "
+                + Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId());
+            log.Post(TableLog.Log
+                ,
+                env == "production" ? "#logging-prod" : "#logging-dev",
+                new List<LogAttachment>
+                {
                         new LogAttachment("STACK TRACE", e.StackTrace),
                         new LogAttachment("REQUEST", requestString)
-                    });
+                });
+            TableLog.Log = TableLog.Log + "\n*STACK TRACE:*\n" + e.StackTrace
+                                        + "\n*REQUEST:* " + requestString;
+            TableLog.Logging();
+            var inputException = new ExceptionTable();
+            inputException.ErrorCode = "500";
+            inputException.Exception = e.Message;
+            inputException.Platform = Client.GetPlatformType(HttpContext.Current.User.Identity.GetClientId()).ToString();
+            inputException.StackTrace = e.StackTrace;
+            inputException.Request = requestString;
+            inputException.PartitionKey = "ERROR LOG";
+            inputException.RowKey = Guid.NewGuid().ToString();
+            TableStorageService.GetInstance().InsertEntityToTableStorage(inputException, "LogExceptionError");
             return e.GetType() == typeof(JsonReaderException)
-                ? ErrorInvalidJson()
+                ? ErrorInvalidJson(e.Message)
                 : Error500();
+        }
+
+        public static ApiResponseBase Error(HttpStatusCode statusCode, string errorMessage)
+        {
+            return new ApiResponseBase
+            {
+                StatusCode = statusCode,
+                ErrorCode = errorMessage
+            };
         }
 
         public static ApiResponseBase Error500()
@@ -72,12 +99,12 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
             };
         }
 
-        public static ApiResponseBase ErrorInvalidJson()
+        public static ApiResponseBase ErrorInvalidJson(string message)
         {
             return new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                ErrorCode = "ERRGEN98"
+                ErrorCode = "ERRGEN98 : " + message
             };
         }
 
@@ -93,5 +120,5 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
         {
             return DerivedTypes;
         }
-    }
+    }    
 }

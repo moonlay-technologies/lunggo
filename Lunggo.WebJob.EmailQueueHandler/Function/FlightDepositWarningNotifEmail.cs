@@ -56,7 +56,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(depostiWarningData, mailModel, "FlightDepositWarningNotifEmail");
+            mailService.SendEmailWithTableTemplate(depostiWarningData, mailModel, "FlightDepositWarningNotifEmail");
 
             Console.WriteLine("Done Processing Flight Deposit Warning Notif Email");
         }

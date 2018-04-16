@@ -20,15 +20,8 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < 3; i++)
             {
-                try
-                {
                     var value = redisDb.StringGet(redisKey);
                     return value;
-                }
-                catch
-                {
-
-                }
             }
 
             return null;
@@ -41,15 +34,8 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < 3; i++)
             {
-                try
-                {
                     redisDb.StringSet(redisKey, rsvNo, TimeSpan.FromMinutes(150));
                     return;
-                }
-                catch
-                {
-
-                }
             }
         }
 
@@ -60,15 +46,8 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < 3; i++)
             {
-                try
-                {
                     redisDb.StringSet(redisKey, Convert.ToString(uniqueCode), TimeSpan.FromMinutes(150));
                     return;
-                }
-                catch
-                {
-
-                }
             }
         }
 
@@ -80,15 +59,8 @@ namespace Lunggo.ApCommon.Payment.Service
             var uniqueCode = new RedisValue();
             for (var i = 0; i < 3; i++)
             {
-                try
-                {
                     uniqueCode = redisDb.StringGet(redisKey);
                     break;
-                }
-                catch
-                {
-
-                }
             
             }
             
@@ -105,16 +77,8 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < 3; i++)
             {
-                try
-                {
                     redisDb.KeyDelete(redisKey);
                     return;
-                }
-                catch
-                {
-
-                }
-
             }
         }
     }

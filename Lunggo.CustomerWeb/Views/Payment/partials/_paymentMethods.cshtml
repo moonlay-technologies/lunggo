@@ -1,5 +1,10 @@
 @using Lunggo.ApCommon.Product.Constant
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.Framework.Config
+
+@{
+    var isProduction = ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production";
+}
 
 <!-- ========================= PAYMENT METHOD ========================= -->
 <div class="content-step" id="step-4">
@@ -239,7 +244,7 @@
                             <div class="row text-group">
                                 <div class="col-xs-3 clear-left"><b>Input 3</b></div>
                                 <div class="col-xs-9">: 
-                                    @Model.RsvNo.Substring(Model.RsvNo.Length - 5, 5)
+                                    @(Model.TrxId.GetHashCode() % 100000)
                                 </div>
                             </div>
                         </div>
@@ -281,6 +286,116 @@
                     @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.CimbClicks)
                 </div>
             </div><!-- /CIMB CLICKS -->
+            
+            <!-- DANAMON ONLINE -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.DanamonOnlineBanking')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/danamon_online_banking.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>Danamon Online Banking</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran Danamon Online Banking akan diproses di situs Bank Danamon. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.DanamonOnlineBanking)
+                </div>
+            </div><!-- /DANAMON ONLINE -->
+            
+            <!-- BTN MOBILE BANKING -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.BtnMobileBanking')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/btn_mobile_banking.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>BTN Mobile Banking</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran BTN Mobile Banking akan diproses di situs BTN. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.BtnMobileBanking)
+                </div>
+            </div><!-- /BTN MOBILE BANKING -->
+            
+            <!-- DOOET QNB -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.DooEtQnb')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/dooet_qnb.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>DooEt QNB</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran DooEt QNB akan diproses di situs Bank QNB. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.DooEtQnb)
+                </div>
+            </div><!-- /DOOET QNB -->
+            
+            <!-- IB MUAMALAT -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.IbMuamalat')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/ib-muamalat.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>IB Muamalat</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran IB Muamalat akan diproses di situs Bank Muamalat. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.IbMuamalat)
+                </div>
+            </div><!-- /IB MUAMALAT -->
+            
+            <!-- SBII ONLINE SHOPPING -->
+            <div class="box-payment col-xs-12">
+                <div class="row accordion-header" ng-click="selectMethod($event,'@PaymentMethod.SbiiOnlineShopping')">
+                    <div class="col-xs-5"><img src="/Assets/images/bank/sbii-online-shopping.png" /></div>
+                    <div class="col-xs-7 col-md-6">
+                        <h4>SBII Online Shopping</h4>
+                    </div>
+                    <div class="hidden-xs col-md-1 text-center">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="accordion-content">
+                    <div class="separator-desktop"></div>
+                    <p>Pembayaran SBII Online Shopping akan diproses di situs Bank SBII. Klik tombol bayar di bawah untuk menyelesaikan pembayaran.</p>
+                    @if (ViewBag.Platform != PlatformType.DesktopWebsite)
+                    {
+                        Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");
+                    }
+                    @Html.Partial("/Views/Payment/partials/_payButton.cshtml", PaymentMethod.SbiiOnlineShopping)
+                </div>
+            </div><!-- /SBII ONLINE SHOPPING -->
         </div>
     </div><!-- .payment-wrapper -->
 </div><!-- .content.step#step-4 -->

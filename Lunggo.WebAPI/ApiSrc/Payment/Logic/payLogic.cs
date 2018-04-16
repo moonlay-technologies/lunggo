@@ -44,9 +44,10 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERPPAY02"
                 };
-            bool isUpdated;
+            bool isUpdated;            
             var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
+            
             return apiResponse;
         }
 
@@ -107,6 +108,13 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         }
 
         private static bool NotEligibleForPaymentMethod(PayApiRequest request, IPrincipal user)
+        {
+            return (request.Method == PaymentMethod.Credit ||
+                    request.Method == PaymentMethod.Deposit) &&
+                    !(user.IsInRole("CorporateCustomer") || user.IsInRole("Admin"));
+        }
+
+        private static bool NotEligibleForPaymentMethod(CheckOutApiRequest request, IPrincipal user)
         {
             return (request.Method == PaymentMethod.Credit ||
                     request.Method == PaymentMethod.Deposit) &&

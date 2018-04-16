@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Auxiliary.Logic;
@@ -12,7 +13,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
     {
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/calendar")]
         [Route("v1/calendar/{lang}")]
         public ApiResponseBase GetCalendar(string lang = "id")
@@ -29,7 +30,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/newsletter/subscribe")]
         public ApiResponseBase NewsletterSubscribe()
         {
@@ -48,7 +49,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
 
         [HttpGet]
         [LunggoCorsPolicy]
-        //[Authorize]
+        [Level1Authorize]
         [Route("v1/promo")]
         [Route("v1/promo/{lang}")]
         public ApiResponseBase GetAllPromo(string lang = "id")
@@ -65,7 +66,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
 
         [HttpGet]
         [LunggoCorsPolicy]
-        //[Authorize]
+        [Level1Authorize]
         [Route("v1/featpromo")]
         [Route("v1/featpromo/{lang}")]
         public ApiResponseBase GetFeaturePromo(string lang = "id")
@@ -82,7 +83,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
 
         [HttpGet]
         [LunggoCorsPolicy]
-        //[Authorize]
+        [Level1Authorize]
         [Route("v1/promo/details/{id}")]
         [Route("v1/promo/details/{id}/{lang}")]
         public ApiResponseBase GetDetailPromo(string id, string lang = "id")
@@ -94,6 +95,26 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary
             catch (Exception e)
             {
                 return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("checkversion")]
+        public ApiResponseBase CheckVersion()
+        {
+            CheckVersionApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckVersionApiRequest>();
+                var apiResponse = AuxiliaryLogic.CheckVersion(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
     }

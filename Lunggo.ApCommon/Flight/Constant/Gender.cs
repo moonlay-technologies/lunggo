@@ -9,7 +9,7 @@
 
     internal class GenderCd
     {
-        internal static string Mnemonic(Gender gender)
+        internal static string Mnemonic(Gender? gender)
         {
             switch (gender)
             {

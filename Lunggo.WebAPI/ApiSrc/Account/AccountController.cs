@@ -1,19 +1,20 @@
-﻿using System;
-using System.Web;
-using System.Web.Http;
-using Lunggo.ApCommon.Identity.Auth;
-using Lunggo.Framework.Extension;
+﻿using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.Framework.Context;
+using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.Account.Logic;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity.Owin;
-using Lunggo.Framework.Cors;
+using System;
+using System.Web;
+using System.Web.Http;
 
 namespace Lunggo.WebAPI.ApiSrc.Account
 {
     public class AccountController : ApiController
     {
         #region Managers
+
         public AccountController()
         {
         }
@@ -39,10 +40,11 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             get { return _signInManager ?? HttpContext.Current.GetOwinContext().Get<ApplicationSignInManager>(); }
             private set { _signInManager = value; }
         }
-        #endregion
+
+        #endregion Managers
 
         [HttpPost]
-        [AllowAnonymous]
+        [Level0Authorize]
         [LunggoCorsPolicy]
         [Route("v1/login")]
         public ApiResponseBase Login()
@@ -61,8 +63,27 @@ namespace Lunggo.WebAPI.ApiSrc.Account
         }
 
         [HttpPost]
+        [Level0Authorize]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Route("v1/operator/login")]
+        public ApiResponseBase LoginOperator()
+        {
+            LoginApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<LoginApiRequest>();
+                var apiResponse = AccountLogic.LoginOperator(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
         [Route("v1/register")]
         public ApiResponseBase Register()
         {
@@ -81,7 +102,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/resendconfirmationemail")]
         public ApiResponseBase ResendConfirmationEmail()
         {
@@ -100,7 +121,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/forgot")]
         public ApiResponseBase ForgotPassword()
         {
@@ -119,7 +140,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPatch]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Level2Authorize]
         [Route("v1/profile")]
         public ApiResponseBase ChangeProfile()
         {
@@ -138,7 +159,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Level2Authorize]
         [Route("v1/profile")]
         public ApiResponseBase GetProfile()
         {
@@ -155,7 +176,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [UserAuthorize]
+        [Level2Authorize]
         [Route("v1/changepassword")]
         public ApiResponseBase ChangePassword()
         {
@@ -174,7 +195,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/resetpassword")]
         public ApiResponseBase ResetPassword()
         {
@@ -212,7 +233,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/trxhistory")]
         public ApiResponseBase GetTransactionHistory(string filter = null, string sort = null, int? page = null, int? itemsPerPage = null)
         {
@@ -229,7 +250,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/rsv/{rsvNo}")]
         public ApiResponseBase GetOrderDetail(string rsvNo)
         {
@@ -241,6 +262,199 @@ namespace Lunggo.WebAPI.ApiSrc.Account
             catch (Exception e)
             {
                 return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/statement")]
+        public ApiResponseBase GetAccountStatement(string from = null, string to = null)
+        {
+            try
+            {
+                var request = ApiRequestBase.DeserializeRequest<GetAccountStatementApiRequest>();
+                var apiResponse = AccountLogic.GetAccountStatement(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/balance")]
+        public ApiResponseBase GetAccountBalance()
+        {
+            try
+            {
+                var apiResponse = AccountLogic.GetAccountBalance();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/requestotp")]
+        public ApiResponseBase RequestOtp()
+        {
+            ForgetPasswordApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ForgetPasswordApiRequest>();
+                var apiResponse = AccountLogic.RequestOtp(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/checkotp")]
+        public ApiResponseBase CheckOtp()
+        {
+            CheckOtpApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<CheckOtpApiRequest>();
+                var apiResponse = AccountLogic.CheckOtp(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/resetpassword")]
+        public ApiResponseBase ResettingPassword()
+        {
+            ResettingPasswordApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ResettingPasswordApiRequest>();
+                var apiResponse = AccountLogic.ResettingPassword(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/referral")]
+        public ApiResponseBase GetReferral()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var apiResponse = AccountLogic.GetReferral();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/referraldetail")]
+        public ApiResponseBase GetReferralDetail()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var apiResponse = AccountLogic.GetReferralDetail();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/account/validatereferral")]
+        public ApiResponseBase ValidateReferral()
+        {
+            ValidateReferralApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<ValidateReferralApiRequest>();
+                var apiResponse = AccountLogic.ValidateReferral(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level1Authorize]
+        [Route("v1/account/referral")]
+        public ApiResponseBase InsertReferral()
+        {
+            InsertReferralApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<InsertReferralApiRequest>();
+                var apiResponse = AccountLogic.InsertReferral(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/account/verifyphone")]
+        public ApiResponseBase VerifyPhone()
+        {
+            VerifyPhoneApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<VerifyPhoneApiRequest>();
+                var apiResponse = AccountLogic.VerifyPhone(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
             }
         }
     }

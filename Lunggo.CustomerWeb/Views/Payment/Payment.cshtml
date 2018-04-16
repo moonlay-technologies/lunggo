@@ -1,10 +1,12 @@
 ﻿@using System.Globalization
+@using Lunggo.ApCommon.Activity.Model
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Identity.Users
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
@@ -14,7 +16,7 @@
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
-    ViewBag.SiteHeader = "checkout";
+    ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Pembayaran";
 }
 
@@ -59,32 +61,39 @@
         var currentPage = 1;
         var message = '@ViewBag.Message';
         // flight detail
-        var rsvNo = @Model.RsvNo;
+        //var rsvNo = '@Model.TrxId';
+        var trxId = '@Model.TrxId';
         var paymentDetail = '';
         var flightDetail = '';
         var trips = '';
-        var price = 0;
-        var originalPrice = '';
+        var price = @Model.OriginalPrice;
+        var originalPrice = @Model.OriginalPrice;
         var nights = '';
-        @if (Model.Reservation is FlightReservationForDisplay)
+        @*@if (Model.Reservation is FlightReservationForDisplay)
         {
             var reservation = Model.Reservation as FlightReservationForDisplay;
             @:trips = @Html.Raw(reservation.Itinerary.Trips.Serialize());
             @:price = @reservation.Itinerary.NetTotalFare;
             @:originalPrice = @reservation.Itinerary.OriginalTotalFare;
         }
-        else //if (Model.Reservation is HotelReservationForDisplay)
+        else if (Model.Reservation is HotelReservationForDisplay)
         {
             var reservation = Model.Reservation as HotelReservationForDisplay;
             @:hotelDetails = @Html.Raw(reservation.HotelDetail.Serialize());
             @:price = @reservation.HotelDetail.NetTotalFare;
             @:originalPrice = @reservation.HotelDetail.OriginalTotalFare;
         }
+        else
+        {
+            var reservation = Model.Reservation as ActivityReservationForDisplay;
+            @:price = @reservation.ActivityDetail.Price;
+            @:originalPrice = @reservation.ActivityDetail.Price;
+        }*@
         var redirectionUrl;
-        @if (Model.Reservation.Payment.RedirectionUrl != null) {
-            @:redirectionUrl = '@Model.Reservation.Payment.RedirectionUrl';
-        }
-        @if (Model.Reservation is FlightReservationForDisplay)
+        @*@if (Model.PaymentDetails.RedirectionUrl != null) {
+            @:redirectionUrl = '@Model.PaymentDetails.RedirectionUrl';
+        }*@
+        @*@if (Model.Reservation is FlightReservationForDisplay)
         {
             @:var departureDate;
             var reservation = Model.Reservation as FlightReservationForDisplay;
@@ -133,7 +142,7 @@
             @:var gtmPurchaseCurrency = 'IDR';
             @:var gtmPurchaseValue = @hotel.HotelDetail.NetTotalFare;
             @:var gtmPageName = 'payment';
-        }
+        }*@
         // change current page
         if (getParam('page') == 4) {
             currentPage = getParam('page');
@@ -152,7 +161,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/paymentController.js"></script>
+    <script src="@Fingerprint.Tag("/Assets/travorama20/js/paymentController.js")"></script>
 }
 
 @switch ((string)ViewBag.Message)
@@ -169,9 +178,7 @@
                         <div class="col-right">
                             <h3 class="lg-txt">
                                 <b>RINCIAN </b>
-                                @if (Model.Reservation is FlightReservationForDisplay)
-                                     { <span>PENERBANGAN</span> }
-                                else { <span>PEMESANAN</span> }
+                                <span>PESANAN</span>
                             </h3>
                             <div class="container-rincian-penerbangan">
                                 <div class="content-right-payment">
@@ -183,13 +190,13 @@
                                         :
                                         <span class="second">00</span>
                                     </p>
-                                    <p><b>Nomor Reservasi : </b>@Model.RsvNo</p>
+                                    @*<p><b>Nomor Reservasi : </b>@Model.RsvNo</p>*@
                                 </div>
-                                @if (Model.Reservation is FlightReservationForDisplay) {
+                                @*@if (Model.Reservation is FlightReservationForDisplay) {
                                         Html.RenderPartial("/Views/Payment/partials/_flightDetail.cshtml");
-                                } else {
+                                } else if (Model.Reservation is HotelReservationForDisplay) {
                                         Html.RenderPartial("/Views/Payment/partials/_hotelDetail.cshtml");
-                                }
+                                }*@
                                 @{Html.RenderPartial("/Views/Payment/partials/_priceDetail.cshtml");}
                             </div>
                         </div>

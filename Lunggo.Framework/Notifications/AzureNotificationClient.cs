@@ -3,7 +3,7 @@ using System.Linq;
 using Lunggo.Framework.Extension;
 using Microsoft.Azure.NotificationHubs;
 
-namespace Lunggo.Framework.Notifications
+namespace Lunggo.Apcommon.Notifications
 {
     public partial class NotificationService
     {

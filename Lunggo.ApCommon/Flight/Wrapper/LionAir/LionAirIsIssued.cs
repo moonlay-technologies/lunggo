@@ -10,6 +10,7 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
 using RestSharp;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {
@@ -19,7 +20,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
         {
             private IssueEnum IsIssued(string bookingId)
             {
+                GlobalLog TableLog = new GlobalLog();
                 var log = LogService.GetInstance();
+
+
+                TableLog.PartitionKey = "FLIGHT ISSUE LOG";
                 const int maxRetryCount = 10;
                 var counter = 0;
                 bool? isIssued = null;
@@ -30,8 +35,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 string userId;
                 string userName;
                 string errorMessage;
-
-                log.Post("[Lion Air] IsIssued: Before Login. Booking ID: " + bookingId, "#logging-issueflight");
+                TableLog.Log = "[Lion Air] IsIssued: Before Login. Booking ID: " + bookingId;
+                log.Post(TableLog.Log, "#logging-issueflight");
+                TableLog.Logging();
                 var succeedLogin = Login(client, out userName, out userId, out errorMessage, 24*3600);
                 if (!succeedLogin)
                 {
@@ -46,7 +52,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                 while (counter++ < maxRetryCount && isIssued == null)
                 {
                     //Page Masukin Booking Id
-                    log.Post("[Lion Air] IsIssued: Inserting Booking Id. Url : /LionAgentsOPS/TicketingQueue.aspx?consID=" + cid + " Booking ID: " + bookingId, "#logging-issueflight");
+                    TableLog.Log = "[Lion Air] IsIssued: Inserting Booking Id. Url : /LionAgentsOPS/TicketingQueue.aspx?consID=" + cid + " Booking ID: " + bookingId;
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     var url3 = @"/LionAgentsOPS/TicketingQueue.aspx?consID=" + cid;
                     var searchRequest3 = new RestRequest(url3, Method.GET);
                     searchRequest3.AddHeader("Referer",
@@ -61,7 +69,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var vs = HttpUtility.UrlEncode(searchedHtml["#__VIEWSTATE"].Attr("value"));
 
                     //Post data booking id
-                    log.Post("[Lion Air] IsIssued: Post Booking Id. Url : " + url3, "#logging-issueflight");
+                    TableLog.Log = "[Lion Air] IsIssued: Post Booking Id. Url : " + url3;
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     var searchRequest4 = new RestRequest(url3, Method.POST);
                     searchRequest4.AddHeader("Referer",
                         "https://agent.lionair.co.id/LionAgentsOPS/TicketingQueue.aspx?consID=" + cid);
@@ -76,7 +86,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     var searchResponse4 = client.Execute(searchRequest4);
 
                     //Page Tampilin Reservasi
-                    log.Post("[Lion Air] IsIssued: Page Show Reservation. Url : /LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId + " Booking ID: " + bookingId, "#logging-issueflight");
+                    TableLog.Log = "[Lion Air] IsIssued: Page Show Reservation. Url : /LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId + " Booking ID: " + bookingId;
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     var url5 = @"/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId;
                     var searchRequest5 = new RestRequest(url5, Method.GET);
                     searchRequest5.AddHeader("Referer",
@@ -99,7 +111,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                         isIssued = theTable.Children().ToList()[7].InnerText == "Confirmed";
                     }
 
-                    log.Post("[Lion Air] IsIssued: Post Page Show Reservation. Url : /LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId + " Booking ID: " + bookingId, "#logging-issueflight");
+                    TableLog.Log = "[Lion Air] IsIssued: Post Page Show Reservation. Url : /LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId + " Booking ID: " + bookingId;
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     var url6 = @"/LionAgentsOPS/TicketBooking.aspx?BookingReloc=" + bookingId;
                     var searchRequest6 = new RestRequest(url6, Method.POST);
                     searchRequest6.AddHeader("Referer",
@@ -114,7 +128,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
                     Thread.Sleep(2000);
                     var searchResponse6 = client.Execute(searchRequest6);
 
-                    log.Post("[Lion Air] IsIssued: Show Ticketing Queue. Url : /LionAgentsOPS/TicketQueue.aspx Booking ID: " + bookingId, "#logging-issueflight");
+                    TableLog.Log = "[Lion Air] IsIssued: Show Ticketing Queue. Url : /LionAgentsOPS/TicketQueue.aspx Booking ID: " + bookingId;
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     const string url7 = @"/LionAgentsOPS/TicketQueue.aspx";
                     var searchRequest7 = new RestRequest(url7, Method.GET);
                     searchRequest7.AddHeader("Referer",
@@ -127,7 +143,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
                     LogOut(cid, client);
                     TurnInUsername(userName);
-                    log.Post("[Lion Air] IsIssued: Done. Booking ID: " + bookingId, "#logging-issueflight");
+                    TableLog.Log = "[Lion Air] IsIssued: Done. Booking ID: " + bookingId;
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                 }
                 switch (isIssued)
                 {

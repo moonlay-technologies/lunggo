@@ -3,13 +3,15 @@
 @using Lunggo.ApCommon.Flight.Model
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.CustomerWeb.Helper
 @using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubmethod
-@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
+@model Lunggo.ApCommon.Payment.Model.PaymentDetails
 
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
     ViewBag.Title = "Instruksi Pembayaran";
     ViewBag.BodyClass = "page page-confirmation page-hotel page-checkout";
+    ViewBag.SiteHeader = "Instruction";
     ViewBag.AngularController = "confirmationController";
 
     var beneficiaryBankList = new List<SelectListItem>
@@ -19,7 +21,7 @@
     };
 }
 @{
-    var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
+    var timelimit = Model.TimeLimit;
     var images = new List<Image>();
 
 }
@@ -52,7 +54,7 @@
     </script>
 
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/ConfirmationController.js"></script>
+    <script src="@Fingerprint.Tag("/Assets/travorama20/js/ConfirmationController.js")"></script>
     <script>
         accordionFunctions();
     </script>
@@ -65,7 +67,7 @@
                 <h1 class="text-center section-title stripe">Panduan <span>Transfer</span></h1>
             </div>
 
-            <div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
+            @*<div class="no-pemesanan">No. Pesanan: <b>@Model.RsvNo</b></div>
 
             @if (Model is FlightReservationForDisplay)
             {
@@ -82,7 +84,7 @@
                     <div class="dash-border"></div>
                     <div>Mohon selesaikan pembayaran berikut:</div>
                 </section>
-            }
+            }*@
             <section class="bank-detail">
                 <div class="bank">
                     <div class="image-wrapper">
@@ -92,7 +94,7 @@
                         <dt>Nama Bank</dt>
                         <dd>@ViewBag.BankName</dd>
                     </dl>
-                    @if (Model.Payment.Method == PaymentMethod.BankTransfer)
+                    @if (Model.Method == PaymentMethod.BankTransfer)
                     {
                         <dl>
                             <dt>Cabang</dt>
@@ -105,11 +107,11 @@
                     }
                     <dl>
                         <dt>Nomor Rekening</dt>
-                        <dd>@Model.Payment.TransferAccount</dd>
+                        <dd>@Model.TransferAccount</dd>
                     </dl>
                     <dl>
                         <dt>Jumlah</dt>
-                        <dd>Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                        <dd>Rp @Model.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                     </dl>
                 </div><!-- .bank -->
             </section><!-- .bank-detail -->
@@ -139,14 +141,14 @@
                 <ol>
                     <li class="order-list">Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
                     <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
-                    @if (Model is FlightReservationForDisplay)
+                    @*@if (Model is FlightReservationForDisplay)
                     {
                         <li class="order-list">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
                     }
                     @if (Model is HotelReservationForDisplay)
                     {
                         <li class="order-list">Voucher akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                    }
+                    }*@
                 </ol>
                 <!--Bagian Form Konfirmasi yang dihilangin-->
             </div>
@@ -177,7 +179,7 @@
         </div><!-- .widget.countdown -->
         <br />
 
-        @if (Model is FlightReservationForDisplay)
+        @*@if (Model is FlightReservationForDisplay)
         {
             var reservation = Model as FlightReservationForDisplay;
 
@@ -348,7 +350,7 @@
         }
         <div class="form-group">
             <a href="@Url.Action("Thankyou", "Payment", new { Model.RsvNo })" class="btn btn-yellow form-control" style="width: 100%; height: 40px; font-size: 15px; line-height: 24px;"> SAYA SUDAH BAYAR</a>
-        </div>
+        </div>*@
     </div>
 
     <div class="popup__wrapper" ng-class="{'active' : expired}">

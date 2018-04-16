@@ -28,7 +28,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
             Console.WriteLine("Sending Notification Email...");
-            mailService.SendEmail(rsvNo, mailModel, "FlightIssueTimeoutNotifEmail");
+            mailService.SendEmailWithTableTemplate(rsvNo, mailModel, "FlightIssueTimeoutNotifEmail");
 
             Console.WriteLine("Done Processing Flight Issue Timeout Notif Developer for RsvNo " + rsvNo);
         }

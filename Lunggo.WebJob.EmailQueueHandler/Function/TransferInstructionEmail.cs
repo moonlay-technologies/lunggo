@@ -41,17 +41,17 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                 {
                     Console.WriteLine("Sending Bank Transfer Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "BankTransferInstructionEmail");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "BankTransferInstructionEmail");
                 }
                 else if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
                 {
                     Console.WriteLine("Sending Virtual Account Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmail");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "VirtualAccountInstructionEmail");
                 }
 
                 Console.WriteLine("Done Processing Transfer Instruction Email for RsvNo " + rsvNo);
             }
-            else
+            else if (rsvNo.StartsWith("2"))
             {
                 var hotelService = ApCommon.Hotel.Service.HotelService.GetInstance();
                 var sw = new Stopwatch();
@@ -76,13 +76,48 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 if (reservation.Payment.Method == PaymentMethod.BankTransfer)
                 {
                     Console.WriteLine("Sending Bank Transfer Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "BankTransferInstructionEmailHotel");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "BankTransferInstructionEmailHotel");
                 }
                 else if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
                 {
                     Console.WriteLine("Sending Virtual Account Instruction Email...");
-                    mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmailHotel");
+                    mailService.SendEmailWithTableTemplate(reservation, mailModel, "VirtualAccountInstructionEmailHotel");
                 }
+
+                Console.WriteLine("Done Processing Transfer Instruction Email for RsvNo " + rsvNo);
+            }
+            else
+            {
+                var activityService = ApCommon.Activity.Service.ActivityService.GetInstance();
+                var sw = new Stopwatch();
+                Console.WriteLine("Processing Transfer Instruction Email for RsvNo " + rsvNo + "...");
+
+                Console.WriteLine("Getting Required Data...");
+                sw.Start();
+                var reservation = activityService.GetReservationForDisplay(rsvNo);
+                sw.Stop();
+                Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
+                sw.Reset();
+
+                var mailService = MailService.GetInstance();
+                var mailModel = new MailModel
+                {
+                    RecipientList = new[] { reservation.Contact.Email },
+                    BccList = null,
+                    Subject = envPrefix + "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pemesanan " + reservation.RsvNo,
+                    FromMail = "booking@travorama.com",
+                    FromName = "Travorama"
+                };
+                //if (reservation.Payment.Method == PaymentMethod.BankTransfer)
+                //{
+                //    Console.WriteLine("Sending Bank Transfer Instruction Email...");
+                //    mailService.SendEmail(reservation, mailModel, "BankTransferInstructionEmailHotel");
+                //}
+                //else if (reservation.Payment.Method == PaymentMethod.VirtualAccount)
+                //{
+                //    Console.WriteLine("Sending Virtual Account Instruction Email...");
+                //    mailService.SendEmail(reservation, mailModel, "VirtualAccountInstructionEmailHotel");
+                //}
 
                 Console.WriteLine("Done Processing Transfer Instruction Email for RsvNo " + rsvNo);
             }

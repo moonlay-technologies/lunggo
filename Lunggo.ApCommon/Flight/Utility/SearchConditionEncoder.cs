@@ -32,8 +32,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public SearchFlightConditions DecodeSearchConditions(string searchId)
         {
-            try
-            {
+
                 var parts = searchId.Split('-');
                 var tripPart = parts.First();
                 var infoPart = parts.Last();
@@ -61,11 +60,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 {
                     return null;
                 }
-            }
-            catch
-            {
-                return null;
-            }
+           
         }
 
         public bool IsSearchIdValid(string searchId)

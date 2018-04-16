@@ -8,6 +8,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.CustomerWeb
 {
@@ -29,12 +30,15 @@ namespace Lunggo.CustomerWeb
             {
                 var clientId = filterContext.HttpContext.Request.Headers["X-Client-ID"];
                 var clientSecret = filterContext.HttpContext.Request.Headers["X-Client-Secret"];
-                if (clientId != null && clientId != "")
+                var identity = filterContext.HttpContext.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+                if (!string.IsNullOrEmpty(clientId))
+                {
+                    identity.AddClaim(new Claim("Client ID", clientId ?? ""));
                     filterContext.Controller.ViewBag.Platform = Client.GetPlatformType(clientId);
+                }
                 else
                 {
                     var mobileUrl = ConfigManager.GetInstance().GetConfigValue("general", "mobileUrl");
-                    var identity = filterContext.HttpContext.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     if (filterContext.HttpContext.Request.Url.Host == mobileUrl)
                     {
                         identity.AddClaim(new Claim("Client ID", "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=" ?? ""));
@@ -51,9 +55,9 @@ namespace Lunggo.CustomerWeb
             }
         }
 
-        private static HandleErrorAttribute CreateGlobalErrorHandler()
+        private static ExceptionFilter CreateGlobalErrorHandler()
         {
-            return new HandleErrorAttribute
+            return new ExceptionFilter
             {
                 Order = 1,
                 View = "GlobalError"
@@ -77,6 +81,21 @@ namespace Lunggo.CustomerWeb
                     BasicRealm = realm
                 };
                 filters.Add(filterAttribute);    
+            }
+        }
+
+        public class ExceptionFilter : HandleErrorAttribute
+        {
+            public override void OnException(ExceptionContext filterContext)
+            {
+                // log error to NLog
+                var log = "Exception : " + filterContext.Exception.Message
+                    + "\nStackTrace : \n" + filterContext.Exception.StackTrace;
+                var TableLog = new GlobalLog();
+                TableLog.PartitionKey = "GLOBAL UNHANDLED EXCEPTION LOG";
+                TableLog.Log = log;
+                TableLog.Logging();
+                base.OnException(filterContext);
             }
         }
     }

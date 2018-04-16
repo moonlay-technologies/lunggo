@@ -68,7 +68,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 }
             };
             Console.WriteLine("Sending Hotel Voucher Email...");
-            mailService.SendEmail(summary, mailModel, "HotelVoucherEmail");
+            mailService.SendEmailWithTableTemplate(summary, mailModel, "HotelVoucherEmail");
             //HotelService.GetInstance().UpdateIssueProgress(rsvNo, "Eticket Email Sent. Ticket Issuance Complete.");
             
             Console.WriteLine("Done Processing Hotel Voucher Email for RsvNo " + rsvNo);

@@ -38,6 +38,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +49,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableRecord\AccountBalanceTableRecord.cs" />
+    <Compile Include="TableRecord\AccountUserTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityBuyPriceTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityCustomDateTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityPackageReservationTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityPackageTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityRatingTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityRegularDateTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityReservationTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityReviewTableRecord.cs" />
+    <Compile Include="TableRecord\ActivitySellPriceTableRecord.cs" />
+    <Compile Include="TableRecord\ActivityTableRecord.cs" />
+    <Compile Include="TableRecord\AgeClassificationTableRecord.cs" />
+    <Compile Include="TableRecord\CartsTableRecord.cs" />
     <Compile Include="TableRecord\ContactTableRecord.cs" />
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
@@ -58,12 +75,19 @@
     </Compile>
     <Compile Include="TableRecord\HotelRoomTableRecord.cs" />
     <Compile Include="TableRecord\MarginTableRecord.cs" />
+    <Compile Include="TableRecord\MarketPriceTableRecord.cs" />
+    <Compile Include="TableRecord\NotificationTableRecord.cs" />
+    <Compile Include="TableRecord\OperatorTableRecord.cs" />
     <Compile Include="TableRecord\PaymentTableRecord.cs" />
     <Compile Include="TableRecord\PriceTableRecord.cs" />
+    <Compile Include="TableRecord\ReferralCodeTableRecord.cs" />
+    <Compile Include="TableRecord\ReferralCreditTableRecord.cs" />
+    <Compile Include="TableRecord\ReferralHistoryTableRecord.cs" />
     <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
     <Compile Include="TableRecord\RefundTableRecord.cs" />
     <Compile Include="TableRecord\ReservationStateTableRecord.cs" />
     <Compile Include="TableRecord\ReservationTableRecord.cs" />
+    <Compile Include="TableRecord\ResetPasswordTableRecord.cs" />
     <Compile Include="TableRecord\SavedCreditCardTableRecord.cs" />
     <Compile Include="TableRecord\CalendarRecipientTableRecord.cs" />
     <Compile Include="TableRecord\CampaignTableRecord.cs" />
@@ -88,6 +112,7 @@
     <Compile Include="TableRecord\NewsletterSubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SubscriberTableRecord.cs" />
     <Compile Include="TableRecord\SupplierTableRecord.cs" />
+    <Compile Include="TableRecord\TransactionJournalTableRecord.cs" />
     <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
     <Compile Include="TableRecord\UsedDiscountTableRecord.cs" />
     <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
@@ -116,6 +141,21 @@
     <Compile Include="TableRecord\UserTableRecord.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRecord\WishlistTableRecord.cs" />
+    <Compile Include="TableRepository\AccountBalanceRepository.cs" />
+    <Compile Include="TableRepository\AccountUserRepository.cs" />
+    <Compile Include="TableRepository\ActivityBuyPriceRepository.cs" />
+    <Compile Include="TableRepository\ActivityCustomDateRepository.cs" />
+    <Compile Include="TableRepository\ActivityPackageRepository.cs" />
+    <Compile Include="TableRepository\ActivityPackageReservationRepository.cs" />
+    <Compile Include="TableRepository\ActivityRatingRepository.cs" />
+    <Compile Include="TableRepository\ActivityRegularDateRepository.cs" />
+    <Compile Include="TableRepository\ActivityRepository.cs" />
+    <Compile Include="TableRepository\ActivityReservationRepository.cs" />
+    <Compile Include="TableRepository\ActivityReviewRepository.cs" />
+    <Compile Include="TableRepository\ActivitySellPriceRepository.cs" />
+    <Compile Include="TableRepository\AgeClassificationRepository.cs" />
+    <Compile Include="TableRepository\CartsRepository.cs" />
     <Compile Include="TableRepository\ContactRepository.cs" />
     <Compile Include="TableRepository\CurrencyRepository.cs" />
     <Compile Include="TableRepository\DiscountRepository.cs" />
@@ -128,12 +168,19 @@
     <Compile Include="TableRepository\HotelReservationDetailsRepository.cs" />
     <Compile Include="TableRepository\HotelRoomRepository.cs" />
     <Compile Include="TableRepository\MarginRepository.cs" />
+    <Compile Include="TableRepository\MarketPriceRepository.cs" />
+    <Compile Include="TableRepository\NotificationRepository.cs" />
+    <Compile Include="TableRepository\OperatorRepository.cs" />
     <Compile Include="TableRepository\PaymentRepository.cs" />
     <Compile Include="TableRepository\PriceRepository.cs" />
+    <Compile Include="TableRepository\ReferralCodeRepository.cs" />
+    <Compile Include="TableRepository\ReferralCreditRepository.cs" />
+    <Compile Include="TableRepository\ReferralHistoryRepository.cs" />
     <Compile Include="TableRepository\RefreshTokenRepository.cs" />
     <Compile Include="TableRepository\RefundRepository.cs" />
     <Compile Include="TableRepository\ReservationRepository.cs" />
     <Compile Include="TableRepository\ReservationStateRepository.cs" />
+    <Compile Include="TableRepository\ResetPasswordRepository.cs" />
     <Compile Include="TableRepository\SavedCreditCardRepository.cs" />
     <Compile Include="TableRepository\CalendarRecipientRepository.cs" />
     <Compile Include="TableRepository\CampaignRepository.cs" />
@@ -158,6 +205,7 @@
     <Compile Include="TableRepository\NewsletterSubscriberRepository.cs" />
     <Compile Include="TableRepository\SubscriberRepository.cs" />
     <Compile Include="TableRepository\SupplierRepository.cs" />
+    <Compile Include="TableRepository\TransactionJournalRepository.cs" />
     <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />
     <Compile Include="TableRepository\UsedDiscountRepository.cs" />
     <Compile Include="TableRepository\UsedMarginRepository.cs" />
@@ -186,6 +234,7 @@
     <Compile Include="TableRepository\UserRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="TableRepository\WishlistRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
@@ -195,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

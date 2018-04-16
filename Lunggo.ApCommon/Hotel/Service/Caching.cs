@@ -25,15 +25,8 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(30));
-                    return;
-                }       
-                catch
-                {
-
-                }
+                redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(30));
+                return;
             }           
         }
 
@@ -46,15 +39,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var cacheObject = "";
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    cacheObject = (string)redisDb.StringGet(redisKey);
-                    break;
-                }
-                catch
-                {
-
-                }
+                cacheObject = (string)redisDb.StringGet(redisKey);
+                break;
             }
 
             if (cacheObject == "")
@@ -74,15 +60,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisValue = rooms.ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
-                    return;
-                }
-                catch
-                {
-
-                }
+                redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
+                return;
             }
 
         }
@@ -91,18 +70,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    var redisService = RedisService.GetInstance();
-                    var redisKey = "HotelAvailableRates:" + token;
-                    var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                    var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
-                    var expiryTime = DateTime.UtcNow + timeToLive;
-                    return expiryTime;
-                }
-                catch
-                {
-                }
+                var redisService = RedisService.GetInstance();
+                var redisKey = "HotelAvailableRates:" + token;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                var expiryTime = DateTime.UtcNow + timeToLive;
+                return expiryTime;
             }
             return DateTime.UtcNow;
         }
@@ -115,16 +88,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             var cacheObject = new RedisValue();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    cacheObject = redisDb.StringGet(redisKey);
-                    var availableRates = cacheObject.DeconvertTo<List<HotelRoom>>();
-                    return availableRates;
-                }
-                catch
-                {
-
-                }
+                cacheObject = redisDb.StringGet(redisKey);
+                var availableRates = cacheObject.DeconvertTo<List<HotelRoom>>();
+                return availableRates;
             }
             return new List<HotelRoom>();
 
@@ -138,15 +104,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisValue = hotel.Serialize();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
-                    return;
-                }
-                catch
-                {
-
-                }
+                redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
+                return;
             }
              //, expiry - timeNow
         }
@@ -160,15 +119,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisValue = searchResult.ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
-                    return;
-                }
-                catch
-                {
-
-                }
+                redisDb.StringSet(redisKey, redisValue, TimeSpan.FromMinutes(timeout));
+                return;
             }
            
         }
@@ -181,16 +133,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             var cacheObject = new RedisValue();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    cacheObject = redisDb.StringGet(redisKey);
-                    var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
-                    return searchResult;
-                }
-                catch
-                {
-
-                }
+                cacheObject = redisDb.StringGet(redisKey);
+                var searchResult = cacheObject.DeconvertTo<SearchHotelResult>();
+                return searchResult;
             }
             return new SearchHotelResult();
             
@@ -200,18 +145,12 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    var redisService = RedisService.GetInstance();
-                    var redisKey = "HotelSearchResult:" + token;
-                    var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-                    var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
-                    var expiryTime = DateTime.UtcNow + timeToLive;
-                    return expiryTime;
-                }
-                catch
-                {
-                }
+                var redisService = RedisService.GetInstance();
+                var redisKey = "HotelSearchResult:" + token;
+                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
+                var expiryTime = DateTime.UtcNow + timeToLive;
+                return expiryTime;
             }
             return DateTime.UtcNow;
         }
@@ -224,15 +163,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var cacheObject = "";
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    cacheObject = (string)redisDb.StringGet(redisKey);
-                    break;
-                }
-                catch
-                {
-
-                }
+                cacheObject = (string)redisDb.StringGet(redisKey);
+                break;
             }
             if (cacheObject == "")
             {
@@ -250,15 +182,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var cacheObject = "";
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
                     cacheObject = (string)redisDb.StringGet(redisKey);
                     break;
-            }
-            catch
-            {
-
-                }
             }
 
             if (cacheObject == "")
@@ -268,18 +193,11 @@ namespace Lunggo.ApCommon.Hotel.Service
             var timeToLive = redisDb.KeyTimeToLive(redisKey).GetValueOrDefault();
             var expiryTime = DateTime.UtcNow + timeToLive;
             return expiryTime;
-            //}
-            //catch
-            //{
-            //    return DateTime.UtcNow;
-            //}
         }
 
         public DateTime? GetSearchedHotelDetailsExpiry(string searchId)
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
-            {
-            try
             {
                 var redisService = RedisService.GetInstance();
                 var redisKey = "searchedHotelItineraries:0:" + searchId + ":";
@@ -288,13 +206,8 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var expiryTime = DateTime.UtcNow + timeToLive;
                 return expiryTime;
             }
-            catch
-            {
-                   
-            }
-            }
-                return null;
-            }
+            return null;
+        }
 
         private void SaveActiveMarginRulesToCache(List<HotelMarginRule> marginRules)
         {
@@ -306,16 +219,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
             redisDb.StringSet(redisMarginsKey, marginsCacheObject);
             redisDb.StringSet(redisRulesKey, rulesCacheObject);
                     return;
-                }
-                catch
-                {
-                    
-                }
             }
             
         }
@@ -330,16 +236,9 @@ namespace Lunggo.ApCommon.Hotel.Service
             var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
             redisDb.StringSet(marginsRedisKey, marginsCacheObject);
             redisDb.StringSet(rulesRedisKey, rulesCacheObject);
                     return;
-                }
-                catch
-                {
-
-                }
             }
         }
 
@@ -353,24 +252,15 @@ namespace Lunggo.ApCommon.Hotel.Service
             var deletedRulesCacheObject = deletedMarginRules.Select(mr => mr.Rule).ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
             redisDb.StringSet(deletedMarginsRedisKey, deletedMarginsCacheObject);
             redisDb.StringSet(deletedRulesRedisKey, deletedRulesCacheObject);
                     return;
-                }
-                catch
-                {
-
-                }
             }
         }
 
         private List<HotelMarginRule> GetAllActiveMarginRulesFromCache()
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
-            {
-            try
             {
                 var redisService = RedisService.GetInstance();
                 var redisMarginKey = "activeHotelMargins";
@@ -383,19 +273,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var marginRules = margins.Zip(rules, (margin, rule) => new HotelMarginRule(margin, rule)).ToList();
                 return marginRules;
             }
-            catch
-            {
-                    
-                }  
-            }
                 return new List<HotelMarginRule>();
-            }
+        }
 
         private List<HotelMarginRule> GetActiveMarginRulesFromBufferCache()
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
-            {
-            try
             {
                 var redisService = RedisService.GetInstance();
                 var redisMarginsKey = "activeHotelMarginsBuffer";
@@ -408,19 +291,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var marginRules = margins.Zip(rules, (margin, rule) => new HotelMarginRule(margin, rule)).ToList();
                 return marginRules;
             }
-            catch
-            {
-                    
-                }
-            }
                 return new List<HotelMarginRule>();
-            }
+        }
 
         private List<HotelMarginRule> GetDeletedMarginRulesFromBufferCache()
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
-            {
-            try
             {
                 var redisService = RedisService.GetInstance();
                 var redisMarginsKey = "deletedHotelMarginsBuffer";
@@ -432,11 +308,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var rules = rulesCacheObject.DeconvertTo<List<HotelRateRule>>();
                 var marginRules = margins.Zip(rules, (margin, rule) => new HotelMarginRule(margin, rule)).ToList();
                 return marginRules;
-            }
-            catch
-            {
-                    
-                }
             }
                 return new List<HotelMarginRule>();
         }
@@ -454,12 +325,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    var values = redisDb.HashGet(location, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
-                    return values.Select(value => Convert.ToDecimal(value)).ToList();
-                }
-                catch { }
+                var values = redisDb.HashGet(location, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
+                return values.Select(value => Convert.ToDecimal(value)).ToList();
             }
             return new List<decimal>();
 
@@ -478,12 +345,8 @@ namespace Lunggo.ApCommon.Hotel.Service
             var values = new List<RedisValue>();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
-                    values = redisDb.HashGet(location, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
-                    break;
-                }
-                catch { }
+                values = redisDb.HashGet(location, Array.ConvertAll(listofDates.ToArray(), item => (RedisValue)item)).ToList();
+                break;
             }
 
             if (values.Count == 0)
@@ -516,17 +379,13 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
+                foreach (DateTime day in EachDay(hotelRsv[0].CheckInDate, hotelRsv[0].CheckOutDate))
                 {
-                    foreach (DateTime day in EachDay(hotelRsv[0].CheckInDate, hotelRsv[0].CheckOutDate))
-                    {
-                        var keyDate = SetDate(day);
-                        redisDb.HashSet(locationCd, keyDate, Convert.ToString(lowestvalue));
-                        Console.WriteLine("Lowest value for location: " + locationCd + keyDate + " is " + lowestvalue);
-                    }
-                    break;
+                    var keyDate = SetDate(day);
+                    redisDb.HashSet(locationCd, keyDate, Convert.ToString(lowestvalue));
+                    Console.WriteLine("Lowest value for location: " + locationCd + keyDate + " is " + lowestvalue);
                 }
-                catch { }
+                break;
             }
         }
 
@@ -536,14 +395,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
                     redisDb.HashSet(locationCd, checkInDate, Convert.ToString(minPrice));
                     Console.WriteLine("Lowest value for location: " + locationCd + checkInDate + " is " + minPrice);
                     
                     break;
-                }
-                catch { }
             }
         }
 
@@ -553,8 +408,6 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                try
-                {
                     for(var j = 0; j < nights; j++)
                     {
                         var day = checkinDate.AddDays(j);
@@ -563,8 +416,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                         Console.WriteLine("Lowest value for location: " + locationCd + keyDate + " is " + lowestvalue);
                     }
                     break;
-                }
-                catch { }
             }
         }
 

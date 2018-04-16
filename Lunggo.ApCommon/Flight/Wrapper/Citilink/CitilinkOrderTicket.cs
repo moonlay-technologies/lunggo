@@ -9,6 +9,7 @@ using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Web;
 using RestSharp;
+using Lunggo.ApCommon.Log;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 {
@@ -39,12 +40,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var bulanIni7 = DateTime.Now.Date.AddDays(7).Month;
                 var tahunIni7 = DateTime.Now.Date.AddDays(7).Year;
 
+                var TableLog = new GlobalLog();
+                
+                TableLog.PartitionKey = "FLIGHT ISSUE LOG";
+                
                 var log = LogService.GetInstance();
                 var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
                 var clientx = CreateAgentClient();
                 Login(clientx);
 
-                log.Post("[Citilink] [GET] Halaman BookingListTravelAgent.aspx", "#logging-issueflight");
+                TableLog.Log = "[Citilink] [GET] Halaman BookingListTravelAgent.aspx";              
+                log.Post(TableLog.Log, "#logging-issueflight");
+                TableLog.Logging();
                 var url = "BookingListTravelAgent.aspx";
                 var listRequest = new RestRequest(url, Method.POST);
                 var postData =
@@ -78,7 +85,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var listResponse = clientx.Execute(listRequest);
                 if (listResponse.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
                 {
-                    log.Post("[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code", "#logging-issueflight");
+                    TableLog.Log = "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     return new IssueTicketResult
                     {
                         IsSuccess = false,
@@ -87,7 +96,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     };
                 }
 
-                log.Post("[Citilink] [POST] Halaman BookingListTravelAgent.aspx", "#logging-issueflight");
+                TableLog.Log = "[Citilink] [POST] Halaman BookingListTravelAgent.aspx";
+                log.Post(TableLog.Log, "#logging-issueflight");
+                TableLog.Logging();
+
                 url = "BookingListTravelAgent.aspx";
                 var selectRequest = new RestRequest(url, Method.POST);
                 postData = 
@@ -121,7 +133,9 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                 var selectResponse = clientx.Execute(selectRequest);
                 if (selectResponse.ResponseUri.AbsolutePath != "/Payment.aspx")
                 {
-                    log.Post("[Citilink] Response Uri is not /Payment.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
+                    TableLog.Log = "[Citilink] Response Uri is not /Payment.aspx or Status is not (OK Or Redirected)";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
                     return new IssueTicketResult
                     {
                         CurrentBalance = GetCurrentBalance(),
@@ -134,7 +148,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                 try
                 {
-                    log.Post("[Citilink]  Halaman Payment.aspx", "#logging-issueflight");
+                    TableLog.Log = "[Citilink]  Halaman Payment.aspx";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
+
                     url = "Payment.aspx";
                     var paymentRequest = new RestRequest(url, Method.POST);
                     postData =
@@ -165,7 +182,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     paymentRequest.AddParameter("application/x-www-form-urlencoded", postData, ParameterType.RequestBody);
                     var paymentResponse = clientx.Execute(paymentRequest);
 
-                    log.Post("[Citilink] [POST] Halaman BookingListTravelAgent.aspx", "#logging-issueflight");
+                    TableLog.Log = "[Citilink] [POST] Halaman BookingListTravelAgent.aspx";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
+
                     url = "BookingListTravelAgent.aspx";
                     var listRequest2 = new RestRequest(url, Method.POST);
                     postData =
@@ -199,7 +219,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     var listResponse2 = clientx.Execute(listRequest2);
                     if (listResponse2.ResponseUri.AbsolutePath != "/BookingListTravelAgent.aspx")
                     {
-                        log.Post("[Citilink] Response Uri is not /BookingListTravelAgent.aspx or Status is not (OK Or Redirected)", "#logging-issueflight");
+
+                        TableLog.Log = "[Citilink] Response Uri is not /BookingListTravelAgent.aspx or Status is not (OK Or Redirected)";
+                        log.Post(TableLog.Log, "#logging-issueflight");
+                        TableLog.Logging();
                         return new IssueTicketResult
                         {
                             CurrentBalance = GetCurrentBalance(),
@@ -208,7 +231,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                             ErrorMessages = new List<string> { "[Citilink] Error while requesting at BookingListTravelAgent.aspx. Unexpected response path or response status code || " + listResponse2.Content }
                         };
                     }
-                    log.Post("[Citilink] [POST] Halaman BookingListTravelAgent.aspx", "#logging-issueflight");
+
+                    TableLog.Log = "[Citilink] [POST] Halaman BookingListTravelAgent.aspx";
+                    log.Post(TableLog.Log, "#logging-issueflight");
+                    TableLog.Logging();
+
                     url = "BookingListTravelAgent.aspx";
                     var checkRequest = new RestRequest(url, Method.POST);
                     postData =
@@ -252,14 +279,18 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
 
                     if ((statusPembayaran == "Konfirm") || (statusPembayaran == "Confirmed"))
                         {
-                            log.Post("[Citilink] Status pembayaran Confirmed", "#logging-issueflight");
+                            TableLog.Log = "[Citilink] Status pembayaran Confirmed";
+                            log.Post(TableLog.Log, "#logging-issueflight");
+                            TableLog.Logging();
                             hasil.BookingId = bookingId;
                             hasil.IsSuccess = true;
                             hasil.IsInstantIssuance = true;
                         }
                     else
                         {
-                            log.Post("[Citilink] Status pembayaran is not Konfim or Confirmed", "#logging-issueflight");
+                            TableLog.Log = "[Citilink] Status pembayaran is not Konfim or Confirmed";
+                            log.Post(TableLog.Log, "#logging-issueflight");
+                            TableLog.Logging();
                             hasil.CurrentBalance = GetCurrentBalance();
                             hasil.IsSuccess = false;
                             hasil.Errors = new List<FlightError> { FlightError.FailedOnSupplier };

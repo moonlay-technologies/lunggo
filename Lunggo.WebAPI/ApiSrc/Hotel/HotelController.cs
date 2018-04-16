@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -13,7 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
     {
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/hotel/book")]
         public ApiResponseBase BookHotel()
         {
@@ -36,7 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/hotel/select")]
         public ApiResponseBase SelectHotel()
         {
@@ -59,6 +60,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Level1Authorize]
         [Route("v1/hotel/getroomdetail")]
         public ApiResponseBase GetRoomDetail()
         {
@@ -81,6 +83,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
+        [Level1Authorize]
         [Route("v1/hotel/getrate")]
         public ApiResponseBase GetRate()
         {
@@ -103,7 +106,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/hotel/search")]
         public ApiResponseBase SearchHotel()
         {
@@ -127,7 +130,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpGet]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/hotel/GetHotelDetail/{searchId}/{hotelCd}")]
         public ApiResponseBase GetHotelDetail(string searchId, int hotelCd)
         {
@@ -156,6 +159,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Level1Authorize]
         [Route("v1/hotel/GetSelectedHotelDetail/{token}")]
         public ApiResponseBase GetSelectedHotelDetail(string token)
         {
@@ -183,6 +187,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Level2Authorize]
         [Route("v1/hotel/CancelHotelBooking/{bookingId}")]
         public ApiResponseBase CancelHotelBooking(string bookingId)
         {
@@ -210,7 +215,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Authorize]
+        [Level1Authorize]
         [Route("v1/hotel/availableRate")]
         public ApiResponseBase GetAvailableRate()
         {
@@ -233,6 +238,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel
 
         [HttpGet]
         [LunggoCorsPolicy]
+        [Level1Authorize]
         [Route("v1/hotel/pricecalendar/{location}/{startDate}/{endDate}/{currency}")]
         public ApiResponseBase PriceCalendar(string location, string currency, string startDate, string endDate)
         {

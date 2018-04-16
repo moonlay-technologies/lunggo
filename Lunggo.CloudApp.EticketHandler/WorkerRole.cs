@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.ServiceRuntime;
+using Lunggo.Worker.EticketHandler;
 
 namespace Lunggo.CloudApp.EticketHandler
 {
@@ -61,6 +62,7 @@ namespace Lunggo.CloudApp.EticketHandler
                 await ProcessEticketQueue.ProcessQueue();
                 await ProcessHotelVoucherQueue.ProcessQueue();
                 await ProcessChangedEticketQueue.ProcessQueue();
+                await ProcessActivityVoucherQueue.ProcessQueue();
                 await Task.Delay(1000, cancellationToken);
             }
         }

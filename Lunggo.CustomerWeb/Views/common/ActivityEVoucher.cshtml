@@ -1,0 +1,107 @@
+﻿@using System.Globalization
+@model Lunggo.ApCommon.Activity.Model.ActivityEVoucher
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserpage/vendor/bootstrap/css/bootstrap.css")" rel="stylesheet" />
+
+    <!-- Custom styles for this template -->
+    <link href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserpage/cssDesktop/style-pdf.css")" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+    <!-- Page Content -->
+    <div class="container-pdf">
+        <header>
+            <div class="tag">
+                <div class="text-tag">Voucher</div>
+            </div>
+            <div class="date">
+                No. Pesanan: @Model.ActivityReservation.RsvNo
+            </div>
+            <div class="clearfix"></div>
+            <div class="container-logo">
+                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/logo.png")">
+            </div>
+        </header>
+
+        <main class="clearfix">
+            <div class="img-activity" style="width: 400px; height: 400px; background: url('@Model.BookingDetail.MediaSrc'); background-size: cover; float:left; "></div>
+            <div class="right-content">
+                <div class="judul-activity">@Model.BookingDetail.Name</div>
+                <div class="alamat-activity">@Model.BookingDetail.Address</div>
+                <div class="container-barcode">
+                    <div class="barcode"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/barcode.jpg")"></div>
+                    <div class="kode-barcode">Kode voucher: @Model.BookingDetail.TicketNumber</div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="container-detail-pesanan">
+                <div class="category">Detail Pesanan</div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Nama Pemesan:</div>
+                    <div class="jawaban">@Model.ActivityReservation.Contact.Name</div>
+                </div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Nama Activity:</div>
+                    <div class="jawaban">@Model.BookingDetail.Name</div>
+                </div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Tanggal Activity:</div>
+                    <div class="jawaban">@Model.BookingDetail.Date.ToString("dd MMMM yyyy", CultureInfo.CreateSpecificCulture("id-ID"))</div>
+                </div>
+                <div class="container-data clearfix">
+                    <div class="pertanyaan">Jumlah Peserta:</div>
+                    <div class="jawaban">
+                        @string.Join(", ", Model.BookingDetail.PaxCount.Select(pax => pax.Count + " " + pax.Type))
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="container-catatan">
+                <p>Catatan khusus:</p>
+                <ul>
+                    <li>Pee in human's bed until he cleans the</li>
+                    <li>If human is on laptop sit on the keyboard</li>
+                    <li>let me out i'm lonely outside, let me in i can't make up my mind whether to go in or out, guess</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <div class="container-footer">
+                <a href=“#”>www.travorama.com</a>
+                <a href=“#”>|</a>
+                <a href=“#”>021-12324456</a>
+                <a href=“#”>|</a>
+                <a href=“#”>cs@travorama.com</a>
+
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/Assets/teaserpage/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

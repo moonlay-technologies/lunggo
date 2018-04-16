@@ -10,6 +10,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 using SelectPdf;
 using FileInfo = Lunggo.Framework.SharedModel.FileInfo;
+using Lunggo.ApCommon.Activity.Service;
 
 namespace Lunggo.CloudApp.EticketHandler
 {
@@ -40,7 +41,7 @@ namespace Lunggo.CloudApp.EticketHandler
 
             Trace.WriteLine("Parsing Eticket Template for RsvNo " + rsvNo + "...");
             sw.Start();
-            var eticketTemplate = templateService.GenerateTemplate(reservation, "FlightEticket");
+            var eticketTemplate = templateService.GenerateTemplateFromTable(reservation, "FlightEticket");
             sw.Stop();
             Trace.WriteLine("Done Parsing Eticket Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -74,7 +75,7 @@ namespace Lunggo.CloudApp.EticketHandler
 
             Trace.WriteLine("Parsing Invoice for RsvNo " + rsvNo + "...");
             sw.Start();
-            var invoiceTemplate = templateService.GenerateTemplate(reservation, "FlightInvoice");
+            var invoiceTemplate = templateService.GenerateTemplateFromTable(reservation, "FlightInvoice");
             sw.Stop();
             Trace.WriteLine("Done Parsing Invoice Template for RsvNo " + rsvNo + ". (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();

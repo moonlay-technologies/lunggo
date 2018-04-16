@@ -300,27 +300,21 @@ namespace Lunggo.ApCommon.Hotel.Service
             for (var i = 1; i < 1000; i++)
             {
                 var hotel = new HotelDetailsBase();
-                try
+                hotel = GetInstance().GetHotelDetailFromTableStorage(i);
+                var index = ((long) AutocompleteType.Hotel).ToString() + hotel.HotelCode*4294967295;
+                var input = new Autocomplete
                 {
-                    hotel = GetInstance().GetHotelDetailFromTableStorage(i);
-                    var index = ((long) AutocompleteType.Hotel).ToString() + hotel.HotelCode*4294967295;
-                    var input = new Autocomplete
-                    {
-                        Id = index,
-                        Code = hotel.HotelCode.ToString(),
-                        Type = AutocompleteType.Hotel,
-                        Name = hotel.HotelName + ", " + GetInstance().
-                            GetZoneNameFromDict(hotel.ZoneCode) + ", "
-                            + GetInstance().GetDestinationNameFromDict(hotel.DestinationCode).Name + ", "
-                            + GetInstance().GetCountryNameFromDict(hotel.CountryCode).Name
-                    };
+                    Id = index,
+                    Code = hotel.HotelCode.ToString(),
+                    Type = AutocompleteType.Hotel,
+                    Name = hotel.HotelName + ", " + GetInstance().
+                        GetZoneNameFromDict(hotel.ZoneCode) + ", "
+                        + GetInstance().GetDestinationNameFromDict(hotel.DestinationCode).Name + ", "
+                        + GetInstance().GetCountryNameFromDict(hotel.CountryCode).Name
+                };
 
-                    _Autocompletes.Add(index, input);
-                }
-                catch
-                {
-
-                }
+                _Autocompletes.Add(index, input);
+                
 
             }
         }

@@ -28,7 +28,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama",
                 Subject = envPrefix + "[Travorama] Selamat, Anda mendapatkan sebuah Calendar"
             };
-            mailService.SendEmail(address, mailModel, "GetCalendarEmail");
+            mailService.SendEmailWithTableTemplate(address, mailModel, "GetCalendarEmail");
             sw.Stop();
 
             Console.WriteLine("Done Processing Get Calendar Email for " + address + " (" + sw.Elapsed.TotalSeconds + "s).");

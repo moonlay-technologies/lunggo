@@ -286,13 +286,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                             var hargaAdult = 0M;
                             var hargaChild = 0M;
                             var hargaInfant = 0M;
-                            try
-                            {
-                                hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                            }
-                            catch { }
+
+                            hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                            hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                            hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
 
 
                             var itin = new FlightItinerary
@@ -460,13 +457,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                 var hargaAdult = 0M;
                                 var hargaChild = 0M;
                                 var hargaInfant = 0M;
-                                try
-                                {
-                                    hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                    hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                    hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                }
-                                catch { }
+
+                                hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+
 
                                 var itin = new FlightItinerary
                                 {
@@ -630,13 +625,11 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                                     var hargaAdult = 0M;
                                     var hargaChild = 0M;
                                     var hargaInfant = 0M;
-                                    try
-                                    {
-                                        hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                        hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                        hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
-                                    }
-                                    catch { }
+
+                                    hargaAdult = decimal.Parse(ambilDataAjax["#fareDetailAdult .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                    hargaChild = decimal.Parse(ambilDataAjax["#fareDetailChild .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+                                    hargaInfant = decimal.Parse(ambilDataAjax["#fareDetailInfant .priceDetail"].Reverse().Skip(1).Take(1).Single().InnerText);
+
 
                                     var itin = new FlightItinerary
                                     {

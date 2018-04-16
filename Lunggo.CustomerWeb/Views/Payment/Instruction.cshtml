@@ -3,16 +3,17 @@
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Hotel.Service
 @using Lunggo.ApCommon.Flight.Model
+@using Lunggo.CustomerWeb.Helper
 @using PaymentMethod = Lunggo.ApCommon.Payment.Constant.PaymentMethod
 @using PaymentSubMethod = Lunggo.ApCommon.Payment.Constant.PaymentSubmethod
-@model Lunggo.ApCommon.Product.Model.ReservationForDisplayBase
+@model Lunggo.ApCommon.Payment.Model.PaymentDetails
 
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
     ViewBag.BodyClass = "page-checkout page-confirmation";
     ViewBag.Title = "Instruksi Pembayaran";
     ViewBag.AngularController = "confirmationController";
-    ViewBag.SiteHeader = "checkout";
+    ViewBag.SiteHeader = "Instruction";
 
     var beneficiaryBankList = new List<SelectListItem>
     {
@@ -22,36 +23,12 @@
 }
 @{
 
-    var timelimit = Model.Payment.TimeLimit.GetValueOrDefault();
+    var timelimit = Model.TimeLimit;
     var images = new List<Image>();
     var hotelImg = "";
     var roomImg = "";
     var sum = 0;
-    try
-    {
-        if (Model is HotelReservationForDisplay)
-        {
-            var rsv = Model as HotelReservationForDisplay;
-            var rsvNo = Model.RsvNo;
-            images = HotelService.GetInstance().GetHotelDetailFromDb(rsv.HotelDetail.HotelCode).ImageUrl;
-            var orDefault = images.Where(i => i.Type == "GEN").ToList().FirstOrDefault();
-            if (orDefault != null)
-            {
-                hotelImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + orDefault.Path;
-            }
-            var firstOrDefault = images.Where(i => i.Type == "HAB").ToList().FirstOrDefault();
-            if (firstOrDefault != null)
-            {
-                roomImg = images == null
-                    ? null
-                    : "https://photos.hotelbeds.com/giata/" + firstOrDefault.Path;
-            }
 
-        }
-    }
-    catch { }
 }
 
 @section AdditionalJS {
@@ -80,7 +57,7 @@
 
     </script>
     <!-- angular controller -->
-    <script src="/Assets/travorama20/js/ConfirmationController.js"></script>
+    <script src="@Fingerprint.Tag("/Assets/travorama20/js/ConfirmationController.js")"></script>
 
     <!-- accordion -->
     <script>
@@ -106,7 +83,7 @@
 
                 <div class="instruction">
                     <h3 class="lg-txt">PANDUAN <b>TRANSFER</b></h3>
-                    <header>
+                    @*<header>
                         <div class="text-left">No. Pesanan: <b>@Model.RsvNo</b></div>
                     </header>
                     @if (Model is FlightReservationForDisplay)
@@ -126,7 +103,7 @@
                                 <p>Mohon selesaikan pembayaran berikut:</p>
                             </div>
                         </section>
-                    }
+                    }*@
                     <section class="bank-detail">
                         <div class="bank">
                             <div class="row">
@@ -138,7 +115,7 @@
                                         <dt>Nama Bank</dt>
                                         <dd>: @ViewBag.BankName</dd>
                                     </dl>
-                                    @if (Model.Payment.Method == PaymentMethod.BankTransfer)
+                                    @if (Model.Method == PaymentMethod.BankTransfer)
                                     {
                                         <dl>
                                             <dt>Cabang</dt>
@@ -151,11 +128,11 @@
                                     }
                                     <dl>
                                         <dt>Nomor Rekening</dt>
-                                        <dd>: @Model.Payment.TransferAccount</dd>
+                                        <dd>: @Model.TransferAccount</dd>
                                     </dl>
                                     <dl>
                                         <dt>Jumlah</dt>
-                                        <dd>: Rp @Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
+                                        <dd>: Rp @Model.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                                     </dl>
                                 </div>
                             </div>
@@ -186,19 +163,19 @@
                         <ol>
                             <li class="order-list">Bayar sesuai harga yang tertera <b>tidak lebih dan tidak kurang</b>, pastikan nominal persis sama hingga <b>tiga angka terakhir</b> agar pembayaran dapat diverifikasi</li>
                             <li class="order-list">Pastikan Anda melakukan transfer ke rekening yang benar</li>
-                            @if (Model is FlightReservationForDisplay)
+                            @*@if (Model is FlightReservationForDisplay)
                             {
                                 <li class="order-list">E-tiket akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
                             }
                             @if (Model is HotelReservationForDisplay)
                             {
                                 <li class="order-list">Voucher akan dikirimkan secara otomatis ke e-mail Anda dalam waktu 30 menit – 1 jam setelah pembayaran.</li>
-                            }
+                            }*@
                         </ol>
                         <!--Bagian Form Konfirmasi yang dihilangin-->
                     </div>
 
-                    <!-- Kondisi nya dikasi sampai sini-->
+                    @*<!-- Kondisi nya dikasi sampai sini-->
                     <header style="margin-bottom:0px; margin-top:25px;">
                         <div>DETAIL <b>PESANAN</b></div>
                     </header>
@@ -343,7 +320,7 @@
                     <!--</section>-->
                     <div class="btn-detail-penerbangan">
                         <a href="@Url.Action("InstructionPost", "Payment", new { Model.RsvNo })" class="btn btn-yellow"> SAYA SUDAH BAYAR</a>
-                    </div>
+                    </div>*@
                 </div>
             </div>
             <div class="col-right">
@@ -353,25 +330,25 @@
                         <div class="widget-content">
                             <dl>
                                 <dt>Total Tiket</dt>
-                                <dd>Rp @(Model.Payment.OriginalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                <dd>Rp @(Model.OriginalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                             </dl>
-                            @if (Model.Payment.DiscountNominal != 0)
+                            @if (Model.DiscountNominal != 0)
                             {
                                 <dl>
                                     <dt>Potongan Harga</dt>
-                                    <dd>- Rp @(Math.Abs(Model.Payment.DiscountNominal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                    <dd>- Rp @(Math.Abs(Model.DiscountNominal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                 </dl>
                             }
-                            @if (Model.Payment.UniqueCode != 0)
+                            @if (Model.UniqueCode != 0)
                             {
                                 <dl>
                                     <dt>Kode Unik Pembayaran</dt>
-                                    <dd>- Rp @(Math.Abs(Model.Payment.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                    <dd>- Rp @(Math.Abs(Model.UniqueCode).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                                 </dl>
                             }
                             <dl class="total-price">
                                 <dt>Total</dt>
-                                <dd>Rp @(Model.Payment.FinalPrice.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                <dd>Rp @(Model.FinalPriceIdr.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
                             </dl>
                         </div>
                     </div><!-- .widget.price-detail -->

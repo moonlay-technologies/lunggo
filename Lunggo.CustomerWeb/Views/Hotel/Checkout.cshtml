@@ -22,8 +22,7 @@
     var listAges = new List<int>();
     var hotelMainImage = Model.HotelDetail.MainImage;
     var totalRoom = 0;
-    try
-    {
+    
         
         foreach (var room in Model.HotelDetail.Rooms)
         {
@@ -49,12 +48,8 @@
             }
             orderedRooms.Add(new Tuple<string, int>(roomName, sum)); ;
         }
-    }
-    catch (Exception)
-    {
+    
 
-        throw;
-    }
     
 }
 
@@ -325,10 +320,13 @@
                                 <dt>Harga Subtotal: </dt>
                                 <dd>Rp @oriTotal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>
                             </dl>
-                            <dl style="color: #1daee4">
-                                <dt>Diskon Travorama</dt>
-                                <dd>- Rp @((oriTotal - netTotal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
-                            </dl>
+                            @if (oriTotal - netTotal != 0)
+                            {
+                                <dl style="color: #1daee4">
+                                    <dt>Diskon Travorama</dt>
+                                    <dd>- Rp @((oriTotal - netTotal).ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID")))</dd>
+                                </dl>
+                            }
                             <dl class="total-price" style="border-top: 1px solid #fd8524;">
                                 <dt>Harga Total</dt>
                                 <dd>Rp @netTotal.ToString("##,###", CultureInfo.CreateSpecificCulture("id-ID"))</dd>

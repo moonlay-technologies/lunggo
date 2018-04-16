@@ -82,6 +82,10 @@
     <Reference Include="System.Spatial">
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -91,10 +95,13 @@
   <ItemGroup>
     <Compile Include="ConfigGenerator.cs" />
     <Compile Include="HtmlTemplateGenerator.cs" />
+    <Content Include="HtmlTemplate\ActivityEVoucherAndInvoiceEmail.cshtml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
@@ -112,6 +119,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\BackendWeb\mandrill.properties" />
+    <None Include="Config\BackendWeb\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\BackendWeb\nicepay.properties" />
     <None Include="Config\BackendWeb\sendGrid.properties" />
     <None Include="Config\BackendWeb\sriwijaya.properties">
@@ -149,6 +159,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CloudApp.CaptchaReader\db.properties" />
+    <None Include="Config\CloudApp.CaptchaReader\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CloudApp.CaptchaReader\flight.properties">
       <SubType>Designer</SubType>
     </None>
@@ -170,6 +183,9 @@
     </None>
     <None Include="Config\CloudApp.CaptchaReader\sendGrid.properties" />
     <None Include="Config\CloudApp.CaptchaReader\sriwijaya.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\CloudApp.EticketHandler\e2pay.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
@@ -194,6 +210,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Config\CloudApp.EticketHandler\Garuda.properties" />
+    <None Include="Config\Common\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\Common\HotelFacilitiesFilterGroup.csv" />
     <None Include="Config\CustomerWeb\airAsia.properties" />
     <None Include="Config\CustomerWeb\api.properties" />
@@ -205,6 +224,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\CustomerWeb\domain.properties" />
+    <None Include="Config\CustomerWeb\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\facebook.properties" />
     <None Include="Config\CustomerWeb\flight.properties">
       <SubType>Designer</SubType>
@@ -214,6 +236,9 @@
     <None Include="Config\CustomerWeb\general.properties" />
     <None Include="Config\CustomerWeb\hotel.properties" />
     <None Include="Config\CustomerWeb\lionAir.properties" />
+    <None Include="Config\CustomerWeb\log.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\CustomerWeb\mandrill.properties" />
     <None Include="Config\CustomerWeb\mystifly.properties" />
     <None Include="Config\CustomerWeb\redis.properties">
@@ -225,10 +250,40 @@
     <None Include="Config\CustomerWeb\veritrans.properties" />
     <None Include="Config\CustomerWeb\zendesk.properties" />
     <None Include="Config\Driver\azureStorage.properties" />
+    <None Include="Config\Driver\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\api.properties" />
+    <None Include="Config\WebAPI\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebAPI\nicepay.properties" />
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler1\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler2\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler3\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler4\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler5\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob-FlightSearch.FlightCrawler6\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.BankTransferChecking\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.BookingAutomation\api.properties" />
     <None Include="Config\WebJob.BookingAutomation\azureStorage.properties" />
+    <None Include="Config\WebJob.BookingAutomation\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.BookingAutomation\general.properties" />
     <None Include="Config\WebAPI\deathbycaptcha.properties">
       <SubType>Designer</SubType>
@@ -372,6 +427,9 @@
     <None Include="Config\WebJob.CurrencyCrawler\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.CurrencyCrawler\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.CurrencyCrawler\sendGrid.properties" />
     <None Include="Config\WebJob.EmailQueueHandler\airAsia.properties">
       <SubType>Designer</SubType>
@@ -381,6 +439,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.EmailQueueHandler\db.properties" />
+    <None Include="Config\WebJob.EmailQueueHandler\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.EmailQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
@@ -488,6 +549,9 @@
     <None Include="Config\WebJob.FlightCrawlScheduler\citilink.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightCrawlScheduler\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.FlightCrawlScheduler\Garuda.properties" />
     <None Include="Config\WebJob.FlightCrawlScheduler\lionAir.properties">
       <SubType>Designer</SubType>
@@ -568,7 +632,22 @@
     <None Include="Config\WebJob.FlightProcessor\deathbycaptcha.properties">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Config\WebJob.FlightProcessor\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelContentWrapper\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.HotelProcessor\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.HotelProcessor\log.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.MystiflyQueueHandler\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Config\WebJob.PriceIdentifierGenerator\e2pay.properties">
       <SubType>Designer</SubType>
     </None>
     <None Include="Config\WebJob.PriceUpdater\airAsia.properties">
@@ -584,6 +663,9 @@
     </None>
     <None Include="Config\WebJob.PriceUpdater\db.properties" />
     <None Include="Config\WebJob.PriceUpdater\domain.properties" />
+    <None Include="Config\WebJob.PriceUpdater\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.PriceUpdater\facebook.properties" />
     <None Include="Config\WebJob.PriceUpdater\flight.properties">
       <SubType>Designer</SubType>
@@ -781,6 +863,9 @@
     <None Include="Config\WebJob.PriceIdentifierGenerator\veritrans.properties" />
     <None Include="Config\WebJob.PriceIdentifierGenerator\zendesk.properties" />
     <None Include="Config\WebJob.TicketQueueHandler\azureStorage.properties" />
+    <None Include="Config\WebJob.TicketQueueHandler\e2pay.properties">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Config\WebJob.TicketQueueHandler\flight.properties">
       <SubType>Designer</SubType>
     </None>
@@ -879,37 +964,42 @@
     <None Include="Config\CloudApp.EticketHandler\sriwijaya.properties">
       <SubType>Designer</SubType>
     </None>
-    <None Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
-    <None Include="HtmlTemplate\FlightDepositWarningNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelInternalFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
-    <None Include="HtmlTemplate\HotelInvoice.cshtml" />
-    <None Include="HtmlTemplate\HotelVoucher.cshtml" />
-    <None Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\ContactUsEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightSaySorryFailedIssueNotifEmail.cshtml" />
-    <None Include="HtmlTemplate\ImlekPromoEmail.cshtml" />
-    <None Include="HtmlTemplate\GetCalendarEmail.cshtml" />
-    <None Include="HtmlTemplate\RegisterSubscribeEmail.cshtml" />
-    <None Include="HtmlTemplate\ReservationNotice.cshtml" />
-    <None Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\FlightEticketEmail.cshtml" />
-    <None Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
-    <None Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
-    <None Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
-    <None Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
-    <None Include="HtmlTemplate\Subscribe.cshtml" />
-    <None Include="HtmlTemplate\Newsletter.cshtml" />
-    <None Include="HtmlTemplate\VoucherEmail.cshtml" />
-    <None Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
-    <None Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityInvoice.cshtml" />
+    <Content Include="HtmlTemplate\BankTransferInstructionEmailHotel.cshtml" />
+    <Content Include="HtmlTemplate\FlightDepositWarningNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightIssueTimeoutNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityIssueTicketNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelInternalFailedIssueNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelSaySorryFailedIssueNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelVoucherEmail.cshtml" />
+    <Content Include="HtmlTemplate\HotelInvoice.cshtml" />
+    <Content Include="HtmlTemplate\HotelVoucher.cshtml" />
+    <Content Include="HtmlTemplate\FlightEticketSlightDelayNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\ContactUsEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightIssueFailedNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightIssueSlightDelayNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightSaySorryFailedIssueNotifEmail.cshtml" />
+    <Content Include="HtmlTemplate\ImlekPromoEmail.cshtml" />
+    <Content Include="HtmlTemplate\GetCalendarEmail.cshtml" />
+    <Content Include="HtmlTemplate\RegisterSubscribeEmail.cshtml" />
+    <Content Include="HtmlTemplate\ReservationNotice.cshtml" />
+    <Content Include="HtmlTemplate\TransferConfirmationEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightChangedEticketEmail.cshtml" />
+    <Content Include="HtmlTemplate\FlightEticketEmail.cshtml" />
+    <Content Include="HtmlTemplate\CartTransferInstructionEmail.cshtml" />
+    <Content Include="HtmlTemplate\VirtualAccountInstructionEmailHotel.cshtml" />
+    <Content Include="HtmlTemplate\VirtualAccountInstructionEmail.cshtml" />
+    <Content Include="HtmlTemplate\BankTransferInstructionEmail.cshtml" />
+    <Content Include="HtmlTemplate\ForgotPasswordEmail.cshtml" />
+    <Content Include="HtmlTemplate\Subscribe.cshtml" />
+    <Content Include="HtmlTemplate\Newsletter.cshtml" />
+    <Content Include="HtmlTemplate\VoucherEmail.cshtml" />
+    <Content Include="HtmlTemplate\InitialSubscriberEmail.cshtml" />
+    <Content Include="HtmlTemplate\UserConfirmationEmail.cshtml" />
+    <Content Include="HtmlTemplate\ForgotPasswordByOtpEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
+    <Content Include="HtmlTemplate\ActivityEVoucher.cshtml" />
     <Content Include="Template\Web.Debug.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -954,11 +1044,11 @@
     <Content Include="Config\Common\i18n_message.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="HtmlTemplate\FlightInvoice.cshtml" />
+    <Content Include="HtmlTemplate\FlightInvoice.cshtml" />
     <Content Include="Template\JsConfig.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="HtmlTemplate\FlightEticket.cshtml" />
+    <Content Include="HtmlTemplate\FlightEticket.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

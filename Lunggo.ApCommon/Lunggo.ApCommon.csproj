@@ -135,6 +135,9 @@
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -172,22 +175,170 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
-    <Compile Include="Activity\Constant\ActivityTypeEnum.cs" />
-    <Compile Include="Activity\Database\Query\GetCityActivitesQuery.cs" />
-    <Compile Include="Activity\Database\Query\CreateCityActivityQuery.cs" />
-    <Compile Include="Activity\Database\Query\SelectActivityByDateQuery.cs" />
-    <Compile Include="Activity\Database\Query\SelectActivityByCityQuery.cs" />
-    <Compile Include="Activity\Database\Query\ThingsToDoQuery.cs" />
-    <Compile Include="Activity\Model\ActivityModel.cs" />
-    <Compile Include="Activity\Model\ActivityByType.cs" />
-    <Compile Include="Activity\Model\ActivityType.cs" />
-    <Compile Include="Activity\Model\QueryByCityModel.cs" />
-    <Compile Include="Activity\Model\QueryByDateModel.cs" />
-    <Compile Include="Activity\Service\CreateCityActivity.cs" />
-    <Compile Include="Activity\Service\SearchCityActivity.cs" />
-    <Compile Include="Activity\Service\SelectActivityByType.cs" />
-    <Compile Include="Activity\Service\ThingsToDo.cs" />
+    <Compile Include="Account\Model\Database\DeleteDataOtpFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetExpireTimeFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetIdByReferralCodeFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetOtpHashFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetReferralCodeFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetReferralHistoryByIdAndHistoryDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetReferreeCodeFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\GetUserIdFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateDateResetPasswordToDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateProfileToDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdatePasswordToDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateReferralCreditDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UseReferralCreditFromDbQuery.cs" />
+    <Compile Include="Account\Model\Database\UpdateReferrerCodeDbQuery.cs" />
+    <Compile Include="Account\Model\Logic\ForgetPasswordInput.cs" />
+    <Compile Include="Account\Model\Logic\ForgetPasswordOutput.cs" />
+    <Compile Include="Account\Model\Logic\GetReferralDetailOutput.cs" />
+    <Compile Include="Account\Model\Logic\GetReferralOutput.cs" />
+    <Compile Include="Account\Model\Logic\ResettingPasswordInput.cs" />
+    <Compile Include="Account\Model\Logic\ResettingPasswordOutput.cs" />
+    <Compile Include="Account\Model\ReferralCode.cs" />
+    <Compile Include="Account\Model\ReferralHistory.cs" />
+    <Compile Include="Account\Service\CheckOtp.cs" />
+    <Compile Include="Account\Service\CheckPhoneNumber.cs" />
+    <Compile Include="Account\Service\Database.cs" />
+    <Compile Include="Account\Service\DeleteDataOtp.cs" />
+    <Compile Include="Account\Service\RequestOtp.cs" />
+    <Compile Include="Account\Service\GetUserIdByEmailOrPhoneNumber.cs" />
+    <Compile Include="Account\Service\ModelConversion.cs" />
+    <Compile Include="Account\Service\ResettingPassword.cs" />
+    <Compile Include="Activity\Constant\BookingStatus.cs" />
+    <Compile Include="Activity\Database\Query\DeleteCustomDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\DeleteDaySessionFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityListFromWishlistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityPackageDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityPackageIdDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityTicketDetaiDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAppointmentDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAppointmentListQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetBlacklistedDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetBookedActivitiesRsvNoQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCustomAvailableHoursBlacklistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCustomAvailableHoursWhitelistDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetPaxCountAndPackageIdDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCartRsvNoListDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityReviewFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetRatingFromDbByRsvNoQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetReviewFromDbByRsvNoQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetTransactionMutationOutputFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetUserIdFromActivityReservationDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetWhitelistedDateDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\InsertRatingAndReviewToDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\InsertTransactionStatementToDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateActivityBookingStatusQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdatePriceActivityQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAvailableSessionQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetListActivityQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetMediaActivityDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAdditionalContentActivityDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAvailableDatesQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetActivityDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetMyBookingDetailQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetAppointmentRequestQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetCartIdListDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetPassengersQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateRsvNoPdfFlagQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateTicketNumberReservationDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdateViewCountDbQuery.cs" />
+    <Compile Include="Activity\Model\ActivityEvoucherAndInvoice.cs" />
+    <Compile Include="Activity\Model\AppointmentDetail.cs" />
+    <Compile Include="Activity\Model\BookingDetail.cs" />
+    <Compile Include="Activity\Model\ActivityDetail.cs" />
+    <Compile Include="Activity\Model\ActivityFilter.cs" />
+    <Compile Include="Activity\Model\ActivityReservation.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityAddSessionOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityCustomDateInput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityCustomDateOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityDeleteSessionInput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityDeleteSessionOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityUpdateInput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityUpdateOutput.cs" />
+    <Compile Include="Activity\Model\Logic\AddToWishlistInput.cs" />
+    <Compile Include="Activity\Model\Logic\AddToWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\BookActivityInput.cs" />
+    <Compile Include="Activity\Model\Logic\BookActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\ActivityAddSessionInput.cs" />
+    <Compile Include="Activity\Model\Logic\CustomDateInput.cs" />
+    <Compile Include="Activity\Model\Logic\CustomDateOutput.cs" />
+    <Compile Include="Activity\Model\Logic\DeleteFromWishlistInput.cs" />
+    <Compile Include="Activity\Model\Logic\DeleteFromWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GenerateQuestionOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityReviewInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityReviewOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityTicketDetailInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetActivityTicketDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentListInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentListOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentDetailInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetListActivityInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetListActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAvailableDatesInput.cs" />
+    <Compile Include="Activity\Model\Logic\AppointmentConfirmationInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetMyBookingDetailInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetDetailActivityInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAvailableDatesOutput.cs" />
+    <Compile Include="Activity\Model\Logic\AppointmentConfirmationOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetMyBookingDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentRequestInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentRequestOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetTransactionStatementOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetWishlistOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertActivityRatingInput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertActivityRatingOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertActivityReviewInput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertRatingAndReviewInput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertRatingAndReviewOutput.cs" />
+    <Compile Include="Activity\Model\Logic\InsertTransactionStatementInput.cs" />
+    <Compile Include="Activity\Model\Logic\IssueActivityTicketInput.cs" />
+    <Compile Include="Activity\Model\Logic\IssueActivityTicketOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetMyBookingsInput.cs" />
+    <Compile Include="Activity\Model\Logic\LandingPageInput.cs" />
+    <Compile Include="Activity\Model\Logic\LandingPageOutput.cs" />
+    <Compile Include="Activity\Model\Logic\OutputBase.cs" />
+    <Compile Include="Activity\Model\Logic\SearchActivityInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetDetailActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
+    <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
+    <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
+    <Compile Include="Activity\Model\TransactionStatement.cs" />
+    <Compile Include="Activity\Model\Logic\WishlistAnalyticsInput.cs" />
+    <Compile Include="Activity\Model\SearchActivityResult.cs" />
+    <Compile Include="Activity\Service\Administration.cs" />
+    <Compile Include="Activity\Service\Admin\InsertTransactionStatement.cs" />
+    <Compile Include="Activity\Service\Database.cs" />
+    <Compile Include="Activity\Service\GetActivityInvoice.cs" />
+    <Compile Include="Activity\Service\GetActivityTicketDetail.cs" />
+    <Compile Include="Activity\Service\GetCartListData.cs" />
+    <Compile Include="Activity\Service\GetMyBookingDetail.cs" />
+    <Compile Include="Activity\Service\GetAvailableDates.cs" />
+    <Compile Include="Activity\Service\GetUserById.cs" />
+    <Compile Include="Activity\Service\LandingPage.cs" />
+    <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />
+    <Compile Include="Activity\Service\Operator\GetTransactionStatement.cs" />
+    <Compile Include="Activity\Service\Operator\UpdateActivity.cs" />
+    <Compile Include="Activity\Service\Operator\AppointmentDetail.cs" />
+    <Compile Include="Activity\Service\Operator\GetAppointmentList.cs" />
+    <Compile Include="Activity\Service\Operator\AppointmentConfirmation.cs" />
+    <Compile Include="Activity\Service\Operator\GetListActivityRequest.cs" />
+    <Compile Include="Activity\Service\Operator\GetAppointmentRequest.cs" />
+    <Compile Include="Activity\Service\Issue.cs" />
+    <Compile Include="Activity\Service\GetActivityDetail.cs" />
+    <Compile Include="Activity\Service\Book.cs" />
+    <Compile Include="Activity\Service\ModelConversion.cs" />
+    <Compile Include="Activity\Service\RatingAndReview.cs" />
+    <Compile Include="Account\Service\ReferralCode.cs" />
+    <Compile Include="Activity\Service\Reservations.cs" />
+    <Compile Include="Activity\Service\GetMyBookings.cs" />
+    <Compile Include="Activity\Service\Search.cs" />
+    <Compile Include="Activity\Service\Sender.cs" />
+    <Compile Include="Activity\Service\Settings.cs" />
+    <Compile Include="Activity\Service\Wishlist.cs" />
     <Compile Include="Autocomplete\AutocompleteManager.cs" />
     <Compile Include="Campaign\Constant\CampaignStatus.cs" />
     <Compile Include="Campaign\Constant\CampaignType.cs" />
@@ -416,6 +567,9 @@
     <Compile Include="Hotel\Model\SearchHotelResult.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsCheckRateHotel.cs" />
     <Compile Include="Hotel\Wrapper\HotelBeds\HotelBedsSearchHotel.cs" />
+    <Compile Include="Log\Log.cs" />
+    <Compile Include="Notifications\Notification.cs" />
+    <Compile Include="Notifications\NotificationService.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
     <Compile Include="Flight\Model\FlightSlightDelay.cs" />
     <Compile Include="Flight\Model\FlightStop.cs" />
@@ -468,7 +622,6 @@
     <Compile Include="Hotel\Query\UpdateReservationQuery.cs" />
     <Compile Include="Flight\Query\UpdateBookingStatusQuery.cs" />
     <Compile Include="Flight\Query\UpdateDetailsQuery.cs" />
-    <Compile Include="Flight\Service\Notification.cs" />
     <Compile Include="Flight\Service\PriceCalendar.cs" />
     <Compile Include="Flight\Service\ExchangeRate.cs" />
     <Compile Include="Flight\Service\Caching.cs" />
@@ -588,7 +741,7 @@
     <Compile Include="Identity\Auth\Client.cs" />
     <Compile Include="Identity\Auth\RefreshToken.cs" />
     <Compile Include="Identity\Auth\RefreshTokenProvider.cs" />
-    <Compile Include="Identity\Auth\UserAuthorizeAttribute.cs" />
+    <Compile Include="Identity\Auth\AuthorizeAttribute.cs" />
     <Compile Include="Identity\Query\GetAllUserQuery.cs" />
     <Compile Include="Identity\Query\GetClientByIdQuery.cs" />
     <Compile Include="Identity\Query\GetListClaimByUserIdQuery.cs" />
@@ -632,7 +785,15 @@
     <Compile Include="Payment\Constant\PaymentMedium.cs" />
     <Compile Include="Payment\Constant\PaymentMethod.cs" />
     <Compile Include="Payment\Constant\PaymentStatus.cs" />
+    <Compile Include="Payment\Model\AccountBalance.cs" />
     <Compile Include="Payment\Model\AddressingDetails.cs" />
+    <Compile Include="Payment\Model\AddToCartInput.cs" />
+    <Compile Include="Payment\Model\AddToCartOutput.cs" />
+    <Compile Include="Payment\Model\CheckoutInput.cs" />
+    <Compile Include="Payment\Model\CheckoutOutput.cs" />
+    <Compile Include="Payment\Model\DeleteRsvFromCartOutput.cs" />
+    <Compile Include="Payment\Model\DeleteRsvFromCartInput.cs" />
+    <Compile Include="Payment\Model\ViewCartInput.cs" />
     <Compile Include="Payment\Model\CreditCardInfo.cs" />
     <Compile Include="Payment\Model\Currency.cs" />
     <Compile Include="Payment\Model\CustomerDetails.cs" />
@@ -647,6 +808,7 @@
     <Compile Include="Payment\Model\Data\TelkomselTcash.cs" />
     <Compile Include="Payment\Model\Data\VirtualAccount.cs" />
     <Compile Include="Payment\Model\Surcharge.cs" />
+    <Compile Include="Payment\Model\Transaction.cs" />
     <Compile Include="Payment\Model\UsedDiscount.cs" />
     <Compile Include="Payment\Model\Discount.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
@@ -656,6 +818,11 @@
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />
     <Compile Include="Payment\Model\TransactionDetails.cs" />
+    <Compile Include="Payment\Model\Cart.cs" />
+    <Compile Include="Payment\Query\CreateAccountByUserQuery.cs" />
+    <Compile Include="Payment\Query\GetAccountUserQuery.cs" />
+    <Compile Include="Payment\Query\GetBalanceQuery.cs" />
+    <Compile Include="Payment\Query\GetCartIdFromDbQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentByRsvNoQuery.cs" />
     <Compile Include="Payment\Query\GetPaymentStatusQuery.cs" />
     <Compile Include="Payment\Query\GetRefundQuery.cs" />
@@ -665,16 +832,22 @@
     <Compile Include="Payment\Query\GetSavedCreditCardQuery.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Payment\Query\GetTransactionsQuery.cs" />
     <Compile Include="Payment\Query\GetUncheckedTransferConfirmationReportsQuery.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Payment\Query\GetUnpaidQuery.cs" />
     <Compile Include="Payment\Query\UpdatePaymentQuery.cs" />
+    <Compile Include="Payment\Service\AccountTransaction.cs" />
     <Compile Include="Payment\Service\Caching.cs" />
+    <Compile Include="Payment\Service\Cart.cs" />
     <Compile Include="Payment\Service\Database.cs" />
     <Compile Include="Payment\Service\ModelConversion.cs" />
     <Compile Include="Payment\Service\Processor.cs" />
     <Compile Include="Payment\Service\Settings.cs" />
+    <Compile Include="Payment\Wrapper\E2Pay\E2PayWrapper.cs" />
+    <Compile Include="Payment\Wrapper\E2Pay\Model\PaymentRequest.cs" />
+    <Compile Include="Payment\Wrapper\E2Pay\Model\PaymentResponse.cs" />
     <Compile Include="Payment\Wrapper\Nicepay\Model\Nicepay.cs" />
     <Compile Include="Payment\Wrapper\Nicepay\NicepayClass.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -720,7 +893,10 @@
     <Compile Include="Query\GetCountryCodeByAreaQuery.cs" />
     <Compile Include="Query\GetCountryCodeQueryRecord.cs" />
     <Compile Include="Query\GetHotelDetailBySearchParamQuery.cs" />
+    <Compile Include="Sequence\AppointmentRequestIdSequence .cs" />
+    <Compile Include="Sequence\AccountNoSequence.cs" />
     <Compile Include="Sequence\DiscountIdSequence.cs" />
+    <Compile Include="Sequence\ActivityReservationIdSequence.cs" />
     <Compile Include="Sequence\HotelReservationIdSequence.cs" />
     <Compile Include="Sequence\HotelRateIdSequence.cs" />
     <Compile Include="Sequence\HotelRoomIdSequence.cs" />
@@ -740,6 +916,7 @@
     <Compile Include="Sequence\FlightTripIdSequence.cs" />
     <Compile Include="Sequence\FlightItineraryIdSequence.cs" />
     <Compile Include="Sequence\MemberIdCardSequence.cs" />
+    <Compile Include="Sequence\TrxNoSequence.cs" />
     <Compile Include="Sequence\VoucherSequence.cs" />
     <Compile Include="Service References\Mystifly.OnePointService.Flight\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -968,6 +1145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Hotel\Logic\Search\" />
+    <Folder Include="Payment\Model\Logic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets" Condition="Exists('..\packages\Microsoft.Azure.DocumentDB.1.10.0\build\Microsoft.Azure.DocumentDB.targets')" />

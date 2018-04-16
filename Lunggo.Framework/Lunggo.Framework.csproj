@@ -132,6 +132,9 @@
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Cors">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
@@ -252,13 +255,6 @@
     <Compile Include="Mail\MandrillMailClient.cs" />
     <Compile Include="I18nMessage\LangToISOCodeMapper.cs" />
     <Compile Include="Mail\SendGridMailClient.cs" />
-    <Compile Include="Notifications\AzureNotificationClient.cs" />
-    <Compile Include="Notifications\Notification.cs" />
-    <Compile Include="Notifications\NotificationClient.cs" />
-    <Compile Include="Notifications\NotificationService.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Notifications\Platform.cs" />
     <Compile Include="Pattern\SingletonBase.cs" />
     <Compile Include="Payment\CreditCardProcessor.cs" />
     <Compile Include="Payment\Data\CIMBPaymentDataDummy.cs" />
@@ -291,6 +287,7 @@
     <Compile Include="SharedModel\FreshdeskTicket.cs" />
     <Compile Include="SharedModel\MailDetailForQueue.cs" />
     <Compile Include="SharedModel\TicketQueueMessage.cs" />
+    <Compile Include="SmsGateway\SendSms.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskApi.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAttachment.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAudit.cs" />

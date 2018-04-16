@@ -3,6 +3,7 @@ using Lunggo.Framework.Mail;
 using Lunggo.Framework.TableStorage;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
+using System;
 
 namespace Lunggo.Framework.HtmlTemplate
 {
@@ -31,7 +32,22 @@ namespace Lunggo.Framework.HtmlTemplate
             }
         }
 
-        internal override string GenerateTemplate<T>(T objectParam , string type)
+        internal override string GenerateTemplate<T>(T objectParam, string template)
+        {
+            var typeName = Guid.NewGuid().ToString("N");
+            var razorConfig = new TemplateServiceConfiguration
+            {
+                DisableTempFileLocking = true,
+                CachingProvider = new DefaultCachingProvider(t => { }),
+            };
+            var razorService = RazorEngineService.Create(razorConfig);
+            razorService.AddTemplate(typeName, template);
+
+            var result = razorService.RunCompile("typeName", model: objectParam);
+            return result;
+        }
+
+        internal string GenerateTemplateFromTable<T>(T objectParam , string type)
         {
             var typeName = PreprocessTemplateType(type);
             var template = GetTemplateByPartitionKey(typeName);

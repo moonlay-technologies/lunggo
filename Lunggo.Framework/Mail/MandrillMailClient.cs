@@ -43,7 +43,7 @@ namespace Lunggo.Framework.Mail
                 }
             }
 
-            internal override void SendEmail<T>(T objectParam, MailModel mailModel, string type)
+            internal override void SendEmailWithTableTemplate<T>(T objectParam, MailModel mailModel, string type)
             {
                 var emailMessage = GenerateMessage(objectParam, mailModel, type);
                 var emailMessageRequest = new SendMessageRequest(emailMessage);
@@ -76,7 +76,7 @@ namespace Lunggo.Framework.Mail
                     FromEmail = mailModel.FromMail,
                     FromName = mailModel.FromName,
                     To = GenerateMessageAddressTo(mailModel),
-                    Html = HtmlTemplateService.GetInstance().GenerateTemplate(objectParam, type)
+                    Html = HtmlTemplateService.GetInstance().GenerateTemplateFromTable(objectParam, type)
                 };
                 if (mailModel.ListFileInfo != null && mailModel.ListFileInfo.Count > 0)
                     emailMessage.Attachments = ConvertFileInfoToAttachmentFiles(mailModel.ListFileInfo);

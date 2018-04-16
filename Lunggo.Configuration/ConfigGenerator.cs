@@ -15,13 +15,14 @@ namespace Lunggo.Configuration
         DV1 = 6,
         DV2 = 7,
         QA = 8,
-        Production = 9
+        Production = 9,
+        LocalAzure = 10
     }
 
     public class ConfigGenerator
     {
-        private const DeploymentEnvironment Environment = DeploymentEnvironment.Local;
-        private const bool DeployHtmlTemplate = false;
+        private const DeploymentEnvironment Environment = DeploymentEnvironment.LocalAzure;
+        private const bool DeployHtmlTemplate = true;
         private const string FileExtension = "*.properties";
         private const string FinalProjectConfigFile = "application.properties";
         private const string RootProject = "Lunggo";
@@ -356,6 +357,7 @@ namespace Lunggo.Configuration
             const string getReservationPath = @"/v1/rsv/";
             const string resendConfirmationEmailPath = @"/v1/resendconfirmationemail";
             const string uniqueCodePaymentPath = @"/v1/payment/uniquecode";
+            const string cartCheckoutPath = @"/v1/payment/cart/checkout";
             const string hotelSearchPath = @"/v1/hotel/search";
             const string hotelDetailsPath = @"/v1/hotel/gethoteldetail";
             const string hotelSelectPath = @"/v1/hotel/select";
@@ -399,6 +401,7 @@ namespace Lunggo.Configuration
             fileTemplate.SetAttribute("veritransTokenPath", veritransTokenPath);
             fileTemplate.SetAttribute("veritransClientKey", veritransClientKey);
             fileTemplate.SetAttribute("uniqueCodePaymentPath", uniqueCodePaymentPath);
+            fileTemplate.SetAttribute("cartCheckoutPath", cartCheckoutPath);
             fileTemplate.SetAttribute("hotelSearchPath", hotelSearchPath);
             fileTemplate.SetAttribute("hotelDetailsPath", hotelDetailsPath);
             fileTemplate.SetAttribute("hotelSelectPath", hotelSelectPath);

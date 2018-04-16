@@ -21,6 +21,8 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -99,6 +101,9 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial">
       <HintPath>..\packages\System.Spatial.5.8.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -502,7 +507,6 @@
     <Content Include="Views\Flight\CheckPayment.cshtml" />
     <Content Include="Views\Flight\ExchangeRate.cshtml" />
     <Content Include="Views\Flight\InsertExchangeRate.cshtml" />
-    <Content Include="Views\Activity\AddActivity.cshtml" />
     <Content Include="Views\Flight\PriceMarginList.cshtml" />
     <Content Include="Views\Flight\PriceMarginAdd.cshtml" />
     <Content Include="Views\Flight\PriceMarginConflict.cshtml" />
@@ -516,6 +520,7 @@
     <Content Include="Views\Hotel\RenderHotel.cshtml" />
     <Content Include="Views\Flight\ConfirmOverrideIssue.cshtml" />
     <Content Include="Views\Flight\ConfirmOverridePayment.cshtml" />
+    <Content Include="Views\Activity\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\CheckPaymentViewModel\" />

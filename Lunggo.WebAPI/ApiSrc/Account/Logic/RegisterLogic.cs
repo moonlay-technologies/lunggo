@@ -3,11 +3,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using static Lunggo.WebAPI.ApiSrc.Common.Model.ApiResponseBase;
+using static System.Net.HttpStatusCode;
+using static System.String;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;
+using Lunggo.ApCommon.Product.Constant;
+using System.Security.Claims;
+using Lunggo.ApCommon.Identity.Auth;
+using System.Linq;
+using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -17,31 +25,85 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
         {
             if (!IsValid(request))
             {
-                return new ApiResponseBase
+                return Error(BadRequest, "ERR_INVALID_REQUEST");                
+            }
+            var accountService = AccountService.GetInstance();
+            if (!IsNullOrEmpty(request.Phone))
+            {
+                if (request.Phone.StartsWith("0"))
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERAREG01"
-                };
+                    request.Phone = request.Phone.Substring(1);
+                }
+                else if (request.Phone.StartsWith("+62"))
+                {
+                    request.Phone = request.Phone.Substring(3);
+                }
+                var isValidFormatNumber = accountService.CheckPhoneNumberFormat(request.Phone);
+                if (isValidFormatNumber == false)
+                {
+                    return Error(BadRequest, "ERR_INVALID_FORMAT_PHONENUMBER");
+                }
             }
 
             var foundUser = userManager.FindByEmail(request.Email);
+            var foundUserByPhone = userManager.FindByName(request.Phone);
+
             if (foundUser != null)
             {
-                return new ApiResponseBase
-                {
-                    StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = foundUser.EmailConfirmed
-                        ? "ERAREG02"
-                        : "ERAREG03"
-                };
+                return Error(BadRequest, "ERR_EMAIL_ALREADY_EXIST");                
             }
+
+            if (foundUserByPhone != null)
+            {
+                return Error(BadRequest, "ERR_PHONENUMBER_ALREADY_EXIST");
+            }
+
+            if (IsNullOrWhiteSpace(request.CountryCallCd))
+            {
+                return Error(BadRequest, "ERR_COUNTRYCALLCD_MUST_BE_FILLED");
+            }
+
+            if (IsNullOrWhiteSpace(request.ReferrerCode))
+            {
+                var referrer = accountService.GetReferralCodeDataFromDb(request.ReferrerCode);
+                if (referrer == null)
+                {
+                    return Error(BadRequest, "ERR_REFERRAL_NOT_VALID");                   
+                }
+            }
+            
+            string first, last;
+            var splittedName = request.Name.Split(' ');
+            if (splittedName.Length == 1)
+            {
+                first = request.Name;
+                last = request.Name;
+            }
+            else
+            {
+                first = request.Name.Substring(0, request.Name.LastIndexOf(' '));
+                last = splittedName[splittedName.Length - 1];
+            }
+
+
+            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            PlatformType Platform;
+
+            var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
+            var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
+            Platform = Client.GetPlatformType(clientId);
 
             var user = new User
             {
-                UserName = request.Email,
-                Email = request.Email
+                FirstName = first,
+                LastName = last,
+                UserName = request.CountryCallCd + "-" + request.Phone + ":" + request.Email,
+                Email = request.Email,
+                PhoneNumber = request.Phone,
+                PlatformCd = PlatformTypeCd.Mnemonic(Platform),
+                CountryCallCd = request.CountryCallCd
             };
-            var result = userManager.Create(user);
+            var result = userManager.Create(user, request.Password);
             if (result.Succeeded)
             {
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
@@ -49,7 +111,8 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();
-
+                        
+                AccountService.GetInstance().GenerateReferralCode(user.Id, first, request.ReferrerCode);
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK

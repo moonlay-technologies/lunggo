@@ -1,0 +1,190 @@
+﻿@using System.Globalization
+@model Lunggo.ApCommon.Activity.Model.ActivityETicketAndInvoiceDataForEmailAndPdf
+@using Lunggo.ApCommon.Constant
+@using Lunggo.Framework.Config
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+
+    <title>Travorama - E-tiket</title>
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
+    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/invoice.min.css")">
+
+</head>
+<body class="eticket">
+
+    <div class="page">
+        <header class="page-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travelmadezy-logo.jpg")" alt="Travelmadezy" />
+                        <address>
+                            <p><b>PT. Travel Madezy Internasional</b></p>
+                            <p>Equity Tower 25th ﬂoor, SCBD Lot 9, Jl. Jendral Sudirman kav. 52 - 53</p>
+                            <!-- <p>p. +62 21 29035088  / +62 21 29035089 | f. +62 21 29035099 </p> -->
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </header><!-- .page-header -->
+        <section class="page-content">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="invoice-detail">
+                            <h3>INVOICE</h3>
+                            <table>
+                                <tr>
+                                    <td>Number</td>
+                                    <td>@Model.CartId</td>
+                                </tr>
+                                <tr>
+                                    <td>Date</td>
+                                    <td>@Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.Time.GetValueOrDefault().ToString("dddd"), @Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.Time.GetValueOrDefault().ToString("dd MMM yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td>Time</td>
+                                    <td>Pk @Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.Time.GetValueOrDefault().AddHours(7).ToString("HH:mm") WIB</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="customer-detail">
+                            <h3></h3>
+                            <table>
+                                <tr></tr>
+                                <tr></tr>
+                                <tr></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="payment-detail">
+                    <h3>Detail Pembayaran</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="number">P.O NUMBER</th>
+                                <th class="payment-method">PEMBELIAN MELALUI</th>
+                                <th class="payment-status">DETAIL TRANSAKSI</th>
+                                <th class="terms">TERMS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="number">@Model.CartId</td>
+                                <td class="payment-method">@EnumDisplay.PaymentMethod(Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.Method)</td>
+                                <td class="payment-status">Lunas</td>
+                                <td class="terms">Due on Receipt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="purchase-detail">
+                    <h3>Detail Pembelian</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="no">RsvNo.</th>
+                                <th class="item">JENIS ITEM</th>
+                                <th class="description">DESKRIPSI</th>
+                                <th class="qty">QTY</th>
+                                <th class="price"></th>
+                                <th class="total-price">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var activity in Model.ActivityETicketAndInvoice.CartList.Activities)
+                            {
+                                <tr>
+                                    <td class="no">@activity.RsvNo</td>
+                                    <td class="item">Activity</td>
+                                    <td class="description">
+                                        @activity.Name <br />  @activity.PackageName <br /> @foreach (var pax in activity.PaxCount)
+                                        { @(pax.Count + "x " + pax.Type) <br />}
+                                    </td>
+                                    <td class="qty">1</td>
+                                    <td class="price"></td>
+                                    <td class="total">@activity.Price.ToString("Rp #,##0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                </tr>
+
+                            }
+
+                            @if (Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.DiscountName != null)
+                            {
+                                <tr>
+                                    <td class="no"></td>
+                                    <td class="item">Voucher</td>
+                                    <td class="description">@Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.DiscountName</td>
+                                    <td class="qty">1</td>
+                                    <td class="price"></td>
+                                    <td class="total">@Model.ActivityETicketAndInvoice.CartList.TotalDiscount.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td class="no"></td>
+                                <td class="item">Kode Unik</td>
+                                <td class="description"></td>
+                                <td class="qty">1</td>
+                                <td class="price"></td>
+                                <td class="total">@Model.ActivityETicketAndInvoice.CartList.TotalUniqueCode.ToString("Rp #,##0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2"><strong>TOTAL</strong></td>
+                                <td>@Model.ActivityETicketAndInvoice.CartList.TotalFinalPrice.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2"><strong>ADMINISTRATION FEE</strong></td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2"><strong>PAYMENT AMOUNT</strong></td>
+                                <td>@Model.ActivityETicketAndInvoice.CartList.TotalFinalPrice.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+        </section><!-- .page-content -->
+    </div><!-- .page -->
+    <!-- ****************************** -->
+    <!-- javascripts -->
+    <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
+
+    @if (IsSectionDefined("AdditionalPageJavascript"))
+    {
+        @RenderSection("AdditionalPageJavascript");
+    }
+
+    @if (IsSectionDefined("PageJavascript"))
+    {
+        @RenderSection("PageJavascript");
+    }
+
+
+</body>
+</html>
