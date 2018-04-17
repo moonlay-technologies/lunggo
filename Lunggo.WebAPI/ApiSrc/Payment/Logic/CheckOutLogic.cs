@@ -15,26 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
     {
         public static ApiResponseBase CheckOut(CheckOutApiRequest request)
         {
-            var user = HttpContext.Current.User.Identity.GetId();
-            var user2 = HttpContext.Current.User;
-            if (request.Test == 1)
-            {
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY05"
-                };
-            }
-            if (request.Test == 2)
-            {
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY06"
-                };
-            }
-
-            if (NotEligibleForPaymentMethod(request, user2))
+            if (NotEligibleForPaymentMethod(request, HttpContext.Current.user))
                 return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
