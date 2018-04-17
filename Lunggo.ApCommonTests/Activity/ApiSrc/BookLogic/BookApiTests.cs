@@ -67,7 +67,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
                 ActivityId = "1",
                 Date = "2017-02-18",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com"},
-                Passengers = paxs
+                Paxes = paxs
             };
             ActivityLogic.BookActivity(input);
         }
@@ -91,7 +91,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -107,7 +107,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -123,7 +123,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -139,7 +139,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact(),
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -152,7 +152,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = null
+                Paxes = null
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -168,7 +168,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -184,7 +184,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -200,7 +200,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Undefined, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -216,7 +216,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -232,7 +232,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -248,7 +248,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "62", Phone = "1234567890", Email = "" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -264,7 +264,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
             {
                 ActivityId = "1",
                 Contact = new Contact() { Name = "Travorama", Title = Title.Mister, CountryCallingCode = "", Phone = "1234567890", Email = "developer@travelmadezy.com" },
-                Passengers = paxs
+                Paxes = paxs
             };
             var actualResult = ActivityLogic.IsValid(input);
             Assert.IsFalse(actualResult);
@@ -280,7 +280,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
                 ActivityId = "1",
                 Date = "2017-01-01",
                 Contact = null,
-                Passengers = PaxsForDisplay,
+                Paxes = PaxsForDisplay,
                 TicketCount = null
             };
 

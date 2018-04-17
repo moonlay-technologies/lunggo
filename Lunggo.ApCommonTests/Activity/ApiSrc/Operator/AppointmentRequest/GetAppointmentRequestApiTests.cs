@@ -89,7 +89,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLog
         public void AssembleApiResponse_GetAppointmentRequestOutput_ReturnGetAppointmentRequestApiResponse()
         {
             var AppointmentList1 = new AppointmentDetail()
-            { Name = "", RequestTime = "2017-01-01", Date = new DateTime() };
+            { Name = "", RequestTime = new DateTime(2017, 1, 1), Date = new DateTime() };
             var test = new GetAppointmentRequestOutput()
             {
                 Appointments = new List<AppointmentDetail>() { AppointmentList1 },
@@ -100,7 +100,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLog
             var actualResult = ActivityLogic.AssembleApiResponse(test);
 
             var AppointmentListDisplay = new AppointmentDetailForDisplay()
-            { Name = "", RequestTime = new DateTime(2017,01,01), Date = new DateTime() };
+            { Name = "", RequestTime = new DateTime(2017, 01, 01), Date = new DateTime() };
 
             var expectedResult = new GetAppointmentRequestApiResponse()
             {
@@ -108,7 +108,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLog
                 Page = 1,
                 PerPage = 10
             };
-            
+
             Assert.AreEqual(expectedResult.Page, actualResult.Page);
             Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
             Assert.AreEqual(expectedResult.Appointments[0].Name, actualResult.Appointments[0].Name);

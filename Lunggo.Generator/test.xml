@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
-  <table name="Currency" />
+  <table name="Notification" />
+  <!--<table name="ReferralCredit" />-->
+<!--   <table name="Currency" /> -->
   <!--<table name="AccountBalance" />
   <table name="AccountUser" />
   <table name="TransactionJournal" />-->
