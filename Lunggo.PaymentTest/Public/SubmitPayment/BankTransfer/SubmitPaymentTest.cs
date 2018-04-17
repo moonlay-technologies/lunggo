@@ -10,58 +10,8 @@ using PaymentData = Lunggo.ApCommon.Payment.Model.PaymentData;
 namespace Lunggo.PaymentTest.Public.SubmitPayment.BankTransfer
 {
     [TestClass]
-    public class UnitTest1
+    public partial class SubmitPaymentTest
     {
-        [TestMethod]
-        public void Should_not_return_failed_when_ID_is_RsvNo___all_numbers_8_12_char()
-        {
-            object dummy = null;
-            string id;
-            bool result;
-
-            id = "12345678";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
-            Assert.IsTrue(result);
-
-            id = "123456789012";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void Should_not_return_failed_when_ID_is_Cart_ID___alphanumeric_8_12_char()
-        {
-            object dummy = null;
-            string id;
-            bool result;
-
-            id = "i23a56j8";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
-            Assert.IsTrue(result);
-
-            id = "i23a56j89oi2";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
-            Assert.IsTrue(result);
-        }
-
-        [TestMethod]
-        public void Should_return_failed_when_ID_less_than_8_char()
-        {
-            var id = "i23";
-            object dummy = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
-            Assert.IsFalse(result);
-        }
-
-        [TestMethod]
-        public void Should_return_failed_when_ID_more_than_8_char()
-        {
-            var id = "i23a56j890abc";
-            object dummy = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
-            Assert.IsFalse(result);
-        }
-
         [TestMethod]
         public void Should_failed_when_method_not_selected()
         {
@@ -186,13 +136,6 @@ namespace Lunggo.PaymentTest.Public.SubmitPayment.BankTransfer
         ////    bool actualResult = JalaninFungsiApalahNamanya(voucherCode);
         ////    Assert.AreNotEqual('Failed', actualResult.Status);
         ////}
-
-        //[TestMethod]
-        //public void Should_return_failed_when_no_method_is_selected()
-        //{
-        //    var p = new PaymentDetails() { };
-        //    Assert.ThrowsException<Exception>(() => JalaninFungsiApalahNamanya());
-        //}
 
         //[TestMethod]
         //public void Should_return_pending_on_successful_Bank_Transfer_Mandiri()

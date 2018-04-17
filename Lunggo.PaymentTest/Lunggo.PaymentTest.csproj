@@ -50,7 +50,8 @@
   <ItemGroup>
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Public\SubmitPayment\BankTransfer\UnitTest1.cs" />
+    <Compile Include="Public\SubmitPayment\BankTransfer\SubmitPaymentTest.cs" />
+    <Compile Include="Public\SubmitPayment\IdValidation.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
