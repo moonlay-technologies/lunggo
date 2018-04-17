@@ -52,6 +52,9 @@ namespace Lunggo.ApCommon.Payment.Model
 
     public class PaymentDetails
     {
+        public PaymentDetailsType Type { get; set; }
+        public string RsvNo { get; set; }
+        public string CartRecordId { get; set; }
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
         public PaymentSubmethod Submethod { get; set; }
@@ -75,8 +78,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal LocalFinalPrice { get; set; }
         public decimal LocalPaidAmount { get; set; }
         public Refund Refund { get; set; }
-        public string InvoiceNo { get; set; }
-        public string CartRecordId { get; set; }
+        public string InvoiceNo { get; set; }        
 
         internal void InsertToDb(string rsvNo)
         {
@@ -151,7 +153,7 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             protected override string GetQuery(dynamic condition = null)
             {
-                return "SELECT MediumCd, MethodCd, SubMethod, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
+                return "SELECT RsvNo, MediumCd, MethodCd, SubMethod, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
                        "ExternalId, DiscountCode, OriginalPriceIdr, DiscountNominal, UniqueCode, FinalPriceIdr, " +
                        "PaidAmountIdr, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
                        "FROM Payment " +

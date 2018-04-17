@@ -86,14 +86,11 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     content = GetResponseContent(response);
                     if (content != null && content.StatusCode.StartsWith("2"))
                     {
-                        //ProcessSavedCreditCardToken(payment.Data, content);
                         payment.Status = PaymentResult(content);
                         if (payment.Status == PaymentStatus.Challenged)
                         {
                             CancelTransaction(content.OrderId, content.TransactionId);
                             payment.Status = PaymentStatus.Denied;
-                            //var responseApprove = ApproveTransaction(content.OrderId, content.TransactionId);
-                            //payment.Status = PaymentResult(responseApprove);
 
                         }
                         payment.ExternalId = content.TransactionId;
@@ -370,19 +367,6 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                     env == "production" ? "#logging-prod" : "#logging-dev");
                 TableLog.Logging();
                 return null;
-            }
-        }
-
-        private static void ProcessSavedCreditCardToken(PaymentData data, VeritransResponse content)
-        {
-            if (data != null && data.CreditCard != null)
-            {
-                var savedToken = content.SavedTokenId;
-                var tokenExpiry = content.TokenIdExpiry;
-                var maskedCardNumber = content.MaskedCard;
-                var cardHolderName = data.CreditCard.HolderName;
-                var email = data.CreditCard.HolderEmail;
-                PaymentService.GetInstance().SaveCreditCard(email, maskedCardNumber, cardHolderName, savedToken, tokenExpiry);
             }
         }
 

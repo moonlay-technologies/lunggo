@@ -163,15 +163,23 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private string GetCartRecordId()
-        {
-            var guid = Guid.NewGuid().ToString("N");
-            return guid;
-        }
-
         public string GetCartIdByRsvNo(string rsvNo)
         {
             return GetCartIdByRsvNoFromDb(rsvNo);
+        }
+
+        public decimal GetSurchargeNominal(PaymentDetails payment)
+        {
+            var surchargeList = GetSurchargeList();
+            var surcharge =
+                surchargeList.SingleOrDefault(
+                    sur =>
+                        payment.Method == sur.PaymentMethod &&
+                        (sur.PaymentSubMethod == null || payment.Submethod == sur.PaymentSubMethod));
+            return surcharge == null
+                ? 0
+                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal) * surcharge.Percentage / 100) +
+                  surcharge.Constant;
         }
     }
 }
