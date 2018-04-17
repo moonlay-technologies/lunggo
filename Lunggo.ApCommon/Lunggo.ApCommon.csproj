@@ -812,6 +812,7 @@
     <Compile Include="Payment\Model\CheckoutOutput.cs" />
     <Compile Include="Payment\Model\DeleteRsvFromCartOutput.cs" />
     <Compile Include="Payment\Model\DeleteRsvFromCartInput.cs" />
+    <Compile Include="Payment\Constant\PaymentDetailsType.cs" />
     <Compile Include="Payment\Model\ViewCartInput.cs" />
     <Compile Include="Payment\Model\CreditCardInfo.cs" />
     <Compile Include="Payment\Model\Currency.cs" />
