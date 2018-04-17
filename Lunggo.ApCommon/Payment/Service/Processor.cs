@@ -26,17 +26,17 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPaymentCart(string trxId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public PaymentDetails SubmitPayment(string trxId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
 
             var isTrxValid = ValidateTrxId(trxId, out var trxType);
-            if (!isTrxValid) 
-                return null;
+            if (!isTrxValid)
+                return new PaymentDetails { FailureReason = FailureReason.InvalidId };
 
             var isMethodValid = ValidatePaymentMethod(method, submethod, paymentData);
-            if (!isMethodValid) 
-                return null;
+            if (!isMethodValid)
+                return new PaymentDetails { FailureReason = FailureReason.MethodNotAvailable };
 
             PaymentDetails paymentDetails;
             if (trxType == PaymentDetailsType.Cart)
@@ -48,8 +48,10 @@ namespace Lunggo.ApCommon.Payment.Service
             else
             {
                 paymentDetails = PaymentDetails.GetFromDb(trxId);
+                SetRsvPaymentDetails(trxId, discountCode, paymentDetails);
                 if (paymentDetails == null)
                     return null;
+                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
 
             SetMethod(method, submethod, paymentData, paymentDetails);
@@ -73,7 +75,10 @@ namespace Lunggo.ApCommon.Payment.Service
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
                 RealizeVoucher(accountService, userId, paymentDetails);
+                //if cart
                 //UpdateDb(method, submethod, paymentData, cart, paymentDetails, paymentDetails.CartRecordId);
+                //if rsv
+                //UpdatePaymentToDb(rsvNo, paymentDetails);
                 DeleteCartCache(trxId);
                 if (paymentDetails.Method == PaymentMethod.BankTransfer || paymentDetails.Method == PaymentMethod.VirtualAccount)
                     SendTransferInstructionToCustomer(paymentDetails);
@@ -84,6 +89,10 @@ namespace Lunggo.ApCommon.Payment.Service
 
         private bool ValidateTrxId(string trxId, out PaymentDetailsType trxType)
         {
+            trxType = PaymentDetailsType.Cart;
+            if (trxId.Length < 8 || trxId.Length > 12)
+                return false;
+
             if (Regex.Matches(trxId, @"[a-zA-Z]").Count > 0)
             {
                 trxType = PaymentDetailsType.Cart;
@@ -96,60 +105,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubmethod submethod,
-            PaymentData paymentData, string discountCode, out bool isUpdated)
-        {
-            isUpdated = false;
-            ReservationBase reservation;
-            if (rsvNo.StartsWith("1"))
-                reservation = FlightService.GetInstance().GetReservation(rsvNo);
-            else if (rsvNo.StartsWith("2"))
-                reservation = HotelService.GetInstance().GetReservation(rsvNo);
-            else
-                reservation = ActivityService.GetInstance().GetReservation(rsvNo);
-
-
-            var paymentDetails = reservation.Payment;
-            if (paymentDetails == null)
-                return null;
-
-            var isMethodValid = ValidatePaymentMethod(method, submethod, paymentData);
-            if (!isMethodValid) 
-                return null;
-
-
-            SetMethod(method, submethod, paymentData, paymentDetails);
-            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-
-            //if (!string.IsNullOrEmpty(discountCode))
-            //{
-            //    if (!string.IsNullOrEmpty(discountCode))
-            //    {
-            //        var isVoucherValid = TryApplyVoucher(cartId, discountCode, paymentDetails, userId);
-            //        if (!isVoucherValid)
-            //            return null;
-            //    }
-            //}
-
-            GetRsvPaymentDetails(rsvNo, discountCode, paymentDetails);
-
-            var transactionDetails = ConstructTransactionDetails(rsvNo, paymentDetails, reservation.Contact);
-            ProcessPayment(paymentDetails, transactionDetails);
-
-            if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
-            {
-                UpdatePaymentToDb(rsvNo, paymentDetails);
-            }
-            if (method == PaymentMethod.BankTransfer || method == PaymentMethod.VirtualAccount)
-            {
-                SendTransferInstructionToCustomer(paymentDetails);
-            }
-
-            isUpdated = true;
-            return paymentDetails;
-        }
-
-        private void GetRsvPaymentDetails(string rsvNo, string discountCode, PaymentDetails paymentDetails)
+        private void SetRsvPaymentDetails(string rsvNo, string discountCode, PaymentDetails paymentDetails)
         {
             var uniqueCode = GetUniqueCodeFromCache(rsvNo);
             if (uniqueCode == 0M)
@@ -226,12 +182,17 @@ namespace Lunggo.ApCommon.Payment.Service
 
         private static bool ValidatePaymentMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData)
         {
-            if (method != PaymentMethod.Undefined && method != PaymentMethod.BankTransfer)
+            if (method == PaymentMethod.Undefined)
+                return false;
+
+            if (method == PaymentMethod.MandiriClickPay)
             {
-                {
+                if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.CardNumber))
                     return false;
-                }
+                if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.Token))
+                    return false;
             }
+
             return true;
         }
 
@@ -264,7 +225,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     ActivityService.GetInstance().Issue(rsvNo);
                     var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(rsvNo);
                     AccountService.GetInstance().InsertBookingReferralHistory(userId);
-                }                    
+                }
             }
         }
 

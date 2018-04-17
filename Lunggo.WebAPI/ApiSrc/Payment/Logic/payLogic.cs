@@ -15,22 +15,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         public static ApiResponseBase Pay(PayApiRequest request)
         {
             var user = HttpContext.Current.User;
-            if (request.Test == 1)
-            {
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY05"
-                };
-            }
-            if (request.Test == 2)
-            {
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY06"
-                };
-            }
+
             if (!IsValid(request))
                 return new PayApiResponse
                 {
@@ -44,11 +29,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERPPAY02"
                 };
-            bool isUpdated;            
-            var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
+            bool isUpdated;
+            var paymentData = PreprocessPaymentData(request);
+            var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
             
             return apiResponse;
+        }
+
+        private static PaymentData PreprocessPaymentData(PayApiRequest request)
+        {
+            return request.Serialize().Deserialize<PaymentData>();
         }
 
         private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)

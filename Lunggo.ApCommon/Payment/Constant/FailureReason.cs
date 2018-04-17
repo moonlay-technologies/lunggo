@@ -9,6 +9,7 @@ namespace Lunggo.ApCommon.Payment.Constant
     public enum FailureReason
     {
         None,
+        InvalidId,
         PaymentFailure,
         VoucherNoLongerAvailable,
         BinPromoNoLongerEligible,
