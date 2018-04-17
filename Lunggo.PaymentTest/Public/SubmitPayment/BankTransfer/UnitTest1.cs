@@ -1,9 +1,11 @@
 ﻿using System;
 using Lunggo.ApCommon.Payment.Constant;
-using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Model.Data;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.Payment.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CreditCard = Lunggo.Framework.Payment.Data.CreditCard;
+using PaymentData = Lunggo.ApCommon.Payment.Model.PaymentData;
 
 namespace Lunggo.PaymentTest.Public.SubmitPayment.BankTransfer
 {
@@ -66,6 +68,55 @@ namespace Lunggo.PaymentTest.Public.SubmitPayment.BankTransfer
             var method = PaymentMethod.Undefined;
             var submethod = PaymentSubmethod.Undefined;
             PaymentData paymentData = null;
+            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Should_failed_when_method_is_Bank_Transfer_but_submethod_is_not_selected()
+        {
+            var method = PaymentMethod.BankTransfer;
+            var submethod = PaymentSubmethod.Undefined;
+            PaymentData paymentData = null;
+            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Should_failed_when_method_is_Virtual_Account_but_submethod_is_not_selected()
+        {
+            var method = PaymentMethod.VirtualAccount;
+            var submethod = PaymentSubmethod.Undefined;
+            PaymentData paymentData = null;
+            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Should_failed_when_Credit_Card_does_not_include_Credit_Card_data()
+        {
+            var method = PaymentMethod.CreditCard;
+            var submethod = PaymentSubmethod.Undefined;
+            var paymentData = new PaymentData
+            {
+                CreditCard = null
+            };
+            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void Should_failed_when_Credit_Card_does_not_include_token()
+        {
+            var method = PaymentMethod.CreditCard;
+            var submethod = PaymentSubmethod.Undefined;
+            var paymentData = new PaymentData
+            {
+                CreditCard = new ApCommon.Payment.Model.Data.CreditCard
+                {
+                    TokenId = null
+                }
+            };
             var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }

@@ -180,22 +180,30 @@ namespace Lunggo.ApCommon.Payment.Service
             return true;
         }
 
+        
         private static bool ValidatePaymentMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData)
         {
-            if (method == PaymentMethod.Undefined)
-                return false;
-
-            if (method == PaymentMethod.MandiriClickPay)
+            switch (method)
             {
-                if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.CardNumber))
-                    return false;
-                if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.Token))
-                    return false;
+                case PaymentMethod.BankTransfer:
+                case PaymentMethod.VirtualAccount:
+                    if (submethod == PaymentSubmethod.Undefined)
+                        return false;
+                    else return true;
+                case PaymentMethod.CreditCard:
+                    if (string.IsNullOrWhiteSpace(paymentData?.CreditCard?.TokenId))
+                        return false;
+                    return true;
+                case PaymentMethod.MandiriClickPay:
+                    if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.CardNumber))
+                        return false;
+                    if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.Token))
+                        return false;
+                    return true;
             }
-
-            return true;
+            return false;
         }
-
+        
         private void SendTransferInstructionToCustomer(PaymentDetails details)
         {
             var queueService = QueueService.GetInstance();
