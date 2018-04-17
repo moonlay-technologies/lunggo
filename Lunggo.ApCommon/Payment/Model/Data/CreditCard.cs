@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Payment.Model.Data
     public class CreditCard
     {
         [JsonProperty("tokenId")]
-        internal string TokenId { get; set; }
+        public string TokenId { get; set; }
         [JsonProperty("bank")]
         public string Bank { get; set; }
         [JsonProperty("holderName")]
