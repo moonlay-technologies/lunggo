@@ -49,7 +49,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (!string.IsNullOrEmpty(cartId))
             {
-                var payment = PaymentService.GetInstance().GetPayment(cartId);
+                var payment = PaymentService.GetInstance().GetPaymentDetails(cartId);
                 if (payment == null)
                     return RedirectToAction("Index", "Index");
 
@@ -66,7 +66,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (regId != signature)
                     return RedirectToAction("Index", "Index");
 
-                var payment = PaymentService.GetInstance().GetPayment(trxId);
+                var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
                 if (payment == null)
                     return RedirectToAction("Index", "Index");
 
@@ -126,7 +126,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentPost(string rsvNo = null, string trxId = null, string paymentUrl = null)
         {
             trxId = trxId ?? rsvNo;
-            var payment = PaymentService.GetInstance().GetPayment(trxId);
+            var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
             var regId = Generator.GenerateTrxIdRegId(trxId);
 
             if (payment.Method == PaymentMethod.BankTransfer ||
@@ -154,7 +154,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (generatedRegId != regId)
                 return RedirectToAction("Index", "Index");
 
-            var payment = PaymentService.GetInstance().GetPayment(trxId);
+            var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
 
             if ((payment.Method == PaymentMethod.BankTransfer || payment.Method == PaymentMethod.VirtualAccount)
                 && payment.Status == PaymentStatus.Pending)
@@ -185,7 +185,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (regId != signature)
                 return RedirectToAction("Index", "Index");
 
-            var payment = PaymentService.GetInstance().GetPayment(trxId);
+            var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
             return View(payment);
         }
 

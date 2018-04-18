@@ -288,6 +288,8 @@
     <Compile Include="SharedModel\MailDetailForQueue.cs" />
     <Compile Include="SharedModel\TicketQueueMessage.cs" />
     <Compile Include="SmsGateway\SendSms.cs" />
+    <Compile Include="TestHelpers\InvokePartial.cs" />
+    <Compile Include="TestHelpers\UseDb.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskApi.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAttachment.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAudit.cs" />

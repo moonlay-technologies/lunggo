@@ -40,6 +40,11 @@ namespace Lunggo.Repository.TableRepository
             return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public PaymentTableRecord Find1OrDefault(IDbConnection connection, PaymentTableRecord record)
+        {
+            return Find1OrDefault(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
 		public IEnumerable<PaymentTableRecord> Find(IDbConnection connection, PaymentTableRecord record)
         {
             return Find(connection, record, CommandDefinition.GetDefaultDefinition());
@@ -73,6 +78,11 @@ namespace Lunggo.Repository.TableRepository
 		public PaymentTableRecord Find1(IDbConnection connection, PaymentTableRecord record, CommandDefinition definition)
         {
 			return Find1Internal(connection, record, definition);
+        }
+
+		public PaymentTableRecord Find1OrDefault(IDbConnection connection, PaymentTableRecord record, CommandDefinition definition)
+        {
+			return Find1OrDefaultInternal(connection, record, definition);
         }
 
 		public IEnumerable<PaymentTableRecord> Find(IDbConnection connection, PaymentTableRecord record, CommandDefinition definition)

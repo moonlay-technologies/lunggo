@@ -15,9 +15,9 @@
         Other = 99
     }
 
-    internal class PaymentSubmethodCd
+    public class PaymentSubmethodCd
     {
-        internal static string Mnemonic(PaymentSubmethod paymentMedium)
+        public static string Mnemonic(PaymentSubmethod paymentMedium)
         {
             switch (paymentMedium)
             {
@@ -46,7 +46,7 @@
             }
         }
 
-        internal static PaymentSubmethod Mnemonic(string paymentMedium)
+        public static PaymentSubmethod Mnemonic(string paymentMedium)
         {
             switch (paymentMedium)
             {

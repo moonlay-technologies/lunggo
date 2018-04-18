@@ -40,7 +40,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
                 FromName = "Travorama"
             };
 
-            var payment = paymentService.GetPayment(cartRecordId);
+            var payment = paymentService.GetPaymentDetails(cartRecordId);
             var instruction = paymentService.GetInstruction(payment);
             var reservations = cart.RsvNoList.Select(ActivityService.GetInstance().GetReservation).ToList();
             Console.WriteLine("Sending Bank Transfer Instruction Email...");

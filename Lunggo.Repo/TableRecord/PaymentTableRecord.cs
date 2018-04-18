@@ -128,15 +128,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DiscountNominal");
 		    }
 		}
-        public Decimal? Surcharge
-        {
-            get { return _Surcharge; }
-            set
-            {
-                _UniqueCode = value;
-                IncrementLog("Surcharge");
-            }
-        }
 		public Decimal? UniqueCode
 		{
 		    get { return _UniqueCode; }
@@ -263,6 +254,24 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("UpdatePgId");
 		    }
 		}
+		public Decimal? Surcharge
+		{
+		    get { return _Surcharge; }
+		    set
+		    {
+		        _Surcharge = value;
+		        IncrementLog("Surcharge");
+		    }
+		}
+		public Decimal? LocalCurrencyRounding
+		{
+		    get { return _LocalCurrencyRounding; }
+		    set
+		    {
+		        _LocalCurrencyRounding = value;
+		        IncrementLog("LocalCurrencyRounding");
+		    }
+		}
 
 		
 		private String _RsvNo;
@@ -278,7 +287,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _DiscountCode;
 		private Decimal? _OriginalPriceIdr;
 		private Decimal? _DiscountNominal;
-        private Decimal? _Surcharge;
 		private Decimal? _UniqueCode;
 		private Decimal? _FinalPriceIdr;
 		private Decimal? _PaidAmountIdr;
@@ -293,6 +301,8 @@ namespace Lunggo.Repository.TableRecord
 		private String _UpdateBy;
 		private DateTime? _UpdateDate;
 		private String _UpdatePgId;
+		private Decimal? _Surcharge;
+		private Decimal? _LocalCurrencyRounding;
 
 
 		public static PaymentTableRecord CreateNewInstance()
@@ -337,7 +347,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("DiscountCode", false),
 				new ColumnMetadata("OriginalPriceIdr", false),
 				new ColumnMetadata("DiscountNominal", false),
-                new ColumnMetadata("Surcharge", false),
 				new ColumnMetadata("UniqueCode", false),
 				new ColumnMetadata("FinalPriceIdr", false),
 				new ColumnMetadata("PaidAmountIdr", false),
@@ -352,6 +361,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("UpdateBy", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("UpdatePgId", false),
+				new ColumnMetadata("Surcharge", false),
+				new ColumnMetadata("LocalCurrencyRounding", false),
 
             };
         }

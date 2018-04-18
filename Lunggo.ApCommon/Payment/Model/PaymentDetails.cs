@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal LocalFinalPrice { get; set; }
         public decimal LocalPaidAmount { get; set; }
         public Refund Refund { get; set; }
-        public string InvoiceNo { get; set; }        
+        public string InvoiceNo { get; set; }
 
         internal void InsertToDb(string rsvNo)
         {
@@ -103,6 +103,7 @@ namespace Lunggo.ApCommon.Payment.Model
                     PaidAmountIdr = PaidAmountIdr,
                     LocalCurrencyCd = LocalCurrency,
                     LocalRate = LocalCurrency.Rate,
+                    LocalCurrencyRounding = LocalCurrency.RoundingOrder,
                     LocalFinalPrice = LocalFinalPrice,
                     LocalPaidAmount = LocalPaidAmount,
                     InvoiceNo = InvoiceNo,
@@ -110,54 +111,6 @@ namespace Lunggo.ApCommon.Payment.Model
                     InsertDate = DateTime.UtcNow,
                     InsertPgId = "0"
                 });
-            }
-        }
-
-        internal static PaymentDetails GetFromDb(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var record = GetPaymentQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).SingleOrDefault();
-
-                if (record == null)
-                    return null;
-
-                return new PaymentDetails
-                {
-                    Medium = PaymentMediumCd.Mnemonic(record.MediumCd),
-                    Method = PaymentMethodCd.Mnemonic(record.MethodCd),
-                    Submethod = PaymentSubmethodCd.Mnemonic(record.SubMethod),
-                    Status = PaymentStatusCd.Mnemonic(record.StatusCd),
-                    Time = record.Time,
-                    TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
-                    TransferAccount = record.TransferAccount,
-                    RedirectionUrl = record.RedirectionUrl,
-                    ExternalId = record.ExternalId,
-                    DiscountCode = record.DiscountCode,
-                    OriginalPriceIdr = record.OriginalPriceIdr.GetValueOrDefault(),
-                    DiscountNominal = record.DiscountNominal.GetValueOrDefault(),
-                    UniqueCode = record.UniqueCode.GetValueOrDefault(),
-                    FinalPriceIdr = record.FinalPriceIdr.GetValueOrDefault(),
-                    PaidAmountIdr = record.PaidAmountIdr.GetValueOrDefault(),
-                    LocalCurrency = new Currency(record.LocalCurrencyCd, record.LocalRate.GetValueOrDefault()),
-                    LocalFinalPrice = record.LocalFinalPrice.GetValueOrDefault(),
-                    LocalPaidAmount = record.LocalPaidAmount.GetValueOrDefault(),
-                    InvoiceNo = record.InvoiceNo,
-                    Discount = UsedDiscount.GetFromDb(rsvNo),
-                    Refund = Refund.GetFromDb(rsvNo)
-                };
-            }
-        }
-
-        private class GetPaymentQuery : DbQueryBase<GetPaymentQuery, PaymentTableRecord>
-        {
-            protected override string GetQuery(dynamic condition = null)
-            {
-                return "SELECT RsvNo, MediumCd, MethodCd, SubMethod, StatusCd, Time, TimeLimit, TransferAccount, RedirectionUrl, " +
-                       "ExternalId, DiscountCode, OriginalPriceIdr, DiscountNominal, UniqueCode, FinalPriceIdr, " +
-                       "PaidAmountIdr, LocalCurrencyCd, LocalRate, LocalFinalPrice, LocalPaidAmount, InvoiceNo " +
-                       "FROM Payment " +
-                       "WHERE RsvNo = @RsvNo";
             }
         }
     }

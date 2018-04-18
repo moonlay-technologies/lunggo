@@ -9,9 +9,9 @@
         E2Pay = 4
     }
 
-    internal class PaymentMediumCd
+    public class PaymentMediumCd
     {
-        internal static string Mnemonic(PaymentMedium paymentMedium)
+        public static string Mnemonic(PaymentMedium paymentMedium)
         {
 
             switch (paymentMedium)
@@ -28,7 +28,7 @@
                     return "";
             }
         }
-        internal static PaymentMedium Mnemonic(string paymentMedium)
+        public static PaymentMedium Mnemonic(string paymentMedium)
         {
             switch (paymentMedium)
             {

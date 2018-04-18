@@ -11,27 +11,19 @@ using Lunggo.Repository.TableRepository;
 using System.Data;
 using Lunggo.ApCommonTests.Init;
 using System.Data.SqlClient;
+using Lunggo.Framework.TestHelpers;
 
 namespace Lunggo.ApCommonTests.Notification
 {
     [TestClass]
     public class NotificationTest
     {
-        public void ManipulateDB(Action<IDbConnection> callback)
-        {
-            Initializer.Init();
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                callback(conn);
-            }
-        }
-
         public void AssertRegisterDevice(string dummyHandle = "TEST_HANDLE", string dummyDeviceId = "TEST_DEVICEID", string dummyUserId = "TEST_USERID", params string[] tags)
         {
             Initializer.Init();
             NotificationTableRecord actualResult;
             NotificationService.GetInstance().RegisterDevice(dummyHandle, dummyDeviceId, dummyUserId);
-            ManipulateDB((conn) =>
+            TestHelper.UseDb((conn) =>
             {
                 actualResult = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = dummyHandle });
                 NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = dummyHandle });
@@ -45,7 +37,7 @@ namespace Lunggo.ApCommonTests.Notification
         [TestMethod]
         public void Should_Success_On_Register_New_Device()
         {
-            ManipulateDB((conn) =>
+            TestHelper.UseDb((conn) =>
             {
                 NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = "TEST_HANDLE" });
             });
@@ -55,7 +47,7 @@ namespace Lunggo.ApCommonTests.Notification
         [TestMethod]
         public void Should_Success_On_Register_Existing_Device_With_Changed_Paramter()
         {
-            ManipulateDB((conn) =>
+            TestHelper.UseDb((conn) =>
             {
                NotificationTableRepo.GetInstance().Insert(conn, new NotificationTableRecord { Handle = "TEST_HANDLE", DeviceId = "TEST_DEVICEID" });
             });

@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Query;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
@@ -36,7 +37,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RsvNo = rsvNo,
                     Contact = Contact.GetFromDb(rsvNo),
                     Pax = new List<Pax>(),
-                    Payment = PaymentDetails.GetFromDb(rsvNo),
+                    Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail(),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),

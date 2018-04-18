@@ -12,6 +12,7 @@ using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
@@ -89,7 +90,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Contact = Contact.GetFromDb(rsvNo),
                     Itineraries = new List<FlightItinerary>(),
                     Pax = new List<Pax>(),
-                    Payment = PaymentDetails.GetFromDb(rsvNo),
+                    Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     User = User.GetFromDb(reservationRecord.UserId),
                 };
@@ -216,7 +217,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 //                RsvNo = rsvNo,
                 //                RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                 //                Contact = Contact.GetFromDb(rsvNo),
-                //                Payment = PaymentDetails.GetFromDb(rsvNo),
+                //                Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
                 //                Itineraries = new List<FlightItinerary>(),
                 //                Pax = new List<Pax>(),
                 //                State = ReservationState.GetFromDb(rsvNo),
@@ -338,7 +339,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 RsvNo = rsvNo,
                                 RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                                 Contact = Contact.GetFromDb(rsvNo),
-                                Payment = PaymentDetails.GetFromDb(rsvNo),
+                                Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),
                                 Pax = new List<Pax>(),
                                 State = ReservationState.GetFromDb(rsvNo),

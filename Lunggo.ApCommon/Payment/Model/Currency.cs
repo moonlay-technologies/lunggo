@@ -67,15 +67,6 @@ namespace Lunggo.ApCommon.Payment.Model
 
         public decimal GetRoundingOrder()
         {
-            //for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
-            //{
-            //        var redis = RedisService.GetInstance();
-            //        var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-            //        var redisKey = "currencyRoundingOrder:" + Symbol + ":" + Supplier;
-            //        var roundingOrder = Convert.ToDecimal(redisDb.StringGet(redisKey));
-            //        return roundingOrder;
-            //}
-            //return 0;
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
@@ -84,7 +75,7 @@ namespace Lunggo.ApCommon.Payment.Model
                 }).ToList();
                 if (rates.Count < 1)
                 {
-                    return 100000;
+                    throw new Exception("Currency not found");
                 }
                 var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();
                 return (decimal)rate.RoundingOrder;

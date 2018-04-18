@@ -18,39 +18,73 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails GetPayment(string cartIdOrRsvNo)
+        public PaymentDetails GetPaymentDetails(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                if (cartIdOrRsvNo.Length < 15)
-                {
-                    var rsvNo = cartIdOrRsvNo;
-                    return PaymentDetails.GetFromDb(rsvNo);
-                }
-                else
-                {
-                    var cartId = cartIdOrRsvNo;
-                    var cart = GetCart(cartId);
-                    if (cart == null)
-                        return null;
+                var record = PaymentTableRepo.GetInstance().Find1(conn, new PaymentTableRecord { RsvNo = rsvNo });
 
-                    var cartRsvNos = cart.RsvNoList;
-                    if (cartRsvNos == null || !cartRsvNos.Any())
-                        return null;
-
-                    var payments = cartRsvNos.Select(PaymentDetails.GetFromDb).ToList();
-                    var payment = payments[0];
-                    payment.UniqueCode = payments.Sum(p => p.UniqueCode);
-                    payment.Surcharge = payments.Sum(p => p.Surcharge);
-                    payment.OriginalPriceIdr = payments.Sum(p => p.OriginalPriceIdr);
-                    payment.FinalPriceIdr = payments.Sum(p => p.FinalPriceIdr);
-                    payment.LocalFinalPrice = payments.Sum(p => p.LocalFinalPrice);
-                    payment.PaidAmountIdr = payments.Sum(p => p.PaidAmountIdr);
-                    payment.LocalPaidAmount = payments.Sum(p => p.LocalPaidAmount);
-                    payment.TimeLimit = payments.Min(p => p.TimeLimit);
-                    return payment;
-                }   
+                return ConvertPaymentRecordToPaymentDetails(record);
             }
+
+            //if (cartIdOrRsvNo.Length < 15)
+            //{
+            //var rsvNo = cartIdOrRsvNo;
+            //return PaymentService.GetInstance().GetPaymentDetails(rsvNo);
+            //}
+            //else
+            //{
+            //    var cartId = cartIdOrRsvNo;
+            //    var cart = GetCart(cartId);
+            //    if (cart == null)
+            //        return null;
+
+            //    var cartRsvNos = cart.RsvNoList;
+            //    if (cartRsvNos == null || !cartRsvNos.Any())
+            //        return null;
+
+            //    var payments = cartRsvNos.Select(PaymentDetails.GetFromDb).ToList();
+            //    var payment = payments[0];
+            //    payment.UniqueCode = payments.Sum(p => p.UniqueCode);
+            //    payment.Surcharge = payments.Sum(p => p.Surcharge);
+            //    payment.OriginalPriceIdr = payments.Sum(p => p.OriginalPriceIdr);
+            //    payment.FinalPriceIdr = payments.Sum(p => p.FinalPriceIdr);
+            //    payment.LocalFinalPrice = payments.Sum(p => p.LocalFinalPrice);
+            //    payment.PaidAmountIdr = payments.Sum(p => p.PaidAmountIdr);
+            //    payment.LocalPaidAmount = payments.Sum(p => p.LocalPaidAmount);
+            //    payment.TimeLimit = payments.Min(p => p.TimeLimit);
+            //    return payment;
+            //}   
+        }
+
+        private static PaymentDetails ConvertPaymentRecordToPaymentDetails(PaymentTableRecord record)
+        {
+            return new PaymentDetails
+            {
+                RsvNo = record.RsvNo,
+                Medium = PaymentMediumCd.Mnemonic(record.MediumCd),
+                Method = PaymentMethodCd.Mnemonic(record.MethodCd),
+                Submethod = PaymentSubmethodCd.Mnemonic(record.SubMethod),
+                Status = PaymentStatusCd.Mnemonic(record.StatusCd),
+                Time = record.Time,
+                TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc),
+                TransferAccount = record.TransferAccount,
+                RedirectionUrl = record.RedirectionUrl,
+                ExternalId = record.ExternalId,
+                DiscountCode = record.DiscountCode,
+                OriginalPriceIdr = record.OriginalPriceIdr.GetValueOrDefault(),
+                DiscountNominal = record.DiscountNominal.GetValueOrDefault(),
+                UniqueCode = record.UniqueCode.GetValueOrDefault(),
+                FinalPriceIdr = record.FinalPriceIdr.GetValueOrDefault(),
+                PaidAmountIdr = record.PaidAmountIdr.GetValueOrDefault(),
+                LocalCurrency = new Currency(record.LocalCurrencyCd, record.LocalRate.GetValueOrDefault(), record.LocalCurrencyRounding.GetValueOrDefault()),
+                LocalFinalPrice = record.LocalFinalPrice.GetValueOrDefault(),
+                LocalPaidAmount = record.LocalPaidAmount.GetValueOrDefault(),
+                Surcharge = record.Surcharge.GetValueOrDefault(),
+                InvoiceNo = record.InvoiceNo,
+                Discount = UsedDiscount.GetFromDb(record.RsvNo),
+                Refund = Refund.GetFromDb(record.RsvNo)
+            };
         }
 
         private PaymentStatus GetStatusFromDb(string rsvNo)
@@ -103,7 +137,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 decimal? localFinalPrice = null;
                 decimal? localPaidAmount = null;
                 string invoiceNo = null;
-                
+
                 if (payment.Medium != PaymentMedium.Undefined)
                     mediumCd = PaymentMediumCd.Mnemonic(payment.Medium);
                 if (payment.Method != PaymentMethod.Undefined)
@@ -168,7 +202,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     UniqueCode = uniqueCode,
                     FinalPriceIdr = finalPriceIdr,
                     LocalCurrencyCd = localCurrency != null ? localCurrency.Symbol : null,
-                    LocalRate = localCurrency != null ? localCurrency.Rate : (decimal?) null,
+                    LocalRate = localCurrency != null ? localCurrency.Rate : (decimal?)null,
                     LocalFinalPrice = localFinalPrice,
                     InvoiceNo = invoiceNo
                 };

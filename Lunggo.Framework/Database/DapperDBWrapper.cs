@@ -46,6 +46,13 @@ namespace Lunggo.Framework.Database
         {
             var queryString = CreateFindQuery(record);
             var queryParams = CreateUpdateQueryParams(record);
+            return SqlMapper.Query<T>(connection, queryString, queryParams as object, null, true, definition.CommandTimeout, definition.CommandType).Single();
+        }
+
+        public T Find1OrDefault<T>(IDbConnection connection, TableRecord record, CommandDefinition definition) where T : TableRecord
+        {
+            var queryString = CreateFindQuery(record);
+            var queryParams = CreateUpdateQueryParams(record);
             return SqlMapper.Query<T>(connection, queryString, queryParams as object, null, true, definition.CommandTimeout, definition.CommandType).SingleOrDefault();
         }
 

@@ -26,9 +26,9 @@
         BtnMobileBanking = 21
     }
 
-    internal class PaymentMethodCd
+    public class PaymentMethodCd
     {
-        internal static string Mnemonic(PaymentMethod paymentMedium)
+        public static string Mnemonic(PaymentMethod paymentMedium)
         {
             switch (paymentMedium)
             {
@@ -78,7 +78,7 @@
                     return "";
             }
         }
-        internal static PaymentMethod Mnemonic(string paymentMedium)
+        public static PaymentMethod Mnemonic(string paymentMedium)
         {
             switch (paymentMedium)
             {

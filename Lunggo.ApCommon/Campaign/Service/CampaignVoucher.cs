@@ -72,10 +72,10 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            var paymentDetails = PaymentService.GetInstance().GetPayment(trxId);
+            var paymentDetails = PaymentService.GetInstance().GetPaymentDetails(trxId);
             if (paymentDetails == null)
             {
-                paymentDetails = PaymentDetails.GetFromDb(trxId);
+                paymentDetails = PaymentService.GetInstance().GetPaymentDetails(trxId);
                 if (paymentDetails == null)
                 {
                     response.VoucherStatus = VoucherStatus.ReservationNotFound;

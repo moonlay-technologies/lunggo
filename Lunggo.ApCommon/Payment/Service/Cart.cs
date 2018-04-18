@@ -64,7 +64,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private static void GetCartContentFromCache(Cart cart)
+        private void GetCartContentFromCache(Cart cart)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "Cart:RsvNoList:" + cart.Id;
@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             var rsvNoList = redisDb.ListRange(redisKey).Select(val => val.ToString()).Distinct().ToList();
             cart.RsvNoList = rsvNoList;
-            cart.TotalPrice = rsvNoList.Select(PaymentDetails.GetFromDb).Sum(p => p.OriginalPriceIdr);
+            cart.TotalPrice = rsvNoList.Select(GetPaymentDetails).Sum(p => p.OriginalPriceIdr);
         }
 
         public bool AddToCart(string rsvNo)
@@ -88,7 +88,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var checkRsv = ActivityService.GetInstance().GetReservation(rsvNo);
             if (checkRsv == null)
                 return false;
-            var paymentDetail = PaymentDetails.GetFromDb(rsvNo);
+            var paymentDetail = PaymentService.GetInstance().GetPaymentDetails(rsvNo);
             if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
                 return false;
 

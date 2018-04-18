@@ -13,9 +13,9 @@
         Failed = 8
     }
 
-    internal class PaymentStatusCd
+    public class PaymentStatusCd
     {
-        internal static string Mnemonic(PaymentStatus paymentStatus)
+        public static string Mnemonic(PaymentStatus paymentStatus)
         {
             switch (paymentStatus)
             {
@@ -39,7 +39,7 @@
                     return null;
             }
         }
-        internal static PaymentStatus Mnemonic(string paymentStatus)
+        public static PaymentStatus Mnemonic(string paymentStatus)
         {
             switch (paymentStatus)
             {

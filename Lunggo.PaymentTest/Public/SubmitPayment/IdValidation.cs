@@ -1,8 +1,9 @@
 ﻿using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Lunggo.PaymentTest.Public.SubmitPayment.BankTransfer
+namespace Lunggo.PaymentTest.Public.SubmitPayment
 {
     public partial class SubmitPaymentTest
     {

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
-namespace Lunggo.PaymentTest
+namespace Lunggo.Framework.TestHelpers
 {
-    internal static class Helper
+    public static partial class TestHelper
     {
-        internal static void InvokePrivate(this object classObject, string methodName, params object[] methodParams)
+        public static void InvokePrivate(this object classObject, string methodName, params object[] methodParams)
         {
             var dynMethod = classObject.GetType().GetMethod(methodName,
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
             dynMethod.Invoke(classObject, methodParams);
         }
 
-        internal static T InvokePrivate<T>(this object classObject, string methodName, params object[] methodParams)
+        public static T InvokePrivate<T>(this object classObject, string methodName, params object[] methodParams)
         {
             var dynMethod = classObject.GetType().GetMethod(methodName,
                 BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);

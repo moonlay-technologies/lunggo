@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else
             {
-                paymentDetails = PaymentDetails.GetFromDb(trxId);
+                paymentDetails = PaymentService.GetInstance().GetPaymentDetails(trxId);
                 SetRsvPaymentDetails(trxId, discountCode, paymentDetails);
                 if (paymentDetails == null)
                     return null;
@@ -59,12 +59,12 @@ namespace Lunggo.ApCommon.Payment.Service
             var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(paymentDetails.RsvNo);
             var accountService = AccountService.GetInstance();
 
-            //if (!string.IsNullOrEmpty(discountCode))
-            //{
-            //    var isVoucherValid = TryApplyVoucher(trxId, discountCode, paymentDetails, userId);
-            //    if (!isVoucherValid)
-            //        return null;
-            //}
+            if (!string.IsNullOrEmpty(discountCode))
+            {
+                var isVoucherValid = TryApplyVoucher(trxId, discountCode, paymentDetails, userId);
+                if (!isVoucherValid)
+                    return null;
+            }
 
             paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
@@ -320,7 +320,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                var payment = PaymentDetails.GetFromDb(rsvNo);
+                var payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo);
                 if (payment == null)
                     return 040440404040.40404004404M;
 
@@ -384,19 +384,20 @@ namespace Lunggo.ApCommon.Payment.Service
             cartPayment.CartRecordId = cart.Id;
             cartPayment.RsvNo = rsvNoList[0];
 
-            foreach (var rsvNo in rsvNoList)
+            var paymentDetailsList = rsvNoList.Select(GetPaymentDetails);
+
+            foreach (var paymentDetails in paymentDetailsList)
             {
-                var paymentDetails = GetPayment(rsvNo);
                 if (paymentDetails == null)
                     return null;
 
                 cartPayment.OriginalPriceIdr += paymentDetails.OriginalPriceIdr;
                 cartPayment.FinalPriceIdr += paymentDetails.OriginalPriceIdr;
 
-                var uniqueCode = GetUniqueCodeFromCache(rsvNo);
+                var uniqueCode = GetUniqueCodeFromCache(paymentDetails.RsvNo);
                 if (uniqueCode == 0M)
                 {
-                    uniqueCode = GetUniqueCode(rsvNo, null, discountCode);
+                    uniqueCode = GetUniqueCode(paymentDetails.RsvNo, null, discountCode);
                 }
                 cartPayment.UniqueCode += uniqueCode;
                 cartPayment.FinalPriceIdr += uniqueCode;

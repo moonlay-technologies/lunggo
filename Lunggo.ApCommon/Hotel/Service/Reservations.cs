@@ -102,7 +102,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     Contact = Contact.GetFromDb(rsvNo),
                     Pax = new List<Pax>(),
                     HotelDetails = new HotelDetail(),
-                    Payment = PaymentDetails.GetFromDb(rsvNo),
+                    Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     User = User.GetFromDb(reservationRecord.UserId)
                 };
@@ -228,7 +228,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
         public void ExpireReservation(string rsvNo)
         {
-            var payment = PaymentDetails.GetFromDb(rsvNo);
+            var payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo);
             if (payment.Status == PaymentStatus.Pending || payment.Status == PaymentStatus.Verifying ||
                 payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.Undefined)
             {
