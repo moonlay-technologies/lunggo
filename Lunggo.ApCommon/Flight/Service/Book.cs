@@ -79,7 +79,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 InsertReservationToDb(reservation);
                 output.RsvNo = reservation.RsvNo;
                 output.TimeLimit = reservation.Itineraries.Min(itin => itin.TimeLimit);
-                ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit);
+                ExpireReservationWhenTimeout(reservation.RsvNo, reservation.Payment.TimeLimit.GetValueOrDefault());
 
                 //DeleteItinerariesFromCache(input.Token);
 
@@ -131,13 +131,6 @@ namespace Lunggo.ApCommon.Flight.Service
             reservation.User = HttpContext.Current.User.Identity.IsUserAuthorized()
                 ? HttpContext.Current.User.Identity.GetUser()
                 : null;
-            reservation.Payment = new PaymentDetails
-            {
-                Status = PaymentStatus.Pending,
-                LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                OriginalPriceIdr = reservation.Itineraries.Sum(order => order.Price.FinalIdr),
-                TimeLimit = reservation.Itineraries.Min(order => order.TimeLimit).AddMinutes(-10),
-            };
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
             var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
             var platform = Client.GetPlatformType(clientId);

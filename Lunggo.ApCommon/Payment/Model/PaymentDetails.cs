@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Payment.Constant;
@@ -52,16 +53,14 @@ namespace Lunggo.ApCommon.Payment.Model
 
     public class PaymentDetails
     {
-        public PaymentDetailsType Type { get; set; }
         public string RsvNo { get; set; }
-        public string CartRecordId { get; set; }
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
         public PaymentSubmethod Submethod { get; set; }
         public PaymentStatus Status { get; set; }
         public FailureReason FailureReason { get; set; }
         public DateTime? Time { get; set; }
-        public DateTime TimeLimit { get; set; }
+        public DateTime? TimeLimit { get; set; }
         public PaymentData Data { get; set; }
         public string TransferAccount { get; set; }
         public string RedirectionUrl { get; set; }
@@ -79,39 +78,11 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal LocalPaidAmount { get; set; }
         public Refund Refund { get; set; }
         public string InvoiceNo { get; set; }
+    }
 
-        internal void InsertToDb(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                PaymentTableRepo.GetInstance().Insert(conn, new PaymentTableRecord
-                {
-                    RsvNo = rsvNo,
-                    MediumCd = PaymentMediumCd.Mnemonic(Medium),
-                    MethodCd = PaymentMethodCd.Mnemonic(Method),
-                    StatusCd = PaymentStatusCd.Mnemonic(Status),
-                    Time = Time,
-                    TimeLimit = TimeLimit,
-                    TransferAccount = TransferAccount,
-                    RedirectionUrl = RedirectionUrl,
-                    ExternalId = ExternalId,
-                    DiscountCode = DiscountCode,
-                    OriginalPriceIdr = OriginalPriceIdr,
-                    DiscountNominal = DiscountNominal,
-                    UniqueCode = UniqueCode,
-                    FinalPriceIdr = FinalPriceIdr,
-                    PaidAmountIdr = PaidAmountIdr,
-                    LocalCurrencyCd = LocalCurrency,
-                    LocalRate = LocalCurrency.Rate,
-                    LocalCurrencyRounding = LocalCurrency.RoundingOrder,
-                    LocalFinalPrice = LocalFinalPrice,
-                    LocalPaidAmount = LocalPaidAmount,
-                    InvoiceNo = InvoiceNo,
-                    InsertBy = "LunggoSystem",
-                    InsertDate = DateTime.UtcNow,
-                    InsertPgId = "0"
-                });
-            }
-        }
+    public class CartPaymentDetails : PaymentDetails
+    {
+        public List<PaymentDetails> RsvPaymentDetails { get; set; }
+        public string CartRecordId { get; set; }
     }
 }

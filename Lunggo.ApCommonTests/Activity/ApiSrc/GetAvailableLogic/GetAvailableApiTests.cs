@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Model.Logic;
-using Lunggo.ApCommonTests.Init;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -29,8 +28,6 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetAvailableLogic.Tests
         [TestMethod]
         public void GetAvailableDates_ValidInput_ReturnSomething()
         {
-            Initializer.Init();
-
             var input = new GetAvailableDatesApiRequest()
             {
                 ActivityId = "1"

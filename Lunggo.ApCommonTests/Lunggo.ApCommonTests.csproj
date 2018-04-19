@@ -145,7 +145,6 @@
     <Compile Include="Activity\Service\ModelConversionTests.cs" />
     <Compile Include="Cart\ApiSrc\AddToCartLogicTest.cs" />
     <Compile Include="Cart\Service\ViewCartServiceTest.cs" />
-    <Compile Include="Init\Initializer.cs" />
     <Compile Include="Notification\NotificationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Service
@@ -15,10 +16,8 @@ namespace Lunggo.ApCommon.Payment.Service
             if (payment == null)
                 return null;
 
-            var time = payment.Time.HasValue
-                ? payment.Time.Value.AddMilliseconds(-payment.Time.Value.Millisecond)
-                : (DateTime?) null;
-            var timeLimit = payment.TimeLimit.AddMilliseconds(-payment.TimeLimit.Millisecond);
+            var time = payment.Time?.AddMilliseconds(-payment.Time.Value.Millisecond);
+            var timeLimit = payment.TimeLimit.TruncateMilliseconds();
 
             var paymentForDisplay = new PaymentDetailsForDisplay();
             paymentForDisplay.Medium = payment.Medium;

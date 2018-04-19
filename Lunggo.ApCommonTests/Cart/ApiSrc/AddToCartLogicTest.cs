@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using Lunggo.ApCommon.Activity.Model;
-using Lunggo.ApCommon.Activity.Model.Logic;
-using Lunggo.ApCommonTests.Init;
-using Lunggo.WebAPI.ApiSrc.Activity.Logic;
-using Lunggo.WebAPI.ApiSrc.Activity.Model;
+﻿using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
-using Lunggo.WebAPI.ApiSrc.Payment.Logic;
 using Lunggo.WebAPI.ApiSrc.Cart.Logic;
 
 namespace Lunggo.ApCommonTests.Cart

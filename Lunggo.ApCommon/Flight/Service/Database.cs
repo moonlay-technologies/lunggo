@@ -17,6 +17,7 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Config;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
@@ -563,7 +564,11 @@ namespace Lunggo.ApCommon.Flight.Service
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
-                reservation.Payment.InsertToDb(reservation.RsvNo);
+                PaymentService.GetInstance().CreateNewPayment(
+                    reservation.RsvNo, 
+                    reservation.Itineraries.Sum(order => order.Price.FinalIdr), 
+                    new Currency(OnlineContext.GetActiveCurrencyCode()),
+                    reservation.Itineraries.Min(order => order.TimeLimit));
 
                 foreach (var itin in reservation.Itineraries)
                 {

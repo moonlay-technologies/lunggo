@@ -3,7 +3,7 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Lunggo.PaymentTest.Public.SubmitPayment
+namespace Lunggo.PaymentTest.Units.SubmitPayment
 {
     public partial class SubmitPaymentTest
     {

@@ -75,7 +75,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     paymentDetails.Status == PaymentStatus.Settled || paymentDetails.Status == PaymentStatus.Pending
                         ? HttpStatusCode.OK
                         : HttpStatusCode.Accepted,
-                CartRecordId = paymentDetails.CartRecordId
+                CartRecordId = (paymentDetails as CartPaymentDetails)?.CartRecordId
             };
         }
     }

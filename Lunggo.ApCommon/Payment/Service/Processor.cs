@@ -32,25 +32,21 @@ namespace Lunggo.ApCommon.Payment.Service
 
             var isTrxValid = ValidateTrxId(trxId, out var trxType);
             if (!isTrxValid)
-                return new PaymentDetails { FailureReason = FailureReason.InvalidId };
+                throw new Exception("Invalid ID for payment");
 
             var isMethodValid = ValidatePaymentMethod(method, submethod, paymentData);
             if (!isMethodValid)
-                return new PaymentDetails { FailureReason = FailureReason.MethodNotAvailable };
+                throw new Exception("Method not available");
 
             PaymentDetails paymentDetails;
             if (trxType == PaymentDetailsType.Cart)
             {
                 paymentDetails = GetCartPaymentDetails(trxId, discountCode);
-                if (paymentDetails == null)
-                    return null;
             }
             else
             {
-                paymentDetails = PaymentService.GetInstance().GetPaymentDetails(trxId);
+                paymentDetails = GetPaymentDetails(trxId);
                 SetRsvPaymentDetails(trxId, discountCode, paymentDetails);
-                if (paymentDetails == null)
-                    return null;
                 paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
             }
 
@@ -180,7 +176,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return true;
         }
 
-        
+
         private static bool ValidatePaymentMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData)
         {
             switch (method)
@@ -203,7 +199,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             return false;
         }
-        
+
         private void SendTransferInstructionToCustomer(PaymentDetails details)
         {
             var queueService = QueueService.GetInstance();
@@ -370,40 +366,29 @@ namespace Lunggo.ApCommon.Payment.Service
             return uniqueCode;
         }
 
-        internal PaymentDetails GetCartPaymentDetails(string trxId, string discountCode)
+        internal CartPaymentDetails GetCartPaymentDetails(string cartId, string discountCode)
         {
-            var cart = GetCart(trxId);
-            if (cart?.RsvNoList == null || !cart.RsvNoList.Any())
-                return null;
-
-            var cartRecordId = GenerateCartRecordId();
-            cart.Id = cartRecordId;
-
+            var cart = GetCart(cartId);
             var rsvNoList = cart.RsvNoList;
-            var cartPayment = new PaymentDetails();
-            cartPayment.CartRecordId = cart.Id;
-            cartPayment.RsvNo = rsvNoList[0];
+            var rsvPaymentDetails = rsvNoList.Select(GetPaymentDetails);
+            var cartPayment = AggregateRsvPaymentDetails(rsvPaymentDetails);
 
-            var paymentDetailsList = rsvNoList.Select(GetPaymentDetails);
+            return cartPayment;
+        }
 
-            foreach (var paymentDetails in paymentDetailsList)
+        private CartPaymentDetails AggregateRsvPaymentDetails(IEnumerable<PaymentDetails> rsvPaymentDetails)
+        {
+            var cartPayment = new CartPaymentDetails();
+            cartPayment.CartRecordId = GenerateCartRecordId();
+
+            foreach (var rsvPayment in rsvPaymentDetails)
             {
-                if (paymentDetails == null)
-                    return null;
-
-                cartPayment.OriginalPriceIdr += paymentDetails.OriginalPriceIdr;
-                cartPayment.FinalPriceIdr += paymentDetails.OriginalPriceIdr;
-
-                var uniqueCode = GetUniqueCodeFromCache(paymentDetails.RsvNo);
-                if (uniqueCode == 0M)
-                {
-                    uniqueCode = GetUniqueCode(paymentDetails.RsvNo, null, discountCode);
-                }
-                cartPayment.UniqueCode += uniqueCode;
-                cartPayment.FinalPriceIdr += uniqueCode;
-                cartPayment.LocalCurrency = paymentDetails.LocalCurrency;
+                cartPayment.OriginalPriceIdr += rsvPayment.OriginalPriceIdr;
+                cartPayment.FinalPriceIdr += rsvPayment.FinalPriceIdr;
+                cartPayment.UniqueCode += rsvPayment.UniqueCode;
+                cartPayment.LocalFinalPrice += rsvPayment.LocalFinalPrice;
             }
-            cartPayment.LocalFinalPrice = cartPayment.FinalPriceIdr * cartPayment.LocalCurrency.Rate;
+
             return cartPayment;
         }
 

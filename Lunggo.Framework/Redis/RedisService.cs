@@ -21,14 +21,20 @@ namespace Lunggo.Framework.Redis
             return Instance;
         }
 
-        public void Init(RedisConnectionProperty[] connectionProperties)
+        public void Init(RedisConnectionProperty[] connectionProperties, int databaseIndex)
         {
             foreach (var property in connectionProperties)
             {
                 var multiplexer = ConnectionMultiplexer.Connect(property.ConnectionString);
                 _connectionTable.Add(property.ConnectionName,multiplexer);
             }
-            _databaseIndex = int.Parse(ConfigManager.GetInstance().GetConfigValue("redis", "databaseIndex"));
+            _databaseIndex = databaseIndex;
+        }
+
+        public void Init(RedisConnectionProperty[] connectionProperties)
+        {
+            var databaseIndex = int.Parse(ConfigManager.GetInstance().GetConfigValue("redis", "databaseIndex"));
+            Init(connectionProperties, databaseIndex);
         }
 
         public IDatabase GetDatabase(String connectionName)

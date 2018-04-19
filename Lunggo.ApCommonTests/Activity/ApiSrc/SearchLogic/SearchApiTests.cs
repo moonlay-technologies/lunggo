@@ -3,7 +3,6 @@ using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Model.Logic;
-using Lunggo.ApCommonTests.Init;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 
@@ -28,8 +27,6 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.SearchLogic.Tests
         [TestMethod]
         public void Search_ValidInput_ReturnSomething()
         {
-            Initializer.Init();
-
             var input = new ActivitySearchApiRequest()
             {
                 Name = "",

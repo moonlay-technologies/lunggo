@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Repository.TableRecord;
@@ -31,7 +32,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
                 if (reservationRecord == null)
                     return null;
-                
+
                 var hotelReservation = new HotelReservation
                 {
                     RsvNo = rsvNo,
@@ -49,76 +50,76 @@ namespace Lunggo.ApCommon.Hotel.Service
                 var hotelDetailRecord = HotelReservationDetailsTableRepo.GetInstance()
                     .Find1(conn, new HotelReservationDetailsTableRecord { RsvNo = rsvNo });
 
-                    var hotelDetail = new HotelDetail
+                var hotelDetail = new HotelDetail
+                {
+                    HotelCode = hotelDetailRecord.HotelCd.GetValueOrDefault(),
+                    HotelName = hotelDetailRecord.HotelName,
+                    CheckInDate = hotelDetailRecord.CheckInDate.GetValueOrDefault(),
+                    CheckOutDate = hotelDetailRecord.CheckOutDate.GetValueOrDefault(),
+                    TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
+                    TotalChildren = hotelDetailRecord.ChildCount.GetValueOrDefault(),
+                    SpecialRequest = hotelDetailRecord.SpecialRequest,
+                    Address = hotelDetailRecord.HotelAddress,
+                    PhonesNumbers = hotelDetailRecord.HotelPhone == null ? new List<string>() : new List<string>{
+                        hotelDetailRecord.HotelPhone},
+                    StarRating = hotelDetailRecord.HotelRating,
+                    Rooms = new List<HotelRoom>(),
+                    ClientReference = hotelDetailRecord.ClientReference,
+                    BookingReference = hotelDetailRecord.BookingReference,
+                    SupplierName = hotelDetailRecord.SupplierName,
+                    SupplierVat = hotelDetailRecord.SupplierVat,
+                    City = hotelDetailRecord.HotelCity,
+                    CountryCode = hotelDetailRecord.HotelCountry,
+                    DestinationCode = hotelDetailRecord.HotelDestination,
+                    ZoneCode = hotelDetailRecord.HotelZone,
+                    AreaCode = hotelDetailRecord.HotelArea
+                };
+
+                var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
+                .Find(conn, new HotelRoomTableRecord { DetailsId = hotelDetailRecord.Id }).ToList();
+
+                if (hotelRoomRecords.Count == 0)
+                    return null;
+
+                foreach (var hotelRoomRecord in hotelRoomRecords)
+                {
+                    var hotelRoom = new HotelRoom
                     {
-                        HotelCode = hotelDetailRecord.HotelCd.GetValueOrDefault(),
-                        HotelName = hotelDetailRecord.HotelName,
-                        CheckInDate = hotelDetailRecord.CheckInDate.GetValueOrDefault(),
-                        CheckOutDate = hotelDetailRecord.CheckOutDate.GetValueOrDefault(),
-                        TotalAdult = hotelDetailRecord.AdultCount.GetValueOrDefault(),
-                        TotalChildren = hotelDetailRecord.ChildCount.GetValueOrDefault(),
-                        SpecialRequest = hotelDetailRecord.SpecialRequest,
-                        Address = hotelDetailRecord.HotelAddress,
-                        PhonesNumbers = hotelDetailRecord.HotelPhone == null ? new List<string>() : new List<string>{
-                        hotelDetailRecord.HotelPhone}, 
-                        StarRating = hotelDetailRecord.HotelRating,
-                        Rooms = new List<HotelRoom>(),
-                        ClientReference = hotelDetailRecord.ClientReference,
-                        BookingReference = hotelDetailRecord.BookingReference,
-                        SupplierName = hotelDetailRecord.SupplierName,
-                        SupplierVat = hotelDetailRecord.SupplierVat,
-                        City = hotelDetailRecord.HotelCity,
-                        CountryCode = hotelDetailRecord.HotelCountry,
-                        DestinationCode = hotelDetailRecord.HotelDestination,
-                        ZoneCode = hotelDetailRecord.HotelZone,
-                        AreaCode = hotelDetailRecord.HotelArea
+                        RoomCode = hotelRoomRecord.Code,
+                        Type = hotelRoomRecord.Type,
+                        Rates = new List<HotelRate>(),
                     };
 
-                    var hotelRoomRecords = HotelRoomTableRepo.GetInstance()
-                    .Find(conn, new HotelRoomTableRecord { DetailsId = hotelDetailRecord.Id }).ToList();
-
-                    if (hotelRoomRecords.Count == 0)
+                    if (hotelRoom.RoomCode == null)
                         return null;
 
-                    foreach (var hotelRoomRecord in hotelRoomRecords)
+                    var rateRecords = HotelRateTableRepo.GetInstance()
+                    .Find(conn, new HotelRateTableRecord { RoomId = hotelRoomRecord.Id }).ToList();
+
+                    if (rateRecords.Count == 0)
+                        return null;
+
+                    foreach (var rateRecord in rateRecords)
                     {
-                        var hotelRoom = new HotelRoom
+                        var rate = new HotelRate
                         {
-                            RoomCode = hotelRoomRecord.Code,
-                            Type = hotelRoomRecord.Type,
-                            Rates = new List<HotelRate>(),
+                            RateKey = rateRecord.RateKey,
+                            AdultCount = rateRecord.AdultCount.GetValueOrDefault(),
+                            ChildCount = rateRecord.ChildCount.GetValueOrDefault(),
+                            Board = rateRecord.Board,
+                            Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
+                            PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
+                            RateCount = rateRecord.RoomCount.GetValueOrDefault(),
+                            Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
+                            RateCommentsId = rateRecord.RateComment,
+                            ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null,
+                            NightCount = Convert.ToInt32((hotelDetailRecord.CheckOutDate - hotelDetailRecord.CheckInDate).GetValueOrDefault().TotalDays)
                         };
-
-                        if (hotelRoom.RoomCode == null)
-                            return null;
-
-                        var rateRecords = HotelRateTableRepo.GetInstance()
-                        .Find(conn, new HotelRateTableRecord { RoomId = hotelRoomRecord.Id }).ToList();
-
-                        if (rateRecords.Count == 0)
-                            return null;
-
-                        foreach (var rateRecord in rateRecords)
-                        {
-                            var rate = new HotelRate
-                            {
-                                RateKey = rateRecord.RateKey,
-                                AdultCount = rateRecord.AdultCount.GetValueOrDefault(),
-                                ChildCount = rateRecord.ChildCount.GetValueOrDefault(),
-                                Board = rateRecord.Board,
-                                Cancellation = rateRecord.Cancellation.Deserialize<List<Cancellation>>(),
-                                PaymentType = PaymentTypeCd.Mnemonic(rateRecord.PaymentType),
-                                RateCount = rateRecord.RoomCount.GetValueOrDefault(),
-                                Price = Price.GetFromDb(rateRecord.PriceId.GetValueOrDefault()),
-                                RateCommentsId = rateRecord.RateComment,
-                                ChildrenAges = rateRecord.ChildrenAges != null ? rateRecord.ChildrenAges.Deserialize<List<int>>() : null,
-                                NightCount = Convert.ToInt32((hotelDetailRecord.CheckOutDate - hotelDetailRecord.CheckInDate).GetValueOrDefault().TotalDays)
-                            };
-                            hotelRoom.Rates.Add(rate);
-                        }
-
-                        hotelDetail.Rooms.Add(hotelRoom);
+                        hotelRoom.Rates.Add(rate);
                     }
+
+                    hotelDetail.Rooms.Add(hotelRoom);
+                }
 
                 hotelDetail.NetTotalFare = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local);
                 hotelDetail.OriginalTotalFare = hotelDetail.Rooms.SelectMany(r => r.Rates).Sum(r => r.GetApparentOriginalPrice());
@@ -128,7 +129,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 hotelDetail.OriginalCheapestTotalFare = hotelDetail.OriginalCheapestFare;
 
                 hotelReservation.HotelDetails = hotelDetail;
-                
+
                 var paxRecords = PaxTableRepo.GetInstance()
                         .Find(conn, new PaxTableRecord { RsvNo = rsvNo }).ToList();
 
@@ -155,7 +156,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                return GetRoomIdQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).ToList();
+                return GetRoomIdQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
             }
         }
 
@@ -242,9 +243,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
-                reservation.Payment.InsertToDb(reservation.RsvNo);
-                
-                 var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord
+                PaymentService.GetInstance().CreateNewPayment(
+                    reservation.RsvNo,
+                    reservation.HotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
+                    new Currency(OnlineContext.GetActiveCurrencyCode()));
+
+                var hotelRsvDetailsRecord = new HotelReservationDetailsTableRecord
                 {
                     Id = HotelReservationIdSequence.GetInstance().GetNext(),
                     RsvNo = reservation.RsvNo,
@@ -260,14 +264,14 @@ namespace Lunggo.ApCommon.Hotel.Service
                     InsertPgId = "0",
                     HotelAddress = reservation.HotelDetails.Address,
                     HotelPhone = !(reservation.HotelDetails.PhonesNumbers == null || reservation.HotelDetails.PhonesNumbers.Count == 0) ?
-                    reservation.HotelDetails.PhonesNumbers[0] : null,
+                   reservation.HotelDetails.PhonesNumbers[0] : null,
                     HotelRating = reservation.HotelDetails.StarRating,
                     HotelCity = reservation.HotelDetails.City,
                     HotelCountry = reservation.HotelDetails.CountryCode,
                     HotelDestination = reservation.HotelDetails.DestinationCode,
-                    HotelZone =  reservation.HotelDetails.ZoneCode,
+                    HotelZone = reservation.HotelDetails.ZoneCode,
                     HotelArea = reservation.HotelDetails.AreaCode
-                 };
+                };
 
                 HotelReservationDetailsTableRepo.GetInstance().Insert(conn, hotelRsvDetailsRecord);
 
@@ -303,7 +307,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                             PriceId = rate.Price.InsertToDb(),
                             RoomId = roomId,
                             RoomCount = rate.RateCount,
-                            RateKey =  rate.RateKey,
+                            RateKey = rate.RateKey,
                             PaymentType = PaymentTypeCd.MnemonicToString(rate.PaymentType),
                             ChildrenAges = rate.ChildrenAges != null ? rate.ChildrenAges.Serialize() : null,
                             RateComment = rate.RateCommentsId,
@@ -498,12 +502,12 @@ namespace Lunggo.ApCommon.Hotel.Service
                         }
                     }
 
-                    
+
                 }
-                
+
             }
 
-            
+
             //return GetRoomIdFromDb(rsvNo);
 
         }

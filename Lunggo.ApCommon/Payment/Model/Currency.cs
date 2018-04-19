@@ -65,6 +65,17 @@ namespace Lunggo.ApCommon.Payment.Model
             RoundingOrder = roundingOrder;
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Currency item))
+                return false;
+
+            return Symbol == item.Symbol && 
+                   Rate == item.Rate && 
+                   RoundingOrder == item.RoundingOrder &&
+                   Supplier == item.Supplier;
+        }
+
         public decimal GetRoundingOrder()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

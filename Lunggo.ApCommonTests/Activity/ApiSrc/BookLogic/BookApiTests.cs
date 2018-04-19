@@ -5,7 +5,6 @@ using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.ApCommonTests.Init;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -57,8 +56,6 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.BookLogic.Tests
         [ExpectedException(typeof(NullReferenceException))]
         public void Book_Valid_NullException()
         {
-            Initializer.Init();
-            
             var pax = new PaxForDisplay(){ Type= PaxType.Adult, Name = "Travo", Nationality = "ID", Title = Title.Mister};
             var paxs = new List<PaxForDisplay> {pax};
 

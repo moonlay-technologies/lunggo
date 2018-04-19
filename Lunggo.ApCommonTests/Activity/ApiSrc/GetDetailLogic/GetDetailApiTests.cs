@@ -2,7 +2,6 @@
 using System.Net;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Model.Logic;
-using Lunggo.ApCommonTests.Init;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,8 +27,6 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetDetailLogic.Tests
         [TestMethod]
         public void GetDetail_ValidInput_ReturnSomething()
         {
-            Initializer.Init();
-
             var input = new GetDetailActivityApiRequest()
             {
                 ActivityId = "1"

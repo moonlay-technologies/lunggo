@@ -66,7 +66,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
             getDetail.ActivityDetail.BookingStatus = BookingStatus.Booked;
             
-            var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
+            var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail, out var originalPrice);
             if (rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE" || rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE_COUNT" || rsvDetail.RsvNo == "ERR_INVALID_ALL_TICKET_COUNT")
             {
                 return new BookActivityOutput
@@ -76,19 +76,20 @@ namespace Lunggo.ApCommon.Activity.Service
                 };
             }
 
-            InsertActivityRsvToDb(rsvDetail);
+            InsertActivityRsvToDb(rsvDetail, originalPrice);
             //ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
             return new BookActivityOutput
             {
                 IsPriceChanged = false,
                 IsValid = true,
                 RsvNo = rsvDetail.RsvNo,
-                TimeLimit = rsvDetail.Payment.TimeLimit
+                //TimeLimit = rsvDetail.Payment.TimeLimit
             };
         }
 
-        public ActivityReservation CreateActivityReservation(BookActivityInput input, ActivityDetail activityInfo)
+        public ActivityReservation CreateActivityReservation(BookActivityInput input, ActivityDetail activityInfo, out decimal originalPrice)
         {
+            originalPrice = 0;
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Activity);
 
             var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
@@ -137,6 +138,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 originalPriceIdr += (price.Amount * ticketCount.Count);
             }
+
+            originalPrice = originalPriceIdr;
             
             if (allTicketCount > packageAttribute[0].MaxCount || allTicketCount < packageAttribute[0].MinCount)
             {
@@ -155,14 +158,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 TicketCount = input.TicketCount,
                 DateTime = input.DateTime,
                 Pax = input.Passengers,
-                Payment = new PaymentDetails
-                {
-                    Status = PaymentStatus.Pending,
-                    LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                    OriginalPriceIdr = originalPriceIdr,
-                    TimeLimit = DateTime.UtcNow.AddYears(1)
-                    //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
-                },
                 RsvStatus = RsvStatus.InProcess,
                 RsvTime = DateTime.UtcNow,
                 State = new ReservationState

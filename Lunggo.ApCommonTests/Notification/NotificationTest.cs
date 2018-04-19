@@ -1,16 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Notifications;
-using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using System.Data;
-using Lunggo.ApCommonTests.Init;
-using System.Data.SqlClient;
 using Lunggo.Framework.TestHelpers;
 
 namespace Lunggo.ApCommonTests.Notification
@@ -20,7 +12,6 @@ namespace Lunggo.ApCommonTests.Notification
     {
         public void AssertRegisterDevice(string dummyHandle = "TEST_HANDLE", string dummyDeviceId = "TEST_DEVICEID", string dummyUserId = "TEST_USERID", params string[] tags)
         {
-            Initializer.Init();
             NotificationTableRecord actualResult;
             NotificationService.GetInstance().RegisterDevice(dummyHandle, dummyDeviceId, dummyUserId);
             TestHelper.UseDb((conn) =>

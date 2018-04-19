@@ -26,6 +26,7 @@ using Lunggo.Framework.Config;
 using System.Security.Cryptography;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Payment.Service;
+using Lunggo.Framework.Context;
 using Lunggo.Framework.Encoder;
 
 namespace Lunggo.ApCommon.Activity.Service
@@ -673,7 +674,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
         #region Insert
 
-        private void InsertActivityRsvToDb(ActivityReservation reservation)
+        private void InsertActivityRsvToDb(ActivityReservation reservation, decimal originalPrice)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -785,7 +786,10 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
-                reservation.Payment.InsertToDb(reservation.RsvNo);
+                PaymentService.GetInstance().CreateNewPayment(reservation.RsvNo,
+                    originalPrice,
+                    new Currency(OnlineContext.GetActiveCurrencyCode()));
+
                 if (reservation.Pax != null)
                 {
                     foreach (var passenger in reservation.Pax)
@@ -1819,7 +1823,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         {
                             RsvNo = savedBooking.RsvNo
                         }).RefundAmount;
-                        
+
                         newPaymentSteps.Add(new PaymentStep
                         {
                             StepDescription = "Cancel",
@@ -1829,11 +1833,11 @@ namespace Lunggo.ApCommon.Activity.Service
                         });
                         paymentSteps = newPaymentSteps;
                     }
-                    savedBooking.PaymentSteps = paymentSteps;                    
+                    savedBooking.PaymentSteps = paymentSteps;
                 }
 
                 var refundsHalf = savedBookings.Where(a => a.RefundAmount > 0).ToList();
-                if(refundsHalf.Count < 1)
+                if (refundsHalf.Count < 1)
                 {
                     return new List<PendingRefund>();
                 }
@@ -1862,7 +1866,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var activityReservation = ActivityReservationTableRepo.GetInstance().Find1(conn, new ActivityReservationTableRecord { RsvNo = rsvNo });
                 return activityReservation.UserId;
             }
-               
+
         }
 
     }

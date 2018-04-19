@@ -3,10 +3,9 @@ using Lunggo.ApCommon.Payment.Model.Data;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CreditCard = Lunggo.Framework.Payment.Data.CreditCard;
 using PaymentData = Lunggo.ApCommon.Payment.Model.PaymentData;
 
-namespace Lunggo.PaymentTest.Public.SubmitPayment
+namespace Lunggo.PaymentTest.Units.SubmitPayment
 {
     [TestClass]
     public partial class SubmitPaymentTest

@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                 objNicepay.BankCd = objNicepayClass.GetBankCode(payment.Submethod);
                 objNicepay.DateNow = DateTime.UtcNow.AddHours(7).ToString("yyyyMMdd");
                 // Set VA expiry date +1 day (optional)
-                objNicepay.vaExpDate = payment.TimeLimit.AddHours(7).ToString("yyyyMMdd");
+                objNicepay.vaExpDate = payment.TimeLimit?.AddHours(7).ToString("yyyyMMdd");
                 //Populate Mandatory parameters to send
                 // payment type Bank
                 objNicepay.PayMethod = "02"; //
@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                 //objNicepay.deliveryCountry = "Indonesia";
 
                 objNicepay.vacctValidDt = objNicepay.vaExpDate;
-                objNicepay.vacctValidTm = payment.TimeLimit.AddHours(7).ToString("HHmmss");
+                objNicepay.vacctValidTm = payment.TimeLimit?.AddHours(7).ToString("HHmmss");
 
                 objResult = objNicepayClass.CreateVA(objNicepay);
 

@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lunggo.ApCommon.Activity.Model;
-using Lunggo.ApCommon.Activity.Model.Logic;
-using Lunggo.ApCommonTests.Init;
 using Lunggo.WebAPI.ApiSrc.Activity.Logic;
 using Lunggo.WebAPI.ApiSrc.Activity.Model;
 using System;
@@ -48,7 +44,6 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
         [TestMethod]
         public void MyBookings_ValidInput_ReturnSomething()
         {
-            Initializer.Init();
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
             HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("08712345678"), new string[0]);
             var input = new GetMyBookingsApiRequest()

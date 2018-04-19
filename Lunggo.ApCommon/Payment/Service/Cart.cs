@@ -3,28 +3,17 @@ using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.ApCommon.Travolutionary.WebService.Hotel;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Redis;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using StackExchange.Redis;
 using Lunggo.ApCommon.Payment.Model;
-using System.Runtime.InteropServices;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.ApCommon.Payment.Query;
-using Lunggo.ApCommon.Activity.Database;
-using Lunggo.ApCommon.Payment.Service;
-using System.Net;
-using Lunggo.ApCommon.Activity.Model;
-using Lunggo.ApCommon.Activity.Database;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Activity.Database.Query;
-using Lunggo.ApCommon.Activity.Model.Logic;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -48,7 +37,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (cart.RsvNoList == null || !cart.RsvNoList.Any())
                 GetCartContentFromDb(cart);
             if (cart.RsvNoList == null || !cart.RsvNoList.Any())
-                return cart;
+                throw new Exception("Cart does not contain any reservation");
 
             cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
             
@@ -69,7 +58,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "Cart:RsvNoList:" + cart.Id;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            if (redisDb.ListLength(redisKey) == 0)
+            if (!redisDb.KeyExists(redisKey) || redisDb.ListLength(redisKey) == 0)
                 return;
 
             var rsvNoList = redisDb.ListRange(redisKey).Select(val => val.ToString()).Distinct().ToList();

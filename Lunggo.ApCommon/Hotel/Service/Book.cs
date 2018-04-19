@@ -187,13 +187,13 @@ namespace Lunggo.ApCommon.Hotel.Service
                 };
             var rsvDetail = CreateHotelReservation(input, bookInfo);
             InsertHotelRsvToDb(rsvDetail);
-            ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit);
+            ExpireReservationWhenTimeout(rsvDetail.RsvNo, rsvDetail.Payment.TimeLimit.GetValueOrDefault());
             return new BookHotelOutput
             {
                 IsPriceChanged = false,
                 IsValid = true,
                 RsvNo = rsvDetail.RsvNo,
-                TimeLimit = rsvDetail.Payment.TimeLimit
+                TimeLimit = rsvDetail.Payment.TimeLimit.GetValueOrDefault()
             };
         }
 
@@ -257,14 +257,6 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Contact = input.Contact,
                 HotelDetails = hotelInfo,
                 Pax = input.Passengers,
-                Payment = new PaymentDetails
-                {
-                    Status = PaymentStatus.Pending,
-                    LocalCurrency = new Currency(OnlineContext.GetActiveCurrencyCode()),
-                    OriginalPriceIdr = bookInfo.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
-                    TimeLimit = DateTime.UtcNow.AddHours(1)
-                    //TimeLimit = bookInfo.Rooms.SelectMany(r => r.Rates).Min(order => order.TimeLimit).AddMinutes(-10),
-                },
                 RsvStatus = RsvStatus.InProcess,
                 RsvTime = DateTime.UtcNow,
                 State = new ReservationState
