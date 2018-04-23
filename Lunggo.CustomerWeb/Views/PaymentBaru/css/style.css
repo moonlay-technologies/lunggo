@@ -231,10 +231,19 @@ body {
 .validation-form {
   border:1px solid #FC8A8A;
 }
+.validation-form-true {
+  border:1px solid #00d3c5;
+}
 .text-validation {
   margin-top:5px;
   font-family: Hind-light;
   color:#F86161;
+  font-size:10px;
+}
+.text-validation-true {
+  margin-top:5px;
+  font-family: Hind-light;
+  color:#00d3c5;
   font-size:10px;
 }
 .more-info {
