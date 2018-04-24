@@ -36,6 +36,7 @@ class PaymentPageStateContainer extends React.Component {
       <Layout
         method={this.method}
         setMethod={this.setMethod}
+        onApplyDiscountVoucher={this.applyDiscountVoucher}
 
         rsvNo={this.props.rsvNo}
         discCd={this.props.discCd}
