@@ -569,12 +569,12 @@ namespace Lunggo.ApCommon.Activity.Service
                     }
                 }
 
-
+                
 
 
                 var output = new GetAppointmentListOutput
                 {
-                    Appointments = saved,
+                    Appointments = saved.Where(a => a.AppointmentReservations.Count > 0).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
