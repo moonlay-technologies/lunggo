@@ -854,17 +854,16 @@ app.controller('paymentController', [
 
         // ********************************** END *********************************************
 
-        // ********************************* LOG IN *******************************************
-        if ($scope.loggedIn) {
-            $scope.buyerInfo.fullname = buyerInfo.fullname;
-            $scope.buyerInfo.countryCode = buyerInfo.countryCode;
-            $scope.buyerInfo.phone = buyerInfo.phone;
-            $scope.buyerInfo.email = buyerInfo.email;
-        } else {
-            $scope.buyerInfo = {};
-        }
-
-        // ********************************** END *********************************************
+        // // ********************************* LOG IN *******************************************
+        // if ($scope.loggedIn) {
+        //     $scope.buyerInfo.fullname = buyerInfo.fullname;
+        //     $scope.buyerInfo.countryCode = buyerInfo.countryCode;
+        //     $scope.buyerInfo.phone = buyerInfo.phone;
+        //     $scope.buyerInfo.email = buyerInfo.email;
+        // } else {
+        //     $scope.buyerInfo = {};
+        // }
+        // // ********************************** END *********************************************
 
 
         // ********************************** OTHERS ******************************************
