@@ -9,26 +9,37 @@ import { getCreditBalance, sumTotalBill } from './PaymentController';
 class PaymentPageStateContainer extends React.Component {
 
   @observable method = null
-  @observable creditBalance = ''
+  @observable creditBalance = this.props.creditBalance
+  @observable discountVoucherAmount = ''
+  @observable discountVoucherCode = ''
   @observable errorMessage = ''
   @observable isLoadingCreditBalance = false
+  @observable isLoadingDiscountVoucher = false
 
   @action setMethod(method) { this.method = method }
 
   @action componentDidMount() {
     this.isLoadingCreditBalance = true;
-    getCreditBalance().then( r => {
-      if (r.status=200) this.creditBalance = r.discount;
-      else this.errorMessage = r.error;
-    }).finally( () => this.isLoadingCreditBalance = false);
+    getCreditBalance()
+      .then( r => {
+        if (r.status=200) this.creditBalance = r.discount;
+        else this.errorMessage = r.error;
+      })
+      .finally( () => this.isLoadingCreditBalance = false);
   }
 
-  applyDiscountVoucher = () => {
-    this.isLoadingCreditBalance = true;
-    getCreditBalance().then( r => {
-      if (r.status=200) this.creditBalance = r.discount;
-      else this.errorMessage = r.error;
-    }).finally( () => this.isLoadingCreditBalance = false);
+  @action applyDiscountVoucher = () => {
+    this.isLoadingDiscountVoucher = true;
+    getCreditBalance()
+      .then( r => {
+        if (r.status=200) this.discountVoucherAmount = r.discount;
+        else this.errorMessage = r.error;
+      })
+      .finally( () => this.isLoadingDiscountVoucher = false);
+  }
+
+  @action onChangedVoucherCode = e => {
+    this.discountVoucherCode = e.target.value;
   }
 
 	render() {
@@ -36,12 +47,15 @@ class PaymentPageStateContainer extends React.Component {
       <Layout
         method={this.method}
         setMethod={this.setMethod}
-        onApplyDiscountVoucher={this.applyDiscountVoucher}
+        creditBalance={this.creditBalance}
+        discountVoucherAmount={this.discountVoucherAmount}
+        discountVoucherCode={this.discountVoucherCode}
+        onChangedVoucherCode={this.onChangedVoucherCode}
+        applyDiscountVoucher={this.applyDiscountVoucher}
 
         rsvNo={this.props.rsvNo}
         discCd={this.props.discCd}
         headerTitle={this.props.headerTitle}
-        creditBalance={this.props.creditBalance}
         pricingDetails={this.props.pricingDetails}
         refund='tidak bisa refund untuk aktivitas ini'
         originalPrice={this.props.originalPrice}

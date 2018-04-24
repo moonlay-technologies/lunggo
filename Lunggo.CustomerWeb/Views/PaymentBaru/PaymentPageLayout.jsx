@@ -38,13 +38,14 @@ export default function PaymentPageLayout(props) {
             <form>
               <div className="form-group">
                 <label className="label-form" for="nokartu">Kode Voucher</label>
-                <input type="number" className="form-control form-payment validation-form-true" id="nokartu" placeholder="Masukkan kode voucher disini" />
-                <div className="text-validation-true">Kode diterima</div>
+                <input value={props.discountVoucherCode} onChange={onChangedVoucherCode} type="number" className="form-control form-payment validation-form-true" id="nokartu" placeholder="Masukkan kode voucher disini" />
+                <div className="text-validation">Kode salah</div>
+                {/*<div className="text-validation-true">Kode benar</div>*/}
               </div>
 
               <div className="row">
                 <div className="col-xs-12 no-padding">
-                  <a href="#" className="button-primary" onClick={props.onApplyDiscountVoucher}>Gunakan</a>
+                  <a href="#" className="button-primary" onClick={props.applyDiscountVoucher}>Gunakan</a>
                 </div>
               </div>
 
