@@ -54,6 +54,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ClearScript, Version=5.4.9.0, Culture=neutral, PublicKeyToken=935d0c957da47c73, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.2.4.2\lib\net45\ClearScript.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.ChakraCore, Version=2.4.8.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.ChakraCore.2.4.8\lib\net45\JavaScriptEngineSwitcher.ChakraCore.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Core, Version=2.4.9.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Core.2.4.9\lib\net45\JavaScriptEngineSwitcher.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.Msie, Version=2.4.9.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.Msie.2.4.9\lib\net45\JavaScriptEngineSwitcher.Msie.dll</HintPath>
+    </Reference>
+    <Reference Include="JavaScriptEngineSwitcher.V8, Version=2.4.2.0, Culture=neutral, PublicKeyToken=c608b2a8cc9e4472, processorArchitecture=MSIL">
+      <HintPath>..\packages\JavaScriptEngineSwitcher.V8.2.4.2\lib\net45\JavaScriptEngineSwitcher.V8.dll</HintPath>
+    </Reference>
+    <Reference Include="JSPool, Version=3.0.1.0, Culture=neutral, PublicKeyToken=2fc7775f73072640, processorArchitecture=MSIL">
+      <HintPath>..\packages\JSPool.3.0.1\lib\net40-client\JSPool.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -107,12 +125,24 @@
     <Reference Include="Microsoft.WindowsAzure.Storage">
       <HintPath>..\packages\WindowsAzure.Storage.8.4.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="MsieJavaScriptEngine, Version=2.2.2.0, Culture=neutral, PublicKeyToken=a3a2846a37ac0d3e, processorArchitecture=MSIL">
+      <HintPath>..\packages\MsieJavaScriptEngine.2.2.2\lib\net45\MsieJavaScriptEngine.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="React.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
+      <HintPath>..\packages\React.Core.3.3.0\lib\net40\React.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="React.Web, Version=3.3.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
+      <HintPath>..\packages\React.Web.3.3.0\lib\net40\React.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="React.Web.Mvc4, Version=3.3.0.0, Culture=neutral, PublicKeyToken=9aed67b161f7db78, processorArchitecture=MSIL">
+      <HintPath>..\packages\React.Web.Mvc4.3.3.0\lib\net40\React.Web.Mvc4.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -133,6 +163,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial">
@@ -208,6 +239,12 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
+    <Reference Include="VroomJs, Version=1.2.3.0, Culture=neutral, PublicKeyToken=e7c52e67fcb0044f, processorArchitecture=MSIL">
+      <HintPath>..\packages\VroomJs.1.2.3\lib\net45\VroomJs.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -217,6 +254,7 @@
     <Compile Include="App_Start\AppInitializer.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\ReactConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -1967,7 +2005,65 @@
     <Content Include="Views\Account\RegisterReferral.cshtml" />
     <Content Include="Views\Account\DownloadReferral.cshtml" />
     <None Include="Views\common\ForgotPasswordByOtpEmail.cshtml" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap-theme.css.map" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap-theme.min.css.map" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap.css.map" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\hind-bold.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\hind-light.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\hind-medium.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\hind-regular.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\hind-semibold.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\ionicons.eot" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\ionicons.ttf" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\ionicons.woff" />
+    <Content Include="Areas\Payment_v2\Views\Payment\Payment.cshtml" />
     <None Include="Views\RegisterReferral\RegisterReferral.cshtml" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap-theme.css" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap-theme.min.css" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap.css" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap.min.css" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\ionicons.css" />
+    <Content Include="Areas\Payment_v2\Views\Payment\css\style.css" />
+    <Content Include="Areas\Payment_v2\Views\Payment\detail-token.html" />
+    <Content Include="Areas\Payment_v2\Views\Payment\detail-transfer.html" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\Payment_v2\Views\Payment\fonts\ionicons.svg" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\bca.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\BCAKlikPay.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\BNI.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\btn.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\cimbclick.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\cimbniaga.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\danamon.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\dompet.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\epaybri.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\gopay.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\icon-success.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\kredit.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\mandiri.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\mandiriclickpay.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\muamalat.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\images\permata.png" />
+    <Content Include="Areas\Payment_v2\Views\Payment\index.html" />
+    <Content Include="Areas\Payment_v2\Views\Payment\js\bootstrap.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\js\bootstrap.min.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\js\jquery.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\js\npm.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentController.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentDataForm.jsx" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentDataStateContainer.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentInstruction.jsx" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentModalLayout.jsx" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentModalStateContainer.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentPageLayout.jsx" />
+    <Content Include="Areas\Payment_v2\Views\Payment\PaymentPageStateContainer.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\test.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\thankyou-page.html" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <Content Include="Views\Promo\PromoLandingPage.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />
@@ -2197,7 +2293,6 @@
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Areas\Payment_v2\Models\" />
-    <Folder Include="Areas\Payment_v2\Views\Payment\" />
     <Folder Include="Areas\Payment_v2\Views\Shared\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular-bootstrap-nav-tree\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular-dropzone\" />
