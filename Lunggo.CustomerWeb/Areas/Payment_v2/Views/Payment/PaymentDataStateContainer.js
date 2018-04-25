@@ -4,24 +4,21 @@ import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 import PaymentDataForm from './PaymentDataForm';
 
-@observer export default
+export default const PaymentDataStateContainer = observer(
 class PaymentDataStateContainer extends React.Component {
 
-  @observable ccNo = ''
-  @observable name = ''
-  // @observable expiryDate = {month:'', year: ''}
-  @observable month = ''
-  @observable year = ''
-  @observable cvv = ''
-  @observable errorMessages = {}
+  ccNo = ''
+  name = ''
+  month = ''
+  year = ''
+  cvv = ''
+  errorMessages = {}
 
-  @action
   handleInputChange = event => {
     const {value, name} = event.target;
     this[name] = value;
   }
 
-  @action
   handleErrorValidationMessages = errorMessages => {
     for (const key in errorMessages) {
       this[key] = errorMessages[key];
@@ -42,3 +39,13 @@ class PaymentDataStateContainer extends React.Component {
 	  );
 	}
 }
+decorate(PaymentDataStateContainer, {
+  ccNo: observable,
+  name: observable,
+  month: observable,
+  year: observable,
+  cvv: observable,
+  errorMessages: observable,
+  handleInputChange: action,
+  handleErrorValidationMessages: action,
+});
