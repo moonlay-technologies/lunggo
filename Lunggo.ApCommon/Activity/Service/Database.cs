@@ -441,6 +441,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     }
                     savedBooking.PaxCount = savedPaxCounts;
                 }
+
                 var output = new GetAppointmentRequestOutput
                 {
                     Appointments = savedBookings.Select(a => new AppointmentDetail()

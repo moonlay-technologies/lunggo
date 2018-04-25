@@ -1,4 +1,6 @@
 ﻿using Lunggo.ApCommon.Activity.Model.Logic;
+using System;
+using System.Linq;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -6,7 +8,18 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public GetAppointmentRequestOutput GetAppointmentRequest(GetAppointmentRequestInput input)
         {
-            return GetAppointmentRequestFromDb(input);
+            var appointmentRequest = GetAppointmentRequestFromDb(input);
+            var expiredAppointmentRequest = appointmentRequest.Appointments.Where(appointment => appointment.TimeLimit < DateTime.UtcNow).ToList();
+            if(expiredAppointmentRequest.Count > 0)
+            {
+                var denyAppointment = expiredAppointmentRequest.Select(a => DenyAppointment(new AppointmentConfirmationInput
+                {
+                    RsvNo = a.RsvNo
+                })).ToList();
+            }
+            var activeAppointmentRequest = appointmentRequest.Appointments.Where(appointment => appointment.TimeLimit > DateTime.UtcNow).ToList();
+            appointmentRequest.Appointments = activeAppointmentRequest;
+            return appointmentRequest;
         }
         
     }
