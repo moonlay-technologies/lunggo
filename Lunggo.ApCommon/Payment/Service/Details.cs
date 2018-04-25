@@ -47,7 +47,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var details = new PaymentDetails
             {
                 RsvNo = rsvNo,
-                Status = PaymentStatus.Pending,
+                Status = PaymentStatus.Undefined,
                 OriginalPriceIdr = price,
                 LocalCurrency = currency,
                 TimeLimit = timeLimit?.AddMinutes(-10)

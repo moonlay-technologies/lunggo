@@ -20,7 +20,16 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             if (cartPayment.Status == PaymentStatus.Expired)
                 return View("Expired");
-            // if already paid, goto respective page (3rd party, instruction, thank you)
+            if (cartPayment.RedirectionUrl != null)
+                return RedirectToAction("3rd party");
+            if (cartPayment.Status != PaymentStatus.Undefined && cartPayment.Status != PaymentStatus.Failed)
+                //alreadt paid
+            {
+                if (cartPayment.RedirectionUrl != null)
+                    return RedirectToAction(cartPayment.RedirectionUrl);
+                if (cartPayment.TransferAccount != null)
+                    return RedirectToAction("Instruction");
+            }
 
             return View(cartPayment);
         }

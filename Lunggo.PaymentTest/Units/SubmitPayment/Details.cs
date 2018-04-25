@@ -315,6 +315,52 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         {
             throw new NotImplementedException();
         }
+
+        [TestMethod]
+        // Should create new payment details with supplied data
+        public void Should_create_new_payment_details_with_supplied_data()
+        {
+            var rsvNo = "123456789";
+            var price = 123456789M;
+            var currency = new Currency("ASD", 100, 123);
+
+            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
+
+            Assert.AreEqual(rsvNo, actual.RsvNo);
+            Assert.AreEqual(price, actual.OriginalPriceIdr);
+            Assert.AreEqual(currency.Symbol, actual.LocalCurrency.Symbol);
+            Assert.AreEqual(currency.Rate, actual.LocalCurrency.Rate);
+            Assert.AreEqual(currency.RoundingOrder, actual.LocalCurrency.RoundingOrder);
+        }
+
+        [TestMethod]
+        // Should create new payment details with undefined status
+        public void Should_create_new_payment_details_with_undefined_status()
+        {
+            var rsvNo = "123456789";
+            var price = 123456789M;
+            var currency = new Currency("ASD", 100, 123);
+
+            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
+
+            Assert.AreEqual(PaymentStatus.Undefined, actual.Status);
+        }
+	
+
+        [TestMethod]
+        // Should create new payment details with 10 minutes less time limit
+        public void Should_create_new_payment_details_with_10_minutes_less_time_limit()
+        {
+            var rsvNo = "123456789";
+            var price = 123456789M;
+            var currency = new Currency("ASD", 100, 123);
+            var timelimit = DateTime.Now;
+
+            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
+
+            Assert.AreEqual(timelimit.AddMinutes(-10), actual.TimeLimit);
+        }
+	
 	
     }
 }

@@ -77,6 +77,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.ApCommonTests", "Lun
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.PaymentTest", "Lunggo.PaymentTest\Lunggo.PaymentTest.csproj", "{6AAA9947-6A7E-42CB-BB65-35B9654F86E0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lunggo.CustomerWebTests", "Lunggo.CustomerWebTests\Lunggo.CustomerWebTests.csproj", "{72AC661F-5399-4A92-8774-CF351FE4051B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -722,6 +724,38 @@ Global
 		{6AAA9947-6A7E-42CB-BB65-35B9654F86E0}.Release-x64|x64.Build.0 = Release|Any CPU
 		{6AAA9947-6A7E-42CB-BB65-35B9654F86E0}.Release-x64|x86.ActiveCfg = Release|Any CPU
 		{6AAA9947-6A7E-42CB-BB65-35B9654F86E0}.Release-x64|x86.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|x64.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug|x86.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|Any CPU.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|ARM.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|ARM.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|x64.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|x64.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|x86.ActiveCfg = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Debug-x64|x86.Build.0 = Debug|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|ARM.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|x64.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|x64.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|x86.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release|x86.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|Any CPU.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|Any CPU.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|ARM.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|ARM.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|x64.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|x64.Build.0 = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|x86.ActiveCfg = Release|Any CPU
+		{72AC661F-5399-4A92-8774-CF351FE4051B}.Release-x64|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
