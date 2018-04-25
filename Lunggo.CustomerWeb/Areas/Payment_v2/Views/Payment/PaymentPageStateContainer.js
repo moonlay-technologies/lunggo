@@ -5,20 +5,20 @@ import { observer } from "mobx-react";
 import Layout from './PaymentPage';
 import { getCreditBalance, sumTotalBill } from './PaymentController';
 
-@observer export default
+export default const PaymentPageStateContainer = observer(
 class PaymentPageStateContainer extends React.Component {
 
-  @observable method = null
-  @observable creditBalance = this.props.creditBalance
-  @observable discountVoucherAmount = ''
-  @observable discountVoucherCode = ''
-  @observable errorMessage = ''
-  @observable isLoadingCreditBalance = false
-  @observable isLoadingDiscountVoucher = false
+  method = null
+  creditBalance = this.props.creditBalance
+  discountVoucherAmount = ''
+  discountVoucherCode = ''
+  errorMessage = ''
+  isLoadingCreditBalance = false
+  isLoadingDiscountVoucher = false
 
-  @action setMethod(method) { this.method = method }
+  setMethod(method) { this.method = method }
 
-  @action componentDidMount() {
+  componentDidMount() {
     this.isLoadingCreditBalance = true;
     getCreditBalance()
       .then( r => {
@@ -28,7 +28,7 @@ class PaymentPageStateContainer extends React.Component {
       .finally( () => this.isLoadingCreditBalance = false);
   }
 
-  @action applyDiscountVoucher = () => {
+  applyDiscountVoucher = () => {
     this.isLoadingDiscountVoucher = true;
     getCreditBalance()
       .then( r => {
@@ -38,7 +38,7 @@ class PaymentPageStateContainer extends React.Component {
       .finally( () => this.isLoadingDiscountVoucher = false);
   }
 
-  @action onChangedVoucherCode = e => {
+  onChangedVoucherCode = e => {
     this.discountVoucherCode = e.target.value;
   }
 
@@ -67,3 +67,16 @@ class PaymentPageStateContainer extends React.Component {
 	  );
 	}
 }
+decorate(PaymentPageStateContainer, {
+  method: observable,
+  creditBalance: observable,
+  discountVoucherAmount: observable,
+  discountVoucherCode: observable,
+  errorMessage: observable,
+  isLoadingCreditBalance: observable,
+  isLoadingDiscountVoucher: observable,
+  setMethod: action,
+  componentDidMount: action,
+  applyDiscountVoucher: action,
+  onChangedVoucherCode: action,
+});
