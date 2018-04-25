@@ -44,10 +44,11 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private bool UpdatePaymentToDb(string rsvNo, PaymentDetails payment)
+        private bool UpdatePaymentToDb(PaymentDetails payment)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
+                var rsvNo = payment.RsvNo;
                 string mediumCd = null;
                 string submethodCd = null;
                 string methodCd = null;

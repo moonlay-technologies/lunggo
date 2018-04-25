@@ -225,6 +225,8 @@
     <Compile Include="Areas\Api\Models\AccountApiResponseModel.cs" />
     <Compile Include="Areas\Api\Models\AccountResponseModel.cs" />
     <Compile Include="Areas\Api\Models\ResetPasswordViewModel.cs" />
+    <Compile Include="Areas\Payment_v2\Controllers\PaymentController.cs" />
+    <Compile Include="Areas\Payment_v2\Payment_v2AreaRegistration.cs" />
     <Compile Include="Attributes\RequireHttpsProduction.cs" />
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\RegisterReferralController.cs" />
@@ -1904,6 +1906,7 @@
     <Content Include="Assets\fonts\hind-light.ttf" />
     <Content Include="Assets\fonts\hind-regular.ttf" />
     <Content Include="Assets\fonts\hind-semibold.ttf" />
+    <Content Include="Areas\Payment_v2\Views\web.config" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2193,6 +2196,9 @@
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
     <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Areas\Payment_v2\Models\" />
+    <Folder Include="Areas\Payment_v2\Views\Payment\" />
+    <Folder Include="Areas\Payment_v2\Views\Shared\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular-bootstrap-nav-tree\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular-dropzone\" />
     <Folder Include="Assets\B2BTravorama\assets\plugins\angular-google-map-loader\" />

@@ -28,42 +28,37 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public Cart GetCart(string cartId)
         {
-            var cart = new Cart
-            {
-                Id = cartId,
-            };
-
-            GetCartContentFromCache(cart);
-            if (cart.RsvNoList == null || !cart.RsvNoList.Any())
-                GetCartContentFromDb(cart);
-            if (cart.RsvNoList == null || !cart.RsvNoList.Any())
-                throw new Exception("Cart does not contain any reservation");
-
+            var cart = GetCartContentFromCache(cartId)??GetCartContentFromDb(cartId);
             cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
             
             return cart;
         }
 
-        private void GetCartContentFromDb(Cart cart)
+        private Cart GetCartContentFromDb(string cartId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord {CartId = cart.Id});
+                var record = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord {CartId = cartId});
+                var cart = new Cart();
                 cart.RsvNoList = record.Select(r => r.RsvNoList).ToList();
+                cart.TotalPrice = cart.RsvNoList.Select(GetPaymentDetails).Sum(p => p.OriginalPriceIdr);
+                return cart;
             }
         }
 
-        private void GetCartContentFromCache(Cart cart)
+        private Cart GetCartContentFromCache(string cartId)
         {
             var redisService = RedisService.GetInstance();
-            var redisKey = "Cart:RsvNoList:" + cart.Id;
+            var redisKey = "Cart:RsvNoList:" + cartId;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             if (!redisDb.KeyExists(redisKey) || redisDb.ListLength(redisKey) == 0)
-                return;
+                return null;
 
             var rsvNoList = redisDb.ListRange(redisKey).Select(val => val.ToString()).Distinct().ToList();
+            var cart = new Cart();
             cart.RsvNoList = rsvNoList;
             cart.TotalPrice = rsvNoList.Select(GetPaymentDetails).Sum(p => p.OriginalPriceIdr);
+            return cart;
         }
 
         public bool AddToCart(string rsvNo)
@@ -133,21 +128,21 @@ namespace Lunggo.ApCommon.Payment.Service
             redisDb.KeyDelete(redisKeyCartId);
         }
 
-        public void InsertCartToDb(string cartRecordId, List<string> rsvNoList)
+        public void InsertCartToDb(CartPaymentDetails cartDetails)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var userId = GetUserIdFromActivityReservationDbQuery.GetInstance().Execute(conn, new { RsvNo = rsvNoList[0] }).First();
-                rsvNoList = rsvNoList.Distinct().ToList();
-                foreach (var rsvNo in rsvNoList)
+                var userId = GetUserIdFromActivityReservationDbQuery.GetInstance().Execute(conn, new { cartDetails.RsvPaymentDetails[0].RsvNo }).First();
+                foreach (var rsvDetails in cartDetails.RsvPaymentDetails)
                 {
                     var cartsRecord = new CartsTableRecord
                     {
-                        CartId = cartRecordId,
-                        RsvNoList = rsvNo,
+                        CartId =  cartDetails.CartRecordId,
+                        RsvNoList = rsvDetails.RsvNo,
                         UserId = userId
                     };
                     CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
+                    UpdatePaymentToDb(rsvDetails);
                 }
             }
         }

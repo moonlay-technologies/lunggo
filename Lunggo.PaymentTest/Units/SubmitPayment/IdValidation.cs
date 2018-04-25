@@ -8,6 +8,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
     public partial class SubmitPaymentTest
     {
         [TestMethod]
+        // TODO GANTI
         public void Should_not_return_failed_when_ID_is_RsvNo___all_numbers_8_12_char()
         {
             object dummy = null;
@@ -24,6 +25,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         }
 
         [TestMethod]
+        // TODO GANTI
         public void Should_not_return_failed_when_ID_is_Cart_ID___alphanumeric_8_12_char()
         {
             object dummy = null;
