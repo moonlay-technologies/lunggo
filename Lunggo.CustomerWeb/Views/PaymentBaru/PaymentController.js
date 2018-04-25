@@ -100,45 +100,32 @@ const getVeritransToken = paymentData => {
   })
 
   return new Promise( (resolve,reject) => {
-
-    // Open-Close 3DSecure dialog box
-    function openDialog(url) {
-      // make sure to load fancybox in a script tag
-      $.fancybox.open({ href: url, type: 'iframe', autoSize: false,
-          width: 400, height: 420, closeBtn: false, modal: true });
-    }
-    function closeDialog() { $.fancybox.close(); }
-
     // run the veritrans function to check credit card
     Veritrans.token(card, response => {
+      // Open-Close 3DSecure dialog box  //// make sure to load fancybox in a script tag
+      function openDialog(url) {
+        $.fancybox.open({ href: url, type: 'iframe', autoSize: false,
+            width: 400, height: 420, closeBtn: false, modal: true });
+      }
+      function closeDialog() { $.fancybox.close(); }
       if (response.redirect_url) {
-          // 3Dsecure transaction. Open 3Dsecure dialog
-          openDialog(response.redirect_url);
+          openDialog(response.redirect_url); // 3Dsecure transaction. Open 3Dsecure dialog
       } else if (response.status_code == '200') { // success 3d secure or success normal
           closeDialog(); //close 3d secure dialog if any
           resolve(response.token_id); // return store token data
       } else {
           reject(`not handled: "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar"
                   OR "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";`);
-          /*
-          // failed request token
-          //close 3d secure dialog if any
-          closeDialog();
+/*        closeDialog(); // failed request token, close 3d secure dialog if any
           $('#submit-button').removeAttr('disabled');
-          //// Show status message.
-          // $('#message').text(response.status_message);
-          // $log.debug(JSON.stringify(response));
-          $scope.$apply(function () {
-              $scope.error.message = (response.status_code == 400) ?
-                  "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
-                  "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";
-          });
-          scrollPage($('*[data-payment-method="CreditCard"]'));
-          */
+          // $('#message').text(response.status_message); //// Show status message.
+          $scope.error.message = (response.status_code == 400) ?
+              "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
+              "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";
+          scrollPage($('*[data-payment-method="CreditCard"]'));        */
       }
     });
   });
-
 }
 
 export pay = async (paymentData, errorMessagesHandler) => {
