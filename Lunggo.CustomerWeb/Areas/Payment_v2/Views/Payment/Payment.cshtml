@@ -1,4 +1,5 @@
 @using System.Globalization
+@using System.Web.Optimization
 @using Lunggo.ApCommon.Activity.Model
 @using Lunggo.ApCommon.Flight.Constant
 @using Lunggo.ApCommon.Flight.Model
@@ -10,8 +11,9 @@
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
 @using Lunggo.Framework.Config
-@model Lunggo.CustomerWeb.Models.PaymentData
+@model Lunggo.ApCommon.Payment.Model.CartPaymentDetails
 @using Lunggo.ApCommon.Product.Model
+@using React.Web.Mvc
 
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -28,41 +30,20 @@
     <!-- veritrans JS -->
     <script src=@(ConfigManager.GetInstance().GetConfigValue("veritrans", "endPoint") + "/v2/assets/js/midtrans.min.js")></script>
 }
-@section PageJS{
-    <script>
-        var mdr = JSON.parse('@ViewBag.SurchargeList'.replace(/&quot;/g,'"'));
-        var paymentTimeout = new Date('@Model.TimeLimit.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'")');
-        window.setInterval(function () {
-            if (new Date() > paymentTimeout) {
-                $scope.expired = true;
-            }
-        }, 1000);
-        $('.timer').countdown(paymentTimeout, function(event) {
-            $('.timer .hour').text(event.strftime('%H'));
-            $('.timer .minute').text(event.strftime('%M'));
-            $('.timer .second').text(event.strftime('%S'));
-        });
-        var loggedIn = @User.Identity.IsAuthenticated.ToString().ToLower();
-
-    </script>
-    <!-- angular controller -->
-    <script src="@Fingerprint.Tag("/Assets/travorama20/js/paymentController.js")"></script>
-}
-
 
 @Html.React("PaymentPageStateContainer", new {
     headerTitle = "Halaman Pembayaran",
-    creditBalance = ViewBag.CreditsAvailable,
+    //creditBalance = ViewBag.CreditsAvailable,
 
-    //cartId = Model.TrxId,
-    originalPrice = Model.OriginalPrice,
+    cartId = Model.CartId,
+    originalPrice = Model.OriginalPriceIdr,
     termsUrl = Url.Action("Terms","StaticPage"),
     privacyUrl = Url.Action("Privacy","StaticPage"),
-    
+
     //rsvNo = Model.RsvNo,
     //lastMethodUsed = 'pembayaran yang terakhir di gunakan',
 
-    
+
     //pricingDetails = 'rincian transaksi',
     //mandiriClickpayToken = Model.TrxId.GetHashCode() % 100000,
     //uniqueCode = UniqueCodePaymentConfig.UniqueCode,

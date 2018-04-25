@@ -111,7 +111,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     //Reservation = rsv,
                     //PaymentDetails = payment,
                     TrxId = trxId,
-                    TimeLimit = payment.TimeLimit,
+                    TimeLimit = payment.TimeLimit.GetValueOrDefault(),
                     OriginalPrice = payment.OriginalPriceIdr
                 });
             }

@@ -18,6 +18,19 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
+        public PaymentStatus GetPaymentStatus(string trxId)
+        {
+            var isTrxValid = ValidateTrxId(trxId, out var trxType);
+            if (!isTrxValid)
+                throw new ArgumentException("Invalid ID");
+
+            var paymentDetails = trxType == PaymentDetailsType.Cart
+                ? GetCartPaymentDetails(trxId)
+                : GetPaymentDetails(trxId);
+
+            return paymentDetails.Status;
+        }
+
         public void CreateNewPayment(string rsvNo, decimal price, Currency currency, DateTime? timeLimit = null)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

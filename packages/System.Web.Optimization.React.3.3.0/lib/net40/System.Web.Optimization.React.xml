@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Web.Optimization.React</name>
+    </assembly>
+    <members>
+        <member name="T:System.Web.Optimization.React.BabelBundle">
+            <summary>
+            Represents a bundle that compiles JavaScript via Babel before minifying.
+            </summary>
+        </member>
+        <member name="M:System.Web.Optimization.React.BabelBundle.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Web.Optimization.React.BabelBundle"/> class.
+            </summary>
+            <param name="virtualPath">
+            The virtual path used to reference the <see cref="T:System.Web.Optimization.Bundle" />
+            from within a view or Web page.
+            </param>
+        </member>
+        <member name="M:System.Web.Optimization.React.BabelBundle.GetTransforms">
+            <summary>
+            Gets the transformations that should be used by the bundle.
+            </summary>
+            <returns>The transformations</returns>
+        </member>
+        <member name="T:System.Web.Optimization.React.BabelTransform">
+            <summary>
+            Transforms JavaScript via Babel. Should be included before any minification 
+            transformations.
+            </summary>
+        </member>
+        <member name="M:System.Web.Optimization.React.BabelTransform.Process(System.Web.Optimization.BundleContext,System.Web.Optimization.BundleResponse)">
+            <summary>
+            Transforms the content in the <see cref="T:System.Web.Optimization.BundleResponse" /> object.
+            </summary>
+            <param name="context">The bundle context.</param>
+            <param name="response">The bundle response.</param>
+        </member>
+    </members>
+</doc>

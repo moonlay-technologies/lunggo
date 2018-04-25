@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cassette.React</name>
+    </assembly>
+    <members>
+        <member name="T:Cassette.React.AssemblyRegistration">
+            <summary>
+            Handles registration of ReactJS.NET components that are only applicable
+            to Cassette when used in MSBuild.
+            </summary>
+        </member>
+        <member name="M:Cassette.React.AssemblyRegistration.Register(React.TinyIoC.TinyIoCContainer)">
+            <summary>
+            Registers components in the React IoC container
+            </summary>
+            <param name="container">Container to register components in</param>
+        </member>
+        <member name="M:Cassette.React.AssemblyRegistration.RegisterForMSBuild(React.TinyIoC.TinyIoCContainer)">
+            <summary>
+            Registers components specific to the MSBuild environment in the React IoC container.
+            </summary>
+            <param name="container">Container to register components in</param>
+        </member>
+        <member name="T:Cassette.React.BabelBundleProcessor">
+            <summary>
+            Handles processing of script bundles in Cassette. Adds a <see cref="T:Cassette.React.BabelCompiler" />
+            for all .js and .jsx files.
+            </summary>
+        </member>
+        <member name="M:Cassette.React.BabelBundleProcessor.#ctor(Cassette.CassetteSettings,React.IReactEnvironment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cassette.React.BabelBundleProcessor"/> class.
+            </summary>
+            <param name="settings">Cassette settings.</param>
+            <param name="environment">The ReactJS.NET environment</param>
+        </member>
+        <member name="M:Cassette.React.BabelBundleProcessor.Process(Cassette.Scripts.ScriptBundle)">
+            <summary>
+            Processes the specified bundle. Adds a <see cref="T:Cassette.React.BabelCompiler"/> for all files.
+            </summary>
+            <param name="bundle">The bundle.</param>
+        </member>
+        <member name="T:Cassette.React.BabelCompiler">
+            <summary>
+            Handles compilation of JavaScript files via Babel in Cassette
+            </summary>
+        </member>
+        <member name="M:Cassette.React.BabelCompiler.#ctor(React.IReactEnvironment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Cassette.React.BabelCompiler"/> class.
+            </summary>
+            <param name="environment">The ReactJS.NET environment</param>
+        </member>
+        <member name="M:Cassette.React.BabelCompiler.Compile(System.String,Cassette.CompileContext)">
+            <summary>
+            Compiles the specified JavaScript file via Babel
+            </summary>
+            <param name="source">The source.</param>
+            <param name="context">The context.</param>
+            <returns>JavaScript</returns>
+        </member>
+        <member name="T:Cassette.React.CassetteMSBuildStartup">
+            <summary>
+            Cassette has two modes of operating - Web (ASP.NET) and MSBuild. IoC registration for web
+            is already covered by React.Web. For the MSBuild mode, we need to initialise ReactJS.NET's
+            IoC container here.
+            </summary>
+        </member>
+        <member name="M:Cassette.React.CassetteMSBuildStartup.Start">
+            <summary>
+            Handles initialisation of ReactJS.NET in Cassette. Only relevant when running in an
+            MSBuild context.
+            </summary>
+        </member>
+        <member name="T:Cassette.React.InsertIntoPipelineJsxBundleProcessor">
+            <summary>
+            Inserts the <see cref="T:Cassette.React.BabelBundleProcessor" /> into the script bundle pipeline
+            </summary>
+        </member>
+        <member name="M:Cassette.React.InsertIntoPipelineJsxBundleProcessor.Modify(Cassette.BundleProcessing.IBundlePipeline{Cassette.Scripts.ScriptBundle})">
+            <summary>
+            Modifies the specified pipeline.
+            </summary>
+            <param name="pipeline">The pipeline.</param>
+            <returns>The pipeline</returns>
+        </member>
+        <member name="T:Cassette.React.JsxFileSearchModifier">
+            <summary>
+            Adds *.jsx to the file search path for script bundles.
+            </summary>
+        </member>
+        <member name="M:Cassette.React.JsxFileSearchModifier.Modify(Cassette.FileSearch)">
+            <summary>
+            Modifies the specified file search.
+            </summary>
+            <param name="fileSearch">The file search.</param>
+        </member>
+        <member name="T:Cassette.React.MSBuildUtils">
+            <summary>
+            Utility methods for interacting with Cassette in a MSBuild environment.
+            </summary>
+        </member>
+        <member name="M:Cassette.React.MSBuildUtils.IsInMSBuild">
+            <summary>
+            Determines if the current process is MSBuild
+            </summary>
+            <returns><c>true</c> if we are currently in MSBuild</returns>
+        </member>
+        <member name="T:Cassette.React.ReactContainerConfiguration">
+            <summary>
+            Cassette IoC configuration for ReactJS.NET
+            </summary>
+        </member>
+        <member name="M:Cassette.React.ReactContainerConfiguration.Configure(Cassette.TinyIoC.TinyIoCContainer)">
+            <summary>
+            Configures the specified Cassette IoC container.
+            </summary>
+            <param name="container">The IoC container.</param>
+        </member>
+        <member name="M:Cassette.React.ReactContainerConfiguration.RegisterPassthru``1(Cassette.TinyIoC.TinyIoCContainer)">
+            <summary>
+            Registers a component in Cassette's IoC container that just delegates resolution to 
+            ReactJS.NET's IoC container.
+            </summary>
+            <typeparam name="T">Type to register</typeparam>
+            <param name="container">Cassette's IoC container</param>
+        </member>
+    </members>
+</doc>

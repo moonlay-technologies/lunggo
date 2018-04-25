@@ -159,27 +159,24 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             AppInitializer.InitDatabaseService();
             Assert.ThrowsException<InvalidOperationException>(() => PaymentService.GetInstance().GetPaymentDetails(rsvNo));
         }
-
-        [TestMethod]
-        // Should return exception when cart does not contain any reservation
-        public void Should_return_exception_when_cart_with_reservation_is_not_found()
-        {
-            AppInitializer.InitDatabaseService();
-            AppInitializer.InitRedisService();
-            Assert.ThrowsException<Exception>(() => PaymentService.GetInstance().GetCart(Guid.NewGuid().ToString()));
-        }
-
-
+        
         [TestMethod]
         public void Should_have_sum_of_all_pricing_from_rsv_for_cart_payment_details()
         {
-            var a = new PaymentDetails { OriginalPriceIdr = 12345678 };
-            var b = new PaymentDetails { OriginalPriceIdr = 849574857485 };
-            var c = new PaymentDetails { OriginalPriceIdr = -38433 };
+            var cart = new CartPaymentDetails
+            {
+                OriginalPriceIdr = 23456789,
+                RsvPaymentDetails = new List<PaymentDetails>
+                {
+                    new PaymentDetails {OriginalPriceIdr = 12345678},
+                    new PaymentDetails {OriginalPriceIdr = 849574857485},
+                    new PaymentDetails {OriginalPriceIdr = -38433}
+                }
+            };
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("AggregateRsvPaymentDetails", new List<PaymentDetails> { a, b, c });
+            PaymentService.GetInstance().InvokePrivate("AggregateRsvPaymentDetails", cart);
 
-            Assert.AreEqual(a.OriginalPriceIdr + b.OriginalPriceIdr + c.OriginalPriceIdr, actual.OriginalPriceIdr);
+            Assert.AreEqual(cart.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr), cart.OriginalPriceIdr);
         }
 
         [TestMethod]
@@ -305,5 +302,19 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             Assert.AreEqual(cartDetails.LocalPaidAmount, cartDetails.RsvPaymentDetails.Sum(d => d.LocalPaidAmount));
         }
 
+        [TestMethod]
+        // Should return exception when transaction is already paid
+        public void Should_return_exception_when_transaction_is_already_paid()
+        {
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        // Should return exception when transaction is already expired
+        public void Should_return_exception_when_transaction_is_already_expired()
+        {
+            throw new NotImplementedException();
+        }
+	
     }
 }

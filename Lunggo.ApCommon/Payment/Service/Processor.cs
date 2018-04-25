@@ -38,17 +38,9 @@ namespace Lunggo.ApCommon.Payment.Service
             if (!isMethodValid)
                 throw new Exception("Method not available");
 
-            PaymentDetails paymentDetails;
-            if (trxType == PaymentDetailsType.Cart)
-            {
-                paymentDetails = GetCartPaymentDetails(trxId, discountCode);
-            }
-            else
-            {
-                paymentDetails = GetPaymentDetails(trxId);
-                SetRsvPaymentDetails(trxId, discountCode, paymentDetails);
-                paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr;
-            }
+            var paymentDetails = trxType == PaymentDetailsType.Cart
+                ? GetCartPaymentDetails(trxId)
+                : GetPaymentDetails(trxId);
 
             SetMethod(method, submethod, paymentData, paymentDetails);
 
@@ -99,23 +91,6 @@ namespace Lunggo.ApCommon.Payment.Service
                 trxType = PaymentDetailsType.Rsv;
                 return true;
             }
-        }
-
-        private void SetRsvPaymentDetails(string rsvNo, string discountCode, PaymentDetails paymentDetails)
-        {
-            var uniqueCode = GetUniqueCodeFromCache(rsvNo);
-            if (uniqueCode == 0M)
-            {
-                uniqueCode = GetUniqueCode(rsvNo, null, discountCode);
-            }
-
-            paymentDetails.UniqueCode = uniqueCode;
-            paymentDetails.FinalPriceIdr += paymentDetails.UniqueCode;
-
-            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
-            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
-
-            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
         }
 
         private void UpdateCartDb(CartPaymentDetails cartPaymentDetails)
@@ -215,7 +190,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void UpdatePayment(string rsvNo, PaymentDetails payment)
         {
-            var isUpdated = UpdatePaymentToDb(rsvNo, payment);
+            var isUpdated = UpdatePaymentToDb(payment);
             if (isUpdated && payment.Status == PaymentStatus.Settled)
             {
                 //var service = typeof(FlightService);
@@ -367,23 +342,34 @@ namespace Lunggo.ApCommon.Payment.Service
             return uniqueCode;
         }
 
-        internal CartPaymentDetails GetCartPaymentDetails(string cartId, string discountCode)
+        public CartPaymentDetails GetCartPaymentDetails(string cartId)
         {
             var cart = GetCart(cartId);
-            var rsvNoList = cart.RsvNoList;
-            var rsvPaymentDetails = rsvNoList.Select(GetPaymentDetails);
-            var cartPayment = AggregateRsvPaymentDetails(rsvPaymentDetails);
+            if (cart == null)
+                return null;
+
+            var cartPayment = GenerateCartPayment(cart);
 
             return cartPayment;
         }
 
-        private CartPaymentDetails AggregateRsvPaymentDetails(IEnumerable<PaymentDetails> rsvPaymentDetails)
+        private CartPaymentDetails GenerateCartPayment(Cart cart)
         {
             var cartPayment = new CartPaymentDetails();
-            cartPayment.CartRecordId = GenerateCartRecordId();
-            cartPayment.OriginalPriceIdr += cartPayment.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr);
-
+            cartPayment.CartId = GenerateCartRecordId();
+            cartPayment.RsvPaymentDetails = RetrieveCartRsvPaymentDetails(cart);
+            AggregateRsvPaymentDetails(cartPayment);
             return cartPayment;
+        }
+
+        private List<PaymentDetails> RetrieveCartRsvPaymentDetails(Cart cart)
+        {
+            return cart.RsvNoList.Select(GetPaymentDetails).ToList();
+        }
+
+        private static void AggregateRsvPaymentDetails(CartPaymentDetails cartPayment)
+        {
+            cartPayment.OriginalPriceIdr = cartPayment.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr);
         }
 
         internal void DistributeRsvPaymentDetails(CartPaymentDetails cartPayment)

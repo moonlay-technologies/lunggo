@@ -28,9 +28,15 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public Cart GetCart(string cartId)
         {
-            var cart = GetCartContentFromCache(cartId)??GetCartContentFromDb(cartId);
+            var cart = GetCartContentFromCache(cartId) ?? GetCartContentFromDb(cartId);
+            if (cart == null)
+                return null;
+
+            if (!cart.RsvNoList.Any())
+                return cart;
+
             cart.Contact = Contact.GetFromDb(cart.RsvNoList[0]);
-            
+
             return cart;
         }
 
@@ -38,9 +44,12 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var record = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord {CartId = cartId});
+                var records = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord { CartId = cartId });
+                if (records == null)
+                    return null;
+
                 var cart = new Cart();
-                cart.RsvNoList = record.Select(r => r.RsvNoList).ToList();
+                cart.RsvNoList = records.Select(r => r.RsvNoList).ToList();
                 cart.TotalPrice = cart.RsvNoList.Select(GetPaymentDetails).Sum(p => p.OriginalPriceIdr);
                 return cart;
             }
@@ -101,14 +110,14 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             return stringBuilder.ToString();
         }
-        
+
         internal void AddCartCache(string userId)
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "Cart:UserCartId:" + userId;
             var redisValue = Guid.NewGuid();
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            redisDb.StringSet(redisKey, redisValue.ToString());            
+            redisDb.StringSet(redisKey, redisValue.ToString());
         }
 
         internal void AddRsvNoToCartCache(string cartId, string rsvNo)
@@ -137,7 +146,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     var cartsRecord = new CartsTableRecord
                     {
-                        CartId =  cartDetails.CartRecordId,
+                        CartId = cartDetails.CartId,
                         RsvNoList = rsvDetails.RsvNo,
                         UserId = userId
                     };
