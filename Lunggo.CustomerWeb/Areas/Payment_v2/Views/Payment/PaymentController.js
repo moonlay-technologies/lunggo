@@ -36,9 +36,10 @@ export function validateCreditCardExpiryDate(month_MM, year_YY) {
 }
 
 //// check if name only contains alphabetical, empty string, or null
-export function isNameAlphabeticalOrEmpty(name) {
+export function isNameAlphabetical(name, acceptEmpty = false) {
   var re = /^[a-zA-Z ]+$/;
-  return (name == null || name == "" || re.test(name));
+  if(acceptEmpty) return name == null || name == "" || re.test(name);
+  else return re.test(name);
 }
 
 //// check if input is a number or null
@@ -49,7 +50,7 @@ export function isNumberOrEmpty(number) {
 
 export function validateCreditCard({ccNo, name, cvv, expiry: {month: month_MM, year: year_YY} }) {
   const ccNumberErrorMessage = isCreditCardNumberFormatValid(ccNo) ? '' : 'Mohon masukkan nomor kartu yang valid';
-  const nameErrorMessage = isNameAlphabeticalOrEmpty(name) ? '' : 'Mohon masukkan format nama yang valid';
+  const nameErrorMessage = isNameAlphabetical(name) ? '' : 'Mohon masukkan format nama yang valid';
   const cvvErrorMessage = isCVVFormatValid(cvv) ? '' : 'Gunakan nomor cvv yang tertera di belakang kartu (3-4 digit)';
   const expiryErrorMessage = validateCreditCardExpiryDate(month_MM, year_YY);
   if (ccNumberErrorMessage || nameErrorMessage || cvvErrorMessage || expiryErrorMessage) {
@@ -151,7 +152,7 @@ export pay = async (paymentData, errorMessagesHandler) => {
   if (res.status == 200) { /* REDIRECT!! to res.redirectionUrl */ }
     else return res.error;
 }
-
+/*
 export getMdr = mdr => {
   var method = 999;
   switch ($scope.paymentMethod) {
@@ -166,7 +167,7 @@ export getMdr = mdr => {
   ///// TODO : include discount
   let price = $scope.totalPrice - $scope.voucher.amount;
   return a ? Math.ceil(price * a.Percentage / 100) : 0;
-}
+}*/
 
 export getCreditBalance = async rsvNo =>
   checkVoucher(rsvNo, 'REFERRALCREDIT')
@@ -181,7 +182,7 @@ export checkVoucher = async (rsvNo,code) => {
   }
   return await fetchTravoramaApi(request);
 }
-
+/*
 if (voucher.status == 'Success') `Voucher valid`
 if (voucher.status == 'ERPVCH01') `Voucher tidak dapat digunakan`
 if (voucher.status == 'ERPVCH02') `Kode voucher salah`
@@ -194,6 +195,6 @@ if (voucher.status == 'ERPVCH09') `Voucher sudah habis`
 if (voucher.status == 'ERPVCH10') `Syarat dan ketentuan voucher tidak terpenuhi`
 if (voucher.status == 'ERPVCH11') `Syarat dan ketentuan voucher tidak terpenuhi`
 if (voucher.status == 'ERPVCH99') `Voucher tidak dapat digunakan`
-
+*/
 
 

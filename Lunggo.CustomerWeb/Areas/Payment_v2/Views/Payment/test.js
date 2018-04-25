@@ -2,8 +2,8 @@
 import React from 'react';
 // import ShallowRenderer from 'react-test-renderer/shallow';
 import {
-  sumTotalBill, convertToAbsoluteNegative, validateCCVFormat,
-  validateCreditCardNumberFormat, validateCreditCardExpiryDate,
+  sumTotalBill, convertToAbsoluteNegative, isCVVFormatValid,
+  isCreditCardNumberFormatValid, validateCreditCardExpiryDate,
 
 } from './PaymentController';
 
@@ -26,43 +26,43 @@ describe('PaymentController', () => {
 
   //// CREDIT CARD
   it(`check credit card number format`, () => {
-    let res = validateCreditCardNumberFormat(1234567890123456);
+    let res = isCreditCardNumberFormatValid(1234567890123456);
     expect(res).toBe(true);
-    res = validateCreditCardNumberFormat('1234567890123456');
+    res = isCreditCardNumberFormatValid('1234567890123456');
     expect(res).toBe(true);
 
-    res = validateCreditCardNumberFormat('12345678901234ww');
+    res = isCreditCardNumberFormatValid('12345678901234ww');
     expect(res).toBe(false);
-    res = validateCreditCardNumberFormat(12345678901234);
+    res = isCreditCardNumberFormatValid(12345678901234);
     expect(res).toBe(false);
-    res = validateCreditCardNumberFormat(12345678901234567890);
+    res = isCreditCardNumberFormatValid(12345678901234567890);
     expect(res).toBe(false);
-    res = validateCreditCardNumberFormat('');
+    res = isCreditCardNumberFormatValid('');
     expect(res).toBe(false);
-    res = validateCreditCardNumberFormat(null);
+    res = isCreditCardNumberFormatValid(null);
     expect(res).toBe(false);
-    res = validateCreditCardNumberFormat(undefined);
+    res = isCreditCardNumberFormatValid(undefined);
     expect(res).toBe(false);
-    res = validateCreditCardNumberFormat(0);
+    res = isCreditCardNumberFormatValid(0);
     expect(res).toBe(false);
   });
 
   it(`check CCV format`, () => {
-    expect(validateCCVFormat(123)).toBe(true);
-    expect(validateCCVFormat(1234)).toBe(true);
-    expect(validateCCVFormat('123')).toBe(true);
-    expect(validateCCVFormat('1234')).toBe(true);
+    expect(isCVVFormatValid(123)).toBe(true);
+    expect(isCVVFormatValid(1234)).toBe(true);
+    expect(isCVVFormatValid('123')).toBe(true);
+    expect(isCVVFormatValid('1234')).toBe(true);
 
-    expect(validateCCVFormat(12345)).toBe(false);
-    expect(validateCCVFormat(12)).toBe(false);
-    expect(validateCCVFormat('123345')).toBe(false);
-    expect(validateCCVFormat('12')).toBe(false);
-    expect(validateCCVFormat('12a')).toBe(false);
-    expect(validateCCVFormat('12aa')).toBe(false);
-    expect(validateCCVFormat('')).toBe(false);
-    expect(validateCCVFormat(null)).toBe(false);
-    expect(validateCCVFormat(undefined)).toBe(false);
-    expect(validateCCVFormat(0)).toBe(false);
+    expect(isCVVFormatValid(12345)).toBe(false);
+    expect(isCVVFormatValid(12)).toBe(false);
+    expect(isCVVFormatValid('123345')).toBe(false);
+    expect(isCVVFormatValid('12')).toBe(false);
+    expect(isCVVFormatValid('12a')).toBe(false);
+    expect(isCVVFormatValid('12aa')).toBe(false);
+    expect(isCVVFormatValid('')).toBe(false);
+    expect(isCVVFormatValid(null)).toBe(false);
+    expect(isCVVFormatValid(undefined)).toBe(false);
+    expect(isCVVFormatValid(0)).toBe(false);
   });
 
   it(`check credit card expiry format`, () => {
@@ -97,10 +97,48 @@ describe('PaymentController', () => {
     expect(validateCreditCardExpiryDate(3,18)).toBe(false);
   });
 
+  it(`isNameAlphabeticalOrEmpty`, () => {
+    throw `not implemented`;
+  });
+  it(`isNumberOrEmpty`, () => {
+    throw `not implemented`;
+  });
+  it(`validateCreditCard`, () => {
+    throw `not implemented`;
+  });
+
+  it(`pay`, function() {
+    const paymentData = {
+      rsvNo,
+      method: 'creditCard',
+      discCd,
+      formData: {
+        ccNo,
+        name: 'Peter Morticelli',
+        cvv: 123,
+        expiry: {month, year},
+      },
+    };
+    let errMessage;
+    const errorMessagesHandler = r => this.errMessage = r
+    const expectedResult = '';
+    const actualResult = pay(paymentData, errorMessagesHandler);
+    expect(actualResult).toBe(expectedResult);
+    expect(errMessage).toBe('errMessage');
+    throw `not done implemented`;
+  });
+
+  it(`getCreditBalance`, () => {
+    throw `not implemented`;
+  });
+  it(`checkVoucher`, () => {
+    throw `not implemented`;
+  });
+
 });
 
 
-describe('PaymentScreen', () => {
+describe('PaymentPageUI', () => {
 
   it(`should return a positive number when fetching creditBalance`, async () => {
     // const creditBalance = await getCreditBalance(1);

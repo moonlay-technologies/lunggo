@@ -5,14 +5,12 @@ import { observer } from "mobx-react";
 import Layout from './PaymentModalLayout';
 import { pay } from './PaymentController';
 
-@observer export default
+export default const PaymentModalStateContainer = observer(
 class PaymentModalStateContainer extends React.Component {
 
-  @observable isLoading = false
-  @observable errorMessage = ''
-  // @observable errorMessages = {}
+  isLoading = false
+  errorMessage = ''
 
-  @action
   onSubmitCreditCardForm = () => {
     const { ccNo, name, month, year, cvv,
       handleErrorValidationMessages } = this.formState;
@@ -40,3 +38,8 @@ class PaymentModalStateContainer extends React.Component {
 	  );
 	}
 }
+decorate(PaymentModalStateContainer, {
+  isLoading: observable,
+  errorMessage: observable,
+  onSubmitCreditCardForm: action,
+});
