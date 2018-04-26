@@ -264,6 +264,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AppInitializer.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\ReactConfig.cs" />
@@ -1406,6 +1407,31 @@
     <Content Include="Assets\js\moment-with-locales.min.js" />
     <Content Include="Assets\js\moment.js" />
     <Content Include="Assets\js\moment.min.js" />
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentController.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentDataForm.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentDataStateContainer.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentInstruction.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentModalLayout.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentModalStateContainer.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentPageLayout.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentPageStateContainer.jsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Payment_v2\Views\Payment\React\paymentReact.js" />
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
@@ -1957,6 +1983,7 @@
     <Content Include="Assets\fonts\hind-regular.ttf" />
     <Content Include="Assets\fonts\hind-semibold.ttf" />
     <Content Include="Areas\Payment_v2\Views\web.config" />
+    <Content Include="webpack.config.js" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\dv1-cw.pubxml" />
     <None Include="Properties\PublishProfiles\dv2-cw.pubxml" />
@@ -2067,14 +2094,6 @@
     <Content Include="Areas\Payment_v2\Views\Payment\js\bootstrap.min.js" />
     <Content Include="Areas\Payment_v2\Views\Payment\js\jquery.js" />
     <Content Include="Areas\Payment_v2\Views\Payment\js\npm.js" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentController.js" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentDataForm.jsx" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentDataStateContainer.js" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentInstruction.jsx" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentModalLayout.jsx" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentModalStateContainer.js" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentPageLayout.jsx" />
-    <Content Include="Areas\Payment_v2\Views\Payment\PaymentPageStateContainer.js" />
     <Content Include="Areas\Payment_v2\Views\Payment\test.js" />
     <Content Include="Areas\Payment_v2\Views\Payment\thankyou-page.html" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
