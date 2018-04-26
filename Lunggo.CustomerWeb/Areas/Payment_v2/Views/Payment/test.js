@@ -109,14 +109,10 @@ describe('PaymentController', () => {
 
   it(`pay`, function() {
     const paymentData = {
-      rsvNo,
       method: 'creditCard',
-      discCd,
       formData: {
-        ccNo,
         name: 'Peter Morticelli',
         cvv: 123,
-        expiry: {month, year},
       },
     };
     let errMessage;
@@ -124,7 +120,6 @@ describe('PaymentController', () => {
     const expectedResult = '';
     const actualResult = pay(paymentData, errorMessagesHandler);
     expect(actualResult).toBe(expectedResult);
-    expect(errMessage).toBe('errMessage');
     throw `not done implemented`;
   });
 
