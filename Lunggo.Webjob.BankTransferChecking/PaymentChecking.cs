@@ -17,7 +17,7 @@ namespace Lunggo.Webjob.BankTransferChecking
         private static void PaymentCheck(List<KeyValuePair<string, string>> list)
         {
             Console.WriteLine("Payment Checking Started");
-            var paymentService = PaymentService.GetInstance();
+            var paymentService = new PaymentService();
             var unpaids = paymentService.GetUnpaids();
             var format = "dd/MM/yyyy HH:mm:ss";
             CultureInfo provider = new CultureInfo("id-ID");
@@ -44,7 +44,7 @@ namespace Lunggo.Webjob.BankTransferChecking
                             Console.WriteLine("Reservation No : " + rsvNo + ", Price : " + payment.FinalPriceIdr + " Has Paid");
 
                             //Update in database
-                            PaymentService.GetInstance().UpdatePayment(rsvNo, payment);
+                            paymentService.UpdatePayment(rsvNo, payment);
                             //FlightService.GetInstance().SendPendingPaymentConfirmedNotifToCustomer(rsvNo);
                         }
                     }

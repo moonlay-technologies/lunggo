@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var cart = new Cart();
             if (!isRsv)
             {
-                cart = PaymentService.GetInstance().GetCart(trxId);
+                cart = _paymentService.GetCart(trxId);
                 if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
                     return response;
             }
@@ -72,10 +72,10 @@ namespace Lunggo.ApCommon.Campaign.Service
                 return response;
             }
 
-            var paymentDetails = PaymentService.GetInstance().GetPaymentDetails(trxId);
+            var paymentDetails = _paymentService.GetPaymentDetails(trxId);
             if (paymentDetails == null)
             {
-                paymentDetails = PaymentService.GetInstance().GetPaymentDetails(trxId);
+                paymentDetails = _paymentService.GetPaymentDetails(trxId);
                 if (paymentDetails == null)
                 {
                     response.VoucherStatus = VoucherStatus.ReservationNotFound;

@@ -32,7 +32,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var eVoucherFile = blobService.GetByteArrayByFileInContainer(rsvNo + ".pdf", "Eticket");
             var activity = ActivityService.GetInstance();
             var summary = activity.GetReservationForDisplay(rsvNo);
-            var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
+            var cartId = new PaymentService().GetCartIdByRsvNo(rsvNo);
             var invoiceFile = blobService.GetByteArrayByFileInContainer(cartId + ".pdf", "Invoice");
             //var summaryBytes = blobService.GetByteArrayByFileInContainer(rsvNo, "Reservation");
             //var summaryJson = Encoding.UTF8.GetString(summaryBytes);

@@ -238,7 +238,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     RsvNo = rsvNo,
                     Contact = Contact.GetFromDb(rsvNo),
-                    Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
+                    Payment = _paymentService.GetPaymentDetails(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     ActivityDetails = new ActivityDetail(),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
@@ -309,7 +309,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
                     var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail).ToList();
-                    var payments = rsvNoList.Select(rsvNo => PaymentService.GetInstance().GetPaymentDetails(rsvNo)).ToList();
+                    var payments = rsvNoList.Select(rsvNo => _paymentService.GetPaymentDetails(rsvNo)).ToList();
                     decimal totalOriginalPrice = payments.Sum(payment => payment.OriginalPriceIdr);
                     decimal totalFinalPrice = payments.Sum(payment => payment.FinalPriceIdr);
                     decimal totalDiscount = payments.Sum(payment => payment.DiscountNominal);
@@ -786,7 +786,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
-                PaymentService.GetInstance().CreateNewPayment(reservation.RsvNo,
+                _paymentService.CreateNewPayment(reservation.RsvNo,
                     originalPrice,
                     new Currency(OnlineContext.GetActiveCurrencyCode()));
 
@@ -1460,7 +1460,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     new ActivityReservationTableRecord { RsvNo = rsvNo });
                 var reservationRecord2 = ReservationTableRepo.GetInstance().Find1(conn, new ReservationTableRecord { RsvNo = rsvNo });
                 var activityRules = ActivityPayRulesOperatorTableRepo.GetInstance().Find(conn, new ActivityPayRulesOperatorTableRecord { ActivityId = reservationRecord.ActivityId }).ToList();
-                var rsvPayment = PaymentService.GetInstance().GetPaymentDetails(rsvNo).OriginalPriceIdr;
+                var rsvPayment = _paymentService.GetPaymentDetails(rsvNo).OriginalPriceIdr;
                 if (activityRules[0].IsCash == true)
                 {
                     var stepDate = new DateTime();

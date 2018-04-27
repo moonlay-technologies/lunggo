@@ -27,7 +27,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                 };
             }
 
-            var transactions = PaymentService.GetInstance().GetTransactions(fromDate, toDate);
+            var transactions = new PaymentService().GetTransactions(fromDate, toDate);
             var apiResponse = AssembleApiResponse(transactions);
             return apiResponse;
         }

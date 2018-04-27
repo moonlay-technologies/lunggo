@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var checkRsv = ActivityService.GetInstance().GetReservation(rsvNo);
             if (checkRsv == null)
                 return false;
-            var paymentDetail = PaymentService.GetInstance().GetPaymentDetails(rsvNo);
+            var paymentDetail = new PaymentService().GetPaymentDetails(rsvNo);
             if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
                 return false;
 

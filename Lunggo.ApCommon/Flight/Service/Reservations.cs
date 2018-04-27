@@ -73,12 +73,12 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public void ExpireReservation(string rsvNo)
         {
-            var payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo);
+            var payment = _paymentService.GetPaymentDetails(rsvNo);
             if (payment.Status == PaymentStatus.Pending || payment.Status == PaymentStatus.Verifying ||
                 payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.Undefined)
             {
                 payment.Status = PaymentStatus.Expired;
-                PaymentService.GetInstance().UpdatePayment(rsvNo, payment);
+                _paymentService.UpdatePayment(rsvNo, payment);
             }
         }
 

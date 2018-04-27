@@ -271,7 +271,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     : null
             };
 
-            PaymentService.GetInstance().GetUniqueCode(rsvDetail.RsvNo, null, null);
+            _paymentService.GetUniqueCode(rsvDetail.RsvNo, null, null);
 
             return rsvDetail;
         }

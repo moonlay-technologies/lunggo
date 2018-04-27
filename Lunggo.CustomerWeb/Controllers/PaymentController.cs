@@ -30,11 +30,18 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public partial class PaymentController : Controller
     {
+        private PaymentService _paymentService;
+
+        public PaymentController(PaymentService paymentService = null)
+        {
+            _paymentService = paymentService ?? new PaymentService();
+        }
+
         private decimal GetAvailableCredits(string trxId, out string voucherCode)
         {
             voucherCode = "REFERRALCREDIT";
             var activityService = ActivityService.GetInstance();
-            var rsvList = PaymentService.GetInstance().GetCart(trxId);
+            var rsvList = _paymentService.GetCart(trxId);
             var userId = activityService.GetUserIdByRsvNo(rsvList.RsvNoList[0]);
             var voucherRs = CampaignService.GetInstance().ValidateVoucherRequest(trxId, voucherCode);
             var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
@@ -49,7 +56,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             if (!string.IsNullOrEmpty(cartId))
             {
-                var payment = PaymentService.GetInstance().GetPaymentDetails(cartId);
+                var payment = _paymentService.GetPaymentDetails(cartId);
                 if (payment == null)
                     return RedirectToAction("Index", "Index");
 
@@ -66,7 +73,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 if (regId != signature)
                     return RedirectToAction("Index", "Index");
 
-                var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
+                var payment = _paymentService.GetPaymentDetails(trxId);
                 if (payment == null)
                     return RedirectToAction("Index", "Index");
 
@@ -98,7 +105,7 @@ namespace Lunggo.CustomerWeb.Controllers
             else if ((payment.Method == PaymentMethod.Undefined && payment.Status == PaymentStatus.Pending) ||
                      payment.Status == PaymentStatus.Failed)
             {
-                ViewBag.SurchargeList = PaymentService.GetInstance().GetSurchargeList().Serialize();
+                ViewBag.SurchargeList = _paymentService.GetSurchargeList().Serialize();
 
                 string creditsVoucherCode;
                 var creditsAvailable = GetAvailableCredits(trxId, out creditsVoucherCode);
@@ -126,7 +133,7 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentPost(string rsvNo = null, string trxId = null, string paymentUrl = null)
         {
             trxId = trxId ?? rsvNo;
-            var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
+            var payment = _paymentService.GetPaymentDetails(trxId);
             var regId = Generator.GenerateTrxIdRegId(trxId);
 
             if (payment.Method == PaymentMethod.BankTransfer ||
@@ -154,14 +161,14 @@ namespace Lunggo.CustomerWeb.Controllers
             if (generatedRegId != regId)
                 return RedirectToAction("Index", "Index");
 
-            var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
+            var payment = _paymentService.GetPaymentDetails(trxId);
 
             if ((payment.Method == PaymentMethod.BankTransfer || payment.Method == PaymentMethod.VirtualAccount)
                 && payment.Status == PaymentStatus.Pending)
             {
-                ViewBag.Instructions = PaymentService.GetInstance().GetInstruction(payment);
-                ViewBag.BankName = PaymentService.GetInstance().GetBankName(payment.Medium, payment.Method, payment.Submethod);
-                ViewBag.BankBranch = PaymentService.GetInstance().GetBankBranch(payment.TransferAccount);
+                ViewBag.Instructions = _paymentService.GetInstruction(payment);
+                ViewBag.BankName = _paymentService.GetBankName(payment.Medium, payment.Method, payment.Submethod);
+                ViewBag.BankBranch = _paymentService.GetBankBranch(payment.TransferAccount);
                 ViewBag.BankImageName = GetBankImageName(payment.Submethod);
                 return View(payment);
             }
@@ -185,7 +192,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (regId != signature)
                 return RedirectToAction("Index", "Index");
 
-            var payment = PaymentService.GetInstance().GetPaymentDetails(trxId);
+            var payment = _paymentService.GetPaymentDetails(trxId);
             return View(payment);
         }
 

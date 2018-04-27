@@ -16,11 +16,11 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             bool result;
 
             id = "12345678";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
+            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", id, dummy);
             Assert.IsTrue(result);
 
             id = "123456789012";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
+            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", id, dummy);
             Assert.IsTrue(result);
         }
 
@@ -33,11 +33,11 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             bool result;
 
             id = "i23a56j8";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
+            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", id, dummy);
             Assert.IsTrue(result);
 
             id = "i23a56j89oi2";
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
+            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", id, dummy);
             Assert.IsTrue(result);
         }
 
@@ -50,7 +50,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
 
             id = "12345678";
             var inputParams = new object[] {id, type};
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", inputParams);
+            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", inputParams);
             Assert.AreEqual(PaymentDetailsType.Rsv, inputParams[1]);
         }
 
@@ -63,7 +63,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
 
             id = "12345abc";
             var inputParams = new object[] {id, type};
-            result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", inputParams);
+            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", inputParams);
             Assert.AreEqual(PaymentDetailsType.Cart, inputParams[1]);
         }
 
@@ -72,7 +72,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         {
             var id = "i23";
             object dummy = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
+            var result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", id, dummy);
             Assert.IsFalse(result);
         }
 
@@ -81,7 +81,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         {
             var id = "i23a56j890abc";
             object dummy = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidateTrxId", id, dummy);
+            var result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", id, dummy);
             Assert.IsFalse(result);
         }
     }

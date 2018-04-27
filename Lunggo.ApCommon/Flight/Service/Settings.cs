@@ -14,6 +14,7 @@ using Lunggo.ApCommon.Flight.Wrapper.Garuda;
 using Lunggo.ApCommon.Flight.Wrapper.LionAir;
 using Lunggo.ApCommon.Flight.Wrapper.Mystifly;
 using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Service;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.Framework.Config;
@@ -23,6 +24,7 @@ namespace Lunggo.ApCommon.Flight.Service
     public partial class FlightService : ProductServiceBase<FlightService>
     {
         private bool _isInitialized;
+        private PaymentService _paymentService = new PaymentService();
 
         private static readonly MystiflyWrapper MystiflyWrapper = MystiflyWrapper.GetInstance();
         private static readonly AirAsiaWrapper AirAsiaWrapper = AirAsiaWrapper.GetInstance();

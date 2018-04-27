@@ -14,7 +14,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
     {
         public static ApiResponseBase GetAccountBalance()
         {
-            var balance = PaymentService.GetInstance().GetBalance();
+            var balance = new PaymentService().GetBalance();
             var apiResponse = AssembleApiResponse(balance);
             return apiResponse;
         }

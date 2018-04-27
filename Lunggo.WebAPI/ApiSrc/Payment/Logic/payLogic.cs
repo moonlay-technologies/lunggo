@@ -31,7 +31,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
             bool isUpdated;
             var paymentData = PreprocessPaymentData(request);
-            var paymentDetails = PaymentService.GetInstance().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
+            var paymentDetails = new PaymentService().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
             
             return apiResponse;

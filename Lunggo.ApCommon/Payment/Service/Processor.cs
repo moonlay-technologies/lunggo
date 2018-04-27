@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return GetUnpaidFromDb();
         }
 
-        private static void ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetails)
+        private void ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetails)
         {
             if (payment.Medium != PaymentMedium.Undefined)
                 ProcessPaymentInternal(payment, transactionDetails);
@@ -229,7 +229,7 @@ namespace Lunggo.ApCommon.Payment.Service
             payment.LocalPaidAmount = payment.FinalPriceIdr;
         }
 
-        private static void ProcessPaymentInternal(PaymentDetails payment, TransactionDetails transactionDetails)
+        private void ProcessPaymentInternal(PaymentDetails payment, TransactionDetails transactionDetails)
         {
             switch (payment.Medium)
             {
@@ -251,7 +251,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     else
                     {
                         payment.Status = PaymentStatus.Pending;
-                        payment.TransferAccount = GetInstance().GetBankTransferAccount(payment.Submethod);
+                        payment.TransferAccount = GetBankTransferAccount(payment.Submethod);
                     }
                     break;
                 default:
@@ -292,7 +292,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 bool isExist;
                 decimal candidatePrice;
                 var rnd = new Random();
-                var payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo);
+                var payment = new PaymentService().GetPaymentDetails(rsvNo);
                 if (payment == null)
                     return 040440404040.40404004404M;
 

@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 HotelDetail = ConvertToHotelDetailWithRoomForDisplay(hotelReservation.HotelDetails),
                 Pax = ConvertToPaxForDisplay(hotelReservation.Pax),
                 RsvNo = hotelReservation.RsvNo,
-                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
+                Payment = _paymentService.ConvertToPaymentDetailsForDisplay(hotelReservation.Payment),
                 RsvTime = hotelReservation.RsvTime,
                 RsvDisplayStatus = MapReservationStatus(hotelReservation)
             };

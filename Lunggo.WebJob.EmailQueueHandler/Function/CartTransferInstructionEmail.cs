@@ -23,7 +23,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 
             Console.WriteLine("Getting Required Data...");
             sw.Start();
-            var paymentService = PaymentService.GetInstance();
+            var paymentService = new PaymentService();
             var cart = paymentService.GetCart(cartRecordId);
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");

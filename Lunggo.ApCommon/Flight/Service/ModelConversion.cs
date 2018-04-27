@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Itinerary = ConvertToItineraryForDisplay(reservation.Itineraries),
                 Contact = reservation.Contact,
                 Pax = ConvertToPaxForDisplay(reservation.Pax),
-                Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(reservation.Payment),
+                Payment = _paymentService.ConvertToPaymentDetailsForDisplay(reservation.Payment),
                 UserId = reservation.User != null ? reservation.User.Id : null,
                 DeviceId = reservation.State != null ? reservation.State.DeviceId : null
             };

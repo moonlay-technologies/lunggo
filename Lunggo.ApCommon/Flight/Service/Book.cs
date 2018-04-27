@@ -142,7 +142,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Language = "id", //OnlineContext.GetActiveLanguageCode();
                 Currency = new Currency("IDR"), //OnlineContext.GetActiveCurrencyCode());
             };
-            PaymentService.GetInstance().GetUniqueCode(reservation.RsvNo, null, null);
+            _paymentService.GetUniqueCode(reservation.RsvNo, null, null);
             return reservation;
         }
 

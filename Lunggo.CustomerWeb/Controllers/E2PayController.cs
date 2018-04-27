@@ -23,6 +23,13 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class E2PayController : Controller
     {
+        private PaymentService _paymentService;
+
+        public E2PayController(PaymentService paymentService = null)
+        {
+            _paymentService = paymentService ?? new PaymentService();
+        }
+
 
         [HttpPost]
         public ActionResult ResponsePage()
@@ -79,7 +86,7 @@ namespace Lunggo.CustomerWeb.Controllers
             return isSuccess ? "OK" : "Failed";
         }
 
-        private static bool ProcessResponse(NameValueCollection form)
+        private bool ProcessResponse(NameValueCollection form)
         {
             var signatureKey = CreateSignature(form["PaymentId"], form["RefNo"], form["Amount"], form["Currency"], form["Status"]);
 
@@ -99,7 +106,7 @@ namespace Lunggo.CustomerWeb.Controllers
                     FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
                     LocalCurrency = new Currency("IDR")
                 };
-                PaymentService.GetInstance().UpdatePayment(form["RefNo"], payment);
+                _paymentService.UpdatePayment(form["RefNo"], payment);
                 return false;
             }
 
@@ -113,7 +120,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
                 LocalCurrency = new Currency("IDR")
             };
-            PaymentService.GetInstance().UpdatePayment(form["RefNo"], paymentInfo);
+            _paymentService.UpdatePayment(form["RefNo"], paymentInfo);
             return true;
         }
 

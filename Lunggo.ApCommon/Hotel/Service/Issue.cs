@@ -213,8 +213,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (newPrice != oldPrice)
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                PaymentService.GetInstance()
-                    .UpdatePayment(input.RsvNo, new PaymentDetails {Status = PaymentStatus.Cancelled});
+                _paymentService.UpdatePayment(input.RsvNo, new PaymentDetails {Status = PaymentStatus.Cancelled});
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 LogIssuanceFailure(rsvData.RsvNo, "Price Changed (" + oldPrice + " -> " + newPrice + ")");
                 return new IssueHotelTicketOutput
@@ -243,8 +242,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 Console.WriteLine(e);
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                PaymentService.GetInstance()
-                    .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
+                _paymentService.UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 while (e.InnerException != null)
                     e = e.InnerException;
@@ -262,8 +260,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             if (issueResult.IsSuccess == false)
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                PaymentService.GetInstance()
-                    .UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
+                _paymentService.UpdatePayment(input.RsvNo, new PaymentDetails { Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 LogIssuanceFailure(rsvData.RsvNo, "Status : " + issueResult.Status);
                 return new IssueHotelTicketOutput

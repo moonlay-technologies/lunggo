@@ -39,7 +39,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             };
 
             if (paymentInfo.Status != PaymentStatus.Failed && paymentInfo.Status != PaymentStatus.Denied)
-                PaymentService.GetInstance().UpdatePayment(notif.referenceNo, paymentInfo);
+                new PaymentService().UpdatePayment(notif.referenceNo, paymentInfo);
             return new ApiResponseBase();
         }
 

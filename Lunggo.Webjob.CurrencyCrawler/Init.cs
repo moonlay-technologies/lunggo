@@ -16,7 +16,6 @@ namespace Lunggo.Webjob.CurrencyCrawler
             InitRedisService();
             InitDatabaseService();
             InitQueueService();
-            InitPayment();
             InitFlightService();
         }
 
@@ -24,10 +23,6 @@ namespace Lunggo.Webjob.CurrencyCrawler
         {
             var flight = FlightService.GetInstance();
             flight.Init("");
-        }
-        private static void InitPayment()
-        {
-            PaymentService.GetInstance().Init();
         }
         private static void InitRedisService()
         {

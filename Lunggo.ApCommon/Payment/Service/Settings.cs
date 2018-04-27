@@ -31,13 +31,13 @@ using Microsoft.WindowsAzure.Storage.Queue;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
-    public partial class PaymentService : SingletonBase<PaymentService>
+    public partial class PaymentService
     {
         private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
         private static readonly NicepayWrapper NicepayWrapper = NicepayWrapper.GetInstance();
         private static readonly E2PayWrapper E2PayWrapper = E2PayWrapper.GetInstance();
 
-        public void Init()
+        public PaymentService()
         {
             Currency.SyncCurrencyData();
             VeritransWrapper.Init();

@@ -25,7 +25,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     //        Console.WriteLine("Getting Required Data...");
     //        sw.Start();
     //        var report =
-    //            PaymentService.GetInstance().GetUncheckedTransferConfirmationReports().SingleOrDefault(r => r.RsvNo == rsvNo);
+    //            new PaymentService().GetUncheckedTransferConfirmationReports().SingleOrDefault(r => r.RsvNo == rsvNo);
     //        sw.Stop();
     //        Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
     //        sw.Reset();

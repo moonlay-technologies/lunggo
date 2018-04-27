@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Activity.Service
             convertedRsv.PackageId = activityReservation.PackageId;
             convertedRsv.TicketCount = activityReservation.TicketCount;
             convertedRsv.RsvNo = activityReservation.RsvNo;
-            convertedRsv.Payment = PaymentService.GetInstance().ConvertToPaymentDetailsForDisplay(activityReservation.Payment);
+            convertedRsv.Payment = _paymentService.ConvertToPaymentDetailsForDisplay(activityReservation.Payment);
             convertedRsv.RsvTime = activityReservation.RsvTime;
             convertedRsv.RsvDisplayStatus = MapReservationStatus(activityReservation);
             

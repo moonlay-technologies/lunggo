@@ -46,7 +46,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             };
             AppInitializer.InitDatabaseService();
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("ConvertPaymentRecordToPaymentDetails", expected);
+            var actual = new PaymentService().InvokePrivate<PaymentDetails>("ConvertPaymentRecordToPaymentDetails", expected);
 
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected.RsvNo, actual.RsvNo);
@@ -102,7 +102,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             };
             AppInitializer.InitDatabaseService();
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentTableRecord>("ConvertPaymentDetailsToPaymentRecord", expected);
+            var actual = new PaymentService().InvokePrivate<PaymentTableRecord>("ConvertPaymentDetailsToPaymentRecord", expected);
 
             Assert.IsNotNull(actual);
             Assert.AreEqual(expected.RsvNo, actual.RsvNo);
@@ -142,7 +142,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var currency = new Currency("ASD", 100, 200);
             var timelimit = DateTime.Now;
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
+            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
 
             Assert.AreEqual(rsvNo, actual.RsvNo);
             Assert.AreEqual(price, actual.OriginalPriceIdr);
@@ -157,7 +157,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         {
             var rsvNo = Guid.NewGuid().ToString();
             AppInitializer.InitDatabaseService();
-            Assert.ThrowsException<InvalidOperationException>(() => PaymentService.GetInstance().GetPaymentDetails(rsvNo));
+            Assert.ThrowsException<InvalidOperationException>(() => new PaymentService().GetPaymentDetails(rsvNo));
         }
         
         [TestMethod]
@@ -174,7 +174,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
                 }
             };
 
-            PaymentService.GetInstance().InvokePrivate("AggregateRsvPaymentDetails", cart);
+            new PaymentService().InvokePrivate("AggregateRsvPaymentDetails", cart);
 
             Assert.AreEqual(cart.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr), cart.OriginalPriceIdr);
         }
@@ -208,7 +208,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
                 }
             };
 
-            PaymentService.GetInstance().InvokePrivate("DistributeRsvPaymentDetails", cartDetails);
+            new PaymentService().InvokePrivate("DistributeRsvPaymentDetails", cartDetails);
 
             var actual1 = cartDetails.RsvPaymentDetails[0];
             var actual2 = cartDetails.RsvPaymentDetails[1];
@@ -324,7 +324,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var price = 123456789M;
             var currency = new Currency("ASD", 100, 123);
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
+            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
 
             Assert.AreEqual(rsvNo, actual.RsvNo);
             Assert.AreEqual(price, actual.OriginalPriceIdr);
@@ -341,7 +341,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var price = 123456789M;
             var currency = new Currency("ASD", 100, 123);
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
+            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
 
             Assert.AreEqual(PaymentStatus.Undefined, actual.Status);
         }
@@ -356,7 +356,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var currency = new Currency("ASD", 100, 123);
             var timelimit = DateTime.Now;
 
-            var actual = PaymentService.GetInstance().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
+            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
 
             Assert.AreEqual(timelimit.AddMinutes(-10), actual.TimeLimit);
         }

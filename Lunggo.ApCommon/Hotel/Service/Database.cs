@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     RsvNo = rsvNo,
                     Contact = Contact.GetFromDb(rsvNo),
                     Pax = new List<Pax>(),
-                    Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
+                    Payment = _paymentService.GetPaymentDetails(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     HotelDetails = new HotelDetail(),
                     RsvTime = reservationRecord.RsvTime.GetValueOrDefault(),
@@ -243,7 +243,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
-                PaymentService.GetInstance().CreateNewPayment(
+                _paymentService.CreateNewPayment(
                     reservation.RsvNo,
                     reservation.HotelDetails.Rooms.SelectMany(r => r.Rates).Sum(r => r.Price.Local),
                     new Currency(OnlineContext.GetActiveCurrencyCode()));

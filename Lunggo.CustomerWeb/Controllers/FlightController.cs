@@ -16,6 +16,13 @@ namespace Lunggo.CustomerWeb.Controllers
 {
     public class FlightController : Controller
     {
+        private PaymentService _paymentService;
+
+        public FlightController(PaymentService paymentService = null)
+        {
+            _paymentService = paymentService ?? new PaymentService();
+        }
+
         //[DeviceDetectionFilter]
         [Route("id/tiket-pesawat/cari/{searchParam}/{searchId}")]
         public ActionResult Search(string searchId, string searchParam)
@@ -123,7 +130,6 @@ namespace Lunggo.CustomerWeb.Controllers
                 try
                 {
                     var flight = FlightService.GetInstance();
-                    var payment = PaymentService.GetInstance();
                     var expiryTime = flight.GetItineraryExpiry(token);
                     //var savedPassengers = flight.GetSavedPassengers(User.Identity.GetEmail());
                     //var savedCreditCards = User.Identity.IsAuthenticated

@@ -21,7 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);                
                 if(request.DiscountCode == "REFERRALCREDIT")
                 {
-                    var cart = PaymentService.GetInstance().GetCart(request.RsvNo);
+                    var cart = new PaymentService().GetCart(request.RsvNo);
                     var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(cart.RsvNoList[0]);
                     var referral = AccountService.GetInstance().GetReferral(userId);
                     if(referral == null)

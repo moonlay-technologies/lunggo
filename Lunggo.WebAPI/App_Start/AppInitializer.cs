@@ -35,7 +35,6 @@ namespace Lunggo.WebAPI
             InitMailService();
             InitBlobStorageService();
             InitUniqueIdGenerator();
-            InitPaymentService();
             InitTableStorageService();
             InitHtmlTemplateService();
             InitNotificationService();
@@ -134,11 +133,6 @@ namespace Lunggo.WebAPI
         {
             var flight = HotelService.GetInstance();
             flight.Init("Config");
-        }
-        private static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
         }
 
         private static void InitMailService()

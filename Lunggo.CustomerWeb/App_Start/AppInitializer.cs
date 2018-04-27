@@ -35,7 +35,6 @@ namespace Lunggo.CustomerWeb
             InitQueueService();
             //InitLogger();
             //InitFlightService();
-            InitPaymentService();
             InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
@@ -132,12 +131,6 @@ namespace Lunggo.CustomerWeb
         {
             var hotel = HotelService.GetInstance();
             hotel.Init("Config");
-        }
-
-        private static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
         }
 
         private static void InitBrowserDetectionService()

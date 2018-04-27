@@ -10,9 +10,16 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 {
     public class PaymentController : Controller
     {
+        private PaymentService _paymentService;
+
+        public PaymentController(PaymentService paymentService = null)
+        {
+            _paymentService = paymentService ?? new PaymentService();
+        }
+
         public ActionResult Payment(string cartId)
         {
-            var cartPayment = PaymentService.GetInstance().GetCartPaymentDetails(cartId);
+            var cartPayment = _paymentService.GetCartPaymentDetails(cartId);
             if (cartPayment == null)
                 return View("invalid ID");
             if (!cartPayment.RsvPaymentDetails.Any())

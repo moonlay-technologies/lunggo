@@ -91,7 +91,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Contact = Contact.GetFromDb(rsvNo),
                     Itineraries = new List<FlightItinerary>(),
                     Pax = new List<Pax>(),
-                    Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
+                    Payment = _paymentService.GetPaymentDetails(rsvNo),
                     State = ReservationState.GetFromDb(rsvNo),
                     User = User.GetFromDb(reservationRecord.UserId),
                 };
@@ -218,7 +218,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 //                RsvNo = rsvNo,
                 //                RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                 //                Contact = Contact.GetFromDb(rsvNo),
-                //                Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
+                //                Payment = _paymentService.GetPaymentDetails(rsvNo),
                 //                Itineraries = new List<FlightItinerary>(),
                 //                Pax = new List<Pax>(),
                 //                State = ReservationState.GetFromDb(rsvNo),
@@ -340,7 +340,7 @@ namespace Lunggo.ApCommon.Flight.Service
                                 RsvNo = rsvNo,
                                 RsvTime = reservationRecord.RsvTime.GetValueOrDefault().SpecifyUtc(),
                                 Contact = Contact.GetFromDb(rsvNo),
-                                Payment = PaymentService.GetInstance().GetPaymentDetails(rsvNo),
+                                Payment = _paymentService.GetPaymentDetails(rsvNo),
                                 Itineraries = new List<FlightItinerary>(),
                                 Pax = new List<Pax>(),
                                 State = ReservationState.GetFromDb(rsvNo),
@@ -545,7 +545,7 @@ namespace Lunggo.ApCommon.Flight.Service
         #endregion
 
         #region Insert
-        private static void InsertReservationToDb(FlightReservation reservation)
+        private void InsertReservationToDb(FlightReservation reservation)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -564,7 +564,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
                 reservation.Contact.InsertToDb(reservation.RsvNo);
                 reservation.State.InsertToDb(reservation.RsvNo);
-                PaymentService.GetInstance().CreateNewPayment(
+                _paymentService.CreateNewPayment(
                     reservation.RsvNo, 
                     reservation.Itineraries.Sum(order => order.Price.FinalIdr), 
                     new Currency(OnlineContext.GetActiveCurrencyCode()),

@@ -96,12 +96,6 @@ namespace Lunggo.PaymentTest
             hotel.Init("Config");
         }
 
-        private static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
-        }
-
         public static void InitHtmlTemplateService()
         {
             var htmlTemplateService = HtmlTemplateService.GetInstance();

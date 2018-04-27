@@ -16,7 +16,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var method = PaymentMethod.Undefined;
             var submethod = PaymentSubmethod.Undefined;
             PaymentData paymentData = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -26,7 +26,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var method = PaymentMethod.BankTransfer;
             var submethod = PaymentSubmethod.Undefined;
             PaymentData paymentData = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -36,7 +36,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             var method = PaymentMethod.VirtualAccount;
             var submethod = PaymentSubmethod.Undefined;
             PaymentData paymentData = null;
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -49,7 +49,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             {
                 CreditCard = null
             };
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -65,7 +65,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
                     TokenId = null
                 }
             };
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -78,7 +78,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             {
                 MandiriClickPay = null
             };
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -95,7 +95,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
                     Token = "123456"
                 }
             };
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 
@@ -112,7 +112,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
                     Token = null
                 }
             };
-            var result = PaymentService.GetInstance().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
+            var result = new PaymentService().InvokePrivate<bool>("ValidatePaymentMethod", method, submethod, paymentData);
             Assert.IsFalse(result);
         }
 

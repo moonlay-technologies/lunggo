@@ -34,7 +34,6 @@ namespace Lunggo.BackendWeb
             InitBlobStorageService();
             InitUniqueIdGenerator();
             InitFlightService();
-            InitPaymentService();
             //InitBrowserDetectionService();
             InitDisplayModes();
             InitMailService();
@@ -134,12 +133,6 @@ namespace Lunggo.BackendWeb
         {
             var hotel = HotelService.GetInstance();
             hotel.Init("config");
-        }
-
-        private static void InitPaymentService()
-        {
-            var payment = PaymentService.GetInstance();
-            payment.Init();
         }
 
         private static void InitBrowserDetectionService()

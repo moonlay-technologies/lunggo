@@ -81,7 +81,7 @@ namespace Lunggo.Worker.EticketHandler
             sw.Reset();
 
             ActivityService.GetInstance().UpdateRsvNoPdfFlag(rsvNo);
-            var cartId = PaymentService.GetInstance().GetCartIdByRsvNo(rsvNo);
+            var cartId = new PaymentService().GetCartIdByRsvNo(rsvNo);
             var activityReservation = activityService.GetActivityInvoice(cartId);
             Trace.WriteLine("Parsing Invoice for CartId " + cartId + "...");
             sw.Start();
