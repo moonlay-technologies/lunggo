@@ -108,32 +108,42 @@ describe('PaymentController', () => {
   });
 
   it(`pay`, function() {
-    const paymentData = {
-      rsvNo,
-      method: 'creditCard',
-      discCd,
-      formData: {
-        ccNo,
-        name: 'Peter Morticelli',
-        cvv: 123,
-        expiry: {month, year},
-      },
-    };
     let errMessage;
     const errorMessagesHandler = r => this.errMessage = r
-    const expectedResult = '';
+
+    let paymentData = {
+      rsvNo: '144566533479',
+      method: 'creditCard',
+      discCd: 'ASDFGHJKL',
+      formData: {
+        ccNo: '4811111111111114',
+        name: 'Peter Morticelli',
+        cvv: 123,
+        expiry: {month: 1, year: 20},
+      },
+    };
+    const expectedResult = {
+      status:200
+    };
     const actualResult = pay(paymentData, errorMessagesHandler);
-    expect(actualResult).toBe(expectedResult);
-    expect(errMessage).toBe('errMessage');
-    throw `not done implemented`;
+    expect(actualResult.status).toBe(expectedResult.status);
+    expect(errMessage).toBe(undefined);
+
+    paymentData.rsvNo = undefined;
+    expectedResult = {
+      status:400
+    };
+    const actualResult = pay(paymentData, errorMessagesHandler);
+    expect(actualResult.status).toBe(expectedResult.status);
+    expect(errMessage).not.toBe(undefined);
   });
 
-  it(`getCreditBalance`, () => {
-    throw `not implemented`;
-  });
-  it(`checkVoucher`, () => {
-    throw `not implemented`;
-  });
+  // it(`getCreditBalance`, () => {
+  //   throw `not implemented`;
+  // });
+  // it(`checkVoucher`, () => {
+  //   throw `not implemented`;
+  // });
 
 });
 
