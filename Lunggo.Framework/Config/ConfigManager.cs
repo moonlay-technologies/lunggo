@@ -1,85 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 
 namespace Lunggo.Framework.Config
 {
-    public class ConfigManager
+    public partial class ConfigManager
     {
-        private const String ConfigFileName = @"application.properties";
         private static readonly ConfigManager Instance = new ConfigManager();
-        private Dictionary<string, PropertyConfig> _configDictionary;
-        private bool _isInitialized;
-       
-        private ConfigManager()
-        {
-
-        }
+        private Dictionary<string, string> _configDictionary = PopulateDictionary();
 
         public static ConfigManager GetInstance()
         {
             return Instance;
         }
 
-        public void Init(string directoryPath)
-        {
-            if (!_isInitialized)
-            {
-                _configDictionary = LoadConfigFileToDictionary(Path.Combine(directoryPath,ConfigFileName));
-                _isInitialized = true;
-            }
-        }
-        
         public string GetConfigValue(string fileName, string keyName)
         {
-            var propertyConfig = _configDictionary[fileName];
-            if (propertyConfig != null)
-            {
-                return propertyConfig.Dictionary[keyName];
-            }
+            var key = string.Join(".", fileName, keyName);
+            var isExist = _configDictionary.TryGetValue(key, out var value);
+            if (isExist)
+                return value;
             else
-            {
-                throw new ArgumentException(String.Format("Configuration File {0}.properties is not exist",fileName));
-            }
-        }
-
-        private Dictionary<string, PropertyConfig> LoadConfigFileToDictionary(String filePath)
-        {
-            var configDoc = LoadConfigurationFile(filePath);
-            return ConfigToDictionary(configDoc);   
-        }
-        
-
-        private XElement LoadConfigurationFile(String filePath)
-        {
-            return XElement.Load(filePath);
-        }
-        
-        private Dictionary<string, PropertyConfig> ConfigToDictionary(XElement doc)
-        {
-            var configNodes = doc.Elements();
-            var configDictionary = configNodes.
-                GroupBy
-                (
-                    n => n.Attribute("file").Value
-                ).
-                ToDictionary
-                (
-                    @group => @group.Key.ToString(CultureInfo.InvariantCulture), 
-                    @group => new PropertyConfig
-                    {
-                        Dictionary = @group.ToDictionary(n => n.Attribute("name").Value, n => n.Value)
-                    }
-                );
-            return configDictionary;
-        }
-
-        private class PropertyConfig
-        {
-            public Dictionary<string,string> Dictionary { get; set;}
+                throw new ArgumentException("Environment variable with key " + key + " does not exist");
         }
     }
 }

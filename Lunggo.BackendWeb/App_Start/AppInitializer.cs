@@ -26,7 +26,6 @@ namespace Lunggo.BackendWeb
     {
         public static void Init()
         {
-            InitConfigurationManager();
             InitI18NMessageManager();
             InitRedisService();
             InitDatabaseService();
@@ -83,13 +82,6 @@ namespace Lunggo.BackendWeb
                 }, 
                  
             });
-        }
-
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
-            configManager.Init(configDirectoryPath);
         }
 
         private static void InitI18NMessageManager()
