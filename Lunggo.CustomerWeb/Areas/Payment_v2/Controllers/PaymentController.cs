@@ -23,22 +23,24 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             if (cartPayment == null)
                 return View("Error");
-            if (!cartPayment.RsvPaymentDetails.Any())
-                return View("CartEmpty");
 
             if (cartPayment.Status == PaymentStatus.Expired)
                 return View("Expired");
             if (cartPayment.HasThirdPartyPage)
-                return RedirectToAction("ThirdParty");
+                return RedirectToAction("ThirdParty", new { cartId });
             if (cartPayment.Status != PaymentStatus.Undefined && cartPayment.Status != PaymentStatus.Failed)
             {
-                if (cartPayment.RedirectionUrl != null)
+                if (cartPayment.HasThirdPartyPage)
                     return RedirectToAction(cartPayment.RedirectionUrl);
-                if (cartPayment.TransferAccount != null)
-                    return RedirectToAction("Instruction");
+                if (cartPayment.HasInstruction)
+                    return RedirectToAction("Instruction", new { cartId });
+                if (cartPayment.Status == PaymentStatus.Settled)
+                    return RedirectToAction("ThankYou", new { cartId });
             }
+            if (cartPayment.RsvPaymentDetails == null || !cartPayment.RsvPaymentDetails.Any())
+                return View("EmptyCart");
 
-            return View(cartPayment);
+            return View("Payment", cartPayment);
         }
     }
 }
