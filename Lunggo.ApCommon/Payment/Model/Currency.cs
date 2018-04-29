@@ -70,26 +70,45 @@ namespace Lunggo.ApCommon.Payment.Model
             if (!(obj is Currency item))
                 return false;
 
-            return Symbol == item.Symbol && 
-                   Rate == item.Rate && 
+            return Symbol == item.Symbol &&
+                   Rate == item.Rate &&
                    RoundingOrder == item.RoundingOrder &&
                    Supplier == item.Supplier;
         }
 
         public decimal GetRoundingOrder()
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            //using (var conn = DbService.GetInstance().GetOpenConnection())
+            //{
+            //    var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
+            //    {
+            //        Symbol = Symbol,
+            //    }).ToList();
+            //    if (rates.Count < 1)
+            //    {
+            //        throw new Exception("Currency not found");
+            //    }
+            //    var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();
+            //    return (decimal)rate.RoundingOrder;
+            //}
+
+            switch (Symbol)
             {
-                var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
-                {
-                    Symbol = Symbol,
-                }).ToList();
-                if (rates.Count < 1)
-                {
-                    throw new Exception("Currency not found");
-                }
-                var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();
-                return (decimal)rate.RoundingOrder;
+                case "IDR": return 100;
+                case "AUD":
+                case "CNY":
+                case "HKD":
+                case "JPY":
+                case "KRW":
+                case "MYR":
+                case "NZD":
+                case "PHP":
+                case "SGD":
+                case "THB":
+                case "USD":
+                case "VND":
+                case "ZAR": return 1;
+                default: throw new ArgumentException("Currency symbol not listed");
             }
         }
 
@@ -104,18 +123,38 @@ namespace Lunggo.ApCommon.Payment.Model
             //        return rate;
             //}
             //return 100000;
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+
+            //using (var conn = DbService.GetInstance().GetOpenConnection())
+            //{
+            //    var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
+            //    {
+            //        Symbol = Symbol,
+            //    }).ToList();
+            //    if (rates.Count < 1)
+            //    {
+            //        return 100000;
+            //    }
+            //    var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();          
+            //    return (decimal)rate.Rate;
+            //}
+
+            switch (Symbol)
             {
-                var rates = CurrencyTableRepo.GetInstance().Find(conn, new CurrencyTableRecord
-                {
-                    Symbol = Symbol,
-                }).ToList();
-                if (rates.Count < 1)
-                {
-                    return 100000;
-                }
-                var rate = rates.Where(a => a.SupplierCd == SupplierCd.Mnemonic(Supplier)).First();          
-                return (decimal)rate.Rate;
+                case "AUD": return 11000;
+                case "CNY": return 2200;
+                case "HKD": return 1800;
+                case "IDR": return 1;
+                case "JPY": return 130;
+                case "KRW": return 15;
+                case "MYR": return 3600;
+                case "NZD": return 10000;
+                case "PHP": return 300;
+                case "SGD": return 10800;
+                case "THB": return 450;
+                case "USD": return 14000;
+                case "VND": return 1;
+                case "ZAR": return 1200;
+                default: throw new ArgumentException("Currency symbol not listed");
             }
         }
 
@@ -134,24 +173,24 @@ namespace Lunggo.ApCommon.Payment.Model
                 var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
                 for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
                 {
-                        foreach (var record in records)
-                        {
-                            var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
-                            var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" +
-                                                   SupplierCd.Mnemonic(record.SupplierCd);
-                            redisDb.StringSet(rateKey, Convert.ToString(record.Rate.GetValueOrDefault()));
-                            redisDb.StringSet(roundingOrderKey,
-                                Convert.ToString(record.RoundingOrder.GetValueOrDefault()));
-                        }
-                        var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
-                        foreach (var supp in suppliers)
-                        {
-                            var currencyListKey = "currencies:" + supp;
-                            var currencyList =
-                                records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
-                            redisDb.StringSet(currencyListKey, currencyList.Serialize());
-                        }
-                        return;
+                    foreach (var record in records)
+                    {
+                        var rateKey = "currencyRate:" + record.Symbol + ":" + SupplierCd.Mnemonic(record.SupplierCd);
+                        var roundingOrderKey = "currencyRoundingOrder:" + record.Symbol + ":" +
+                                               SupplierCd.Mnemonic(record.SupplierCd);
+                        redisDb.StringSet(rateKey, Convert.ToString(record.Rate.GetValueOrDefault()));
+                        redisDb.StringSet(roundingOrderKey,
+                            Convert.ToString(record.RoundingOrder.GetValueOrDefault()));
+                    }
+                    var suppliers = records.Select(r => SupplierCd.Mnemonic(r.SupplierCd)).Distinct().ToList();
+                    foreach (var supp in suppliers)
+                    {
+                        var currencyListKey = "currencies:" + supp;
+                        var currencyList =
+                            records.Where(r => SupplierCd.Mnemonic(r.SupplierCd) == supp).Select(r => r.Symbol);
+                        redisDb.StringSet(currencyListKey, currencyList.Serialize());
+                    }
+                    return;
                 }
             }
         }
@@ -162,14 +201,14 @@ namespace Lunggo.ApCommon.Payment.Model
                 return;
             symbol = symbol.ToUpper();
             using (var conn = DbService.GetInstance().GetOpenConnection())
-                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate, SupplierCd = SupplierCd.Mnemonic(supplier), UpdateDate = DateTime.UtcNow});
+                CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, Rate = rate, SupplierCd = SupplierCd.Mnemonic(supplier), UpdateDate = DateTime.UtcNow });
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                    var redis = RedisService.GetInstance();
-                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                    var rateKey = "currencyRate:" + symbol + ":" + supplier;
-                    redisDb.StringSet(rateKey, Convert.ToString(rate));
-                    return;
+                var redis = RedisService.GetInstance();
+                var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                var rateKey = "currencyRate:" + symbol + ":" + supplier;
+                redisDb.StringSet(rateKey, Convert.ToString(rate));
+                return;
             }
         }
 
@@ -182,11 +221,11 @@ namespace Lunggo.ApCommon.Payment.Model
                 CurrencyTableRepo.GetInstance().Update(conn, new CurrencyTableRecord { Symbol = symbol, RoundingOrder = roundingOrder, SupplierCd = SupplierCd.Mnemonic(supplier) });
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                    var redis = RedisService.GetInstance();
-                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                    var roundingOrderKey = "currencyRoundingOrder:" + symbol;
-                    redisDb.StringSet(roundingOrderKey, Convert.ToString(roundingOrder));
-                    return;
+                var redis = RedisService.GetInstance();
+                var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                var roundingOrderKey = "currencyRoundingOrder:" + symbol;
+                redisDb.StringSet(roundingOrderKey, Convert.ToString(roundingOrder));
+                return;
             }
         }
 
@@ -194,11 +233,11 @@ namespace Lunggo.ApCommon.Payment.Model
         {
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
-                    var redis = RedisService.GetInstance();
-                    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
-                    var currencyListKey = "currencies:" + supplier;
-                    var currencyList = ((string) redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
-                    return currencyList;
+                var redis = RedisService.GetInstance();
+                var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+                var currencyListKey = "currencies:" + supplier;
+                var currencyList = ((string)redisDb.StringGet(currencyListKey)).Deserialize<IEnumerable<string>>();
+                return currencyList;
             }
             return null;
         }

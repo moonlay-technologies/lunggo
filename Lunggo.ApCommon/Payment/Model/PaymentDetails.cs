@@ -78,6 +78,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public decimal LocalPaidAmount { get; set; }
         public Refund Refund { get; set; }
         public string InvoiceNo { get; set; }
+        public bool HasInstruction { get; set; }
+        public bool HasThirdPartyPage { get; set; }
     }
 
     public class CartPaymentDetails : PaymentDetails

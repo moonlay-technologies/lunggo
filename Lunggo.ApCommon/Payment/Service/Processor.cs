@@ -342,7 +342,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return uniqueCode;
         }
 
-        public CartPaymentDetails GetCartPaymentDetails(string cartId)
+        public virtual CartPaymentDetails GetCartPaymentDetails(string cartId)
         {
             var cart = GetCart(cartId);
             if (cart == null)

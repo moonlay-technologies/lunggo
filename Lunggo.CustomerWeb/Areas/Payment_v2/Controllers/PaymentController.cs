@@ -20,17 +20,17 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
         public ActionResult Payment(string cartId)
         {
             var cartPayment = _paymentService.GetCartPaymentDetails(cartId);
+
             if (cartPayment == null)
-                return View("invalid ID");
+                return View("Error");
             if (!cartPayment.RsvPaymentDetails.Any())
-                return View("Cart Empty");
+                return View("CartEmpty");
 
             if (cartPayment.Status == PaymentStatus.Expired)
                 return View("Expired");
-            if (cartPayment.RedirectionUrl != null)
-                return RedirectToAction("3rd party");
+            if (cartPayment.HasThirdPartyPage)
+                return RedirectToAction("ThirdParty");
             if (cartPayment.Status != PaymentStatus.Undefined && cartPayment.Status != PaymentStatus.Failed)
-                //alreadt paid
             {
                 if (cartPayment.RedirectionUrl != null)
                     return RedirectToAction(cartPayment.RedirectionUrl);

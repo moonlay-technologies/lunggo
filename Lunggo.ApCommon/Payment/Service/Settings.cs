@@ -39,7 +39,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public PaymentService()
         {
-            Currency.SyncCurrencyData();
+            //Currency.SyncCurrencyData();
             VeritransWrapper.Init();
             NicepayWrapper.Init();
             E2PayWrapper.Init();
