@@ -225,7 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserDetection\BrowserDetectionService.cs" />
-    <Compile Include="Config\ConfigManager.cs" />
+    <Compile Include="Config\EnvVariables.cs" />
     <Compile Include="Config\Variables\Production.cs" />
     <Compile Include="Config\Variables\QA.cs" />
     <Compile Include="Config\Variables\LocalAzure.cs" />

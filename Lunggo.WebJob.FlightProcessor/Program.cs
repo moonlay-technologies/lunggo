@@ -16,8 +16,8 @@ namespace Lunggo.WebJob.FlightProcessor
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(4);
             configuration.Queues.MaxDequeueCount = 10;
-            configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            configuration.StorageConnectionString = EnvVariables.Get("azureStorage", "connectionString");
+            configuration.DashboardConnectionString = EnvVariables.Get("azureStorage", "connectionString");
 
             JobHost host = new JobHost(configuration);
             host.RunAndBlock();

@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
-@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+@{ var env = EnvVariables.Get("general", "environment"); }
 <html>
 <head>
     <title>

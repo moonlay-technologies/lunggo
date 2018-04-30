@@ -52,30 +52,30 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
         {
             if (!_isInitialized)
             {
-                _paymentEndpoint = ConfigManager.GetInstance().GetConfigValue("e2pay", "paymentEndPoint");
-                _requeryEndpoint = ConfigManager.GetInstance().GetConfigValue("e2pay", "requeryEndPoint");
-                _merchantCode = ConfigManager.GetInstance().GetConfigValue("e2pay", "merchantCode");
-                _merchantKey = ConfigManager.GetInstance().GetConfigValue("e2pay", "merchantKey");
+                _paymentEndpoint = EnvVariables.Get("e2pay", "paymentEndPoint");
+                _requeryEndpoint = EnvVariables.Get("e2pay", "requeryEndPoint");
+                _merchantCode = EnvVariables.Get("e2pay", "merchantCode");
+                _merchantKey = EnvVariables.Get("e2pay", "merchantKey");
                 _isInitialized = true;
             }
         }
 
         internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
         {
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
+            var timeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
             var requestHtml = GenerateRequestPageHtml(payment, transactionDetail);
             var paymentUrl = SavePaymentHtmlToCache(requestHtml, transactionDetail.RsvNo, timeout);
             payment.Status = PaymentStatus.Pending;
             payment.RedirectionUrl = paymentUrl;
             return payment;
 
-            //var rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            //var rootUrl = EnvVariables.Get("general", "rootUrl");
             //if (payment.Method != PaymentMethod.CreditCard && payment.Method != PaymentMethod.VirtualAccount &&
             //    payment.Method != PaymentMethod.BankTransfer)
             //{
             //    var client = new RestClient(_endpointBase);
             //    var request = new RestRequest(_paymentEndpointPath, Method.POST);
-            //    if (ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production")
+            //    if (EnvVariables.Get("general", "environment") == "production")
             //        request.AddHeader("Referer", rootUrl);
             //    else
             //        request.AddHeader("Referer", "qa.travorama.com");
@@ -103,7 +103,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
             //        payment.FailureReason = FailureReason.PaymentFailure;
 
             //        var log = LogService.GetInstance();
-            //        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //        var env = EnvVariables.Get("general", "environment");
             //        log.Post(
             //            "```Payment Log```"
             //            + "\n`*Environment :* " + env.ToUpper()
@@ -131,7 +131,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
             //        payment.FailureReason = FailureReason.PaymentFailure;
 
             //        var log = LogService.GetInstance();
-            //        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //        var env = EnvVariables.Get("general", "environment");
             //        log.Post(
             //            "```Payment Log```"
             //            + "\n`*Environment :* " + env.ToUpper()
@@ -152,7 +152,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
             //        return payment;
             //    }
 
-            //    var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
+            //    var timeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
             //    var csHtml = (CQ) responseContent;
             //    var externalId = csHtml["input[name='billReferenceNo']"].Attr("value");
             //    var paymentUrl = SavePaymentHtmlToCache(responseContent, transactionDetail.RsvNo, timeout);
@@ -167,7 +167,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
             //    payment.FailureReason = FailureReason.PaymentFailure;
 
             //    var log = LogService.GetInstance();
-            //    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            //    var env = EnvVariables.Get("general", "environment");
             //    log.Post(
             //        "```Payment Log```"
             //        + "\n`*Environment :* " + env.ToUpper()
@@ -188,7 +188,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
 
         private static string GenerateRequestPageHtml(PaymentDetails payment, TransactionDetails transactionDetail)
         {
-            var rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            var rootUrl = EnvVariables.Get("general", "rootUrl");
             var contact = transactionDetail.Contact;
             var html =
                 string.Format(
@@ -230,7 +230,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.E2Pay
                         throw;
                 }
             }
-            var rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            var rootUrl = EnvVariables.Get("general", "rootUrl");
             var paymentUrl = rootUrl + _paymentPagePath + "?rsvNo=" + rsvNo + "&id=" + guid + "&medium=" + (int) PaymentMedium.E2Pay;
             return paymentUrl;
         }

@@ -26,8 +26,8 @@ namespace Lunggo.WebJob.EmailQueueHandler
             JobHostConfiguration configuration = new JobHostConfiguration();
             configuration.Queues.MaxPollingInterval = TimeSpan.FromSeconds(4);
             configuration.Queues.MaxDequeueCount = 10;
-            configuration.StorageConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
-            configuration.DashboardConnectionString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            configuration.StorageConnectionString = EnvVariables.Get("azureStorage", "connectionString");
+            configuration.DashboardConnectionString = EnvVariables.Get("azureStorage", "connectionString");
 
             JobHost host = new JobHost(configuration);
             //Function.ProcessEmailQueue.FlightIssueFailedNotifEmail("137816601979+AirAsia;435671;1231562");

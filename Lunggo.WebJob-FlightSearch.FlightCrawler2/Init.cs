@@ -12,7 +12,6 @@ namespace Lunggo.WebJob.FlightCrawler
     {
         public static void Init()
         {
-            InitConfigurationManager();
             InitDatabaseService();
             InitRedisService();
             InitQueueService();
@@ -28,27 +27,21 @@ namespace Lunggo.WebJob.FlightCrawler
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });
         }
-
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"");
-        }
-
+        
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -61,13 +54,13 @@ namespace Lunggo.WebJob.FlightCrawler
 
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var database = DbService.GetInstance();
             database.Init(connString);
         }
         public static void InitLogService()
         {
-            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var webhookUrl = EnvVariables.Get("log", "slack");
             var log = LogService.GetInstance();
             log.Init(webhookUrl);
         }

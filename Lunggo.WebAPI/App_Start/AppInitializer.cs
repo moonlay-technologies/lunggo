@@ -26,7 +26,6 @@ namespace Lunggo.WebAPI
     {
         public static void Init()
         {
-            InitConfigurationManager();
             //InitI18NMessageManager();
             InitDatabaseService();
             InitRedisService();
@@ -46,32 +45,25 @@ namespace Lunggo.WebAPI
 
         private static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
         private static void InitDocumentsService()
         {
-            var endpoint = ConfigManager.GetInstance().GetConfigValue("documentDb", "endpoint");
-            var authKey = ConfigManager.GetInstance().GetConfigValue("documentDb", "authorizationKey");
-            var dbName = ConfigManager.GetInstance().GetConfigValue("documentDb", "databaseName");
-            var collectionName = ConfigManager.GetInstance().GetConfigValue("documentDb", "collectionName");
+            var endpoint = EnvVariables.Get("documentDb", "endpoint");
+            var authKey = EnvVariables.Get("documentDb", "authorizationKey");
+            var dbName = EnvVariables.Get("documentDb", "databaseName");
+            var collectionName = EnvVariables.Get("documentDb", "collectionName");
             DocumentService.GetInstance().Init(endpoint, authKey, dbName, collectionName);
         }
 
         private static void InitNotificationService()
         {
             var notif = NotificationService.GetInstance();
-            var connString = ConfigManager.GetInstance().GetConfigValue("notification", "connectionString");
-            var hubName = ConfigManager.GetInstance().GetConfigValue("notification", "hubName");
+            var connString = EnvVariables.Get("notification", "connectionString");
+            var hubName = EnvVariables.Get("notification", "hubName");
             notif.Init(connString, hubName);
-        }
-
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
-            configManager.Init(configDirectoryPath);
         }
 
         private static void InitI18NMessageManager()
@@ -82,7 +74,7 @@ namespace Lunggo.WebAPI
 
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var database = DbService.GetInstance();
             database.Init(connString);
         }
@@ -90,7 +82,7 @@ namespace Lunggo.WebAPI
         private static void InitUniqueIdGenerator()
         {
             var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var seqContainerName = EnvVariables.Get("general", "seqGeneratorContainerName");
             var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
@@ -107,12 +99,12 @@ namespace Lunggo.WebAPI
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }
             });
         }
@@ -137,13 +129,13 @@ namespace Lunggo.WebAPI
 
         private static void InitMailService()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
+            var apiKey = EnvVariables.Get("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
             mailService.Init(apiKey);
         }
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -156,14 +148,14 @@ namespace Lunggo.WebAPI
 
         public static void InitTableStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var table = TableStorageService.GetInstance();
             table.Init(connString);
         }
 
         public static void InitLogService()
         {
-            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var webhookUrl = EnvVariables.Get("log", "slack");
             var log = LogService.GetInstance();
             log.Init(webhookUrl);
         }

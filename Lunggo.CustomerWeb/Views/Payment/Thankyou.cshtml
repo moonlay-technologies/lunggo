@@ -20,7 +20,7 @@
 
 @{
     var payment = Model.Status;
-    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+    var timeout = EnvVariables.Get("flight", "paymentTimeout");
     //Model.Status = PaymentStatus.Settled;
 
     var night = 0;

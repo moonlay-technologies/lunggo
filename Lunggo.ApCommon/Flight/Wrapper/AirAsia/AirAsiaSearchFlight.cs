@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                         };
 
                     
-                    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                    var env = EnvVariables.Get("general", "environment");
 
 
 

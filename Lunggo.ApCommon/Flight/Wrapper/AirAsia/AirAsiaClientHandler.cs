@@ -28,8 +28,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
             {
                 if (!_isInitialized)
                 {
-                    _userName = ConfigManager.GetInstance().GetConfigValue("airAsia", "webUserName");
-                    _password = ConfigManager.GetInstance().GetConfigValue("airAsia", "webPassword");
+                    _userName = EnvVariables.Get("airAsia", "webUserName");
+                    _password = EnvVariables.Get("airAsia", "webPassword");
                     _isInitialized = true;
                 }
             }

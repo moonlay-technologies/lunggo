@@ -38,8 +38,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             {
                 if (!_isInitialized)
                 {
-                    _userName = ConfigManager.GetInstance().GetConfigValue("lionAir", "webUserName");
-                    _password = ConfigManager.GetInstance().GetConfigValue("lionAir", "webPassword");
+                    _userName = EnvVariables.Get("lionAir", "webUserName");
+                    _password = EnvVariables.Get("lionAir", "webPassword");
                     _isInitialized = true;
                 }
             }
@@ -236,7 +236,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
             private static string GetUsername(out string errorMessage, int timeoutSeconds)
             {
-                var userUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var userUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var userClient = new RestClient(userUrl);
                 var userRq = new RestRequest("/api/LionAirAccount/ChooseUserId", Method.GET);
                 var userName = "";
@@ -258,7 +258,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 
             private static void TurnInUsername(string username)
             {
-                var userUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var userUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var userClient = new RestClient(userUrl);
                 var userRq = new RestRequest("/api/LionAirAccount/LogOut?userId=" + username, Method.GET);
                 var userRs = (RestResponse)userClient.Execute(userRq);
@@ -268,7 +268,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
             /* USING CLOUD APP */
             private static string ReadCaptcha(byte[] captchaImg, string msgLogin, out string captchaId, string prevCaptchaId = null)
             {
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var cloudAppUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var client = new RestClient(cloudAppUrl);
                 var captchaRq = new RestRequest("/api/captcha/lionairbreak", Method.POST);
                 captchaRq.AddHeader("Host", "localhost:14938");

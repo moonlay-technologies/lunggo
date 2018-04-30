@@ -58,7 +58,6 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
 
         private static void Init()
         {
-            InitConfigurationManager();
             InitDatabaseService();
             InitRedisService();
             InitBlobStorageService();
@@ -67,22 +66,16 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
             InitQueueService();
         }
 
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"");
-        }
-
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var db = DbService.GetInstance();
             db.Init(connString);
         }
 
         private static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
@@ -90,7 +83,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
         private static void InitUniqueIdGenerator()
         {
             var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var seqContainerName = EnvVariables.Get("general", "seqGeneratorContainerName");
             var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
@@ -107,7 +100,7 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
 
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -120,13 +113,13 @@ namespace Lunggo.Webjob.MystiflyQueueHandler
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });

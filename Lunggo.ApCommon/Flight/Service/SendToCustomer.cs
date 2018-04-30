@@ -41,7 +41,7 @@ namespace Lunggo.ApCommon.Flight.Service
         //    var queue = queueService.GetQueueByReference("BankTransferInstructionEmail");
         //    queue.AddMessage(new CloudQueueMessage(rsvNo));
             //var expirationQueue = queueService.GetQueueByReference("FlightPendingPaymentExpiredNotifEmail");
-            //var expirationTimeoutString = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+            //var expirationTimeoutString = EnvVariables.Get("flight", "paymentTimeout");
             //var expirationTimeout = new TimeSpan(0, int.Parse(expirationTimeoutString), 0);
             //expirationQueue.AddMessage(new CloudQueueMessage(rsvNo), initialVisibilityDelay: expirationTimeout);
         //}

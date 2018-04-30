@@ -43,23 +43,23 @@ namespace Lunggo.BackendWeb
 
         private static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
 
         private static void InitDocumentsService()
         {
-            var endpoint = ConfigManager.GetInstance().GetConfigValue("documentDb", "endpoint");
-            var authKey = ConfigManager.GetInstance().GetConfigValue("documentDb", "authorizationKey");
-            var dbName = ConfigManager.GetInstance().GetConfigValue("documentDb", "databaseName");
-            var collectionName = ConfigManager.GetInstance().GetConfigValue("documentDb", "collectionName");
+            var endpoint = EnvVariables.Get("documentDb", "endpoint");
+            var authKey = EnvVariables.Get("documentDb", "authorizationKey");
+            var dbName = EnvVariables.Get("documentDb", "databaseName");
+            var collectionName = EnvVariables.Get("documentDb", "collectionName");
             DocumentService.GetInstance().Init(endpoint, authKey, dbName, collectionName);
         }
 
         private static void InitMailService()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
+            var apiKey = EnvVariables.Get("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
             mailService.Init(apiKey);
         }
@@ -72,13 +72,13 @@ namespace Lunggo.BackendWeb
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });
@@ -93,7 +93,7 @@ namespace Lunggo.BackendWeb
         private static void InitUniqueIdGenerator()
         {
             var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var seqContainerName = EnvVariables.Get("general", "seqGeneratorContainerName");
             var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
@@ -104,13 +104,13 @@ namespace Lunggo.BackendWeb
 
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var database = DbService.GetInstance();
             database.Init(connString);
         }
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -136,8 +136,7 @@ namespace Lunggo.BackendWeb
 
         private static void InitDisplayModes()
         {
-            var configManager = ConfigManager.GetInstance();
-            var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            var mobileUrl = EnvVariables.Get("general", "mobileUrl");
             DisplayModeProvider.Instance.Modes.Clear();
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
             {
@@ -153,7 +152,7 @@ namespace Lunggo.BackendWeb
         }
         public static void InitTableStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var tableStorageService = TableStorageService.GetInstance();
             tableStorageService.Init(connString);
         }

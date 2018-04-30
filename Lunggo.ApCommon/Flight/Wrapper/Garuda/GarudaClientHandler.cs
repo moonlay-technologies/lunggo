@@ -28,8 +28,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
             {
                 if (!_isInitialized)
                 {
-                    _userName = ConfigManager.GetInstance().GetConfigValue("Garuda", "webUserName");
-                    _password = ConfigManager.GetInstance().GetConfigValue("Garuda", "webPassword");
+                    _userName = EnvVariables.Get("Garuda", "webUserName");
+                    _password = EnvVariables.Get("Garuda", "webPassword");
                     _isInitialized = true;
                 }
             }

@@ -13,8 +13,8 @@ namespace Lunggo.Framework.TicketSupport
         private ZendeskApi api;
         public void init(string apikey)
         {
-            string zendeskSiteUrl = ConfigManager.GetInstance().GetConfigValue("zendesk", "zendeskSiteUrl");
-            string zendeskEmailAccount = ConfigManager.GetInstance().GetConfigValue("zendesk", "zendeskEmailAccount");
+            string zendeskSiteUrl = EnvVariables.Get("zendesk", "zendeskSiteUrl");
+            string zendeskEmailAccount = EnvVariables.Get("zendesk", "zendeskEmailAccount");
             init(apikey, zendeskSiteUrl, zendeskEmailAccount);
         }
         public void init(string apikey, string zendeskSiteUrl, string zendeskEmailAccount)

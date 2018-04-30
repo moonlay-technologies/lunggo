@@ -13,8 +13,7 @@ namespace Lunggo.Framework.Payment
         {
             try
             {
-                var configManager = ConfigManager.GetInstance();
-                var veritransServerKey = configManager.GetConfigValue("veritrans", "Authorization");
+                var veritransServerKey = EnvVariables.Get("veritrans", "Authorization");
                 var generatedServerKey = GenerateServerKey(veritransServerKey);
                 return generatedServerKey;
             }
@@ -39,9 +38,8 @@ namespace Lunggo.Framework.Payment
         {
             try
             {
-                var configManager = ConfigManager.GetInstance();
-                var veritransRestSharpClientUrl = configManager.GetConfigValue("veritrans", "RestSharpClientUrl");
-                var veritransRestSharpRequestUrl = configManager.GetConfigValue("veritrans", "RestSharpRequestUrl");
+                var veritransRestSharpClientUrl = EnvVariables.Get("veritrans", "RestSharpClientUrl");
+                var veritransRestSharpRequestUrl = EnvVariables.Get("veritrans", "RestSharpRequestUrl");
                 var client = new RestClient(veritransRestSharpClientUrl);
 
                 var request = new RestRequest(veritransRestSharpRequestUrl, Method.POST);

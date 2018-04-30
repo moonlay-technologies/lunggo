@@ -99,7 +99,7 @@ namespace Lunggo.ApCommon.Flight.Service
 
         public byte[] GetEticket(string rsvNo)
         {
-            var azureConnString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var azureConnString = EnvVariables.Get("azureStorage", "connectionString");
             var storageName = azureConnString.Split(';')[1].Split('=')[1];
             var url = @"https://" + storageName + @".blob.core.windows.net/eticket/" + rsvNo + ".pdf";
             var client = new WebClient();

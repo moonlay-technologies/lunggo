@@ -53,7 +53,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
                 
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             
             return apiResponse;
         }

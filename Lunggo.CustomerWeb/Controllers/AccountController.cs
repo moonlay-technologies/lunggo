@@ -250,7 +250,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return RedirectToAction("Index", "Index");
             }
 
-            var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var apiUrl = EnvVariables.Get("api", "apiUrl");
             var confirmClient = new RestClient(apiUrl);
             var confirmRequest = new RestRequest("/v1/confirmemail", Method.POST);
             confirmRequest.RequestFormat = DataFormat.Json;
@@ -937,7 +937,7 @@ namespace Lunggo.CustomerWeb.Controllers
             }
 
 
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
 
             var user = new User
             {
@@ -953,7 +953,7 @@ namespace Lunggo.CustomerWeb.Controllers
             if (result.Succeeded)
             {
                 var code = HttpUtility.UrlEncode(UserManager.GenerateEmailConfirmationToken(user.Id));
-                var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                var host = EnvVariables.Get("general", "rootUrl");
                 var apiUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 UserManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();

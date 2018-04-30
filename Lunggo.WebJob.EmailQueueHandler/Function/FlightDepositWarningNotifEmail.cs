@@ -17,7 +17,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightDepositWarningNotifEmail([QueueTrigger("flightdepositwarningnotifemail")] string message)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var flightService = FlightService.GetInstance();

@@ -21,14 +21,14 @@ namespace Lunggo.ApCommon.Flight.Service
     {
         public SearchFlightOutput SearchFlight(SearchFlightInput input)
         {
-            var minuteTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            var minuteTimeout = int.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
             var timeout = DateTime.UtcNow.AddMinutes(minuteTimeout);
             var gottenSupplierCount = input.Progress / (100 / Suppliers.Count);
             var searchedSupplierIds = GetSearchedSupplierIndicesFromCache(input.SearchId);
             var requestedSupplierIds = searchedSupplierIds.Skip(gottenSupplierCount).ToList();
             var unsearchedSupplierIds = Suppliers.Keys.Except(searchedSupplierIds);
 
-            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "searchTimeout"));
+            var searchTimeout = int.Parse(EnvVariables.Get("flight", "searchTimeout"));
 
             var isSearching = GetSearchingStatusInCache(input.SearchId);
             if (!isSearching)
@@ -208,9 +208,9 @@ namespace Lunggo.ApCommon.Flight.Service
                 }));
 
             var searchId = EncodeSearchConditions(conditions);
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+            var timeout = int.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
 
-            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "searchTimeout"));
+            var searchTimeout = int.Parse(EnvVariables.Get("flight", "searchTimeout"));
             var searchCancellationSource = new CancellationTokenSource();
             var searchCancellation = searchCancellationSource.Token;
 
@@ -279,7 +279,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var searchExpiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
             if (searchExpiry == null)
             {
-                var cacheTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "SearchResultCacheTimeout"));
+                var cacheTimeout = int.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
                 var emptyLists = new List<List<FlightItinerary>> { new List<FlightItinerary>() };
 
                 var conditions = DecodeSearchConditions(searchId);

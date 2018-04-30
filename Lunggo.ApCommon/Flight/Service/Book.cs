@@ -247,7 +247,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 trial++;
             }
 
-            var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout")));
+            var defaultTimeout = DateTime.UtcNow.AddMinutes(double.Parse(EnvVariables.Get("flight", "paymentTimeout")));
             if (result.Status != null && result.IsSuccess)
             {
                 result.Status.TimeLimit = defaultTimeout < result.Status.TimeLimit

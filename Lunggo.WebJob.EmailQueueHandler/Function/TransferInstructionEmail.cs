@@ -12,7 +12,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void TransferInstructionEmail([QueueTrigger("transferinstructionemail")] string rsvNo)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             if (rsvNo.StartsWith("1"))

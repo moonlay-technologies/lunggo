@@ -173,7 +173,7 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
                                 rate.Price.SetSupplier(x.net,
                                     x.hotelCurrency != null
                                         ? allCurrencies[x.hotelCurrency]
-                                        : ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production"
+                                        : EnvVariables.Get("general", "environment") == "production"
                                             ? allCurrencies["IDR"]
                                             : x.net < 10000
                                                 ? allCurrencies["USD"]

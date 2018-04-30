@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
     {
         internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else
@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
                 TableLog.PartitionKey = "FLIGHT ISSUE LOG";
                 
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
                 if (!Login(clientx))
                 {
                     Console.WriteLine("[Airasia] Failed to Login");

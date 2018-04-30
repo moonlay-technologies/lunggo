@@ -26,7 +26,6 @@ namespace Lunggo.WebJob.EmailQueueHandler
     {
         public static void Init()
         {
-            InitConfigurationManager();
             InitTableStorageService();
             InitDatabaseService();
             InitQueueService();
@@ -40,15 +39,9 @@ namespace Lunggo.WebJob.EmailQueueHandler
             //InitTraceListener();
         }
 
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"");
-        }
-
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var db = DbService.GetInstance();
             db.Init(connString);
         }
@@ -73,7 +66,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -86,13 +79,13 @@ namespace Lunggo.WebJob.EmailQueueHandler
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });
@@ -100,7 +93,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         private static void InitMailService()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("sendGrid", "apikey");
+            var apiKey = EnvVariables.Get("sendGrid", "apikey");
             var mailService = MailService.GetInstance();
             mailService.Init(apiKey);
         }
@@ -113,14 +106,14 @@ namespace Lunggo.WebJob.EmailQueueHandler
 
         public static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
 
         public static void InitTableStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var tableStorageService = TableStorageService.GetInstance();
             tableStorageService.Init(connString);
         }
@@ -128,7 +121,7 @@ namespace Lunggo.WebJob.EmailQueueHandler
         private static void InitTraceListener()
         {
             Trace.Listeners.Clear();
-            var connectionString = ConfigManager.GetInstance().GetConfigValue("azurestorage", "connectionString");
+            var connectionString = EnvVariables.Get("azurestorage", "connectionString");
             string traceName = typeof(TableTraceListener).Name;
             var listener =
                 new TableTraceListener(connectionString, "webjobTrace")

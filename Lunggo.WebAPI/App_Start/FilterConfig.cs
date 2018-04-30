@@ -48,7 +48,7 @@ namespace Lunggo.WebAPI.App_Start
                 }
                 else
                 {
-                    var mobileUrl = ConfigManager.GetInstance().GetConfigValue("general", "mobileUrl");
+                    var mobileUrl = EnvVariables.Get("general", "mobileUrl");
                     if (HttpContext.Current.Request.Url.Host == mobileUrl)
                     {
                         platformType = PlatformType.MobileWebsite.ToString();

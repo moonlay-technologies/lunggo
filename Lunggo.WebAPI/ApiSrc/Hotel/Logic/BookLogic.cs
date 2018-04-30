@@ -46,7 +46,7 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
             }
             if (apiResponse.StatusCode == HttpStatusCode.OK) return apiResponse;
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             return apiResponse;
         }
 

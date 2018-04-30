@@ -33,10 +33,10 @@ namespace Lunggo.Webjob.BankTransferChecking
         {
             if (!_isInitialized)
             {
-                _companyId = ConfigManager.GetInstance().GetConfigValue("mandiri", "webCompanyId");
-                _userName = ConfigManager.GetInstance().GetConfigValue("mandiri", "webUserName");
-                _password = ConfigManager.GetInstance().GetConfigValue("mandiri", "webPassword");
-                bankAccountNumber = ConfigManager.GetInstance().GetConfigValue("mandiri", "bankAccountNumber");
+                _companyId = EnvVariables.Get("mandiri", "webCompanyId");
+                _userName = EnvVariables.Get("mandiri", "webUserName");
+                _password = EnvVariables.Get("mandiri", "webPassword");
+                bankAccountNumber = EnvVariables.Get("mandiri", "bankAccountNumber");
                 _isInitialized = true;
             }
         }

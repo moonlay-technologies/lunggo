@@ -15,7 +15,7 @@ namespace Lunggo.CustomerWeb.Attributes
         {
             if (filterContext == null)
                 throw new ArgumentNullException("filterContext");
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env == "production" && !filterContext.HttpContext.Request.IsSecureConnection)
                     HandleNonHttpsRequest(filterContext);
             if (env != "production" && filterContext.HttpContext.Request.IsSecureConnection)

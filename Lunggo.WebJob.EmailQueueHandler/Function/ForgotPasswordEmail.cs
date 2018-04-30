@@ -12,7 +12,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void ForgotPasswordEmail([QueueTrigger("forgotpasswordemail")] string messageJson)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var sw = new Stopwatch();

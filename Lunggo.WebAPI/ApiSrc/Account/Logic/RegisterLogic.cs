@@ -89,7 +89,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
 
 
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             PlatformType Platform;
 
             var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
@@ -110,7 +110,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             if (result.Succeeded)
             {
                 var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(user.Id));
-                var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                var host = EnvVariables.Get("general", "rootUrl");
                 var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
                 var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + user.Id + "&code=" + code + "&apiUrl=" + apiUrl;
                 userManager.SendEmailAsync(user.Id, "UserConfirmationEmail", callbackUrl).Wait();

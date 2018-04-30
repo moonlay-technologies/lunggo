@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 
                 var clientx = CreateAgentClient();
                 
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var cloudAppUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var clienty = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
                 var userName = "";

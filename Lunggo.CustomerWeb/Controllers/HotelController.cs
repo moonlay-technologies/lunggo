@@ -26,7 +26,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
-                var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+                var source = EnvVariables.Get("api", "apiUrl");
                 var query = Request.QueryString;
                 if (query.HasKeys())
                 {
@@ -94,7 +94,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             try
             {
-                var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+                var source = EnvVariables.Get("api", "apiUrl");
                 var query = Request.QueryString;
                 if (query.HasKeys())
                 {
@@ -156,7 +156,7 @@ namespace Lunggo.CustomerWeb.Controllers
         [Route("id/hotel/{country}/{destination}/{hotelParam}")]
         public ActionResult DetailHotel(String hotelParam)
         {
-            var source = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var source = EnvVariables.Get("api", "apiUrl");
 
             var hotelCd = Convert.ToInt32(hotelParam.Split('-').Last());
             var hotelDetail = HotelService.GetInstance().GetHotelDetail(new GetHotelDetailInput

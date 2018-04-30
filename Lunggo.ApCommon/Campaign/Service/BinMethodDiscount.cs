@@ -224,7 +224,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         private bool IsDateValid(string promoType)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var dateNow = DateTime.UtcNow.AddHours(7).Date;
             switch (promoType)
             {
@@ -245,7 +245,7 @@ namespace Lunggo.ApCommon.Campaign.Service
 
         private static string GetBinPromoType(string bin)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env != "production")
                 bin = "dev" + bin;
             var binList = new Dictionary<string, List<string>>

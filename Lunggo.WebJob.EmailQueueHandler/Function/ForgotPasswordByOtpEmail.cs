@@ -16,7 +16,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void ForgotPasswordOtpByEmail([QueueTrigger("forgotpasswordbyotpemail")] string contactAndOtp)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
             var splitContactAndOtp = contactAndOtp.Split(':');
             var contact = splitContactAndOtp[0];

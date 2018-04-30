@@ -13,14 +13,14 @@
 <body style="background-color:#F4F4F4; color:#535353; font-family:arial, helvetica, sans-serif; font-size:13px;">
 
 
-    <table style="margin-left:auto; margin-right:auto; margin-top:10px; margin-bottom:10px; width:700px; height:875px; max-width:700px; display:block; background:url(@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/subscribenovoucher.png"));">
+    <table style="margin-left:auto; margin-right:auto; margin-top:10px; margin-bottom:10px; width:700px; height:875px; max-width:700px; display:block; background:url(@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/subscribenovoucher.png"));">
         <thead width="100%">
             <tr width="100%">
                 <th width="15%" style="padding-top:50px; right:0px"></th>
                 <th colspan="3" width="85%" style="padding-top:50px; padding-right:60px;">
                     <p style="text-align:right;">
                         <a href="http://travorama.com" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                            <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
                         </a>
                         <br />
                     </p>
@@ -40,17 +40,17 @@
                             Anda akan mendapatkan informasi terkini apabila ada penawaran khusus dari travorama. Rasakan kemudahan bertransaksi di travorama.
                         </b>
                     </p>
-                    <p align="center" style="padding-bottom:20px;padding-left:20px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/garisemail.png")" alt="Garis" /></p>
+                    <p align="center" style="padding-bottom:20px;padding-left:20px;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/garisemail.png")" alt="Garis" /></p>
                     <p style="text-align:center; padding-bottom:10px;padding-left:20px;"><span style="color: #15b1e4;font-size:16px;">Apa kelebihan <b>Travorama</b>?</span></p>
                     <table style="padding-left:20px;">
                         <tr>
-                            <td width="22%" style="padding-bottom:20px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/flightjoin.png")" alt="no1" /></td>
+                            <td width="22%" style="padding-bottom:20px;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/flightjoin.png")" alt="no1" /></td>
                             <td width="4%" style="padding-bottom:20px;"></td>
-                            <td width="22%" style="padding-bottom:20px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/no2.png")" alt="no2" /></td>
+                            <td width="22%" style="padding-bottom:20px;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/no2.png")" alt="no2" /></td>
                             <td width="4%" style="padding-bottom:20px;"></td>
-                            <td width="22%" style="padding-bottom:20px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/no3.png")" alt="no3" /></td>
+                            <td width="22%" style="padding-bottom:20px;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/no3.png")" alt="no3" /></td>
                             <td width="4%" style="padding-bottom:20px;"></td>
-                            <td width="22%" style="padding-bottom:20px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/no4.png")" alt="no4" /></td>
+                            <td width="22%" style="padding-bottom:20px;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/no4.png")" alt="no4" /></td>
                         </tr>
                         <tr>
                             <td width="22%" valign="top">Banyak Pilihan, travorama memiliki lebih dari <b>900 pilihan maskapai</b> penerbangan ke seluruh dunia</td>
@@ -62,7 +62,7 @@
                             <td width="22%" valign="top">Cashback, <b>dapatkan cashback</b> apabila Anda mendaftarkan diri sebagai member</td>
                         </tr>
                     </table>
-                    <p align="center" style="padding-top:10px; padding-bottom:2px;padding-left:20px;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/garisemail.png")" alt="Garis" /></p>
+                    <p align="center" style="padding-top:10px; padding-bottom:2px;padding-left:20px;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/garisemail.png")" alt="Garis" /></p>
                 </td>
                 <td width="15%" style="padding-top:1em;"></td>
             </tr>
@@ -76,17 +76,17 @@
                                 var twitter = "@travoramaid";
                             }
                             <td width="25%" style="padding-bottom: 1em;"><h4 style="color:#15b1e4;"><b>Further Information : </b></h4></td>
-                            <td style="text-align:left;padding-bottom:1em; padding-left:5px;" width="30%"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/line.png")" /> @travoramastring</td>
+                            <td style="text-align:left;padding-bottom:1em; padding-left:5px;" width="30%"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/line.png")" /> @travoramastring</td>
                             <td></td>
-                            <td colspan="2" style="text-align:left; padding-bottom:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/mail.png")" /> cs@travorama</td>
+                            <td colspan="2" style="text-align:left; padding-bottom:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/mail.png")" /> cs@travorama</td>
                         </tr>
                     </table>
                     <table width="100%" style="padding-left:20px;">
                         <tr>
                             <td width="30%"><h4 style="color:#15b1e4;"><b>Follow Us On : </b></h4></td>
-                            <td style="text-align:left;" width="20%"><img style="width:30px;height:30px;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" /> travorama</td>
-                            <td style="text-align:left" width="20%"><img style="width:30px;height:30px;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" /> @twitter</td>
-                            <td style="text-align:left"><img style="width:30px;height:30px;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" /> @travoramastring</td>
+                            <td style="text-align:left;" width="20%"><img style="width:30px;height:30px;" src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" /> travorama</td>
+                            <td style="text-align:left" width="20%"><img style="width:30px;height:30px;" src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" /> @twitter</td>
+                            <td style="text-align:left"><img style="width:30px;height:30px;" src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" /> @travoramastring</td>
                         </tr>
                     </table>
                 </td>

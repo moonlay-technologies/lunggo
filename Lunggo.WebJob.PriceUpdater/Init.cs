@@ -17,7 +17,6 @@ namespace Lunggo.WebJob.PriceUpdater
     {
         public static void Init()
         {
-            InitConfigurationManager();
             InitDatabaseService();
             InitQueueService();
             InitRedisService();
@@ -29,15 +28,9 @@ namespace Lunggo.WebJob.PriceUpdater
             InitHotelService();
         }
 
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            configManager.Init("");
-        }
-
         public static void InitTableStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var table = TableStorageService.GetInstance();
             table.Init(connString);
         }
@@ -55,21 +48,21 @@ namespace Lunggo.WebJob.PriceUpdater
 
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var db = DbService.GetInstance();
             db.Init(connString);
         }
 
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
 
         private static void InitMailService()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
+            var apiKey = EnvVariables.Get("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
             mailService.Init(apiKey);
         }
@@ -82,7 +75,7 @@ namespace Lunggo.WebJob.PriceUpdater
 
         public static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
@@ -94,13 +87,13 @@ namespace Lunggo.WebJob.PriceUpdater
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });

@@ -8,7 +8,7 @@ using Lunggo.Framework.Config;
 public class NicepayConfig
 {
     public const string NICEPAY_CALLBACK_URL = ""; // Sett by merchant
-    public static string NICEPAY_DBPROCESS_URL = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl") + "/v1/payment/nicepay/paymentnotification"; // Sett by merchant
+    public static string NICEPAY_DBPROCESS_URL = EnvVariables.Get("api", "apiUrl") + "/v1/payment/nicepay/paymentnotification"; // Sett by merchant
     public const sbyte NICEPAY_TIMEOUT_CONNECT = 15;
 
     public const sbyte NICEPAY_TIMEOUT_READ = 25;

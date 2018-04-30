@@ -914,7 +914,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var minuteTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
+                var minuteTimeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
                 ExpireReservationsQuery.GetInstance().Execute(conn, new { MinuteTimeout = minuteTimeout });
             }
         }

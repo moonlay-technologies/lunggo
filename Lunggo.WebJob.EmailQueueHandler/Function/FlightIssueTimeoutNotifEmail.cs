@@ -14,7 +14,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightIssueTimeoutNotifEmail([QueueTrigger("flightissuetimeoutnotifemail")] string rsvNo)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             Console.WriteLine("Processing Flight Issue Timeout Notif Developer for RsvNo " + rsvNo + "...");

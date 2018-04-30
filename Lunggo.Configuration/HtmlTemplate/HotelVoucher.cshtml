@@ -13,21 +13,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+    <link rel="shortcut icon" type="image/ico" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/favico.ico")" />
 
     <title>Travorama - Voucher</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")" />
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")" />
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")" />
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/css/neweticket.css")" />
 </head>
 <body class="eticket page-hotel-voucher">
     <div class="page">
         <header class="page-header">
             <div class="row">
                 <div class="col-xs-4">
-                    <img class="img-logo" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher/travorama-white.png")" />
+                    <img class="img-logo" src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/voucher/travorama-white.png")" />
                 </div>
                 <div class="col-xs-8">
                     <div class="page-header-right pull-right">
@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-xs-12">
                     <div class="pull-right">
-                        <img class="img-email" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/voucher/email-white.png")" /><span class="white-txt">cs@travorama.com</span>
+                        <img class="img-email" src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/voucher/email-white.png")" /><span class="white-txt">cs@travorama.com</span>
                     </div>
                 </div>
             </div>

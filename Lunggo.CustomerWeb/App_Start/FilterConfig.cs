@@ -38,7 +38,7 @@ namespace Lunggo.CustomerWeb
                 }
                 else
                 {
-                    var mobileUrl = ConfigManager.GetInstance().GetConfigValue("general", "mobileUrl");
+                    var mobileUrl = EnvVariables.Get("general", "mobileUrl");
                     if (filterContext.HttpContext.Request.Url.Host == mobileUrl)
                     {
                         identity.AddClaim(new Claim("Client ID", "WWxoa2VrOXFSWFZOUXpSM1QycEpORTB5U1RWT1IxcHNXVlJOTTFsWFZYaE5hbVJwVFVSSk5FOUVTbWxOUkVVMFRrUlNhVmxxVlhwT01sbDNUbXBvYkUxNlJUMD0=" ?? ""));
@@ -70,12 +70,12 @@ namespace Lunggo.CustomerWeb
             {
                 
             };
-            var environment = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var environment = EnvVariables.Get("general", "environment");
             if (basicAuthEnvList.Any(p => p == environment))
             {
-                var userName = ConfigManager.GetInstance().GetConfigValue("cw", "basicAuthenticationUser");
-                var password = ConfigManager.GetInstance().GetConfigValue("cw", "basicAuthenticationPassword");
-                var realm = ConfigManager.GetInstance().GetConfigValue("cw", "basicAuthenticationRealm");
+                var userName = EnvVariables.Get("cw", "basicAuthenticationUser");
+                var password = EnvVariables.Get("cw", "basicAuthenticationPassword");
+                var realm = EnvVariables.Get("cw", "basicAuthenticationRealm");
                 var filterAttribute = new BasicAuthenticationFilterAttribute(userName,password)
                 {
                     BasicRealm = realm
