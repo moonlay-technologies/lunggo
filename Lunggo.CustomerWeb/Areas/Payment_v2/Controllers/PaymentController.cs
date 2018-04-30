@@ -12,6 +12,10 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
     {
         private PaymentService _paymentService;
 
+        public PaymentController() : this(null)
+        {
+        }
+
         public PaymentController(PaymentService paymentService = null)
         {
             _paymentService = paymentService ?? new PaymentService();

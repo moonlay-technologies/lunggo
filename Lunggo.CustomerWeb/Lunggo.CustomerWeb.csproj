@@ -1432,6 +1432,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Payment_v2\Views\Payment\React\paymentReact.js" />
+    <Content Include="Assets\js\paymentReact.js" />
     <Content Include="Assets\js\sampleData\CGKHND201015-100y.js" />
     <Content Include="Assets\js\sampleData\HNDCGK231015-100y.js" />
     <Content Include="Assets\js\xml2json.min.js" />
