@@ -703,7 +703,7 @@ if (typeof (angular) == 'object') {
 
         // Cookies
         $rootScope.getCookies = function() {
-            $.getScript("/Assets/js/js.cookie.js", function () {
+            $.getScript("https://cdnjs.cloudflare.com/ajax/libs/js-cookie/1.5.0/js.cookie.min.js", function () {
                 $rootScope.$apply(function() {
                 if (Cookies.get('origin')) {
                     $rootScope.FlightSearchForm.AirportOrigin.Code = Cookies.get('origin');
