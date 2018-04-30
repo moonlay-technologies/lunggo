@@ -42,5 +42,16 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             return View("Payment", cartPayment);
         }
+
+        public ActionResult Instruction(string cartId)
+        {
+            var cartPayment = _paymentService.GetCartPaymentDetails(cartId);
+
+            if (cartPayment == null)
+                return View("Error");
+            if (!cartPayment.HasInstruction)
+                return View("Error");
+            return View("Instruction");
+        }
     }
 }
