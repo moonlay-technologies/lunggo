@@ -10,14 +10,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+    <link rel="shortcut icon" type="image/ico" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/favico.ico")" />
 
     <title>Travorama - E-tiket</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/invoice.min.css")">
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")">
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/css/invoice.min.css")">
 
 </head>
 <body class="eticket">
@@ -27,7 +27,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
-                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travelmadezy-logo.jpg")" alt="Travelmadezy" />
+                        <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/travelmadezy-logo.jpg")" alt="Travelmadezy" />
                         <address>
                             <p><b>PT. Travel Madezy Internasional</b></p>
                             <p>Equity Tower 25th ﬂoor, SCBD Lot 9, Jl. Jendral Sudirman kav. 52 - 53</p>
@@ -173,7 +173,7 @@
     </div><!-- .page -->
     <!-- ****************************** -->
     <!-- javascripts -->
-    <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     @if (IsSectionDefined("AdditionalPageJavascript"))
     {

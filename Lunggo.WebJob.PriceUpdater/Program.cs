@@ -15,7 +15,7 @@ namespace Lunggo.WebJob.PriceUpdater
             var todaydate = DateTime.UtcNow;
             //var todaydate = new DateTime(2017, 6, 1, 0, 0, 0, DateTimeKind.Utc);
             var endofmonth = DateTime.DaysInMonth(todaydate.Year, todaydate.Month);
-            var apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            var apiUrl = EnvVariables.Get("api", "apiUrl");
             Console.WriteLine(apiUrl);
             var loginClient = new RestClient(apiUrl);
             var difference = endofmonth - todaydate.Day;

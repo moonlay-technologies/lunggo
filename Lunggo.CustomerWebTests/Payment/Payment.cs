@@ -61,9 +61,7 @@ namespace Lunggo.CustomerWebTests.Payment
             Assert.AreEqual("Instruction", actual?.RouteValues["action"]);
             Assert.AreEqual(cartId, actual?.RouteValues["cartId"]);
         }
-
-
-
+        
         [TestMethod]
         // Should redirect to 3rd party page action when method already selected and utilize 3rd party page
         public void Should_redirect_to_3rd_party_page_action_when_method_already_selected_and_utilize_3rd_party_page()

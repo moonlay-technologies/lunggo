@@ -33,7 +33,7 @@ namespace Lunggo.Framework.Redis
 
         public void Init(RedisConnectionProperty[] connectionProperties)
         {
-            var databaseIndex = int.Parse(ConfigManager.GetInstance().GetConfigValue("redis", "databaseIndex"));
+            var databaseIndex = int.Parse(EnvVariables.Get("redis", "databaseIndex"));
             Init(connectionProperties, databaseIndex);
         }
 

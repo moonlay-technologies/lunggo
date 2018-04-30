@@ -55,7 +55,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                     };
 
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
 
 
 

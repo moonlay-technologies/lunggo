@@ -55,7 +55,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "HotelAvailableRates:" + token;
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout")); //TODO Change this
+            var timeout = int.Parse(EnvVariables.Get("hotel", "hotelSearchResultCacheTimeout")); //TODO Change this
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisValue = rooms.ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
@@ -100,7 +100,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "hotelToken:" + token;
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "selectCacheTimeOut"));
+            var timeout = int.Parse(EnvVariables.Get("hotel", "selectCacheTimeOut"));
             var redisValue = hotel.Serialize();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -114,7 +114,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "HotelSearchResult:" + token;
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
+            var timeout = int.Parse(EnvVariables.Get("hotel", "hotelSearchResultCacheTimeout"));
             var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
             var redisValue = searchResult.ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)

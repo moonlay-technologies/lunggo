@@ -26,11 +26,11 @@ namespace Lunggo.WebJob.FlightProcessor
             Console.WriteLine("Processing Flight Issue Ticket for RsvNo " + rsvNo + "...");
             var sw = Stopwatch.StartNew();
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             TableLog.Log = "Logging Issue for *Rsv No : " + rsvNo + "*";
             log.Post(TableLog.Log, "#logging-issueflight");
             TableLog.Logging();
-            var issueTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "issueTimeout"));
+            var issueTimeout = int.Parse(EnvVariables.Get("flight", "issueTimeout"));
             var issueCancellationSource = new CancellationTokenSource();
             var issueCancellation = issueCancellationSource.Token;
             var issueTask = Task.Run(() =>

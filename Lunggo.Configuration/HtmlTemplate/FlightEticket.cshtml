@@ -17,14 +17,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="shortcut icon" type="image/ico" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/favico.ico")" />
+    <link rel="shortcut icon" type="image/ico" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/favico.ico")" />
 
     <title>Travorama - eTicket</title>
 
     <!-- stylesheets -->
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
-    <link rel="stylesheet" href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/css/neweticket.css")">
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/bootstrap/bootstrap.min.css")">
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/css/font-awesome.min.css")">
+    <link rel="stylesheet" href="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/css/neweticket.css")">
 
 </head>
 <body class="eticket">
@@ -35,7 +35,7 @@
             <header class="page-header">
                 <div class="row">
                     <div class="col-xs-4">
-                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                        <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
                     </div>
                     <div class="col-xs-8">
                         <div class="page-header-right">
@@ -52,7 +52,7 @@
 
                 <div class="flight-list-wrapper departure-flight">
 
-                    <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/flight-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                    <h2 class="flight-title"><span><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/flight-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                     <div class="flight-list">
                         @foreach (var segment in Model.Itinerary.Trips[0].Segments)
                         {
@@ -141,13 +141,13 @@
                     </tbody>
                 </table>
 
-                <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="catatan" /></span></h2>
+                <h2 class="flight-title2" style="text-align:center"><span><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="catatan" /></span></h2>
                 <table width="100%">
                     <tr style="margin-bottom:1px;">
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
+                        <td width="35%" align="center"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
+                        <td width="35%" align="center"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
@@ -160,9 +160,9 @@
                 <p style="text-align:center;font-size:12pt; margin-bottom: 20px;"><b>Follow Us</b> on</p>
                 <table align="center">
                     <tr>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
                     </tr>
                 </table>
                 <p style="text-align:center; margin-top: 20px;">Copyright 2015 Travel Madezy International. All Rights Reserved</p>
@@ -173,7 +173,7 @@
             <header class="page-header">
                 <div class="row">
                     <div class="col-xs-4">
-                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                        <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
                     </div>
                     <div class="col-xs-8">
                         <div class="page-header-right">
@@ -190,7 +190,7 @@
 
                 <div class="flight-list-wrapper departure-flight">
 
-                    <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/flight-kembali.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                    <h2 class="flight-title"><span><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/flight-kembali.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                     <div class="flight-list">
                         @foreach (var segment in Model.Itinerary.Trips[1].Segments)
                         {
@@ -279,13 +279,13 @@
                     </tbody>
                 </table>
 
-                <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="Catatan" /></span></h2>
+                <h2 class="flight-title2" style="text-align:center"><span><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="Catatan" /></span></h2>
                 <table width="100%">
                     <tr style="margin-bottom:1px;">
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
+                        <td width="35%" align="center"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
+                        <td width="35%" align="center"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
@@ -298,9 +298,9 @@
                 <p style="text-align:center;font-size:12pt; margin-bottom: 20px;"><b>Follow Us</b> on</p>
                 <table align="center">
                     <tr>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
                     </tr>
                 </table>
                 <p style="text-align:center; margin-top: 20px;">Copyright 2015 Travel Madezy International. All Rights Reserved</p>
@@ -314,7 +314,7 @@
             <header class="page-header">
                 <div class="row">
                     <div class="col-xs-4">
-                        <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
+                        <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/logo-color.png")" alt="Travorama" />
                     </div>
                     <div class="col-xs-8">
                         <div class="page-header-right">
@@ -331,7 +331,7 @@
 
                 <div class="flight-list-wrapper departure-flight">
 
-                    <h2 class="flight-title"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/flight-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
+                    <h2 class="flight-title"><span><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/flight-pergi.jpg")" alt="PENERBANGAN PERGI" /></span></h2>
                     <div class="flight-list">
                         @foreach (var segment in Model.Itinerary.Trips[0].Segments)
                         {
@@ -420,13 +420,13 @@
                     </tbody>
                 </table>
 
-                <h2 class="flight-title2" style="text-align:center"><span><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="Catatan" /></span></h2>
+                <h2 class="flight-title2" style="text-align:center"><span><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/catatan.jpg")" alt="Catatan" /></span></h2>
                 <table width="100%">
                     <tr style="margin-bottom:1px;">
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
+                        <td width="35%" align="center"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/show.png")" alt="Show Eticket" width="140" height="140" /></td>
                         <td width="10%" rowspan="2"></td>
-                        <td width="35%" align="center"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
+                        <td width="35%" align="center"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/check.png")" alt="Check In" width="140" height="140" /></td>
                         <td width="10%" rowspan="2"></td>
                     </tr>
                     <tr>
@@ -439,9 +439,9 @@
                 <p style="text-align:center;font-size:12pt; margin-bottom: 20px;"><b>Follow Us</b> on</p>
                 <table align="center">
                     <tr>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
-                        <td style="padding-right:1em;"><img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-facebook.png")" alt="Facebook" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-twitter.png")" alt="Twitter" /></td>
+                        <td style="padding-right:1em;"><img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/social-instagram.png")" alt="Instagram" /></td>
                     </tr>
                 </table>
                 <p style="text-align:center; margin-top: 20px;">Copyright 2015 Travel Madezy Internasional. All Rights Reserved</p>
@@ -451,7 +451,7 @@
 
     <!-- ****************************** -->
     <!-- javascripts -->
-    <script src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
+    <script src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/js/jquery.min.js")"></script>
 
 </body>
 </html>

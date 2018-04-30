@@ -36,8 +36,7 @@ namespace Lunggo.Framework.Cors
 
         private void SetCorsOriginDomains(CorsPolicy policy)
         {
-            var configManager = ConfigManager.GetInstance();
-            var origins = configManager.GetConfigValue("general", "corsAllowedDomains").Split(',');
+            var origins = EnvVariables.Get("general", "corsAllowedDomains").Split(',');
 
             // Add allowed origins.
             foreach (var origin in origins)

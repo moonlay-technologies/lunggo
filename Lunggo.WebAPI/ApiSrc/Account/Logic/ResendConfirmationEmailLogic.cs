@@ -44,7 +44,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
 
             var code = HttpUtility.UrlEncode(userManager.GenerateEmailConfirmationToken(foundUser.Id));
-            var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            var host = EnvVariables.Get("general", "rootUrl");
             var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             var callbackUrl = host + "/id/Account/ConfirmEmail?userId=" + foundUser.Id + "&code=" + code + "&apiUrl=" + apiUrl;
             userManager.SendEmailAsync(foundUser.Id, "UserConfirmationEmail", callbackUrl).Wait();

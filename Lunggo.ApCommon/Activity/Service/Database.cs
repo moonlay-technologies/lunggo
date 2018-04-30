@@ -399,7 +399,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 savedBooking.RequestRating = CheckRating(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
                 if (savedBooking.HasPdfVoucher && savedBooking.IsPdfUploaded)
                 {
-                    savedBooking.PdfUrl = ConfigManager.GetInstance().GetConfigValue("azureStorage", "rootUrl") + "/eticket/" + input.RsvNo + ".pdf";
+                    savedBooking.PdfUrl = EnvVariables.Get("azureStorage", "rootUrl") + "/eticket/" + input.RsvNo + ".pdf";
                 }
 
                 var output = new GetMyBookingDetailOutput

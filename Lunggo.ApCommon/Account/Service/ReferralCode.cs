@@ -74,7 +74,7 @@ namespace Lunggo.ApCommon.Account.Service
                 ReferralCode = referralCode.ReferralCode,
                 ReferralCredit = referralCode.ReferralCredit,
                 ExpDate = referralCode.ExpDate,
-                ShareableLink = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/id/account/registerreferral?referrercode=" + referralCode.ReferralCode,
+                ShareableLink = EnvVariables.Get("general", "rootUrl") + "/id/account/registerreferral?referrercode=" + referralCode.ReferralCode,
                 UserId = referralCode.UserId
             };
         }

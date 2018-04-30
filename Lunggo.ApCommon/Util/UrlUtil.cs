@@ -5,7 +5,7 @@ namespace Lunggo.ApCommon.Util
 {
     public class UrlUtil
     {
-        private readonly static String ImageDomain = ConfigManager.GetInstance().GetConfigValue("domain","imageDomain");
+        private readonly static String ImageDomain = EnvVariables.Get("domain","imageDomain");
         public static String CreateFullImageUrlForHotel(String hotelId,String imageFileName, bool isHttps = false)
         {
             //TODO use configuration file do not hardcode

@@ -42,7 +42,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var form = Request.Form;
 
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             TableLog.Log = "```E2Pay Response Page```"
                 + "\n`*Environment :* " + env.ToUpper()
                 + "\n*FORM :*\n"
@@ -69,7 +69,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var form = Request.Form;
 
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
 
             TableLog.Log = "```E2Pay Backend Post```"
                 + "\n`*Environment :* " + env.ToUpper()
@@ -159,8 +159,8 @@ namespace Lunggo.CustomerWeb.Controllers
 
         private static string CreateSignature(string paymentId, string rsvNo, string amount, string currency, string status)
         {
-            var merchantKey = ConfigManager.GetInstance().GetConfigValue("e2pay", "merchantKey");
-            var merchantCode = ConfigManager.GetInstance().GetConfigValue("e2pay", "merchantCode");
+            var merchantKey = EnvVariables.Get("e2pay", "merchantKey");
+            var merchantCode = EnvVariables.Get("e2pay", "merchantCode");
             var plain = merchantKey + merchantCode + paymentId + rsvNo + amount + currency + status;
             var hashed = plain.Sha1Base64Encode();
             return hashed;

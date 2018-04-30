@@ -54,16 +54,16 @@ namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk
 
         public HotelApiClient(HotelApiType apiType)
         {
-            this.apiKey = ConfigManager.GetInstance().GetConfigValue("hotel", "apiKey");
-            this.sharedSecret = ConfigManager.GetInstance().GetConfigValue("hotel", "apiSecret");
+            this.apiKey = EnvVariables.Get("hotel", "apiKey");
+            this.sharedSecret = EnvVariables.Get("hotel", "apiSecret");
             this.version = new HotelApiVersion(HotelApiVersion.versions.V1);
             if (apiType == HotelApiType.BookingApi)
             {
-                this.basePath = ConfigManager.GetInstance().GetConfigValue("hotel", "apiUrl");
+                this.basePath = EnvVariables.Get("hotel", "apiUrl");
             }
             else
             {
-                this.basePath = ConfigManager.GetInstance().GetConfigValue("hotel", "contentUrl");
+                this.basePath = EnvVariables.Get("hotel", "contentUrl");
             }
             Console.WriteLine("Url : "+this.basePath);
             CheckHotelApiClientConfig();

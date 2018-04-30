@@ -226,8 +226,8 @@ namespace Lunggo.ApCommon.Hotel.Service
         public void UpdateHotelImage()
         {
             Dictionary<int,string> hotelbedsBaseUrl = new Dictionary<int,string>();
-            hotelbedsBaseUrl.Add(0, ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage"));
-            hotelbedsBaseUrl.Add(1, ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage"));
+            hotelbedsBaseUrl.Add(0, EnvVariables.Get("hotel", "bigSizeImage"));
+            hotelbedsBaseUrl.Add(1, EnvVariables.Get("hotel", "standardSizeImage"));
             var blobService = BlobStorageService.GetInstance();
             for (var i = 1; i <= 650000; i++)
             {

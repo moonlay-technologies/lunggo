@@ -1,5 +1,5 @@
 ﻿@using Lunggo.Framework.Config
-@if (ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production")
+@if (EnvVariables.Get("general", "environment") == "production")
 {
     <!-- Google Tag Manager -->
     <noscript>

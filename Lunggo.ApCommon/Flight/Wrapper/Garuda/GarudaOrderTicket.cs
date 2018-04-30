@@ -15,7 +15,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
     {
         internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env == "production")
                 return Client.IssueTicket(bookingId);
             else
@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 searchReqAgent0.AddHeader("Host", "gosga.garuda-indonesia.com");
                 var searchResAgent0 = clientx.Execute(searchReqAgent0);
 
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var cloudAppUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var clienty = new RestClient(cloudAppUrl);
                 var accReq = new RestRequest("/api/GarudaAccount/ChooseUserId", Method.GET);
                 var userName = "";

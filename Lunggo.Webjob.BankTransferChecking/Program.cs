@@ -18,7 +18,7 @@ namespace Lunggo.Webjob.BankTransferChecking
         {
             Init();
 
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env != "production")
                 return;
 

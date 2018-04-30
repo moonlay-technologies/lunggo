@@ -34,10 +34,10 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
             {
                 if (!_isInitialized)
                 {
-                    _accountNumber = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiAccountNumber");
-                    _userName = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiUserName");
-                    _password = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiPassword");
-                    var targetServer = ConfigManager.GetInstance().GetConfigValue("mystifly", "apiTargetServer");
+                    _accountNumber = EnvVariables.Get("mystifly", "apiAccountNumber");
+                    _userName = EnvVariables.Get("mystifly", "apiUserName");
+                    _password = EnvVariables.Get("mystifly", "apiPassword");
+                    var targetServer = EnvVariables.Get("mystifly", "apiTargetServer");
                     switch (targetServer)
                     {
                         case "Test":

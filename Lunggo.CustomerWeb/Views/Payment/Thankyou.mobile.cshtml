@@ -18,7 +18,7 @@
 }
 
 @{
-    var timeout = ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout");
+    var timeout = EnvVariables.Get("flight", "paymentTimeout");
     var totalAdult = 0;
     var totalChild = 0;
     //if (Model is HotelReservationForDisplay)

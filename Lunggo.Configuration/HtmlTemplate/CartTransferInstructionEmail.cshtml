@@ -21,17 +21,17 @@
                 <th colspan="2" width="90%" style="padding-top:30px;">
                     <p style="text-align:right;">
                         <a href="http://travorama.com" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
+                            <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/travorama-logo-color.png")" alt="Travorama" />
                         </a>
                         <br />
                         <a href="https://www.facebook.com/travorama" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
+                            <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email-facebook.jpg")" alt="Travorama on Facebook" />
                         </a>
                         <a href="https://twitter.com/travoramaid" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
+                            <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email-twitter.jpg")" alt="Travorama on Twitter" />
                         </a>
                         <a href="https://instagram.com/travorama" style="text-decoration:none;">
-                            <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
+                            <img src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email-instagram.jpg")" alt="Travorama on Instagram" />
                         </a>
                     </p>
                 </th>
@@ -99,7 +99,7 @@
                         <tfoot width="100%">
                             <tr>
                                 <td></td>
-                                <td style="width: 60%;"><img style="width: 100%;" src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + @"/Assets/images/email/plane-email-bg.jpg")" /></td>
+                                <td style="width: 60%;"><img style="width: 100%;" src="@(EnvVariables.Get("general", "rootUrl") + @"/Assets/images/email/plane-email-bg.jpg")" /></td>
                                 <td style="padding-bottom:40px;">
 
                                     <address style="font-style:normal; float:right; width:240px; margin-right:0; margin-left:auto; font-size:12px;">

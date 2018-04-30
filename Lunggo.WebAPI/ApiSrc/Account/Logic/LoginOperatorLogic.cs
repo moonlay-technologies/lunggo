@@ -144,7 +144,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             catch
             {
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
                 TableLog.Log = "```Token Error " + env.ToUpper() + "```\n"
                     + tokenResponse.Content;
                 log.Post(TableLog.Log

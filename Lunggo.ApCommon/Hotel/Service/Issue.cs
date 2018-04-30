@@ -295,7 +295,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var TableLog = new GlobalLog();
             TableLog.PartitionKey = "HOTEL ISSUANCE FAILURE";
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             TableLog.Log = "```Hotel Issuance Failure```"
                 + "\n*Environment :* " + env.ToUpper()
                 + "\n*Reservation :* \n"

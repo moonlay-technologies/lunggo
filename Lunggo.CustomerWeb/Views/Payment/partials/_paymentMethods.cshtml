@@ -3,7 +3,7 @@
 @using Lunggo.Framework.Config
 
 @{
-    var isProduction = ConfigManager.GetInstance().GetConfigValue("general", "environment") == "production";
+    var isProduction = EnvVariables.Get("general", "environment") == "production";
 }
 
 <!-- ========================= PAYMENT METHOD ========================= -->

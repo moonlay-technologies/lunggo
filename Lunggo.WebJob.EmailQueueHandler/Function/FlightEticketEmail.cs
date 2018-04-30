@@ -17,7 +17,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
     {
         public static void FlightEticketEmail([QueueTrigger("flighteticketemail")] string rsvNo)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
 
             var sw = new Stopwatch();

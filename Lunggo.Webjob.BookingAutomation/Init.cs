@@ -13,27 +13,21 @@ namespace Lunggo.WebJob.BookingAutomation
     {
         public static void Init()
         {
-            InitConfigurationManager();
             InitBlobStorageService();
             InitData();
             InitSupplierName();
         }
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            configManager.Init(@"");
-        }
-
+        
         public static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
 
         private static void InitData()
         {
-            _apiUrl = ConfigManager.GetInstance().GetConfigValue("api", "apiUrl");
+            _apiUrl = EnvVariables.Get("api", "apiUrl");
             _client = new RestClient(_apiUrl);
             isFirst = true;
             GetAuthAccess();

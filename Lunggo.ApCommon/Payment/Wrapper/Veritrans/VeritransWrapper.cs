@@ -57,11 +57,11 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         {
             if (!_isInitialized)
             {
-                _chargeEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "chargeEndPoint");
-                _serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey") + ":";
-                _cancelEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "cancelEndPoint");
-                _approveEndPoint = ConfigManager.GetInstance().GetConfigValue("veritrans", "approveEndPoint");
-                _rootUrl = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+                _chargeEndPoint = EnvVariables.Get("veritrans", "chargeEndPoint");
+                _serverKey = EnvVariables.Get("veritrans", "serverKey") + ":";
+                _cancelEndPoint = EnvVariables.Get("veritrans", "cancelEndPoint");
+                _approveEndPoint = EnvVariables.Get("veritrans", "approveEndPoint");
+                _rootUrl = EnvVariables.Get("general", "rootUrl");
                 _isInitialized = true;
             }
         }
@@ -101,7 +101,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.FailureReason = FailureReason.PaymentFailure;
 
                         var log = LogService.GetInstance();
-                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        var env = EnvVariables.Get("general", "environment");
                         TableLog.Log = "```Payment Log```"
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*PAYMENT DETAILS :*\n"
@@ -139,7 +139,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.FailureReason = FailureReason.PaymentFailure;
 
                         var log = LogService.GetInstance();
-                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        var env = EnvVariables.Get("general", "environment");
                         TableLog.Log = "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
                                 + "\n*PAYMENT DETAILS :*\n"
@@ -176,7 +176,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.FailureReason = FailureReason.PaymentFailure;
 
                         var log = LogService.GetInstance();
-                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        var env = EnvVariables.Get("general", "environment");
                         TableLog.Log = "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
                                 + "\n*PAYMENT DETAILS :*\n"
@@ -214,7 +214,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.FailureReason = FailureReason.PaymentFailure;
 
                         var log = LogService.GetInstance();
-                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        var env = EnvVariables.Get("general", "environment");
                         TableLog.Log = "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
                                 + "\n*PAYMENT DETAILS :*\n"
@@ -252,7 +252,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
                         payment.FailureReason = FailureReason.PaymentFailure;
 
                         var log = LogService.GetInstance();
-                        var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                        var env = EnvVariables.Get("general", "environment");
                         TableLog.Log = "```Payment Log```"
                                 + "\n`*Environment :* " + env.ToUpper()
                                 + "\n*PAYMENT DETAILS :*\n"
@@ -303,7 +303,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             else
             {
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
                 TableLog.Log = "CANCEL TRANSACTION" +
                     "```Payment Log```"
                     + "\n`*Environment :* " + env.ToUpper()
@@ -347,7 +347,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             else
             {
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
                 TableLog.Log = "CANCEL TRANSACTION" +
                     "```Payment Log```"
                     + "\n`*Environment :* " + env.ToUpper()
@@ -422,7 +422,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
         private static void ProcessVtDirectRequestParams(WebRequest request, PaymentData data, TransactionDetails transactionDetail, PaymentMethod method)
         {
             data = data ?? new PaymentData();
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
+            var timeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
             var requestParams = new VeritransRequest
             {
                 PaymentType = MapPaymentMethod(method),
@@ -513,7 +513,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Veritrans
             _unfinishedRedirectUrl = _rootUrl + langCode + UnfinishRedirectPath;
             _errorRedirectUrl = _rootUrl + langCode + ErrorRedirectPath;
 
-            var timeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("flight", "paymentTimeout"));
+            var timeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
             var requestParams = new VeritransRequest
             {
                 PaymentType = "vtweb",

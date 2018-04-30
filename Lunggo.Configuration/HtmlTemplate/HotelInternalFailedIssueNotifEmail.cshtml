@@ -2,7 +2,7 @@
 @using Lunggo.ApCommon.Constant
 @using Lunggo.Framework.Config
 @model Lunggo.ApCommon.Hotel.Model.HotelReservationForDisplay
-@{ var env = ConfigManager.GetInstance().GetConfigValue("general", "environment"); }
+@{ var env = EnvVariables.Get("general", "environment"); }
 <html>
 <head>
     <title>

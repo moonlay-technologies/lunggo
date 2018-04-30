@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var emailRedisKey = "binPromo:email:" + promoType;
             var isEmailExist = redis.SetContains(emailRedisKey, email);
             var fullyUsed = redis.SetLength(panRedisKey) >= limit || redis.SetLength(emailRedisKey) >= limit;
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             return env != "production" || (!isPanExist && !isEmailExist && !fullyUsed);
         }
 
@@ -58,7 +58,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var emailRedisKey = "methodPromo:email:" + promoType;
             var isEmailExist = redis.SetContains(emailRedisKey, email);
             var fullyUsed = redis.SetLength(emailRedisKey) > limit;
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             return  (!isEmailExist && !fullyUsed);
             //env != "production" ||
         }
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Campaign.Service
             var isPhoneExist = redis.SetContains(phoneRedisKey, phone);
             var emailRedisKey = "voucherPromo:email:" + voucherCode;
             var isEmailExist = redis.SetContains(emailRedisKey, email);
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             env = "production";
             return env != "production" || (!isPhoneExist && !isEmailExist);
         }

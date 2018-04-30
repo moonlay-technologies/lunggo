@@ -50,9 +50,9 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
         {
             if (!_isInitialized)
             {
-                _endpoint = ConfigManager.GetInstance().GetConfigValue("nicepay", "endPoint");
-                _merchantId = ConfigManager.GetInstance().GetConfigValue("nicepay", "merchantId");
-                _merchantKey = ConfigManager.GetInstance().GetConfigValue("nicepay", "merchantKey");
+                _endpoint = EnvVariables.Get("nicepay", "endPoint");
+                _merchantId = EnvVariables.Get("nicepay", "merchantId");
+                _merchantKey = EnvVariables.Get("nicepay", "merchantKey");
                 _isInitialized = true;
             }
         }
@@ -123,7 +123,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                     payment.FailureReason = FailureReason.PaymentFailure;
 
                     var log = LogService.GetInstance();
-                    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                    var env = EnvVariables.Get("general", "environment");
                     TableLog.Log = "```Payment Log```"
                         + "\n`*Environment :* " + env.ToUpper()
                         + "\n*PAYMENT DETAILS :*\n"
@@ -151,7 +151,7 @@ namespace Lunggo.ApCommon.Payment.Wrapper.Nicepay
                     payment.FailureReason = FailureReason.PaymentFailure;
 
                     var log = LogService.GetInstance();
-                    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                    var env = EnvVariables.Get("general", "environment");
                     TableLog.Log = "```Payment Log, Connection Time out to Nicepay```"
                         + "\n`*Environment :* " + env.ToUpper()
                         + "\n*PAYMENT DETAILS :*\n"

@@ -45,13 +45,13 @@ namespace Lunggo.CustomerWeb
         }
         private static void InitBlobStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var blobStorageService = BlobStorageService.GetInstance();
             blobStorageService.Init(connString);
         }
         private static void InitMailService()
         {
-            var apiKey = ConfigManager.GetInstance().GetConfigValue("mandrill", "apiKey");
+            var apiKey = EnvVariables.Get("mandrill", "apiKey");
             var mailService = MailService.GetInstance();
             mailService.Init(apiKey);
         }
@@ -64,13 +64,13 @@ namespace Lunggo.CustomerWeb
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });
@@ -85,7 +85,7 @@ namespace Lunggo.CustomerWeb
         private static void InitUniqueIdGenerator()
         {
             var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var seqContainerName = EnvVariables.Get("general", "seqGeneratorContainerName");
             var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
@@ -96,13 +96,13 @@ namespace Lunggo.CustomerWeb
 
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var database = DbService.GetInstance();
             database.Init(connString);
         }
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -134,8 +134,7 @@ namespace Lunggo.CustomerWeb
 
         private static void InitDisplayModes()
         {
-            var configManager = ConfigManager.GetInstance();
-            var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            var mobileUrl = EnvVariables.Get("general", "mobileUrl");
             DisplayModeProvider.Instance.Modes.Clear();
             DisplayModeProvider.Instance.Modes.Insert(0, new DefaultDisplayMode("mobile")
             {
@@ -151,14 +150,14 @@ namespace Lunggo.CustomerWeb
         }
         public static void InitTableStorageService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var tableStorageService = TableStorageService.GetInstance();
             tableStorageService.Init(connString);
         }
 
         public static void InitLogService()
         {
-            var webhookUrl = ConfigManager.GetInstance().GetConfigValue("log", "slack");
+            var webhookUrl = EnvVariables.Get("log", "slack");
             var log = LogService.GetInstance();
             log.Init(webhookUrl);
         }

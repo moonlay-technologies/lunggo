@@ -128,7 +128,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetail == null)
                 return null;
-            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+            var baseUrl = EnvVariables.Get("hotel", "standardSizeImage");
                 var hotel = new HotelDetailForDisplay
                 {
                     HotelCode = hotelDetail.HotelCode,
@@ -178,7 +178,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (hotelDetails == null)
                 return null;
-            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+            var baseUrl = EnvVariables.Get("hotel", "standardSizeImage");
             var convertedHotels = new List<HotelDetailForDisplay>();
             foreach (var hotelDetail in hotelDetails)
             {
@@ -293,7 +293,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (images == null)
                 return null;
-            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "bigSizeImage");
+            var baseUrl = EnvVariables.Get("hotel", "bigSizeImage");
             var imagePath = images.Select(x => x.Path).ToList();
             return imagePath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
@@ -435,7 +435,7 @@ namespace Lunggo.ApCommon.Hotel.Service
         {
             if (imagesPath == null)
                 return null;
-            var baseUrl = ConfigManager.GetInstance().GetConfigValue("hotel", "standardSizeImage");
+            var baseUrl = EnvVariables.Get("hotel", "standardSizeImage");
             return imagesPath.Select(image => string.Concat(baseUrl, image)).ToList();
         }
 

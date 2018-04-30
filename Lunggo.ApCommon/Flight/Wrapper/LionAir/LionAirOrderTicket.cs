@@ -21,7 +21,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
     {
         internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else

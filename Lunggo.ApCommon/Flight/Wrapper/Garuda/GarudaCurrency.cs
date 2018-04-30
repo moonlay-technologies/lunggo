@@ -82,7 +82,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                 DateTime depdate = DateTime.Now.AddMonths(6);
                 var returnPath = "";
                 var client = CreateAgentClient();
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var cloudAppUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
                 var userName = "";
                 var successLogin = false;

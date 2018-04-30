@@ -32,7 +32,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 notifJson = rqStream.ReadToEnd();
             var notif = JsonConvert.DeserializeObject<VeritransNotification>(notifJson);
 
-            var serverKey = ConfigManager.GetInstance().GetConfigValue("veritrans", "serverKey");
+            var serverKey = EnvVariables.Get("veritrans", "serverKey");
             var rawKey = notif.order_id + notif.status_code + notif.gross_amount + serverKey;
             var signatureKey = rawKey.Sha512Encode();
 

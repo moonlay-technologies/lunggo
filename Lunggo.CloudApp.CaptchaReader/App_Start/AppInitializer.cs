@@ -16,13 +16,12 @@ namespace Lunggo.CloudApp.CaptchaReader
     {
         public static void Init()
         {
-            InitConfigurationManager();
             InitAccountManager();
         }
 
         public static void InitAccountManager()
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env == "production")
             {
                 Account.AccountList.Add("trv.agent.tiga");
@@ -73,7 +72,7 @@ namespace Lunggo.CloudApp.CaptchaReader
         private static void InitUniqueIdGenerator()
         {
             var generator = UniqueIdGenerator.GetInstance();
-            var seqContainerName = ConfigManager.GetInstance().GetConfigValue("general", "seqGeneratorContainerName");
+            var seqContainerName = EnvVariables.Get("general", "seqGeneratorContainerName");
             var optimisticData = new BlobOptimisticDataStore(seqContainerName)
             {
                 SeedValueInitializer = (sequenceName) => generator.GetIdInitialValue(sequenceName)
@@ -81,14 +80,7 @@ namespace Lunggo.CloudApp.CaptchaReader
             generator.Init(optimisticData);
             generator.BatchSize = 100;
         }
-
-        private static void InitConfigurationManager()
-        {
-            var configManager = ConfigManager.GetInstance();
-            var configDirectoryPath = HttpContext.Current.Server.MapPath(@"~/Config/");
-            configManager.Init(configDirectoryPath);
-        }
-
+        
         private static void InitI18NMessageManager()
         {
             var messageManager = MessageManager.GetInstance();
@@ -97,13 +89,13 @@ namespace Lunggo.CloudApp.CaptchaReader
 
         private static void InitDatabaseService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("db", "connectionString");
+            var connString = EnvVariables.Get("db", "connectionString");
             var database = DbService.GetInstance();
             database.Init(connString);
         }
         private static void InitQueueService()
         {
-            var connString = ConfigManager.GetInstance().GetConfigValue("azureStorage", "connectionString");
+            var connString = EnvVariables.Get("azureStorage", "connectionString");
             var queue = QueueService.GetInstance();
             queue.Init(connString);
         }
@@ -116,13 +108,13 @@ namespace Lunggo.CloudApp.CaptchaReader
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.SearchResultCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "searchResultCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = ConfigManager.GetInstance().GetConfigValue("redis", "masterDataCacheConnectionString")
+                    ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }, 
                  
             });

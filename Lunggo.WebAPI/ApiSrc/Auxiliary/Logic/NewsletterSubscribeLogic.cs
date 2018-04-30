@@ -77,9 +77,9 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
 
         private static RestClient CreateApiClient()
         {
-            var path = ConfigManager.GetInstance().GetConfigValue("mailchimp", "addMemberApiRootUrl").Trim();
-            var basicAuthUserName = ConfigManager.GetInstance().GetConfigValue("mailchimp", "basicAuthUserName").Trim();
-            var basicAuthPassword = ConfigManager.GetInstance().GetConfigValue("mailchimp", "basicAuthPassword").Trim();
+            var path = EnvVariables.Get("mailchimp", "addMemberApiRootUrl").Trim();
+            var basicAuthUserName = EnvVariables.Get("mailchimp", "basicAuthUserName").Trim();
+            var basicAuthPassword = EnvVariables.Get("mailchimp", "basicAuthPassword").Trim();
 
             var client = new RestClient(path)
             {
@@ -90,7 +90,7 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Logic
 
         private static RestRequest CreateApiRequest()
         {
-            var path = ConfigManager.GetInstance().GetConfigValue("mailchimp", "addMemberApiPath").Trim();
+            var path = EnvVariables.Get("mailchimp", "addMemberApiPath").Trim();
             var request = new RestRequest(path, Method.POST);
             return request;
         }

@@ -28,8 +28,7 @@ namespace Lunggo.CustomerWeb
             // Redirect mobile users to the mobile home page
 
             var httpRequest = Request;
-            var configManager = ConfigManager.GetInstance();
-            var mobileUrl = configManager.GetConfigValue("general", "mobileUrl");
+            var mobileUrl = EnvVariables.Get("general", "mobileUrl");
             var host = httpRequest.Url.Host;
             var path = httpRequest.Url.PathAndQuery;
             var browserDetectionService = BrowserDetectionService.GetInstance();

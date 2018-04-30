@@ -41,7 +41,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             }
 
             var code = HttpUtility.UrlEncode(userManager.GeneratePasswordResetToken(foundUser.Id));
-            var host = ConfigManager.GetInstance().GetConfigValue("general", "rootUrl");
+            var host = EnvVariables.Get("general", "rootUrl");
             var apiUrl = HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
             var callbackUrl = host + "/id/Account/ResetPassword?code=" + code + "&email=" + request.UserName + "&apiUrl=" + apiUrl;
             userManager.SendEmailAsync(foundUser.Id, "ForgotPasswordEmail", callbackUrl).Wait();

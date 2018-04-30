@@ -15,9 +15,8 @@ namespace Lunggo.BackendWeb
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
-            var configManager = ConfigManager.GetInstance();
-            //var facebookAppId = configManager.GetConfigValue("facebook", "appId");
-            //var facebookAppSecret = configManager.GetConfigValue("facebook", "appSecret");
+            //var facebookAppId = EnvVariables.Get("facebook", "appId");
+            //var facebookAppSecret = EnvVariables.Get("facebook", "appSecret");
             // Configure the db context, user manager and role manager to use a single instance per request
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);

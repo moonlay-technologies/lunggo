@@ -36,7 +36,7 @@ namespace Lunggo.WebAPI.ApiSrc.Flight.Logic
                 if (apiResponse.StatusCode != HttpStatusCode.OK)
                 {
                     var log = LogService.GetInstance();
-                    var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                    var env = EnvVariables.Get("general", "environment");
                     TableLog.Log = "```Booking API Log```"
                             + "\n`*Environment :* " + env.ToUpper()
                             + "\n*Platform :* "

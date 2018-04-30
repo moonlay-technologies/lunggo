@@ -28,8 +28,8 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
             {
                 if (!_isInitialized)
                 {
-                    _userName = ConfigManager.GetInstance().GetConfigValue("citilink", "webUserName");
-                    _password = ConfigManager.GetInstance().GetConfigValue("citilink", "webPassword");
+                    _userName = EnvVariables.Get("citilink", "webUserName");
+                    _password = EnvVariables.Get("citilink", "webPassword");
                     _isInitialized = true;
                 }
             }

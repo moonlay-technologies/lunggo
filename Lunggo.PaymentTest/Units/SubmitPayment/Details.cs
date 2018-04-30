@@ -147,7 +147,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
             Assert.AreEqual(rsvNo, actual.RsvNo);
             Assert.AreEqual(price, actual.OriginalPriceIdr);
             Assert.AreEqual(currency, actual.LocalCurrency);
-            Assert.AreEqual(PaymentStatus.Pending, actual.Status);
+            Assert.AreEqual(PaymentStatus.Undefined, actual.Status);
             Assert.AreEqual(timelimit.AddMinutes(-10), actual.TimeLimit);
         }
 

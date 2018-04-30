@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
         public static int issueTrial = 0;	
         internal override IssueTicketResult OrderTicket(string bookingId, bool canHold)
         {
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             if (env == "production")
                 return Client.OrderTicket(bookingId);
             else
@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
                 
                 TableLog.PartitionKey = "FLIGHT ISSUE LOG";
                 
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
                 var clientx = CreateAgentClient();
                 var untukEncode = "ticketing:" + bookingId + ":STEP2";
                 var encode = untukEncode.Base64Encode();

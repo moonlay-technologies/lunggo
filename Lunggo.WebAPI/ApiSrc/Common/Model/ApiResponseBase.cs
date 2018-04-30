@@ -49,7 +49,7 @@ namespace Lunggo.WebAPI.ApiSrc.Common.Model
                 requestString = "Invalid JSON";
             }
             var log = LogService.GetInstance();
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             TableLog.Log = "```Error 500 API Log```"
                 + "\n*Environment :* " + env.ToUpper()
                 + "\n*Exception :* "

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Lunggo.Framework.Config
 {
-    public partial class ConfigManager
+    public partial class EnvVariables
     {
         private static Dictionary<string, string> PopulateDictionary()
         {

@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Activity.Service
             originalPrice = 0;
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Activity);
 
-            var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+            var env = EnvVariables.Get("general", "environment");
             PlatformType platform;
             string deviceId;
             if (env == "production")

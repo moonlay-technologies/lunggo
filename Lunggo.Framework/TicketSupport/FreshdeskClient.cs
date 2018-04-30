@@ -21,7 +21,7 @@ namespace Lunggo.Framework.TicketSupport
 
         public void init(string apikey)
         {
-            string freshdeskRestSharpClientUrl = ConfigManager.GetInstance().GetConfigValue("freshdesk", "RestSharpClientUrl");
+            string freshdeskRestSharpClientUrl = EnvVariables.Get("freshdesk", "RestSharpClientUrl");
             this.restClientRestSharp = new RestClient(freshdeskRestSharpClientUrl);
             //this.restClientRestSharp.Authenticator = new HttpBasicAuthenticator(apikey, "X");
         }

@@ -96,7 +96,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
                     };
 
                 var client = CreateAgentClient();
-                var cloudAppUrl = ConfigManager.GetInstance().GetConfigValue("general", "cloudAppUrl");
+                var cloudAppUrl = EnvVariables.Get("general", "cloudAppUrl");
                 var clientx = new RestClient(cloudAppUrl);
                 var userName = "";
                 var successLogin = false;

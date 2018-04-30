@@ -205,7 +205,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             var searchType = detailDestination.Type.ToString();
             var searchIds = detailDestination.Code + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + result.MinPrice;
             var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("HotelPriceCalendar");
-            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
+            var searchTimeout = int.Parse(EnvVariables.Get("hotel", "hotelSearchResultCacheTimeout"));
             priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
             //SetLowestPriceToCache(input.CheckIn, input.Nights, detailDestination.Code, result.MinPrice);
             return new SearchHotelOutput
@@ -225,7 +225,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 MinPrice = result.MinPrice,
                 IsSpecificHotel = searchType.Equals("Hotel"),
                 HotelCode = searchType.Equals("Hotel") ? (int?)firstPageHotelDetails.Select(x => x.HotelCode).FirstOrDefault() : null,
-                ExpiryTime = DateTime.UtcNow.AddMinutes(int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout")))
+                ExpiryTime = DateTime.UtcNow.AddMinutes(int.Parse(EnvVariables.Get("hotel", "hotelSearchResultCacheTimeout")))
             };
         }
 
@@ -373,7 +373,7 @@ namespace Lunggo.ApCommon.Hotel.Service
 
             var searchIds = input.HotelCode + "|" + input.CheckIn.ToString("ddMMyy") + "|" + input.Nights + "|" + results.MinPrice;
             var priceCalendarQueue = QueueService.GetInstance().GetQueueByReference("hotelpricecalendar");
-            var searchTimeout = int.Parse(ConfigManager.GetInstance().GetConfigValue("hotel", "hotelSearchResultCacheTimeout"));
+            var searchTimeout = int.Parse(EnvVariables.Get("hotel", "hotelSearchResultCacheTimeout"));
             priceCalendarQueue.AddMessage(new CloudQueueMessage(searchIds), initialVisibilityDelay: new TimeSpan(0, 0, searchTimeout));
             //SetLowestPriceToCache(input.CheckIn, input.Nights, Convert.ToString(input.HotelCode), results.MinPrice);
             return new SearchHotelOutput

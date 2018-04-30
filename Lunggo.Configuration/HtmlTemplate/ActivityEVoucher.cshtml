@@ -16,10 +16,10 @@
     <title></title>
 
     <!-- Bootstrap core CSS -->
-    <link href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserpage/vendor/bootstrap/css/bootstrap.css")" rel="stylesheet" />
+    <link href="@(EnvVariables.Get("general", "rootUrl") + "/Assets/teaserpage/vendor/bootstrap/css/bootstrap.css")" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserpage/cssDesktop/style-pdf.css")" rel="stylesheet" />
+    <link href="@(EnvVariables.Get("general", "rootUrl") + "/Assets/teaserpage/cssDesktop/style-pdf.css")" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" />
 
 </head>
@@ -38,7 +38,7 @@
             </div>
             <div class="clearfix"></div>
             <div class="container-logo">
-                <img src="@(ConfigManager.GetInstance().GetConfigValue("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/logo.png")">
+                <img src="@(EnvVariables.Get("general", "rootUrl") + "/Assets/teaserPage/imgDesktop/logo.png")">
             </div>
         </header>
 

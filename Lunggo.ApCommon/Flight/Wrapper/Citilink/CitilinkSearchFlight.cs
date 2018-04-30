@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Citilink
                     };
 
                 var log = LogService.GetInstance();
-                var env = ConfigManager.GetInstance().GetConfigValue("general", "environment");
+                var env = EnvVariables.Get("general", "environment");
 
                 
                 // WAIT
