@@ -1,6 +1,6 @@
 import Moment from 'moment';
 import 'moment/locale/id';
-import {fetchTravoramaApi} from '../../../../../Assets/js/ApiWrapper';
+import { fetchTravoramaApi, AUTH_LEVEL } from '../ApiWrapper';
 
 export function sumTotalBill(...args) {
     return args.reduce((previous, current) => {
@@ -71,7 +71,7 @@ const fetchPayAPI = async ({ rsvNo, method, discCd, methodData }) => {
     let request = {
         path: `/${version}/payment/pay`,
         method: 'POST',
-        requiredAuthLevel: 2, //AUTH_LEVEL.User,
+        requiredAuthLevel: AUTH_LEVEL.User,
         data: { rsvNo, method, discCd, [method]: methodData },
     }
     return await fetchTravoramaApi(request);
@@ -180,7 +180,7 @@ export const checkVoucher = async (rsvNo, code) => {
     let request = {
         path: `/${version}/payment/checkvoucher`,
         method: 'POST',
-        requiredAuthLevel: 2, //AUTH_LEVEL.User,
+        requiredAuthLevel: AUTH_LEVEL.User,
         data: { rsvNo, code }
     }
     return await fetchTravoramaApi(request);

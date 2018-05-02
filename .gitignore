@@ -164,3 +164,5 @@ Lunggo.Driver/Config/
 /Lunggo.Generator/Repository
 /Lunggo.Generator/TableRecord
 /.vs
+
+/*/node_modules

@@ -330,6 +330,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Api\Views\web.config" />
+    <Content Include="Areas\Payment_v2\Views\Payment\error-page.html" />
+    <Content Include="Assets\js\Payment\bank\icon-error.png" />
+    <Content Include="Assets\js\ApiWrapper.js" />
+    <Content Include="Assets\js\Auth\AuthController.js" />
     <Content Include="Assets\bootstrap\bootstrap.css" />
     <Content Include="Assets\bootstrap\bootstrap.css.map" />
     <Content Include="Assets\bootstrap\bootstrap.min.css" />
@@ -1310,32 +1314,33 @@
     <Content Include="Assets\img\email.jpg" />
     <Content Include="Assets\img\icon.png" />
     <Content Include="Assets\img\whatsapp.jpg" />
+    <Content Include="Assets\js\env.js" />
     <Content Include="Assets\js\jquery.ui.datepicker-id.js" />
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentController.js">
+    <Content Include="Assets\js\Payment\PaymentController.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentDataForm.jsx">
+    <Content Include="Assets\js\Payment\PaymentDataForm.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentDataStateContainer.js">
+    <Content Include="Assets\js\Payment\PaymentDataStateContainer.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentInstruction.jsx">
+    <Content Include="Assets\js\Payment\PaymentInstruction.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentModalLayout.jsx">
+    <Content Include="Assets\js\Payment\PaymentModalLayout.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentModalStateContainer.js">
+    <Content Include="Assets\js\Payment\PaymentModalStateContainer.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentPageLayout.jsx">
+    <Content Include="Assets\js\Payment\PaymentPageLayout.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\PaymentPageStateContainer.jsx">
+    <Content Include="Assets\js\Payment\PaymentPageStateContainer.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Payment_v2\Views\Payment\React\paymentReact.js" />
+    <Content Include="Assets\js\Payment\paymentReact.js" />
     <Content Include="Assets\teaserpage\cssDesktop\full.css" />
     <Content Include="Assets\teaserpage\cssDesktop\style-pdf.css" />
     <Content Include="Assets\teaserpage\cssDesktop\style.css" />
@@ -1969,27 +1974,27 @@
     <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap.css" />
     <Content Include="Areas\Payment_v2\Views\Payment\css\bootstrap.min.css" />
     <Content Include="Areas\Payment_v2\Views\Payment\css\ionicons.css" />
-    <Content Include="Areas\Payment_v2\Views\Payment\css\style.css" />
+    <Content Include="Assets\js\Payment\style.css" />
     <Content Include="Areas\Payment_v2\Views\Payment\detail-token.html" />
     <Content Include="Areas\Payment_v2\Views\Payment\detail-transfer.html" />
     <Content Include="Areas\Payment_v2\Views\Payment\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Areas\Payment_v2\Views\Payment\fonts\ionicons.svg" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\bca.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\BCAKlikPay.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\BNI.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\btn.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\cimbclick.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\cimbniaga.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\danamon.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\dompet.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\epaybri.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\gopay.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\icon-success.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\kredit.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\mandiri.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\mandiriclickpay.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\muamalat.png" />
-    <Content Include="Areas\Payment_v2\Views\Payment\images\permata.png" />
+    <Content Include="Assets\js\Payment\bank\bca.png" />
+    <Content Include="Assets\js\Payment\bank\BCAKlikPay.png" />
+    <Content Include="Assets\js\Payment\bank\BNI.png" />
+    <Content Include="Assets\js\Payment\bank\btn.png" />
+    <Content Include="Assets\js\Payment\bank\cimbclick.png" />
+    <Content Include="Assets\js\Payment\bank\cimbniaga.png" />
+    <Content Include="Assets\js\Payment\bank\danamon.png" />
+    <Content Include="Assets\js\Payment\bank\dompet.png" />
+    <Content Include="Assets\js\Payment\bank\epaybri.png" />
+    <Content Include="Assets\js\Payment\bank\gopay.png" />
+    <Content Include="Assets\js\Payment\bank\icon-success.png" />
+    <Content Include="Assets\js\Payment\bank\kredit.png" />
+    <Content Include="Assets\js\Payment\bank\mandiri.png" />
+    <Content Include="Assets\js\Payment\bank\mandiriclickpay.png" />
+    <Content Include="Assets\js\Payment\bank\muamalat.png" />
+    <Content Include="Assets\js\Payment\bank\permata.png" />
     <Content Include="Areas\Payment_v2\Views\Payment\index.html" />
     <Content Include="Areas\Payment_v2\Views\Payment\js\bootstrap.js" />
     <Content Include="Areas\Payment_v2\Views\Payment\js\bootstrap.min.js" />

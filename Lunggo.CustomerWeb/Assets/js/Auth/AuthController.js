@@ -22,14 +22,14 @@ async function fetchAuth(data) {
   return response;
 }
 
-const { getItemAsync, setItemAsync, deleteItemAsync } = Expo.SecureStore;
+//const { getItemAsync, setItemAsync, deleteItemAsync } = Expo.SecureStore;
 
 async function setAccessToken(tokenData) {
   let { accessToken, refreshToken, expTime, authLevel } = tokenData;
-  setItemAsync('accessToken', accessToken);
-  setItemAsync('refreshToken', refreshToken);
-  setItemAsync('authLevel', authLevel);
-  setItemAsync('expTime', expTime);
+  //setItemAsync('accessToken', accessToken);
+  //setItemAsync('refreshToken', refreshToken);
+  //setItemAsync('authLevel', authLevel);
+  //setItemAsync('expTime', expTime);
 }
 
 export async function fetchTravoramaLoginApi(email, countryCallCd, phoneNumber, password) {
@@ -79,8 +79,8 @@ export async function getAuthAccess() {
   try {
     let [accessToken, refreshToken, expTime, authLevel] =
       await Promise.all([
-        getItemAsync('accessToken'), getItemAsync('refreshToken'),
-        getItemAsync('expTime'), getItemAsync('authLevel')
+        //getItemAsync('accessToken'), getItemAsync('refreshToken'),
+        //getItemAsync('expTime'), getItemAsync('authLevel')
       ]);
     let data = { clientId, clientSecret, deviceId };
 
@@ -138,14 +138,14 @@ export async function checkUserLoggedIn() {
 
 export async function removeAccessToken() {
   await Promise.all([
-    deleteItemAsync('accessToken'), deleteItemAsync('refreshToken'),
-    deleteItemAsync('expTime'), deleteItemAsync('authLevel'),
+    //deleteItemAsync('accessToken'), deleteItemAsync('refreshToken'),
+    //deleteItemAsync('expTime'), deleteItemAsync('authLevel'),
   ]);
   return;
 }
 
 export async function logout() {
   return await Promise.all([
-    deleteItemAsync('isLoggedIn'), removeAccessToken(),
+    //deleteItemAsync('isLoggedIn'), removeAccessToken(),
   ]);
 }
