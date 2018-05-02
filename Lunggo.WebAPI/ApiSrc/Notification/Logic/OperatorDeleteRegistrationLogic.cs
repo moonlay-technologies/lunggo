@@ -10,12 +10,12 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {
     public static partial class RegistrationLogic
     {
-        public static async Task<ApiResponseBase> DeleteRegistration(DeleteRegistrationApiRequest request)
+        public static async Task<ApiResponseBase> OperatorDeleteRegistration(DeleteRegistrationApiRequest request)
         {
             if (IsValid(request))
             {
                 var notif = NotificationService.GetInstance();
-                notif.DeleteRegistration(request.Handle);
+                notif.OperatorDeleteRegistration(request.Handle);
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK
@@ -29,13 +29,6 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                     ErrorCode = "ERNDEL01"
                 };
             }
-        }
-
-        private static bool IsValid(DeleteRegistrationApiRequest request)
-        {
-            return
-                request != null &&
-                !string.IsNullOrEmpty(request.Handle);
         }
     }
 }

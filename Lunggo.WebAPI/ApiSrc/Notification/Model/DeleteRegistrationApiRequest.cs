@@ -4,7 +4,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Model
 {
     public class DeleteRegistrationApiRequest
     {
-        [JsonProperty("registrationId")]
-        public string RegistrationId { get; set; }
+        [JsonProperty("handle")]
+        public string Handle { get; set; }
     }
 }

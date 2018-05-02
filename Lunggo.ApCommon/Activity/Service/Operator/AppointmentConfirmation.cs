@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Activity.Constant;
+﻿using System;
+using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Product.Model;
@@ -6,6 +7,7 @@ using Lunggo.Framework.Mail;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using System.Collections.Generic;
+using Lunggo.ApCommon.Notifications;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -25,6 +27,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsSuccess = false
                     };
                 }
+                var pushNotifConfirm = PushNotificationConfirmAppointment(input.RsvNo);
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Confirmed);
                 UpdateTicketNumberReservationDb(input.RsvNo);
@@ -44,6 +47,17 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 return new AppointmentConfirmationOutput { IsSuccess = false };
             }
+        }
+
+        internal bool PushNotificationConfirmAppointment(string rsvNo)
+        {
+            var userId = GetUserIdByRsvNo(rsvNo);
+            var reservation = GetReservation(rsvNo);
+            var notifTitle = "Aktivitas telah di terima oleh operator";
+            var notifBody = "Aktivitas dengan nama aktivitas \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
+                            reservation.DateTime.Date.Value.Date.ToShortDateString() + " telah di terima oleh operator";
+            var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, userId);
+            return notifResult;
         }
 
         public AppointmentConfirmationOutput DeclineAppointment(AppointmentConfirmationInput input)
@@ -82,6 +96,8 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsSuccess = false
                     };
                 }
+
+                var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Denied);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Denied);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
@@ -90,6 +106,17 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 return new AppointmentConfirmationOutput { IsSuccess = false };
             }
+        }
+
+        internal bool PushNotificationDenyAppointment(string rsvNo)
+        {
+            var userId = GetUserIdByRsvNo(rsvNo);
+            var reservation = GetReservation(rsvNo);
+            var notifTitle = "Aktivitas telah ditolak";            
+            var notifBody = "Aktivitas dengan nama aktivitas \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
+                            reservation.DateTime.Date.Value.Date.ToShortDateString() + " telah di tolak";
+            var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, userId);
+            return notifResult;
         }
 
 
@@ -180,6 +207,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsSuccess = false
                     };
                 }
+                var pushNotifForward = PushNotificationForwardAppointment(input.RsvNo);
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.ForwardedToOperator);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.ForwardedToOperator);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
@@ -189,6 +217,34 @@ namespace Lunggo.ApCommon.Activity.Service
                 return new AppointmentConfirmationOutput { IsSuccess = false };
             }
         }
+
+        internal bool PushNotificationForwardAppointment(string rsvNo)
+        {
+            var customerId = GetUserIdByRsvNo(rsvNo);
+            var reservation = GetReservation(rsvNo);
+            var customerResult = PushNotifForwardAppointmentForCustomer(customerId, reservation.ActivityDetails.Name ,reservation.DateTime.Date.Value.Date);
+            var operatorId = GetOperatorIdByActivityId(reservation.ActivityDetails.ActivityId);
+            var operatorResult = PushNotifForwardAppointmentForOperator(operatorId, reservation.ActivityDetails.Name,
+                reservation.DateTime.Date.Value.Date);
+            return operatorResult && customerResult;
+        }
+
+        internal bool PushNotifForwardAppointmentForCustomer(string customerId, string activityName, DateTime activityDate)
+        {
+            var notifTitle = "Aktivitas telah di teruskan ke operator";
+            var notifBody = "Aktivitas dengan nama aktivitas \"" + activityName + "\" pada tanggal " +
+                            activityDate.ToShortDateString() + " telah di teruskan ke operator";
+            var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, customerId);
+            return notifResult;
+        }
         
+        internal bool PushNotifForwardAppointmentForOperator(string operatorId, string activityName, DateTime activityDate)
+        {
+            var notifTitle = "Anda mendapatkan pesanan baru";
+            var notifBody = "Anda mendapatkan pesanan baru dengan nama aktivitas \"" + activityName + "\" pada tanggal " +
+                            activityDate.ToShortDateString();
+            var notifResult = NotificationService.GetInstance().SendNotificationsOperator(notifTitle, notifBody, operatorId);
+            return notifResult;
+        }
     }
 }

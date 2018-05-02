@@ -1865,5 +1865,15 @@ namespace Lunggo.ApCommon.Activity.Service
                
         }
 
+        public string GetOperatorIdByActivityId(long activityId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var operatorId = OperatorTableRepo.GetInstance()
+                    .Find1(conn, new OperatorTableRecord {ActivityId = activityId});
+                return operatorId.UserId;
+            }
+        }
+
     }
 }

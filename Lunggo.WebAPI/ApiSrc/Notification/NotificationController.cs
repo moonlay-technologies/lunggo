@@ -75,6 +75,62 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
             }
         }
 
+        [HttpPut]
+        [Route("v1/operator/notification/registration")]
+        [Level1Authorize]
+        public async Task<ApiResponseBase> OperatorRegisterDevice()
+        {
+            RegisterDeviceApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<RegisterDeviceApiRequest>();
+                var apiResponse = await RegistrationLogic.OperatorRegisterDevice(request);
+                return apiResponse; 
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        // PUT api/register/5
+        // This creates or updates a registration (with provided channelURI) at the specified id
+        [HttpPatch]
+        [Route("v1/operator/notification/registration")]
+        [Level1Authorize]
+        public async Task<ApiResponseBase> OperatorUpdateRegistration()
+        {
+            UpdateRegistrationApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<UpdateRegistrationApiRequest>();
+                var apiResponse = await RegistrationLogic.UpdateRegistration(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
+
+        // DELETE api/register/5
+        [HttpDelete]
+        [Route("v1/operator/notification/registration")]
+        [Level1Authorize]
+        public async Task<ApiResponseBase> OperatorDeleteRegistration()
+        {
+            DeleteRegistrationApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<DeleteRegistrationApiRequest>();
+                var apiResponse = await RegistrationLogic.OperatorDeleteRegistration(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e, request);
+            }
+        }
         
     }
 }

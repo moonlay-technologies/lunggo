@@ -5,7 +5,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class NotificationTableRecord : Lunggo.Framework.Database.TableRecord
+    public class NotificationOperatorTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
@@ -55,20 +55,20 @@ namespace Lunggo.Repository.TableRecord
 		private String _Tags;
 
 
-		public static NotificationTableRecord CreateNewInstance()
+		public static NotificationOperatorTableRecord CreateNewInstance()
         {
-            var record = new NotificationTableRecord();
+            var record = new NotificationOperatorTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public NotificationTableRecord()
+		public NotificationOperatorTableRecord()
         {
             ;
         }
 
-        static NotificationTableRecord()
+        static NotificationOperatorTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -77,7 +77,7 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Notification";
+            _tableName = "NotificationOperator";
         }
 
         private static void InitRecordMetadata()

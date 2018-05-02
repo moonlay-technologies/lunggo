@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 {
     public static partial class RegistrationLogic
     {
-        public static async Task<ApiResponseBase> RegisterDevice(RegisterDeviceApiRequest request)
+        public static async Task<ApiResponseBase> OperatorRegisterDevice(RegisterDeviceApiRequest request)
         {
             if (IsValid(request))
             {
@@ -40,7 +40,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                         };
 
                 var notif = NotificationService.GetInstance();
-                var newRegistrationId = notif.RegisterDevice(request.Handle, deviceId, userId);
+                var newRegistrationId = notif.OperatorRegisterDevice(request.Handle, deviceId, userId);
 
                 return new RegisterDeviceApiResponse
                 {
@@ -56,13 +56,6 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                     ErrorCode = "ERNREG01"
                 };
             }
-        }
-
-        private static bool IsValid(RegisterDeviceApiRequest request)
-        {
-            return
-                request != null &&
-                !string.IsNullOrEmpty(request.Handle);
         }
     }
 }
