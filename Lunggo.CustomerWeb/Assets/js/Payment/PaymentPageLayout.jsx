@@ -2,9 +2,11 @@
 import React from 'react';
 import PopUpModal from './PaymentModalStateContainer';
 
+//import DevTools from 'mobx-react-devtools';
+
 function PaymentPageLayout(props) {
     return (
-        <div>
+      <div>
             <PopUpModal {...props} />
             {/*<!-- Navigation -->*/}
             <nav className="mynav">
@@ -88,7 +90,7 @@ function PaymentPageLayout(props) {
                     <div className="section-label">Pembayaran yang terakhir digunakan</div>
 
                     <div className="row">
-                        <PaymentSelection text="Transfer Bank" onClick={props.selectMethod('transferbank')} collapsible icon={<i className="icon ion-cash icon-pembayaran-primary" />} />
+                        <PaymentSelection text="Transfer Bank" href="transferbank" collapsible icon={<i className="icon ion-cash icon-pembayaran-primary" />} />
                         {/*style="margin-bottom: 0"*//*ini harusnya dipake buat bank transfer, nanti gw implement blm smpet*/}
                     </div>
 
@@ -96,12 +98,12 @@ function PaymentPageLayout(props) {
                         <div className="collapse" id="transferbank" style={{ marginTop: 5 }}>
                             <div className="btn-method-transfer-dropdown clearfix">
 
-                                <PaymentSelection text="Bank Mandiri" onClick={props.selectMethod('tfmandiri')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/mandiri.png" />} />
-                                <PaymentSelection text="Bank BCA" onClick={props.selectMethod('tfbca')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/bca.png" />} />
-                                <PaymentSelection text="Bank BNI" onClick={props.selectMethod('tfbni')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/bni.png" />} />
-                                <PaymentSelection text="Bank Danamon" onClick={props.selectMethod('tfdanamon')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/danamon.png" />} />
-                                <PaymentSelection text="Bank CIMB Niaga" onClick={props.selectMethod('tfcimbniaga')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/cimbniaga.png" />} />
-                                <PaymentSelection text="Bank Permata" onClick={props.selectMethod('tfpermata')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/permata.png" />} />
+                                <PaymentSelection text="Bank Mandiri" onClick={()=>props.selectMethod('tfmandiri')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/mandiri.png" />} />
+                  <PaymentSelection text="Bank BCA" onClick={() =>props.selectMethod('tfbca')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/bca.png" />} />
+                  <PaymentSelection text="Bank BNI" onClick={() =>props.selectMethod('tfbni')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/bni.png" />} />
+                  <PaymentSelection text="Bank Danamon" onClick={() =>props.selectMethod('tfdanamon')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/danamon.png" />} />
+                  <PaymentSelection text="Bank CIMB Niaga" onClick={() =>props.selectMethod('tfcimbniaga')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/cimbniaga.png" />} />
+                  <PaymentSelection text="Bank Permata" onClick={() =>props.selectMethod('tfpermata')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/permata.png" />} />
 
                             </div>
                         </div>
@@ -109,10 +111,10 @@ function PaymentPageLayout(props) {
                 </div>
 
                 <div className="section-container">
-                    <div className="section-label">Metode Pembayaran</div>
+            <div className="section-label">Metode Pembayaran --- {props.method}</div>
                     <div className="row">
-                        <PaymentSelection text="Kartu Kredit/Debit" onClick={props.selectMethod('card')} icon={<img className="img-pembayaran" src="/Assets/images/bank/kredit.png" />} />
-                        <PaymentSelection text="BCA Klikpay" onClick={props.selectMethod('bcaklikpay')} icon={<img className="img-pembayaran" src="/Assets/images/bank/bcaklikpay.png" />} />
+              <PaymentSelection text="Kartu Kredit/Debit" onClick={() =>props.selectMethod('card')} icon={<img className="img-pembayaran" src="/Assets/images/bank/kredit.png" />} />
+              <PaymentSelection text="BCA Klikpay" onClick={() =>props.selectMethod('bcaklikpay')} icon={<img className="img-pembayaran" src="/Assets/images/bank/bcaklikpay.png" />} />
 
                         <div className="row">
                             <PaymentSelection text="Debit Online" href="#debitonline" collapsible icon={<i className="icon ion-card icon-pembayaran-primary" />} />
@@ -121,12 +123,12 @@ function PaymentPageLayout(props) {
                             <div className="collapse" id="debitonline" style={{ marginTop: -5 }}>
                                 <div className="btn-method-transfer-dropdown clearfix">
 
-                                    <PaymentSelection text="CIMB Clicks" onClick={props.selectMethod('cimbclicks')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/cimbclick.png" />} />
-                                    <PaymentSelection text="Mandiri Clickpay" onClick={props.selectMethod('mandiriclickpay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/mandiriclickpay.png" />} />
-                                    <PaymentSelection text="e-pay BRI" onClick={props.selectMethod('epaybri')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/epaybri.png" />} />
-                                    <PaymentSelection text="BTN Mobile Banking" onClick={props.selectMethod('btnmobile')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/btn.png" />} />
-                                    <PaymentSelection text="IB Muamalat" onClick={props.selectMethod('muamalat')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/muamalat.png" />} />
-                                    <PaymentSelection text="PermataNet" onClick={props.selectMethod('permatanet')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/permata.png" />} />
+                    <PaymentSelection text="CIMB Clicks" onClick={() =>props.selectMethod('cimbclicks')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/cimbclick.png" />} />
+                    <PaymentSelection text="Mandiri Clickpay" onClick={() =>props.selectMethod('mandiriclickpay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/mandiriclickpay.png" />} />
+                    <PaymentSelection text="e-pay BRI" onClick={() =>props.selectMethod('epaybri')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/epaybri.png" />} />
+                    <PaymentSelection text="BTN Mobile Banking" onClick={() =>props.selectMethod('btnmobile')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/btn.png" />} />
+                    <PaymentSelection text="IB Muamalat" onClick={() =>props.selectMethod('muamalat')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/muamalat.png" />} />
+                    <PaymentSelection text="PermataNet" onClick={() =>props.selectMethod('permatanet')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/permata.png" />} />
 
                                 </div>
                             </div>
@@ -139,7 +141,7 @@ function PaymentPageLayout(props) {
                         <div className="row">
                             <div className="collapse" id="ewallet" style={{ marginTop: -5 }}>
                                 <div className="btn-method-transfer-dropdown clearfix">
-                                    <PaymentSelection text="GO-PAY" onClick={props.selectMethod('gopay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/gopay.png" />} />
+                    <PaymentSelection text="GO-PAY" onClick={() =>props.selectMethod('gopay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/gopay.png" />} />
                                 </div>
                             </div>
                         </div>
