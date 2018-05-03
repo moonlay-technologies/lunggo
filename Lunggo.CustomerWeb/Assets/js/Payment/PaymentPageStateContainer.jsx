@@ -17,8 +17,12 @@ const PaymentPageStateContainer = observer(
         errorMessage = '';
         isLoadingCreditBalance = false;
         isLoadingDiscountVoucher = false;
+        showModal = false;
 
-        setMethod(method) { this.method = method }
+        selectMethod(method) {
+          this.method = method;
+          this.showModal = true;
+        }
 
 
 
@@ -50,12 +54,13 @@ const PaymentPageStateContainer = observer(
             return (
                 <Layout
                     method={this.method}
-                    setMethod={this.setMethod}
+                    selectMethod={this.selectMethod}
                     creditBalance={this.creditBalance}
                     discountVoucherAmount={this.discountVoucherAmount}
                     discountVoucherCode={this.discountVoucherCode}
                     onChangedVoucherCode={this.onChangedVoucherCode}
                     applyDiscountVoucher={this.applyDiscountVoucher}
+                    showModal={this.showModal}
 
                     rsvNo={this.props.rsvNo}
                     discCd={this.props.discCd}
@@ -80,7 +85,8 @@ decorate(PaymentPageStateContainer, {
     errorMessage: observable,
     isLoadingCreditBalance: observable,
     isLoadingDiscountVoucher: observable,
-    setMethod: action,
+    showModal: observable,
+    selectMethod: action,
     componentDidMount: action,
     applyDiscountVoucher: action,
     onChangedVoucherCode: action

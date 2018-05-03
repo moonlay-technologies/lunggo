@@ -4,7 +4,7 @@ import DataForm from './PaymentDataStateContainer';
 import PaymentInstruction from './PaymentInstruction.jsx';
 
 function PaymentModalLayout(props) {
-    const shouldShowDataForm = (props.method == 'creditCard' || props.method == 'mandiriClickPay');
+    const shouldShowDataForm = (props.method == 'card' || props.method == 'mandiriClickPay');
     return (
         <div hidden={props.method == null} className="mother-container">
 

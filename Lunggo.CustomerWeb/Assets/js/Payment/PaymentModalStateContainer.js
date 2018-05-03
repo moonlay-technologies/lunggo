@@ -24,6 +24,7 @@ const PaymentModalStateContainer = observer(
         getFormState = e => this.formState = e;
 
         render() {
+            // return ( props.showModal &&
             return (
                 <Layout
                     method={this.props.method}
