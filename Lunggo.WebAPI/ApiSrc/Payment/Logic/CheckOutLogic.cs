@@ -8,6 +8,7 @@ using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Payment.Model;
 using Lunggo.ApCommon.Identity.Users;
+using Lunggo.ApCommon.Product.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 {
@@ -23,7 +24,17 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 };
 
             bool isUpdated;
-            var paymentDetails = new PaymentService().SubmitCartPayment(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request, request.DiscountCode, out isUpdated);
+            var user = HttpContext.Current.User.Identity.GetUser();
+            var contact = new Contact
+            {
+                Name = user.FirstName == user.LastName
+                    ? user.FirstName
+                    : string.Join(" ", user.FirstName, user.LastName),
+                Email = user.Email,
+                CountryCallingCode = user.CountryCallCd,
+                Phone = user.PhoneNumber
+            };
+            var paymentDetails = new PaymentService().SubmitCartPayment(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, contact, request,request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated, request.CartId);
             return apiResponse;
         }

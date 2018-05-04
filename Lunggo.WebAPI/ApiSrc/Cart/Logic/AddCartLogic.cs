@@ -23,7 +23,8 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
-            var isSuccess = new PaymentService().AddToCart(request.RsvNo);
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var isSuccess = new PaymentService().AddToCart(userId, request.RsvNo);
             var apiResponse = new ApiResponseBase
             {
                 StatusCode = isSuccess ? HttpStatusCode.OK : HttpStatusCode.BadRequest,

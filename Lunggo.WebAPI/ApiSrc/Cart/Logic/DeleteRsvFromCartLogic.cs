@@ -7,6 +7,7 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using System.Net;
+using Lunggo.ApCommon.Identity.Users;
 
 namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
 {
@@ -22,7 +23,8 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
                     StatusCode = HttpStatusCode.BadRequest,
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
-            new PaymentService().RemoveFromCart(request.RsvNo);
+            var userId = HttpContext.Current.User.Identity.GetId();
+            new PaymentService().RemoveFromCart(userId, request.RsvNo);
             var apiResponse = new ApiResponseBase
             {
                 StatusCode = HttpStatusCode.OK

@@ -8,10 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Lunggo.PaymentTest.PaymentServiceTests
 {
     [TestClass]
-    public class CartTests
+    public class CartAndTrxTests
     {
         
-	
-	
     }
 }

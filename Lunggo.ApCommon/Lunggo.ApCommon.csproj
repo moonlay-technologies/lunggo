@@ -608,7 +608,7 @@
     <Compile Include="Notifications\Notification.cs" />
     <Compile Include="Notifications\NotificationService.cs" />
     <Compile Include="Payment\Cache\Campaign.cs" />
-    <Compile Include="Payment\Cache\Cart.cs" />
+    <Compile Include="Payment\Cache\CartAndTrx.cs" />
     <Compile Include="Payment\Constant\CampaignStatus.cs" />
     <Compile Include="Payment\Constant\CampaignType.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />
@@ -828,6 +828,8 @@
     <Compile Include="Payment\Constant\PaymentStatus.cs" />
     <Compile Include="Payment\Constant\VoucherStatus.cs" />
     <Compile Include="Payment\Database\Campaign.cs" />
+    <Compile Include="Payment\Database\CartAndTrx.cs" />
+    <Compile Include="Payment\Database\Details.cs" />
     <Compile Include="Payment\Database\Query\CheckVoucherUsageQuery.cs" />
     <Compile Include="Payment\Database\Query\GetCampaignVoucherRecordQuery.cs" />
     <Compile Include="Payment\Database\Query\GetMemberRecordQuery.cs" />
@@ -892,13 +894,14 @@
     <Compile Include="Payment\Database\Query\UpdatePaymentQuery.cs" />
     <Compile Include="Payment\Model\VoucherResponse.cs" />
     <Compile Include="Payment\Service\AccountTransaction.cs" />
-    <Compile Include="Payment\Service\Campaign.cs" />
+    <Compile Include="Payment\Service\Voucher.cs" />
     <Compile Include="Payment\Service\Cart.cs" />
     <Compile Include="Payment\Service\Details.cs" />
     <Compile Include="Payment\Database\Query\GetPaymentQuery.cs" />
     <Compile Include="Payment\Service\ModelConversion.cs" />
     <Compile Include="Payment\Database\PaymentDbService.cs" />
     <Compile Include="Payment\Cache\PaymentCacheService.cs" />
+    <Compile Include="Payment\Service\Others.cs" />
     <Compile Include="Payment\Service\SubmitCartPayment.cs" />
     <Compile Include="Payment\Service\SubmitPayment.cs" />
     <Compile Include="Payment\Service\Settings.cs" />

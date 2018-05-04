@@ -5,6 +5,7 @@ using Lunggo.ApCommon.Activity.Database.Query;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Database.Query;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -13,78 +14,6 @@ namespace Lunggo.ApCommon.Payment.Database
 {
     internal partial class PaymentDbService
     {
-        internal virtual List<string> GetCartRsvNos(string cartId)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var records = CartsTableRepo.GetInstance().Find(conn, new CartsTableRecord { CartId = cartId });
-
-                var rsvNoList = records?.Select(r => r.RsvNoList).Distinct().ToList();
-                return rsvNoList;
-            }
-        }
-
-        internal void InsertCart(CartPaymentDetails cartDetails)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var userId = GetUserIdFromActivityReservationDbQuery.GetInstance().Execute(conn, new { cartDetails.RsvPaymentDetails[0].RsvNo }).First();
-                foreach (var rsvDetails in cartDetails.RsvPaymentDetails)
-                {
-                    var cartsRecord = new CartsTableRecord
-                    {
-                        CartId = cartDetails.CartId,
-                        RsvNoList = rsvDetails.RsvNo,
-                        UserId = userId
-                    };
-                    CartsTableRepo.GetInstance().Insert(conn, cartsRecord);
-                    UpdatePaymentToDb(rsvDetails);
-                }
-            }
-        }
-
-        internal virtual PaymentDetails GetPaymentDetails(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var record = PaymentTableRepo.GetInstance().Find1(conn, new PaymentTableRecord { RsvNo = rsvNo });
-
-                return ConvertPaymentRecordToPaymentDetails(record);
-            }
-        }
-
-        private static PaymentDetails ConvertPaymentRecordToPaymentDetails(PaymentTableRecord record)
-        {
-            var details = new PaymentDetails();
-            details.RsvNo = record.RsvNo;
-            details.Medium = PaymentMediumCd.Mnemonic(record.MediumCd);
-            details.Method = PaymentMethodCd.Mnemonic(record.MethodCd);
-            details.Submethod = PaymentSubmethodCd.Mnemonic(record.SubMethod);
-            details.Status = PaymentStatusCd.Mnemonic(record.StatusCd);
-            details.Time = DateTime.SpecifyKind(record.Time.GetValueOrDefault(), DateTimeKind.Utc);
-            details.TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc);
-            details.TransferAccount = record.TransferAccount;
-            details.RedirectionUrl = record.RedirectionUrl;
-            details.ExternalId = record.ExternalId;
-            details.DiscountCode = record.DiscountCode;
-            details.OriginalPriceIdr = record.OriginalPriceIdr.GetValueOrDefault();
-            details.DiscountNominal = record.DiscountNominal.GetValueOrDefault();
-            details.UniqueCode = record.UniqueCode.GetValueOrDefault();
-            details.FinalPriceIdr = record.FinalPriceIdr.GetValueOrDefault();
-            details.PaidAmountIdr = record.PaidAmountIdr.GetValueOrDefault();
-            details.LocalCurrency = new Currency(
-                record.LocalCurrencyCd,
-                record.LocalRate.GetValueOrDefault(),
-                record.LocalCurrencyRounding.GetValueOrDefault());
-            details.LocalFinalPrice = record.LocalFinalPrice.GetValueOrDefault();
-            details.LocalPaidAmount = record.LocalPaidAmount.GetValueOrDefault();
-            details.Surcharge = record.Surcharge.GetValueOrDefault();
-            details.InvoiceNo = record.InvoiceNo;
-            details.Discount = UsedDiscount.GetFromDb(record.RsvNo);
-            details.Refund = Refund.GetFromDb(record.RsvNo);
-            return details;
-        }
-
         internal bool ClearPaymentSelection(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -216,15 +145,6 @@ namespace Lunggo.ApCommon.Payment.Database
                     FinalPriceIdr = rec.FinalPriceIdr.GetValueOrDefault()
                 });
                 return payments;
-            }
-        }
-
-        internal string GetCartIdByRsvNoFromDb(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var cartId = GetCartIdFromDbQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).First();
-                return cartId;
             }
         }
 

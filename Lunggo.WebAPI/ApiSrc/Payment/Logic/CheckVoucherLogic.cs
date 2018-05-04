@@ -4,6 +4,8 @@ using Lunggo.WebAPI.ApiSrc.Payment.Model;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Account.Service;
 using System;
+using System.Web;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
@@ -19,8 +21,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 var response = new PaymentService().ValidateVoucherRequest(request.RsvNo, request.DiscountCode);                
                 if(request.DiscountCode == "REFERRALCREDIT")
                 {
-                    var cart = new PaymentService().GetCart(request.RsvNo);
-                    var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(cart.RsvNoList[0]);
+                    var userId = HttpContext.Current.User.Identity.GetId();
                     var referral = AccountService.GetInstance().GetReferral(userId);
                     if(referral == null)
                     {

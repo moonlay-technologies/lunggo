@@ -109,7 +109,6 @@
     <Compile Include="TableRecord\ActivityTableRecord.cs" />
     <Compile Include="TableRecord\AgeClassificationTableRecord.cs" />
     <Compile Include="TableRecord\AppointmentTableRecord.cs" />
-    <Compile Include="TableRecord\CartsTableRecord.cs" />
     <Compile Include="TableRecord\ContactTableRecord.cs" />
     <Compile Include="TableRecord\CurrencyTableRecord.cs" />
     <Compile Include="TableRecord\DiscountTableRecord.cs" />
@@ -164,6 +163,8 @@
     <Compile Include="TableRecord\SupplierTableRecord.cs" />
     <Compile Include="TableRecord\TransactionJournalTableRecord.cs" />
     <Compile Include="TableRecord\TransferConfirmationReportTableRecord.cs" />
+    <Compile Include="TableRecord\TrxRsvTableRecord.cs" />
+    <Compile Include="TableRecord\TrxUserTableRecord.cs" />
     <Compile Include="TableRecord\UsedDiscountTableRecord.cs" />
     <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
     <Compile Include="TableRecord\VoucherRecipientsTableRecord.cs" />
@@ -212,7 +213,6 @@
     <Compile Include="TableRepository\ActivitySellPriceRepository.cs" />
     <Compile Include="TableRepository\AgeClassificationRepository.cs" />
     <Compile Include="TableRepository\AppointmentRepository.cs" />
-    <Compile Include="TableRepository\CartsRepository.cs" />
     <Compile Include="TableRepository\ContactRepository.cs" />
     <Compile Include="TableRepository\CurrencyRepository.cs" />
     <Compile Include="TableRepository\DiscountRepository.cs" />
@@ -267,6 +267,8 @@
     <Compile Include="TableRepository\SupplierRepository.cs" />
     <Compile Include="TableRepository\TransactionJournalRepository.cs" />
     <Compile Include="TableRepository\TransferConfirmationReportRepository.cs" />
+    <Compile Include="TableRepository\TrxRsvRepository.cs" />
+    <Compile Include="TableRepository\TrxUserRepository.cs" />
     <Compile Include="TableRepository\UsedDiscountRepository.cs" />
     <Compile Include="TableRepository\UsedMarginRepository.cs" />
     <Compile Include="TableRepository\VoucherRecipientsRepository.cs" />

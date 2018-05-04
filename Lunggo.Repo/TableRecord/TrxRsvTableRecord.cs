@@ -5,60 +5,50 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.Repository.TableRecord
 {
-    public class CartsTableRecord : Lunggo.Framework.Database.TableRecord
+    public class TrxRsvTableRecord : Lunggo.Framework.Database.TableRecord
     {
 		private static List<ColumnMetadata> _recordMetadata;
         private static List<ColumnMetadata> _primaryKeys;
         private static String _tableName;
 
-		public String UserId
+		public String TrxId
 		{
-		    get { return _UserId; }
+		    get { return _TrxId; }
 		    set
 		    {
-		        _UserId = value;
-		        IncrementLog("UserId");
+		        _TrxId = value;
+		        IncrementLog("TrxId");
 		    }
 		}
-		public String CartId
+		public String RsvNo
 		{
-		    get { return _CartId; }
+		    get { return _RsvNo; }
 		    set
 		    {
-		        _CartId = value;
-		        IncrementLog("CartId");
-		    }
-		}
-		public String RsvNoList
-		{
-		    get { return _RsvNoList; }
-		    set
-		    {
-		        _RsvNoList = value;
-		        IncrementLog("RsvNoList");
+		        _RsvNo = value;
+		        IncrementLog("RsvNo");
 		    }
 		}
 
 		
-		private String _UserId;
-		private String _CartId;
-		private String _RsvNoList;
+		private String _TrxId;
+		private String _RsvNo;
 
 
-		public static CartsTableRecord CreateNewInstance()
+		public static TrxRsvTableRecord CreateNewInstance()
         {
-            var record = new CartsTableRecord();
+            var record = new TrxRsvTableRecord();
             var iRecord = record.AsInterface();
             iRecord.ManuallyCreated = true;
             return record;
         }
 
-		public CartsTableRecord()
+		public TrxRsvTableRecord()
         {
             ;
         }
 
-        static CartsTableRecord()
+        static TrxRsvTableRecord()
         {
             InitTableName();
             InitRecordMetadata();
@@ -67,16 +57,15 @@ namespace Lunggo.Repository.TableRecord
 
         private static void InitTableName()
         {
-            _tableName = "Carts";
+            _tableName = "TrxRsv";
         }
 
         private static void InitRecordMetadata()
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("UserId", false),
-				new ColumnMetadata("CartId", false),
-				new ColumnMetadata("RsvNoList", false),
+				new ColumnMetadata("TrxId", true),
+				new ColumnMetadata("RsvNo", true),
 
             };
         }

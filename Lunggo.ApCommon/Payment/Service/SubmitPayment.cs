@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Payment.Service
             throw new NotImplementedException();
         }
 
-        private static void RealizeVoucher(AccountService accountService, PaymentDetails paymentDetails)
+        internal virtual void RealizeVoucher(AccountService accountService, PaymentDetails paymentDetails)
         {
             var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(paymentDetails.RsvNo);
             accountService.UseReferralCredit(userId, paymentDetails.DiscountNominal);

@@ -9,7 +9,7 @@ using StackExchange.Redis;
 namespace Lunggo.PaymentTest.CacheServiceTests
 {
     [TestClass]
-    public class CartTests
+    public class CartAndTrxTests
     {
         [TestMethod]
         // Should get all rsvNo from associated cartId
@@ -22,6 +22,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 var rsvNo3 = "32335325";
                 var cartId = Guid.NewGuid().ToString();
                 var key = "Cart:RsvNoList:" + cartId;
+                redis.KeyDelete(key);
                 redis.ListLeftPush(key, rsvNo1);
                 redis.ListLeftPush(key, rsvNo2);
                 redis.ListLeftPush(key, rsvNo3);
@@ -81,6 +82,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 var cartId = Guid.NewGuid().ToString();
                 var rsvNo = "123456";
                 var key = "Cart:RsvNoList:" + cartId;
+                redis.KeyDelete(key);
 
                 new PaymentCacheService().AddRsvToCart(cartId, rsvNo);
 
@@ -102,6 +104,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 var cartId = Guid.NewGuid().ToString();
                 var rsvNo = "123456";
                 var key = "Cart:RsvNoList:" + cartId;
+                redis.KeyDelete(key);
 
                 redis.ListLeftPush(key, rsvNo);
 
@@ -113,14 +116,15 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         }
 
         [TestMethod]
-        // Should not contains anything after removing cart
-        public void Should_not_contains_anything_after_removing_cart()
+        // Should not contain anything after removing cart
+        public void Should_not_contain_anything_after_removing_cart()
         {
             TestHelper.UseRedis(redis =>
             {
                 var cartId = Guid.NewGuid().ToString();
                 var rsvNo = "123456";
                 var key = "Cart:RsvNoList:" + cartId;
+                redis.KeyDelete(key);
 
                 redis.ListLeftPush(key, rsvNo);
 

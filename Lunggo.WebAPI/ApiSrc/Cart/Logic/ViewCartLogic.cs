@@ -18,7 +18,8 @@ namespace Lunggo.WebAPI.ApiSrc.Cart.Logic
     {
         public static ApiResponseBase ViewCart()
         {
-            var viewCartResponse = new PaymentService().GetCart();
+            var userId = HttpContext.Current.User.Identity.GetId();
+            var viewCartResponse = new PaymentService().GetCart(userId);
             var apiResponse = AssembleApiResponse(viewCartResponse);
             return apiResponse;
         }

@@ -19,16 +19,9 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public Cart GetCart()
+        public Cart GetCart(string userId)
         {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            var cartId = GetCartId(userId);
-            return GetCart(cartId);
-        }
-
-        public Cart GetCart(string cartId)
-        {
-            var rsvNoList = _cache.GetCartRsvNos(cartId) ?? _db.GetCartRsvNos(cartId);
+            var rsvNoList = _cache.GetCartRsvNos(userId);
 
             if (rsvNoList == null || !rsvNoList.Any())
                 return null;
@@ -36,12 +29,6 @@ namespace Lunggo.ApCommon.Payment.Service
             var cart = ConstructCartFronRsvNoList(rsvNoList);
 
             return cart;
-        }
-
-        public bool AddToCart(string rsvNo)
-        {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            return AddToCart(userId, rsvNo);
         }
 
         public bool AddToCart(string userId, string rsvNo)
@@ -58,12 +45,6 @@ namespace Lunggo.ApCommon.Payment.Service
             return true;
         }
 
-        public bool RemoveFromCart(string rsvNo)
-        {
-            var userId = HttpContext.Current.User.Identity.GetId();
-            return RemoveFromCart(userId, rsvNo);
-        }
-
         public bool RemoveFromCart(string userId, string rsvNo)
         {
             var cartId = GetCartId(userId);
@@ -71,7 +52,24 @@ namespace Lunggo.ApCommon.Payment.Service
             return true;
         }
 
-        public string GetCartId(string userId)
+        public string GetCartIdByRsvNo(string rsvNo)
+        {
+            return _db.GetCartIdByRsvNoFromDb(rsvNo);
+        }
+
+        public Cart GetTrx(string trxId)
+        {
+            var rsvNoList = _db.GetTrxRsvNos(trxId);
+
+            if (rsvNoList == null || !rsvNoList.Any())
+                return null;
+
+            var cart = ConstructCartFronRsvNoList(rsvNoList);
+
+            return cart;
+        }
+
+        private string GetCartId(string userId)
         {
             var hash = userId.Sha1Encode();
             var stringBuilder = new StringBuilder();
@@ -80,25 +78,6 @@ namespace Lunggo.ApCommon.Payment.Service
                 stringBuilder.AppendFormat("{0:x2}", hashByte);
             }
             return stringBuilder.ToString();
-        }
-
-        public string GetCartIdByRsvNo(string rsvNo)
-        {
-            return _db.GetCartIdByRsvNoFromDb(rsvNo);
-        }
-
-        public decimal GetSurchargeNominal(PaymentDetails payment)
-        {
-            var surchargeList = GetSurchargeList();
-            var surcharge =
-                surchargeList.SingleOrDefault(
-                    sur =>
-                        payment.Method == sur.PaymentMethod &&
-                        (sur.PaymentSubMethod == null || payment.Submethod == sur.PaymentSubMethod));
-            return surcharge == null
-                ? 0
-                : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal) * surcharge.Percentage / 100) +
-                  surcharge.Constant;
         }
 
         private Cart ConstructCartFronRsvNoList(List<string> rsvNoList)

@@ -35,13 +35,13 @@ namespace Lunggo.CustomerWeb.Controllers
             _paymentService = paymentService ?? new PaymentService();
         }
 
-        private decimal GetAvailableCredits(string trxId, out string voucherCode)
+        private decimal GetAvailableCredits(out string voucherCode)
         {
             voucherCode = "REFERRALCREDIT";
             var activityService = ActivityService.GetInstance();
-            var rsvList = _paymentService.GetCart(trxId);
-            var userId = activityService.GetUserIdByRsvNo(rsvList.RsvNoList[0]);
-            var voucherRs = new PaymentService().ValidateVoucherRequest(trxId, voucherCode);
+            var userId = System.Web.HttpContext.Current.User.Identity.GetId();
+            var cart = _paymentService.GetCart(userId);
+            var voucherRs = new PaymentService().ValidateVoucherRequest(cart.Id, voucherCode);
             var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
             if(voucherRsLimit < voucherRs.TotalDiscount)
             {
@@ -106,7 +106,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 ViewBag.SurchargeList = _paymentService.GetSurchargeList().Serialize();
 
                 string creditsVoucherCode;
-                var creditsAvailable = GetAvailableCredits(trxId, out creditsVoucherCode);
+                var creditsAvailable = GetAvailableCredits(out creditsVoucherCode);
                 ViewBag.CreditsAvailable = creditsAvailable;
                 ViewBag.CreditsVoucherCode = creditsVoucherCode;
 

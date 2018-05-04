@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public CartPaymentDetails SubmitCartPayment(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public CartPaymentDetails SubmitCartPayment(string cartId, PaymentMethod method, PaymentSubmethod submethod, Contact contact, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
 
@@ -46,7 +46,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
-            var transactionDetails = ConstructTransactionDetails(paymentDetails.RsvNo, paymentDetails, Contact.GetFromDb(paymentDetails.RsvNo));
+            var transactionDetails = ConstructTransactionDetails(paymentDetails.RsvNo, paymentDetails, contact);
             var processSuccess = _processor.ProcessPayment(paymentDetails, transactionDetails);
 
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
@@ -69,7 +69,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private void UpdateCartDb(CartPaymentDetails cartPaymentDetails)
         {
             DistributeRsvPaymentDetails(cartPaymentDetails);
-            _db.InsertCart(cartPaymentDetails);
+            _db.InsertTrx(cartPaymentDetails);
         }
 
 
