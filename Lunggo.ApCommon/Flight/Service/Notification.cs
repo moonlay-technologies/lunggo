@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Flight.Service
             {
                 {TagType.Email, email}
             };
-            service.PushSilentNotification(new {apagitu = "yes"}, tags);
+       //     service.PushSilentNotification(new {apagitu = "yes"}, tags);
         }
 
         public void PushFlightReminderNotif(string rsvNo)
@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Title = "Jadwal Penerbangan Esok Hari",
                 Message = string.Join("\n", rsv.Itineraries.SelectMany(itin => itin.Trips).Select(trip => trip.OriginAirport + "-" + trip.DestinationAirport + " " + trip.DepartureDate.ToString("dd-MM-yyyy")))
             };
-            service.PushNotification(notif, tags);
+       //     service.PushNotification(notif, tags);
         }
 
         public void PushEticketIssuedNotif(string rsvNo)
@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 Title = "E-tiket Anda telah terbit",
                 Message = string.Join("\n", rsv.Itineraries.SelectMany(itin => itin.Trips).Select(trip => trip.OriginAirport + "-" + trip.DestinationAirport + " " + trip.DepartureDate.ToString("dd-MM-yyyy")))
             };
-            service.PushNotification(notif, tags);
+         //   service.PushNotification(notif, tags);
         }
     }
 }

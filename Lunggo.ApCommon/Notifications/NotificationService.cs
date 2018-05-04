@@ -59,7 +59,7 @@ namespace Lunggo.ApCommon.Notifications
             return _db.OperatorRegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
         }
 
-        public bool SendNotificationsCustomer(string messageTitle, string messageBody, string userId)
+        public bool SendNotificationsCustomer(string messageTitle, string messageBody, string userId, NotificationData data)
         {
             if (string.IsNullOrWhiteSpace(userId))
             {
@@ -72,12 +72,12 @@ namespace Lunggo.ApCommon.Notifications
             }
             foreach (var expoToken in expoTokens)
             {
-                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken);            
+                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken, data);            
             }
             return true;
         }
 
-        public bool SendNotificationsOperator(string messageTitle, string messageBody, string userId)
+        public bool SendNotificationsOperator(string messageTitle, string messageBody, string userId, NotificationData data)
         {
             if (string.IsNullOrWhiteSpace(userId))
             {
@@ -90,13 +90,13 @@ namespace Lunggo.ApCommon.Notifications
             }
             foreach (var expoToken in expoTokens)
             {
-                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken);           
+                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken, data);           
             }
             return true;
         }
         
 
-        public virtual bool SendNotificationsExpo(string messageTitle, string messageBody, string expoToken)
+        public virtual bool SendNotificationsExpo(string messageTitle, string messageBody, string expoToken, NotificationData data)
         {
             if (string.IsNullOrWhiteSpace(expoToken))
             {
@@ -109,6 +109,8 @@ namespace Lunggo.ApCommon.Notifications
             pushNotificationBody.Message = messageBody;
             pushNotificationBody.Receiver = expoToken;
             pushNotificationBody.Sound = "default";
+            var dataJson = ConvertToNotificationDataJsonFormat(data);
+            pushNotificationBody.Data = dataJson;
             var pushNotificationBodyJson = ConvertToNotificationJsonFormat(pushNotificationBody);
             pushNotificationRequest.AddJsonBody(pushNotificationBodyJson);
             var pushNotificationResponse = pushNotificationClient.Execute(pushNotificationRequest);
@@ -146,7 +148,20 @@ namespace Lunggo.ApCommon.Notifications
             notificationJsonFormat.body = notification.Message;
             notificationJsonFormat.sound = notification.Sound;
             notificationJsonFormat.title = notification.Title;
+            notificationJsonFormat.data = notification.Data;
             return notificationJsonFormat;
+        }
+
+        public NotificationDataJsonFormat ConvertToNotificationDataJsonFormat(NotificationData data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+            var dataJsonFormat = new NotificationDataJsonFormat();
+            dataJsonFormat.function = data.Function;
+            dataJsonFormat.status = data.Status;
+            return dataJsonFormat;
         }
     }
 }
