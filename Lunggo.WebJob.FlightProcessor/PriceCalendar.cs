@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;

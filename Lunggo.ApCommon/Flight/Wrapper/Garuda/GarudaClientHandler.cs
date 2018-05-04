@@ -1,5 +1,5 @@
 ﻿using System.Net;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda

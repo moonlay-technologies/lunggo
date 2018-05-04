@@ -14,7 +14,6 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Queue;
@@ -24,6 +23,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using BookingStatusCd = Lunggo.ApCommon.Hotel.Constant.BookingStatusCd;
 using Occupancy = Lunggo.ApCommon.Hotel.Model.Occupancy;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Hotel.Service
 {

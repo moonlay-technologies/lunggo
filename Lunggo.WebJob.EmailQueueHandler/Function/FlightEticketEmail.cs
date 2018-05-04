@@ -5,7 +5,7 @@ using System.Text;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;

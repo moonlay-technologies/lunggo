@@ -13,9 +13,9 @@ using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using System.Collections.Generic;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Activity.Service
 {

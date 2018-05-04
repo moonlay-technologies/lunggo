@@ -5,13 +5,13 @@ using System.Net;
 using System.Threading;
 using CsQuery;
 using DeathByCaptcha;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Microsoft.WindowsAzure.Storage.Blob.Protocol;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir
 {

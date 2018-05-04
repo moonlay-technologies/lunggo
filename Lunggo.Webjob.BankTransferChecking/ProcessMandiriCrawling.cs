@@ -7,7 +7,6 @@ using RestSharp;
 using CsQuery;
 using System.Diagnostics;
 using System.Net;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.Database;
 using Lunggo.ApCommon.Constant;

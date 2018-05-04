@@ -7,7 +7,6 @@ using static Lunggo.WebAPI.ApiSrc.Common.Model.ApiResponseBase;
 using static System.Net.HttpStatusCode;
 using static System.String;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;
@@ -16,6 +15,7 @@ using System.Security.Claims;
 using Lunggo.ApCommon.Identity.Auth;
 using System.Linq;
 using Lunggo.ApCommon.Account.Service;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {

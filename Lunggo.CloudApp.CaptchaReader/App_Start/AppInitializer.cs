@@ -2,8 +2,8 @@
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.CloudApp.CaptchaReader.Models;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
@@ -107,7 +107,7 @@ namespace Lunggo.CloudApp.CaptchaReader
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 

@@ -3,8 +3,8 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Log;
@@ -39,7 +39,7 @@ namespace Lunggo.PaymentTest
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = "travorama-development.redis.cache.windows.net,allowAdmin=true,syncTimeout=60000,ssl=true,password=16EGFGYzLMtwUP1KiNjgsi2rcgBPYnlSYWRqOK0EX5c="
                 },
 

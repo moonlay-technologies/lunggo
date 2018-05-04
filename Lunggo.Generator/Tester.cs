@@ -5,7 +5,6 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
@@ -20,6 +19,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.Generator
 {
@@ -142,7 +142,7 @@ namespace Lunggo.Generator
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
 

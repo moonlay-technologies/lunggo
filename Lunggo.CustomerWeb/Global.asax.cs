@@ -5,9 +5,9 @@ using System.Web.Routing;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BrowserDetection;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.CustomerWeb
 {

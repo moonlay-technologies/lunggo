@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;

@@ -5,10 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
 using Microsoft.Azure.WebJobs;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebJob.FlightProcessor
 {

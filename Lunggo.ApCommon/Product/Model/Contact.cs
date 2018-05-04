@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Product.Model
             }
         }
 
-        internal static Contact GetFromDb(string rsvNo)
+        public static Contact GetFromDb(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {

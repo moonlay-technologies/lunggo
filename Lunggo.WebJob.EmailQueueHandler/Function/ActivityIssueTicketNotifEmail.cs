@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Lunggo.ApCommon.Activity.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 

@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Web;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
@@ -12,6 +11,7 @@ using RestSharp;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {

@@ -9,13 +9,13 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using RestSharp;
 using RestSharp.Extensions.MonoHttp;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Sriwijaya
 {

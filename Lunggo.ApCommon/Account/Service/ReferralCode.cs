@@ -1,11 +1,11 @@
 ﻿using Lunggo.ApCommon.Account.Model.Logic;
-using Lunggo.Framework.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Account.Service
 {
@@ -62,9 +62,9 @@ namespace Lunggo.ApCommon.Account.Service
             };
         }
 
-        public GetReferralOutput GetReferral(string userId)
+        public GetReferralOutput GetReferral(string cartId)
         {
-            var referralCode = GetReferralCodeByIdFromDb(userId);
+            var referralCode = GetReferralCodeByIdFromDb(cartId);
             if (referralCode == null)
             {
                 return null;

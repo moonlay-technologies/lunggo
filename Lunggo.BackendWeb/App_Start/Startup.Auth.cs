@@ -1,7 +1,6 @@
 ﻿using System;
 
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

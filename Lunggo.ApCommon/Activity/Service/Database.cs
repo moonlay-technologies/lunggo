@@ -22,12 +22,12 @@ using System.Text;
 using System.Globalization;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using System.Security.Cryptography;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Encoder;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Activity.Service
 {

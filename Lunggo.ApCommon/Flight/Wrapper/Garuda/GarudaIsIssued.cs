@@ -2,7 +2,7 @@
 using System.Linq;
 using CsQuery;
 using CsQuery.ExtensionMethods.Internal;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda

@@ -1,8 +1,8 @@
 ﻿using System;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 using Lunggo.ApCommon.Query;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebJob.EmailQueueHandler.Function
 {

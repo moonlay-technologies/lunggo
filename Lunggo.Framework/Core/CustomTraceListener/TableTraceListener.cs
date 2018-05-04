@@ -151,8 +151,8 @@ namespace Lunggo.Framework.Core.CustomTraceListener
             var message = _messageBuffer.ToString();
             _messageBuffer.Length = 0;
 
-            if (message.EndsWith(Environment.NewLine))
-                message = message.Substring(0, message.Length - Environment.NewLine.Length);
+            if (message.EndsWith(System.Environment.NewLine))
+                message = message.Substring(0, message.Length - System.Environment.NewLine.Length);
 
             if (message.Length == 0)
                 return;

@@ -146,7 +146,7 @@ namespace Lunggo.ApCommon.Account.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "ForgotPasswordSmsTimer:" + phoneNumber;
             var redisValue = DateTime.UtcNow.AddSeconds(90).ToString();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             redisDb.StringSet(redisKey, redisValue, TimeSpan.FromSeconds(90));
         }
 
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommon.Account.Service
             var redisService = RedisService.GetInstance();
             var redisKey = "ForgotPasswordEmailTimer:" + email;
             var redisValue = DateTime.UtcNow.AddSeconds(90).ToString();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             redisDb.StringSet(redisKey, redisValue, TimeSpan.FromSeconds(90));
         }
         public bool CheckTimerSms(string phoneNumber, out int? resendCooldownSeconds)
@@ -167,7 +167,7 @@ namespace Lunggo.ApCommon.Account.Service
             
             var redisService = RedisService.GetInstance();
             var redisKey = "ForgotPasswordSmsTimer:" + phoneNumber;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var result = redisDb.KeyExists(redisKey);
             var resendCooldown = redisDb.StringGetWithExpiry(redisKey).Expiry;
             
@@ -188,7 +188,7 @@ namespace Lunggo.ApCommon.Account.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "ForgotPasswordEmailTimer:" + email;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var result = redisDb.KeyExists(redisKey);
             var resendCooldown = redisDb.StringGetWithExpiry(redisKey).Expiry;
 

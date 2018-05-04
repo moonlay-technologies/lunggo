@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Controllers;
-using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Identity.Auth
 {

@@ -8,7 +8,6 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.BrowserDetection;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
@@ -17,6 +16,7 @@ using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Redis;
 using Lunggo.Framework.SnowMaker;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Environment;
 using Microsoft.WindowsAzure.Storage;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.TableStorage;
@@ -63,7 +63,7 @@ namespace Lunggo.CustomerWeb
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Documents;
 using Lunggo.Framework.TableStorage;

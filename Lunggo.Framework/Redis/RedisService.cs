@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using StackExchange.Redis;
 
 namespace Lunggo.Framework.Redis
@@ -10,6 +10,7 @@ namespace Lunggo.Framework.Redis
         private static readonly RedisService Instance = new RedisService();
         private readonly Dictionary<String,ConnectionMultiplexer> _connectionTable;
         private int _databaseIndex;
+        private static bool _isInitialized;
 
         private RedisService()
         {
@@ -33,8 +34,12 @@ namespace Lunggo.Framework.Redis
 
         public void Init(RedisConnectionProperty[] connectionProperties)
         {
-            var databaseIndex = int.Parse(EnvVariables.Get("redis", "databaseIndex"));
-            Init(connectionProperties, databaseIndex);
+            if (!_isInitialized)
+            {
+                var databaseIndex = int.Parse(EnvVariables.Get("redis", "databaseIndex"));
+                Init(connectionProperties, databaseIndex);
+                _isInitialized = true;
+            }
         }
 
         public IDatabase GetDatabase(String connectionName)

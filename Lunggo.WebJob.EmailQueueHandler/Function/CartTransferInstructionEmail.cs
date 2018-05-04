@@ -5,7 +5,8 @@ using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
-using Lunggo.Framework.Config;
+using Lunggo.ApCommon.Product.Model;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 
@@ -29,10 +30,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
+            var contact = Contact.GetFromDb(cart.RsvNoList[0]);
+
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { cart.Contact.Email },
+                RecipientList = new[] { contact.Email },
                 BccList = new[] { "maillog.travorama@gmail.com" },
                 Subject =
                     envPrefix + "[Travorama] Harap Selesaikan Pembayaran Anda - No. Pesanan " + cartRecordId,
@@ -44,7 +47,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var instruction = paymentService.GetInstruction(payment);
             var reservations = cart.RsvNoList.Select(ActivityService.GetInstance().GetReservation).ToList();
             Console.WriteLine("Sending Bank Transfer Instruction Email...");
-            mailService.SendEmailWithTableTemplate(new { Payment = payment, cart.Contact, Instruction = instruction, reservations}, mailModel, "CartTransferInstructionEmail");
+            mailService.SendEmailWithTableTemplate(new { Payment = payment, contact, Instruction = instruction, reservations}, mailModel, "CartTransferInstructionEmail");
 
             Console.WriteLine("Done Processing Transfer Instruction Email for CartRecordId " + cartRecordId);
 

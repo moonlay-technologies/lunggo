@@ -182,11 +182,11 @@ namespace Lunggo.ApCommon.Account.Service
             }
         }
 
-        public ReferralCodeModel GetReferralCodeByIdFromDb(string userId)
+        public ReferralCodeModel GetReferralCodeByIdFromDb(string cartId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var referralCode = GetReferralCodeFromDbQuery.GetInstance().Execute(conn, new { UserId = userId }).ToList();
+                var referralCode = GetReferralCodeFromDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
                 if(referralCode.Count == 1)
                 {
                     return referralCode.First();

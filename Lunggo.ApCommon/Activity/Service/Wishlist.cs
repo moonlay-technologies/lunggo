@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using Lunggo.ApCommon.Activity.Model;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;

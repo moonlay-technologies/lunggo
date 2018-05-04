@@ -12,11 +12,11 @@ using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.helpers;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Microsoft.Owin.Security.Provider;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Hotel.Constant;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds
 {

@@ -225,11 +225,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserDetection\BrowserDetectionService.cs" />
-    <Compile Include="Config\EnvVariables.cs" />
-    <Compile Include="Config\Variables\Production.cs" />
-    <Compile Include="Config\Variables\QA.cs" />
-    <Compile Include="Config\Variables\LocalAzure.cs" />
-    <Compile Include="Config\Variables\Local.cs" />
+    <Compile Include="Environment\EnvVariables.cs" />
+    <Compile Include="Environment\Variables\Production.cs" />
+    <Compile Include="Environment\Variables\QA.cs" />
+    <Compile Include="Environment\Variables\LocalAzure.cs" />
+    <Compile Include="Environment\Variables\Local.cs" />
     <Compile Include="Core\LunggoLogger.cs" />
     <Compile Include="Core\CustomTraceListener\TableTraceListener.cs" />
     <Compile Include="Constant\SystemConstant.cs" />
@@ -334,6 +334,7 @@
     <Compile Include="SmsGateway\SendSms.cs" />
     <Compile Include="TestHelpers\InvokePartial.cs" />
     <Compile Include="TestHelpers\UseDb.cs" />
+    <Compile Include="TestHelpers\UseRedis.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskApi.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAttachment.cs" />
     <Compile Include="TicketSupport\ZendeskClass\ZendeskAudit.cs" />

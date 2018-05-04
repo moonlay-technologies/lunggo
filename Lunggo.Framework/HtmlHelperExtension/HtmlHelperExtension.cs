@@ -48,7 +48,7 @@ namespace Lunggo.Framework.HtmlHelperExtension
 
         public static MvcHtmlString PageScripts(this HtmlHelper helper)
         {
-            return MvcHtmlString.Create(string.Join(Environment.NewLine, ScriptBlock.PageScripts.Select(s => s.ToString())));
+            return MvcHtmlString.Create(string.Join(System.Environment.NewLine, ScriptBlock.PageScripts.Select(s => s.ToString())));
         }
 
         public static MvcHtmlString ConvertToReadMore(this HtmlHelper helper, string str, int length)

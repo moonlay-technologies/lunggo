@@ -1,5 +1,4 @@
 ﻿using CsQuery;
-using Lunggo.Framework.Config;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.Webjob.BankTransferChecking
 {

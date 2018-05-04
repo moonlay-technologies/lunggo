@@ -10,7 +10,6 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Activity.Service

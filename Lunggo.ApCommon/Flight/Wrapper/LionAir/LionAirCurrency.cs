@@ -8,7 +8,6 @@ using CsQuery.StringScanner.ExtensionMethods;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Config;
 using RestSharp;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
 

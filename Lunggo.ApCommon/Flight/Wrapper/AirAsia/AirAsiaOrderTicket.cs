@@ -6,11 +6,11 @@ using System.Threading;
 using CsQuery;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Web;
 using RestSharp;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.AirAsia
 {

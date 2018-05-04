@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Content.Model;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.messages;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.types;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Newtonsoft.Json;
 
 namespace Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk

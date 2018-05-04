@@ -1,5 +1,4 @@
 ﻿using System;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Lunggo.ApCommon.Activity.Model;

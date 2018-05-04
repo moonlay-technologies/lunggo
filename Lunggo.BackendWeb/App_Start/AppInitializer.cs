@@ -7,10 +7,10 @@ using Lunggo.ApCommon.Payment;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.BlobStorage;
 using Lunggo.Framework.BrowserDetection;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Core;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Documents;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.I18nMessage;
 using Lunggo.Framework.Mail;
@@ -71,7 +71,7 @@ namespace Lunggo.BackendWeb
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 

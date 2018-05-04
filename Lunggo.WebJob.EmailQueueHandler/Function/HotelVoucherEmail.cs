@@ -6,7 +6,7 @@ using System.Text;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Mail;
 using Lunggo.Framework.SharedModel;
 using Microsoft.Azure.WebJobs;

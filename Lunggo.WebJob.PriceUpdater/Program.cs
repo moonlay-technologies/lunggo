@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using RestSharp;
 

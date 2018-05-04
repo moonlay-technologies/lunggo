@@ -10,9 +10,9 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
 using RestSharp;
 using System.Globalization;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda
 {

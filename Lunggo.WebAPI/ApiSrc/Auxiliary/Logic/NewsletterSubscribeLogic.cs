@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.WebAPI.ApiSrc.Auxiliary.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using RestSharp;

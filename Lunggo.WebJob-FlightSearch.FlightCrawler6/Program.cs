@@ -1,5 +1,5 @@
 ﻿using System;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Microsoft.Azure.WebJobs;
 
 namespace Lunggo.WebJob.FlightCrawler

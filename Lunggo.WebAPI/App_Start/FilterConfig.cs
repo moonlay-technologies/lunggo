@@ -2,7 +2,6 @@
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Log;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.TableStorage;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -16,6 +15,7 @@ using System.Text;
 using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebAPI.App_Start
 {

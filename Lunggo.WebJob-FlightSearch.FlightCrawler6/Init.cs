@@ -1,7 +1,7 @@
 ﻿using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
@@ -26,7 +26,7 @@ namespace Lunggo.WebJob.FlightCrawler
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 

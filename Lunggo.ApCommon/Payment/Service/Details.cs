@@ -9,7 +9,6 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Payment.Query;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -18,15 +17,29 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentStatus GetPaymentStatus(string trxId)
+        public PaymentDetails GetPaymentDetails(string rsvNo)
         {
-            var isTrxValid = ValidateTrxId(trxId, out var trxType);
+            return _db.GetPaymentDetails(rsvNo);
+        }
+
+        public PaymentStatus GetCartPaymentStatus(string cartId)
+        {
+            var isTrxValid = ValidateCartId(cartId);
             if (!isTrxValid)
                 throw new ArgumentException("Invalid ID");
 
-            var paymentDetails = trxType == PaymentDetailsType.Cart
-                ? GetCartPaymentDetails(trxId)
-                : GetPaymentDetails(trxId);
+            var paymentDetails = GetCartPaymentDetails(cartId);
+
+            return paymentDetails.Status;
+        }
+
+        public PaymentStatus GetPaymentStatus(string rsvNo)
+        {
+            var isTrxValid = ValidateRsvNo(rsvNo);
+            if (!isTrxValid)
+                throw new ArgumentException("Invalid ID");
+
+            var paymentDetails = _db.GetPaymentDetails(rsvNo);
 
             return paymentDetails.Status;
         }
@@ -87,46 +100,6 @@ namespace Lunggo.ApCommon.Payment.Service
             return record;
         }
 
-        public PaymentDetails GetPaymentDetails(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var record = PaymentTableRepo.GetInstance().Find1(conn, new PaymentTableRecord { RsvNo = rsvNo });
-
-                return ConvertPaymentRecordToPaymentDetails(record);
-            }
-        }
-
-        private static PaymentDetails ConvertPaymentRecordToPaymentDetails(PaymentTableRecord record)
-        {
-            var details = new PaymentDetails();
-            details.RsvNo = record.RsvNo;
-            details.Medium = PaymentMediumCd.Mnemonic(record.MediumCd);
-            details.Method = PaymentMethodCd.Mnemonic(record.MethodCd);
-            details.Submethod = PaymentSubmethodCd.Mnemonic(record.SubMethod);
-            details.Status = PaymentStatusCd.Mnemonic(record.StatusCd);
-            details.Time = DateTime.SpecifyKind(record.Time.GetValueOrDefault(), DateTimeKind.Utc);
-            details.TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc);
-            details.TransferAccount = record.TransferAccount;
-            details.RedirectionUrl = record.RedirectionUrl;
-            details.ExternalId = record.ExternalId;
-            details.DiscountCode = record.DiscountCode;
-            details.OriginalPriceIdr = record.OriginalPriceIdr.GetValueOrDefault();
-            details.DiscountNominal = record.DiscountNominal.GetValueOrDefault();
-            details.UniqueCode = record.UniqueCode.GetValueOrDefault();
-            details.FinalPriceIdr = record.FinalPriceIdr.GetValueOrDefault();
-            details.PaidAmountIdr = record.PaidAmountIdr.GetValueOrDefault();
-            details.LocalCurrency = new Currency(
-                record.LocalCurrencyCd,
-                record.LocalRate.GetValueOrDefault(),
-                record.LocalCurrencyRounding.GetValueOrDefault());
-            details.LocalFinalPrice = record.LocalFinalPrice.GetValueOrDefault();
-            details.LocalPaidAmount = record.LocalPaidAmount.GetValueOrDefault();
-            details.Surcharge = record.Surcharge.GetValueOrDefault();
-            details.InvoiceNo = record.InvoiceNo;
-            details.Discount = UsedDiscount.GetFromDb(record.RsvNo);
-            details.Refund = Refund.GetFromDb(record.RsvNo);
-            return details;
-        }
+        
     }
 }

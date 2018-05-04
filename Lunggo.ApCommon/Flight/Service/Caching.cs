@@ -9,7 +9,7 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using StackExchange.Redis;
@@ -32,7 +32,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var lowestvalue = GetLowestPrice(itins);
             Console.WriteLine("Lowest value for route: " + keyRoute + keyDate + " is " + lowestvalue);
             var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redis.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var keyDate = SetDate(date);
             var lowestvalue = GetLowestPrice(itins);
             var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redis.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                
@@ -68,7 +68,7 @@ namespace Lunggo.ApCommon.Flight.Service
         //    var keyRoute = SetRoute(itins);
         //    var keyDate = SetDate(itins);
         //    var redis = RedisService.GetInstance();
-        //    var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+        //    var redisDb = redis.GetDatabase(ApConstant.MasterDataCacheName);
         //    return (decimal)redisDb.HashGet(keyRoute, keyDate);
         //}
 
@@ -77,7 +77,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var keyRoute = SetRoute(origin, destination);
             var keyDate = SetDate(date);
             var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redis.GetDatabase(ApConstant.MasterDataCacheName);
             Decimal dec = -1;
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -99,7 +99,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
             }
             var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redis.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -121,7 +121,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 listofDates.Add(date.ToString("ddMMyy", CultureInfo.InvariantCulture));
             }
             var redis = RedisService.GetInstance();
-            var redisDb = redis.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redis.GetDatabase(ApConstant.MasterDataCacheName);
             var values = new List<RedisValue>();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -157,7 +157,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -176,7 +176,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "mandiriTransactionPrice:" + mandiriCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -196,7 +196,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "mandiriTransactionPrice:" + key;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -212,7 +212,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchFlightStatus:" + searchId + ":" + supplierIndex;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -231,7 +231,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchFlightStatus:" + searchId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 
@@ -250,7 +250,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchFlightStatus:" + searchId + ":" + supplierIndex;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var expiry = GetSearchedItinerariesExpiry(searchId, supplierIndex);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -266,7 +266,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchFlightStatus:" + searchId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var expiry = GetSearchedItinerariesExpiry(searchId, 0);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -285,7 +285,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 timeout =
                     Int32.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
                 
@@ -309,7 +309,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var timeout = Int32.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
             var redisKey = "searchedPartialFlightItineraries:" + searchId + ":" + supplierIndex + ":" + partNumber;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var cacheObject = itineraryList.ToCacheObject();
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
@@ -327,7 +327,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Int32.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
             var redisKey = "searchedSupplierIndices:" + searchId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
                 
@@ -345,7 +345,7 @@ namespace Lunggo.ApCommon.Flight.Service
                     Int32.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
             var redisService = RedisService.GetInstance();
             var redisKey = "currencies:" + searchId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
                 
@@ -359,7 +359,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "currencies:" + searchId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
 
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
@@ -375,7 +375,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchedSupplierIndices:" + searchId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var length = redisDb.ListLength(redisKey);
             for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
             {
@@ -394,7 +394,7 @@ namespace Lunggo.ApCommon.Flight.Service
             for (var i = 0; i <= partialItinsCount; i++)
             {
                 var redisKey = "searchedPartialFlightItineraries:" + searchId + ":" + supplierIndex + ":" + i;
-                var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+                var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
                 var cacheObject = new RedisValue();
                 for (var x = 0; x < ApConstant.RedisMaxRetry; x++)
                 {
@@ -421,7 +421,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var supplierIndex = registerNumber / SupplierIndexCap;
             var redisKey = "searchedFlightItineraries:" + partNumber + ":" + searchId + ":" + supplierIndex;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var cacheObject = new RedisValue();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -446,7 +446,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "searchedFlightItineraries:0:" + searchId + ":" + supplierIndex;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -463,7 +463,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var conditions = DecodeSearchConditions(searchId);
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var searchedSupplierItins = new Dictionary<int, List<List<FlightItinerary>>>();
             foreach (var supplierId in requestedSupplierIds)
             {
@@ -498,7 +498,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "flightItinerary:" + itinCacheId;
             var cacheObject = itin.ToCacheObject();
             var timeout = int.Parse(EnvVariables.Get("flight", "ItineraryCacheTimeout"));
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -516,7 +516,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "flightCombos:" + searchId + ":" + supplierIndex;
             var cacheObject = combos.ToCacheObject();
             var timeout = int.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -531,7 +531,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightCombos:" + searchId + ":" + supplierIndex;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var cacheObject = new RedisValue();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -549,7 +549,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItinerary:" + itinCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -570,7 +570,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItinerary:" + itinCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             //var cacheObject = redisDb.StringGet(redisKey);
             redisDb.KeyDelete(redisKey);
         }
@@ -579,7 +579,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItineraries:" + itinCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -604,7 +604,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisKey = "flightItineraries:" + itinCacheId;
             var setCacheObject = itins.ToCacheObject();
             var timeout = int.Parse(EnvVariables.Get("flight", "ItineraryCacheTimeout"));
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -619,7 +619,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItineraries:" + itinCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -640,7 +640,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightItineraries:" + itinCacheId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -654,7 +654,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "paymentRedirectionUrl:" + rsvNo;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -668,7 +668,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "paymentRedirectionUrl:" + rsvNo;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 
@@ -684,7 +684,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisMarginsKey = "activeFlightMargins";
             var redisRulesKey = "activeFlightMarginRules";
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var marginsCacheObject = marginRules.Select(mr => mr.Margin).ToCacheObject();
             var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
@@ -702,7 +702,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisMarginKey = "activeFlightMargins";
             var redisRuleKey = "activeFlightMarginRules";
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
 
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -724,7 +724,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var marginsRedisKey = "activeFlightMarginsBuffer";
             var rulesRedisKey = "activeFlightMarginRulesBuffer";
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var marginsCacheObject = marginRules.Select(mr => mr.Margin).ToCacheObject();
             var rulesCacheObject = marginRules.Select(mr => mr.Rule).ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
@@ -742,7 +742,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var deletedMarginsRedisKey = "deletedFlightMarginsBuffer";
             var deletedRulesRedisKey = "deletedFlightMarginRulesBuffer";
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var deletedMarginsCacheObject = deletedMarginRules.Select(mr => mr.Margin).ToCacheObject();
             var deletedRulesCacheObject = deletedMarginRules.Select(mr => mr.Rule).ToCacheObject();
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
@@ -760,7 +760,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisMarginsKey = "activeFlightMarginsBuffer";
             var redisRulesKey = "activeFlightMarginRulesBuffer";
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
 
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -781,7 +781,7 @@ namespace Lunggo.ApCommon.Flight.Service
             var redisService = RedisService.GetInstance();
             var redisMarginsKey = "deletedFlightMarginsBuffer";
             var redisRulesKey = "deletedFlightMarginRulesBuffer";
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
 
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -801,7 +801,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightRequestAsReturn:" + requestId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var timeout = Int32.Parse(EnvVariables.Get("flight", "SearchResultCacheTimeout"));
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
@@ -816,7 +816,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "flightRequestAsReturn:" + requestId;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
 

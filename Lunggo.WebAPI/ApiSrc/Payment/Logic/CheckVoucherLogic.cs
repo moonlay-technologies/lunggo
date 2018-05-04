@@ -1,12 +1,11 @@
 ﻿using System.Net;
-using Lunggo.ApCommon.Campaign.Constant;
-using Lunggo.ApCommon.Campaign.Model;
-using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Payment.Model;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Account.Service;
 using System;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
@@ -17,8 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             if (IsValid(request))
             {
-                var service = CampaignService.GetInstance();
-                var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);                
+                var response = new PaymentService().ValidateVoucherRequest(request.RsvNo, request.DiscountCode);                
                 if(request.DiscountCode == "REFERRALCREDIT")
                 {
                     var cart = new PaymentService().GetCart(request.RsvNo);

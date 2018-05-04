@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;

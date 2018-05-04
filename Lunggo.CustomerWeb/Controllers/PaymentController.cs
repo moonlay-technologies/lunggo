@@ -18,12 +18,10 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.CustomerWeb.Helper;
 using Lunggo.CustomerWeb.Models;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Redis;
 using RestSharp;
 using PaymentData = Lunggo.CustomerWeb.Models.PaymentData;
-using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Account.Service;
 
 namespace Lunggo.CustomerWeb.Controllers
@@ -43,7 +41,7 @@ namespace Lunggo.CustomerWeb.Controllers
             var activityService = ActivityService.GetInstance();
             var rsvList = _paymentService.GetCart(trxId);
             var userId = activityService.GetUserIdByRsvNo(rsvList.RsvNoList[0]);
-            var voucherRs = CampaignService.GetInstance().ValidateVoucherRequest(trxId, voucherCode);
+            var voucherRs = new PaymentService().ValidateVoucherRequest(trxId, voucherCode);
             var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
             if(voucherRsLimit < voucherRs.TotalDiscount)
             {
@@ -261,7 +259,7 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             var redisService = RedisService.GetInstance();
             var redisKey = "e2pay:paymentPage:" + guid;
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             for (var i = 0; i < ApConstant.RedisMaxRetry; i++)
             {
                 try

@@ -1,5 +1,5 @@
 ﻿using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
 {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Web.Mvc;
 using Lunggo.CustomerWeb.Attributes;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Filter;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.CustomerWeb
 {

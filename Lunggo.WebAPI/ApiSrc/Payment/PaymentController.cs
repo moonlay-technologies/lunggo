@@ -164,7 +164,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         [HttpPost]
         [Level1Authorize]
         [Route("v1/payment/nicepay/paymentnotification")]
-        public ApiResponseBase NicepayPaymentNotification([FromBody] NotificationResult request)
+        public ApiResponseBase NicepayPaymentNotification([FromBody] PaymentLogic.NotificationResult request)
         {
             try
             {
