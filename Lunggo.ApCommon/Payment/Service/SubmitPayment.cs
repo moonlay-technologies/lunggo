@@ -88,8 +88,8 @@ namespace Lunggo.ApCommon.Payment.Service
 
         internal virtual bool TryApplyVoucher(string cartId, string discountCode, PaymentDetails paymentDetails)
         {
-            var campaign = UseVoucherRequest(cartId, discountCode);
-            if (campaign.VoucherStatus != VoucherStatus.Success || campaign.Discount == null)
+            var campaign = UseVoucherRequest(cartId, discountCode, out var status);
+            if (status != VoucherStatus.Success || campaign.Discount == null)
             {
                 paymentDetails.Status = PaymentStatus.Failed;
                 paymentDetails.FailureReason = FailureReason.VoucherNoLongerAvailable;
@@ -118,7 +118,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             paymentDetails.FinalPriceIdr -= campaign.TotalDiscount;
             paymentDetails.Discount = campaign.Discount;
-            paymentDetails.DiscountCode = campaign.VoucherCode;
+            paymentDetails.DiscountCode = discountCode;
             paymentDetails.DiscountNominal = campaign.TotalDiscount;
             return true;
         }

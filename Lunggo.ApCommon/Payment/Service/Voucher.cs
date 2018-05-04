@@ -30,49 +30,47 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             return _db.GetCampaignVoucher(voucherCode);
         }
-        public VoucherResponse ValidateVoucherRequest(string trxId, string voucherCode)
+        public VoucherResponse ValidateVoucherRequest(string trxId, string voucherCode, out VoucherStatus status)
         {
             var response = new VoucherResponse();
-            var user = HttpContext.Current.User;
             var isRsv = trxId.Length < 15;
             var cart = new Cart();
             if (!isRsv)
             {
                 cart = GetCart(trxId);
                 if (cart == null || cart.RsvNoList == null || !cart.RsvNoList.Any())
+                {
+                    status = VoucherStatus.InternalError;
                     return response;
+                }
             }
             
             var voucher = _db.GetCampaignVoucher(voucherCode);
 
             if (voucher == null)
             {
-                response.VoucherStatus = VoucherStatus.VoucherNotFound;
+                status = VoucherStatus.VoucherNotFound;
                 return response;
             }
 
             if (isRsv && voucher.ProductType != null && !voucher.ProductType.Contains(trxId[0]))
             {
-                response.VoucherStatus = VoucherStatus.ProductNotEligible;
+                status = VoucherStatus.TermsConditionsNotEligible;
                 return response;
             }
-
-            if (user.Identity.IsAuthenticated && user.Identity.IsUserAuthorized())
-                response.Email = user.Identity.GetEmail();
-            response.VoucherCode = voucherCode;
 
             var contact = isRsv ? Contact.GetFromDb(trxId) : Contact.GetFromDb(cart.RsvNoList[0]);
             if (contact == null)
             {
-                response.VoucherStatus = VoucherStatus.ReservationNotFound;
+                status = VoucherStatus.InternalError;
                 return response;
             }
 
-            if (!_cache.IsPhoneAndEmailEligibleInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email))
-            {
-                response.VoucherStatus = VoucherStatus.EmailNotEligible;
-                return response;
-            }
+            //if (!_cache.IsPhoneAndEmailEligibleInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email))
+            //{
+            //    status = VoucherStatus.EmailNotEligible;
+            //    return response;
+            //}
 
             var paymentDetails = GetPaymentDetails(trxId);
             if (paymentDetails == null)
@@ -80,14 +78,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 paymentDetails = GetPaymentDetails(trxId);
                 if (paymentDetails == null)
                 {
-                    response.VoucherStatus = VoucherStatus.ReservationNotFound;
+                    status = VoucherStatus.InternalError;
                     return response;
                 }
             }
 
             var price = paymentDetails.OriginalPriceIdr * paymentDetails.LocalCurrency.Rate;
 
-            var validationStatus = ValidateVoucher(voucher, price, response.Email, voucherCode);
+            var validationStatus = ValidateVoucher(voucher, price, voucherCode);
 
             if (validationStatus == VoucherStatus.Success)
             {
@@ -124,7 +122,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.MaxBudget.HasValue &&
                     (voucher.MaxBudget - voucher.UsedBudget < cost - paymentDetails.FinalPriceIdr * 0.97M))
                 {
-                    response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+                    status = VoucherStatus.VoucherDepleted;
                     return response;
                 }
 
@@ -133,13 +131,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 66 || voucher.CampaignName == "Good Monday") // Good Monday
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                     var platform = Client.GetPlatformType(clientId);
                     if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
                     {
-                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -149,7 +148,7 @@ namespace Lunggo.ApCommon.Payment.Service
                             FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                             FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -157,7 +156,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     if (!(new[] { "JKT", "CGK", "HLP", "SRG", "JOG", "TNJ", "SUB" }
                         .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -170,14 +169,14 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
                         {
-                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            status = VoucherStatus.TermsConditionsNotEligible;
                             valid = false;
                         }
                     }
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Monday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -191,10 +190,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 71 || voucher.CampaignName == "Selasa Spesial") // Selasa Spesial
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Tuesday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -208,13 +208,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 67 || voucher.CampaignName == "Promo Rabu") // Promo Rabu
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                     var platform = Client.GetPlatformType(clientId);
                     if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
                     {
-                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -224,7 +225,7 @@ namespace Lunggo.ApCommon.Payment.Service
                             FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                             FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -237,7 +238,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         if (!(new[] { "SJ", "IN" }.Contains(airline)))
                         {
-                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            status = VoucherStatus.TermsConditionsNotEligible;
                             valid = false;
                         }
                     }
@@ -246,13 +247,13 @@ namespace Lunggo.ApCommon.Payment.Service
                         paymentDetails.Method != PaymentMethod.VirtualAccount &&
                         paymentDetails.Method != PaymentMethod.Undefined)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Wednesday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -266,13 +267,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 68 || voucher.CampaignName == "Kamis Ceria") // Kamis Ceria
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                     var platform = Client.GetPlatformType(clientId);
                     if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
                     {
-                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -282,7 +284,7 @@ namespace Lunggo.ApCommon.Payment.Service
                             FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                             FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -290,7 +292,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     if (!(new[] { "DPS", "LOP", "LBJ", "BTH", "BTJ" }
                         .Contains((rsv as FlightReservation).Itineraries[0].Trips[0].DestinationAirport)))
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -303,7 +305,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
                         {
-                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            status = VoucherStatus.TermsConditionsNotEligible;
                             valid = false;
                         }
                     }
@@ -311,7 +313,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Thursday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -325,6 +327,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 72 || voucher.CampaignName == "Jumat Hemat") // Jumat Hemat
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     var userId = identity.Name == "anonymous" ? null : identity.GetUser().Id;
@@ -337,13 +340,13 @@ namespace Lunggo.ApCommon.Payment.Service
                         .Where(r => r.Payment.Status == PaymentStatus.Settled);
                     if (!rsvs1.Concat(rsvs2).Any())
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Friday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -356,13 +359,14 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 69 || voucher.CampaignName == "Jalan-Jalan Sabtu") // Jalan-Jalan Sabtu
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                     var clientId = identity.Claims.Single(claim => claim.Type == "Client ID").Value;
                     var platform = Client.GetPlatformType(clientId);
                     if (platform == PlatformType.AndroidApp || platform == PlatformType.IosApp)
                     {
-                        response.VoucherStatus = VoucherStatus.PlatformNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -372,7 +376,7 @@ namespace Lunggo.ApCommon.Payment.Service
                             FlightService.GetInstance().GetAirportCountryCode(t.OriginAirport) != "ID" ||
                             FlightService.GetInstance().GetAirportCountryCode(t.DestinationAirport) != "ID"))
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -385,7 +389,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     {
                         if (!(new[] { "QG", "SJ", "IN", "ID" }.Contains(airline)))
                         {
-                            response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                            status = VoucherStatus.TermsConditionsNotEligible;
                             valid = false;
                         }
                     }
@@ -395,14 +399,14 @@ namespace Lunggo.ApCommon.Payment.Service
                         paymentDetails.Method != PaymentMethod.VirtualAccount &&
                         paymentDetails.Method != PaymentMethod.Undefined)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Saturday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -416,10 +420,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (voucher.CampaignId == 73 || voucher.CampaignName == "Sunday Funday") // Sunday Funday
                 {
                     var valid = true;
+                    status = VoucherStatus.InternalError;
 
                     if (DateTime.UtcNow.AddHours(7).DayOfWeek != DayOfWeek.Sunday)
                     {
-                        response.VoucherStatus = VoucherStatus.ReservationNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                         valid = false;
                     }
 
@@ -434,69 +439,68 @@ namespace Lunggo.ApCommon.Payment.Service
 
             }
 
-            response.VoucherStatus = validationStatus;
+            status = validationStatus;
             return response;
         }
 
-        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode)
+        public VoucherResponse UseVoucherRequest(string rsvNo, string voucherCode, out VoucherStatus status)
         {
-            var response = ValidateVoucherRequest(rsvNo, voucherCode);
-            if (response.VoucherStatus == VoucherStatus.Success)
+            var response = ValidateVoucherRequest(rsvNo, voucherCode, out status);
+            if (status == VoucherStatus.Success)
             {
                 var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);
                 var isVoucherDecrementSuccess = VoucherDecrement(voucherCode);
                 if (isUseBudgetSuccess && isVoucherDecrementSuccess)
                 {
-                    response.VoucherStatus = VoucherStatus.Success;
-                    var contact = Contact.GetFromDb(rsvNo);
+                    status = VoucherStatus.Success;
+                    //var contact = Contact.GetFromDb(rsvNo);
                     //SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
                 }
                 else
-                    response.VoucherStatus = VoucherStatus.UpdateError;
+                    status = VoucherStatus.InternalError;
             }
             return response;
         }
 
-        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, string email, string voucherCode)
+        private VoucherStatus ValidateVoucher(CampaignVoucher voucher, decimal price, string voucherCode)
         {
             var currentTime = DateTime.Now;
             if (voucher == null)
                 return VoucherStatus.VoucherNotFound;
             if (voucher.StartDate >= currentTime)
-                return VoucherStatus.CampaignNotStartedYet;
+                return VoucherStatus.OutsidePeriod;
             if (voucher.EndDate <= currentTime)
-                return VoucherStatus.CampaignHasEnded;
+                return VoucherStatus.OutsidePeriod;
             if (voucher.RemainingCount < 1)
-                return VoucherStatus.NoVoucherRemaining;
+                return VoucherStatus.VoucherDepleted;
             if (voucher.MinSpendValue > price)
                 return VoucherStatus.BelowMinimumSpend;
-            if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Member))
-            {
-                if (!_db.IsMember(email))
-                    return VoucherStatus.EmailNotEligible;
-            }
-            if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Private))
-            {
-                if (!_db.IsEligibleForVoucher(voucherCode, email))
-                    return VoucherStatus.EmailNotEligible;
-            }
+            //if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Member))
+            //{
+            //    if (!_db.IsMember(email))
+            //        return VoucherStatus.EmailNotEligible;
+            //}
+            //if (voucher.CampaignTypeCd == CampaignTypeCd.Mnemonic(CampaignType.Private))
+            //{
+            //    if (!_db.IsEligibleForVoucher(voucherCode, email))
+            //        return VoucherStatus.EmailNotEligible;
+            //}
             if (voucher.CampaignStatus == false)
-                return VoucherStatus.CampaignInactive;
-            if (voucher.IsSingleUsage != null && voucher.IsSingleUsage == true)
-            {
-                if (_db.CheckVoucherUsage(voucherCode, email) > 0)
-                    return VoucherStatus.VoucherAlreadyUsed;
-            }
+                return VoucherStatus.OutsidePeriod;
+            //if (voucher.IsSingleUsage != null && voucher.IsSingleUsage == true)
+            //{
+            //    if (_db.CheckVoucherUsage(voucherCode, email) > 0)
+            //        return VoucherStatus.VoucherAlreadyUsed;
+            //}
             return VoucherStatus.Success;
         }
 
         private void CalculateVoucherDiscount(CampaignVoucher voucher, decimal price, VoucherResponse response)
         {
-            response.OriginalPrice = price;
             response.TotalDiscount = 0;
 
             if (voucher.ValuePercentage != null && voucher.ValuePercentage > 0)
-                response.TotalDiscount += (response.OriginalPrice * (decimal)voucher.ValuePercentage / 100M);
+                response.TotalDiscount += (price * (decimal)voucher.ValuePercentage / 100M);
 
             if (voucher.ValueConstant != null && voucher.ValueConstant > 0)
                 response.TotalDiscount += (decimal)voucher.ValueConstant;
@@ -507,7 +511,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             response.TotalDiscount = Math.Floor(response.TotalDiscount);
 
-            response.DiscountedPrice = response.OriginalPrice - response.TotalDiscount;
+            response.DiscountedPrice = price - response.TotalDiscount;
             if (response.DiscountedPrice < 50000)
             {
                 response.DiscountedPrice = 50000M;
