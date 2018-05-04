@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Activity.Service
             var userId = GetUserIdByRsvNo(rsvNo);
             var reservation = GetReservation(rsvNo);
             var notifTitle = "Aktivitas telah di terima oleh operator";
-            var notifBody = "Aktivitas dengan nama aktivitas \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
+            var notifBody = "Aktivitas dengan nama \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
                             reservation.DateTime.Date.Value.Date.ToShortDateString() + " telah di terima oleh operator";
             var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, userId);
             return notifResult;
@@ -113,7 +113,7 @@ namespace Lunggo.ApCommon.Activity.Service
             var userId = GetUserIdByRsvNo(rsvNo);
             var reservation = GetReservation(rsvNo);
             var notifTitle = "Aktivitas telah ditolak";            
-            var notifBody = "Aktivitas dengan nama aktivitas \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
+            var notifBody = "Aktivitas dengan nama \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
                             reservation.DateTime.Date.Value.Date.ToShortDateString() + " telah di tolak";
             var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, userId);
             return notifResult;
@@ -232,7 +232,7 @@ namespace Lunggo.ApCommon.Activity.Service
         internal bool PushNotifForwardAppointmentForCustomer(string customerId, string activityName, DateTime activityDate)
         {
             var notifTitle = "Aktivitas telah di teruskan ke operator";
-            var notifBody = "Aktivitas dengan nama aktivitas \"" + activityName + "\" pada tanggal " +
+            var notifBody = "Aktivitas dengan nama \"" + activityName + "\" pada tanggal " +
                             activityDate.ToShortDateString() + " telah di teruskan ke operator";
             var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, customerId);
             return notifResult;

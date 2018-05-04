@@ -41,6 +41,14 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
 
                 var notif = NotificationService.GetInstance();
                 var newRegistrationId = notif.RegisterDevice(request.Handle, deviceId, userId);
+                if (newRegistrationId == null)
+                {
+                    return new RegisterDeviceApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_REQUEST"
+                    };
+                }
 
                 return new RegisterDeviceApiResponse
                 {

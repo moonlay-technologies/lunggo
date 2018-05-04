@@ -586,6 +586,7 @@
     <Compile Include="Log\Log.cs" />
     <Compile Include="Notifications\Notification.cs" />
     <Compile Include="Notifications\NotificationClient.cs" />
+    <Compile Include="Notifications\NotificationDbService.cs" />
     <Compile Include="Notifications\NotificationService.cs" />
     <Compile Include="Notifications\Platform.cs" />
     <Compile Include="Payment\Constant\FailureReason.cs" />

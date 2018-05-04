@@ -10,14 +10,21 @@ namespace Lunggo.ApCommon.Notifications
 {
     public partial class NotificationService
     {
+        public NotificationDbService _db { get; set; }
         private static readonly NotificationService Instance = new NotificationService();
         private bool _isInitialized;
         //private static readonly AzureNotificationClient Client = AzureNotificationClient.GetClientInstance();
 
-        private NotificationService()
+        public NotificationService() : this(null)
         {
 
         }
+
+        public NotificationService(NotificationDbService notificationDbService)
+        {
+            _db = notificationDbService ?? new NotificationDbService();
+        }
+
         public void Init(string connString, string hubName)
         {
             if (!_isInitialized)
@@ -33,118 +40,68 @@ namespace Lunggo.ApCommon.Notifications
 
         public string RegisterDevice(string notificationHandle, string deviceId, string userId)
         {
-            //return Client.RegisterDevice(notificationHandle, deviceId);
-            return RegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
-        }
-
-        internal string RegisterDeviceExpoToDb(string notificationHandle, string deviceId, string userId)
-        {
-            var RegisterId = "";
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {                
-                var notificationRecord = new NotificationTableRecord
-                {
-                    Handle = notificationHandle,
-                    DeviceId = deviceId,
-                    UserId = userId
-                };
-                if (CheckAvailableExpoToken(notificationHandle))
-                {
-                    NotificationTableRepo.GetInstance().Update(conn, notificationRecord);
-                }
-                else
-                {
-                    NotificationTableRepo.GetInstance().Insert(conn, notificationRecord);
-                }
+            if (string.IsNullOrWhiteSpace(notificationHandle) || string.IsNullOrWhiteSpace(userId)) 
+            {
+                return null;
             }
-            return RegisterId;
+            //return Client.RegisterDevice(notificationHandle, deviceId);
+            return _db.RegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
         }
 
+      
         public string OperatorRegisterDevice(string notificationHandle, string deviceId, string userId)
         {
             //return Client.RegisterDevice(notificationHandle, deviceId);
-            return OperatorRegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
-        }
-
-        internal string OperatorRegisterDeviceExpoToDb(string notificationHandle, string deviceId, string userId)
-        {
-            var RegisterId = "";
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {                
-                var notificationRecord = new NotificationOperatorTableRecord
-                {
-                    Handle = notificationHandle,
-                    DeviceId = deviceId,
-                    UserId = userId
-                };
-                if (CheckAvailableOperatorExpoToken(notificationHandle))
-                {
-                    NotificationOperatorTableRepo.GetInstance().Update(conn, notificationRecord);
-                }
-                else
-                {
-                    NotificationOperatorTableRepo.GetInstance().Insert(conn, notificationRecord);
-                }
+            if (string.IsNullOrWhiteSpace(notificationHandle) || string.IsNullOrWhiteSpace(userId)) 
+            {
+                return null;
             }
-            return RegisterId;
+            return _db.OperatorRegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
         }
-
 
         public bool SendNotificationsCustomer(string messageTitle, string messageBody, string userId)
         {
-            var expoTokens = GetCustomerExpoTokenFromDb(userId);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return false;
+            }
+            var expoTokens = _db.GetCustomerExpoTokenFromDb(userId);
             if (expoTokens == null || expoTokens.Count <  1)
             {
                 return false;
             }
-
-            int successCounter = 0;
-            int failCounter = 0;
-
-            foreach (var expoData in expoTokens)
+            foreach (var expoToken in expoTokens)
             {
-                var check = SendNotificationsExpo(messageTitle, messageBody, expoData.Handle);
-                if (check)
-                {
-                    successCounter++;
-                }
-                else
-                {
-                    failCounter++;
-                }                
+                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken);            
             }
             return true;
         }
 
         public bool SendNotificationsOperator(string messageTitle, string messageBody, string userId)
         {
-            var expoTokens = GetOperatorExpoTokenFromDb(userId);
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return false;
+            }
+            var expoTokens = _db.GetOperatorExpoTokenFromDb(userId);
             if (expoTokens == null || expoTokens.Count <  1)
             {
                 return false;
             }
-
-            int successCounter = 0;
-            int failCounter = 0;
-
-            foreach (var expoData in expoTokens)
+            foreach (var expoToken in expoTokens)
             {
-                var check = SendNotificationsExpo(messageTitle, messageBody, expoData.Handle);
-                if (check)
-                {
-                    successCounter++;
-                }
-                else
-                {
-                    failCounter++;
-                }                
+                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken);           
             }
             return true;
         }
         
 
-        internal bool SendNotificationsExpo(string messageTitle, string messageBody, string expoToken)
+        public virtual bool SendNotificationsExpo(string messageTitle, string messageBody, string expoToken)
         {
+            if (string.IsNullOrWhiteSpace(expoToken))
+            {
+                return false;
+            }
             var pushNotificationClient = new RestClient("https://exp.host");
             var pushNotificationRequest = new RestRequest("/--/api/v2/push/send", Method.POST);
             var pushNotificationBody = new Notification();
@@ -152,102 +109,44 @@ namespace Lunggo.ApCommon.Notifications
             pushNotificationBody.Message = messageBody;
             pushNotificationBody.Receiver = expoToken;
             pushNotificationBody.Sound = "default";
-            var pushNotificationBodyJson = pushNotificationBody.ConvertToNotificationJsonFormat();
+            var pushNotificationBodyJson = ConvertToNotificationJsonFormat(pushNotificationBody);
             pushNotificationRequest.AddJsonBody(pushNotificationBodyJson);
             var pushNotificationResponse = pushNotificationClient.Execute(pushNotificationRequest);
             return pushNotificationResponse.StatusCode == HttpStatusCode.OK;
         }
 
-        internal List<NotificationTableRecord> GetCustomerExpoTokenFromDb(string userId)
+        public bool DeleteRegistration(string expoHandle)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            if (string.IsNullOrWhiteSpace(expoHandle))
             {
-                var notificationRecord = new NotificationTableRecord();
-                notificationRecord.UserId = userId;
-                var userExpoToken = NotificationTableRepo.GetInstance().Find(conn, notificationRecord).ToList();
-                return userExpoToken;
+                return false;
             }
+            _db.DeleteRegistrationFromDb(expoHandle);
+            return true;
         }
 
-        internal List<NotificationOperatorTableRecord> GetOperatorExpoTokenFromDb(string userId)
+        public bool OperatorDeleteRegistration(string expoHandle)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            if (string.IsNullOrWhiteSpace(expoHandle))
             {
-                var notificationRecord = new NotificationOperatorTableRecord();
-                notificationRecord.UserId = userId;
-                var userExpoToken = NotificationOperatorTableRepo.GetInstance().Find(conn, notificationRecord).ToList();
-                return userExpoToken;
+                return false;
             }
+            _db.OperatorDeleteRegistrationFromDb(expoHandle);
+            return true;
         }
 
-
-        public bool UpdateTags(string registrationId, string notificationHandle, Platform platform,
-            Dictionary<string, string> tags)
+        public NotificationJsonFormat ConvertToNotificationJsonFormat(Notification notification)
         {
-            //return Client.UpdateTags(registrationId, notificationHandle, platform, tags);
-            return false;
-        }
-
-        public void DeleteRegistration(string expoHandle)
-        {
-            DeleteRegistrationFromDb(expoHandle);
-        }
-
-        public void DeleteRegistrationFromDb(string expoHandle)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            if (notification == null)
             {
-                var notificationRecord = new NotificationTableRecord();
-                notificationRecord.Handle = expoHandle;
-                NotificationTableRepo.GetInstance().Delete(conn, notificationRecord);
+                return null;
             }
-        }
-
-        public void OperatorDeleteRegistration(string expoHandle)
-        {
-            OperatorDeleteRegistrationFromDb(expoHandle);
-        }
-
-        public void OperatorDeleteRegistrationFromDb(string expoHandle)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var notificationRecord = new NotificationOperatorTableRecord();
-                notificationRecord.Handle = expoHandle;
-                NotificationOperatorTableRepo.GetInstance().Delete(conn, notificationRecord);
-            }
-        }
-
-        public void PushNotification(Notification notification, Dictionary<string, string> tags)
-        {
-            //Client.PushNotification(notification, tags);
-        }
-
-        public void PushSilentNotification(object data, Dictionary<string, string> tags)
-        {
-            //Client.PushSilentNotification(data, tags);
-        }
-
-        public bool CheckAvailableExpoToken(string expoToken)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var notificationRecord = new NotificationTableRecord();
-                notificationRecord.Handle = expoToken;
-                var result = NotificationTableRepo.GetInstance().Find(conn, notificationRecord).ToList();
-                return result.Count > 0;
-            }
-        }
-
-        public bool CheckAvailableOperatorExpoToken(string expoToken)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                var notificationRecord = new NotificationOperatorTableRecord();
-                notificationRecord.Handle = expoToken;
-                var result = NotificationOperatorTableRepo.GetInstance().Find(conn, notificationRecord).ToList();
-                return result.Count > 0;
-            }
+            var notificationJsonFormat = new NotificationJsonFormat();
+            notificationJsonFormat.to = notification.Receiver;
+            notificationJsonFormat.body = notification.Message;
+            notificationJsonFormat.sound = notification.Sound;
+            notificationJsonFormat.title = notification.Title;
+            return notificationJsonFormat;
         }
     }
 }

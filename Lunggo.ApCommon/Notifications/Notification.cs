@@ -10,16 +10,6 @@ namespace Lunggo.ApCommon.Notifications
         public string Title { get; set; }
         public string Message { get; set; }
         public string Sound { get; set; }
-
-        public NotificationJsonFormat ConvertToNotificationJsonFormat()
-        {
-            var notificationJsonFormat = new NotificationJsonFormat();
-            notificationJsonFormat.to = Receiver;
-            notificationJsonFormat.body = Message;
-            notificationJsonFormat.sound = Sound;
-            notificationJsonFormat.title = Title;
-            return notificationJsonFormat;
-        }
     }
 
     public class NotificationJsonFormat
