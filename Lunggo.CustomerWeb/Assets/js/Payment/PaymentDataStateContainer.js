@@ -7,39 +7,41 @@ import PaymentDataForm from './PaymentDataForm.jsx';
 //const PaymentDataStateContainer = observer(
 class PaymentDataStateContainer extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      ccNo: '',
-      name: '',
-      month: '',
-      year: '',
-      cvv: '',
-      errorMessages: {},
-    }
-  }
+  //constructor() {
+  //  super();
+  //  this.state = {
+  //    ccNo: '',
+  //    name: '',
+  //    month: '',
+  //    year: '',
+  //    cvv: '',
+  //    errorMessages: {},
+  //  }
+  //}
 
-  handleInputChange = event => {
-    const { value, name } = event.target;
-    this.setState({ [name]: value });
-  }
+  //handleInputChange = event => {
+  //  const { value, name } = event.target;
+  //  this.setState({ [name]: value });
+  //}
 
-  handleErrorValidationMessages = errorMessages => {
-    for (const key in errorMessages) {
-      this.setState({ [key]: errorMessages[key] });
-    }
-  }
+  //handleErrorValidationMessages = errorMessages => {
+  //  for (const key in errorMessages) {
+  //    this.setState({ [key]: errorMessages[key] });
+  //  }
+  //}
 
   render() {
     return (
       <PaymentDataForm
         method={this.props.method}
-        ccNo={this.state.ccNo}
-        name={this.state.name}
-        month={this.state.month}
-        year={this.state.year}
-        cvv={this.state.cvv}
-        onSubmit={this.onSubmitCreditCardForm}
+        ccNo={this.props.ccNo}
+        name={this.props.name}
+        month={this.props.month}
+        year={this.props.year}
+        cvv={this.props.cvv}
+        errorMessages={this.props.errorMessages}
+        handleInputChange={this.props.handleInputChange}
+        {...this.props}
       />
     );
   }

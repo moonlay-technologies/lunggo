@@ -12,38 +12,59 @@ class PaymentModalStateContainer extends React.Component {
     this.state = {
       isLoading: false,
       errorMessage: '',
-    }
+
+      ccNo: '',
+      name: '',
+      expiry:'',
+      //month: '',
+      //year: '',
+      cvv: '',
+      errorMessages: {},
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange = event => {
+    const { value, name } = event.target;
+    const errorMessages = { ...this.state.errorMessages, [name]: '' };
+    this.setState({ [name]: value, errorMessages });
+  }
+
+  handleErrorValidationMessages = errorMessages => {
+    this.setState({ errorMessages });
   }
 
   onSubmitCreditCardForm = () => {
-    const { ccNo, name, month, year, cvv,
-      handleErrorValidationMessages } = this.state.formState;
-    const formData = { ccNo, name, cvv, expiry: { month, year } };
+    //e.preventDefault();
+    const { ccNo, name, cvv, expiry } = this.state;
+    const formData = { ccNo, name, cvv, expiry };
     this.setState({ isLoading: true });
-    pay({ ...this.props, formData }, handleErrorValidationMessages)
-      .then(res => this.setState({ errorMessage: res }))
-      .finally(() => this.setState({ isLoading: false }));
+    console.log('begin to invoke `pay` function')
+    pay({ ...this.props, formData }, this.handleErrorValidationMessages)
+      .then(res => /*this.setState({ errorMessage: res })*/ console.log('pay resolved',res) )
+      .finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
+    console.log('onSubmitCreditCardForm done')
   }
 
-  getFormState = e => this.setState({ formState: e });
-
   render() {
-    // return ( props.showModal &&
     return (
       <Layout
         method={this.props.method}
         ccNo={this.state.ccNo}
         name={this.state.name}
-        month={this.state.month}
-        year={this.state.year}
+        expiry={this.state.expiry}
+        //month={this.state.month}
+        //year={this.state.year}
         cvv={this.state.cvv}
+        errorMessages={this.state.errorMessages}
         onSubmit={this.onSubmitCreditCardForm}
-        bindFormRef={this.getFormState}
+        handleInputChange={this.handleInputChange}
+        shouldShowDataForm={this.props.method == 'card' || this.props.method == 'mandiriClickPay'}
       />
     );
   }
 }
-);
+//);
 
 //decorate(PaymentModalStateContainer, {
 //  isLoading: observable,

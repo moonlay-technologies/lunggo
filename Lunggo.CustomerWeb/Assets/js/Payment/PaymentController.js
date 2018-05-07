@@ -3,157 +3,164 @@ import 'moment/locale/id';
 import { fetchTravoramaApi, AUTH_LEVEL } from '../ApiWrapper';
 
 export function sumTotalBill(...args) {
-    return args.reduce((previous, current) => {
-        return previous + current;
-    }, 0);
+  return args.reduce((previous, current) => {
+    return previous + current;
+  }, 0);
 }
 
 export function convertToAbsoluteNegative(value) {
-    if (value > 0) return (-1) * value;
-    else return value;
+  if (value > 0) return (-1) * value;
+  else return value;
 }
 
 export function isCreditCardNumberFormatValid(value) {
-    return !!value && !isNaN(value) && value.toString().length == 16;
+  return !!value && !isNaN(value) && value.toString().length == 16;
 }
 
 export function isCVVFormatValid(value) {
-    const length = !!value && value.toString().length;
-    return !!value && !isNaN(value) && (length == 3 || length == 4);
+  const length = !!value && value.toString().length;
+  return !!value && !isNaN(value) && (length == 3 || length == 4);
 }
 
-export function validateCreditCardExpiryDate(month_MM, year_YY) {
-    if (month_MM == 0 || month_MM == '' || year_YY == '') {
-        return 'Mohon isi tanggal kadaluarsa kartu';
-    }
-    const value = Moment(`${month_MM}-${year_YY}`, 'MM-YY').endOf('month');
-    if (value.isValid()) {
-        return 'Mohon isi dengan tanggal yang valid';
-    }
-    else if (Moment() < value) {
-        return 'Kartu telah kadaluarsa';
-    }
-    else return ''; //// VALID
+export function validateCreditCardExpiryDate(month_MM, year_YYYY) {
+  if (month_MM == 0 || month_MM == '' || year_YYYY == '') {
+    return 'Mohon isi tanggal kadaluarsa kartu';
+  }
+  const value = Moment(`${month_MM}-${year_YYYY}`, 'MM-YYYY').endOf('month');
+  if (value.isValid() == false) {
+    return 'Mohon isi dengan tanggal yang valid';
+  }
+  else if (Moment() > value) {
+    return 'Kartu telah kadaluarsa';
+  }
+  else return ''; //// VALID
 }
 
 //// check if name only contains alphabetical, empty string, or null
 export function isNameAlphabetical(name, acceptEmpty = false) {
-    var re = /^[a-zA-Z ]+$/;
-    if (acceptEmpty) return name == null || name == "" || re.test(name);
-    else return re.test(name);
+  var re = /^[a-zA-Z ]+$/;
+  if (acceptEmpty) return name == null || name == "" || re.test(name);
+  else return re.test(name);
 }
 
 //// check if input is a number or null
 export function isNumberOrEmpty(number) {
-    var re = /^[0-9]+$/;
-    return (number == "" || number == null || re.test(number));
+  var re = /^[0-9]+$/;
+  return (number == "" || number == null || re.test(number));
 }
 
-export function validateCreditCard({ ccNo, name, cvv, expiry: { month: month_MM, year: year_YY } }) {
-    const ccNumberErrorMessage = isCreditCardNumberFormatValid(ccNo) ? '' : 'Mohon masukkan nomor kartu yang valid';
-    const nameErrorMessage = isNameAlphabetical(name) ? '' : 'Mohon masukkan format nama yang valid';
-    const cvvErrorMessage = isCVVFormatValid(cvv) ? '' : 'Gunakan nomor cvv yang tertera di belakang kartu (3-4 digit)';
-    const expiryErrorMessage = validateCreditCardExpiryDate(month_MM, year_YY);
-    if (ccNumberErrorMessage || nameErrorMessage || cvvErrorMessage || expiryErrorMessage) {
-        return {
-            errorMessages: {
-                ccNo: ccNumberErrorMessage,
-                name: nameErrorMessage,
-                cvv: cvvErrorMessage,
-                expiry: expiryErrorMessage
-            }
-        };
-    } else return 'VALID';
+export function validateCreditCard({ ccNo, name, cvv, expiry }) {
+  const ccNumberErrorMessage = isCreditCardNumberFormatValid(ccNo) ? '' : 'Mohon masukkan nomor kartu yang valid';
+  const nameErrorMessage = isNameAlphabetical(name) ? '' : 'Mohon masukkan format nama yang valid';
+  const cvvErrorMessage = isCVVFormatValid(cvv) ? '' : 'Gunakan nomor cvv yang tertera di belakang kartu (3-4 digit)';
+  const expiryErrorMessage = validateCreditCardExpiryDate(expiry.month, expiry.year);
+  if (ccNumberErrorMessage || nameErrorMessage || cvvErrorMessage || expiryErrorMessage) {
+    return {
+      errorMessages: {
+        ccNo: ccNumberErrorMessage,
+        name: nameErrorMessage,
+        cvv: cvvErrorMessage,
+        expiry: expiryErrorMessage
+      }
+    };
+  } else return 'VALID';
 }
 
 const fetchPayAPI = async ({ rsvNo, method, discCd, methodData }) => {
-    const version = 'v1';
-    let request = {
-        path: `/${version}/payment/pay`,
-        method: 'POST',
-        requiredAuthLevel: AUTH_LEVEL.User,
-        data: { rsvNo, method, discCd, [method]: methodData },
-    }
-    return await fetchTravoramaApi(request);
+  const version = 'v1';
+  let request = {
+    path: `/${version}/payment/pay`,
+    method: 'POST',
+    requiredAuthLevel: AUTH_LEVEL.User,
+    data: { rsvNo, method, discCd, [method]: methodData },
+  }
+  return await fetchTravoramaApi(request);
 }
 
 const proceedWithoutVeritransToken = () => {
-    throw `not implemented!!`;
-    const { formData, totalPrice, voucher, rsvNo, method, discCd } = paymentData;
-    fetchPayAPI({ rsvNo, method, discCd, methodData });
+  throw `not implemented!!`;
+  const { formData, totalPrice, voucher, rsvNo, method, discCd } = paymentData;
+  fetchPayAPI({ rsvNo, method, discCd, methodData });
 }
 
 const getVeritransToken = paymentData => {
-    const { formData, totalPrice, voucher } = paymentData;
-    // formData = { ccNo, name, cvv, expiry: {month, year} };
-    Veritrans.url = VeritransTokenConfig.Url;
-    Veritrans.client_key = VeritransTokenConfig.ClientKey;
+  const { formData, totalPrice, voucher = {} } = paymentData;
+  // formData = { ccNo, name, cvv, expiry: {month, year} };
+  Veritrans.url = VeritransTokenConfig.Url;
+  Veritrans.client_key = VeritransTokenConfig.ClientKey;
 
-    const card = () => ({
-        'card_number': formData.ccNo,
-        'card_exp_month': formData.expiry.month,
-        'card_exp_year': formData.expiry.year,
-        'card_cvv': formData.cvv,
-        //// Set 'secure', 'bank', and 'gross_amount', if the merchant
-        //// wants transaction to be processed with 3D Secure
-        'secure': true,
-        'bank': 'mandiri',
-        'gross_amount': totalPrice - voucher.amount + getMdr(),
-    })
-
-    return new Promise((resolve, reject) => {
-        // run the veritrans function to check credit card
-        Veritrans.token(card, response => {
-            // Open-Close 3DSecure dialog box  //// make sure to load fancybox in a script tag
-            function openDialog(url) {
-                $.fancybox.open({
-                    href: url, type: 'iframe', autoSize: false,
-                    width: 400, height: 420, closeBtn: false, modal: true
-                });
-            }
-            function closeDialog() { $.fancybox.close(); }
-            if (response.redirect_url) {
-                openDialog(response.redirect_url); // 3Dsecure transaction. Open 3Dsecure dialog
-            } else if (response.status_code == '200') { // success 3d secure or success normal
-                closeDialog(); //close 3d secure dialog if any
-                resolve(response.token_id); // return store token data
-            } else {
-                reject(`not handled: "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar"
-                  OR "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";`);
-                /*        closeDialog(); // failed request token, close 3d secure dialog if any
-                          $('#submit-button').removeAttr('disabled');
-                          // $('#message').text(response.status_message); //// Show status message.
-                          $scope.error.message = (response.status_code == 400) ?
-                              "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
-                              "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";
-                          scrollPage($('*[data-payment-method="CreditCard"]'));        */
-            }
+  const card = () => ({
+    'card_number': formData.ccNo,
+    'card_exp_month': formData.expiry.month,
+    'card_exp_year': formData.expiry.year,
+    'card_cvv': formData.cvv,
+    //// Set 'secure', 'bank', and 'gross_amount', if the merchant
+    //// wants transaction to be processed with 3D Secure
+    'secure': true,
+    'bank': 'mandiri',
+    ///'gross_amount': totalPrice - voucher.amount // + getMdr(),
+    'gross_amount': 8
+  })
+  console.log(card())
+  return new Promise((resolve, reject) => {
+    // run the veritrans function to check credit card
+    Veritrans.token(card, response => {
+      // Open-Close 3DSecure dialog box  //// make sure to load fancybox in a script tag
+      function openDialog(url) {
+        $.fancybox.open({
+          href: url, type: 'iframe', autoSize: false,
+          width: 400, height: 420, closeBtn: false, modal: true
         });
+      }
+      function closeDialog() { $.fancybox.close(); }
+      if (response.redirect_url) {
+        openDialog(response.redirect_url); // 3Dsecure transaction. Open 3Dsecure dialog
+      } else if (response.status_code == '200') { // success 3d secure or success normal
+        closeDialog(); //close 3d secure dialog if any
+        resolve(response.token_id); // return store token data
+      } else {
+        reject(`not handled: "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar"
+                  OR "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";`);
+        /*        closeDialog(); // failed request token, close 3d secure dialog if any
+                  $('#submit-button').removeAttr('disabled');
+                  // $('#message').text(response.status_message); //// Show status message.
+                  $scope.error.message = (response.status_code == 400) ?
+                      "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
+                      "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";
+                  scrollPage($('*[data-payment-method="CreditCard"]'));        */
+      }
     });
+  });
 }
 
 export const pay = async (paymentData, errorMessagesHandler) => {
-    const { rsvNo, method, discCd } = paymentData;
+  const { rsvNo, method, discCd, formData } = paymentData;
+  //// VALIDATION
+  if (method == 'card') {
+    const month = formData.expiry.substr(0, 2);
+    const year = `20` + formData.expiry.substr(2, 2);
+    formData.expiry = { month, year };
+    //const month_MM, year_YY; [month_MM, year_YY] = expiry.split('/');
 
-    //// VALIDATION
-    const isValid = validateCreditCard(paymentData);
+    const isValid = validateCreditCard(formData);
     if (isValid !== 'VALID') {
-        errorMessagesHandler(isValid.errorMessages);
-        return `error`
+      errorMessagesHandler(isValid.errorMessages);
+      return `VALIDATION ERROR`
     }
-    let methodData;
-    if (method == 'creditCard') {
-        const tokenId = await getVeritransToken(paymentData);
-        methodData = {
-            tokenId,
-            holderName: paymentData.formData.name,
-            hashedPan: paymentData.formData.ccNo,
-            reqBinDiscount: false,
-        };
-    } else methodData = proceedWithoutVeritransToken(); //TODO
-    const res = await fetchPayAPI({ rsvNo, method, discCd, methodData });
-    if (res.status == 200) { /* REDIRECT!! to res.redirectionUrl */ }
-    else return res.error;
+  }
+  let methodData;
+  if (method == 'card') {
+    const tokenId = await getVeritransToken(paymentData);
+    methodData = {
+      tokenId,
+      holderName: paymentData.formData.name,
+      hashedPan: paymentData.formData.ccNo,
+      reqBinDiscount: false,
+    };
+  } else methodData = proceedWithoutVeritransToken(); //TODO
+  const res = await fetchPayAPI({ rsvNo, method, discCd, methodData });
+  if (res.status == 200) { /* REDIRECT!! to res.redirectionUrl */ }
+  else return res.error;
 }
 /*
 export getMdr = mdr => {
@@ -173,17 +180,17 @@ export getMdr = mdr => {
 }*/
 
 export const getCreditBalance = async rsvNo =>
-    checkVoucher(rsvNo, 'REFERRALCREDIT')
+  checkVoucher(rsvNo, 'REFERRALCREDIT')
 
 export const checkVoucher = async (rsvNo, code) => {
-    const version = 'v1';
-    let request = {
-        path: `/${version}/payment/checkvoucher`,
-        method: 'POST',
-        requiredAuthLevel: AUTH_LEVEL.User,
-        data: { rsvNo, code }
-    }
-    return await fetchTravoramaApi(request);
+  const version = 'v1';
+  let request = {
+    path: `/${version}/payment/checkvoucher`,
+    method: 'POST',
+    requiredAuthLevel: AUTH_LEVEL.User,
+    data: { rsvNo, code }
+  }
+  return await fetchTravoramaApi(request);
 }
 /*
 if (voucher.status == 'Success') `Voucher valid`

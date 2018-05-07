@@ -10,25 +10,20 @@ import { getCreditBalance, sumTotalBill } from './PaymentController';
 class PaymentPageStateContainer extends React.Component {
 
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       method: null,
-      creditBalance: this.props.creditBalance,
+      creditBalance: props.creditBalance,
       discountVoucherAmount: '',
       discountVoucherCode: '',
       errorMessage: '',
       isLoadingCreditBalance: false,
       isLoadingDiscountVoucher: false,
-      //showModal: false,
     };
   }
 
-  selectMethod(method) {
-    this.setState({ method });
-    //this.showModal = true;
-    console.log('from select method', this.state.method)
-  }
+  selectMethod = method => this.setState({ method });
 
   applyDiscountVoucher = () => {
     this.setState({ isLoadingDiscountVoucher: true });
@@ -55,14 +50,14 @@ class PaymentPageStateContainer extends React.Component {
   }
 
   render() {
-    console.log('from render', this.state.method)
     return (
       <Layout
         method={this.state.method}
-        selectMethod={this.state.selectMethod}
         creditBalance={this.state.creditBalance}
         discountVoucherAmount={this.state.discountVoucherAmount}
         discountVoucherCode={this.state.discountVoucherCode}
+        
+        selectMethod={this.selectMethod}
         onChangedVoucherCode={this.onChangedVoucherCode}
         applyDiscountVoucher={this.applyDiscountVoucher}
 
