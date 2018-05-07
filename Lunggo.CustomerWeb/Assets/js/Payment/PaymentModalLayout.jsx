@@ -2,8 +2,10 @@
 import React from 'react';
 import DataForm from './PaymentDataForm.jsx';
 import PaymentInstruction from './PaymentInstruction.jsx';
+//import Iframe from 'react-iframe';
 
 function PaymentModalLayout(props) {
+  console.log(props.iframeUrl)
     return (
       <div id="payment-modal" className="mother-container modal fade">
         <div className="modal-dialog modal-lg" style={{
@@ -11,6 +13,23 @@ function PaymentModalLayout(props) {
           padding: 10,
           borderRadius: 7
         }}>
+          <div>
+            {/*<Iframe
+            //  hidden={props.paymentStep !== 'paymentOtp'}
+            //  //url={props.iframeUrl}
+            //  url="https://www.travorama.com"
+            //  width="400px"
+            //  height="420px"
+            //  id="myId"
+            //  className="myClassname"
+            //  display="initial"
+            //  position="relative"
+            //  allowFullScreen />
+            */}
+            <iframe hidden={props.paymentStep !== 'paymentOtp'}
+              src={props.iframeUrl}></iframe>
+          </div>
+          <div hidden={props.paymentStep !== 'initial'}>
             <div className="row">
                 <div className="col-xs-8 no-padding-left">
                   <div className="info-total-harga">
@@ -44,8 +63,10 @@ function PaymentModalLayout(props) {
                     </div>
                 </div>
             </div>
+
           </div>
         </div>
+      </div>
     );
 }
 export default PaymentModalLayout;

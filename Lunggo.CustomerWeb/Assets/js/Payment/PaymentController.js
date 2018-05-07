@@ -83,7 +83,7 @@ const proceedWithoutVeritransToken = () => {
   fetchPayAPI({ rsvNo, method, discCd, methodData });
 }
 
-const getVeritransToken = paymentData => {
+const getVeritransToken = (paymentData, changePaymentStepLayout) => {
   const { formData, totalPrice, voucher = {} } = paymentData;
   // formData = { ccNo, name, cvv, expiry: {month, year} };
   Veritrans.url = VeritransTokenConfig.Url;
@@ -101,28 +101,18 @@ const getVeritransToken = paymentData => {
     ///'gross_amount': totalPrice - voucher.amount // + getMdr(),
     'gross_amount': 8
   })
-  console.log(card())
   return new Promise((resolve, reject) => {
     // run the veritrans function to check credit card
     Veritrans.token(card, response => {
-      // Open-Close 3DSecure dialog box  //// make sure to load fancybox in a script tag
-      function openDialog(url) {
-        $.fancybox.open({
-          href: url, type: 'iframe', autoSize: false,
-          width: 400, height: 420, closeBtn: false, modal: true
-        });
-      }
-      function closeDialog() { $.fancybox.close(); }
       if (response.redirect_url) {
-        openDialog(response.redirect_url); // 3Dsecure transaction. Open 3Dsecure dialog
+        changePaymentStepLayout('paymentOtp', response.redirect_url); // 3Dsecure transaction. Open 3Dsecure dialog
       } else if (response.status_code == '200') { // success 3d secure or success normal
-        closeDialog(); //close 3d secure dialog if any
+        changePaymentStepLayout('success'); //close 3d secure dialog if any
         resolve(response.token_id); // return store token data
       } else {
-        reject(`not handled: "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar"
-                  OR "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";`);
-        /*        closeDialog(); // failed request token, close 3d secure dialog if any
-                  $('#submit-button').removeAttr('disabled');
+        changePaymentStepLayout('failed');
+        reject(`Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain`);
+        /*        $('#submit-button').removeAttr('disabled');
                   // $('#message').text(response.status_message); //// Show status message.
                   $scope.error.message = (response.status_code == 400) ?
                       "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
@@ -133,7 +123,7 @@ const getVeritransToken = paymentData => {
   });
 }
 
-export const pay = async (paymentData, errorMessagesHandler) => {
+export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLayout) => {
   const { rsvNo, method, discCd, formData } = paymentData;
   //// VALIDATION
   if (method == 'card') {
@@ -150,13 +140,13 @@ export const pay = async (paymentData, errorMessagesHandler) => {
   }
   let methodData;
   if (method == 'card') {
-    const tokenId = await getVeritransToken(paymentData);
-    methodData = {
-      tokenId,
-      holderName: paymentData.formData.name,
-      hashedPan: paymentData.formData.ccNo,
-      reqBinDiscount: false,
-    };
+    getVeritransToken(paymentData, changePaymentStepLayout)
+      .then(tokenId => methodData = {
+        tokenId,
+        holderName: paymentData.formData.name,
+        hashedPan: paymentData.formData.ccNo,
+        reqBinDiscount: false,
+      }).catch(e => console.error(e));
   } else methodData = proceedWithoutVeritransToken(); //TODO
   const res = await fetchPayAPI({ rsvNo, method, discCd, methodData });
   if (res.status == 200) { /* REDIRECT!! to res.redirectionUrl */ }

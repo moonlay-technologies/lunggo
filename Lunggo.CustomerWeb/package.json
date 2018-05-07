@@ -10,7 +10,9 @@
     "moment": "^2.22.1",
     "node": "^10.0.0",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "react-fancybox": "^0.2.3",
+    "react-iframe": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
