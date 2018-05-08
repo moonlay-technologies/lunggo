@@ -5,10 +5,10 @@ var PROD = JSON.parse(process.env.PROD_ENV || '0');
 module.exports = {
     entry: [
         "babel-polyfill",
-        "./Areas/Payment_v2/Views/Payment/React/PaymentPageStateContainer.jsx"
+        "./Assets/js/Payment/PaymentPageStateContainer.jsx"
     ],
     output: {
-        path: path.resolve(__dirname, "Areas/Payment_v2/Views/Payment/React/"),
+        path: path.resolve(__dirname, "Assets/js/Payment/"),
         filename: "paymentReact.js"
     },
     devServer: {

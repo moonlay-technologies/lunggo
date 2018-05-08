@@ -10,7 +10,9 @@
     "moment": "^2.22.1",
     "node": "^10.0.0",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "react-fancybox": "^0.2.3",
+    "react-iframe": "^1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -22,6 +24,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "mobx-react-devtools": "^5.0.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15"
   },
