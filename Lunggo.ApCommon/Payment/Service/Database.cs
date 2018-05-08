@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Query;
 using Lunggo.ApCommon.Payment.Constant;
@@ -146,7 +147,6 @@ namespace Lunggo.ApCommon.Payment.Service
                     localFinalPrice = payment.LocalFinalPrice;
                 if (payment.InvoiceNo != null)
                     invoiceNo = payment.InvoiceNo;
-
                 var queryParam = new
                 {
                     RsvNo = rsvNo,
@@ -177,6 +177,28 @@ namespace Lunggo.ApCommon.Payment.Service
                     payment.Discount.InsertToDb(rsvNo);
                 if (payment.Refund != null)
                     payment.Refund.InsertToDb(rsvNo);
+                if (payment.Status == PaymentStatus.Settled)
+                {
+                    var rsv = ActivityService.GetInstance().GetReservation(rsvNo);
+                    var oldPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                    {
+                        ActivityId = rsv.ActivityDetails.ActivityId,
+                        AvailableHour = rsv.DateTime.Session ?? "",
+                        CustomDate = rsv.DateTime.Date
+                    };
+                    var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn,oldPaxSlotTableRecord).First().PaxSlot;
+                    var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
+                    var newPaxSlot = oldPaxSlot - ticketCount;
+                    var newPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                    {
+                        ActivityId = rsv.ActivityDetails.ActivityId,
+                        AvailableHour = rsv.DateTime.Session ?? "",
+                        CustomDate = rsv.DateTime.Date,
+                        PaxSlot = newPaxSlot,
+                        DateStatus = "whitelisted"
+                    };
+                    ActivityCustomDateTableRepo.GetInstance().Update(conn,newPaxSlotTableRecord);
+                }
                 return true;
             }
         }
