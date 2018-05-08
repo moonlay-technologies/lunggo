@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             var payment = _paymentService.GetPaymentDetails(rsvNo);
             if (payment.Status == PaymentStatus.Pending || payment.Status == PaymentStatus.Verifying ||
-                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.Undefined)
+                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.MethodNotSet)
             {
                 payment.Status = PaymentStatus.Expired;
                 _paymentService.UpdatePayment(rsvNo, payment);

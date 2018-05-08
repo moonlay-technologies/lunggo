@@ -13,16 +13,35 @@ namespace Lunggo.ApCommon.Payment.Database
 {
     internal partial class PaymentDbService
     {
-        internal CampaignVoucher GetCampaignVoucher(string voucherCode)
+        internal virtual CampaignVoucher GetCampaignVoucher(string voucherCode)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var voucher = GetCampaignVoucherRecordQuery.GetInstance().Execute(conn, new { VoucherCode = voucherCode }).FirstOrDefault();
-                if (voucher != null && string.IsNullOrWhiteSpace(voucher.DisplayName))
-                    voucher.DisplayName = "Discount";
+                var voucher = GetCampaignVoucherRecordQuery.GetInstance().ExecuteMultiMap(
+                    conn,
+                    new {VoucherCode = voucherCode},
+                    splitOn: "CampaignId",
+                    map: (campaignVoucher, campaign) =>
+                    {
+                        var result = new CampaignVoucher();
+                        result.CampaignId = campaignVoucher.CampaignId.GetValueOrDefault();
+                        result.CampaignDescription = campaign.Description;
+                        result.CampaignName = campaign.Name;
+                        result.DisplayName = campaign.DisplayName;
+                        result.StartDate = campaign.StartDate.GetValueOrDefault();
+                        result.EndDate = campaign.EndDate.GetValueOrDefault();
+                        result.ValuePercentage = campaign.ValuePercentage.GetValueOrDefault();
+                        result.ValueConstant = campaign.ValueConstant.GetValueOrDefault();
+                        result.MinSpendValue = campaign.MinSpendValue.GetValueOrDefault();
+                        result.MaxDiscountValue = campaign.MaxDiscountValue.GetValueOrDefault();
+                        result.ProductType = campaign.ProductType;
+                        result.RemainingCount = campaignVoucher.RemainingCount;
+                        return result;
+                    }).FirstOrDefault();
                 return voucher;
             }
         }
+
         internal int CheckVoucherUsage(string voucherCode, string email)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())

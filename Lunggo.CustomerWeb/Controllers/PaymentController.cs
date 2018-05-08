@@ -41,13 +41,21 @@ namespace Lunggo.CustomerWeb.Controllers
             var activityService = ActivityService.GetInstance();
             var userId = System.Web.HttpContext.Current.User.Identity.GetId();
             var cart = _paymentService.GetCart(userId);
-            var voucherRs = new PaymentService().ValidateVoucherRequest(cart.Id, voucherCode);
-            var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
-            if(voucherRsLimit < voucherRs.TotalDiscount)
+            var voucherRs = new PaymentService().GetVoucherDiscountForCart(cart.Id, voucherCode, out var voucherStatus);
+            if (voucherStatus == VoucherStatus.Success)
             {
-                return voucherRsLimit;
+                var voucherRsLimit = AccountService.GetInstance().GetReferral(userId).ReferralCredit;
+                if (voucherRsLimit < voucherRs.TotalDiscount)
+                {
+                    return voucherRsLimit;
+                }
+
+                return voucherRs.TotalDiscount;
             }
-            return voucherRs.TotalDiscount;
+            else
+            {
+                return 0;
+            }
         }
 
         public ActionResult Payment(string rsvNo = null, string regId = null, string trxId = null, string cartId = null)

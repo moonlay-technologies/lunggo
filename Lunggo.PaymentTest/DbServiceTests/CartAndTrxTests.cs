@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Lunggo.PaymentTest.DbServiceTests
 {
     [TestClass]
-    public class CartAndTrxTests
+    public class GetTrxRsvNosTests
     {
         [TestMethod]
         // Should return rsvNo list when retrieving by trxId

@@ -25,7 +25,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
             Assert.AreEqual(rsvNo, actual.RsvNo);
             Assert.AreEqual(price, actual.OriginalPriceIdr);
             Assert.AreEqual(currency, actual.LocalCurrency);
-            Assert.AreEqual(PaymentStatus.Undefined, actual.Status);
+            Assert.AreEqual(PaymentStatus.MethodNotSet, actual.Status);
             Assert.AreEqual(timelimit.AddMinutes(-10), actual.TimeLimit);
         }
 
@@ -212,7 +212,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
 
             var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
 
-            Assert.AreEqual(PaymentStatus.Undefined, actual.Status);
+            Assert.AreEqual(PaymentStatus.MethodNotSet, actual.Status);
         }
 
         [TestMethod]

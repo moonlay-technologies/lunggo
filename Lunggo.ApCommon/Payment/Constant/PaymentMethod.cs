@@ -1,4 +1,6 @@
-﻿namespace Lunggo.ApCommon.Payment.Constant
+﻿using System;
+
+namespace Lunggo.ApCommon.Payment.Constant
 {
     public enum PaymentMethod
     {
@@ -17,8 +19,8 @@
         MandiriEcash = 12,
         MandiriBillPayment = 13,
         Indomaret = 14,
-        Credit = 15,
-        Deposit = 16,
+        //Credit = 15,
+        //Deposit = 16,
         IbMuamalat = 17,
         DanamonOnlineBanking = 18,
         SbiiOnlineShopping = 19,
@@ -28,104 +30,123 @@
 
     public class PaymentMethodCd
     {
-        public static string Mnemonic(PaymentMethod paymentMedium)
+        public static string Mnemonic(PaymentMethod paymentMethod)
         {
-            switch (paymentMedium)
+            switch (paymentMethod)
             {
                 case PaymentMethod.CreditCard:
-                    return "CRC";
+                    return "CREDITCARD";
                 case PaymentMethod.BankTransfer:
-                    return "TRF";
+                    return "BANKTRANSFER";
                 case PaymentMethod.MandiriClickPay:
-                    return "MCP";
+                    return "MANDIRICLICKPAY";
                 case PaymentMethod.CimbClicks:
-                    return "CCL";
+                    return "CIMBCLICKS";
                 case PaymentMethod.VirtualAccount:
-                    return "VIR";
+                    return "VIRTUALACCOUNT";
                 case PaymentMethod.BcaKlikpay:
-                    return "BKP";
+                    return "BCAKLIKPAY";
                 case PaymentMethod.EpayBri:
-                    return "EPB";
+                    return "EPAYBRI";
                 case PaymentMethod.TelkomselTcash:
-                    return "TTC";
+                    return "TELKOMSELTCASH";
                 case PaymentMethod.XlTunai:
-                    return "XLT";
+                    return "XLTUNAI";
                 case PaymentMethod.BbmMoney:
-                    return "BBM";
+                    return "BBMMONEY";
                 case PaymentMethod.IndosatDompetku:
-                    return "IND";
+                    return "INDOSATDOMPETKU";
                 case PaymentMethod.MandiriEcash:
-                    return "MEC";
+                    return "MANDIRIECASH";
                 case PaymentMethod.MandiriBillPayment:
-                    return "MBP";
+                    return "MANDIRIBILLPAYMENT";
                 case PaymentMethod.Indomaret:
-                    return "IDM";
-                case PaymentMethod.Credit:
-                    return "CRD";
-                case PaymentMethod.Deposit:
-                    return "DPS";
+                    return "INDOMARET";
+                //case PaymentMethod.Credit:
+                //    return "Credit";
+                //case PaymentMethod.Deposit:
+                //    return "DPS";
                 case PaymentMethod.IbMuamalat:
-                    return "IBM";
+                    return "IBMUAMALAT";
                 case PaymentMethod.DanamonOnlineBanking:
-                    return "DOB";
+                    return "DANAMONONLINEBANKING";
                 case PaymentMethod.SbiiOnlineShopping:
-                    return "SBI";
+                    return "SBIIONLINESHOPPING";
                 case PaymentMethod.DooEtQnb:
-                    return "QNB";
+                    return "DOOETQNB";
                 case PaymentMethod.BtnMobileBanking:
-                    return "BTN";
+                    return "BTNMOBILEBANKING";
                 default:
-                    return "";
+                    throw new ArgumentException("Payment method not implemented: " + paymentMethod);
             }
         }
-        public static PaymentMethod Mnemonic(string paymentMedium)
+        public static PaymentMethod Mnemonic(string paymentMethod)
         {
-            switch (paymentMedium)
+            switch (paymentMethod)
             {
                 case "CRC":
+                case "CREDITCARD":
                     return PaymentMethod.CreditCard;
                 case "TRF":
+                case "BANKTRANSFER":
                     return PaymentMethod.BankTransfer;
                 case "MCP":
+                case "MANDIRICLICKPAY":
                     return PaymentMethod.MandiriClickPay;
                 case "CCL":
+                case "CIMBCLICKS":
                     return PaymentMethod.CimbClicks;
                 case "VIR":
+                case "VIRTUALACCOUNT":
                     return PaymentMethod.VirtualAccount;
                 case "BKP":
+                case "BCAKLIKPAY":
                     return PaymentMethod.BcaKlikpay;
                 case "EPB":
+                case "EPAYBRI":
                     return PaymentMethod.EpayBri;
                 case "TTC":
+                case "TELKOMSELTCASH":
                     return PaymentMethod.TelkomselTcash;
                 case "XLT":
+                case "XLTUNAI":
                     return PaymentMethod.XlTunai;
                 case "BBM":
+                case "BBMMONEY":
                     return PaymentMethod.BbmMoney;
                 case "IND":
+                case "INDOSATDOMPETKU":
                     return PaymentMethod.IndosatDompetku;
                 case "MEC":
+                case "MANDIRIECASH":
                     return PaymentMethod.MandiriEcash;
                 case "MBP":
+                case "MANDIRIBILLPAYMENT":
                     return PaymentMethod.MandiriBillPayment;
                 case "IDM":
+                case "INDOMARET":
                     return PaymentMethod.Indomaret;
-                case "CRD":
-                    return PaymentMethod.Credit;
-                case "DPS":
-                    return PaymentMethod.Deposit;
+                //case "CRD":
+                //    return PaymentMethod.Credit;
+                //case "DPS":
+                //    return PaymentMethod.Deposit;
                 case "IBM":
+                case "IBMUAMALAT":
                     return PaymentMethod.IbMuamalat;
                 case "DOB":
+                case "DANAMONONLINEBANKING":
                     return PaymentMethod.DanamonOnlineBanking;
                 case "SBI":
+                case "SBIIONLINESHOPPING":
                     return PaymentMethod.SbiiOnlineShopping;
                 case "QNB":
+                case "DOOETQNB":
                     return PaymentMethod.DooEtQnb;
                 case "BTN":
+                case "BTNMOBILEBANKING":
                     return PaymentMethod.BtnMobileBanking;
                 default:
-                    return PaymentMethod.Undefined;
+                    throw new ArgumentException("Payment method not implemented: " + paymentMethod);
             }
         }
     }

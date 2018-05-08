@@ -37,9 +37,11 @@ namespace Lunggo.ApCommon.Payment.Service
 
             var accountService = AccountService.GetInstance();
 
+            var discount = (VoucherDiscount) null;
+            var isVoucherValid = false;
             if (!string.IsNullOrEmpty(discountCode))
             {
-                var isVoucherValid = TryApplyVoucher(rsvNo, discountCode, paymentDetails);
+                isVoucherValid = TryApplyVoucher(rsvNo, discountCode, paymentDetails, out discount);
                 if (!isVoucherValid)
                     return null;
             }
@@ -52,7 +54,8 @@ namespace Lunggo.ApCommon.Payment.Service
 
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
             {
-                RealizeVoucher(accountService, paymentDetails);
+                if (!string.IsNullOrEmpty(discountCode) && isVoucherValid)
+                    RealizeVoucher(discount, accountService, paymentDetails);
                 if (paymentDetails is CartPaymentDetails)
                     UpdateCartDb(paymentDetails as CartPaymentDetails);
                 else
@@ -69,12 +72,6 @@ namespace Lunggo.ApCommon.Payment.Service
             throw new NotImplementedException();
         }
 
-        internal virtual void RealizeVoucher(AccountService accountService, PaymentDetails paymentDetails)
-        {
-            var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(paymentDetails.RsvNo);
-            accountService.UseReferralCredit(userId, paymentDetails.DiscountNominal);
-        }
-
         private static void SetMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, PaymentDetails paymentDetails)
         {
             paymentDetails.Data = paymentData;
@@ -86,10 +83,10 @@ namespace Lunggo.ApCommon.Payment.Service
                 cartDetails.RsvPaymentDetails.ForEach(d => SetMethod(method, submethod, paymentData, d));
         }
 
-        internal virtual bool TryApplyVoucher(string cartId, string discountCode, PaymentDetails paymentDetails)
+        private bool TryApplyVoucher(string cartId, string discountCode, PaymentDetails paymentDetails, out VoucherDiscount discount)
         {
-            var campaign = UseVoucherRequest(cartId, discountCode, out var status);
-            if (status != VoucherStatus.Success || campaign.Discount == null)
+            discount = GetVoucherDiscount(cartId, discountCode, out var status);
+            if (status != VoucherStatus.Success || discount.Discount == null)
             {
                 paymentDetails.Status = PaymentStatus.Failed;
                 paymentDetails.FailureReason = FailureReason.VoucherNoLongerAvailable;
@@ -110,16 +107,16 @@ namespace Lunggo.ApCommon.Payment.Service
                     }
                 }
 
-                if (referral.ReferralCredit < campaign.TotalDiscount)
+                if (referral.ReferralCredit < discount.TotalDiscount)
                 {
-                    campaign.TotalDiscount = referral.ReferralCredit;
+                    discount.TotalDiscount = referral.ReferralCredit;
                 }
             }
 
-            paymentDetails.FinalPriceIdr -= campaign.TotalDiscount;
-            paymentDetails.Discount = campaign.Discount;
+            paymentDetails.FinalPriceIdr -= discount.TotalDiscount;
+            paymentDetails.Discount = discount.Discount;
             paymentDetails.DiscountCode = discountCode;
-            paymentDetails.DiscountNominal = campaign.TotalDiscount;
+            paymentDetails.DiscountNominal = discount.TotalDiscount;
             return true;
         }
 
@@ -142,6 +139,8 @@ namespace Lunggo.ApCommon.Payment.Service
                         return false;
                     if (string.IsNullOrWhiteSpace(paymentData?.MandiriClickPay?.Token))
                         return false;
+                    return true;
+                case PaymentMethod.CimbClicks:
                     return true;
             }
             return false;

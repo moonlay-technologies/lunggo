@@ -9,7 +9,7 @@ using StackExchange.Redis;
 namespace Lunggo.PaymentTest.CacheServiceTests
 {
     [TestClass]
-    public class CartAndTrxTests
+    public class GetCartRsvNosTests
     {
         [TestMethod]
         // Should get all rsvNo from associated cartId
@@ -71,8 +71,11 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 Assert.IsTrue(actual.Count == 0);
             });
         }
+    }
 
-
+    [TestClass]
+    public class AddRsvToCartTests
+    {
         [TestMethod]
         // Should contains rsvNo after adding rsvNo
         public void Should_contains_rsvNo_after_adding_rsvNo()
@@ -94,7 +97,11 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 redis.KeyDelete(key);
             });
         }
+    }
 
+    [TestClass]
+    public class RemoveRsvFromCartTests
+    {
         [TestMethod]
         // Should not contains rsvNo after removing rsvNo
         public void Should_not_contains_rsvNo_after_removing_rsvNo()
@@ -134,7 +141,5 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 Assert.IsTrue(actual == null || actual.Length == 0);
             });
         }
-	
-
     }
 }

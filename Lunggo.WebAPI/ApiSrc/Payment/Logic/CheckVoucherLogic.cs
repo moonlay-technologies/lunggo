@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             if (IsValid(request))
             {
-                var response = new PaymentService().ValidateVoucherRequest(request.RsvNo, request.DiscountCode, out var status);
+                var response = new PaymentService().GetVoucherDiscount(request.RsvNo, request.DiscountCode, out var status);
                 if (request.DiscountCode == "REFERRALCREDIT")
                 {
                     var userId = HttpContext.Current.User.Identity.GetId();
@@ -61,15 +61,15 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 request.RsvNo != null;
         }
 
-        private static ApiResponseBase AssembleApiResponse(VoucherResponse response, VoucherStatus status)
+        private static ApiResponseBase AssembleApiResponse(VoucherDiscount discount, VoucherStatus status)
         {
             switch (status)
             {
                 case VoucherStatus.Success:
                     return new CheckVoucherApiResponse
                     {
-                        Discount = response.TotalDiscount,
-                        DisplayName = response.Discount.DisplayName,
+                        Discount = discount.TotalDiscount,
+                        DisplayName = discount.Discount.DisplayName,
                         StatusCode = HttpStatusCode.OK
                     };
                 case VoucherStatus.OutsidePeriod:

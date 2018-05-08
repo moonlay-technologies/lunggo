@@ -68,8 +68,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     request.Passengers != null;
                 //request.Passengers.Any() &&
                 //request.Passengers.TrueForAll(p => !string.IsNullOrEmpty(p.Name)) &&
-                //request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
-                //request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
+                //request.Passengers.TrueForAll(p => p.Title != Title.MethodNotSet) &&
+                //request.Passengers.TrueForAll(p => p.Type != PaxType.MethodNotSet);
             }
             catch
             {

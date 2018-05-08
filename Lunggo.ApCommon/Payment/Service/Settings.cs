@@ -53,8 +53,8 @@ namespace Lunggo.ApCommon.Payment.Service
             switch (method)
             {
                 case PaymentMethod.BankTransfer:
-                case PaymentMethod.Credit:
-                case PaymentMethod.Deposit:
+                //case PaymentMethod.Credit:
+                //case PaymentMethod.Deposit:
                     return PaymentMedium.Direct;
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:

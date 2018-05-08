@@ -26,9 +26,10 @@ namespace Lunggo.ApCommon.Activity.Service
             }
 
             var output = new IssueActivityTicketOutput();
-            if (rsvData.Payment.Method == PaymentMethod.Credit ||
-                (rsvData.Payment.Method != PaymentMethod.Credit &&
-                 rsvData.Payment.Status == PaymentStatus.Settled))
+            //if (rsvData.Payment.Method == PaymentMethod.Credit ||
+            //    (rsvData.Payment.Method != PaymentMethod.Credit &&
+            //     rsvData.Payment.Status == PaymentStatus.Settled))
+            if (rsvData.Payment.Status == PaymentStatus.Settled)
             {
                 //UpdateRsvStatusDb(rsvData.RsvNo, RsvStatus.Completed );
                 //InsertAppointmentReqToDb(rsvData, "Requesting");

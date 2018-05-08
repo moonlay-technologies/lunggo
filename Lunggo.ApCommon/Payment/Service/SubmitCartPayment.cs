@@ -30,35 +30,52 @@ namespace Lunggo.ApCommon.Payment.Service
             if (!isMethodValid)
                 throw new ArgumentException("Method not available");
 
-            var paymentDetails = GetCartPaymentDetails(cartId);
+            var cartPaymentDetails = GetCartPaymentDetails(cartId);
+            if (cartPaymentDetails?.RsvPaymentDetails == null || cartPaymentDetails.RsvPaymentDetails.Count == 0)
+                throw new ArgumentException("Invalid Cart ID");
 
-            SetMethod(method, submethod, paymentData, paymentDetails);
+            var isPayable = ValidatePaymentStatus(cartPaymentDetails);
+            if (!isPayable)
+                throw new ArgumentException("Cannot pay this cart, status is " + cartPaymentDetails.Status);
+
+            SetMethod(method, submethod, paymentData, cartPaymentDetails);
 
             var accountService = AccountService.GetInstance();
 
+            var discount = (VoucherDiscount)null;
+            var isVoucherValid = false;
             if (!string.IsNullOrEmpty(discountCode))
             {
-                var isVoucherValid = TryApplyVoucher(cartId, discountCode, paymentDetails);
+                isVoucherValid = TryApplyVoucher(cartId, discountCode, cartPaymentDetails, out discount);
                 if (!isVoucherValid)
                     return null;
             }
 
-            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
-            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+            cartPaymentDetails.Surcharge = GetSurchargeNominal(cartPaymentDetails);
+            cartPaymentDetails.FinalPriceIdr += cartPaymentDetails.Surcharge;
 
-            var transactionDetails = ConstructTransactionDetails(paymentDetails.RsvNo, paymentDetails, contact);
-            var processSuccess = _processor.ProcessPayment(paymentDetails, transactionDetails);
+            var transactionDetails = ConstructTransactionDetails(cartPaymentDetails.RsvNo, cartPaymentDetails, contact);
+            var processSuccess = _processor.ProcessPayment(cartPaymentDetails, transactionDetails);
 
-            if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
+            if (cartPaymentDetails.Status != PaymentStatus.Failed && cartPaymentDetails.Status != PaymentStatus.Denied)
             {
-                RealizeVoucher(accountService, paymentDetails);
-                UpdateCartDb(paymentDetails);
+                if (!string.IsNullOrEmpty(discountCode) && isVoucherValid)
+                    RealizeVoucher(discount, accountService, cartPaymentDetails);
+                UpdateCartDb(cartPaymentDetails);
                 _cache.DeleteCart(cartId);
-                if (paymentDetails.Method == PaymentMethod.BankTransfer || paymentDetails.Method == PaymentMethod.VirtualAccount)
-                    SendTransferInstructionToCustomer(paymentDetails);
+                if (cartPaymentDetails.Method == PaymentMethod.BankTransfer || cartPaymentDetails.Method == PaymentMethod.VirtualAccount)
+                    SendTransferInstructionToCustomer(cartPaymentDetails);
             }
             isUpdated = true;
-            return paymentDetails;
+            return cartPaymentDetails;
+        }
+
+        private bool ValidatePaymentStatus(PaymentDetails paymentDetails)
+        {
+            var status = paymentDetails.Status;
+            return status == PaymentStatus.MethodNotSet ||
+                   status == PaymentStatus.Failed ||
+                   status == PaymentStatus.Denied;
         }
 
         private bool ValidateCartId(string cartId)
@@ -71,7 +88,6 @@ namespace Lunggo.ApCommon.Payment.Service
             DistributeRsvPaymentDetails(cartPaymentDetails);
             _db.InsertTrx(cartPaymentDetails);
         }
-
 
         public virtual CartPaymentDetails GetCartPaymentDetails(string cartId)
         {

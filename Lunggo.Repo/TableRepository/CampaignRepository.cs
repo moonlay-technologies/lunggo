@@ -40,6 +40,11 @@ namespace Lunggo.Repository.TableRepository
             return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public CampaignTableRecord Find1OrDefault(IDbConnection connection, CampaignTableRecord record)
+        {
+            return Find1OrDefault(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
 		public IEnumerable<CampaignTableRecord> Find(IDbConnection connection, CampaignTableRecord record)
         {
             return Find(connection, record, CommandDefinition.GetDefaultDefinition());
@@ -73,6 +78,11 @@ namespace Lunggo.Repository.TableRepository
 		public CampaignTableRecord Find1(IDbConnection connection, CampaignTableRecord record, CommandDefinition definition)
         {
 			return Find1Internal(connection, record, definition);
+        }
+
+		public CampaignTableRecord Find1OrDefault(IDbConnection connection, CampaignTableRecord record, CommandDefinition definition)
+        {
+			return Find1OrDefaultInternal(connection, record, definition);
         }
 
 		public IEnumerable<CampaignTableRecord> Find(IDbConnection connection, CampaignTableRecord record, CommandDefinition definition)

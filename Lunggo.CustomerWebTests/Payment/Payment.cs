@@ -24,14 +24,14 @@ namespace Lunggo.CustomerWebTests.Payment
             {
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
-                Status = PaymentStatus.Undefined,
+                Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<PaymentDetails>
                 {
                     new PaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
-                        Status = PaymentStatus.Undefined
+                        Status = PaymentStatus.MethodNotSet
                     }
                 }
             };
@@ -206,7 +206,7 @@ namespace Lunggo.CustomerWebTests.Payment
             {
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
-                Status = PaymentStatus.Undefined,
+                Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<PaymentDetails>
                 {
                     new PaymentDetails
@@ -236,7 +236,7 @@ namespace Lunggo.CustomerWebTests.Payment
             {
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
-                Status = PaymentStatus.Undefined,
+                Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<PaymentDetails>
                 {
                     new PaymentDetails
@@ -266,7 +266,7 @@ namespace Lunggo.CustomerWebTests.Payment
             {
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
-                Status = PaymentStatus.Undefined,
+                Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<PaymentDetails>
                 {
                     new PaymentDetails

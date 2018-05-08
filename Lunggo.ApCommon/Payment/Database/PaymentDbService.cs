@@ -62,7 +62,7 @@ namespace Lunggo.ApCommon.Payment.Database
                     methodCd = PaymentMethodCd.Mnemonic(payment.Method);
                 if (payment.Submethod != PaymentSubmethod.Undefined)
                     submethodCd = PaymentSubmethodCd.Mnemonic(payment.Submethod);
-                if (payment.Status != PaymentStatus.Undefined)
+                if (payment.Status != PaymentStatus.MethodNotSet)
                     statusCd = PaymentStatusCd.Mnemonic(payment.Status);
                 if (payment.Time.HasValue)
                     time = payment.Time.Value.ToUniversalTime();

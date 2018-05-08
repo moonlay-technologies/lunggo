@@ -1,4 +1,6 @@
-﻿namespace Lunggo.ApCommon.Payment.Constant
+﻿using System;
+
+namespace Lunggo.ApCommon.Payment.Constant
 {
     public enum PaymentMedium
     {
@@ -16,16 +18,18 @@
 
             switch (paymentMedium)
             {
+                case PaymentMedium.Undefined:
+                    return null;
                 case PaymentMedium.Direct:
-                    return "DRCT";
+                    return "DIRECT";
                 case PaymentMedium.Veritrans:
-                    return "VERI";
+                    return "VERITRANS";
                 case PaymentMedium.Nicepay:
-                    return "NICE";
+                    return "NICEPAY";
                 case PaymentMedium.E2Pay:
-                    return "E2PA";
+                    return "E2PAY";
                 default:
-                    return "";
+                    throw new ArgumentException("Payment medium not implemented: " + paymentMedium);
             }
         }
         public static PaymentMedium Mnemonic(string paymentMedium)
@@ -33,15 +37,19 @@
             switch (paymentMedium)
             {
                 case "DRCT":
+                case "DIRECT":
                     return PaymentMedium.Direct;
                 case "VERI":
+                case "VERITRANS":
                     return PaymentMedium.Veritrans;
                 case "NICE":
+                case "NICEPAY":
                     return PaymentMedium.Nicepay;
                 case "E2PA":
+                case "E2PAY":
                     return PaymentMedium.E2Pay;
                 default:
-                    return PaymentMedium.Undefined;
+                    throw new ArgumentException("Payment medium not implemented: " + paymentMedium);
             }
         }
     }

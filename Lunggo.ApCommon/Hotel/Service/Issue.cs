@@ -46,9 +46,10 @@ namespace Lunggo.ApCommon.Hotel.Service
             }
 
             var output = new IssueHotelTicketOutput();
-            if (rsvData.Payment.Method == PaymentMethod.Credit ||
-                (rsvData.Payment.Method != PaymentMethod.Credit &&
-                 rsvData.Payment.Status == PaymentStatus.Settled))
+            //if (rsvData.Payment.Method == PaymentMethod.Credit ||
+            //    (rsvData.Payment.Method != PaymentMethod.Credit &&
+            //     rsvData.Payment.Status == PaymentStatus.Settled))
+            if (rsvData.Payment.Status == PaymentStatus.Settled)
             {
                 var queueService = QueueService.GetInstance();
                 var queue = queueService.GetQueueByReference("HotelIssueVoucher");

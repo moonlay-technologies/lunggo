@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Lunggo.PaymentTest.DbServiceTests
 {
     [TestClass]
-    public class Details
+    public class GetPaymentDetailsTests
     {
         [TestMethod]
         public void Should_convert_valid_data_from_payment_record_to_payment_details()
@@ -89,7 +89,11 @@ namespace Lunggo.PaymentTest.DbServiceTests
                 Assert.ThrowsException<InvalidOperationException>(() => new PaymentService().GetPaymentDetails(rsvNo));
             });
         }
+    }
 
+    [TestClass]
+    public class InsertPaymentDetailsTests
+    {
         [TestMethod]
         public void Should_convert_valid_data_from_payment_details_to_payment_record()
         {

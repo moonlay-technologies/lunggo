@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
   <!--<table name="Payment" />-->
-  <table name="TrxRsv" />
-  <table name="TrxUser" />
+  <table name="Campaign" />
+  <table name="CampaignVoucher" />
+  <!--<table name="TrxRsv" />-->
+  <!--<table name="TrxUser" /-->>
   <!--<table name="ReferralCredit" />-->
 <!--   <table name="Currency" /> -->
   <!--<table name="AccountBalance" />

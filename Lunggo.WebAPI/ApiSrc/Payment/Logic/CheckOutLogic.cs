@@ -16,14 +16,13 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
     {
         public static ApiResponseBase CheckOut(CheckOutApiRequest request)
         {
-            if (NotEligibleForPaymentMethod(request, HttpContext.Current.User))
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY02"
-                };
+            //if (NotEligibleForPaymentMethod(request, HttpContext.Current.User))
+            //    return new PayApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERPPAY02"
+            //    };
 
-            bool isUpdated;
             var user = HttpContext.Current.User.Identity.GetUser();
             var contact = new Contact
             {
@@ -34,7 +33,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 CountryCallingCode = user.CountryCallCd,
                 Phone = user.PhoneNumber
             };
-            var paymentDetails = new PaymentService().SubmitCartPayment(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, contact, request,request.DiscountCode, out isUpdated);
+            var paymentDetails = new PaymentService().SubmitCartPayment(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, contact, request,request.DiscountCode, out var isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated, request.CartId);
             return apiResponse;
         }
@@ -46,7 +45,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new CheckOutApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY04"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
 
@@ -56,7 +55,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     return new CheckOutApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPPAY05"
+                        ErrorCode = "ERR_VOUCHER_NOT_AVAILABLE"
                     };
                 if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
                     return new CheckOutApiResponse

@@ -155,7 +155,7 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         //    {
         //        Medium = PaymentMedium.Direct,
         //        Method = PaymentMethod.CreditCard,
-        //        Status = PaymentStatus.Undefined,
+        //        Status = PaymentStatus.MethodNotSet,
         //        Data = new PaymentData(),
         //    };
         //    var actualResult = JalaninFungsiApalahNamanya(p);

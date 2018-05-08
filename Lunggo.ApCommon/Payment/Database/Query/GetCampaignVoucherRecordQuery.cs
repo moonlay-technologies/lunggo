@@ -1,10 +1,11 @@
 ﻿using System.Text;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.Framework.Database;
+using Lunggo.Repository.TableRecord;
 
 namespace Lunggo.ApCommon.Payment.Database.Query
 {
-    internal class GetCampaignVoucherRecordQuery : DbQueryBase<GetCampaignVoucherRecordQuery, CampaignVoucher>
+    internal class GetCampaignVoucherRecordQuery : DbQueryBase<GetCampaignVoucherRecordQuery, CampaignVoucher, CampaignVoucherTableRecord, CampaignTableRecord>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -17,13 +18,7 @@ namespace Lunggo.ApCommon.Payment.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT A.[VoucherCode], A.[CampaignId], A.[RemainingCount], A.[IsSingleUsage], ");
-            clauseBuilder.Append("B.[Name] AS CampaignName, B.[Description] AS CampaignDescription, B.DisplayName, ");
-            clauseBuilder.Append("B.[StartDate], B.[EndDate], ");
-            clauseBuilder.Append("B.[ValuePercentage], B.[ValueConstant], ");
-            clauseBuilder.Append("B.[MaxDiscountValue], B.[MinSpendValue], ");
-            clauseBuilder.Append("B.[CampaignTypeCd], B.[Status] AS CampaignStatus, ");
-            clauseBuilder.Append("B.[ProductType], B.[MaxBudget], B.[UsedBudget] ");
+            clauseBuilder.Append("SELECT A.*, B.* ");
             clauseBuilder.Append("FROM [CampaignVoucher] A ");
             clauseBuilder.Append("LEFT JOIN [Campaign] B ");
             clauseBuilder.Append("ON A.CampaignId = B.CampaignId ");

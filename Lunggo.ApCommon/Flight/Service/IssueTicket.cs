@@ -35,9 +35,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 return output;
             }
 
-            if (reservation.Payment.Method == PaymentMethod.Credit ||
-                (reservation.Payment.Method != PaymentMethod.Credit &&
-                 reservation.Payment.Status == PaymentStatus.Settled))
+            //if (reservation.Payment.Method == PaymentMethod.Credit ||
+            //    (reservation.Payment.Method != PaymentMethod.Credit &&
+            //     reservation.Payment.Status == PaymentStatus.Settled))
+            if (reservation.Payment.Status == PaymentStatus.Settled)
             {
                 var queueService = QueueService.GetInstance();
                 var queue = queueService.GetQueueByReference("FlightIssueTicket");
@@ -73,9 +74,10 @@ namespace Lunggo.ApCommon.Flight.Service
                 output.Errors = new List<FlightError> { FlightError.AlreadyBooked };
                 return output;
             }
-            if (reservation.Payment.Method == PaymentMethod.Credit ||
-                (reservation.Payment.Method != PaymentMethod.Credit &&
-                reservation.Payment.Status == PaymentStatus.Settled))
+            //if (reservation.Payment.Method == PaymentMethod.Credit ||
+            //    (reservation.Payment.Method != PaymentMethod.Credit &&
+            //    reservation.Payment.Status == PaymentStatus.Settled))
+            if (reservation.Payment.Status == PaymentStatus.Settled)
             {
                 Parallel.ForEach(reservation.Itineraries, itin =>
                 {

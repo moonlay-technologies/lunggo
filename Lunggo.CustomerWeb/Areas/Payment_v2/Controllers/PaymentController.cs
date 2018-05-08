@@ -38,7 +38,7 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
                     return RedirectToAction("ThankYou", new { cartId });
                 case PaymentStatus.Verifying:
                     return RedirectToAction("Verifying", new { cartId });
-                case PaymentStatus.Undefined:
+                case PaymentStatus.MethodNotSet:
                 case PaymentStatus.Failed:
                 case PaymentStatus.Expired:
                 case PaymentStatus.Denied:

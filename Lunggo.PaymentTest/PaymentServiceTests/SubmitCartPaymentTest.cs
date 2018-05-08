@@ -19,14 +19,14 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
     public class SubmitCartPaymentTest
     {
         [TestMethod]
-        // Should return final payment details and isUpdated as true when have all required valid data
-        public void Should_return_final_payment_details_and_isUpdated_as_true_when_have_all_required_valid_data()
+        // Should return final payment details and isUpdated as true when have all required valid data and without voucher
+        public void Should_return_final_payment_details_and_isUpdated_as_true_when_have_all_required_valid_data_and_without_voucher()
         {
             var cartId = "abc";
             var method = PaymentMethod.CreditCard;
             var submethod = PaymentSubmethod.BRI;
             var paymentData = new PaymentData { CreditCard = new CreditCard { TokenId = "asbdcd" } };
-            var discCd = "acc";
+            var discCd = (string)null;
 
             var procMock = new Mock<PaymentProcessorService>();
             var dbMock = new Mock<PaymentDbService>();
@@ -41,9 +41,6 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-
-            service.Setup(m => m.TryApplyVoucher(cartId, discCd, It.IsAny<PaymentDetails>())).Returns(true);
-            service.Setup(m => m.RealizeVoucher(It.IsAny<AccountService>(), It.IsAny<PaymentDetails>()));
             service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
@@ -52,10 +49,10 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                     new PaymentDetails
                     {
                         RsvNo = rsvNo1,
-                        Medium = PaymentMediumCd.Mnemonic("VERI"),
-                        Method = PaymentMethodCd.Mnemonic("BKP"),
-                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
-                        Status = PaymentStatusCd.Mnemonic("SET"),
+                        Medium = PaymentMedium.Veritrans,
+                        Method = PaymentMethod.BcaKlikpay,
+                        Submethod = PaymentSubmethod.BCA,
+                        Status = PaymentStatus.MethodNotSet,
                         Time = DateTime.Now,
                         TimeLimit = DateTime.Now,
                         TransferAccount = "1234567890",
@@ -76,10 +73,10 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                     new PaymentDetails
                     {
                         RsvNo = rsvNo2,
-                        Medium = PaymentMediumCd.Mnemonic("VERI"),
-                        Method = PaymentMethodCd.Mnemonic("BKP"),
-                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
-                        Status = PaymentStatusCd.Mnemonic("SET"),
+                        Medium = PaymentMedium.Veritrans,
+                        Method = PaymentMethod.BcaKlikpay,
+                        Submethod = PaymentSubmethod.BCA,
+                        Status = PaymentStatus.MethodNotSet,
                         Time = DateTime.Now,
                         TimeLimit = DateTime.Now,
                         TransferAccount = "1234567890",
@@ -99,10 +96,10 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                     }
                 },
                 CartId = cartId,
-                Medium = PaymentMediumCd.Mnemonic("VERI"),
-                Method = PaymentMethodCd.Mnemonic("BKP"),
-                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
-                Status = PaymentStatusCd.Mnemonic("SET"),
+                Medium = PaymentMedium.Veritrans,
+                Method = PaymentMethod.BcaKlikpay,
+                Submethod = PaymentSubmethod.BCA,
+                Status = PaymentStatus.MethodNotSet,
                 Time = DateTime.Now,
                 TimeLimit = DateTime.Now,
                 TransferAccount = "1234567890",
@@ -141,21 +138,36 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             Assert.IsTrue(isUpdated);
         }
 
-
         [TestMethod]
         // Should return exception when cartId is not valid
         public void Should_return_exception_when_cartId_is_not_valid()
         {
             var cartId = "abc";
-            var method = PaymentMethod.CreditCard;
+            var method = PaymentMethod.CimbClicks;
             var submethod = PaymentSubmethod.BRI;
             var paymentData = new PaymentData();
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string>());
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns((CartPaymentDetails)null);
+
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
         }
 
         [TestMethod]
@@ -163,15 +175,55 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
         public void Should_return_exception_when_cart_id_does_not_contain_any_reservation()
         {
             var cartId = "abc";
-            var method = PaymentMethod.CreditCard;
+            var method = PaymentMethod.CimbClicks;
             var submethod = PaymentSubmethod.BRI;
             var paymentData = new PaymentData();
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string>());
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            {
+                RsvPaymentDetails = new List<PaymentDetails>(),
+                CartId = cartId,
+                Medium = PaymentMediumCd.Mnemonic("VERI"),
+                Method = PaymentMethodCd.Mnemonic("BKP"),
+                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                Status = PaymentStatusCd.Mnemonic("SET"),
+                Time = DateTime.Now,
+                TimeLimit = DateTime.Now,
+                TransferAccount = "1234567890",
+                RedirectionUrl = "http://234567890",
+                ExternalId = "87654321",
+                DiscountCode = discCd,
+                OriginalPriceIdr = 0,
+                DiscountNominal = 0,
+                Surcharge = 0,
+                UniqueCode = 0,
+                FinalPriceIdr = 0,
+                PaidAmountIdr = 0,
+                LocalCurrency = new Currency("USD", 123, 321),
+                LocalFinalPrice = 0,
+                LocalPaidAmount = 0,
+                InvoiceNo = "asdfg123456"
+            });
+
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
         }
 
         [TestMethod]
@@ -179,31 +231,173 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
         public void Should_return_exception_when_transaction_status_is_settled()
         {
             var cartId = "abc";
-            var method = PaymentMethod.CreditCard;
+            var method = PaymentMethod.CimbClicks;
             var submethod = PaymentSubmethod.BRI;
             var paymentData = new PaymentData();
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            var rsvNo = "1234";
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            {
+                RsvPaymentDetails = new List<PaymentDetails>
+                {
+                    new PaymentDetails
+                    {
+                        RsvNo = rsvNo,
+                        Medium = PaymentMediumCd.Mnemonic("VERI"),
+                        Method = PaymentMethodCd.Mnemonic("BKP"),
+                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                        Status = PaymentStatusCd.Mnemonic("SET"),
+                        Time = DateTime.Now,
+                        TimeLimit = DateTime.Now,
+                        TransferAccount = "1234567890",
+                        RedirectionUrl = "http://234567890",
+                        ExternalId = "87654321",
+                        DiscountCode = "asdfghjkl",
+                        OriginalPriceIdr = 1234567890,
+                        DiscountNominal = 987654321,
+                        Surcharge = 3456789,
+                        UniqueCode = 8765432,
+                        FinalPriceIdr = 876543234,
+                        PaidAmountIdr = 654345,
+                        LocalCurrency = new Currency("USD", 123, 321),
+                        LocalFinalPrice = 47384123,
+                        LocalPaidAmount = 47297424,
+                        InvoiceNo = "asdfg123456"
+                    }
+                },
+                CartId = cartId,
+                Medium = PaymentMediumCd.Mnemonic("VERI"),
+                Method = PaymentMethodCd.Mnemonic("BKP"),
+                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                Status = PaymentStatusCd.Mnemonic("SET"),
+                Time = DateTime.Now,
+                TimeLimit = DateTime.Now,
+                TransferAccount = "1234567890",
+                RedirectionUrl = "http://234567890",
+                ExternalId = "87654321",
+                DiscountCode = "asdfghjkl",
+                OriginalPriceIdr = 1234567890,
+                DiscountNominal = 987654321,
+                Surcharge = 3456789,
+                UniqueCode = 8765432,
+                FinalPriceIdr = 876543234,
+                PaidAmountIdr = 654345,
+                LocalCurrency = new Currency("USD", 123, 321),
+                LocalFinalPrice = 47384123,
+                LocalPaidAmount = 47297424,
+                InvoiceNo = "asdfg123456"
+            });
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+
         }
 
         [TestMethod]
         // Should return exception when transaction status is verifying
         public void Should_return_exception_when_transaction_status_is_verifying()
         {
-            var cartId = "abc";
-            var method = PaymentMethod.CreditCard;
+                        var cartId = "abc";
+            var method = PaymentMethod.CimbClicks;
             var submethod = PaymentSubmethod.BRI;
             var paymentData = new PaymentData();
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            var rsvNo = "1234";
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            {
+                RsvPaymentDetails = new List<PaymentDetails>
+                {
+                    new PaymentDetails
+                    {
+                        RsvNo = rsvNo,
+                        Medium = PaymentMediumCd.Mnemonic("VERI"),
+                        Method = PaymentMethodCd.Mnemonic("BKP"),
+                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                        Status = PaymentStatusCd.Mnemonic("VER"),
+                        Time = DateTime.Now,
+                        TimeLimit = DateTime.Now,
+                        TransferAccount = "1234567890",
+                        RedirectionUrl = "http://234567890",
+                        ExternalId = "87654321",
+                        DiscountCode = "asdfghjkl",
+                        OriginalPriceIdr = 1234567890,
+                        DiscountNominal = 987654321,
+                        Surcharge = 3456789,
+                        UniqueCode = 8765432,
+                        FinalPriceIdr = 876543234,
+                        PaidAmountIdr = 654345,
+                        LocalCurrency = new Currency("USD", 123, 321),
+                        LocalFinalPrice = 47384123,
+                        LocalPaidAmount = 47297424,
+                        InvoiceNo = "asdfg123456"
+                    }
+                },
+                CartId = cartId,
+                Medium = PaymentMediumCd.Mnemonic("VERI"),
+                Method = PaymentMethodCd.Mnemonic("BKP"),
+                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                Status = PaymentStatusCd.Mnemonic("VER"),
+                Time = DateTime.Now,
+                TimeLimit = DateTime.Now,
+                TransferAccount = "1234567890",
+                RedirectionUrl = "http://234567890",
+                ExternalId = "87654321",
+                DiscountCode = "asdfghjkl",
+                OriginalPriceIdr = 1234567890,
+                DiscountNominal = 987654321,
+                Surcharge = 3456789,
+                UniqueCode = 8765432,
+                FinalPriceIdr = 876543234,
+                PaidAmountIdr = 654345,
+                LocalCurrency = new Currency("USD", 123, 321),
+                LocalFinalPrice = 47384123,
+                LocalPaidAmount = 47297424,
+                InvoiceNo = "asdfg123456"
+            });
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+
         }
 
         [TestMethod]
@@ -216,12 +410,81 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var paymentData = (PaymentData)null;
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            var rsvNo = "1234";
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            {
+                RsvPaymentDetails = new List<PaymentDetails>
+                {
+                    new PaymentDetails
+                    {
+                        RsvNo = rsvNo,
+                        Medium = PaymentMediumCd.Mnemonic("VERI"),
+                        Method = PaymentMethodCd.Mnemonic("BKP"),
+                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                        Status = PaymentStatusCd.Mnemonic("SET"),
+                        Time = DateTime.Now,
+                        TimeLimit = DateTime.Now,
+                        TransferAccount = "1234567890",
+                        RedirectionUrl = "http://234567890",
+                        ExternalId = "87654321",
+                        DiscountCode = "asdfghjkl",
+                        OriginalPriceIdr = 1234567890,
+                        DiscountNominal = 987654321,
+                        Surcharge = 3456789,
+                        UniqueCode = 8765432,
+                        FinalPriceIdr = 876543234,
+                        PaidAmountIdr = 654345,
+                        LocalCurrency = new Currency("USD", 123, 321),
+                        LocalFinalPrice = 47384123,
+                        LocalPaidAmount = 47297424,
+                        InvoiceNo = "asdfg123456"
+                    }
+                },
+                CartId = cartId,
+                Medium = PaymentMediumCd.Mnemonic("VERI"),
+                Method = PaymentMethodCd.Mnemonic("BKP"),
+                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                Status = PaymentStatusCd.Mnemonic("SET"),
+                Time = DateTime.Now,
+                TimeLimit = DateTime.Now,
+                TransferAccount = "1234567890",
+                RedirectionUrl = "http://234567890",
+                ExternalId = "87654321",
+                DiscountCode = "asdfghjkl",
+                OriginalPriceIdr = 1234567890,
+                DiscountNominal = 987654321,
+                Surcharge = 3456789,
+                UniqueCode = 8765432,
+                FinalPriceIdr = 876543234,
+                PaidAmountIdr = 654345,
+                LocalCurrency = new Currency("USD", 123, 321),
+                LocalFinalPrice = 47384123,
+                LocalPaidAmount = 47297424,
+                InvoiceNo = "asdfg123456"
+            });
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
         }
-
 
         [TestMethod]
         // Should return exception when method is credit card but payment data does not include credit card data
@@ -233,10 +496,81 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var paymentData = new PaymentData();
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            var rsvNo = "1234";
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            {
+                RsvPaymentDetails = new List<PaymentDetails>
+                {
+                    new PaymentDetails
+                    {
+                        RsvNo = rsvNo,
+                        Medium = PaymentMediumCd.Mnemonic("VERI"),
+                        Method = PaymentMethodCd.Mnemonic("BKP"),
+                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                        Status = PaymentStatusCd.Mnemonic("SET"),
+                        Time = DateTime.Now,
+                        TimeLimit = DateTime.Now,
+                        TransferAccount = "1234567890",
+                        RedirectionUrl = "http://234567890",
+                        ExternalId = "87654321",
+                        DiscountCode = "asdfghjkl",
+                        OriginalPriceIdr = 1234567890,
+                        DiscountNominal = 987654321,
+                        Surcharge = 3456789,
+                        UniqueCode = 8765432,
+                        FinalPriceIdr = 876543234,
+                        PaidAmountIdr = 654345,
+                        LocalCurrency = new Currency("USD", 123, 321),
+                        LocalFinalPrice = 47384123,
+                        LocalPaidAmount = 47297424,
+                        InvoiceNo = "asdfg123456"
+                    }
+                },
+                CartId = cartId,
+                Medium = PaymentMediumCd.Mnemonic("VERI"),
+                Method = PaymentMethodCd.Mnemonic("BKP"),
+                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                Status = PaymentStatusCd.Mnemonic("SET"),
+                Time = DateTime.Now,
+                TimeLimit = DateTime.Now,
+                TransferAccount = "1234567890",
+                RedirectionUrl = "http://234567890",
+                ExternalId = "87654321",
+                DiscountCode = "asdfghjkl",
+                OriginalPriceIdr = 1234567890,
+                DiscountNominal = 987654321,
+                Surcharge = 3456789,
+                UniqueCode = 8765432,
+                FinalPriceIdr = 876543234,
+                PaidAmountIdr = 654345,
+                LocalCurrency = new Currency("USD", 123, 321),
+                LocalFinalPrice = 47384123,
+                LocalPaidAmount = 47297424,
+                InvoiceNo = "asdfg123456"
+            });
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+
         }
 
         [TestMethod]
@@ -252,10 +586,80 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             };
             var discCd = "acc";
 
-            var service = new PaymentService();
+            var procMock = new Mock<PaymentProcessorService>();
+            var dbMock = new Mock<PaymentDbService>();
+            var cacheMock = new Mock<PaymentCacheService>();
+
+            var rsvNo = "1234";
+            cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+
+            var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            {
+                RsvPaymentDetails = new List<PaymentDetails>
+                {
+                    new PaymentDetails
+                    {
+                        RsvNo = rsvNo,
+                        Medium = PaymentMediumCd.Mnemonic("VERI"),
+                        Method = PaymentMethodCd.Mnemonic("BKP"),
+                        Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                        Status = PaymentStatusCd.Mnemonic("SET"),
+                        Time = DateTime.Now,
+                        TimeLimit = DateTime.Now,
+                        TransferAccount = "1234567890",
+                        RedirectionUrl = "http://234567890",
+                        ExternalId = "87654321",
+                        DiscountCode = "asdfghjkl",
+                        OriginalPriceIdr = 1234567890,
+                        DiscountNominal = 987654321,
+                        Surcharge = 3456789,
+                        UniqueCode = 8765432,
+                        FinalPriceIdr = 876543234,
+                        PaidAmountIdr = 654345,
+                        LocalCurrency = new Currency("USD", 123, 321),
+                        LocalFinalPrice = 47384123,
+                        LocalPaidAmount = 47297424,
+                        InvoiceNo = "asdfg123456"
+                    }
+                },
+                CartId = cartId,
+                Medium = PaymentMediumCd.Mnemonic("VERI"),
+                Method = PaymentMethodCd.Mnemonic("BKP"),
+                Submethod = PaymentSubmethodCd.Mnemonic("BCA"),
+                Status = PaymentStatusCd.Mnemonic("SET"),
+                Time = DateTime.Now,
+                TimeLimit = DateTime.Now,
+                TransferAccount = "1234567890",
+                RedirectionUrl = "http://234567890",
+                ExternalId = "87654321",
+                DiscountCode = "asdfghjkl",
+                OriginalPriceIdr = 1234567890,
+                DiscountNominal = 987654321,
+                Surcharge = 3456789,
+                UniqueCode = 8765432,
+                FinalPriceIdr = 876543234,
+                PaidAmountIdr = 654345,
+                LocalCurrency = new Currency("USD", 123, 321),
+                LocalFinalPrice = 47384123,
+                LocalPaidAmount = 47297424,
+                InvoiceNo = "asdfg123456"
+            });
+            var contact = new Contact
+            {
+                Name = "naannaan",
+                Email = "fmkef@mkemf.cm",
+                CountryCallingCode = "62",
+                Phone = "12345678",
+                Title = Title.Mister
+            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.SubmitPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
         }
     }
 }

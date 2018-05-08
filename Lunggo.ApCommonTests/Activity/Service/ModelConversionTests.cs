@@ -110,16 +110,16 @@ namespace Lunggo.ApCommonTests.Activity.Service
         //{
         //    ActivityReservation input = new ActivityReservation()
         //    {
-        //        RsvStatus = RsvStatus.Undefined,
+        //        RsvStatus = RsvStatus.MethodNotSet,
         //        Payment = new PaymentDetails()
         //        {
-        //            Status = PaymentStatus.Undefined,
+        //            Status = PaymentStatus.MethodNotSet,
         //            Method = PaymentMethod.Indomaret
         //        }
         //    };
 
         //    var actualResult = ActivityService.MapReservationStatus(input);
-        //    Assert.AreEqual(RsvDisplayStatus.Undefined, actualResult);
+        //    Assert.AreEqual(RsvDisplayStatus.MethodNotSet, actualResult);
         //}
 
         [TestMethod]
@@ -128,7 +128,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Cancelled,
-                Payment = new PaymentDetails() { Status = PaymentStatus.Undefined }
+                Payment = new PaymentDetails() { Status = PaymentStatus.MethodNotSet }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Expired,
-                Payment = new PaymentDetails() { Status = PaymentStatus.Undefined }
+                Payment = new PaymentDetails() { Status = PaymentStatus.MethodNotSet }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -291,7 +291,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             {
                 Payment = new PaymentDetails()
                 {
-                    Status = PaymentStatus.Undefined,
+                    Status = PaymentStatus.MethodNotSet,
                     Method = PaymentMethod.VirtualAccount
                 }
             };
@@ -308,7 +308,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             {
                 Payment = new PaymentDetails()
                 {
-                    Status = PaymentStatus.Undefined,
+                    Status = PaymentStatus.MethodNotSet,
                     Method = PaymentMethod.BankTransfer
                 }
             };
