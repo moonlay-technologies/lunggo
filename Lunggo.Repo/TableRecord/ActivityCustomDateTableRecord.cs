@@ -47,12 +47,22 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DateStatus");
 		    }
 		}
+		public int? PaxSlot
+		{
+		    get { return _PaxSlot; }
+		    set
+		    {
+		        _PaxSlot = value;
+		        IncrementLog("PaxSlot");
+		    }
+		}
 
 		
 		private long? _ActivityId;
 		private DateTime? _CustomDate;
 		private String _AvailableHour;
 		private String _DateStatus;
+		private int? _PaxSlot;
 
 
 		public static ActivityCustomDateTableRecord CreateNewInstance()
@@ -84,10 +94,11 @@ namespace Lunggo.Repository.TableRecord
         {
             _recordMetadata = new List<ColumnMetadata>
             {
-				new ColumnMetadata("ActivityId", false),
-				new ColumnMetadata("CustomDate", false),
-				new ColumnMetadata("AvailableHour", false),
+				new ColumnMetadata("ActivityId", true),
+				new ColumnMetadata("CustomDate", true),
+				new ColumnMetadata("AvailableHour", true),
 				new ColumnMetadata("DateStatus", false),
+				new ColumnMetadata("PaxSlot", false),
 
             };
         }

@@ -154,6 +154,17 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime? Date { get; set; }
         [JsonProperty("availableHours", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> AvailableHours { get; set; }
+        [JsonProperty("availableSessionAndPaxSlots", NullValueHandling = NullValueHandling.Ignore)]
+        public List<AvailableSessionAndPaxSlot> AvailableSessionAndPaxSlots { get; set; }
+       
+    }
+
+    public class AvailableSessionAndPaxSlot
+    {
+        [JsonProperty("availableHour", NullValueHandling = NullValueHandling.Ignore)]
+        public string AvailableHour { get; set; }
+        [JsonProperty("paxSlot", NullValueHandling = NullValueHandling.Ignore)]
+        public int PaxSlot { get; set; }
     }
 
     public class AvailableDayAndHours

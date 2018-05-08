@@ -36,13 +36,13 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                     };
 
                 var notif = NotificationService.GetInstance();
-                var succeeded = notif.UpdateTags(request.RegistrationId, request.Handle, platform, request.Tags);
-                if (!succeeded)
-                    return new FlightIssuanceApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERNADT03"
-                    };
+               // var succeeded = notif.UpdateTags(request.RegistrationId, request.Handle, platform, request.Tags);
+               // if (!succeeded)
+               //     return new FlightIssuanceApiResponse
+               //     {
+               //         StatusCode = HttpStatusCode.BadRequest,
+               //         ErrorCode = "ERNADT03"
+               //     };
 
                 return new ApiResponseBase
                 {
