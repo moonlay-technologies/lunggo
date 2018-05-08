@@ -66,7 +66,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
             getDetail.ActivityDetail.BookingStatus = BookingStatus.Booked;
             
-            var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail);
+            var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail, dateAndSession);
             if (rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE" || rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE_COUNT" || rsvDetail.RsvNo == "ERR_INVALID_ALL_TICKET_COUNT")
             {
                 return new BookActivityOutput
@@ -87,7 +87,7 @@ namespace Lunggo.ApCommon.Activity.Service
             };
         }
 
-        public ActivityReservation CreateActivityReservation(BookActivityInput input, ActivityDetail activityInfo)
+        public ActivityReservation CreateActivityReservation(BookActivityInput input, ActivityDetail activityInfo, List<DateAndAvailableHour> dateAndSession)
         {
             var rsvNo = RsvNoSequence.GetInstance().GetNext(ProductType.Activity);
 
@@ -138,7 +138,19 @@ namespace Lunggo.ApCommon.Activity.Service
                 originalPriceIdr += (price.Amount * ticketCount.Count);
             }
             
-            if (allTicketCount > packageAttribute[0].MaxCount || allTicketCount < packageAttribute[0].MinCount)
+            var dateResults = dateAndSession.Where(a => a.Date == input.DateTime.Date).First();
+            int paxSlot = 0;
+            if (input.DateTime.Session != null)
+            {
+                paxSlot = dateResults.AvailableSessionAndPaxSlots.Where(a => a.AvailableHour == input.DateTime.Session).First().PaxSlot;
+            }
+
+            else
+            {
+                paxSlot = dateResults.AvailableSessionAndPaxSlots.First().PaxSlot;
+            }
+
+            if (allTicketCount > packageAttribute[0].MaxCount || allTicketCount < packageAttribute[0].MinCount || allTicketCount > paxSlot)
             {
                 return new ActivityReservation
                 {

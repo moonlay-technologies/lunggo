@@ -101,7 +101,7 @@ namespace Lunggo.Framework.Database
         {
             var iRecord = (ITableRecord)record;
             var clauseBuilder = new StringBuilder();
-            var columnAssignmentClause = String.Join(",", record.GetMetadata().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName + "=@" + p.ColumnName));
+            var columnAssignmentClause = String.Join(" AND ", record.GetMetadata().Where(p => iRecord.IsSet(p.ColumnName)).Select(p => p.ColumnName + "=@" + p.ColumnName));
             clauseBuilder.AppendFormat("WHERE {0} ", columnAssignmentClause);
             return clauseBuilder.ToString();
         }
