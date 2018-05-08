@@ -180,24 +180,8 @@ namespace Lunggo.ApCommon.Payment.Service
                 if (payment.Status == PaymentStatus.Settled)
                 {
                     var rsv = ActivityService.GetInstance().GetReservation(rsvNo);
-                    var oldPaxSlotTableRecord = new ActivityCustomDateTableRecord
-                    {
-                        ActivityId = rsv.ActivityDetails.ActivityId,
-                        AvailableHour = rsv.DateTime.Session ?? "",
-                        CustomDate = rsv.DateTime.Date
-                    };
-                    var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn,oldPaxSlotTableRecord).First().PaxSlot;
                     var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
-                    var newPaxSlot = oldPaxSlot - ticketCount;
-                    var newPaxSlotTableRecord = new ActivityCustomDateTableRecord
-                    {
-                        ActivityId = rsv.ActivityDetails.ActivityId,
-                        AvailableHour = rsv.DateTime.Session ?? "",
-                        CustomDate = rsv.DateTime.Date,
-                        PaxSlot = newPaxSlot,
-                        DateStatus = "whitelisted"
-                    };
-                    ActivityCustomDateTableRepo.GetInstance().Update(conn,newPaxSlotTableRecord);
+                    ActivityService.GetInstance().DecreasePaxSlotFromDb(rsv.ActivityDetails.ActivityId, ticketCount, rsv.DateTime.Date.Value, rsv.DateTime.Session);
                 }
                 return true;
             }

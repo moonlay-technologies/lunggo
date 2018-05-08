@@ -1883,5 +1883,30 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
+        public void DecreasePaxSlotFromDb(long activityId, int ticketCount, DateTime date, string session)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var oldPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = activityId,
+                    AvailableHour = session ?? "",
+                    CustomDate = date
+                };
+                var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn,oldPaxSlotTableRecord).First().PaxSlot;
+               
+                var newPaxSlot = oldPaxSlot - ticketCount;
+                var newPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = activityId,
+                    AvailableHour = session ?? "",
+                    CustomDate = date,
+                    PaxSlot = newPaxSlot,
+                    DateStatus = "whitelisted"
+                };
+                ActivityCustomDateTableRepo.GetInstance().Update(conn,newPaxSlotTableRecord);
+            }
+        }
+
     }
 }
