@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 
@@ -27,6 +28,11 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             if (cartPayment == null)
                 return View("Error");
+
+            var rsvList = cartPayment.RsvPaymentDetails
+                .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
+
+            ViewBag.RsvList = rsvList;
 
             switch (cartPayment.Status)
             {

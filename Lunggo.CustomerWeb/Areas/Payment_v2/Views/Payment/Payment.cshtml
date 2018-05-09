@@ -10,10 +10,10 @@
 @using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
-@model Lunggo.ApCommon.Payment.Model.CartPaymentDetails
 @using Lunggo.ApCommon.Product.Model
 @using Lunggo.Framework.Environment
 @using React.Web.Mvc
+@model Lunggo.ApCommon.Payment.Model.CartPaymentDetails
 
 @{
     Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
@@ -55,7 +55,13 @@
     })*@
 
 <div id="react"></div>
-<script>var cartId = '4fd9fd7c11203fdbf6225b5e6af08426ebcf0773'</script>
+<script>
+    var cartId = '@Model.CartId';
+    var paymentDetails =
+        '@((ViewBag.RsvList as List<ActivityReservationForDisplay>).Zip(Model.RsvPaymentDetails,
+               (a,b) => new {name = a.ActivityDetail.Name, amount = b.OriginalPriceIdr})
+               .Serialize())';
+</script>
 <script src="~/Assets/js/Payment/paymentReact.js"></script>
 
 
