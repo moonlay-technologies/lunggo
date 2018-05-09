@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Lunggo.Framework.TestHelpers;
 using Lunggo.WebAPI.ApiSrc.Cart.Logic;
 using Lunggo.WebAPI.ApiSrc.Cart.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Lunggo.Framework.TestHelpers.TestHelper;
 
 namespace Lunggo.WebAPITests.PaymentTests
 {
@@ -18,7 +18,7 @@ namespace Lunggo.WebAPITests.PaymentTests
         // TESTNAME
         public void TESTNAME()
         {
-            HttpContext.Current = LoginUser("08428373826:petermort@wasasa.com");
+            HttpContext.Current = TestHelper.LoginUser("08428373826:petermort@wasasa.com");
 
             CartLogic.ViewCart();
         }

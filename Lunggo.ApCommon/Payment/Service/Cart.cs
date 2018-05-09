@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public Cart GetCartByUser(string userId)
+        public virtual Cart GetCartByUser(string userId)
         {
             var cartId = GetCartId(userId);
             var cart = GetCart(cartId);
@@ -27,7 +27,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return cart;
         }
 
-        public Cart GetCart(string cartId)
+        public virtual Cart GetCart(string cartId)
         {
             var rsvNoList = _cache.GetCartRsvNos(cartId);
 
@@ -41,13 +41,10 @@ namespace Lunggo.ApCommon.Payment.Service
             return cart;
         }
 
-        public bool AddToCart(string userId, string rsvNo)
+        public virtual bool AddToCart(string userId, string rsvNo)
         {
-            var checkRsv = ActivityService.GetInstance().GetReservation(rsvNo);
-            if (checkRsv == null)
-                return false;
-            var paymentDetail = _db.GetPaymentDetails(rsvNo);
-            if (paymentDetail.FinalPriceIdr != 0 || paymentDetail.OriginalPriceIdr == 0)
+            var paymentDetails = _db.GetPaymentDetails(rsvNo);
+            if (paymentDetails == null)
                 return false;
 
             var cartId = GetCartId(userId);
@@ -55,7 +52,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return true;
         }
 
-        public bool RemoveFromCart(string userId, string rsvNo)
+        public virtual bool RemoveFromCart(string userId, string rsvNo)
         {
             var cartId = GetCartId(userId);
             _cache.RemoveRsvFromCart(cartId, rsvNo);
