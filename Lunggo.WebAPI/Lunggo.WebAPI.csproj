@@ -364,6 +364,7 @@
     <Compile Include="ApiSrc\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
     <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\CheckOperatorVersionLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\CheckVersionLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetPromoLogic.cs" />
@@ -451,6 +452,9 @@
     <Compile Include="ApiSrc\Hotel\Model\HotelRateApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\OperatorDeleteRegistrationLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\OperatorRegisterDeviceLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
     <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\RegisterDeviceLogic.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiResponse.cs" />

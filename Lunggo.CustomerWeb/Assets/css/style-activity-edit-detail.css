@@ -4,8 +4,12 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-3-col-portfolio/blob/master/LICENSE)
  */
 
+@font-face {
+    font-family: "Ionicons";
+    src: url(../fonts/ionicons.ttf);
+}
 body {
-  padding-top: 45px;
+  padding-top: 0px;
 }
 
 @media (min-width: 992px) {
@@ -28,4 +32,9 @@ body {
 }
 
 .align-center {text-align: center;}
+.icon-pembayaran-primary {
+  color:#00d3c5;
+  font-size: 28px;
+  width: 35px;
+}
 

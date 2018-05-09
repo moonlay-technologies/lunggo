@@ -1,25 +1,35 @@
-﻿using Lunggo.Framework.Database;
+using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Net;
+using RestSharp;
 
 namespace Lunggo.ApCommon.Notifications
 {
     public partial class NotificationService
     {
+        public NotificationDbService _db { get; set; }
         private static readonly NotificationService Instance = new NotificationService();
         private bool _isInitialized;
+        //private static readonly AzureNotificationClient Client = AzureNotificationClient.GetClientInstance();
 
-        private NotificationService()
+        public NotificationService() : this(null)
         {
 
         }
+
+        public NotificationService(NotificationDbService notificationDbService)
+        {
+            _db = notificationDbService ?? new NotificationDbService();
+        }
+
         public void Init(string connString, string hubName)
         {
             if (!_isInitialized)
             {
+                //Client.Init(connString, hubName);
                 _isInitialized = true;
             }
         }
@@ -28,44 +38,130 @@ namespace Lunggo.ApCommon.Notifications
             return Instance;
         }
 
-        public void RegisterDevice(string token, string deviceId, string userId, params string[] tags)
+        public string RegisterDevice(string notificationHandle, string deviceId, string userId)
         {
-            if ( string.IsNullOrWhiteSpace(token) ) throw new ArgumentException ("Notification Registration token is null or white space, expected string");
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            if (string.IsNullOrWhiteSpace(notificationHandle) || string.IsNullOrWhiteSpace(userId)) 
             {
-                var deviceRegistered = NotificationTableRepo.GetInstance().Find1(conn, new NotificationTableRecord { Handle = token });
-                NotificationTableRecord TableRecord = prepareQueryParams(token, deviceId, userId, tags);
-                if (deviceRegistered == null)
-                {
-                    NotificationTableRepo.GetInstance().Insert(conn, TableRecord);
-                }
-                else
-                {
-                    NotificationTableRepo.GetInstance().Update(conn, TableRecord);
-                }
+                return null;
             }
+            //return Client.RegisterDevice(notificationHandle, deviceId);
+            return _db.RegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
         }
 
-        public void DeleteRegistration(string token)
+      
+        public string OperatorRegisterDevice(string notificationHandle, string deviceId, string userId)
         {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
+            //return Client.RegisterDevice(notificationHandle, deviceId);
+            if (string.IsNullOrWhiteSpace(notificationHandle) || string.IsNullOrWhiteSpace(userId)) 
             {
-                var deletedId = NotificationTableRepo.GetInstance().Delete(conn, new NotificationTableRecord { Handle = token });
+                return null;
             }
+            return _db.OperatorRegisterDeviceExpoToDb(notificationHandle, deviceId, userId);
         }
 
-        private static NotificationTableRecord prepareQueryParams(string token, string deviceId, string userId, string[] tags)
+        public bool SendNotificationsCustomer(string messageTitle, string messageBody, string userId, NotificationData data)
         {
-            var tagString = string.Join(",", tags);
-            tagString = "," + tagString + ",";
-            var TableRecord = new NotificationTableRecord
+            if (string.IsNullOrWhiteSpace(userId))
             {
-                Handle = token,
-                DeviceId = deviceId,
-                UserId = userId,
-                Tags = tagString
-            };
-            return TableRecord;
+                return false;
+            }
+            var expoTokens = _db.GetCustomerExpoTokenFromDb(userId);
+            if (expoTokens == null || expoTokens.Count <  1)
+            {
+                return false;
+            }
+            foreach (var expoToken in expoTokens)
+            {
+                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken, data);            
+            }
+            return true;
+        }
+
+        public bool SendNotificationsOperator(string messageTitle, string messageBody, string userId, NotificationData data)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return false;
+            }
+            var expoTokens = _db.GetOperatorExpoTokenFromDb(userId);
+            if (expoTokens == null || expoTokens.Count <  1)
+            {
+                return false;
+            }
+            foreach (var expoToken in expoTokens)
+            {
+                var check = SendNotificationsExpo(messageTitle, messageBody, expoToken, data);           
+            }
+            return true;
+        }
+        
+
+        public virtual bool SendNotificationsExpo(string messageTitle, string messageBody, string expoToken, NotificationData data)
+        {
+            if (string.IsNullOrWhiteSpace(expoToken))
+            {
+                return false;
+            }
+            var pushNotificationClient = new RestClient("https://exp.host");
+            var pushNotificationRequest = new RestRequest("/--/api/v2/push/send", Method.POST);
+            var pushNotificationBody = new Notification();
+            pushNotificationBody.Title = messageTitle;
+            pushNotificationBody.Message = messageBody;
+            pushNotificationBody.Receiver = expoToken;
+            pushNotificationBody.Sound = "default";
+            var dataJson = ConvertToNotificationDataJsonFormat(data);
+            pushNotificationBody.Data = dataJson;
+            var pushNotificationBodyJson = ConvertToNotificationJsonFormat(pushNotificationBody);
+            pushNotificationRequest.AddJsonBody(pushNotificationBodyJson);
+            var pushNotificationResponse = pushNotificationClient.Execute(pushNotificationRequest);
+            return pushNotificationResponse.StatusCode == HttpStatusCode.OK;
+        }
+
+        public bool DeleteRegistration(string expoHandle)
+        {
+            if (string.IsNullOrWhiteSpace(expoHandle))
+            {
+                return false;
+            }
+            _db.DeleteRegistrationFromDb(expoHandle);
+            return true;
+        }
+
+        public bool OperatorDeleteRegistration(string expoHandle)
+        {
+            if (string.IsNullOrWhiteSpace(expoHandle))
+            {
+                return false;
+            }
+            _db.OperatorDeleteRegistrationFromDb(expoHandle);
+            return true;
+        }
+
+        public NotificationJsonFormat ConvertToNotificationJsonFormat(Notification notification)
+        {
+            if (notification == null)
+            {
+                return null;
+            }
+            var notificationJsonFormat = new NotificationJsonFormat();
+            notificationJsonFormat.to = notification.Receiver;
+            notificationJsonFormat.body = notification.Message;
+            notificationJsonFormat.sound = notification.Sound;
+            notificationJsonFormat.title = notification.Title;
+            notificationJsonFormat.data = notification.Data;
+            return notificationJsonFormat;
+        }
+
+        public NotificationDataJsonFormat ConvertToNotificationDataJsonFormat(NotificationData data)
+        {
+            if (data == null)
+            {
+                return null;
+            }
+            var dataJsonFormat = new NotificationDataJsonFormat();
+            dataJsonFormat.function = data.Function;
+            dataJsonFormat.status = data.Status;
+            return dataJsonFormat;
         }
     }
 }

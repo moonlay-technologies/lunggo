@@ -23,12 +23,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 
             TableLog.PartitionKey = "TOKEN ERROR LOG";
 
-            if (request.RefreshToken != null && (!string.IsNullOrEmpty(request.Email) || !string.IsNullOrEmpty(request.Password)))
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
-                };
             if(!string.IsNullOrEmpty(request.Email))
             {
                 long result;

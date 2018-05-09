@@ -409,6 +409,7 @@
     <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
     <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
     <Content Include="Assets\bootstrap\bootstrap_difference.css" />
+    <Content Include="Assets\css\ionicons.css" />
     <Content Include="Assets\css\landingpage.css" />
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
     <Content Include="Assets\bootstrap\_bootstrap-mincer.scss" />
@@ -468,6 +469,7 @@
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
+    <Content Include="Assets\fonts\ionicons.svg" />
     <Content Include="Assets\fonts\MyriadPro-BoldCond.otf" />
     <Content Include="Assets\fonts\MyriadPro-Regular.otf" />
     <Content Include="Assets\fonts\OpenSans-Bold.eot" />
@@ -1888,6 +1890,9 @@
     <Content Include="Assets\fonts\hind-light.ttf" />
     <Content Include="Assets\fonts\hind-regular.ttf" />
     <Content Include="Assets\fonts\hind-semibold.ttf" />
+    <Content Include="Assets\fonts\ionicons.eot" />
+    <Content Include="Assets\fonts\ionicons.ttf" />
+    <Content Include="Assets\fonts\ionicons.woff" />
     <Content Include="Areas\Payment_v2\Views\web.config" />
     <Content Include="webpack.config.js" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />

@@ -123,11 +123,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
-      <Project>{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}</Project>
+      <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
       <Name>Lunggo.ApCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lunggo.CustomerWeb\Lunggo.CustomerWeb.csproj">
-      <Project>{C6C677D1-BB06-45C7-94DE-C9BB2603907B}</Project>
+      <Project>{c6c677d1-bb06-45c7-94de-c9bb2603907b}</Project>
       <Name>Lunggo.CustomerWeb</Name>
     </ProjectReference>
   </ItemGroup>

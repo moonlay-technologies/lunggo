@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Activity.Database.Query;
+using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Database.Query;
 using Lunggo.ApCommon.Payment.Model;
@@ -113,6 +114,12 @@ namespace Lunggo.ApCommon.Payment.Database
                     payment.Discount.InsertToDb(rsvNo);
                 if (payment.Refund != null)
                     payment.Refund.InsertToDb(rsvNo);
+                if (rsvNo[0] == '3' && payment.Status == PaymentStatus.Settled)
+                {
+                    var rsv = ActivityService.GetInstance().GetReservation(rsvNo);
+                    var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
+                    ActivityService.GetInstance().DecreasePaxSlotFromDb(rsv.ActivityDetails.ActivityId, ticketCount, rsv.DateTime.Date.Value, rsv.DateTime.Session);
+                }
                 return true;
             }
         }

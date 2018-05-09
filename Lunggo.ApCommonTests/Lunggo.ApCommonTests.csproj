@@ -189,8 +189,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Account\ApiSrc\ChangePasswordLogic\" />
+    <Folder Include="Account\ApiSrc\LoginLogic\" />
+    <Folder Include="Account\ApiSrc\RegisterLogic\" />
+    <Folder Include="Account\Service\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Lunggo.ApCommon\Lunggo.ApCommon.csproj">
-      <Project>{9A51106C-BD55-40CC-A1C6-6FC3CB74EC8A}</Project>
+      <Project>{9a51106c-bd55-40cc-a1c6-6fc3cb74ec8a}</Project>
       <Name>Lunggo.ApCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Lunggo.Framework\Lunggo.Framework.csproj">
@@ -205,15 +214,6 @@
       <Project>{94c45b65-f662-4262-a745-0d023f9c9ff9}</Project>
       <Name>Lunggo.WebAPI</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Account\ApiSrc\ChangePasswordLogic\" />
-    <Folder Include="Account\ApiSrc\LoginLogic\" />
-    <Folder Include="Account\ApiSrc\RegisterLogic\" />
-    <Folder Include="Account\Service\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
