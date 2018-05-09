@@ -5,7 +5,6 @@ import PaymentInstruction from './PaymentInstruction.jsx';
 //import Iframe from 'react-iframe';
 
 function PaymentModalLayout(props) {
-  console.log(props.iframeUrl)
     return (
       <div id="payment-modal" className="mother-container modal fade">
         <div className="modal-dialog modal-lg" style={{
@@ -13,21 +12,50 @@ function PaymentModalLayout(props) {
           padding: 10,
           borderRadius: 7
         }}>
+          <div hidden={props.paymentStep !== 'loading'}>
+            ...Loading
+          </div>
+          <div hidden={props.paymentStep !== 'failed'}>
+            <div className="mother-container">
+              <div style={{ textAlign: 'center', marginTop: '40%' }}>
+                <div className="icon-success">
+                  <img style={{width:100}} src="images/icon-error.png" />
+                </div>
+                <div className="text-success">Terjadi kesalahan pada sistem</div>
+                <div className="button-container-thankyou">
+                  <div className="row">
+                    <div className="col-xs-12 no-padding">
+                      <a href="#" className="button-primary">Gunakan Metode Pembayaran Lain</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div hidden={props.paymentStep !== 'success'}>
+              <div className="mother-container">
+              <div style={{ textAlign: 'center', marginTop: '40%' }}>
+                  <div className="icon-success">
+                  <img style={{width:100}} src="images/icon-success.png" />
+        </div>
+                    <div className="text-success">Proses Pembayaran Berhasil</div>
+                    <div className="text-success">No. Transaksi: 1234567890</div>
+                    <div className="button-container-thankyou">
+                      <div className="row">
+                        <div className="col-xs-12 no-padding">
+                          <a href="#" className="button-primary">Kembali ke Pesananku</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div> 
+          </div>
           <div>
-            {/*<Iframe
-            //  hidden={props.paymentStep !== 'paymentOtp'}
-            //  //url={props.iframeUrl}
-            //  url="https://www.travorama.com"
-            //  width="400px"
-            //  height="420px"
-            //  id="myId"
-            //  className="myClassname"
-            //  display="initial"
-            //  position="relative"
-            //  allowFullScreen />
-            */}
-            <iframe hidden={props.paymentStep !== 'paymentOtp'}
-              src={props.iframeUrl}></iframe>
+            <iframe hidden={props.paymentStep !== 'paymentOtp'} src={props.iframeUrl} width="400px" height="420px">
+              <p>Your browser doesn't support iframe</p>
+            </iframe>
           </div>
           <div hidden={props.paymentStep !== 'initial'}>
             <div className="row">
