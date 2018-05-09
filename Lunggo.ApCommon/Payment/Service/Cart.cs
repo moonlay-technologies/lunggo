@@ -19,9 +19,16 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public Cart GetCart(string userId)
+        public Cart GetCartByUser(string userId)
         {
             var cartId = GetCartId(userId);
+            var cart = GetCart(cartId);
+
+            return cart;
+        }
+
+        public Cart GetCart(string cartId)
+        {
             var rsvNoList = _cache.GetCartRsvNos(cartId);
 
             if (rsvNoList == null || !rsvNoList.Any())
@@ -30,8 +37,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     RsvNoList = new List<string>()
                 };
 
-            var cart = ConstructCartFromRsvNoList(rsvNoList);
-
+            var cart = ConstructCart(cartId, rsvNoList);
             return cart;
         }
 
@@ -68,7 +74,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (rsvNoList == null || !rsvNoList.Any())
                 return null;
 
-            var cart = ConstructCartFromRsvNoList(rsvNoList);
+            var cart = ConstructCart(trxId, rsvNoList);
 
             return cart;
         }
@@ -84,9 +90,10 @@ namespace Lunggo.ApCommon.Payment.Service
             return stringBuilder.ToString();
         }
 
-        private Cart ConstructCartFromRsvNoList(List<string> rsvNoList)
+        private Cart ConstructCart(string cartId, List<string> rsvNoList)
         {
             var cart = new Cart();
+            cart.Id = cartId;
             cart.RsvNoList = rsvNoList;
             cart.TotalPrice = rsvNoList.Select(_db.GetPaymentDetails).Sum(d => d.OriginalPriceIdr);
             return cart;

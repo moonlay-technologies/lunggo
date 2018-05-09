@@ -40,7 +40,7 @@ namespace Lunggo.CustomerWeb.Controllers
             voucherCode = "REFERRALCREDIT";
             var activityService = ActivityService.GetInstance();
             var userId = System.Web.HttpContext.Current.User.Identity.GetId();
-            var cart = _paymentService.GetCart(userId);
+            var cart = _paymentService.GetCartByUser(userId);
             var voucherRs = new PaymentService().GetVoucherDiscountForCart(cart.Id, voucherCode, out var voucherStatus);
             if (voucherStatus == VoucherStatus.Success)
             {

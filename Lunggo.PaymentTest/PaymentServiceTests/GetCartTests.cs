@@ -112,7 +112,7 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 InvoiceNo = "asdfg123456"
             });
 
-            var actual = service.Object.GetCart(userId);
+            var actual = service.Object.GetCartByUser(userId);
         }
 	
     }
