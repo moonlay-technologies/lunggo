@@ -3,6 +3,7 @@ using System.Linq;
 using Lunggo.ApCommon.Payment.Cache;
 using Lunggo.Framework.Redis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StackExchange.Redis;
 using static Lunggo.Framework.TestHelpers.TestHelper;
 
 namespace Lunggo.PaymentTest.CacheServiceTests
@@ -120,10 +121,14 @@ namespace Lunggo.PaymentTest.CacheServiceTests
                 Assert.IsTrue(actual == null || !actual.Contains<RedisValue>(rsvNo));
             });
         }
+    }
 
+    [TestClass]
+    public class DeleteCartTests
+    {
         [TestMethod]
-        // Should not contain anything after removing cart
-        public void Should_not_contain_anything_after_removing_cart()
+        // Should not contains anything after deleting cart
+        public void Should_not_contains_anything_after_deleting_cart()
         {
             UseRedis(redis =>
             {
@@ -134,11 +139,12 @@ namespace Lunggo.PaymentTest.CacheServiceTests
 
                 redis.ListLeftPush(key, rsvNo);
 
-                new PaymentCacheService().RemoveRsvFromCart(cartId, rsvNo);
+                new PaymentCacheService().DeleteCart(cartId);
 
                 var actual = redis.ListRange(key);
                 Assert.IsTrue(actual == null || actual.Length == 0);
             });
         }
+
     }
 }

@@ -85,7 +85,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Level1Authorize]
+        [Level0Authorize]
         [Route("v1/payment/checkvoucher")]
         public ApiResponseBase CheckVoucher()
         {
