@@ -14,47 +14,46 @@ using static Lunggo.WebAPI.ApiSrc.Payment.Logic.PaymentLogic;
 namespace Lunggo.WebAPITests.PaymentTests
 {
     [TestClass]
-    public class CheckOutTests
+    public class PayTests
     {
         [TestMethod]
-        // Should throw exception when not logged in
-        public void Should_throw_exception_when_not_logged_in()
+        // Should return invalid request when rsvNo and cartId are none
+        public void Should_return_invalid_request_when_rsvNo_and_cartId_are_none()
         {
-            HttpContext.Current = NoLogin();
-
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                CheckOut(new CheckOutApiRequest());
-            });
+            throw new NotImplementedException();
         }
 
         [TestMethod]
-        // Should throw exception when logged in as guest
-        public void Should_throw_exception_when_logged_in_as_guest()
+        // Should pay for rsv when supplied with rsvNo
+        public void Should_pay_for_rsv_when_supplied_with_rsvNo()
         {
-            HttpContext.Current = LoginGuest();
-
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                CheckOut(new CheckOutApiRequest());
-            });
+            throw new NotImplementedException();
         }
 
         [TestMethod]
-        // Should throw exception when logged in invalid user
-        public void Should_throw_exception_when_logged_in_as_invalid_user()
+        // Should pay for cart when supplied with cartId
+        public void Should_pay_for_cart_when_supplied_with_cartId()
         {
-            HttpContext.Current = LoginInvalidUser();
-
-            Assert.ThrowsException<InvalidOperationException>(() =>
-            {
-                CheckOut(new CheckOutApiRequest());
-            });
+            throw new NotImplementedException();
         }
 
         [TestMethod]
-        // Should return invalid request when cart ID is invalid
-        public void Should_return_invalid_request_when_cart_ID_is_invalid()
+        // Should pay for rsv when both rsvNo and cartId are supplied
+        public void Should_pay_for_rsv_when_both_rsvNo_and_cartId_are_supplied()
+        {
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        // Should return invalid request when rsvNo is invalid
+        public void Should_return_invalid_request_when_rsvNo_is_invalid()
+        {
+            throw new NotImplementedException();
+        }
+
+        [TestMethod]
+        // Should return invalid request when cartId is invalid
+        public void Should_return_invalid_request_when_cartId_is_invalid()
         {
             throw new NotImplementedException();
         }

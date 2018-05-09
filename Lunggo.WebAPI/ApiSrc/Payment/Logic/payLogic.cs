@@ -14,8 +14,6 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
     {
         public static ApiResponseBase Pay(PayApiRequest request)
         {
-            var user = HttpContext.Current.User;
-
             if (!IsValid(request))
                 return new PayApiResponse
                 {
@@ -23,15 +21,13 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     ErrorCode = "ERPPAY01"
                 };
 
-            //if (NotEligibleForPaymentMethod(request, user))
-            //    return new PayApiResponse
-            //    {
-            //        StatusCode = HttpStatusCode.BadRequest,
-            //        ErrorCode = "ERPPAY02"
-            //    };
             bool isUpdated;
             var paymentData = PreprocessPaymentData(request);
-            var paymentDetails = new PaymentService().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
+            var paymentDetails = !string.IsNullOrWhiteSpace(request.RsvNo)
+                ? (PaymentDetails) new PaymentService().SubmitPayment(request.RsvNo, request.Method,
+                    request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated)
+                : (PaymentDetails) new PaymentService().SubmitCartPayment(request.RsvNo, request.Method,
+                    request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
             
             return apiResponse;
@@ -42,7 +38,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return request.Serialize().Deserialize<PaymentData>();
         }
 
-        private static PayApiResponse AssembleApiResponse(RsvPaymentDetails paymentDetails, bool isUpdated)
+        private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
         {
             if (paymentDetails == null)
             {

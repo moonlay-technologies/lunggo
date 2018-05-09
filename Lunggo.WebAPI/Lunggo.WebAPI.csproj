@@ -464,7 +464,6 @@
     <Compile Include="ApiSrc\Notification\NotificationController.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckMethodDiscountLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckBinDiscountLogic.cs" />
-    <Compile Include="ApiSrc\Payment\Logic\CheckOutLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\CheckPaymentLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\GetPaymentMethodsLogic.cs" />
     <Compile Include="ApiSrc\Payment\Logic\NicepayNotificationLogic.cs" />

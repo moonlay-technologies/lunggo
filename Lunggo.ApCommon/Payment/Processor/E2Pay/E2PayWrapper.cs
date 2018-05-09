@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Payment.Processor
             private const string _backendPath = @"/id/E2Pay/BackendPost";
             private const string _paymentPagePath = @"/id/Payment/OnlineDebit";
 
-            internal RsvPaymentDetails ProcessPayment(RsvPaymentDetails payment, TransactionDetails transactionDetail)
+            internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
             {
                 var timeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
                 var requestHtml = GenerateRequestPageHtml(payment, transactionDetail);
@@ -164,7 +164,7 @@ namespace Lunggo.ApCommon.Payment.Processor
                 //    return payment;
             }
 
-            private static string GenerateRequestPageHtml(RsvPaymentDetails payment, TransactionDetails transactionDetail)
+            private static string GenerateRequestPageHtml(PaymentDetails payment, TransactionDetails transactionDetail)
             {
                 var rootUrl = EnvVariables.Get("general", "rootUrl");
                 var contact = transactionDetail.Contact;

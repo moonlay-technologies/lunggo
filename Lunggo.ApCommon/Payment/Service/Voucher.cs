@@ -434,14 +434,14 @@ namespace Lunggo.ApCommon.Payment.Service
             return voucherDiscount;
         }
 
-        private bool RealizeVoucher(VoucherDiscount discount, AccountService accountService, RsvPaymentDetails paymentDetails)
+        private bool RealizeVoucher(VoucherDiscount discount, AccountService accountService, PaymentDetails paymentDetails)
         {
             //var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);
             var isVoucherDecrementSuccess = VoucherDecrement(discount.VoucherCode);
             if ( /*isUseBudgetSuccess && */isVoucherDecrementSuccess)
             {
-                var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(paymentDetails.RsvNo);
-                accountService.UseReferralCredit(userId, paymentDetails.DiscountNominal);
+                //var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(paymentDetails.RsvNo);
+                //accountService.UseReferralCredit(userId, paymentDetails.DiscountNominal);
                 return true;
                 //var contact = Contact.GetFromDb(rsvNo);
                 //SavePhoneAndEmailInCache(voucherCode, contact.CountryCallingCode + contact.Phone, contact.Email);
@@ -548,7 +548,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private bool TryApplyVoucher(string cartId, string discountCode, RsvPaymentDetails paymentDetails,
+        private bool TryApplyVoucher(string cartId, string discountCode, PaymentDetails paymentDetails,
             out VoucherDiscount discount)
         {
             discount = GetVoucherDiscount(cartId, discountCode, out var status);

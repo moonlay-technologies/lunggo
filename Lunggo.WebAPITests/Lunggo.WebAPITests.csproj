@@ -86,7 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PaymentTests\CheckVoucherTests.cs" />
-    <Compile Include="PaymentTests\CheckOutTests.cs" />
+    <Compile Include="PaymentTests\PayTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

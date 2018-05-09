@@ -14,6 +14,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         public string DiscountCode { get; set; }
         [JsonProperty("rsvNo", NullValueHandling = NullValueHandling.Ignore)]
         public string RsvNo { get; set; }
+        [JsonProperty("cartId", NullValueHandling = NullValueHandling.Ignore)]
+        public string CartId { get; set; }
         [JsonProperty("creditCard", NullValueHandling = NullValueHandling.Ignore)]
         public CreditCard CreditCard { get; set; }
         [JsonProperty("mandiriClickPay", NullValueHandling = NullValueHandling.Ignore)]
