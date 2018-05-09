@@ -51,8 +51,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     return null;
             }
 
-            cartPaymentDetails.Surcharge = GetSurchargeNominal(cartPaymentDetails);
-            cartPaymentDetails.FinalPriceIdr += cartPaymentDetails.Surcharge;
+            CalculateFinal(cartPaymentDetails);
 
             var transactionDetails = ConstructTransactionDetails(cartPaymentDetails.RsvPaymentDetails[0].RsvNo, cartPaymentDetails);
             var processSuccess = _processor.ProcessPayment(cartPaymentDetails, transactionDetails);
@@ -68,6 +67,19 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             isUpdated = true;
             return cartPaymentDetails;
+        }
+
+        private void CalculateFinal(PaymentDetails paymentDetails)
+        {
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr -
+                                               paymentDetails.DiscountNominal + paymentDetails.UniqueCode;
+            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+
+            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
+
+            if (paymentDetails is CartPaymentDetails cartDetails)
+                cartDetails.RsvPaymentDetails.ForEach(CalculateFinal);
         }
 
         private bool ValidatePaymentStatus(PaymentDetails paymentDetails)
@@ -123,6 +135,7 @@ namespace Lunggo.ApCommon.Payment.Service
             cartPayment.Method = firstRsv.Method;
             cartPayment.Submethod = firstRsv.Submethod;
             cartPayment.Data = firstRsv.Data;
+            cartPayment.LocalCurrency = firstRsv.LocalCurrency;
         }
 
         private void DistributeRsvPaymentDetails(CartPaymentDetails cartPayment)

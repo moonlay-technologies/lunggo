@@ -101,5 +101,13 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
         {
             throw new NotImplementedException();
         }
+
+        [TestMethod]
+        // Should return true when userId is valid and rsvNo is whatever
+        public void Should_return_true_when_userId_is_valid_and_rsvNo_is_whatever()
+        {
+            throw new NotImplementedException();
+        }
+	
     }
 }
