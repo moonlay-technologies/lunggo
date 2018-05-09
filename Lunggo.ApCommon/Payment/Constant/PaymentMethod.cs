@@ -34,6 +34,8 @@ namespace Lunggo.ApCommon.Payment.Constant
         {
             switch (paymentMethod)
             {
+                case PaymentMethod.Undefined:
+                    return null;
                 case PaymentMethod.CreditCard:
                     return "CREDITCARD";
                 case PaymentMethod.BankTransfer:

@@ -184,8 +184,6 @@ namespace Lunggo.ApCommon.Activity.Service
                     : null
             };
 
-            _paymentService.GetUniqueCode(rsvDetail.RsvNo, null, null);
-
             return rsvDetail;
         }
 

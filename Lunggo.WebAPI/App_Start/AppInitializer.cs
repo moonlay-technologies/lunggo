@@ -99,11 +99,6 @@ namespace Lunggo.WebAPI
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
-                },
-                new RedisConnectionProperty
-                {
-                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "masterDataCacheConnectionString")
                 }
             });
