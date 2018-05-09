@@ -21,16 +21,27 @@ function PaymentPageLayout(props) {
 
         <div className="row">
           <div className="col-xs-6 text-center no-padding-left">
-            <div className="btn-potonganharga selected-discount">
+            <a href="#" onClick={() => props.onChangedDiscountOption('creditBalance')}>
+            <div className={props.chosenDiscountOption == 'creditBalance' ? `btn-potonganharga selected-discount` : `btn-potonganharga`}
+              
+            >
               <p>Gunakan Credit</p>
               <span>{props.creditBalance}</span>
-            </div>
+              </div>
+              </a>
           </div>
           <div className="col-xs-6 text-center no-padding-right" data-toggle="collapse" href="#kodevoucher">
-            <div className="btn-potonganharga">
+            <a href="#">
+              <div className={props.chosenDiscountOption == 'voucherCode' ? `btn-potonganharga selected-discount` : `btn-potonganharga`}
+              onClick={() => props.onChangedDiscountOption('voucherCode')}
+            >
               <p>Gunakan Voucher</p>
-              <span className="sub-info">masukan kode voucher disini</span>
-            </div>
+              {props.discountVoucherAmount ?
+                <span>props.discountVoucherAmount</span> :
+                <span className="sub-info">masukkan kode voucher disini</span>
+              }
+              </div>
+              </a>
           </div>
         </div>
 
@@ -40,8 +51,8 @@ function PaymentPageLayout(props) {
               <form>
                 <div className="form-group">
                   <label className="label-form" for="nokartu">Kode Voucher</label>
-                  <input value={props.discountVoucherCode} onChange={props.onChangedVoucherCode} type="number" className="form-control form-payment validation-form-true" id="nokartu" placeholder="Masukkan kode voucher disini" />
-                  <div className="text-validation">Kode salah</div>
+                  <input value={props.discountVoucherCode} onChange={props.onChangedVoucherCode} type="text" className="form-control form-payment validation-form-true" id="nokartu" placeholder="Masukkan kode voucher disini" />
+                  <div className="text-validation">{props.voucherErrorMessage}</div>
                   {/*<div className="text-validation-true">Kode benar</div>*/}
                 </div>
 
@@ -116,36 +127,36 @@ function PaymentPageLayout(props) {
           <div className="row">
             <PaymentSelection text="BCA Klikpay" onClick={() => props.selectMethod('bcaklikpay')} icon={<img className="img-pembayaran" src="/Assets/images/bank/bcaklikpay.png" />} /></div>
 
-            <div className="row">
-              <PaymentSelection text="Debit Online" href="#debitonline" collapsible icon={<i className="icon ion-card icon-pembayaran-primary" />} />
-            </div>
-            <div className="row">
-              <div className="collapse" id="debitonline" style={{ marginTop: -5 }}>
-                <div className="btn-method-transfer-dropdown clearfix">
+          <div className="row">
+            <PaymentSelection text="Debit Online" href="#debitonline" collapsible icon={<i className="icon ion-card icon-pembayaran-primary" />} />
+          </div>
+          <div className="row">
+            <div className="collapse" id="debitonline" style={{ marginTop: -5 }}>
+              <div className="btn-method-transfer-dropdown clearfix">
 
-                  <PaymentSelection text="CIMB Clicks" onClick={() => props.selectMethod('cimbclicks')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/cimbclick.png" />} />
-                  <PaymentSelection text="Mandiri Clickpay" onClick={() => props.selectMethod('mandiriClickPay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/mandiriclickpay.png" />} />
-                  <PaymentSelection text="e-pay BRI" onClick={() => props.selectMethod('epaybri')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/epaybri.png" />} />
-                  <PaymentSelection text="BTN Mobile Banking" onClick={() => props.selectMethod('btnmobile')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/btn.png" />} />
-                  <PaymentSelection text="IB Muamalat" onClick={() => props.selectMethod('muamalat')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/muamalat.png" />} />
-                  <PaymentSelection text="PermataNet" onClick={() => props.selectMethod('permatanet')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/permata.png" />} />
+                <PaymentSelection text="CIMB Clicks" onClick={() => props.selectMethod('cimbclicks')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/cimbclick.png" />} />
+                <PaymentSelection text="Mandiri Clickpay" onClick={() => props.selectMethod('mandiriClickPay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/mandiriclickpay.png" />} />
+                <PaymentSelection text="e-pay BRI" onClick={() => props.selectMethod('epaybri')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/epaybri.png" />} />
+                <PaymentSelection text="BTN Mobile Banking" onClick={() => props.selectMethod('btnmobile')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/btn.png" />} />
+                <PaymentSelection text="IB Muamalat" onClick={() => props.selectMethod('muamalat')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/muamalat.png" />} />
+                <PaymentSelection text="PermataNet" onClick={() => props.selectMethod('permatanet')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/permata.png" />} />
 
-                </div>
               </div>
             </div>
+          </div>
 
-            <div className="row">
-              <PaymentSelection text="E-Wallet" href="#ewallet" collapsible icon={<img src="/Assets/images/bank/dompet.png" />} />
-            </div>
+          <div className="row">
+            <PaymentSelection text="E-Wallet" href="#ewallet" collapsible icon={<img src="/Assets/images/bank/dompet.png" />} />
+          </div>
 
-            <div className="row">
-              <div className="collapse" id="ewallet" style={{ marginTop: -5 }}>
-                <div className="btn-method-transfer-dropdown clearfix">
-                  <PaymentSelection text="GO-PAY" onClick={() => props.selectMethod('gopay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/gopay.png" />} />
-                </div>
+          <div className="row">
+            <div className="collapse" id="ewallet" style={{ marginTop: -5 }}>
+              <div className="btn-method-transfer-dropdown clearfix">
+                <PaymentSelection text="GO-PAY" onClick={() => props.selectMethod('gopay')} isChild icon={<img className="img-pembayaran" src="/Assets/images/bank/gopay.png" />} />
               </div>
             </div>
-            
+          </div>
+
         </div>
 
 

@@ -78,7 +78,14 @@ const fetchPayAPI = async ({ cartId, method, discCd, methodData }) => {
       method: method.charAt(0).toUpperCase() + method.slice(1)
     },
   }
-  return await fetchTravoramaApi(request);
+  const res = await fetchTravoramaApi(request);
+  if (res.status != 200) switch (res.error) {
+    case 'ERR_INVALID_REQUEST': res.message = `Terjadi kesalahan pengisian data`; break;
+    case 'ERR_VOUCHER_NOT_AVAILABLE': res.message = `Voucher tidak dapat digunakan`; break;
+    case 'ERR_NOT_SUCCESS': res.message = `Pembayaran gagal, mohon menggunakan metode lain`; break;
+    default: res.message = `Mohon maaf, terjadi kesalahan pada sistem, mohon menggunakan metode lain`;
+  }
+  return res;
 }
 
 const proceedWithoutVeritransToken = () => {
@@ -103,7 +110,7 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
     'secure': true,
     'bank': 'mandiri',
     ///'gross_amount': totalPrice - voucher.amount // + getMdr(),
-    'gross_amount': 8
+    'gross_amount': 190000
   })
   return new Promise((resolve, reject) => {
     // run the veritrans function to check credit card
@@ -113,16 +120,10 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
       } else if (response.status_code == '200') { // success 3d secure or success normal
         changePaymentStepLayout('loading'); //close 3d secure dialog if any
         resolve(response.token_id); // return store token data
-      } else {
+      } else if (response.status_code != '200') {
         changePaymentStepLayout('failed');
-        reject(`Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain`);
-        /*        $('#submit-button').removeAttr('disabled');
-                  // $('#message').text(response.status_message); //// Show status message.
-                  $scope.error.message = (response.status_code == 400) ?
-                      "Terdapat kesalahan pada pengisian kartu atau kartu tidak terdaftar" :
-                      "Terjadi kesalahan pada sistem, mohon menggunakan metode pembayaran lain";
-                  scrollPage($('*[data-payment-method="CreditCard"]'));        */
-      }
+        reject(response.status_message);
+      } else reject(`unexpected response from payment gateway API`)
     });
   });
 }
@@ -150,14 +151,14 @@ export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLa
         hashedPan: paymentData.formData.ccNo,
         reqBinDiscount: false,
       }
-    } catch (e) { console.error(e); }
+    } catch (e) { return changePaymentStepLayout('failed', e); }
   } else methodData = proceedWithoutVeritransToken(); //TODO
   const res = await fetchPayAPI({ cartId, method, discCd, methodData });
   if (res.status == 200) {
     if (!!res.redirectionUrl) { /* REDIRECT!! to res.redirectionUrl */ }
     else { changePaymentStepLayout('success'); }
   }
-  else changePaymentStepLayout('failed'); //res.error;
+  else changePaymentStepLayout('failed', res.message);
 }
 /*
 export getMdr = mdr => {
@@ -177,7 +178,7 @@ export getMdr = mdr => {
 }*/
 
 export const getCreditBalance = async cartId =>
-  checkVoucher(cartId, 'REFERRALCREDIT')
+  checkVoucher(cartId, 'referralcredit')
 
 export const checkVoucher = async (cartId, code) => {
   const version = 'v1';
@@ -187,21 +188,15 @@ export const checkVoucher = async (cartId, code) => {
     requiredAuthLevel: AUTH_LEVEL.User,
     data: { cartId, code }
   }
-  return await fetchTravoramaApi(request);
+  const res = await fetchTravoramaApi(request);
+  if (res.status != 200) switch (res.error) {
+    case 'ERR_INVALID_REQUEST': res.message = `Voucher tidak dapat digunakan`; break;
+    case 'ERR_INVALID_CODE': res.message = `Kode voucher salah`; break;
+    case 'ERR_TNC_NOT_FULFILLED': res.message = `Syarat dan ketentuan voucher tidak terpenuhi`; break;
+    case 'ERR_NO_LONGER_AVAILABLE': res.message = `Voucher telah habis`; break;
+    default: res.message = `Mohon maaf, terjadi kesalahan pada sistem`;
+  }
+  return res;
 }
-/*
-if (voucher.status == 'Success') `Voucher valid`
-if (voucher.status == 'ERPVCH01') `Voucher tidak dapat digunakan`
-if (voucher.status == 'ERPVCH02') `Kode voucher salah`
-if (voucher.status == 'ERPVCH03') `Voucher sudah habis`
-if (voucher.status == 'ERPVCH04') `Syarat dan ketentuan voucher tidak terpenuhi`
-if (voucher.status == 'ERPVCH05') `Voucher tidak dapat digunakan`
-if (voucher.status == 'ERPVCH06') `Voucher sudah digunakan`
-if (voucher.status == 'ERPVCH08') `Syarat dan ketentuan voucher tidak terpenuhi`
-if (voucher.status == 'ERPVCH09') `Voucher sudah habis`
-if (voucher.status == 'ERPVCH10') `Syarat dan ketentuan voucher tidak terpenuhi`
-if (voucher.status == 'ERPVCH11') `Syarat dan ketentuan voucher tidak terpenuhi`
-if (voucher.status == 'ERPVCH99') `Voucher tidak dapat digunakan`
-*/
 
 

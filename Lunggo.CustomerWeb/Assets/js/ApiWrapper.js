@@ -49,8 +49,9 @@ export async function fetchTravoramaApi(request) {
       return { message: 'response null, please check your connection!' }
     }
     if (response.status == 401) {
-      await deleteItemAsync('expTime');
-      return fetchTravoramaApi(request);
+      //await deleteItemAsync('expTime');
+      //return fetchTravoramaApi(request);
+      throw `error 401 forbidden (not yet handled)`
     } else if (response.error == "ERRGEN98") { //invalid JSON format
       // console.log(JSON.stringify(request.data));
       throw 'invalid JSON format :' + JSON.stringify(request.data);

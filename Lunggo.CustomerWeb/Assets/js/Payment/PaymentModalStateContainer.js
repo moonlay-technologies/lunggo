@@ -36,8 +36,8 @@ class PaymentModalStateContainer extends React.Component {
     this.setState({ errorMessages });
   }
 
-  changePaymentStepLayout = (paymentStep, iframeUrl = '') => {
-    this.setState({ paymentStep, iframeUrl });
+  changePaymentStepLayout = (paymentStep, paymentStepStringData = '') => {
+    this.setState({ paymentStep, paymentStepStringData });
     //switch (paymentStep) {
     //  case 'paymentOtp':
     //    //ss
@@ -53,11 +53,9 @@ class PaymentModalStateContainer extends React.Component {
     const { ccNo, name, cvv, expiry } = this.state;
     const formData = { ccNo, name, cvv, expiry };
     this.setState({ isLoading: true });
-    console.log('begin to invoke `pay` function')
     pay({ ...this.props, formData }, this.handleErrorValidationMessages, this.changePaymentStepLayout)
-      .then(res => /*this.setState({ errorMessage: res })*/ console.log('pay resolved',res) )
-      .finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
-    console.log('onSubmitCreditCardForm done')
+      //.then(res => /*this.setState({ errorMessage: res })*/ console.log('pay resolved',res) )
+      //.finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
   }
 
   render() {
@@ -72,7 +70,7 @@ class PaymentModalStateContainer extends React.Component {
         cvv={this.state.cvv}
         errorMessages={this.state.errorMessages}
         paymentStep={this.state.paymentStep}
-        iframeUrl={this.state.iframeUrl}
+        paymentStepStringData={this.state.paymentStepStringData}
         onSubmit={this.onSubmitCreditCardForm}
         handleInputChange={this.handleInputChange}
         shouldShowDataForm={this.props.method == 'card' || this.props.method == 'mandiriClickPay'}
