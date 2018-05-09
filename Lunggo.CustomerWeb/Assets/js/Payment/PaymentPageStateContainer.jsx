@@ -61,7 +61,7 @@ class PaymentPageStateContainer extends React.Component {
         onChangedVoucherCode={this.onChangedVoucherCode}
         applyDiscountVoucher={this.applyDiscountVoucher}
 
-        rsvNo={this.props.rsvNo}
+        cartId={this.props.cartId}
         discCd={this.props.discCd}
         headerTitle={this.props.headerTitle}
         pricingDetails={this.props.pricingDetails}
@@ -96,6 +96,6 @@ class PaymentPageStateContainer extends React.Component {
 export default PaymentPageStateContainer;
 
 ReactDOM.render(
-  <PaymentPageStateContainer />,
+  <PaymentPageStateContainer cartId={cartId} />,
   document.getElementById("react")
 );

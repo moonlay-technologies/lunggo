@@ -1,4 +1,6 @@
-﻿namespace Lunggo.ApCommon.Payment.Constant
+﻿using System;
+
+namespace Lunggo.ApCommon.Payment.Constant
 {
     public enum PaymentSubmethod
     {
@@ -17,10 +19,12 @@
 
     public class PaymentSubmethodCd
     {
-        public static string Mnemonic(PaymentSubmethod paymentMedium)
+        public static string Mnemonic(PaymentSubmethod paymentSubmethod)
         {
-            switch (paymentMedium)
+            switch (paymentSubmethod)
             {
+                case PaymentSubmethod.Undefined:
+                    return null;
                 case PaymentSubmethod.BCA:
                     return "BCA";
                 case PaymentSubmethod.Mandiri:
@@ -42,13 +46,13 @@
                 case PaymentSubmethod.Other:
                     return "Other";
                 default:
-                    return null;
+                    throw new ArgumentException("Payment submethod not implemented: " + paymentSubmethod);
             }
         }
 
-        public static PaymentSubmethod Mnemonic(string paymentMedium)
+        public static PaymentSubmethod Mnemonic(string paymentSubmethod)
         {
-            switch (paymentMedium)
+            switch (paymentSubmethod)
             {
                 case "BCA":
                     return PaymentSubmethod.BCA;
@@ -71,7 +75,7 @@
                 case "Other":
                     return PaymentSubmethod.Other;
                 default:
-                    return PaymentSubmethod.Undefined;
+                    throw new ArgumentException("Payment submethod not implemented: " + paymentSubmethod);
             }
         }
     }
