@@ -23,6 +23,23 @@ namespace Lunggo.Framework.TestHelpers
             return context;
         }
 
+        public static HttpContext LoginUser(string username)
+        {
+            var context = new HttpContext(
+                new HttpRequest("", "http://tempuri.org", ""),
+                new HttpResponse(new StringWriter())
+            );
+
+            var identity = new GenericIdentity(username);
+
+            context.User = new GenericPrincipal(
+                identity,
+                new string[0]
+            );
+
+            return context;
+        }
+
         public static HttpContext NoLogin()
         {
             var context = new HttpContext(

@@ -30,25 +30,6 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             }
         }
 
-        [HttpPost]
-        [LunggoCorsPolicy]
-        [Level0Authorize]
-        [Route("v1/payment/cart/checkout")]
-        public ApiResponseBase CheckOut()
-        {
-            CheckOutApiRequest request = null;
-            try
-            {
-                request = ApiRequestBase.DeserializeRequest<CheckOutApiRequest>();
-                var apiResponse = PaymentLogic.CheckOut(request);
-                return apiResponse;
-            }
-            catch (Exception e)
-            {
-                return ApiResponseBase.ExceptionHandling(e, request);
-            }
-        }
-
         [HttpGet]
         [LunggoCorsPolicy]
         [Level1Authorize]

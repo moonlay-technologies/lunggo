@@ -117,6 +117,12 @@ namespace Lunggo.ApCommon.Payment.Service
         private static void AggregateRsvPaymentDetails(CartPaymentDetails cartPayment)
         {
             cartPayment.OriginalPriceIdr = cartPayment.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr);
+            var firstRsv = cartPayment.RsvPaymentDetails[0];
+            cartPayment.Status = firstRsv.Status;
+            cartPayment.Medium = firstRsv.Medium;
+            cartPayment.Method = firstRsv.Method;
+            cartPayment.Submethod = firstRsv.Submethod;
+            cartPayment.Data = firstRsv.Data;
         }
 
         private void DistributeRsvPaymentDetails(CartPaymentDetails cartPayment)

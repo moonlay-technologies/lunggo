@@ -2,9 +2,8 @@
 using System.Linq;
 using Lunggo.ApCommon.Payment.Cache;
 using Lunggo.Framework.Redis;
-using Lunggo.Framework.TestHelpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StackExchange.Redis;
+using static Lunggo.Framework.TestHelpers.TestHelper;
 
 namespace Lunggo.PaymentTest.CacheServiceTests
 {
@@ -15,7 +14,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         // Should get all rsvNo from associated cartId
         public void Should_get_all_rsvNo_from_associated_cartId()
         {
-            TestHelper.UseRedis(redis =>
+            UseRedis(redis =>
             {
                 var rsvNo1 = "12345678";
                 var rsvNo2 = "64234634";
@@ -41,7 +40,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         // Should return empty list when there is no rsvNo with the associated cartId
         public void Should_return_empty_list_when_there_is_no_rsvNo_with_the_associated_cartId()
         {
-            TestHelper.UseRedis(redis =>
+            UseRedis(redis =>
             {
                 var cartId = Guid.NewGuid().ToString();
                 var key = "Cart:RsvNoList:" + cartId;
@@ -59,7 +58,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         // Should return empty list when key does not exist
         public void Should_return_empty_list_when_key_does_not_exist()
         {
-            TestHelper.UseRedis(redis =>
+            UseRedis(redis =>
             {
                 var cartId = Guid.NewGuid().ToString();
                 var key = "Cart:RsvNoList:" + cartId;
@@ -80,7 +79,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         // Should contains rsvNo after adding rsvNo
         public void Should_contains_rsvNo_after_adding_rsvNo()
         {
-            TestHelper.UseRedis(redis =>
+            UseRedis(redis =>
             {
                 var cartId = Guid.NewGuid().ToString();
                 var rsvNo = "123456";
@@ -106,7 +105,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         // Should not contains rsvNo after removing rsvNo
         public void Should_not_contains_rsvNo_after_removing_rsvNo()
         {
-            TestHelper.UseRedis(redis =>
+            UseRedis(redis =>
             {
                 var cartId = Guid.NewGuid().ToString();
                 var rsvNo = "123456";
@@ -126,7 +125,7 @@ namespace Lunggo.PaymentTest.CacheServiceTests
         // Should not contain anything after removing cart
         public void Should_not_contain_anything_after_removing_cart()
         {
-            TestHelper.UseRedis(redis =>
+            UseRedis(redis =>
             {
                 var cartId = Guid.NewGuid().ToString();
                 var rsvNo = "123456";

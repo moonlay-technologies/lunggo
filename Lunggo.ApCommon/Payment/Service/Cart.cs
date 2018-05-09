@@ -21,12 +21,16 @@ namespace Lunggo.ApCommon.Payment.Service
     {
         public Cart GetCart(string userId)
         {
-            var rsvNoList = _cache.GetCartRsvNos(userId);
+            var cartId = GetCartId(userId);
+            var rsvNoList = _cache.GetCartRsvNos(cartId);
 
             if (rsvNoList == null || !rsvNoList.Any())
-                return null;
+                return new Cart
+                {
+                    RsvNoList = new List<string>()
+                };
 
-            var cart = ConstructCartFronRsvNoList(rsvNoList);
+            var cart = ConstructCartFromRsvNoList(rsvNoList);
 
             return cart;
         }
@@ -64,7 +68,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (rsvNoList == null || !rsvNoList.Any())
                 return null;
 
-            var cart = ConstructCartFronRsvNoList(rsvNoList);
+            var cart = ConstructCartFromRsvNoList(rsvNoList);
 
             return cart;
         }
@@ -80,7 +84,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return stringBuilder.ToString();
         }
 
-        private Cart ConstructCartFronRsvNoList(List<string> rsvNoList)
+        private Cart ConstructCartFromRsvNoList(List<string> rsvNoList)
         {
             var cart = new Cart();
             cart.RsvNoList = rsvNoList;

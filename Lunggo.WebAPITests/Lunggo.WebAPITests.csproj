@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="PaymentTests\CheckVoucherTests.cs" />
     <Compile Include="PaymentTests\PayTests.cs" />
+    <Compile Include="PaymentTests\ViewCartTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
