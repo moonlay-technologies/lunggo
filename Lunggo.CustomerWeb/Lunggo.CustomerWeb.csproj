@@ -1324,9 +1324,6 @@
     <Content Include="Assets\js\Payment\PaymentDataForm.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\js\Payment\PaymentDataStateContainer.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\js\Payment\PaymentInstruction.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
