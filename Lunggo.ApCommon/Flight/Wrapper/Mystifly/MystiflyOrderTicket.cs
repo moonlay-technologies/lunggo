@@ -127,7 +127,7 @@ namespace Lunggo.ApCommon.Flight.Wrapper.Mystifly
         private static FlightBookingInfo WebfareBooking(string bookingId)
         {
             var redisService = RedisService.GetInstance();
-            var redisDb = redisService.GetDatabase(ApConstant.SearchResultCacheName);
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             var redisKey = "MystiflyWebfare:" + bookingId;
             var cacheObject = redisDb.StringGet(redisKey);
 

@@ -1,8 +1,8 @@
-﻿using Lunggo.Framework.Config;
-using Lunggo.Framework.Core;
+﻿using Lunggo.Framework.Core;
 using Lunggo.Framework.Payment.Data;
 using RestSharp;
 using System;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.Framework.Payment
 {

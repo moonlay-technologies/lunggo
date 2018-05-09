@@ -17,7 +17,6 @@ using Lunggo.ApCommon.Flight.Wrapper.Sriwijaya;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Service;
 using Lunggo.ApCommon.Voucher;
-using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Flight.Service
 {

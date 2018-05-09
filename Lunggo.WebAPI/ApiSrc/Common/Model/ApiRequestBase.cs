@@ -10,7 +10,6 @@ using System.Web;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;

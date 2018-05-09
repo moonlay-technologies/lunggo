@@ -1,5 +1,5 @@
 ﻿using System;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Util
 {

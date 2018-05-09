@@ -6,7 +6,7 @@ using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;
@@ -68,8 +68,8 @@ namespace Lunggo.WebAPI.ApiSrc.Hotel.Logic
                     request.Passengers != null;
                 //request.Passengers.Any() &&
                 //request.Passengers.TrueForAll(p => !string.IsNullOrEmpty(p.Name)) &&
-                //request.Passengers.TrueForAll(p => p.Title != Title.Undefined) &&
-                //request.Passengers.TrueForAll(p => p.Type != PaxType.Undefined);
+                //request.Passengers.TrueForAll(p => p.Title != Title.MethodNotSet) &&
+                //request.Passengers.TrueForAll(p => p.Type != PaxType.MethodNotSet);
             }
             catch
             {

@@ -1,4 +1,6 @@
-﻿namespace Lunggo.ApCommon.Payment.Constant
+﻿using System;
+
+namespace Lunggo.ApCommon.Payment.Constant
 {
     public enum PaymentStatus
     {
@@ -10,7 +12,8 @@
         Expired = 5,
         Verifying = 6,
         Challenged = 7,
-        Failed = 8
+        Failed = 8,
+        MethodNotSet = 9,
     }
 
     public class PaymentStatusCd
@@ -19,48 +22,60 @@
         {
             switch (paymentStatus)
             {
+                case PaymentStatus.MethodNotSet:
+                    return "METHODNOTSET";
                 case PaymentStatus.Settled:
-                    return "SET";
+                    return "SETTLED";
                 case PaymentStatus.Cancelled:
-                    return "CAN";
+                    return "CANCELLED";
                 case PaymentStatus.Pending:
-                    return "PEN";
+                    return "PENDING";
                 case PaymentStatus.Denied:
-                    return "DEN";
+                    return "DENIED";
                 case PaymentStatus.Expired:
-                    return "EXP";
+                    return "EXPIRED";
                 case PaymentStatus.Verifying:
-                    return "VER";
+                    return "VERIFYING";
                 case PaymentStatus.Challenged:
-                    return "CHA";
+                    return "CHALLENGED";
                 case PaymentStatus.Failed:
-                    return "FAI";
+                    return "FAILED";
                 default:
-                    return null;
+                    throw new ArgumentException("Payment status not defined: " + paymentStatus);
             }
         }
         public static PaymentStatus Mnemonic(string paymentStatus)
         {
             switch (paymentStatus)
             {
+                case "METHODNOTSET":
+                    return PaymentStatus.MethodNotSet;
                 case "SET":
+                case "SETTLED":
                     return PaymentStatus.Settled;
                 case "CAN":
+                case "CANCELLED":
                     return PaymentStatus.Cancelled;
                 case "PEN":
+                case "PENDING":
                     return PaymentStatus.Pending;
                 case "DEN":
+                case "DENIED":
                     return PaymentStatus.Denied;
                 case "EXP":
+                case "EXPIRED":
                     return PaymentStatus.Expired;
                 case "VER":
+                case "VERIFYING":
                     return PaymentStatus.Verifying;
                 case "CHA":
+                case "CHALLENGED":
                     return PaymentStatus.Challenged;
                 case "FAI":
+                case "FAILED":
                     return PaymentStatus.Failed;
                 default:
-                    return PaymentStatus.Undefined;
+                    throw new ArgumentException("Payment status not defined: " + paymentStatus);
             }
         }
     }

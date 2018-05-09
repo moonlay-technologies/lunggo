@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Lunggo.ApCommon.Identity.Users;
+using Lunggo.ApCommon.Payment.Database.Query;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Payment.Query;
 using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Database;
 

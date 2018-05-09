@@ -13,7 +13,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using RestSharp;
 using System.Globalization;
 

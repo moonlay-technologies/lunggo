@@ -8,7 +8,6 @@ using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds.Sdk.auto.model;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Sequence;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Hotel.Service

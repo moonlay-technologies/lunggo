@@ -59,11 +59,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     var date = e.Date;
                     var dateAndAvailableHours = new DateAndAvailableHourApi();
                     dateAndAvailableHours.AvailableHours = null;
-                    if (e.AvailableHours.Count() > 0)
+                    if (e.AvailableHours.Count > 0)
                     {
                         dateAndAvailableHours.AvailableHours = e.AvailableHours;
                     }
                     dateAndAvailableHours.Date = e.Date.HasValue ? e.Date.Value.ToString("yyyy-MM-dd") : null;
+                    dateAndAvailableHours.AvailableSessionAndPaxSlots = e.AvailableSessionAndPaxSlots;
                     return dateAndAvailableHours;
                 }).ToList(),
                 StatusCode = HttpStatusCode.OK

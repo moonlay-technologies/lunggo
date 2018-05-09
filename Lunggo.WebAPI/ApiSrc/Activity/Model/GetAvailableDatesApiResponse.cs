@@ -17,5 +17,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         public string Date { get; set; }
         [JsonProperty("availableHours", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> AvailableHours { get; set; }
+        [JsonProperty("availableSessionAndPaxSlots", NullValueHandling = NullValueHandling.Ignore)]
+        public List<AvailableSessionAndPaxSlot> AvailableSessionAndPaxSlots { get; set; }
     }
 }

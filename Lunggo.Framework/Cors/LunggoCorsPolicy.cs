@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Cors;
 using System.Web.Http.Cors;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.Framework.Cors
 {

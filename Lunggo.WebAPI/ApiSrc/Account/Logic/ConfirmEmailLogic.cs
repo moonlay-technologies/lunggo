@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRepository;

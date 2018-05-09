@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.SharedModel;
 using Lunggo.WebAPI.ApiSrc.Account.Model;

@@ -14,7 +14,8 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
         {
             if (IsValid(request))
             {
-                NotificationService.GetInstance().DeleteRegistration(request.RegistrationId);
+                var notif = NotificationService.GetInstance();
+                notif.DeleteRegistration(request.Handle);
                 return new ApiResponseBase
                 {
                     StatusCode = HttpStatusCode.OK
@@ -34,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
         {
             return
                 request != null &&
-                !string.IsNullOrEmpty(request.RegistrationId);
+                !string.IsNullOrEmpty(request.Handle);
         }
     }
 }

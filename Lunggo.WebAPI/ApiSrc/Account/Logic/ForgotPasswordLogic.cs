@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Web;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Microsoft.AspNet.Identity;

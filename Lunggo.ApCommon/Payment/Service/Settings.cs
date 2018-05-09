@@ -6,18 +6,15 @@ using System.Security.Claims;
 using System.Security.Policy;
 using System.Text;
 using System.Web;
-using Lunggo.ApCommon.Campaign.Model;
-using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Payment.Cache;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Database;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.ApCommon.Payment.Query;
-using Lunggo.ApCommon.Payment.Wrapper.E2Pay;
-using Lunggo.ApCommon.Payment.Wrapper.Nicepay;
-using Lunggo.ApCommon.Payment.Wrapper.Veritrans;
+using Lunggo.ApCommon.Payment.Processor;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.BlobStorage;
@@ -33,16 +30,22 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        private static readonly VeritransWrapper VeritransWrapper = VeritransWrapper.GetInstance();
-        private static readonly NicepayWrapper NicepayWrapper = NicepayWrapper.GetInstance();
-        private static readonly E2PayWrapper E2PayWrapper = E2PayWrapper.GetInstance();
+        private readonly PaymentProcessorService _processor;
+        private readonly PaymentDbService _db;
+        private readonly PaymentCacheService _cache;
 
-        public PaymentService()
+        public PaymentService() : this(null, null, null)
         {
+
+        }
+
+        internal PaymentService(PaymentProcessorService paymentProcessorService, PaymentDbService paymentDbService, PaymentCacheService paymentCacheService)
+        {
+            _cache = paymentCacheService ?? new PaymentCacheService();
+            _db = paymentDbService ?? new PaymentDbService();
+            _processor = paymentProcessorService ?? new PaymentProcessorService();
+
             //Currency.SyncCurrencyData();
-            VeritransWrapper.Init();
-            NicepayWrapper.Init();
-            E2PayWrapper.Init();
         }
 
         private static PaymentMedium GetPaymentMedium(PaymentMethod method, PaymentSubmethod submethod)
@@ -50,8 +53,8 @@ namespace Lunggo.ApCommon.Payment.Service
             switch (method)
             {
                 case PaymentMethod.BankTransfer:
-                case PaymentMethod.Credit:
-                case PaymentMethod.Deposit:
+                //case PaymentMethod.Credit:
+                //case PaymentMethod.Deposit:
                     return PaymentMedium.Direct;
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:
@@ -99,17 +102,6 @@ namespace Lunggo.ApCommon.Payment.Service
                         Constant = 0
                     }
                 };
-        }
-
-        public string GetBankTransferAccount(PaymentSubmethod submethod)
-        {
-            switch (submethod)
-            {
-                case PaymentSubmethod.Mandiri:
-                    return "1020006675802";
-                default:
-                    return null;
-            }
         }
 
         public string GetBankBranch(string transferAccount)
@@ -193,7 +185,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
 
-        public List<Tuple<string, List<string>>> GetInstruction(PaymentDetails payment)
+        public List<Tuple<string, List<string>>> GetInstruction(RsvPaymentDetails payment)
         {
             var medium = payment.Medium;
             var method = payment.Method;
@@ -229,7 +221,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     }),
                 };
 
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Veritrans &&
                 method == PaymentMethod.VirtualAccount &&
@@ -275,7 +267,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     })
                 };
 
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Veritrans &&
                 method == PaymentMethod.VirtualAccount &&
@@ -306,7 +298,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     }),
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -353,7 +345,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -402,7 +394,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -477,7 +469,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai."
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -521,7 +513,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -570,7 +562,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -603,7 +595,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -652,7 +644,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -707,7 +699,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     })
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -745,7 +737,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     }),
                 };
-                #endregion
+            #endregion
 
             if (medium == PaymentMedium.Nicepay &&
                 method == PaymentMethod.VirtualAccount &&
@@ -776,7 +768,7 @@ namespace Lunggo.ApCommon.Payment.Service
                         "Selesai"
                     }),
                 };
-                #endregion
+            #endregion
 
             return null;
         }

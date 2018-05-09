@@ -13,8 +13,12 @@ namespace Lunggo.ApCommon.Account.Model.Database
         {
             return "Select rco.ReferralCode AS ReferralCode, " +
                 "rco.ReferrerCode AS ReferrerCode, rco.UserId AS UserId, rcr.ReferralCredit AS ReferralCredit, " +
-                "rcr.ExpDate AS ExpDate FROM ReferralCode AS rco INNER JOIN " +
-                "ReferralCredit AS rcr ON rcr.UserId = rco.UserId WHERE rco.UserId = @UserId";
+                "rcr.ExpDate AS ExpDate " +
+                   "FROM ReferralCode AS rco " +
+                   "INNER JOIN ReferralCredit AS rcr ON rcr.UserId = rco.UserId " +
+                   "INNER JOIN Reservation AS rsv ON rcr.UserId = rsv.UserId " +
+                   "INNER JOIN Cart AS c ON c.RsvNo = rsv.RsvNo " +
+                   "WHERE rco.CartId = @CartId";
         }
     }
 }

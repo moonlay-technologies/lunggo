@@ -5,7 +5,7 @@ using Lunggo.ApCommon.Flight.Model.Logic;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Http.Rest;
 using Microsoft.Azure.WebJobs;

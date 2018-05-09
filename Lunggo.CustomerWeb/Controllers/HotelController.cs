@@ -10,7 +10,7 @@ using System;
 using System.Collections.Specialized;
 using System.Net;
 using System.Web.Mvc;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using RestSharp;
 

@@ -1,8 +1,8 @@
 ﻿using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.Framework.Log;
 using Lunggo.Framework.Mail;
@@ -71,7 +71,7 @@ namespace Lunggo.WebJob.FlightProcessor
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 

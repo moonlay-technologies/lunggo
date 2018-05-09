@@ -13,5 +13,9 @@ namespace Lunggo.WebAPI.ApiSrc.Auxiliary.Model
         public string LatestVersion { get; set; }
         [JsonProperty("mustUpdate", NullValueHandling = NullValueHandling.Ignore)]
         public bool MustUpdate { get; set; }
+        [JsonProperty("forceToUpdate", NullValueHandling = NullValueHandling.Ignore)]
+        public bool ForceToUpdate { get; set; }
+        [JsonProperty("updateUrl", NullValueHandling = NullValueHandling.Ignore)]
+        public string UpdateUrl { get; set; }
     }
 }

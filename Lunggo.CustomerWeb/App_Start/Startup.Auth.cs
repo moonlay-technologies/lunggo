@@ -2,7 +2,6 @@
 using System.Web.Http;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;

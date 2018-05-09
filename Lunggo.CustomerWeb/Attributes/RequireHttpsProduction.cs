@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Properties;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.CustomerWeb.Attributes
 {

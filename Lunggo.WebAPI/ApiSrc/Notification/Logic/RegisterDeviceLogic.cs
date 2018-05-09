@@ -23,8 +23,33 @@ namespace Lunggo.WebAPI.ApiSrc.Notification.Logic
                 var identity = HttpContext.Current.User.Identity as ClaimsIdentity ?? new ClaimsIdentity();
                 var clientId = identity.GetClientId();
                 var deviceId = identity.GetDeviceId();
-                var userId = identity.GetUser().Id;
-                NotificationService.GetInstance().RegisterDevice(request.Handle, deviceId, userId);
+                var user = identity.GetUser();
+                string userId = null;
+                if(user != null)
+                {
+                    userId = user.Id;
+                }
+                var platformType = Client.GetPlatformType(clientId);
+                Platform platform;
+                var isSupported = TryMapPlatform(platformType, out platform);
+                if (!isSupported)
+                        return new ApiResponseBase
+                        {
+                            StatusCode = HttpStatusCode.Forbidden,
+                            ErrorCode = "ERNREG02"
+                        };
+
+                var notif = NotificationService.GetInstance();
+                var newRegistrationId = notif.RegisterDevice(request.Handle, deviceId, userId);
+                if (newRegistrationId == null)
+                {
+                    return new RegisterDeviceApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_INVALID_REQUEST"
+                    };
+                }
+
                 return new RegisterDeviceApiResponse
                 {
                     StatusCode = HttpStatusCode.OK,

@@ -42,32 +42,6 @@ namespace Lunggo.PaymentTest.Units.SubmitPayment
         }
 
         [TestMethod]
-        public void Should_return_type_rsv_when_ID_is_RsvNo()
-        {
-            PaymentDetailsType? type = null;
-            string id;
-            bool result;
-
-            id = "12345678";
-            var inputParams = new object[] {id, type};
-            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", inputParams);
-            Assert.AreEqual(PaymentDetailsType.Rsv, inputParams[1]);
-        }
-
-        [TestMethod]
-        public void Should_return_type_cart_when_ID_is_CartID()
-        {
-            PaymentDetailsType? type = null;
-            string id;
-            bool result;
-
-            id = "12345abc";
-            var inputParams = new object[] {id, type};
-            result = new PaymentService().InvokePrivate<bool>("ValidateTrxId", inputParams);
-            Assert.AreEqual(PaymentDetailsType.Cart, inputParams[1]);
-        }
-
-        [TestMethod]
         public void Should_return_failed_when_ID_less_than_8_char()
         {
             var id = "i23";

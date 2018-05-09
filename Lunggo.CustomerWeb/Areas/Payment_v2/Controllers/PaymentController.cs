@@ -27,24 +27,30 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             if (cartPayment == null)
                 return View("Error");
-
-            if (cartPayment.Status == PaymentStatus.Expired)
-                return View("Expired");
-            if (cartPayment.HasThirdPartyPage)
-                return RedirectToAction("ThirdParty", new { cartId });
-            if (cartPayment.Status != PaymentStatus.Undefined && cartPayment.Status != PaymentStatus.Failed)
-            {
-                if (cartPayment.HasThirdPartyPage)
-                    return RedirectToAction(cartPayment.RedirectionUrl);
-                if (cartPayment.HasInstruction)
-                    return RedirectToAction("Instruction", new { cartId });
-                if (cartPayment.Status == PaymentStatus.Settled)
-                    return RedirectToAction("ThankYou", new { cartId });
-            }
             if (cartPayment.RsvPaymentDetails == null || !cartPayment.RsvPaymentDetails.Any())
                 return View("EmptyCart");
 
-            return View("Payment", cartPayment);
+            switch (cartPayment.Status)
+            {
+                case PaymentStatus.Pending:
+                    if (cartPayment.HasThirdPartyPage)
+                        return RedirectToAction("ThirdParty", new { cartId });
+                    if (cartPayment.HasInstruction)
+                        return RedirectToAction("Instruction", new { cartId });
+                    return View("Error");
+                case PaymentStatus.Settled:
+                    return RedirectToAction("ThankYou", new { cartId });
+                case PaymentStatus.Verifying:
+                    return RedirectToAction("Verifying", new { cartId });
+                case PaymentStatus.MethodNotSet:
+                case PaymentStatus.Failed:
+                case PaymentStatus.Expired:
+                case PaymentStatus.Denied:
+                    return View("Payment", cartPayment);
+                default:
+                    return View("Error");
+            }
+
         }
 
         public ActionResult Instruction(string cartId)

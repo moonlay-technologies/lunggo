@@ -11,8 +11,8 @@ using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Queue;
 using Lunggo.Repository.TableRecord;
@@ -34,7 +34,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             var payment = _paymentService.GetPaymentDetails(rsvNo);
             if (payment.Status == PaymentStatus.Pending || payment.Status == PaymentStatus.Verifying ||
-                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.Undefined)
+                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.MethodNotSet)
             {
                 payment.Status = PaymentStatus.Expired;
                 _paymentService.UpdatePayment(rsvNo, payment);

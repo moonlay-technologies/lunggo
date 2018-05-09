@@ -6,7 +6,7 @@ using CsQuery;
 using CsQuery.ExtensionMethods.Internal;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.Garuda

@@ -38,21 +38,11 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("RemainingCount");
 		    }
 		}
-		public Boolean? IsSingleUsage
-		{
-		    get { return _IsSingleUsage; }
-		    set
-		    {
-		        _IsSingleUsage = value;
-		        IncrementLog("IsSingleUsage");
-		    }
-		}
 
 		
 		private String _VoucherCode;
 		private long? _CampaignId;
 		private int? _RemainingCount;
-		private Boolean? _IsSingleUsage;
 
 
 		public static CampaignVoucherTableRecord CreateNewInstance()
@@ -87,7 +77,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("VoucherCode", true),
 				new ColumnMetadata("CampaignId", false),
 				new ColumnMetadata("RemainingCount", false),
-				new ColumnMetadata("IsSingleUsage", false),
 
             };
         }

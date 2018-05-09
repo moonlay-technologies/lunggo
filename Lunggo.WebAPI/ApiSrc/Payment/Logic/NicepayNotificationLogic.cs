@@ -25,7 +25,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             var status = MapNicepayPaymentStatus(notif.status,notif.resultMsg);
             var method = MapNicepayPaymentMethod(notif.payMethod);
-            var paymentInfo = new PaymentDetails
+            var paymentInfo = new RsvPaymentDetails
             {
                 Medium = PaymentMedium.Nicepay,
                 Method = method,
@@ -107,6 +107,30 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 default:
                     return PaymentSubmethod.Undefined;
             }
+        }
+
+        public class NotificationResult
+        {
+            internal string tXid { get; set; }
+            internal string referenceNo { get; set; }
+            internal string amt { get; set; }
+            internal string merchantToken { get; set; }
+            internal string reqTm { get; set; }
+            internal string goodsNm { get; set; }
+            internal string resultCd { get; set; }
+            internal string instmntType { get; set; }
+            internal string iMid { get; set; }
+            internal string billingNm { get; set; }
+            internal string resultMsg { get; set; }
+            internal string vacctValidDt { get; set; }
+            internal string payMethod { get; set; }
+            internal string reqDt { get; set; }
+            internal string currency { get; set; }
+            internal string instmntMon { get; set; }
+            internal string vacctValidTm { get; set; }
+            internal string status { get; set; }
+            internal string vacctNo { get; set; }
+            internal string bankCd { get; set; }
         }
     }
 }

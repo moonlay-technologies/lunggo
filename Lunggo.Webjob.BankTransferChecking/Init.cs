@@ -1,5 +1,4 @@
 ﻿using Lunggo.ApCommon.Constant;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Database;
 using Lunggo.Framework.Queue;
 using Lunggo.Framework.Redis;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.Webjob.BankTransferChecking
 {
@@ -27,7 +27,7 @@ namespace Lunggo.Webjob.BankTransferChecking
             {
                 new RedisConnectionProperty
                 {
-                    ConnectionName = ApConstant.SearchResultCacheName,
+                    ConnectionName = ApConstant.MasterDataCacheName,
                     ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
                 },
                 

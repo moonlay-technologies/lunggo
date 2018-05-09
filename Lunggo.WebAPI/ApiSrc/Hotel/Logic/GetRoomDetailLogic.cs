@@ -3,7 +3,7 @@ using System.Net;
 using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Hotel.Model;

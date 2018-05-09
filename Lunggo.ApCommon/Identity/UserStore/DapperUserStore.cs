@@ -16,7 +16,6 @@ using System.Web;
 using System.Security.Claims;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Identity.UserStore
 {

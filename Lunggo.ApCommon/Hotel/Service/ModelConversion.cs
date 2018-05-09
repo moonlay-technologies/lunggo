@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Mystifly.OnePointService.Flight;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Hotel.Service

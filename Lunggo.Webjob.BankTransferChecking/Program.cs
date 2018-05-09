@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Lunggo.ApCommon;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
 using System.Globalization;
+using Lunggo.Framework.Environment;
 
 
 namespace Lunggo.Webjob.BankTransferChecking

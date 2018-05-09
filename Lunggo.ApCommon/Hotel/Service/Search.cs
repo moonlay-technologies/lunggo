@@ -8,7 +8,7 @@ using Lunggo.ApCommon.Hotel.Model;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Wrapper.HotelBeds;
 using Lunggo.ApCommon.Payment.Model;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 

@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Web;
 using Lunggo.ApCommon.Identity.Auth;
 using Lunggo.ApCommon.Identity.Users;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Lunggo.WebAPI.ApiSrc.Account.Model;
@@ -12,6 +11,7 @@ using RestSharp;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using Lunggo.ApCommon.Log;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebAPI.ApiSrc.Account.Logic
 {
@@ -22,13 +22,6 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             var TableLog = new GlobalLog();
 
             TableLog.PartitionKey = "TOKEN ERROR lOG";
-
-            if (request.RefreshToken != null && (string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password)))
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_FORM_EMPTY" //ERALOG01
-                };
             long result;
             if (!string.IsNullOrWhiteSpace(request.Email) && !Int64.TryParse(request.Email, out result))
             {
@@ -53,26 +46,31 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
             //    };
             //}
 
-            var foundUser = userManager.FindByName(request.UserName);
-            
-            if(foundUser == null)
+            if (string.IsNullOrWhiteSpace(request.RefreshToken) && !string.IsNullOrWhiteSpace(request.UserName))
             {
-                return new LoginApiResponse
+                var foundUser = userManager.FindByName(request.UserName);
+                if(foundUser == null)
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_UNREGISTERED"
-                };
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_UNREGISTERED"
+                    };
+                }
+
+                var role = userManager.GetRoles(foundUser.Id).FirstOrDefault();
+
+                if(role != "Operator")
+                    return new LoginApiResponse
+                    {
+                        StatusCode = HttpStatusCode.BadRequest,
+                        ErrorCode = "ERR_UNREGISTERED"
+                    };
+
             }
-
-            var role = userManager.GetRoles(foundUser.Id).FirstOrDefault();
-
-            if(role != "Operator")
-                return new LoginApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERR_UNREGISTERED"
-                };
-
+            
+            
+            
             var tokenClient = new RestClient(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority));
             var tokenRequest = new RestRequest("/oauth/token", Method.POST);
             var postData =

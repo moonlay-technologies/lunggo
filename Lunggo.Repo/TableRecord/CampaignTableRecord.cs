@@ -20,15 +20,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CampaignId");
 		    }
 		}
-		public int? ClientId
-		{
-		    get { return _ClientId; }
-		    set
-		    {
-		        _ClientId = value;
-		        IncrementLog("ClientId");
-		    }
-		}
 		public String Name
 		{
 		    get { return _Name; }
@@ -110,33 +101,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("VoucherCount");
 		    }
 		}
-		public Boolean? IsSingleVoucher
-		{
-		    get { return _IsSingleVoucher; }
-		    set
-		    {
-		        _IsSingleVoucher = value;
-		        IncrementLog("IsSingleVoucher");
-		    }
-		}
-		public Boolean? Status
-		{
-		    get { return _Status; }
-		    set
-		    {
-		        _Status = value;
-		        IncrementLog("Status");
-		    }
-		}
-		public String CampaignTypeCd
-		{
-		    get { return _CampaignTypeCd; }
-		    set
-		    {
-		        _CampaignTypeCd = value;
-		        IncrementLog("CampaignTypeCd");
-		    }
-		}
 		public String DisplayName
 		{
 		    get { return _DisplayName; }
@@ -146,37 +110,18 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("DisplayName");
 		    }
 		}
-        public String ProductType
-        {
-            get { return _ProductType; }
-            set
-            {
-                _ProductType = value;
-                IncrementLog("ProductType");
-            }
-        }
-        public Decimal? MaxBudget
-        {
-            get { return _MaxBudget; }
-            set
-            {
-                _MaxBudget = value;
-                IncrementLog("MaxBudget");
-            }
-        }
-        public Decimal? UsedBudget
-        {
-            get { return _UsedBudget; }
-            set
-            {
-                _UsedBudget = value;
-                IncrementLog("UsedBudget");
-            }
-        }
+		public String ProductType
+		{
+		    get { return _ProductType; }
+		    set
+		    {
+		        _ProductType = value;
+		        IncrementLog("ProductType");
+		    }
+		}
 
 		
 		private long? _CampaignId;
-		private int? _ClientId;
 		private String _Name;
 		private String _Description;
 		private DateTime? _StartDate;
@@ -186,13 +131,8 @@ namespace Lunggo.Repository.TableRecord
 		private Decimal? _MaxDiscountValue;
 		private Decimal? _MinSpendValue;
 		private int? _VoucherCount;
-		private Boolean? _IsSingleVoucher;
-		private Boolean? _Status;
-		private String _CampaignTypeCd;
 		private String _DisplayName;
-        private String _ProductType;
-        private Decimal? _MaxBudget;
-        private Decimal? _UsedBudget;
+		private String _ProductType;
 
 
 		public static CampaignTableRecord CreateNewInstance()
@@ -225,7 +165,6 @@ namespace Lunggo.Repository.TableRecord
             _recordMetadata = new List<ColumnMetadata>
             {
 				new ColumnMetadata("CampaignId", true),
-				new ColumnMetadata("ClientId", false),
 				new ColumnMetadata("Name", false),
 				new ColumnMetadata("Description", false),
 				new ColumnMetadata("StartDate", false),
@@ -235,13 +174,8 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("MaxDiscountValue", false),
 				new ColumnMetadata("MinSpendValue", false),
 				new ColumnMetadata("VoucherCount", false),
-				new ColumnMetadata("IsSingleVoucher", false),
-				new ColumnMetadata("Status", false),
-				new ColumnMetadata("CampaignTypeCd", false),
 				new ColumnMetadata("DisplayName", false),
 				new ColumnMetadata("ProductType", false),
-				new ColumnMetadata("MaxBudget", false),
-				new ColumnMetadata("UsedBudget", false),
 
             };
         }

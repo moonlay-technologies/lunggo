@@ -11,13 +11,13 @@ using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Encoder;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Log;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Log;
 using Lunggo.CustomerWeb.Helper;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.CustomerWeb.Controllers
 {
@@ -95,7 +95,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (form["Status"] != "1")
             {
-                var payment = new PaymentDetails
+                var payment = new RsvPaymentDetails
                 {
                     Medium = PaymentMedium.E2Pay,
                     Method = MapPaymentMethod(form["PaymentId"]),
@@ -110,7 +110,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 return false;
             }
 
-            var paymentInfo = new PaymentDetails
+            var paymentInfo = new RsvPaymentDetails
             {
                 Medium = PaymentMedium.E2Pay,
                 Method = MapPaymentMethod(form["PaymentId"]),

@@ -22,12 +22,12 @@ using System.Text;
 using System.Globalization;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using System.Security.Cryptography;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Encoder;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -141,76 +141,84 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var whitelistedDates = GetWhitelistedDateDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
-                var blacklistedDates = GetBlacklistedDateDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
-                var allDates = new List<DateTime>();
+                //var blacklistedDates = GetBlacklistedDateDbQuery.GetInstance().Execute(conn, new { ActivityId = input.ActivityId }).ToList();
+                //var allDates = new List<DateTime>();
                 var result = new List<DateAndAvailableHour>();
-                var allAvailableDates = new List<DateTime>();
-                var startDate = DateTime.Today;
-                var endDate = startDate.AddMonths(3);
-                for (var date = startDate; date <= endDate; date = date.AddDays(1))
-                {
-                    allDates.Add(date);
-                }
-                var savedDay = GetAvailableDatesQuery.GetInstance()
-                    .Execute(conn, new { ActivityId = input.ActivityId });
-                var availableDays = savedDay.ToList();
-                var dayEnum = new List<DayOfWeek>();
-                foreach (var day in availableDays)
-                {
-                    DayOfWeek myDays = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), day);
-                    dayEnum.Add(myDays);
-                }
+                //var allAvailableDates = new List<DateTime>();
+                //var startDate = DateTime.Today;
+                //var endDate = startDate.AddMonths(3);
+                //for (var date = startDate; date <= endDate; date = date.AddDays(1))
+                //{
+                //    allDates.Add(date);
+                //}
+                //var savedDay = GetAvailableDatesQuery.GetInstance()
+                //    .Execute(conn, new { ActivityId = input.ActivityId });
+                //var availableDays = savedDay.ToList();
+                //var dayEnum = new List<DayOfWeek>();
+                //foreach (var day in availableDays)
+                //{
+                //    DayOfWeek myDays = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), day);
+                //    dayEnum.Add(myDays);
+                //}
 
-                foreach (var date in allDates)
-                {
-                    if (dayEnum.Contains(date.DayOfWeek))
-                    {
-                        var savedHours = GetAvailableSessionQuery.GetInstance()
-                         .Execute(conn, new { ActivityId = input.ActivityId, AvailableDay = date.DayOfWeek.ToString() }).ToList();
-                        var customSavedHoursWL = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
-                        var customSavedHoursBL = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
-                        savedHours.Remove("");
-                        customSavedHoursBL.Remove("");
-                        customSavedHoursWL.Remove("");
-                        if (whitelistedDates.Contains(date) && customSavedHoursWL.Count() != 0)
-                        {
-                            foreach (var customSavedHour in customSavedHoursWL)
-                            {
-                                savedHours.Add(customSavedHour);
-                                whitelistedDates.Remove(date);
-                            }
-                        }
-
-                        if (blacklistedDates.Contains(date) && customSavedHoursBL.Count() != 0)
-                        {
-                            foreach (var customSavedHour in customSavedHoursBL)
-                            {
-                                savedHours.Remove(customSavedHour);
-                            }
-                        }
-
-                        if (!blacklistedDates.Contains(date) || savedHours.Count > 0)
-                        {
-                            var savedDateAndHour = new DateAndAvailableHour
-                            {
-                                AvailableHours = savedHours,
-                                Date = date
-                            };
-                            result.Add(savedDateAndHour);
-                        }
-                    }
-                }
+                //foreach (var date in allDates)
+                //{
+                //    if (dayEnum.Contains(date.DayOfWeek))
+                //    {
+                //        var savedHours = GetAvailableSessionQuery.GetInstance()
+                //         .Execute(conn, new { ActivityId = input.ActivityId, AvailableDay = date.DayOfWeek.ToString() }).ToList();
+                //        var customSavedHoursWL = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
+                //        var customSavedHoursBL = GetCustomAvailableHoursBlacklistDbQuery.GetInstance().Execute(conn, new { CustomDate = date, ActivityId = input.ActivityId }).ToList();
+                //        savedHours.Remove("");
+                //        customSavedHoursBL.Remove("");
+                //        customSavedHoursWL.Remove("");
+                //        if (whitelistedDates.Contains(date) && customSavedHoursWL.Count() != 0)
+                //        {
+                //            foreach (var customSavedHour in customSavedHoursWL)
+                //            {
+                //                savedHours.Add(customSavedHour);
+                //                whitelistedDates.Remove(date);
+                //            }
+                //        }
+                //
+                //        if (blacklistedDates.Contains(date) && customSavedHoursBL.Count() != 0)
+                //        {
+                //            foreach (var customSavedHour in customSavedHoursBL)
+                //            {
+                //                savedHours.Remove(customSavedHour);
+                //            }
+                //        }
+                //
+                //        if (!blacklistedDates.Contains(date) || savedHours.Count > 0)
+                //        {
+                //            var savedDateAndHour = new DateAndAvailableHour
+                //            {
+                //                AvailableHours = savedHours,
+                //                Date = date
+                //            };
+                //            result.Add(savedDateAndHour);
+                //        }
+                //    }
+                //}
 
                 var validWhiteListedDates = whitelistedDates.Where(a => a.Date > DateTime.UtcNow);
 
                 foreach (var whitelistedDate in validWhiteListedDates)
                 {
-                    var customSavedHours = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate, ActivityId = input.ActivityId }).ToList();
-                    customSavedHours.Remove("");
+                    var customSessionAndPaxSlots = GetCustomAvailableHoursWhitelistDbQuery.GetInstance().Execute(conn, new { CustomDate = whitelistedDate, ActivityId = input.ActivityId }).ToList();
+                    var availableHours = customSessionAndPaxSlots.Select(a => a.AvailableHour).ToList();
+                    availableHours.Remove("");
+                    foreach (var customSessionAndPaxSlot in customSessionAndPaxSlots)
+                    {
+                        customSessionAndPaxSlot.AvailableHour = customSessionAndPaxSlot.AvailableHour == ""
+                            ? null
+                            : customSessionAndPaxSlot.AvailableHour;
+                    }
                     var customSavedDateAndHour = new DateAndAvailableHour
                     {
-                        AvailableHours = customSavedHours,
-                        Date = whitelistedDate
+                        Date = whitelistedDate,
+                        AvailableHours = availableHours,
+                        AvailableSessionAndPaxSlots = customSessionAndPaxSlots
                     };
                     result.Add(customSavedDateAndHour);
                 }
@@ -443,6 +451,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     }
                     savedBooking.PaxCount = savedPaxCounts;
                 }
+
                 var output = new GetAppointmentRequestOutput
                 {
                     Appointments = savedBookings.Select(a => new AppointmentDetail()
@@ -571,12 +580,12 @@ namespace Lunggo.ApCommon.Activity.Service
                     }
                 }
 
-
+                
 
 
                 var output = new GetAppointmentListOutput
                 {
-                    Appointments = saved,
+                    Appointments = saved.Where(a => a.AppointmentReservations.Count > 0).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
                 };
@@ -1867,6 +1876,41 @@ namespace Lunggo.ApCommon.Activity.Service
                 return activityReservation.UserId;
             }
 
+        }
+
+        public string GetOperatorIdByActivityId(long activityId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var operatorId = OperatorTableRepo.GetInstance()
+                    .Find1(conn, new OperatorTableRecord {ActivityId = activityId});
+                return operatorId.UserId;
+            }
+        }
+
+        public void DecreasePaxSlotFromDb(long activityId, int ticketCount, DateTime date, string session)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var oldPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = activityId,
+                    AvailableHour = session ?? "",
+                    CustomDate = date
+                };
+                var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn,oldPaxSlotTableRecord).First().PaxSlot;
+               
+                var newPaxSlot = oldPaxSlot - ticketCount;
+                var newPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = activityId,
+                    AvailableHour = session ?? "",
+                    CustomDate = date,
+                    PaxSlot = newPaxSlot,
+                    DateStatus = "whitelisted"
+                };
+                ActivityCustomDateTableRepo.GetInstance().Update(conn,newPaxSlotTableRecord);
+            }
         }
 
     }

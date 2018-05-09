@@ -1,6 +1,5 @@
 ﻿using Lunggo.ApCommon.Activity.Service;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 using System;
@@ -9,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebJob.EmailQueueHandler.Function
 {

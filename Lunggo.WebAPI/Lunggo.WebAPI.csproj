@@ -42,10 +42,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Lunggo.WebAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\Lunggo.WebAPI.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -368,6 +364,7 @@
     <Compile Include="ApiSrc\Autocomplete\Model\HotelLocationApi.cs" />
     <Compile Include="ApiSrc\Autocomplete\Model\UpdateSet.cs" />
     <Compile Include="ApiSrc\Auxiliary\AuxiliaryController.cs" />
+    <Compile Include="ApiSrc\Auxiliary\Logic\CheckOperatorVersionLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\CheckVersionLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetCalendarLogic.cs" />
     <Compile Include="ApiSrc\Auxiliary\Logic\GetPromoLogic.cs" />
@@ -455,6 +452,9 @@
     <Compile Include="ApiSrc\Hotel\Model\HotelRateApiResponse.cs" />
     <Compile Include="ApiSrc\Hotel\Model\HotelSearchApiResponse.cs" />
     <Compile Include="ApiSrc\Notification\Logic\DeleteRegistrationLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\OperatorDeleteRegistrationLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\OperatorRegisterDeviceLogic.cs" />
+    <Compile Include="ApiSrc\Notification\Logic\PlatformMapper.cs" />
     <Compile Include="ApiSrc\Notification\Logic\UpdateRegistrationLogic.cs" />
     <Compile Include="ApiSrc\Notification\Logic\RegisterDeviceLogic.cs" />
     <Compile Include="ApiSrc\Notification\Model\RegisterDeviceApiResponse.cs" />

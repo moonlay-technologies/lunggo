@@ -138,13 +138,12 @@ namespace Lunggo.ApCommon.Identity.Auth
             {
                 context.Properties.ExpiresUtc = context.Properties.IssuedUtc.GetValueOrDefault().AddHours(4);
                 context.Properties.Dictionary[".expires"] = context.Properties.ExpiresUtc.Value.ToString("r");
-                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(180).TotalMinutes);
+                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(365).TotalMinutes);
             }
             else
             {
                 context.Properties.ExpiresUtc = context.Properties.IssuedUtc.GetValueOrDefault().AddMonths(6);
                 context.Properties.Dictionary[".expires"] = context.Properties.ExpiresUtc.Value.ToString("r");
-                context.OwinContext.Set("as:clientRefreshTokenLifeTime", TimeSpan.FromDays(365).TotalMinutes);
             }
 
             context.Issue(context.Identity, context.Properties);

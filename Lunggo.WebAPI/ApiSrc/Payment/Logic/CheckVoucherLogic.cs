@@ -1,12 +1,13 @@
 ﻿using System.Net;
-using Lunggo.ApCommon.Campaign.Constant;
-using Lunggo.ApCommon.Campaign.Model;
-using Lunggo.ApCommon.Campaign.Service;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
 using Lunggo.WebAPI.ApiSrc.Payment.Model;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Account.Service;
 using System;
+using System.Web;
+using Lunggo.ApCommon.Identity.Users;
+using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 
 namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
@@ -17,31 +18,29 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             if (IsValid(request))
             {
-                var service = CampaignService.GetInstance();
-                var response = service.ValidateVoucherRequest(request.RsvNo, request.DiscountCode);                
-                if(request.DiscountCode == "REFERRALCREDIT")
+                var response = new PaymentService().GetVoucherDiscount(request.RsvNo, request.DiscountCode, out var status);
+                if (request.DiscountCode == "REFERRALCREDIT")
                 {
-                    var cart = new PaymentService().GetCart(request.RsvNo);
-                    var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(cart.RsvNoList[0]);
+                    var userId = HttpContext.Current.User.Identity.GetId();
                     var referral = AccountService.GetInstance().GetReferral(userId);
-                    if(referral == null)
+                    if (referral == null)
                     {
-                        response.VoucherStatus = VoucherStatus.ProductNotEligible;
+                        status = VoucherStatus.TermsConditionsNotEligible;
                     }
                     else if (referral.ReferralCredit <= 0M)
                     {
-                        response.VoucherStatus = VoucherStatus.NoBudgetRemaining;
+                        status = VoucherStatus.VoucherDepleted;
                     }
                     else if (DateTime.UtcNow > referral.ExpDate)
                     {
-                        response.VoucherStatus = VoucherStatus.NoVoucherRemaining;
+                        status = VoucherStatus.VoucherDepleted;
                     }
                     else if (referral.ReferralCredit < response.TotalDiscount)
                     {
                         response.TotalDiscount = referral.ReferralCredit;
                     }
                 }
-                var apiResponse = AssembleApiResponse(response);
+                var apiResponse = AssembleApiResponse(response, status);
                 return apiResponse;
             }
             else
@@ -62,27 +61,25 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 request.RsvNo != null;
         }
 
-        private static ApiResponseBase AssembleApiResponse(VoucherResponse response)
+        private static ApiResponseBase AssembleApiResponse(VoucherDiscount discount, VoucherStatus status)
         {
-            switch (response.VoucherStatus)
+            switch (status)
             {
                 case VoucherStatus.Success:
                     return new CheckVoucherApiResponse
                     {
-                        Discount = response.TotalDiscount,
-                        DisplayName = response.Discount.DisplayName,
+                        Discount = discount.TotalDiscount,
+                        DisplayName = discount.Discount.DisplayName,
                         StatusCode = HttpStatusCode.OK
                     };
-                case VoucherStatus.CampaignHasEnded:
-                case VoucherStatus.CampaignInactive:
-                case VoucherStatus.CampaignNotStartedYet:
+                case VoucherStatus.OutsidePeriod:
                 case VoucherStatus.VoucherNotFound:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERPVCH02"
                     };
-                case VoucherStatus.NoVoucherRemaining:
+                case VoucherStatus.VoucherDepleted:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
@@ -94,48 +91,48 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERPVCH04"
                     };
-                case VoucherStatus.EmailNotEligible:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH05"
-                    };
-                case VoucherStatus.VoucherAlreadyUsed:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH06"
-                    };
-                case VoucherStatus.ReservationNotFound:
+                //case VoucherStatus.EmailNotEligible:
+                //    return new CheckVoucherApiResponse
+                //    {
+                //        StatusCode = HttpStatusCode.Accepted,
+                //        ErrorCode = "ERPVCH05"
+                //    };
+                //case VoucherStatus.VoucherDepleted:
+                //    return new CheckVoucherApiResponse
+                //    {
+                //        StatusCode = HttpStatusCode.Accepted,
+                //        ErrorCode = "ERPVCH06"
+                //    };
+                case VoucherStatus.InternalError:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
                         ErrorCode = "ERPVCH07"
                     };
-                case VoucherStatus.ProductNotEligible:
+                case VoucherStatus.TermsConditionsNotEligible:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERPVCH08"
                     };
-                case VoucherStatus.NoBudgetRemaining:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH09"
-                    };
-                case VoucherStatus.ReservationNotEligible:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH10"
-                    };
-                case VoucherStatus.PlatformNotEligible:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH11"
-                    };
+                //case VoucherStatus.VoucherDepleted:
+                //    return new CheckVoucherApiResponse
+                //    {
+                //        StatusCode = HttpStatusCode.Accepted,
+                //        ErrorCode = "ERPVCH09"
+                //    };
+                //case VoucherStatus.TermsConditionsNotEligible:
+                //    return new CheckVoucherApiResponse
+                //    {
+                //        StatusCode = HttpStatusCode.Accepted,
+                //        ErrorCode = "ERPVCH10"
+                //    };
+                //case VoucherStatus.TermsConditionsNotEligible:
+                //    return new CheckVoucherApiResponse
+                //    {
+                //        StatusCode = HttpStatusCode.Accepted,
+                //        ErrorCode = "ERPVCH11"
+                //    };
                 default:
                     return ApiResponseBase.Error500();
             }

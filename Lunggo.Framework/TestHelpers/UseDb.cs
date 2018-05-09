@@ -6,6 +6,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Framework.Database;
+using Lunggo.Framework.Redis;
+using StackExchange.Redis;
 
 namespace Lunggo.Framework.TestHelpers
 {

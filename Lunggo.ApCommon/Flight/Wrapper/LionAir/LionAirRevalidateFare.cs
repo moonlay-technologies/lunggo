@@ -12,7 +12,6 @@ using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using RestSharp;
 
 namespace Lunggo.ApCommon.Flight.Wrapper.LionAir

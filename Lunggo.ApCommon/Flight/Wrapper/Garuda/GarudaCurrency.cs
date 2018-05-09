@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using CsQuery;
 using CsQuery.StringScanner.ExtensionMethods;
-using Lunggo.Framework.Config;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.Framework.Environment;
 using RestSharp;
 using HttpUtility = RestSharp.Extensions.MonoHttp.HttpUtility;
 

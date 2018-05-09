@@ -4,9 +4,9 @@
 @using Lunggo.ApCommon.Hotel.Model
 @using Lunggo.ApCommon.Payment.Constant
 @using Lunggo.CustomerWeb.Helper
-@using Lunggo.Framework.Config
 @using Lunggo.ApCommon.Flight.Model
-@model Lunggo.ApCommon.Payment.Model.PaymentDetails
+@using Lunggo.Framework.Environment.Variables
+@model Lunggo.ApCommon.Payment.Model.RsvPaymentDetails
 
 @{
     Layout = "/Views/Shared/mobile/_LayoutMobile.cshtml";
@@ -126,7 +126,7 @@
                 </div>
                 break;
 
-            case PaymentStatus.Undefined:
+            case PaymentStatus.MethodNotSet:
             case PaymentStatus.Cancelled:
 
             <div class="popup__wrapper active">

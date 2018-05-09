@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Framework.BlobStorage;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using RestSharp;
 
 namespace Lunggo.WebJob.BookingAutomation

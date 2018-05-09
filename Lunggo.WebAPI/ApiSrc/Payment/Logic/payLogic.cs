@@ -23,12 +23,12 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     ErrorCode = "ERPPAY01"
                 };
 
-            if (NotEligibleForPaymentMethod(request, user))
-                return new PayApiResponse
-                {
-                    StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY02"
-                };
+            //if (NotEligibleForPaymentMethod(request, user))
+            //    return new PayApiResponse
+            //    {
+            //        StatusCode = HttpStatusCode.BadRequest,
+            //        ErrorCode = "ERPPAY02"
+            //    };
             bool isUpdated;
             var paymentData = PreprocessPaymentData(request);
             var paymentDetails = new PaymentService().SubmitPayment(request.RsvNo, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
@@ -42,7 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return request.Serialize().Deserialize<PaymentData>();
         }
 
-        private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
+        private static PayApiResponse AssembleApiResponse(RsvPaymentDetails paymentDetails, bool isUpdated)
         {
             if (paymentDetails == null)
             {
@@ -98,19 +98,19 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             };
         }
 
-        private static bool NotEligibleForPaymentMethod(PayApiRequest request, IPrincipal user)
-        {
-            return (request.Method == PaymentMethod.Credit ||
-                    request.Method == PaymentMethod.Deposit) &&
-                    !(user.IsInRole("CorporateCustomer") || user.IsInRole("Admin"));
-        }
+        //private static bool NotEligibleForPaymentMethod(PayApiRequest request, IPrincipal user)
+        //{
+        //    return (request.Method == PaymentMethod.Credit ||
+        //            request.Method == PaymentMethod.Deposit) &&
+        //            !(user.IsInRole("CorporateCustomer") || user.IsInRole("Admin"));
+        //}
 
-        private static bool NotEligibleForPaymentMethod(CheckOutApiRequest request, IPrincipal user)
-        {
-            return (request.Method == PaymentMethod.Credit ||
-                    request.Method == PaymentMethod.Deposit) &&
-                    !(user.IsInRole("CorporateCustomer") || user.IsInRole("Admin"));
-        }
+        //private static bool NotEligibleForPaymentMethod(CheckOutApiRequest request, IPrincipal user)
+        //{
+        //    return (request.Method == PaymentMethod.Credit ||
+        //            request.Method == PaymentMethod.Deposit) &&
+        //            !(user.IsInRole("CorporateCustomer") || user.IsInRole("Admin"));
+        //}
 
         private static bool IsValid(PayApiRequest request)
         {

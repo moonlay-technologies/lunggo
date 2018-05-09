@@ -7,7 +7,6 @@ using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Voucher;
 using Lunggo.CustomerWeb.Helper;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.Context;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
@@ -32,13 +31,13 @@ using RestSharp.Authenticators;
 using Lunggo.ApCommon.Flight.Service;
 using Lunggo.ApCommon.Hotel.Service;
 using Lunggo.ApCommon.Product.Model;
-using Lunggo.Framework.Config;
 using Lunggo.Framework.HtmlTemplate;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Account.Service;
 using Lunggo.ApCommon.Identity.Auth;
 using System.Security.Claims;
+using Lunggo.Framework.Environment;
 
 namespace Lunggo.CustomerWeb.Controllers
 {

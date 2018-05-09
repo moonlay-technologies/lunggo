@@ -11,7 +11,7 @@ using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Constant;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 
@@ -75,7 +75,7 @@ namespace Lunggo.ApCommon.Flight.Service
         {
             var payment = _paymentService.GetPaymentDetails(rsvNo);
             if (payment.Status == PaymentStatus.Pending || payment.Status == PaymentStatus.Verifying ||
-                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.Undefined)
+                payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.MethodNotSet)
             {
                 payment.Status = PaymentStatus.Expired;
                 _paymentService.UpdatePayment(rsvNo, payment);

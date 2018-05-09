@@ -302,7 +302,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Level2Authorize]
+        [Level1Authorize]
         [Route("v1/account/requestotp")]
         public ApiResponseBase RequestOtp()
         {
@@ -321,7 +321,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Level2Authorize]
+        [Level1Authorize]
         [Route("v1/account/checkotp")]
         public ApiResponseBase CheckOtp()
         {
@@ -340,7 +340,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account
 
         [HttpPost]
         [LunggoCorsPolicy]
-        [Level2Authorize]
+        [Level1Authorize]
         [Route("v1/account/resetpassword")]
         public ApiResponseBase ResettingPassword()
         {

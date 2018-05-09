@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Lunggo.ApCommon.Flight.Constant;
 using Lunggo.ApCommon.Flight.Model;
 using Lunggo.ApCommon.Flight.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Mail;
 using Microsoft.Azure.WebJobs;
 

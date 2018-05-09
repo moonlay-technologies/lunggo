@@ -14,7 +14,6 @@ namespace Lunggo.ApCommon.Payment.Model
         public List<string> RsvNoList { get; set; }
         public decimal TotalPrice { get; set; }
         public string Id { get; set; }
-        public Contact Contact { get; set; }
         public ActivityPackageReservation Pax { get; set; }
     }
 }

@@ -28,7 +28,14 @@ namespace Lunggo.ApCommon.Identity.Auth
 
         public async Task CreateAsync(AuthenticationTokenCreateContext context)
         {
+            if (context.Ticket.Identity.Name == "anonymous")
+            {
+                return;
+            }
+
             var clientId = context.Ticket.Properties.Dictionary["as:client_id"];
+
+
 
             if (string.IsNullOrEmpty(clientId))
             {
@@ -55,28 +62,9 @@ namespace Lunggo.ApCommon.Identity.Auth
             context.Ticket.Properties.ExpiresUtc = token.ExpireTime;
 
             token.ProtectedTicket = context.SerializeTicket();
-
-            bool result;
-
-            if (context.Ticket.Identity.Name != "anonymous")
-            {
-                result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(deviceId))
-                {
-                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
-                }
-                else
-                {
-                    //refreshTokenId = clientId.Base64Encode().Base64Encode().Base64Encode().Base64Encode();
-                    //token.Id = refreshTokenId.Sha512Encode();
-                    token.DeviceId = Guid.NewGuid().ToString("n");
-                    result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
-                }
-            }
-
+            
+            bool result = await new DapperAuthStore().AddOrReplaceRefreshToken(token);
+           
             if (result)
             {
                 context.SetToken(refreshTokenId);

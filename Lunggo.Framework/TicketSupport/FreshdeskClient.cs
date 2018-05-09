@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.SharedModel;
 using Newtonsoft.Json;
 using RestSharp;

@@ -4,7 +4,7 @@ using System.Net;
 using Lunggo.ApCommon.Hotel.Constant;
 using Lunggo.ApCommon.Hotel.Model.Logic;
 using Lunggo.ApCommon.Hotel.Service;
-using Lunggo.Framework.Config;
+using Lunggo.Framework.Environment;
 using Lunggo.Framework.Extension;
 using Lunggo.Framework.Http;
 using Lunggo.Framework.Log;

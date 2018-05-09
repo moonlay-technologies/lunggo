@@ -8,7 +8,6 @@ using Lunggo.ApCommon.Constant;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.ApCommon.Product.Service;
 using Lunggo.ApCommon.Voucher;
-using Lunggo.Framework.Config;
 
 namespace Lunggo.ApCommon.Activity.Service
 {

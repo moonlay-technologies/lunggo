@@ -14,7 +14,5 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Model
         public PaymentSubmethod? Submethod { get; set; }
         [JsonProperty("discCd", NullValueHandling = NullValueHandling.Ignore)]
         public string DiscountCode { get; set; }
-        [JsonProperty("test", NullValueHandling = NullValueHandling.Ignore)]
-        public int Test { get; set; }
     }
 }
