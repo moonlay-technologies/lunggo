@@ -69,12 +69,7 @@ namespace Lunggo.BackendWeb
             var redisService = RedisService.GetInstance();
             redisService.Init(new RedisConnectionProperty[]
             {
-                new RedisConnectionProperty
-                {
-                    ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
-                },
-                
+                               
                 new RedisConnectionProperty
                 {
                     ConnectionName = ApConstant.MasterDataCacheName,
