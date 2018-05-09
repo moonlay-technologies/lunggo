@@ -96,7 +96,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         }
 
-        private ActionResult HandlePaymentState(string trxId, string regId, PaymentDetails payment)
+        private ActionResult HandlePaymentState(string trxId, string regId, RsvPaymentDetails payment)
         {
             if (payment.RedirectionUrl != null && payment.Status != PaymentStatus.Settled)
             {
@@ -122,7 +122,7 @@ namespace Lunggo.CustomerWeb.Controllers
                 {
                     //RsvNo = rsvNo,
                     //Reservation = rsv,
-                    //PaymentDetails = payment,
+                    //RsvPaymentDetails = payment,
                     TrxId = trxId,
                     TimeLimit = payment.TimeLimit.GetValueOrDefault(),
                     OriginalPrice = payment.OriginalPriceIdr

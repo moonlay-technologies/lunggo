@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Payment.Processor
         private static readonly NicepayWrapper Nicepay = new NicepayWrapper();
         private static readonly E2PayWrapper E2Pay = new E2PayWrapper();
 
-        internal virtual bool ProcessPayment(PaymentDetails paymentDetails, TransactionDetails trxDetails)
+        internal virtual bool ProcessPayment(RsvPaymentDetails paymentDetails, TransactionDetails trxDetails)
         {
             if (paymentDetails.Medium != PaymentMedium.Undefined)
                 ProcessPaymentInternal(paymentDetails, trxDetails);
@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Payment.Processor
             return true;
         }
 
-        private void ProcessPaymentInternal(PaymentDetails payment, TransactionDetails transactionDetails)
+        private void ProcessPaymentInternal(RsvPaymentDetails payment, TransactionDetails transactionDetails)
         {
             switch (payment.Medium)
             {

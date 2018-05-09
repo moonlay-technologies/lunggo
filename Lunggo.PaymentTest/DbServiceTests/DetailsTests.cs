@@ -99,7 +99,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
         {
             TestHelper.UseDb(conn =>
             {
-                var expected = new PaymentDetails
+                var expected = new RsvPaymentDetails
                 {
                     RsvNo = "123456789",
                     Medium = PaymentMediumCd.Mnemonic("VERI"),

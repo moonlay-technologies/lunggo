@@ -111,7 +111,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         //    ActivityReservation input = new ActivityReservation()
         //    {
         //        RsvStatus = RsvStatus.MethodNotSet,
-        //        Payment = new PaymentDetails()
+        //        Payment = new RsvPaymentDetails()
         //        {
         //            Status = PaymentStatus.MethodNotSet,
         //            Method = PaymentMethod.Indomaret
@@ -128,7 +128,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Cancelled,
-                Payment = new PaymentDetails() { Status = PaymentStatus.MethodNotSet }
+                Payment = new RsvPaymentDetails() { Status = PaymentStatus.MethodNotSet }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -141,7 +141,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails() { Status = PaymentStatus.Cancelled }
+                Payment = new RsvPaymentDetails() { Status = PaymentStatus.Cancelled }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -155,7 +155,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Expired,
-                Payment = new PaymentDetails() { Status = PaymentStatus.MethodNotSet }
+                Payment = new RsvPaymentDetails() { Status = PaymentStatus.MethodNotSet }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -168,7 +168,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails() { Status = PaymentStatus.Expired }
+                Payment = new RsvPaymentDetails() { Status = PaymentStatus.Expired }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -181,7 +181,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails() { Status = PaymentStatus.Denied }
+                Payment = new RsvPaymentDetails() { Status = PaymentStatus.Denied }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -194,7 +194,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails() { Status = PaymentStatus.Failed }
+                Payment = new RsvPaymentDetails() { Status = PaymentStatus.Failed }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -208,7 +208,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Failed,
-                Payment = new PaymentDetails()
+                Payment = new RsvPaymentDetails()
                 {
                     Status = PaymentStatus.Settled
                 }
@@ -225,7 +225,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Failed,
-                Payment = new PaymentDetails()
+                Payment = new RsvPaymentDetails()
                 {
                     Status = PaymentStatus.Failed                }
             };
@@ -240,7 +240,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails() { Method = PaymentMethod.Undefined }
+                Payment = new RsvPaymentDetails() { Method = PaymentMethod.Undefined }
             };
 
             var actualResult = ActivityService.MapReservationStatus(input);
@@ -254,7 +254,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.Completed,
-                Payment = new PaymentDetails()
+                Payment = new RsvPaymentDetails()
                 {
                     Status = PaymentStatus.Settled,
                     Method = PaymentMethod.CreditCard
@@ -272,7 +272,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
             ActivityReservation input = new ActivityReservation()
             {
                 RsvStatus = RsvStatus.InProcess,
-                Payment = new PaymentDetails()
+                Payment = new RsvPaymentDetails()
                 {
                     Status = PaymentStatus.Settled,
                     Method = PaymentMethod.CreditCard
@@ -289,7 +289,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails()
+                Payment = new RsvPaymentDetails()
                 {
                     Status = PaymentStatus.MethodNotSet,
                     Method = PaymentMethod.VirtualAccount
@@ -306,7 +306,7 @@ namespace Lunggo.ApCommonTests.Activity.Service
         {
             ActivityReservation input = new ActivityReservation()
             {
-                Payment = new PaymentDetails()
+                Payment = new RsvPaymentDetails()
                 {
                     Status = PaymentStatus.MethodNotSet,
                     Method = PaymentMethod.BankTransfer

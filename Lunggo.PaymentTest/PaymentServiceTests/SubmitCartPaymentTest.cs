@@ -36,17 +36,25 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var rsvNo2 = "5678";
             cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo1, rsvNo2 });
             dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo1, rsvNo2 });
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo1)).Returns(new PaymentDetails());
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo2)).Returns(new PaymentDetails());
-            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo1)).Returns(new RsvPaymentDetails());
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo2)).Returns(new RsvPaymentDetails());
+            dbMock.Setup(m => m.GetRsvContact(rsvNo1)).Returns(new Contact()
+            {
+                Name = "dwajhgdyuaw",
+                CountryCallingCode = "4783",
+                Title = Title.Mister,
+                Email = "fnwfnje@nfenj.com",
+                Phone = "74837483"
+            });
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<RsvPaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<RsvPaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo1,
                         Medium = PaymentMedium.Veritrans,
@@ -70,7 +78,7 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                         LocalPaidAmount = 47297424,
                         InvoiceNo = "asdfg123456"
                     },
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo2,
                         Medium = PaymentMedium.Veritrans,
@@ -117,16 +125,8 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 LocalPaidAmount = 47297424,
                 InvoiceNo = "asdfg123456"
             });
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
 
-            var result = service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated);
+            var result = service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated);
 
             Assert.AreEqual(cartId, result.CartId);
             Assert.AreEqual(result.Method, method);
@@ -139,8 +139,8 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
         }
 
         [TestMethod]
-        // Should return exception when cartId is not valid
-        public void Should_return_exception_when_cartId_is_not_valid()
+        // Should return null when cartId is not valid
+        public void Should_return_null_when_cartId_is_not_valid()
         {
             var cartId = "abc";
             var method = PaymentMethod.CimbClicks;
@@ -157,22 +157,14 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns((CartPaymentDetails)null);
 
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
+            var actual = service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated);
 
-            Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+            Assert.IsNull(actual);
         }
 
         [TestMethod]
-        // Should return exception when cart id does not contain any reservation
-        public void Should_return_exception_when_cart_id_does_not_contain_any_reservation()
+        // Should return null when cart id does not contain any reservation
+        public void Should_return_null_when_cart_id_does_not_contain_any_reservation()
         {
             var cartId = "abc";
             var method = PaymentMethod.CimbClicks;
@@ -189,7 +181,7 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>(),
+                RsvPaymentDetails = new List<RsvPaymentDetails>(),
                 CartId = cartId,
                 Medium = PaymentMediumCd.Mnemonic("VERI"),
                 Method = PaymentMethodCd.Mnemonic("BKP"),
@@ -213,22 +205,14 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 InvoiceNo = "asdfg123456"
             });
 
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
+            var actual = service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated);
 
-            Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+            Assert.IsNull(actual);
         }
 
         [TestMethod]
-        // Should return exception when transaction status is settled
-        public void Should_return_exception_when_transaction_status_is_settled()
+        // Should_return_payment_details_with_settled_status_when_transaction_status_is_settled
+        public void Should_return_payment_details_with_settled_status_when_transaction_status_is_settled()
         {
             var cartId = "abc";
             var method = PaymentMethod.CimbClicks;
@@ -243,16 +227,16 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var rsvNo = "1234";
             cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
             dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
-            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new RsvPaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<RsvPaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<RsvPaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo,
                         Medium = PaymentMediumCd.Mnemonic("VERI"),
@@ -299,25 +283,18 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 LocalPaidAmount = 47297424,
                 InvoiceNo = "asdfg123456"
             });
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
 
-            Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+            var actual = service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated);
+
+            Assert.AreEqual(PaymentStatus.Settled, actual.Status);
 
         }
 
         [TestMethod]
-        // Should return exception when transaction status is verifying
-        public void Should_return_exception_when_transaction_status_is_verifying()
+        // Should_return_payment_details_with_verifying_status_when_transaction_status_is_verifying
+        public void Should_return_payment_details_with_verifying_status_when_transaction_status_is_verifying()
         {
-                        var cartId = "abc";
+            var cartId = "abc";
             var method = PaymentMethod.CimbClicks;
             var submethod = PaymentSubmethod.BRI;
             var paymentData = new PaymentData();
@@ -330,16 +307,16 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var rsvNo = "1234";
             cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
             dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
-            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new RsvPaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<RsvPaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<RsvPaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo,
                         Medium = PaymentMediumCd.Mnemonic("VERI"),
@@ -386,17 +363,10 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 LocalPaidAmount = 47297424,
                 InvoiceNo = "asdfg123456"
             });
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
 
-            Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+            var actual = service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated);
+
+            Assert.AreEqual(PaymentStatus.Verifying, actual.Status);
 
         }
 
@@ -417,16 +387,16 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var rsvNo = "1234";
             cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
             dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
-            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new RsvPaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<RsvPaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<RsvPaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo,
                         Medium = PaymentMediumCd.Mnemonic("VERI"),
@@ -473,17 +443,9 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 LocalPaidAmount = 47297424,
                 InvoiceNo = "asdfg123456"
             });
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
         }
 
         [TestMethod]
@@ -503,16 +465,16 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var rsvNo = "1234";
             cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
             dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
-            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new RsvPaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<RsvPaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<RsvPaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo,
                         Medium = PaymentMediumCd.Mnemonic("VERI"),
@@ -559,17 +521,9 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 LocalPaidAmount = 47297424,
                 InvoiceNo = "asdfg123456"
             });
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
 
         }
 
@@ -593,16 +547,16 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
             var rsvNo = "1234";
             cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns(new List<string> { rsvNo });
             dbMock.Setup(m => m.GetTrxRsvNos(cartId)).Returns(new List<string> { rsvNo });
-            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new PaymentDetails());
-            procMock.Setup(m => m.ProcessPayment(It.IsAny<PaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
+            dbMock.Setup(m => m.GetPaymentDetails(rsvNo)).Returns(new RsvPaymentDetails());
+            procMock.Setup(m => m.ProcessPayment(It.IsAny<RsvPaymentDetails>(), It.IsAny<TransactionDetails>())).Returns(true);
 
             var service = new Mock<PaymentService>(procMock.Object, dbMock.Object, cacheMock.Object);
-            service.Setup(m => m.GetSurchargeNominal(It.IsAny<PaymentDetails>())).Returns(272838);
+            service.Setup(m => m.GetSurchargeNominal(It.IsAny<RsvPaymentDetails>())).Returns(272838);
             service.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = rsvNo,
                         Medium = PaymentMediumCd.Mnemonic("VERI"),
@@ -649,17 +603,9 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
                 LocalPaidAmount = 47297424,
                 InvoiceNo = "asdfg123456"
             });
-            var contact = new Contact
-            {
-                Name = "naannaan",
-                Email = "fmkef@mkemf.cm",
-                CountryCallingCode = "62",
-                Phone = "12345678",
-                Title = Title.Mister
-            };
 
             Assert.ThrowsException<ArgumentException>(() =>
-                service.Object.SubmitCartPayment(cartId, method, submethod, contact, paymentData, discCd, out var isUpdated));
+                service.Object.SubmitCartPayment(cartId, method, submethod, paymentData, discCd, out var isUpdated));
         }
     }
 }

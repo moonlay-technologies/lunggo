@@ -25,9 +25,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -57,9 +57,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 Method = PaymentMethod.CreditCard,
                 Status = PaymentStatus.Pending,
                 HasInstruction = true,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -88,9 +88,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 Method = PaymentMethod.CreditCard,
                 Status = PaymentStatus.Pending,
                 HasThirdPartyPage = true,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -128,7 +128,7 @@ namespace Lunggo.CustomerWebTests.Payment
             var mock = new Mock<PaymentService>();
             mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
             {
-                RsvPaymentDetails = new List<PaymentDetails>()
+                RsvPaymentDetails = new List<RsvPaymentDetails>()
             });
             var controller = new PaymentController(mock.Object);
 
@@ -148,9 +148,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.Settled,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -179,9 +179,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 Status = PaymentStatus.Pending,
                 HasInstruction = false,
                 HasThirdPartyPage = false,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -207,9 +207,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -237,9 +237,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -267,9 +267,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,
@@ -297,9 +297,9 @@ namespace Lunggo.CustomerWebTests.Payment
                 CartId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.Verifying,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails
+                    new RsvPaymentDetails
                     {
                         RsvNo = "123456789",
                         OriginalPriceIdr = 123456789,

@@ -185,7 +185,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return null;
         }
 
-        public List<Tuple<string, List<string>>> GetInstruction(PaymentDetails payment)
+        public List<Tuple<string, List<string>>> GetInstruction(RsvPaymentDetails payment)
         {
             var medium = payment.Medium;
             var method = payment.Method;

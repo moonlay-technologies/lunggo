@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        internal PaymentDetailsForDisplay ConvertToPaymentDetailsForDisplay(PaymentDetails payment)
+        internal PaymentDetailsForDisplay ConvertToPaymentDetailsForDisplay(RsvPaymentDetails payment)
         {
             if (payment == null)
                 return null;

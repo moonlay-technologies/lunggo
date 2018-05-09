@@ -866,7 +866,7 @@
     <Compile Include="Payment\Model\Discount.cs" />
     <Compile Include="Payment\Model\ItemDetails.cs" />
     <Compile Include="Payment\Model\PaymentData.cs" />
-    <Compile Include="Payment\Model\PaymentDetails.cs" />
+    <Compile Include="Payment\Model\RsvPaymentDetails.cs" />
     <Compile Include="Payment\Model\Refund.cs" />
     <Compile Include="Payment\Model\SavedCreditCard.cs" />
     <Compile Include="Payment\Model\TransferConfirmationReport.cs" />

@@ -33,7 +33,7 @@ namespace Lunggo.ApCommon.Payment.Processor
             private Data objData = new Data();
             private NotificationResult objNoti = new NotificationResult();
 
-        internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
+        internal RsvPaymentDetails ProcessPayment(RsvPaymentDetails payment, TransactionDetails transactionDetail)
         {
             JavaScriptSerializer JsonSerializer = new JavaScriptSerializer();
             var TableLog = new GlobalLog();

@@ -42,7 +42,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return request.Serialize().Deserialize<PaymentData>();
         }
 
-        private static PayApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated)
+        private static PayApiResponse AssembleApiResponse(RsvPaymentDetails paymentDetails, bool isUpdated)
         {
             if (paymentDetails == null)
             {

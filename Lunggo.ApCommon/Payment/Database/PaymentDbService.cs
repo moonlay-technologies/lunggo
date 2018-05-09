@@ -14,23 +14,7 @@ namespace Lunggo.ApCommon.Payment.Database
 {
     internal partial class PaymentDbService
     {
-        internal bool ClearPaymentSelection(string rsvNo)
-        {
-            using (var conn = DbService.GetInstance().GetOpenConnection())
-            {
-                return PaymentTableRepo.GetInstance().Update(conn, new PaymentTableRecord
-                {
-                    RedirectionUrl = null,
-                    TransferAccount = null,
-                    MethodCd = PaymentMethodCd.Mnemonic(PaymentMethod.Undefined),
-                    MediumCd = PaymentMediumCd.Mnemonic(PaymentMedium.Undefined),
-                    StatusCd = PaymentStatusCd.Mnemonic(PaymentStatus.Pending),
-                    RsvNo = rsvNo
-                }) > 0;
-            }
-        }
-
-        internal bool UpdatePaymentToDb(PaymentDetails payment)
+        internal bool UpdatePaymentToDb(RsvPaymentDetails payment)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -133,12 +117,12 @@ namespace Lunggo.ApCommon.Payment.Database
             }
         }
 
-        internal Dictionary<string, PaymentDetails> GetUnpaidFromDb()
+        internal Dictionary<string, RsvPaymentDetails> GetUnpaidFromDb()
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var records = GetUnpaidQuery.GetInstance().Execute(conn, null);
-                var payments = records.ToDictionary(rec => rec.RsvNo, rec => new PaymentDetails
+                var payments = records.ToDictionary(rec => rec.RsvNo, rec => new RsvPaymentDetails
                 {
                     Time = rec.InsertDate,
                     TimeLimit = rec.TimeLimit.GetValueOrDefault(),

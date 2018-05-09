@@ -18,7 +18,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails GetPaymentDetails(string rsvNo)
+        public RsvPaymentDetails GetPaymentDetails(string rsvNo)
         {
             return _db.GetPaymentDetails(rsvNo);
         }
@@ -51,9 +51,9 @@ namespace Lunggo.ApCommon.Payment.Service
             return paymentDetails.Status;
         }
 
-        private static PaymentDetails CreateNewPaymentDetails(string rsvNo, decimal price, Currency currency, DateTime? timeLimit = null)
+        private static RsvPaymentDetails CreateNewPaymentDetails(string rsvNo, decimal price, Currency currency, DateTime? timeLimit = null)
         {
-            var details = new PaymentDetails
+            var details = new RsvPaymentDetails
             {
                 RsvNo = rsvNo,
                 Status = PaymentStatus.MethodNotSet,

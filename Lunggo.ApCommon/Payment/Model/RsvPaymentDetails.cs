@@ -51,9 +51,8 @@ namespace Lunggo.ApCommon.Payment.Model
         public string InvoiceNo { get; set; }
     }
 
-    public class PaymentDetails
+    public abstract class PaymentDetails
     {
-        public string RsvNo { get; set; }
         public PaymentMedium Medium { get; set; }
         public PaymentMethod Method { get; set; }
         public PaymentSubmethod Submethod { get; set; }
@@ -82,9 +81,14 @@ namespace Lunggo.ApCommon.Payment.Model
         public bool HasThirdPartyPage { get; set; }
     }
 
-    public class CartPaymentDetails : PaymentDetails
+    public class RsvPaymentDetails : PaymentDetails
     {
-        public List<PaymentDetails> RsvPaymentDetails { get; set; }
+        public string RsvNo { get; set; }
+    }
+
+    public class CartPaymentDetails : RsvPaymentDetails
+    {
         public string CartId { get; set; }
+        public List<RsvPaymentDetails> RsvPaymentDetails { get; set; }
     }
 }

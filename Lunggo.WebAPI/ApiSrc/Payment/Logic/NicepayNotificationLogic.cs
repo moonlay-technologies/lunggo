@@ -25,7 +25,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             var status = MapNicepayPaymentStatus(notif.status,notif.resultMsg);
             var method = MapNicepayPaymentMethod(notif.payMethod);
-            var paymentInfo = new PaymentDetails
+            var paymentInfo = new RsvPaymentDetails
             {
                 Medium = PaymentMedium.Nicepay,
                 Method = method,

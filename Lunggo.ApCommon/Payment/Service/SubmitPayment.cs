@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public PaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public RsvPaymentDetails SubmitPayment(string rsvNo, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
 
@@ -37,7 +37,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             var accountService = AccountService.GetInstance();
 
-            var discount = (VoucherDiscount) null;
+            var discount = (VoucherDiscount)null;
             var isVoucherValid = false;
             if (!string.IsNullOrEmpty(discountCode))
             {
@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
-            var transactionDetails = ConstructTransactionDetails(paymentDetails.RsvNo, paymentDetails, Contact.GetFromDb(paymentDetails.RsvNo));
+            var transactionDetails = ConstructTransactionDetails(paymentDetails.RsvNo, paymentDetails);
             _processor.ProcessPayment(paymentDetails, transactionDetails);
 
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
@@ -72,7 +72,7 @@ namespace Lunggo.ApCommon.Payment.Service
             throw new NotImplementedException();
         }
 
-        private static void SetMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, PaymentDetails paymentDetails)
+        private static void SetMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, RsvPaymentDetails paymentDetails)
         {
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
@@ -81,43 +81,6 @@ namespace Lunggo.ApCommon.Payment.Service
 
             if (paymentDetails is CartPaymentDetails cartDetails)
                 cartDetails.RsvPaymentDetails.ForEach(d => SetMethod(method, submethod, paymentData, d));
-        }
-
-        private bool TryApplyVoucher(string cartId, string discountCode, PaymentDetails paymentDetails, out VoucherDiscount discount)
-        {
-            discount = GetVoucherDiscount(cartId, discountCode, out var status);
-            if (status != VoucherStatus.Success || discount.Discount == null)
-            {
-                paymentDetails.Status = PaymentStatus.Failed;
-                paymentDetails.FailureReason = FailureReason.VoucherNoLongerAvailable;
-                {
-                    return false;
-                }
-            }
-
-            if (discountCode == "REFERRALCREDIT")
-            {
-                var referral = AccountService.GetInstance().GetReferral(cartId);
-                if (referral.ReferralCredit <= 0)
-                {
-                    paymentDetails.Status = PaymentStatus.Failed;
-                    paymentDetails.FailureReason = FailureReason.VoucherNotEligible;
-                    {
-                        return false;
-                    }
-                }
-
-                if (referral.ReferralCredit < discount.TotalDiscount)
-                {
-                    discount.TotalDiscount = referral.ReferralCredit;
-                }
-            }
-
-            paymentDetails.FinalPriceIdr -= discount.TotalDiscount;
-            paymentDetails.Discount = discount.Discount;
-            paymentDetails.DiscountCode = discountCode;
-            paymentDetails.DiscountNominal = discount.TotalDiscount;
-            return true;
         }
 
 
@@ -142,23 +105,19 @@ namespace Lunggo.ApCommon.Payment.Service
                     return true;
                 case PaymentMethod.CimbClicks:
                     return true;
+                default:
+                    return false;
             }
-            return false;
         }
 
-        private void SendTransferInstructionToCustomer(PaymentDetails details)
+        private void SendTransferInstructionToCustomer(RsvPaymentDetails details)
         {
             var queueService = QueueService.GetInstance();
             var queue = queueService.GetQueueByReference("CartTransferInstructionEmail");
             queue.AddMessage(new CloudQueueMessage(details.Serialize()));
         }
 
-        public void ClearPayment(string rsvNo)
-        {
-            _db.ClearPaymentSelection(rsvNo);
-        }
-
-        public void UpdatePayment(string rsvNo, PaymentDetails payment)
+        public void UpdatePayment(string rsvNo, RsvPaymentDetails payment)
         {
             var isUpdated = _db.UpdatePaymentToDb(payment);
             if (isUpdated && payment.Status == PaymentStatus.Settled)
@@ -179,13 +138,14 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        public Dictionary<string, PaymentDetails> GetUnpaids()
+        public Dictionary<string, RsvPaymentDetails> GetUnpaids()
         {
             return _db.GetUnpaidFromDb();
         }
 
-        private static TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment, Contact contact)
+        private TransactionDetails ConstructTransactionDetails(string rsvNo, RsvPaymentDetails payment)
         {
+            var contact = _db.GetRsvContact(rsvNo);
             return new TransactionDetails
             {
                 RsvNo = rsvNo,
@@ -209,7 +169,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             else
             {
-                rsvNos = new List<string> {trxId};
+                rsvNos = new List<string> { trxId };
             }
 
             foreach (var rsvNo in rsvNos)

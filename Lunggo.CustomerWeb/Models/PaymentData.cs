@@ -13,7 +13,7 @@ namespace Lunggo.CustomerWeb.Models
     {
         public string TrxId { get; set; }
         //public ReservationForDisplayBase Reservation { get; set; }
-        //public PaymentDetails PaymentDetails { get; set; }
+        //public RsvPaymentDetails RsvPaymentDetails { get; set; }
         public decimal OriginalPrice { get; set; }
         public DateTime TimeLimit { get; set; }
         public List<SavedCreditCard> SavedCreditCards { get; set; }

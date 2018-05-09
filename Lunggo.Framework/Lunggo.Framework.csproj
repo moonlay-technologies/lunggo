@@ -332,6 +332,7 @@
     <Compile Include="SharedModel\MailDetailForQueue.cs" />
     <Compile Include="SharedModel\TicketQueueMessage.cs" />
     <Compile Include="SmsGateway\SendSms.cs" />
+    <Compile Include="TestHelpers\Auth.cs" />
     <Compile Include="TestHelpers\InvokePartial.cs" />
     <Compile Include="TestHelpers\Random.cs" />
     <Compile Include="TestHelpers\UseDb.cs" />

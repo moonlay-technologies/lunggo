@@ -20,7 +20,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
             var currency = new Currency("ASD", 100, 200);
             var timelimit = DateTime.Now;
 
-            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
+            var actual = new PaymentService().InvokePrivate<RsvPaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
 
             Assert.AreEqual(rsvNo, actual.RsvNo);
             Assert.AreEqual(price, actual.OriginalPriceIdr);
@@ -35,11 +35,11 @@ namespace Lunggo.PaymentTest.DbServiceTests
             var cart = new CartPaymentDetails
             {
                 OriginalPriceIdr = 23456789,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails {OriginalPriceIdr = 12345678},
-                    new PaymentDetails {OriginalPriceIdr = 849574857485},
-                    new PaymentDetails {OriginalPriceIdr = -38433}
+                    new RsvPaymentDetails {OriginalPriceIdr = 12345678},
+                    new RsvPaymentDetails {OriginalPriceIdr = 849574857485},
+                    new RsvPaymentDetails {OriginalPriceIdr = -38433}
                 }
             };
 
@@ -66,14 +66,14 @@ namespace Lunggo.PaymentTest.DbServiceTests
                 PaidAmountIdr = 6_715_000,
                 LocalPaidAmount = 671_500_000,
                 OriginalPriceIdr = 7_000_000,
-                RsvPaymentDetails = new List<PaymentDetails>
+                RsvPaymentDetails = new List<RsvPaymentDetails>
                 {
-                    new PaymentDetails{OriginalPriceIdr = 200_000},
-                    new PaymentDetails{OriginalPriceIdr = 1_000_000},
-                    new PaymentDetails{OriginalPriceIdr = 1_300_000},
-                    new PaymentDetails{OriginalPriceIdr = 2_000_000},
-                    new PaymentDetails{OriginalPriceIdr = 1_800_000},
-                    new PaymentDetails{OriginalPriceIdr = 700_000}
+                    new RsvPaymentDetails{OriginalPriceIdr = 200_000},
+                    new RsvPaymentDetails{OriginalPriceIdr = 1_000_000},
+                    new RsvPaymentDetails{OriginalPriceIdr = 1_300_000},
+                    new RsvPaymentDetails{OriginalPriceIdr = 2_000_000},
+                    new RsvPaymentDetails{OriginalPriceIdr = 1_800_000},
+                    new RsvPaymentDetails{OriginalPriceIdr = 700_000}
                 }
             };
 
@@ -193,7 +193,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
             var price = 123456789M;
             var currency = new Currency("ASD", 100, 123);
 
-            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
+            var actual = new PaymentService().InvokePrivate<RsvPaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
 
             Assert.AreEqual(rsvNo, actual.RsvNo);
             Assert.AreEqual(price, actual.OriginalPriceIdr);
@@ -210,7 +210,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
             var price = 123456789M;
             var currency = new Currency("ASD", 100, 123);
 
-            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
+            var actual = new PaymentService().InvokePrivate<RsvPaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, null);
 
             Assert.AreEqual(PaymentStatus.MethodNotSet, actual.Status);
         }
@@ -224,7 +224,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
             var currency = new Currency("ASD", 100, 123);
             var timelimit = DateTime.Now;
 
-            var actual = new PaymentService().InvokePrivate<PaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
+            var actual = new PaymentService().InvokePrivate<RsvPaymentDetails>("CreateNewPaymentDetails", rsvNo, price, currency, timelimit);
 
             Assert.AreEqual(timelimit.AddMinutes(-10), actual.TimeLimit);
         }

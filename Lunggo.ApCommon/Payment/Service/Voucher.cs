@@ -434,7 +434,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return voucherDiscount;
         }
 
-        private bool RealizeVoucher(VoucherDiscount discount, AccountService accountService, PaymentDetails paymentDetails)
+        private bool RealizeVoucher(VoucherDiscount discount, AccountService accountService, RsvPaymentDetails paymentDetails)
         {
             //var isUseBudgetSuccess = !rsvNo.StartsWith("2") || UseHotelBudget(voucherCode, rsvNo);
             var isVoucherDecrementSuccess = VoucherDecrement(discount.VoucherCode);
@@ -546,6 +546,44 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 return false;
             }
+        }
+
+        private bool TryApplyVoucher(string cartId, string discountCode, RsvPaymentDetails paymentDetails,
+            out VoucherDiscount discount)
+        {
+            discount = GetVoucherDiscount(cartId, discountCode, out var status);
+            if (status != VoucherStatus.Success || discount.Discount == null)
+            {
+                paymentDetails.Status = PaymentStatus.Failed;
+                paymentDetails.FailureReason = FailureReason.VoucherNoLongerAvailable;
+                {
+                    return false;
+                }
+            }
+
+            if (discountCode == "REFERRALCREDIT")
+            {
+                var referral = AccountService.GetInstance().GetReferral(cartId);
+                if (referral.ReferralCredit <= 0)
+                {
+                    paymentDetails.Status = PaymentStatus.Failed;
+                    paymentDetails.FailureReason = FailureReason.VoucherNotEligible;
+                    {
+                        return false;
+                    }
+                }
+
+                if (referral.ReferralCredit < discount.TotalDiscount)
+                {
+                    discount.TotalDiscount = referral.ReferralCredit;
+                }
+            }
+
+            paymentDetails.FinalPriceIdr -= discount.TotalDiscount;
+            paymentDetails.Discount = discount.Discount;
+            paymentDetails.DiscountCode = discountCode;
+            paymentDetails.DiscountNominal = discount.TotalDiscount;
+            return true;
         }
     }
 }

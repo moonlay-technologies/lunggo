@@ -23,22 +23,12 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             //        ErrorCode = "ERPPAY02"
             //    };
 
-            var user = HttpContext.Current.User.Identity.GetUser();
-            var contact = new Contact
-            {
-                Name = user.FirstName == user.LastName
-                    ? user.FirstName
-                    : string.Join(" ", user.FirstName, user.LastName),
-                Email = user.Email,
-                CountryCallingCode = user.CountryCallCd,
-                Phone = user.PhoneNumber
-            };
-            var paymentDetails = new PaymentService().SubmitCartPayment(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, contact, request,request.DiscountCode, out var isUpdated);
+            var paymentDetails = new PaymentService().SubmitCartPayment(request.CartId, request.Method, request.Submethod ?? PaymentSubmethod.Undefined, request,request.DiscountCode, out var isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated, request.CartId);
             return apiResponse;
         }
 
-        private static CheckOutApiResponse AssembleApiResponse(PaymentDetails paymentDetails, bool isUpdated, string cartId)
+        private static CheckOutApiResponse AssembleApiResponse(RsvPaymentDetails paymentDetails, bool isUpdated, string cartId)
         {
             if (paymentDetails == null)
             {
@@ -56,12 +46,6 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     {
                         StatusCode = HttpStatusCode.Accepted,
                         ErrorCode = "ERR_VOUCHER_NOT_AVAILABLE"
-                    };
-                if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
-                    return new CheckOutApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPPAY06"
                     };
             }
 
@@ -84,8 +68,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 StatusCode =
                     paymentDetails.Status == PaymentStatus.Settled || paymentDetails.Status == PaymentStatus.Pending
                         ? HttpStatusCode.OK
-                        : HttpStatusCode.Accepted,
-                CartRecordId = (paymentDetails as CartPaymentDetails)?.CartId
+                        : HttpStatusCode.Accepted
             };
         }
     }

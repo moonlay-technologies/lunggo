@@ -1,6 +1,8 @@
 ﻿using System;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Model;
+using Lunggo.ApCommon.Product.Constant;
+using Lunggo.ApCommon.Product.Model;
 using Lunggo.Framework.Database;
 using Lunggo.Repository.TableRecord;
 using Lunggo.Repository.TableRepository;
@@ -9,7 +11,7 @@ namespace Lunggo.ApCommon.Payment.Database
 {
     internal partial class PaymentDbService
     {
-        internal virtual PaymentDetails GetPaymentDetails(string rsvNo)
+        internal virtual RsvPaymentDetails GetPaymentDetails(string rsvNo)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -19,7 +21,7 @@ namespace Lunggo.ApCommon.Payment.Database
             }
         }
 
-        internal virtual void InsertPaymentDetails(PaymentDetails details)
+        internal virtual void InsertPaymentDetails(RsvPaymentDetails details)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -29,7 +31,7 @@ namespace Lunggo.ApCommon.Payment.Database
             }
         }
 
-        private static PaymentTableRecord ConvertPaymentDetailsToPaymentRecord(PaymentDetails details)
+        private static PaymentTableRecord ConvertPaymentDetailsToPaymentRecord(RsvPaymentDetails details)
         {
             var record = new PaymentTableRecord();
             record.RsvNo = details.RsvNo;
@@ -61,9 +63,9 @@ namespace Lunggo.ApCommon.Payment.Database
             return record;
         }
 
-        private static PaymentDetails ConvertPaymentRecordToPaymentDetails(PaymentTableRecord record)
+        private static RsvPaymentDetails ConvertPaymentRecordToPaymentDetails(PaymentTableRecord record)
         {
-            var details = new PaymentDetails();
+            var details = new RsvPaymentDetails();
             details.RsvNo = record.RsvNo;
             details.Medium = PaymentMediumCd.Mnemonic(record.MediumCd);
             details.Method = PaymentMethodCd.Mnemonic(record.MethodCd);
@@ -91,6 +93,23 @@ namespace Lunggo.ApCommon.Payment.Database
             details.Discount = UsedDiscount.GetFromDb(record.RsvNo);
             details.Refund = Refund.GetFromDb(record.RsvNo);
             return details;
+        }
+
+        public virtual Contact GetRsvContact(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var record = ContactTableRepo.GetInstance().Find1(conn, new ContactTableRecord {RsvNo = rsvNo});
+                var contact = new Contact
+                {
+                    Name = record.Name,
+                    Title = TitleCd.Mnemonic(record.TitleCd),
+                    CountryCallingCode = record.CountryCallCd,
+                    Email = record.Email,
+                    Phone = record.Phone
+                };
+                return contact;
+            }
         }
     }
 }

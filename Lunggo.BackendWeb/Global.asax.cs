@@ -96,7 +96,7 @@ namespace Lunggo.BackendWeb
     }
 }
 
-//new PaymentService().UpdatePayment("276966536079", new PaymentDetails
+//new PaymentService().UpdatePayment("276966536079", new RsvPaymentDetails
 //            {
 //                Status = PaymentStatus.Settled,
 

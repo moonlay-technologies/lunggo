@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public CartPaymentDetails SubmitCartPayment(string cartId, PaymentMethod method, PaymentSubmethod submethod, Contact contact, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public CartPaymentDetails SubmitCartPayment(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
 
@@ -32,11 +32,11 @@ namespace Lunggo.ApCommon.Payment.Service
 
             var cartPaymentDetails = GetCartPaymentDetails(cartId);
             if (cartPaymentDetails?.RsvPaymentDetails == null || cartPaymentDetails.RsvPaymentDetails.Count == 0)
-                throw new ArgumentException("Invalid Cart ID");
+                return null;
 
             var isPayable = ValidatePaymentStatus(cartPaymentDetails);
             if (!isPayable)
-                throw new ArgumentException("Cannot pay this cart, status is " + cartPaymentDetails.Status);
+                return cartPaymentDetails;
 
             SetMethod(method, submethod, paymentData, cartPaymentDetails);
 
@@ -54,7 +54,7 @@ namespace Lunggo.ApCommon.Payment.Service
             cartPaymentDetails.Surcharge = GetSurchargeNominal(cartPaymentDetails);
             cartPaymentDetails.FinalPriceIdr += cartPaymentDetails.Surcharge;
 
-            var transactionDetails = ConstructTransactionDetails(cartPaymentDetails.RsvNo, cartPaymentDetails, contact);
+            var transactionDetails = ConstructTransactionDetails(cartPaymentDetails.RsvPaymentDetails[0].RsvNo, cartPaymentDetails);
             var processSuccess = _processor.ProcessPayment(cartPaymentDetails, transactionDetails);
 
             if (cartPaymentDetails.Status != PaymentStatus.Failed && cartPaymentDetails.Status != PaymentStatus.Denied)
@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return cartPaymentDetails;
         }
 
-        private bool ValidatePaymentStatus(PaymentDetails paymentDetails)
+        private bool ValidatePaymentStatus(RsvPaymentDetails paymentDetails)
         {
             var status = paymentDetails.Status;
             return status == PaymentStatus.MethodNotSet ||
@@ -109,7 +109,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return cartPayment;
         }
 
-        private List<PaymentDetails> RetrieveCartRsvPaymentDetails(Cart cart)
+        private List<RsvPaymentDetails> RetrieveCartRsvPaymentDetails(Cart cart)
         {
             return cart.RsvNoList.Select(_db.GetPaymentDetails).ToList();
         }

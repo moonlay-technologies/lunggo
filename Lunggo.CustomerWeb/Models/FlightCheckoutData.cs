@@ -14,7 +14,7 @@ namespace Lunggo.CustomerWeb.Models
         public FlightItineraryForDisplay Itinerary { get; set; }
         public Contact Contact { get; set; }
         public List<PassengerData> Passengers { get; set; }
-        public PaymentDetails PaymentDetailsData { get; set; }
+        public RsvPaymentDetails PaymentDetailsData { get; set; }
         public string DiscountCode { get; set; }
         public DateTime ExpiryTime { get; set; }
         public List<Pax> SavedPassengers { get; set; }

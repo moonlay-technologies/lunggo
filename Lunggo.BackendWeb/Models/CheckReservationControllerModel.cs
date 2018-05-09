@@ -6,7 +6,7 @@ namespace Lunggo.BackendWeb.Models
     public class CheckReservationControllerModel
     {
         public string NoRsv { get; set; }
-        public PaymentDetails PaymentDetailsData { get; set; }
+        public RsvPaymentDetails PaymentDetailsData { get; set; }
         public PaymentStatus Status { get; set; }
     }
 }

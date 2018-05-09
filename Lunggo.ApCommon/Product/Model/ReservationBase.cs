@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Product.Model
         public RsvStatus RsvStatus { get; set; }
         public CancellationType CancellationType { get; set; }
         public DateTime? CancellationTime { get; set; }
-        public PaymentDetails Payment { get; set; }
+        public RsvPaymentDetails Payment { get; set; }
         public Contact Contact { get; set; }
         public User User { get; set; }
         public ReservationState State { get; set; }
