@@ -15,8 +15,7 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public AppointmentConfirmationOutput ConfirmAppointment(AppointmentConfirmationInput input)
         {
-            try
-            {
+            
                 var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "TKTD" };
                 var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
                 var status = bookingDetail.BookingDetail.BookingStatus;
@@ -43,11 +42,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }      
                 var pushNotifConfirm = PushNotificationConfirmAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
+            
         }
 
         internal bool PushNotificationConfirmAppointment(string rsvNo)
@@ -66,8 +61,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput DeclineAppointment(AppointmentConfirmationInput input)
         {
-            try
-            {
+            
                 var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (status == "CANC" || rejectStatus.Contains(status))
@@ -80,17 +74,14 @@ namespace Lunggo.ApCommon.Activity.Service
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Cancelled);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Cancelled);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
+            
+           
         }
 
         public AppointmentConfirmationOutput DenyAppointment(AppointmentConfirmationInput input)
         {
-            try
-            {
+            
+            
                 var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (status == "DENY" || rejectStatus.Contains(status))
@@ -106,11 +97,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Denied);
                 var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
+            
+            
         }
 
         internal bool PushNotificationDenyAppointment(string rsvNo)
@@ -131,8 +119,6 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput CancelAppointmentByOperator(AppointmentConfirmationInput input)
         {
-            try
-            {
                 var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
@@ -146,17 +132,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByOperator);
                 InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
         }
 
         public AppointmentConfirmationOutput CancelAppointmentByAdmin(AppointmentConfirmationInput input)
         {
-            try
-            {
                 var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
@@ -170,18 +149,12 @@ namespace Lunggo.ApCommon.Activity.Service
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByAdmin);
                 InsertRefundAmountOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
+            
         }
 
 
         public AppointmentConfirmationOutput CancelAppointmentByCustomer(AppointmentConfirmationInput input)
         {
-            try
-            {
                 var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
@@ -195,17 +168,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByCustomer);
                 InsertRefundAmountOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
         }
 
         public AppointmentConfirmationOutput ForwardAppointment(AppointmentConfirmationInput input)
         {
-            try
-            {
                 var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (status == "FORW" || rejectStatus.Contains(status))
@@ -221,11 +187,6 @@ namespace Lunggo.ApCommon.Activity.Service
                 var pushNotifForward = PushNotificationForwardAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
 
-            }
-            catch
-            {
-                return new AppointmentConfirmationOutput { IsSuccess = false };
-            }
         }
 
         internal bool PushNotificationForwardAppointment(string rsvNo)

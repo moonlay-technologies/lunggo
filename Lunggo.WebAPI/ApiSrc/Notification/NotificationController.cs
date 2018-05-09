@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Notification
     {
         // POST api/register
         // This creates a registration id
-        [HttpPost]
+        [HttpPut]
         [Route("v1/notification/registration")]
         [Level1Authorize]
         public ApiResponseBase RegisterDevice()
