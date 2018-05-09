@@ -56,10 +56,7 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 if (!string.IsNullOrEmpty(discountCode) && isVoucherValid)
                     RealizeVoucher(discount, accountService, paymentDetails);
-                if (paymentDetails is CartPaymentDetails)
-                    UpdateCartDb(paymentDetails as CartPaymentDetails);
-                else
-                    _db.UpdatePaymentToDb(paymentDetails);
+                _db.UpdatePaymentToDb(paymentDetails);
                 if (paymentDetails.Method == PaymentMethod.BankTransfer || paymentDetails.Method == PaymentMethod.VirtualAccount)
                     SendTransferInstructionToCustomer(paymentDetails);
             }
@@ -72,7 +69,7 @@ namespace Lunggo.ApCommon.Payment.Service
             throw new NotImplementedException();
         }
 
-        private static void SetMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, RsvPaymentDetails paymentDetails)
+        private static void SetMethod(PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, PaymentDetails paymentDetails)
         {
             paymentDetails.Data = paymentData;
             paymentDetails.Method = method;
@@ -110,7 +107,7 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private void SendTransferInstructionToCustomer(RsvPaymentDetails details)
+        private void SendTransferInstructionToCustomer(PaymentDetails details)
         {
             var queueService = QueueService.GetInstance();
             var queue = queueService.GetQueueByReference("CartTransferInstructionEmail");
@@ -143,7 +140,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return _db.GetUnpaidFromDb();
         }
 
-        private TransactionDetails ConstructTransactionDetails(string rsvNo, RsvPaymentDetails payment)
+        private TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment)
         {
             var contact = _db.GetRsvContact(rsvNo);
             return new TransactionDetails

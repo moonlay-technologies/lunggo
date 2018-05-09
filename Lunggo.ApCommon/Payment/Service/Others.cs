@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public virtual decimal GetSurchargeNominal(RsvPaymentDetails payment)
+        public virtual decimal GetSurchargeNominal(PaymentDetails payment)
         {
             var surchargeList = GetSurchargeList();
             var surcharge =

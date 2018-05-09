@@ -70,7 +70,7 @@ namespace Lunggo.ApCommon.Payment.Service
             return cartPaymentDetails;
         }
 
-        private bool ValidatePaymentStatus(RsvPaymentDetails paymentDetails)
+        private bool ValidatePaymentStatus(PaymentDetails paymentDetails)
         {
             var status = paymentDetails.Status;
             return status == PaymentStatus.MethodNotSet ||

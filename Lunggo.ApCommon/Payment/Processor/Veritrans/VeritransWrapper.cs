@@ -50,7 +50,7 @@ namespace Lunggo.ApCommon.Payment.Processor
                 _rootUrl = EnvVariables.Get("general", "rootUrl");
             }
 
-            internal RsvPaymentDetails ProcessPayment(RsvPaymentDetails payment, TransactionDetails transactionDetail)
+            internal PaymentDetails ProcessPayment(PaymentDetails payment, TransactionDetails transactionDetail)
             {
                 var TableLog = new GlobalLog();
 
