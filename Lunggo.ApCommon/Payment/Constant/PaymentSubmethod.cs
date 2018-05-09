@@ -74,6 +74,9 @@ namespace Lunggo.ApCommon.Payment.Constant
                     return PaymentSubmethod.KEBHana;
                 case "Other":
                     return PaymentSubmethod.Other;
+                case "":
+                case null:
+                    return PaymentSubmethod.Undefined;
                 default:
                     throw new ArgumentException("Payment submethod not implemented: " + paymentSubmethod);
             }

@@ -147,6 +147,9 @@ namespace Lunggo.ApCommon.Payment.Constant
                 case "BTN":
                 case "BTNMOBILEBANKING":
                     return PaymentMethod.BtnMobileBanking;
+                case "":
+                case null:
+                    return PaymentMethod.Undefined;
                 default:
                     throw new ArgumentException("Payment method not implemented: " + paymentMethod);
             }

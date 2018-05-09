@@ -48,6 +48,9 @@ namespace Lunggo.ApCommon.Payment.Constant
                 case "E2PA":
                 case "E2PAY":
                     return PaymentMedium.E2Pay;
+                case "":
+                case null:
+                    return PaymentMedium.Undefined;
                 default:
                     throw new ArgumentException("Payment medium not implemented: " + paymentMedium);
             }
