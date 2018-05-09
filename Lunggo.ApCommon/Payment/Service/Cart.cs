@@ -19,9 +19,16 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public Cart GetCart(string userId)
+        public Cart GetCartByUser(string userId)
         {
             var cartId = GetCartId(userId);
+            var cart = GetCart(cartId);
+
+            return cart;
+        }
+
+        public Cart GetCart(string cartId)
+        {
             var rsvNoList = _cache.GetCartRsvNos(cartId);
 
             if (rsvNoList == null || !rsvNoList.Any())
@@ -31,7 +38,6 @@ namespace Lunggo.ApCommon.Payment.Service
                 };
 
             var cart = ConstructCart(cartId, rsvNoList);
-
             return cart;
         }
 
