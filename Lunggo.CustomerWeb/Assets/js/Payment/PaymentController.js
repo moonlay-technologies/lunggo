@@ -66,21 +66,25 @@ export function validateCreditCard({ ccNo, name, cvv, expiry }) {
   } else return 'VALID';
 }
 
-const fetchPayAPI = async ({ rsvNo, method, discCd, methodData }) => {
+const fetchPayAPI = async ({ cartId, method, discCd, methodData }) => {
+  if (method == 'card') method = `creditCard`;
   const version = 'v1';
   let request = {
-    path: `/${version}/payment/pay`,
+    path: `/${version}/payment/cart/checkout`,
     method: 'POST',
     requiredAuthLevel: AUTH_LEVEL.User,
-    data: { rsvNo, method, discCd, [method]: methodData },
+    data: {
+      cartId, discCd, [method]: methodData,
+      method: method.charAt(0).toUpperCase() + method.slice(1)
+    },
   }
   return await fetchTravoramaApi(request);
 }
 
 const proceedWithoutVeritransToken = () => {
   throw `not implemented!!`;
-  const { formData, totalPrice, voucher, rsvNo, method, discCd } = paymentData;
-  fetchPayAPI({ rsvNo, method, discCd, methodData });
+  const { formData, totalPrice, voucher, cartId, method, discCd } = paymentData;
+  fetchPayAPI({ cartId, method, discCd, methodData });
 }
 
 const getVeritransToken = (paymentData, changePaymentStepLayout) => {
@@ -107,7 +111,7 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
       if (response.redirect_url) {
         changePaymentStepLayout('paymentOtp', response.redirect_url); // 3Dsecure transaction. Open 3Dsecure dialog
       } else if (response.status_code == '200') { // success 3d secure or success normal
-        changePaymentStepLayout('success'); //close 3d secure dialog if any
+        changePaymentStepLayout('loading'); //close 3d secure dialog if any
         resolve(response.token_id); // return store token data
       } else {
         changePaymentStepLayout('failed');
@@ -124,7 +128,8 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
 }
 
 export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLayout) => {
-  const { rsvNo, method, discCd, formData } = paymentData;
+  const { cartId, method, discCd, formData } = paymentData;
+  let methodData;
   //// VALIDATION
   if (method == 'card') {
     const month = formData.expiry.substr(0, 2);
@@ -135,22 +140,24 @@ export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLa
     const isValid = validateCreditCard(formData);
     if (isValid !== 'VALID') {
       errorMessagesHandler(isValid.errorMessages);
-      return `VALIDATION ERROR`
+      return `VALIDATION ERROR`;
     }
-  }
-  let methodData;
-  if (method == 'card') {
-    getVeritransToken(paymentData, changePaymentStepLayout)
-      .then(tokenId => methodData = {
+    try {
+      const tokenId = await getVeritransToken(paymentData, changePaymentStepLayout);
+      methodData = {
         tokenId,
         holderName: paymentData.formData.name,
         hashedPan: paymentData.formData.ccNo,
         reqBinDiscount: false,
-      }).catch(e => console.error(e));
+      }
+    } catch (e) { console.error(e); }
   } else methodData = proceedWithoutVeritransToken(); //TODO
-  const res = await fetchPayAPI({ rsvNo, method, discCd, methodData });
-  if (res.status == 200) { /* REDIRECT!! to res.redirectionUrl */ }
-  else return res.error;
+  const res = await fetchPayAPI({ cartId, method, discCd, methodData });
+  if (res.status == 200) {
+    if (!!res.redirectionUrl) { /* REDIRECT!! to res.redirectionUrl */ }
+    else { changePaymentStepLayout('success'); }
+  }
+  else changePaymentStepLayout('failed'); //res.error;
 }
 /*
 export getMdr = mdr => {
@@ -169,16 +176,16 @@ export getMdr = mdr => {
   return a ? Math.ceil(price * a.Percentage / 100) : 0;
 }*/
 
-export const getCreditBalance = async rsvNo =>
-  checkVoucher(rsvNo, 'REFERRALCREDIT')
+export const getCreditBalance = async cartId =>
+  checkVoucher(cartId, 'REFERRALCREDIT')
 
-export const checkVoucher = async (rsvNo, code) => {
+export const checkVoucher = async (cartId, code) => {
   const version = 'v1';
   let request = {
     path: `/${version}/payment/checkvoucher`,
     method: 'POST',
     requiredAuthLevel: AUTH_LEVEL.User,
-    data: { rsvNo, code }
+    data: { cartId, code }
   }
   return await fetchTravoramaApi(request);
 }

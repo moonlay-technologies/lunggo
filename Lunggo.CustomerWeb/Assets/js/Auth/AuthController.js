@@ -3,6 +3,7 @@ import {
   clientId, clientSecret, deviceId, API_DOMAIN, AUTH_LEVEL,
 } from '../env';
 // import { fetchProfile } from '../ProfileController';
+const __DEV__ = true;
 
 async function fetchAuth(data) {
   let url = API_DOMAIN + `/v1/login`;
@@ -69,13 +70,48 @@ async function waitFetchingAuth() {
   return;
 }
 
+// Get Value from Cookie
+function getCookie(name) {
+  var nameEQ = name + `=`;
+  var ca = document.cookie.split(`; `);
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ` `) c = c.substring(1, c.length);
+       if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+function setCookie(cname, cvalue, expTime) {
+
+  if (cname != `accesstoken`) {
+    var d = new Date();
+    d.setTime(d.getTime() + (9999 * 24 * 60 * 60 * 1000));
+  } else {
+    var d = new Date(expTime);
+  }
+  var expires = `expires =` + d.toUTCString();
+  document.cookie = cname + `=` + cvalue + `; ` + expires + `; path = /`;
+}
+//Delete Specific value from Cookie
+function eraseCookie(name) {
+  var d = new Date(-1);
+  var expires = `expires =` + d.toUTCString();
+  var cvalue = ``;
+  document.cookie = name + `=` + cvalue + `; ` + expires + `; path = /`;
+}
+
 export async function getAuthAccess() {
+
+  //////TODO ini buat ngebypass doang
+  return { accessToken:'1', authLevel:2 };
+
   if (global.isFetchingAuth) {
     await waitFetchingAuth();
     let { accessToken, authLevel } = global;
     return { accessToken, authLevel };
   }
   global.isFetchingAuth = true;
+  console.log(`get accesstoken, refreshToken, expTime, authLevel`)
   try {
     let [accessToken, refreshToken, expTime, authLevel] =
       await Promise.all([
@@ -83,9 +119,7 @@ export async function getAuthAccess() {
         //getItemAsync('expTime'), getItemAsync('authLevel')
       ]);
     let data = { clientId, clientSecret, deviceId };
-
-    // console.warn('sengaja ditutup dulu validasi expTimenya buat testing refreshToken')
-    /**/if (new Date(expTime) > new Date()) { //// token not expired
+    if (new Date(expTime) > new Date()) { //// token not expired
       console.log(
         'session not expired, continue the request...'
       )
@@ -95,7 +129,7 @@ export async function getAuthAccess() {
       global.authLevel = authLevel;
       return { accessToken, authLevel };
     } //// if it's not, then token is expired or client doesnt have expTime
-    else/**/ if (refreshToken) {
+    else if (refreshToken) {
       console.log('....     prepare login by refreshToken')
       data.refreshToken = refreshToken;
     } else {
