@@ -21,11 +21,11 @@ function PaymentModalLayout(props) {
                 <div className="icon-success">
                   <img style={{width:100}} src="images/icon-error.png" />
                 </div>
-                <div className="text-success">Terjadi kesalahan pada sistem</div>
+                <div className="text-success">{props.paymentStepStringData}</div>
                 <div className="button-container-thankyou">
                   <div className="row">
                     <div className="col-xs-12 no-padding">
-                      <a href="#" className="button-primary">Gunakan Metode Pembayaran Lain</a>
+                      <a href="#" data-dismiss="modal" className="button-primary">Gunakan Metode Pembayaran Lain</a>
                     </div>
                   </div>
                 </div>
@@ -53,7 +53,7 @@ function PaymentModalLayout(props) {
                 </div> 
           </div>
           <div>
-            <iframe hidden={props.paymentStep !== 'paymentOtp'} src={props.iframeUrl} width="400px" height="420px">
+            <iframe hidden={props.paymentStep !== 'paymentOtp'} src={props.paymentStepStringData} width="400px" height="420px">
               <p>Your browser doesn't support iframe</p>
             </iframe>
           </div>
@@ -83,10 +83,10 @@ function PaymentModalLayout(props) {
                 <div className="button-container">
                     <div className="row">
                         <div className="col-xs-12 no-padding">
-                            <a onClick={props.onSubmit} className="button-primary">Bayar Sekarang</a>
+                            <a href="#" onClick={props.onSubmit} className="button-primary">Bayar Sekarang</a>
                         </div>
                         <div className="col-xs-12 no-padding">
-                            <a data-dismiss="modal" className="button-secondary">Ganti Metode Pembayaran</a>
+                            <a href="#" data-dismiss="modal" className="button-secondary">Ganti Metode Pembayaran</a>
                         </div>
                     </div>
                 </div>

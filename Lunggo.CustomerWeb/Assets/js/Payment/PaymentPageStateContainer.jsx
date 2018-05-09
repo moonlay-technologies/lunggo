@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 //import { observable, action, decorate } from "mobx";
 //import { observer } from "mobx-react";
 import Layout from './PaymentPageLayout.jsx';
-import { getCreditBalance, sumTotalBill } from './PaymentController';
+import { getCreditBalance, checkVoucher, sumTotalBill } from './PaymentController';
 
 //const PaymentPageStateContainer = observer(
 class PaymentPageStateContainer extends React.Component {
@@ -14,12 +14,13 @@ class PaymentPageStateContainer extends React.Component {
     super(props);
     this.state = {
       method: null,
-      creditBalance: props.creditBalance,
+      creditBalance: `loading...`,
       discountVoucherAmount: '',
       discountVoucherCode: '',
-      errorMessage: '',
+      voucherErrorMessage: '',
       isLoadingCreditBalance: false,
       isLoadingDiscountVoucher: false,
+      chosenDiscountOption: 'creditBalance',
     };
   }
 
@@ -27,24 +28,26 @@ class PaymentPageStateContainer extends React.Component {
 
   applyDiscountVoucher = () => {
     this.setState({ isLoadingDiscountVoucher: true });
-    getCreditBalance()
+    checkVoucher(this.props.cartId, this.state.discountVoucherCode)
       .then(r => {
         if (r.status === 200) this.setState({ discountVoucherAmount: r.discount });
-        else this.setState({ errorMessage: r.error });
+        else this.setState({ voucherErrorMessage: r.message, discountVoucherAmount: '' });
       })
       .finally(() => this.setState({ isLoadingDiscountVoucher: false }));
   }
 
   onChangedVoucherCode = e => {
-    this.setState({ discountVoucherCode: e.target.value });
+    this.setState({ discountVoucherCode: e.target.value, voucherErrorMessage: '' });
   }
+
+  onChangedDiscountOption = opt => this.setState({ chosenDiscountOption: opt });
 
   componentDidMount() {
     this.setState({ isLoadingCreditBalance: true });
-    getCreditBalance()
+    getCreditBalance(this.props.cartId)
       .then(r => {
         if (r.status === 200) this.setState({ creditBalance: r.discount });
-        else this.setState({ errorMessage: r.error });
+        // else this.setState({ errorMessage: r.message });
       })
       .finally(() => this.setState({ isLoadingCreditBalance: false }));
   }
@@ -56,10 +59,14 @@ class PaymentPageStateContainer extends React.Component {
         creditBalance={this.state.creditBalance}
         discountVoucherAmount={this.state.discountVoucherAmount}
         discountVoucherCode={this.state.discountVoucherCode}
-        
+        isLoadingCreditBalance={this.state.isLoadingCreditBalance}
+        voucherErrorMessage={this.state.voucherErrorMessage}
+        chosenDiscountOption={this.state.chosenDiscountOption}
+
         selectMethod={this.selectMethod}
         onChangedVoucherCode={this.onChangedVoucherCode}
         applyDiscountVoucher={this.applyDiscountVoucher}
+        onChangedDiscountOption={this.onChangedDiscountOption}
 
         cartId={this.props.cartId}
         discCd={this.props.discCd}
