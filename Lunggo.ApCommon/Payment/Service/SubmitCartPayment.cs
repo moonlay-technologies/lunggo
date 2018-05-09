@@ -92,7 +92,7 @@ namespace Lunggo.ApCommon.Payment.Service
         public virtual CartPaymentDetails GetCartPaymentDetails(string cartId)
         {
             var cart = GetCart(cartId);
-            if (cart == null)
+            if (cart == null || cart.RsvNoList == null || cart.RsvNoList.Count == 0)
                 return null;
 
             var cartPayment = GenerateCartPayment(cart);

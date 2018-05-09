@@ -27,8 +27,6 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             if (cartPayment == null)
                 return View("Error");
-            if (cartPayment.RsvPaymentDetails == null || !cartPayment.RsvPaymentDetails.Any())
-                return View("EmptyCart");
 
             switch (cartPayment.Status)
             {

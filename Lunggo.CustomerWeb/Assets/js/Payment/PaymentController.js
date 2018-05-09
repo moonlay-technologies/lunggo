@@ -70,7 +70,7 @@ const fetchPayAPI = async ({ cartId, method, discCd, methodData }) => {
   if (method == 'card') method = `creditCard`;
   const version = 'v1';
   let request = {
-    path: `/${version}/payment/cart/checkout`,
+    path: `/${version}/payment/pay`,
     method: 'POST',
     requiredAuthLevel: AUTH_LEVEL.User,
     data: {
