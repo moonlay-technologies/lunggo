@@ -4,6 +4,16 @@ import PopUpModal from './PaymentModalStateContainer';
 
 //import DevTools from 'mobx-react-devtools';
 
+//// Format number to "1.000.000"
+var number = int => int.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+//// Format price to "Rp 1.000.000"
+var rupiah = int => {
+  const numStr = number(int);
+  if (numStr.substr(0,1)=='-') return '–Rp ' + numStr.substr(1);
+  else return 'Rp ' + numStr;
+}
+
 function PaymentPageLayout(props) {
   return (
     <div>
@@ -78,7 +88,7 @@ function PaymentPageLayout(props) {
                           <div className="info-biaya">{detail.name}</div>
                       </div>
                       <div className="col-xs-6 text-right no-padding-right">
-                          <div className="info-biaya">{detail.price}</div>
+                          <div className="info-biaya">{rupiah(detail.price)}</div>
                       </div>
                   </div>
               )}
@@ -88,7 +98,7 @@ function PaymentPageLayout(props) {
                   <div className="info-total">Total</div>
                 </div>
                 <div className="col-xs-6 text-right no-padding-right">
-                  <div className="info-total">Rp {props.totalPrice}</div>
+                  <div className="info-total">{rupiah(props.totalPrice)}</div>
                 </div>
               </div>
 

@@ -40,7 +40,6 @@ function PaymentModalLayout(props) {
                   <img style={{width:100}} src="images/icon-success.png" />
         </div>
                     <div className="text-success">Proses Pembayaran Berhasil</div>
-                    <div className="text-success">No. Transaksi: 1234567890</div>
                     <div className="button-container-thankyou">
                       <div className="row">
                         <div className="col-xs-12 no-padding">
