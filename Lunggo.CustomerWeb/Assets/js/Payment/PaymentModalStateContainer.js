@@ -38,24 +38,20 @@ class PaymentModalStateContainer extends React.Component {
 
   changePaymentStepLayout = (paymentStep, paymentStepStringData = '') => {
     this.setState({ paymentStep, paymentStepStringData });
-    //switch (paymentStep) {
-    //  case 'paymentOtp':
-    //    //ss
-    //    break;
-    //  case 'success':
-    //    break;
-    //  case 'failed':
-    //    break;
-    //}
   }
+
   onSubmitCreditCardForm = () => {
     //e.preventDefault();
     const { ccNo, name, cvv, expiry } = this.state;
     const formData = { ccNo, name, cvv, expiry };
     this.setState({ isLoading: true });
-    pay({ ...this.props, formData }, this.handleErrorValidationMessages, this.changePaymentStepLayout)
+    pay({ ...this.props, formData, discCd: this.props.discountVoucherCode }, this.handleErrorValidationMessages, this.changePaymentStepLayout)
       //.then(res => /*this.setState({ errorMessage: res })*/ console.log('pay resolved',res) )
       //.finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
+  }
+
+  backToMethodSelection = () => {
+    this.changePaymentStepLayout('initial');
   }
 
   backToMyBookings = () => {
@@ -79,7 +75,9 @@ class PaymentModalStateContainer extends React.Component {
         onSubmit={this.onSubmitCreditCardForm}
         handleInputChange={this.handleInputChange}
         shouldShowDataForm={this.props.method == 'card' || this.props.method == 'mandiriClickPay'}
+        discountVoucherCode={this.props.discountVoucherCode}
         backToMyBookings={this.backToMyBookings}
+        backToMethodSelection={this.backToMethodSelection}
       />
     );
   }

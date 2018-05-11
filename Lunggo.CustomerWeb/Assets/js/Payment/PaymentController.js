@@ -110,7 +110,7 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
     'secure': true,
     'bank': 'mandiri',
     ///'gross_amount': totalPrice - voucher.amount // + getMdr(),
-    'gross_amount': 190000
+    'gross_amount': totalPrice,
   })
   return new Promise((resolve, reject) => {
     // run the veritrans function to check credit card
