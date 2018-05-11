@@ -98,6 +98,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private void UpdateCartDb(CartPaymentDetails cartPaymentDetails)
         {
             DistributeRsvPaymentDetails(cartPaymentDetails);
+            cartPaymentDetails.CartId = GenerateCartRecordId();
             _db.InsertTrx(cartPaymentDetails);
         }
 
@@ -115,7 +116,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private CartPaymentDetails GenerateCartPayment(Cart cart)
         {
             var cartPayment = new CartPaymentDetails();
-            cartPayment.CartId = GenerateCartRecordId();
+            cartPayment.CartId = cart.Id;
             cartPayment.RsvPaymentDetails = RetrieveCartRsvPaymentDetails(cart);
             AggregateRsvPaymentDetails(cartPayment);
             return cartPayment;

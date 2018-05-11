@@ -57,10 +57,10 @@
 <div id="react"></div>
 <script>
     var cartId = '@Model.CartId';
-    var paymentDetails =
-        '@((ViewBag.RsvList as List<ActivityReservationForDisplay>).Zip(Model.RsvPaymentDetails,
-               (a,b) => new {name = a.ActivityDetail.Name, amount = b.OriginalPriceIdr})
-               .Serialize())';
+    var pricingDetails =
+        @Html.Raw((ViewBag.RsvList as List<ActivityReservationForDisplay>).Zip(Model.RsvPaymentDetails,
+               (a,b) => new {name = a.ActivityDetail.Name, price = b.OriginalPriceIdr})
+               .Serialize());
     var veritransUrl = '@EnvVariables.Get("veritrans", "tokenEndPoint")';
     var veritransKey = '@EnvVariables.Get("veritrans","clientKey")';
 </script>
