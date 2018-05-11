@@ -13,7 +13,7 @@ function PaymentModalLayout(props) {
           borderRadius: 7
         }}>
           <div hidden={props.paymentStep !== 'loading'}>
-            ...Loading
+            Please wait...
           </div>
           <div hidden={props.paymentStep !== 'failed'}>
             <div className="mother-container">
@@ -25,7 +25,7 @@ function PaymentModalLayout(props) {
                 <div className="button-container-thankyou">
                   <div className="row">
                     <div className="col-xs-12 no-padding">
-                      <a href="#" data-dismiss="modal" className="button-primary">Gunakan Metode Pembayaran Lain</a>
+                      <a href="#" data-dismiss="modal" onClick={props.backToMethodSelection} className="button-primary">Gunakan Metode Pembayaran Lain</a>
                     </div>
                   </div>
                 </div>
@@ -86,7 +86,7 @@ function PaymentModalLayout(props) {
                             <a href="#" onClick={props.onSubmit} className="button-primary">Bayar Sekarang</a>
                         </div>
                         <div className="col-xs-12 no-padding">
-                            <a href="#" data-dismiss="modal" className="button-secondary">Ganti Metode Pembayaran</a>
+                    <a href="#" data-dismiss="modal" onClick={props.backToMethodSelection} className="button-secondary">Ganti Metode Pembayaran</a>
                         </div>
                     </div>
                 </div>
