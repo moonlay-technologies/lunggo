@@ -53,7 +53,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
             CalculateFinal(cartPaymentDetails);
 
-            var transactionDetails = ConstructTransactionDetails(cartPaymentDetails.RsvPaymentDetails[0].RsvNo, cartPaymentDetails);
+            var transactionDetails = ConstructCartTransactionDetails(cartPaymentDetails);
             var processSuccess = _processor.ProcessPayment(cartPaymentDetails, transactionDetails);
 
             if (cartPaymentDetails.Status != PaymentStatus.Failed && cartPaymentDetails.Status != PaymentStatus.Denied)
@@ -67,6 +67,18 @@ namespace Lunggo.ApCommon.Payment.Service
             }
             isUpdated = true;
             return cartPaymentDetails;
+        }
+
+        private TransactionDetails ConstructCartTransactionDetails(CartPaymentDetails payment)
+        {
+            var contact = _db.GetRsvContact(payment.RsvPaymentDetails[0].RsvNo);
+            return new TransactionDetails
+            {
+                Id = payment.CartId,
+                OrderTime = DateTime.UtcNow,
+                Amount = (long)payment.FinalPriceIdr,
+                Contact = contact
+            };
         }
 
         private void CalculateFinal(PaymentDetails paymentDetails)
