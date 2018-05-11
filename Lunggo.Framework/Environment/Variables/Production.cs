@@ -29,7 +29,6 @@ namespace Lunggo.Framework.Environment
                 {"veritrans.tokenEndPoint","https://api.midtrans.com/v2/token"},
                 {"veritrans.cancelEndPoint","https://api.midtrans.com/v2/order_id/cancel"},
                 {"veritrans.approveEndPoint","https://api.midtrans.com/v2/order_id/approve"},
-                {"veritrans.serverKey","VT-server-hHlRSrXOiqM4_gQn8-hgt4n8"},
                 {"veritrans.clientKey","VT-client-qLa90AYZ7IWIB404"},
                 {"AzureWebJobsDashboard.connectionString",""},
                 {"AzureWebJobsStorage.connectionString",""},

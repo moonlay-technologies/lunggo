@@ -1,0 +1,76 @@
+﻿@using Lunggo.CustomerWeb.Helper
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/ico" href="/Assets/images/favico.ico" />
+
+    @{ Html.RenderPartial("_openGraph"); }
+    @{ Html.RenderPartial("_metaTag"); }
+
+    @if (ViewBag.Title == null || ViewBag.Title == "")
+    {
+        <title>Travorama: Pesan Promo Tiket Pesawat dan Hotel Murah</title>
+    }
+    else
+    {
+        <title>@ViewBag.Title | Travorama: Pesan Promo Tiket Pesawat dan Hotel Murah</title>
+    }
+
+    <!-- stylesheets -->
+    <link href="/Assets/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    @*
+        <!--<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>-->
+    *@
+
+    @if (IsSectionDefined("AdditionalCSS"))
+    {
+        @RenderSection("AdditionalCSS");
+    }
+
+    <link rel="stylesheet" href="/Assets/css/common.css">
+    <link rel="stylesheet" href="/Assets/mobile/css/style_mobile.css">
+
+    @*
+        <!--
+            <script type="text/javascript">
+                (function(h,l,i,n,k,s){
+                s=h.createElement(i);s.type="text/javascript";s.async=1;
+                s.src=l+n+".js";k=h.getElementsByTagName(i)[0];k.parentNode.insertBefore(s,k);
+                })(document,"//cdn.hokolinks.com/banner/v1/","script","7ebdfcd03161adc9");
+            </script>
+        -->
+    *@
+
+</head>
+<body class="@ViewBag.BodyClass">
+    @Html.Partial("/Views/Shared/_googleTag.cshtml")
+
+    <!--********************-->
+
+    <section class="site-content">
+        @RenderBody()
+    </section><!-- .site-content -->
+    <!--********************-->
+
+    <!-- Javascripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment-with-locales.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    @if (IsSectionDefined("AdditionalJS"))
+    {
+        @RenderSection("AdditionalJS");
+    }
+
+    @if (IsSectionDefined("PageJS"))
+    {
+        @RenderSection("PageJS");
+    }
+</body>
+</html>

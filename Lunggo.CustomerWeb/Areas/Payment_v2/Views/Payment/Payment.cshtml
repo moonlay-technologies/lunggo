@@ -16,7 +16,7 @@
 @model Lunggo.ApCommon.Payment.Model.CartPaymentDetails
 
 @{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutReactWebview.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
     ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Pembayaran";
@@ -61,8 +61,10 @@
         '@((ViewBag.RsvList as List<ActivityReservationForDisplay>).Zip(Model.RsvPaymentDetails,
                (a,b) => new {name = a.ActivityDetail.Name, amount = b.OriginalPriceIdr})
                .Serialize())';
+    var veritransUrl = '@EnvVariables.Get("veritrans", "tokenEndPoint")';
+    var veritransKey = '@EnvVariables.Get("veritrans","clientKey")';
 </script>
-<script src="~/Assets/js/Payment/paymentReact.js"></script>
+<script src=@Fingerprint.Tag("/Assets/js/Payment/paymentReact.js")></script>
 
 
 @Html.ReactInitJavaScript()
