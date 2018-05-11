@@ -37,7 +37,7 @@ function PaymentPageLayout(props) {
             >
               <p>Gunakan Voucher</p>
               {props.discountVoucherAmount ?
-                <span>props.discountVoucherAmount</span> :
+                <span>{props.discountVoucherAmount}</span> :
                 <span className="sub-info">masukkan kode voucher disini</span>
               }
               </div>
@@ -72,23 +72,23 @@ function PaymentPageLayout(props) {
           <div className="row">
             <div className="col-xs-12 info-container">
 
-              {/*}{props.pricingDetails.map(detail =>
-                                <div className="row" style="margin-bottom: 5px !important">
-                                    <div className="col-xs-6 no-padding-left">
-                                        <div className="info-biaya">{detail.name}</div>
-                                    </div>
-                                    <div className="col-xs-6 text-right no-padding-right">
-                                        <div className="info-biaya">{detail.price}</div>
-                                    </div>
-                                </div>
-                            )}*/}
+              {props.pricingDetails.map(detail =>
+                  <div className="row" style={{ marginBottom: "5px !important" }}>
+                      <div className="col-xs-6 no-padding-left">
+                          <div className="info-biaya">{detail.name}</div>
+                      </div>
+                      <div className="col-xs-6 text-right no-padding-right">
+                          <div className="info-biaya">{detail.price}</div>
+                      </div>
+                  </div>
+              )}
 
               <div className="row total-container">
                 <div className="col-xs-6 no-padding-left">
                   <div className="info-total">Total</div>
                 </div>
                 <div className="col-xs-6 text-right no-padding-right">
-                  <div className="info-total">Rp 899.978</div>
+                  <div className="info-total">Rp {props.totalPrice}</div>
                 </div>
               </div>
 
@@ -178,7 +178,7 @@ function PaymentSelection(props) {
   const className = 'col-xs-12 btn-method-transfer' +
     (props.isChild ? '-dropdown-child' : '');
   return (
-    <a href={props.href} className={className}
+    <a href={props.href || "#"} className={className}
       {...props.collapsible ? collapsibleAttr : uncollapsibleAttr }
     >
       <div className="col-xs-3 no-padding-left">

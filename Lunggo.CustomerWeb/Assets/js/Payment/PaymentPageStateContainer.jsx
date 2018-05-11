@@ -12,26 +12,41 @@ class PaymentPageStateContainer extends React.Component {
 
   constructor(props) {
     super(props);
+    const discountVoucherCode = '';
+    const discountVoucherAmount = '';
     this.state = {
       method: null,
-      creditBalance: `loading...`,
-      discountVoucherAmount: '',
-      discountVoucherCode: '',
+      creditBalance: 0,
+      discountVoucherAmount,
+      discountVoucherCode,
       voucherErrorMessage: '',
       isLoadingCreditBalance: false,
       isLoadingDiscountVoucher: false,
       chosenDiscountOption: 'creditBalance',
+      pricingDetails: [...props.pricingDetails],
     };
   }
 
   selectMethod = method => this.setState({ method });
 
   applyDiscountVoucher = () => {
+    const { discountVoucherCode, discountVoucherAmount } = this.state;
     this.setState({ isLoadingDiscountVoucher: true });
-    checkVoucher(this.props.cartId, this.state.discountVoucherCode)
+    checkVoucher(this.props.cartId, discountVoucherCode)
       .then(r => {
-        if (r.status === 200) this.setState({ discountVoucherAmount: r.discount });
-        else this.setState({ voucherErrorMessage: r.message, discountVoucherAmount: '' });
+        if (r.status === 200) {
+          const discountVoucherAmount = r.discount;
+          const pricingDetails = [
+            ...this.props.pricingDetails,
+            { name: discountVoucherCode, price: (-1) * discountVoucherAmount }
+          ];
+          this.setState({ discountVoucherAmount, pricingDetails });
+        }
+        else this.setState({
+          voucherErrorMessage: r.message,
+          discountVoucherAmount: '',
+          pricingDetails: this.props.pricingDetails,
+        });
       })
       .finally(() => this.setState({ isLoadingDiscountVoucher: false }));
   }
@@ -40,7 +55,15 @@ class PaymentPageStateContainer extends React.Component {
     this.setState({ discountVoucherCode: e.target.value, voucherErrorMessage: '' });
   }
 
-  onChangedDiscountOption = opt => this.setState({ chosenDiscountOption: opt });
+  onChangedDiscountOption = opt => {
+    const { creditBalance, discountVoucherAmount, discountVoucherCode } = this.state;
+    let pricingDetails = [...this.props.pricingDetails];
+    if (opt == 'creditBalance') {
+      pricingDetails.push({ name: 'kredit referal', price: -1 * creditBalance });
+    } else
+      pricingDetails.push({ name: discountVoucherCode, price: (-1) * discountVoucherAmount });
+    this.setState({ pricingDetails, chosenDiscountOption: opt });
+  }
 
   componentDidMount() {
     this.setState({ isLoadingCreditBalance: true });
@@ -62,6 +85,8 @@ class PaymentPageStateContainer extends React.Component {
         isLoadingCreditBalance={this.state.isLoadingCreditBalance}
         voucherErrorMessage={this.state.voucherErrorMessage}
         chosenDiscountOption={this.state.chosenDiscountOption}
+        pricingDetails={this.state.pricingDetails}
+        totalPrice={this.state.pricingDetails.reduce((total, detail) => total + detail.price, 0)}
 
         selectMethod={this.selectMethod}
         onChangedVoucherCode={this.onChangedVoucherCode}
@@ -69,15 +94,12 @@ class PaymentPageStateContainer extends React.Component {
         onChangedDiscountOption={this.onChangedDiscountOption}
 
         cartId={this.props.cartId}
-        discCd={this.props.discCd}
         headerTitle={this.props.headerTitle}
-        pricingDetails={this.props.pricingDetails}
         refund='tidak bisa refund untuk aktivitas ini'
         originalPrice={this.props.originalPrice}
         termsUrl={this.props.termsUrl}
         privacyUrl={this.props.privacyUrl}
       // mandiriClickpayToken={this.props.mandiriClickpayToken
-      // cartId='0'
       />
     );
   }
@@ -103,6 +125,6 @@ class PaymentPageStateContainer extends React.Component {
 export default PaymentPageStateContainer;
 
 ReactDOM.render(
-  <PaymentPageStateContainer cartId={cartId} />,
+  <PaymentPageStateContainer cartId={cartId} pricingDetails={pricingDetails} />,
   document.getElementById("react")
 );

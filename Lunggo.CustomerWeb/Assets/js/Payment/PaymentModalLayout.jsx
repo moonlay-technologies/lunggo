@@ -44,7 +44,7 @@ function PaymentModalLayout(props) {
                     <div className="button-container-thankyou">
                       <div className="row">
                         <div className="col-xs-12 no-padding">
-                          <a href="#" className="button-primary">Kembali ke Pesananku</a>
+                          <a href="#" onClick={props.backToMyBookings} className="button-primary">Kembali ke Pesananku</a>
                         </div>
                       </div>
                     </div>

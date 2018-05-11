@@ -58,6 +58,11 @@ class PaymentModalStateContainer extends React.Component {
       //.finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
   }
 
+  backToMyBookings = () => {
+    window.postMessage('backToMyBookings');
+    //// navigate web to myBooking page
+  }
+
   render() {
     return (
       <Layout
@@ -74,6 +79,7 @@ class PaymentModalStateContainer extends React.Component {
         onSubmit={this.onSubmitCreditCardForm}
         handleInputChange={this.handleInputChange}
         shouldShowDataForm={this.props.method == 'card' || this.props.method == 'mandiriClickPay'}
+        backToMyBookings={this.backToMyBookings}
       />
     );
   }
