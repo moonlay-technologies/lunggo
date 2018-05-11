@@ -44,5 +44,44 @@ namespace Lunggo.ApCommon.Payment.Cache
             var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
             redisDb.KeyDelete(redisKeyCartId);
         }
+
+        public string GetUserCartId(string userId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:UserCartId:" + userId;
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
+            var cartId = redisDb.StringGet(redisKey);
+            return cartId;
+        }
+
+        public string GetCartUserId(string cartId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:CartUserId:" + cartId;
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
+            var userId = redisDb.StringGet(redisKey);
+            return userId;
+        }
+
+        public void SaveUserCartId(string userId, string cartId)
+        {
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:UserCartId:" + userId;
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
+            redisDb.StringSet(redisKey, cartId);
+            var redisCartKey = "Cart:CartUserId:" + cartId;
+            redisDb.StringSet(redisCartKey, userId);
+        }
+
+        public void ClearUserCartId(string cartId)
+        {
+            var userId = GetCartUserId(cartId);
+            var redisService = RedisService.GetInstance();
+            var redisKey = "Cart:UserCartId:" + userId;
+            var redisCartKey = "Cart:CartUserId:" + cartId;
+            var redisDb = redisService.GetDatabase(ApConstant.MasterDataCacheName);
+            redisDb.KeyDelete(redisKey);
+            redisDb.KeyDelete(redisCartKey);
+        }
     }
 }
