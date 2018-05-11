@@ -1,6 +1,10 @@
-﻿"use strict";
+/// <binding BeforeBuild='Run - Development' />
+"use strict";
 const path = require('path');
 var PROD = JSON.parse(process.env.PROD_ENV || '0');
+
+// webpack.config.js
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 module.exports = {
     entry: [
@@ -23,15 +27,15 @@ module.exports = {
                 loader: "babel-loader",
                 options: {
                     presets: [
-                        "es2015",
                         "es2016",
-                        "stage-0",
-                        "stage-1",
                         "stage-2",
                         "react"
                     ]
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new HardSourceWebpackPlugin()
+    ]
 };
