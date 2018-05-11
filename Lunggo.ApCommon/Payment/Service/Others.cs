@@ -8,6 +8,8 @@ namespace Lunggo.ApCommon.Payment.Service
     {
         public virtual decimal GetSurchargeNominal(PaymentDetails payment)
         {
+            return 0;
+            // TODO: isi surcharge
             var surchargeList = GetSurchargeList();
             var surcharge =
                 surchargeList.SingleOrDefault(

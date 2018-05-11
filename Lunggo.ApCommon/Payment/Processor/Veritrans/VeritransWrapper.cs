@@ -581,6 +581,8 @@ namespace Lunggo.ApCommon.Payment.Processor
 
             private static WebResponse SubmitRequest(WebRequest request)
             {
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 var response = (HttpWebResponse)request.GetResponse();
                 return response;
             }
