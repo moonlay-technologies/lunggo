@@ -13,6 +13,7 @@ using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using static Lunggo.Framework.TestHelpers.TestHelper;
 
 namespace Lunggo.PaymentTest.PaymentServiceTests
 {
@@ -23,6 +24,17 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
         // Should return cart when there is filled cart
         public void Should_return_cart_when_there_is_filled_cart()
         {
+            var cartId = RandomString();
+
+            var cacheMock = new Mock<PaymentCacheService>();
+            var dbMock = new Mock<PaymentDbService>();
+
+            //cacheMock.Setup(m => m.GetCartRsvNos(cartId)).Returns()
+
+            var service = new PaymentService(paymentCacheService: cacheMock.Object, paymentDbService: dbMock.Object);
+
+            var actual = service.GetCart(cartId);
+
             throw new NotImplementedException();
         }
 
@@ -103,8 +115,8 @@ namespace Lunggo.PaymentTest.PaymentServiceTests
         }
 
         [TestMethod]
-        // Should return true when userId is valid and rsvNo is whatever
-        public void Should_return_true_when_userId_is_valid_and_rsvNo_is_whatever()
+        // TESTNAME
+        public void TESTNAME()
         {
             throw new NotImplementedException();
         }

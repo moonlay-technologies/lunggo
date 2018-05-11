@@ -34,12 +34,15 @@ namespace Lunggo.ApCommon.Payment.Service
         private readonly PaymentDbService _db;
         private readonly PaymentCacheService _cache;
 
-        public PaymentService() : this(null, null, null)
+        public PaymentService() : this(null)
         {
 
         }
 
-        internal PaymentService(PaymentProcessorService paymentProcessorService, PaymentDbService paymentDbService, PaymentCacheService paymentCacheService)
+        internal PaymentService(
+            PaymentProcessorService paymentProcessorService = null,
+            PaymentDbService paymentDbService = null,
+            PaymentCacheService paymentCacheService = null)
         {
             _cache = paymentCacheService ?? new PaymentCacheService();
             _db = paymentDbService ?? new PaymentDbService();
@@ -53,8 +56,8 @@ namespace Lunggo.ApCommon.Payment.Service
             switch (method)
             {
                 case PaymentMethod.BankTransfer:
-                //case PaymentMethod.Credit:
-                //case PaymentMethod.Deposit:
+                    //case PaymentMethod.Credit:
+                    //case PaymentMethod.Deposit:
                     return PaymentMedium.Direct;
                 case PaymentMethod.CreditCard:
                 case PaymentMethod.MandiriClickPay:

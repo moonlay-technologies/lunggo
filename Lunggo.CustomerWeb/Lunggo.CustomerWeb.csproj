@@ -2006,6 +2006,7 @@
     <Content Include="Areas\Payment_v2\Views\Payment\thankyou-page.html" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <Content Include="Views\Promo\PromoLandingPage.cshtml" />
+    <Content Include="Views\Shared\mobile\_LayoutReactWebview.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />
     <Content Include="Views\Index\TeaserPage.cshtml" />
     <Content Include="Views\Index\TeaserPage.mobile.cshtml" />

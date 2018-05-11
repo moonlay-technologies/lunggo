@@ -97,8 +97,8 @@ const proceedWithoutVeritransToken = () => {
 const getVeritransToken = (paymentData, changePaymentStepLayout) => {
   const { formData, totalPrice, voucher = {} } = paymentData;
   // formData = { ccNo, name, cvv, expiry: {month, year} };
-  Veritrans.url = VeritransTokenConfig.Url;
-  Veritrans.client_key = VeritransTokenConfig.ClientKey;
+  Veritrans.url = veritransUrl;
+  Veritrans.client_key = veritransKey;
 
   const card = () => ({
     'card_number': formData.ccNo,
