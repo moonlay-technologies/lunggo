@@ -130,7 +130,7 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
 
 export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLayout) => {
   const { cartId, method, discCd, formData } = paymentData;
-  let methodData;
+  let methodData = {};
   //// VALIDATION
   if (method == 'card') {
     const month = formData.expiry.substr(0, 2);
@@ -152,10 +152,12 @@ export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLa
         reqBinDiscount: false,
       }
     } catch (e) { return changePaymentStepLayout('failed', e); }
-  } else methodData = proceedWithoutVeritransToken(); //TODO
+  } //else methodData = proceedWithoutVeritransToken(); //TODO
   const res = await fetchPayAPI({ cartId, method, discCd, methodData });
   if (res.status == 200) {
-    if (!!res.redirectionUrl) { /* REDIRECT!! to res.redirectionUrl */ }
+    if (!!res.redirectionUrl) {
+      window.location = res.redirectionUrl;
+    }
     else { changePaymentStepLayout('success'); }
   }
   else changePaymentStepLayout('failed', res.message);
