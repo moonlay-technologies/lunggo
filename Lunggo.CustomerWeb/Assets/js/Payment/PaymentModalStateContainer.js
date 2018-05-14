@@ -45,9 +45,7 @@ class PaymentModalStateContainer extends React.Component {
     const { ccNo, name, cvv, expiry } = this.state;
     const formData = { ccNo, name, cvv, expiry };
     this.setState({ isLoading: true });
-    pay({ ...this.props, formData, discCd: this.props.discountVoucherCode }, this.handleErrorValidationMessages, this.changePaymentStepLayout)
-      //.then(res => /*this.setState({ errorMessage: res })*/ console.log('pay resolved',res) )
-      //.finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
+    pay({ ...this.props, formData, discCd: this.props.discountVoucherCode }, this.handleErrorValidationMessages, this.changePaymentStepLayout);
   }
 
   backToMethodSelection = () => {
@@ -66,8 +64,6 @@ class PaymentModalStateContainer extends React.Component {
         ccNo={this.state.ccNo}
         name={this.state.name}
         expiry={this.state.expiry}
-        //month={this.state.month}
-        //year={this.state.year}
         cvv={this.state.cvv}
         errorMessages={this.state.errorMessages}
         paymentStep={this.state.paymentStep}

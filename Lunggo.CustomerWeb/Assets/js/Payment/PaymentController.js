@@ -109,8 +109,7 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
     //// wants transaction to be processed with 3D Secure
     'secure': true,
     'bank': 'mandiri',
-    ///'gross_amount': totalPrice - voucher.amount // + getMdr(),
-    'gross_amount': totalPrice,
+    'gross_amount': totalPrice, // + getMdr(),
   })
   return new Promise((resolve, reject) => {
     // run the veritrans function to check credit card
@@ -123,7 +122,7 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
       } else if (response.status_code != '200') {
         changePaymentStepLayout('failed');
         reject(response.status_message);
-      } else reject(`unexpected response from payment gateway API`)
+      } else reject(`unexpected response from payment gateway API`);
     });
   });
 }
@@ -150,7 +149,7 @@ export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLa
         holderName: paymentData.formData.name,
         hashedPan: paymentData.formData.ccNo,
         reqBinDiscount: false,
-      }
+      };
     } catch (e) { return changePaymentStepLayout('failed', e); }
   } //else methodData = proceedWithoutVeritransToken(); //TODO
   const res = await fetchPayAPI({ cartId, method, discCd, methodData });
