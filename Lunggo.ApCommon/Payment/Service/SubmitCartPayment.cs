@@ -62,6 +62,7 @@ namespace Lunggo.ApCommon.Payment.Service
                     RealizeVoucher(discount, accountService, cartPaymentDetails);
                 UpdateCartDb(cartPaymentDetails);
                 _cache.DeleteCart(cartId);
+                _cache.ClearUserCartId(cartId);
                 if (cartPaymentDetails.Method == PaymentMethod.BankTransfer || cartPaymentDetails.Method == PaymentMethod.VirtualAccount)
                     SendTransferInstructionToCustomer(cartPaymentDetails);
             }
