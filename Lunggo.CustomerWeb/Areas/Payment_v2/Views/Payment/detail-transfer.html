@@ -27,38 +27,192 @@
     <!-- Page Content -->
     <div class="mother-container">
 
-      <div class="row">
-        <div class="col-xs-8 no-padding-left">
-          <div class="info-total-harga"><p>Total Pembayaran</p><span>tidak bisa refund untuk aktivitas ini</span></div>
+      <!-- <div class="row">
+        <div class="col-xs-6 no-padding-left">
+          <div class="info-total-harga"><p>Total Pembayaran</p><span>Lihat rincian harga</span></div>
         </div>
-        <div class="col-xs-4 text-right no-padding-right no-padding-left">
-          <div class="info-total-angka"><p>Rp 899.978</p></div>
+        <div class="col-xs-6 text-right no-padding-right no-padding-left">
+          <div class="info-total-angka"><p>Rp 899.978</p><span>transfer tepat sampai 3 digit terakhir</span></div>
+        </div>
+      </div> -->
+
+      <div>
+        <div class="row">
+          <div class="col-xs-6 no-padding-left">
+            <div class="section-label">Total Pembayaran</div>
+          </div>
+          <div class="col-xs-6 text-right no-padding-right no-padding-left">
+             <div class="info-total-harga"><span>Lihat rincian harga</span></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 info-container">
+              <div class="info-total-angka-transfer">
+                <p>Rp 899.<span>978</span></p><span>transfer tepat sampai 3 digit terakhir</span>
+              </div>
+              <div style="text-align: center;" class="btn-salin"><a href="#">Salin Harga</a></div>
+          </div>
         </div>
       </div>
 
+      <div style="margin-top:25px">
+        <div class="row">
+          <div class="col-xs-6 no-padding-left">
+            <div class="section-label">Nama Bank</div>
+          </div>
+        </div>
 
-
-
+        <div class="row">
+          <div class="col-xs-12 info-container">
+            <div>
+              <div style="margin-bottom: 15px; ">
+                <img class="img-pembayaran-big" src="images/mandiri.png">
+              </div>
+              <div class="info-transfer">
+                <div class="row">
+                  <div class="col-xs-4 no-padding">Nama Bank</div>
+                  <div class="col-xs-1 no-padding">:</div>
+                  <div class="col-xs-7 no-padding">Mandiri</div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4 no-padding">No. Rek</div>
+                  <div class="col-xs-1 no-padding">:</div>
+                  <div class="col-xs-7 no-padding">12344565767676766</div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4 no-padding">Cabang</div>
+                  <div class="col-xs-1 no-padding">:</div>
+                  <div class="col-xs-7 no-padding">Senayan </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-4 no-padding">Nama Rekening</div>
+                  <div class="col-xs-1 no-padding">:</div>
+                  <div class="col-xs-7 no-padding">PT. Travel Madezy</div>
+                </div>
+              </div>
+            </div>
+            <div class="btn-salin"><a href="#">Salin No.Rekening</a></div>
+          </div>
+        </div>
+      </div>
 
       <div class="section-container">
-
-
-        
         <div class="section-label">Instruksi Pembayaran</div>
-          <div class="row">
+
+          <!-- <div class="row">
             <div class="col-xs-12 info-container">
               <div class="info-transfer">
                 <ol>
                   <li>Gunakan ATM/Mbanking/Setor Tunai untuk transfer</li>
                   <li>No. Rek: 12344565767676766<br>Cabang: Senayan <br>Nama Rekening: PT. Travel Madezy</li>
                   <li style="margin:0">Lakukan pembayaran sebelum tanggal<br>dd/mm/yy : 10.00 PM</li>
-                <ol>
+                </ol>
               </div>
             </div>
-        </div>
+          </div> -->
 
+          <div class="info-container accordion-container" id="accordion" role="tablist" aria-multiselectable="true">
+            <div>
+              <div role="tab">
+                <div class="info-total">
+                  <div class="row">
+                    <div class="col-xs-10 no-padding">
+                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#info1" aria-expanded="true" aria-controls="collapseOne">
+                        Internet Banking
+                      </a>
+                    </div>
+                    <div class="col-xs-2 no-padding-right text-right">
+                      <i class="icon ion-chevron-right icon-instruksi"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="info1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="info1">
+                <div class="body-panel info-transfer">
+                  <ol>
+                    <li>Gunakan ATM/Mbanking/Setor Tunai untuk transfer</li>
+                    <li>No. Rek: 12344565767676766<br>Cabang: Senayan <br>Nama Rekening: PT. Travel Madezy</li>
+                    <li style="margin:0">Lakukan pembayaran sebelum tanggal<br>dd/mm/yy : 10.00 PM</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <div class="info-container" id="accordion" role="tablist" aria-multiselectable="true">
+            <div>
+              <div role="tab">
+                <div class="info-total">
+                  <div class="row">
+                    <div class="col-xs-10 no-padding">
+                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#info2" aria-expanded="true" >
+                        ATM
+                      </a>
+                    </div>
+                    <div class="col-xs-2 no-padding-right text-right">
+                      <i class="icon ion-chevron-right icon-instruksi"></i>
+                    </div>
+                  </div>
 
+                </div>
+              </div>
+              <div id="info2" class="panel-collapse collapse" role="tabpanel">
+                <div class="body-panel info-transfer">
+                  <ol>
+                    <li>Gunakan ATM/Mbanking/Setor Tunai untuk transfer</li>
+                    <li>No. Rek: 12344565767676766<br>Cabang: Senayan <br>Nama Rekening: PT. Travel Madezy</li>
+                    <li style="margin:0">Lakukan pembayaran sebelum tanggal<br>dd/mm/yy : 10.00 PM</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Collapsible Group Item #1
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Collapsible Group Item #2
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Collapsible Group Item #3
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                </div>
+              </div>
+            </div>
+          </div> -->
 
         <div class="more-info">
           Dengan klik tombol bayar, anda telah setuju dengan <a href="#">Syarat & Ketentuan</a> dan <a href="#">Kebijakan</a> yang berlaku
@@ -73,6 +227,7 @@
             </div>
           </div>
         </div>
+
       </div>
 
 

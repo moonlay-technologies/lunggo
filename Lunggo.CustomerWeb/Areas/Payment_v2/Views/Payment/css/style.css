@@ -1,0 +1,367 @@
+
+@font-face {
+    font-family: Hind;
+    src: url(fonts/hind-regular.ttf);
+}
+@font-face {
+    font-family: Hind-Light;
+    src: url(fonts/hind-light.ttf);
+}
+@font-face {
+    font-family: Hind-SemiBold;
+    src: url(fonts/hind-semibold.ttf);
+}
+@font-face {
+    font-family: "Ionicons";
+    src: url(fonts/ionicons.ttf);
+}
+
+/* ----------- Normalize ----------- */
+
+.no-margin {
+  margin:0 !important;
+}
+.no-padding {
+  padding:0 !important;
+}
+.no-padding-left {
+  padding-left: 0 !important;
+}
+.no-padding-right {
+  padding-right: 0 !important;
+}
+.row {
+  margin:0 !important;
+  position: relative;
+}
+.clearfix {
+  *zoom: 1;
+  position: relative;
+}
+.clearfix:after, .clearfix:before {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+ul {
+  margin:0;
+  padding:0;
+}
+ol {
+  margin:0;
+  padding:0;
+}
+a {
+  text-decoration: none;
+}
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+  color:inherit;
+}
+a:hover {
+  text-decoration: none;
+  color:inherit;
+}
+a:active {
+  text-decoration: none;
+  color:inherit;
+}
+
+/* ----------- Normalize ----------- */
+
+
+body {
+  background:#FAFAFA;
+}
+.primary-color {
+  color:#00d3c5;
+}
+.icon-pembayaran-primary {
+  color:#00d3c5;
+  font-size: 28px;
+}
+.icon-pembayaran-tertiary {
+  color:#878787;
+  font-size: 18px;
+}
+.icon-instruksi {
+  color:#878787;
+  font-size: 14px;
+}
+.mynav {
+  background: #fff;
+  height:50px;
+  padding:13px 15px 17px 15px;
+  font-family: Hind;
+  color:#454545;
+  font-size: 16px;
+  -webkit-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.08);
+  -moz-box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.08);
+  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.08);
+}
+.mother-container {
+  padding:15px;
+}
+.btn-potonganharga {
+  height: 50px;
+  border-radius: 5px;
+  padding-top:8px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(176,176,176,0.2);
+}
+.selected-discount {
+  border: 2px solid #00d3c5;
+}
+.btn-potonganharga p {
+  color: #454545;
+  font-family: Hind;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom:-5px;
+}
+.btn-potonganharga span {
+  color: #00D3C5;
+  font-family: Hind;
+  font-size: 12px;
+  font-weight: 600;
+}
+.sub-info {
+  color: #656565 !important;
+  font-family: Hind !important;
+  font-size: 10px !important;
+  font-weight: 300 !important;
+}
+.section-container {
+  margin:25px 0;
+}
+.section-label {
+  color: #454545;
+  font-family: Hind;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.info-container {
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  padding:15px;
+  box-shadow: 0 2px 4px 0 rgba(176,176,176,0.2);
+}
+.info-biaya {
+  color: #454545;
+  font-family: Hind;
+  font-size: 12px;
+}
+.info-potongan {
+  color: #00d3c5;
+  font-family: Hind;
+  font-size: 12px;
+}
+.total-container {
+  border-top: 1px solid #ececec;
+  padding-top:5px;
+}
+.info-total {
+  color: #454545;
+  font-family: Hind;
+  font-size: 12px;
+  font-weight: 600;
+}
+.info-total a {
+  color: inherit;
+}
+.btn-method-transfer {
+  height: 50px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(176,176,176,0.2);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.btn-method-transfer-dropdown {
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(176,176,176,0.2);
+  margin-bottom: 10px;
+}
+.btn-method-transfer-dropdown-child {
+  height: 50px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  border-bottom: 1px solid #ececec;
+}
+.img-pembayaran {
+  width: 60px
+}
+.img-pembayaran-big {
+  width: 100px
+}
+.info-total-harga {
+  font-family: Hind-Light;
+}
+.info-total-harga p {
+  font-size: 18px;
+  margin-bottom: -5px;
+}
+.info-total-harga span {
+  font-size: 12px;
+  color:#00d3c5;
+  font-weight: 600
+}
+.info-total-angka {
+  font-family: Hind;
+  font-weight: 300;
+}
+.info-total-angka p {
+  font-size: 18px;
+  margin-bottom: -5px;
+}
+.info-total-angka span {
+  font-family: Hind;
+  font-weight: 300;
+  font-size: 12px;
+}
+.info-total-angka-transfer {
+  font-family: Hind-SemiBold;
+  text-align: center;
+}
+.info-total-angka-transfer p {
+  font-size: 22px;
+  margin-bottom:0;
+}
+.info-total-angka-transfer p span {
+   color:#f57b76;
+   font-size: 22px;
+}
+.info-total-angka-transfer span {
+  font-family: Hind;
+  font-weight: 300;
+  font-size: 12px;
+}
+.label-form {
+  font-family: Hind-Light;
+  font-size:10px;
+  color:#7d7d7d;
+  margin-bottom: 5px;
+  font-weight: unset;
+}
+.form-payment {
+  border:1px solid #cdcdcd;
+  border-radius: 0;
+  font-family: hind-semibold;
+  font-size:10px;
+}
+.validation-form {
+  border:1px solid #FC8A8A;
+}
+.validation-form-true {
+  border:1px solid #00d3c5;
+}
+.text-validation {
+  margin-top:5px;
+  font-family: Hind-light;
+  color:#F86161;
+  font-size:10px;
+}
+.text-validation-true {
+  margin-top:5px;
+  font-family: Hind-light;
+  color:#00d3c5;
+  font-size:10px;
+}
+.more-info {
+  margin-top:10px;
+  font-family: hind;
+  color:#808080;
+  font-size:10px;
+}
+.more-info a {
+  font-weight: bold;
+  color:#00d3c5;
+}
+.button-container {
+  margin-top:15px;
+}
+.button-container-thankyou {
+  margin-top:60px;
+}
+.button-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #00D3C5;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.08);
+  color:#fff !important;
+  font-family: Hind;
+  font-size: 14px;
+}
+.button-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 1px solid #00D3C5;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 4px 0 rgba(176,176,176,0.08);
+  color:#00d3c5 !important;
+  margin-top:10px;
+  font-family: Hind;
+  font-size: 14px;
+}
+.info-transfer {
+  font-family: hind;
+  font-size: 12px;
+  color: #454545;
+}
+.info-transfer p {
+  font-family: hind;
+  font-size: 12px;
+  color: #454545;
+  margin-bottom: 0;
+}
+.info-transfer ol {
+  padding-left:15px;
+}
+.info-transfer li {
+  margin-bottom:5px;
+}
+.text-success {
+  font-family: Hind;
+  font-size: 20px;
+  color:#454545;
+  margin-bottom: 5px
+}
+.icon-success {
+  margin-bottom:25px;
+}
+.btn-salin {
+  margin-top:10px;
+}
+.btn-salin a {
+  color:#00d3c5;
+  text-decoration: underline;
+  font-family: hind;
+  font-size: 12px;
+}
+.body-panel {
+  border-top: solid 1px #e6e6e6;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.accordion-container {
+  margin-bottom:10px;
+}
