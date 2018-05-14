@@ -17,7 +17,8 @@ class PaymentModalStateContainer extends React.Component {
 
       ccNo: '',
       name: '',
-      expiry:'',
+      expiryMonth: '',
+      expiryYear: '',
       //month: '',
       //year: '',
       cvv: '',
@@ -26,9 +27,10 @@ class PaymentModalStateContainer extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event, customErrorMessage) => {
     const { value, name } = event.target;
-    const errorMessages = { ...this.state.errorMessages, [name]: '' };
+    const errName = customErrorMessage || name;
+    const errorMessages = { ...this.state.errorMessages, [errName]: '' };
     this.setState({ [name]: value, errorMessages });
   }
 
@@ -42,8 +44,8 @@ class PaymentModalStateContainer extends React.Component {
 
   onSubmitCreditCardForm = () => {
     //e.preventDefault();
-    const { ccNo, name, cvv, expiry } = this.state;
-    const formData = { ccNo, name, cvv, expiry };
+    const { ccNo, name, cvv, expiryMonth, expiryYear } = this.state;
+    const formData = { ccNo, name, cvv, expiryMonth, expiryYear };
     this.setState({ isLoading: true });
     pay({ ...this.props, formData, discCd: this.props.discountVoucherCode }, this.handleErrorValidationMessages, this.changePaymentStepLayout);
   }
@@ -63,7 +65,8 @@ class PaymentModalStateContainer extends React.Component {
         method={this.props.method}
         ccNo={this.state.ccNo}
         name={this.state.name}
-        expiry={this.state.expiry}
+        expiryMonth={this.state.expiryMonth}
+        expiryYear={this.state.expiryYear}
         cvv={this.state.cvv}
         errorMessages={this.state.errorMessages}
         paymentStep={this.state.paymentStep}

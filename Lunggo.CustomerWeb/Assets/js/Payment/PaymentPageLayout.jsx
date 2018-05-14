@@ -106,15 +106,15 @@ function PaymentPageLayout(props) {
             </div>
           </div>
         </div>
-
+        {/*
         <div className="section-container">
           <div className="section-label">Pembayaran yang terakhir digunakan</div>
 
           <div className="row">
-            <PaymentSelection text="Transfer Bank" href="#transferbank" collapsible icon={<i className="icon ion-cash icon-pembayaran-primary" />} />
-            {/*style="margin-bottom: 0"*//*ini harusnya dipake buat bank transfer, nanti gw implement blm smpet*/}
+            <PaymentSelection text="Transfer Bank" href="#transferbank" collapsible icon={<i className="icon ion-cash icon-pembayaran-primary" />}
+              //style="margin-bottom: 0"*//*ini harusnya dipake buat bank transfer, nanti gw implement blm smpet
+            />
           </div>
-
           <div className="row">
             <div className="collapse" id="transferbank" style={{ marginTop: 5 }}>
               <div className="btn-method-transfer-dropdown clearfix">
@@ -128,13 +128,14 @@ function PaymentPageLayout(props) {
               </div>
             </div>
           </div>
-        </div>
+        </div>*/}
 
         <div className="section-container">
           <div className="section-label">Metode Pembayaran</div>
           <div className="row">
-            <PaymentSelection text="Kartu Kredit/Debit" onClick={() => props.selectMethod('card')} icon={<img className="img-pembayaran" src="/Assets/images/bank/kredit.png" />} /></div>
-          <div className="row">
+            <PaymentSelection text="Kartu Kredit/Debit" onClick={() => props.selectMethod('card')} icon={<img className="img-pembayaran" src="/Assets/images/bank/kredit.png" />} />
+          </div>
+          {/*<div className="row">
             <PaymentSelection text="BCA Klikpay" onClick={() => props.selectMethod('bcaklikpay')} icon={<img className="img-pembayaran" src="/Assets/images/bank/bcaklikpay.png" />} /></div>
 
           <div className="row">
@@ -166,7 +167,7 @@ function PaymentPageLayout(props) {
               </div>
             </div>
           </div>
-
+          */}
         </div>
 
 

@@ -22,11 +22,11 @@ export function isCVVFormatValid(value) {
   return !!value && !isNaN(value) && (length == 3 || length == 4);
 }
 
-export function validateCreditCardExpiryDate(month_MM, year_YYYY) {
-  if (month_MM == 0 || month_MM == '' || year_YYYY == '') {
+export function validateCreditCardExpiryDate(month_MM, year_YY) {
+  if (month_MM == 0 || month_MM == '' || year_YY == '') {
     return 'Mohon isi tanggal kadaluarsa kartu';
   }
-  const value = Moment(`${month_MM}-${year_YYYY}`, 'MM-YYYY').endOf('month');
+  const value = Moment(`${month_MM}-${year_YY}`, 'MM-YY').endOf('month');
   if (value.isValid() == false) {
     return 'Mohon isi dengan tanggal yang valid';
   }
@@ -49,11 +49,11 @@ export function isNumberOrEmpty(number) {
   return (number == "" || number == null || re.test(number));
 }
 
-export function validateCreditCard({ ccNo, name, cvv, expiry }) {
+export function validateCreditCard({ ccNo, name, cvv, expiryMonth, expiryYear }) {
   const ccNumberErrorMessage = isCreditCardNumberFormatValid(ccNo) ? '' : 'Mohon masukkan nomor kartu yang valid';
   const nameErrorMessage = isNameAlphabetical(name) ? '' : 'Mohon masukkan format nama yang valid';
   const cvvErrorMessage = isCVVFormatValid(cvv) ? '' : 'Gunakan nomor cvv yang tertera di belakang kartu (3-4 digit)';
-  const expiryErrorMessage = validateCreditCardExpiryDate(expiry.month, expiry.year);
+  const expiryErrorMessage = validateCreditCardExpiryDate(expiryMonth, expiryYear);
   if (ccNumberErrorMessage || nameErrorMessage || cvvErrorMessage || expiryErrorMessage) {
     return {
       errorMessages: {
@@ -102,8 +102,8 @@ const getVeritransToken = (paymentData, changePaymentStepLayout) => {
 
   const card = () => ({
     'card_number': formData.ccNo,
-    'card_exp_month': formData.expiry.month,
-    'card_exp_year': formData.expiry.year,
+    'card_exp_month': formData.expiryMonth,
+    'card_exp_year': formData.expiryYear,
     'card_cvv': formData.cvv,
     //// Set 'secure', 'bank', and 'gross_amount', if the merchant
     //// wants transaction to be processed with 3D Secure
@@ -132,11 +132,6 @@ export const pay = async (paymentData, errorMessagesHandler, changePaymentStepLa
   let methodData = {};
   //// VALIDATION
   if (method == 'card') {
-    const month = formData.expiry.substr(0, 2);
-    const year = `20` + formData.expiry.substr(2, 2);
-    formData.expiry = { month, year };
-    //const month_MM, year_YY; [month_MM, year_YY] = expiry.split('/');
-
     const isValid = validateCreditCard(formData);
     if (isValid !== 'VALID') {
       errorMessagesHandler(isValid.errorMessages);

@@ -72,13 +72,13 @@ function PaymentModalLayout(props) {
             </div>
 
             {props.shouldShowDataForm && <DataForm {...props} />}
-            <PaymentInstruction />
+            {/*<<PaymentInstruction />*/}
 
 
             <div className="section-container">
-                <div className="more-info">
+              {/*<div className="more-info">
                     Dengan klik tombol bayar, anda telah setuju dengan <a href={props.termsUrl}>Syarat & Ketentuan</a> dan <a href={props.privacyUrl}>Kebijakan</a> yang berlaku
-                </div>
+                </div>*/}
                 <div className="button-container">
                     <div className="row">
                         <div className="col-xs-12 no-padding">
