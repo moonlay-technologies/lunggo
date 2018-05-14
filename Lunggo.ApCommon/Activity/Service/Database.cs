@@ -315,7 +315,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var savedBookings = new List<CartList>();
                 foreach (var cartId in cartIdList)
                 {
-                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
                     var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail).ToList();
                     var payments = rsvNoList.Select(rsvNo => _paymentService.GetPaymentDetails(rsvNo)).ToList();
                     decimal totalOriginalPrice = payments.Sum(payment => payment.OriginalPriceIdr);

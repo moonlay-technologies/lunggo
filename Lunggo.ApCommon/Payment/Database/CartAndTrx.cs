@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Activity.Database.Query;
 using Lunggo.ApCommon.Payment.Database.Query;
@@ -16,7 +17,7 @@ namespace Lunggo.ApCommon.Payment.Database
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var records = TrxRsvTableRepo.GetInstance().Find(conn, new TrxRsvTableRecord {TrxId = trxId});
+                var records = TrxRsvTableRepo.GetInstance().Find(conn, new TrxRsvTableRecord { TrxId = trxId });
 
                 var rsvNoList = records?.Select(r => r.RsvNo).Distinct().ToList();
                 return rsvNoList ?? new List<string>();
@@ -28,11 +29,12 @@ namespace Lunggo.ApCommon.Payment.Database
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userId = GetUserIdFromActivityReservationDbQuery.GetInstance()
-                    .Execute(conn, new {cartDetails.RsvPaymentDetails[0].RsvNo}).First();
+                    .Execute(conn, new { cartDetails.RsvPaymentDetails[0].RsvNo }).First();
                 var trxUserRecord = new TrxUserTableRecord
                 {
                     TrxId = cartDetails.CartId,
-                    UserId = userId
+                    UserId = userId,
+                    Time = DateTime.UtcNow
                 };
                 TrxUserTableRepo.GetInstance().Insert(conn, trxUserRecord);
 
@@ -53,7 +55,7 @@ namespace Lunggo.ApCommon.Payment.Database
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var cartId = GetCartIdFromDbQuery.GetInstance().Execute(conn, new {RsvNo = rsvNo}).First();
+                var cartId = GetCartIdFromDbQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).First();
                 return cartId;
             }
         }
