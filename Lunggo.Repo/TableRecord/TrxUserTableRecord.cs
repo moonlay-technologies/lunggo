@@ -29,10 +29,20 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("TrxId");
 		    }
 		}
+		public DateTime? Time
+		{
+		    get { return _Time; }
+		    set
+		    {
+		        _Time = value;
+		        IncrementLog("Time");
+		    }
+		}
 
 		
 		private String _UserId;
 		private String _TrxId;
+		private DateTime? _Time;
 
 
 		public static TrxUserTableRecord CreateNewInstance()
@@ -66,6 +76,7 @@ namespace Lunggo.Repository.TableRecord
             {
 				new ColumnMetadata("UserId", true),
 				new ColumnMetadata("TrxId", true),
+				new ColumnMetadata("Time", false),
 
             };
         }

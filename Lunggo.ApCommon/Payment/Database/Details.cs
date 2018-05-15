@@ -71,8 +71,8 @@ namespace Lunggo.ApCommon.Payment.Database
             details.Method = PaymentMethodCd.Mnemonic(record.MethodCd);
             details.Submethod = PaymentSubmethodCd.Mnemonic(record.SubMethod);
             details.Status = PaymentStatusCd.Mnemonic(record.StatusCd);
-            details.Time = DateTime.SpecifyKind(record.Time.GetValueOrDefault(), DateTimeKind.Utc);
-            details.TimeLimit = DateTime.SpecifyKind(record.TimeLimit.GetValueOrDefault(), DateTimeKind.Utc);
+            details.Time = record.Time.HasValue ? DateTime.SpecifyKind(record.Time.Value, DateTimeKind.Utc) : (DateTime?) null;
+            details.TimeLimit = record.TimeLimit.HasValue ? DateTime.SpecifyKind(record.TimeLimit.Value, DateTimeKind.Utc) : (DateTime?) null;
             details.TransferAccount = record.TransferAccount;
             details.RedirectionUrl = record.RedirectionUrl;
             details.ExternalId = record.ExternalId;

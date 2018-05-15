@@ -17,7 +17,8 @@ class PaymentModalStateContainer extends React.Component {
 
       ccNo: '',
       name: '',
-      expiry:'',
+      expiryMonth: '',
+      expiryYear: '',
       //month: '',
       //year: '',
       cvv: '',
@@ -26,9 +27,10 @@ class PaymentModalStateContainer extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
-  handleInputChange = event => {
+  handleInputChange = (event, customErrorMessage) => {
     const { value, name } = event.target;
-    const errorMessages = { ...this.state.errorMessages, [name]: '' };
+    const errName = customErrorMessage || name;
+    const errorMessages = { ...this.state.errorMessages, [errName]: '' };
     this.setState({ [name]: value, errorMessages });
   }
 
@@ -36,28 +38,25 @@ class PaymentModalStateContainer extends React.Component {
     this.setState({ errorMessages });
   }
 
-  changePaymentStepLayout = (paymentStep, iframeUrl = '') => {
-    this.setState({ paymentStep, iframeUrl });
-    //switch (paymentStep) {
-    //  case 'paymentOtp':
-    //    //ss
-    //    break;
-    //  case 'success':
-    //    break;
-    //  case 'failed':
-    //    break;
-    //}
+  changePaymentStepLayout = (paymentStep, paymentStepStringData = '') => {
+    this.setState({ paymentStep, paymentStepStringData });
   }
+
   onSubmitCreditCardForm = () => {
     //e.preventDefault();
-    const { ccNo, name, cvv, expiry } = this.state;
-    const formData = { ccNo, name, cvv, expiry };
+    const { ccNo, name, cvv, expiryMonth, expiryYear } = this.state;
+    const formData = { ccNo, name, cvv, expiryMonth, expiryYear };
     this.setState({ isLoading: true });
-    console.log('begin to invoke `pay` function')
-    pay({ ...this.props, formData }, this.handleErrorValidationMessages, this.changePaymentStepLayout)
-      .then(res => /*this.setState({ errorMessage: res })*/ console.log('pay resolved',res) )
-      .finally(() => /*this.setState({ isLoading: false })*/ console.log('pay ended') );
-    console.log('onSubmitCreditCardForm done')
+    pay({ ...this.props, formData, discCd: this.props.discountVoucherCode }, this.handleErrorValidationMessages, this.changePaymentStepLayout);
+  }
+
+  backToMethodSelection = () => {
+    this.changePaymentStepLayout('initial');
+  }
+
+  backToMyBookings = () => {
+    window.postMessage('backToMyBookings');
+    //// navigate web to myBooking page
   }
 
   render() {
@@ -66,16 +65,18 @@ class PaymentModalStateContainer extends React.Component {
         method={this.props.method}
         ccNo={this.state.ccNo}
         name={this.state.name}
-        expiry={this.state.expiry}
-        //month={this.state.month}
-        //year={this.state.year}
+        expiryMonth={this.state.expiryMonth}
+        expiryYear={this.state.expiryYear}
         cvv={this.state.cvv}
         errorMessages={this.state.errorMessages}
         paymentStep={this.state.paymentStep}
-        iframeUrl={this.state.iframeUrl}
+        paymentStepStringData={this.state.paymentStepStringData}
         onSubmit={this.onSubmitCreditCardForm}
         handleInputChange={this.handleInputChange}
         shouldShowDataForm={this.props.method == 'card' || this.props.method == 'mandiriClickPay'}
+        discountVoucherCode={this.props.discountVoucherCode}
+        backToMyBookings={this.backToMyBookings}
+        backToMethodSelection={this.backToMethodSelection}
       />
     );
   }

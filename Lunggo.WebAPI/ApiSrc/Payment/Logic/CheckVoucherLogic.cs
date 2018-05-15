@@ -18,7 +18,10 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             if (IsValid(request))
             {
-                var response = new PaymentService().GetVoucherDiscount(request.RsvNo, request.DiscountCode, out var status);
+                VoucherStatus status;
+                var response = !string.IsNullOrWhiteSpace(request.RsvNo)
+                    ? new PaymentService().GetVoucherDiscount(request.RsvNo, request.DiscountCode, out status)
+                    : new PaymentService().GetVoucherDiscountForCart(request.CartId, request.DiscountCode, out status);
                 if (request.DiscountCode == "REFERRALCREDIT")
                 {
                     var userId = HttpContext.Current.User.Identity.GetId();
@@ -48,7 +51,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new CheckVoucherApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPVCH01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
         }
@@ -57,8 +60,8 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
         {
             return
                 request != null &&
-                request.DiscountCode != null &&
-                request.RsvNo != null;
+                !string.IsNullOrWhiteSpace(request.DiscountCode) &&
+                (!string.IsNullOrWhiteSpace(request.RsvNo) || !string.IsNullOrWhiteSpace(request.CartId));
         }
 
         private static ApiResponseBase AssembleApiResponse(VoucherDiscount discount, VoucherStatus status)
@@ -77,19 +80,19 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH02"
+                        ErrorCode = "ERR_INVALID_CODE"
                     };
                 case VoucherStatus.VoucherDepleted:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH03"
+                        ErrorCode = "ERR_NO_LONGER_AVAILABLE"
                     };
                 case VoucherStatus.BelowMinimumSpend:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH04"
+                        ErrorCode = "ERR_TRX_VALUE_NOT_ENOUGH"
                     };
                 //case VoucherStatus.EmailNotEligible:
                 //    return new CheckVoucherApiResponse
@@ -103,17 +106,11 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 //        StatusCode = HttpStatusCode.Accepted,
                 //        ErrorCode = "ERPVCH06"
                 //    };
-                case VoucherStatus.InternalError:
-                    return new CheckVoucherApiResponse
-                    {
-                        StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERPVCH07"
-                    };
                 case VoucherStatus.TermsConditionsNotEligible:
                     return new CheckVoucherApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPVCH08"
+                        ErrorCode = "ERR_TNC_NOT_FULFILLED"
                     };
                 //case VoucherStatus.VoucherDepleted:
                 //    return new CheckVoucherApiResponse
@@ -133,6 +130,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 //        StatusCode = HttpStatusCode.Accepted,
                 //        ErrorCode = "ERPVCH11"
                 //    };
+                case VoucherStatus.InternalError:
                 default:
                     return ApiResponseBase.Error500();
             }

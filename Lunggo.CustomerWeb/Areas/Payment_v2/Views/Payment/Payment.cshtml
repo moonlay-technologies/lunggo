@@ -10,13 +10,13 @@
 @using Lunggo.CustomerWeb.Helper
 @using Lunggo.Framework.Context
 @using Lunggo.Framework.Extension
-@model Lunggo.ApCommon.Payment.Model.CartPaymentDetails
 @using Lunggo.ApCommon.Product.Model
 @using Lunggo.Framework.Environment
 @using React.Web.Mvc
+@model Lunggo.ApCommon.Payment.Model.CartPaymentDetails
 
 @{
-    Layout = "/Views/Shared/Desktop/_LayoutDesktop.cshtml";
+    Layout = "/Views/Shared/mobile/_LayoutReactWebview.cshtml";
     ViewBag.BodyClass = "page-checkout page-checkout-flight";
     ViewBag.SiteHeader = "Payment";
     ViewBag.Title = "Pembayaran";
@@ -37,9 +37,7 @@
 
 @*@Html.React("CommentBox", new
     {
-        //headerTitle = "Halaman Pembayaran",
         ////creditBalance = ViewBag.CreditsAvailable,
-
         //cartId = Model.CartId,
         //originalPrice = Model.OriginalPriceIdr,
         //termsUrl = Url.Action("Terms","StaticPage"),
@@ -48,15 +46,23 @@
         //rsvNo = Model.RsvNo,
         //lastMethodUsed = 'pembayaran yang terakhir di gunakan',
 
-
         //pricingDetails = 'rincian transaksi',
         //mandiriClickpayToken = Model.TrxId.GetHashCode() % 100000,
         //uniqueCode = UniqueCodePaymentConfig.UniqueCode,
     })*@
 
 <div id="react"></div>
-<script>var cartId = '4fd9fd7c11203fdbf6225b5e6af08426ebcf0773'</script>
-<script src="~/Assets/js/Payment/paymentReact.js"></script>
+<script>
+    var cartId = '@Model.CartId';
+    var pricingDetails =
+        @Html.Raw((ViewBag.RsvList as List<ActivityReservationForDisplay>).Zip(Model.RsvPaymentDetails,
+               (a,b) => new {name = a.ActivityDetail.Name, price = b.OriginalPriceIdr})
+               .Serialize());
+    var refund = 'tidak bisa refund untuk aktivitas ini';
+    var veritransUrl = '@EnvVariables.Get("veritrans", "tokenEndPoint")';
+    var veritransKey = '@EnvVariables.Get("veritrans","clientKey")';
+</script>
+<script src=@Fingerprint.Tag("/Assets/js/Payment/paymentReact.bundle.js")></script>
 
 
 @Html.ReactInitJavaScript()

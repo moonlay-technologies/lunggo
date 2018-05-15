@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "Select c.RsvNoList FROM Carts as c WHERE c.CartId = @CartId";
+            return "Select RsvNo FROM TrxRsv WHERE TrxId = @TrxId";
         }
     }
 

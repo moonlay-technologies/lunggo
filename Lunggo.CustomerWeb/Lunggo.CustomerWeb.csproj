@@ -282,6 +282,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\RegisterReferralController.cs" />
     <Compile Include="Controllers\TermsController.cs" />
+    <Compile Include="Controllers\WebViewController.cs" />
     <Compile Include="Helper\Fingerprint.cs" />
     <Compile Include="Helper\Generator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -2006,6 +2007,7 @@
     <Content Include="Areas\Payment_v2\Views\Payment\thankyou-page.html" />
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <Content Include="Views\Promo\PromoLandingPage.cshtml" />
+    <Content Include="Views\Shared\mobile\_LayoutReactWebview.cshtml" />
     <None Include="Views\WebView\Contact.cshtml" />
     <Content Include="Views\Index\TeaserPage.cshtml" />
     <Content Include="Views\Index\TeaserPage.mobile.cshtml" />

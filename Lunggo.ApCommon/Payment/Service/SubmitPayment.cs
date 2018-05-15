@@ -49,7 +49,7 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
             paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
 
-            var transactionDetails = ConstructTransactionDetails(paymentDetails.RsvNo, paymentDetails);
+            var transactionDetails = ConstructRsvTransactionDetails(paymentDetails);
             _processor.ProcessPayment(paymentDetails, transactionDetails);
 
             if (paymentDetails.Status != PaymentStatus.Failed && paymentDetails.Status != PaymentStatus.Denied)
@@ -140,12 +140,12 @@ namespace Lunggo.ApCommon.Payment.Service
             return _db.GetUnpaidFromDb();
         }
 
-        private TransactionDetails ConstructTransactionDetails(string rsvNo, PaymentDetails payment)
+        private TransactionDetails ConstructRsvTransactionDetails(RsvPaymentDetails payment)
         {
-            var contact = _db.GetRsvContact(rsvNo);
+            var contact = _db.GetRsvContact(payment.RsvNo);
             return new TransactionDetails
             {
-                RsvNo = rsvNo,
+                Id = payment.RsvNo,
                 OrderTime = DateTime.UtcNow,
                 Amount = (long)payment.FinalPriceIdr,
                 Contact = contact

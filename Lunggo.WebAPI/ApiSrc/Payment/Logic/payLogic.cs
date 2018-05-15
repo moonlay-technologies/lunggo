@@ -18,7 +18,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY01"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
 
             bool isUpdated;
@@ -26,7 +26,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             var paymentDetails = !string.IsNullOrWhiteSpace(request.RsvNo)
                 ? (PaymentDetails) new PaymentService().SubmitPayment(request.RsvNo, request.Method,
                     request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated)
-                : (PaymentDetails) new PaymentService().SubmitCartPayment(request.RsvNo, request.Method,
+                : (PaymentDetails) new PaymentService().SubmitCartPayment(request.CartId, request.Method,
                     request.Submethod ?? PaymentSubmethod.Undefined, paymentData, request.DiscountCode, out isUpdated);
             var apiResponse = AssembleApiResponse(paymentDetails, isUpdated);
             
@@ -45,7 +45,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.BadRequest,
-                    ErrorCode = "ERPPAY04"
+                    ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
 
@@ -55,19 +55,19 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                     return new PayApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPPAY05"
+                        ErrorCode = "ERR_VOUCHER_NOT_AVAILABLE"
                     };
-                if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
-                    return new PayApiResponse
-                    {
-                        StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPPAY06"
-                    };
+                //if (paymentDetails.FailureReason == FailureReason.BinPromoNoLongerEligible)
+                //    return new PayApiResponse
+                //    {
+                //        StatusCode = HttpStatusCode.Accepted,
+                //        ErrorCode = "ERPPAY06"
+                //    };
                 if (paymentDetails.FailureReason == FailureReason.VoucherNotEligible)
                     return new PayApiResponse
                     {
                         StatusCode = HttpStatusCode.Accepted,
-                        ErrorCode = "ERPPAY07"
+                        ErrorCode = "ERR_VOUCHER_NOT_AVAILABLE"
                     };
             }
 
@@ -76,7 +76,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
                 return new PayApiResponse
                 {
                     StatusCode = HttpStatusCode.Accepted,
-                    ErrorCode = "ERPPAY03"
+                    ErrorCode = "ERR_NOT_SUCCESS"
                 };
             }
 
@@ -113,7 +113,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
             return
                 request != null &&
                 request.Method != PaymentMethod.Undefined &&
-                request.RsvNo != null;
+                (!string.IsNullOrWhiteSpace(request.RsvNo) || !string.IsNullOrWhiteSpace(request.CartId));
 
         }
     }

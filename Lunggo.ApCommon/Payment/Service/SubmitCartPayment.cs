@@ -51,10 +51,9 @@ namespace Lunggo.ApCommon.Payment.Service
                     return null;
             }
 
-            cartPaymentDetails.Surcharge = GetSurchargeNominal(cartPaymentDetails);
-            cartPaymentDetails.FinalPriceIdr += cartPaymentDetails.Surcharge;
+            CalculateFinal(cartPaymentDetails);
 
-            var transactionDetails = ConstructTransactionDetails(cartPaymentDetails.RsvPaymentDetails[0].RsvNo, cartPaymentDetails);
+            var transactionDetails = ConstructCartTransactionDetails(cartPaymentDetails);
             var processSuccess = _processor.ProcessPayment(cartPaymentDetails, transactionDetails);
 
             if (cartPaymentDetails.Status != PaymentStatus.Failed && cartPaymentDetails.Status != PaymentStatus.Denied)
@@ -63,11 +62,37 @@ namespace Lunggo.ApCommon.Payment.Service
                     RealizeVoucher(discount, accountService, cartPaymentDetails);
                 UpdateCartDb(cartPaymentDetails);
                 _cache.DeleteCart(cartId);
+                _cache.ClearUserCartId(cartId);
                 if (cartPaymentDetails.Method == PaymentMethod.BankTransfer || cartPaymentDetails.Method == PaymentMethod.VirtualAccount)
                     SendTransferInstructionToCustomer(cartPaymentDetails);
             }
             isUpdated = true;
             return cartPaymentDetails;
+        }
+
+        private TransactionDetails ConstructCartTransactionDetails(CartPaymentDetails payment)
+        {
+            var contact = _db.GetRsvContact(payment.RsvPaymentDetails[0].RsvNo);
+            return new TransactionDetails
+            {
+                Id = payment.CartId,
+                OrderTime = DateTime.UtcNow,
+                Amount = (long)payment.FinalPriceIdr,
+                Contact = contact
+            };
+        }
+
+        private void CalculateFinal(PaymentDetails paymentDetails)
+        {
+            paymentDetails.FinalPriceIdr = paymentDetails.OriginalPriceIdr -
+                                               paymentDetails.DiscountNominal + paymentDetails.UniqueCode;
+            paymentDetails.Surcharge = GetSurchargeNominal(paymentDetails);
+            paymentDetails.FinalPriceIdr += paymentDetails.Surcharge;
+
+            paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
+
+            if (paymentDetails is CartPaymentDetails cartDetails)
+                cartDetails.RsvPaymentDetails.ForEach(CalculateFinal);
         }
 
         private bool ValidatePaymentStatus(PaymentDetails paymentDetails)
@@ -86,6 +111,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private void UpdateCartDb(CartPaymentDetails cartPaymentDetails)
         {
             DistributeRsvPaymentDetails(cartPaymentDetails);
+            cartPaymentDetails.CartId = GenerateCartRecordId();
             _db.InsertTrx(cartPaymentDetails);
         }
 
@@ -103,7 +129,7 @@ namespace Lunggo.ApCommon.Payment.Service
         private CartPaymentDetails GenerateCartPayment(Cart cart)
         {
             var cartPayment = new CartPaymentDetails();
-            cartPayment.CartId = GenerateCartRecordId();
+            cartPayment.CartId = cart.Id;
             cartPayment.RsvPaymentDetails = RetrieveCartRsvPaymentDetails(cart);
             AggregateRsvPaymentDetails(cartPayment);
             return cartPayment;
@@ -123,6 +149,7 @@ namespace Lunggo.ApCommon.Payment.Service
             cartPayment.Method = firstRsv.Method;
             cartPayment.Submethod = firstRsv.Submethod;
             cartPayment.Data = firstRsv.Data;
+            cartPayment.LocalCurrency = firstRsv.LocalCurrency;
         }
 
         private void DistributeRsvPaymentDetails(CartPaymentDetails cartPayment)

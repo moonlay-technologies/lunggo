@@ -13,7 +13,7 @@ function PaymentModalLayout(props) {
           borderRadius: 7
         }}>
           <div hidden={props.paymentStep !== 'loading'}>
-            ...Loading
+            Please wait...
           </div>
           <div hidden={props.paymentStep !== 'failed'}>
             <div className="mother-container">
@@ -21,11 +21,11 @@ function PaymentModalLayout(props) {
                 <div className="icon-success">
                   <img style={{width:100}} src="images/icon-error.png" />
                 </div>
-                <div className="text-success">Terjadi kesalahan pada sistem</div>
+                <div className="text-success">{props.paymentStepStringData}</div>
                 <div className="button-container-thankyou">
                   <div className="row">
                     <div className="col-xs-12 no-padding">
-                      <a href="#" className="button-primary">Gunakan Metode Pembayaran Lain</a>
+                      <a href="#" data-dismiss="modal" onClick={props.backToMethodSelection} className="button-primary">Gunakan Metode Pembayaran Lain</a>
                     </div>
                   </div>
                 </div>
@@ -40,11 +40,10 @@ function PaymentModalLayout(props) {
                   <img style={{width:100}} src="images/icon-success.png" />
         </div>
                     <div className="text-success">Proses Pembayaran Berhasil</div>
-                    <div className="text-success">No. Transaksi: 1234567890</div>
                     <div className="button-container-thankyou">
                       <div className="row">
                         <div className="col-xs-12 no-padding">
-                          <a href="#" className="button-primary">Kembali ke Pesananku</a>
+                          <a href="#" onClick={props.backToMyBookings} className="button-primary">Kembali ke Pesananku</a>
                         </div>
                       </div>
                     </div>
@@ -53,7 +52,7 @@ function PaymentModalLayout(props) {
                 </div> 
           </div>
           <div>
-            <iframe hidden={props.paymentStep !== 'paymentOtp'} src={props.iframeUrl} width="400px" height="420px">
+            <iframe hidden={props.paymentStep !== 'paymentOtp'} src={props.paymentStepStringData} width="400px" height="420px">
               <p>Your browser doesn't support iframe</p>
             </iframe>
           </div>
@@ -73,20 +72,20 @@ function PaymentModalLayout(props) {
             </div>
 
             {props.shouldShowDataForm && <DataForm {...props} />}
-            <PaymentInstruction />
+            {/*<<PaymentInstruction />*/}
 
 
             <div className="section-container">
-                <div className="more-info">
+              {/*<div className="more-info">
                     Dengan klik tombol bayar, anda telah setuju dengan <a href={props.termsUrl}>Syarat & Ketentuan</a> dan <a href={props.privacyUrl}>Kebijakan</a> yang berlaku
-                </div>
+                </div>*/}
                 <div className="button-container">
                     <div className="row">
                         <div className="col-xs-12 no-padding">
-                            <a onClick={props.onSubmit} className="button-primary">Bayar Sekarang</a>
+                            <a href="#" onClick={props.onSubmit} className="button-primary">Bayar Sekarang</a>
                         </div>
                         <div className="col-xs-12 no-padding">
-                            <a data-dismiss="modal" className="button-secondary">Ganti Metode Pembayaran</a>
+                    <a href="#" data-dismiss="modal" onClick={props.backToMethodSelection} className="button-secondary">Ganti Metode Pembayaran</a>
                         </div>
                     </div>
                 </div>
