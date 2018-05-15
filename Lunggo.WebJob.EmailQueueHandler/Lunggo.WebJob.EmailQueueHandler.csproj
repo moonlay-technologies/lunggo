@@ -161,6 +161,9 @@
     <Compile Include="Function\FlightIssueTimeoutNotifEmail.cs" />
     <Compile Include="Function\ActivityIssueTicketNotifEmail.cs" />
     <Compile Include="Function\ForgotPasswordByOtpEmail.cs" />
+    <Compile Include="Function\Function1.cs">
+      <DependentUpon>ActivityIssueTicketNotifEmail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Function\HotelInternalFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelSaySorryFailedIssueNotifEmail.cs" />
     <Compile Include="Function\HotelVoucherEmail.cs" />
