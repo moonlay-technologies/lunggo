@@ -13,7 +13,7 @@ module.exports = {
     ],
     output: {
         path: path.resolve(__dirname, "Assets/js/Payment/"),
-        filename: "paymentReact.js"
+        filename: "paymentReact.bundle.js"
     },
     devServer: {
         contentBase: ".",
