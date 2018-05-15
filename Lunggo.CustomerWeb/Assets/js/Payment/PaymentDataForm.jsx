@@ -25,13 +25,13 @@ function PaymentDataForm(props) {
                 <div className="row">
                   <label className="label-form" htmlFor="expiryMonth">Berlaku Hingga</label>
                 </div>
-                  <div className="col-xs-6 no-padding-left">
+                  <div className="col-xs-6 no-padding-left no-padding-right">
                     <div className="form-group no-margin">
                       <input name="expiryMonth" placeholder="MM" type="number" className={props.errorMessages.expiry ? "form-control form-payment validation-form" : "form-control form-payment"} onChange={e => props.handleInputChange(e, 'expiry')} />
                       <div className="text-validation">{props.errorMessages.expiry}</div>
                     </div>
                   </div>
-                  <div className="col-xs-6 no-padding-left">
+                  <div className="col-xs-6 no-padding-left no-padding-right">
                     <div className="form-group no-margin">
                       <input name="expiryYear" placeholder="YY" type="number" className={props.errorMessages.expiry ? "form-control form-payment validation-form" : "form-control form-payment"} onChange={e => props.handleInputChange(e, 'expiry')} />
                     </div>
@@ -39,8 +39,8 @@ function PaymentDataForm(props) {
                 </div>
                 <div className="col-xs-6 no-padding-right">
                   <div className="form-group no-margin">
-                    <label className="label-form" htmlFor="cvv">CVV 3 Digit</label>
-                    <input name="cvv" type="number" className={props.errorMessages.cvv ? "form-control form-payment validation-form" : "form-control form-payment"} id="cvv" placeholder="xxx" onChange={props.handleInputChange} />
+                  <label className="label-form" htmlFor="cvv">CVV 3 Digit</label>
+                  <input name="cvv" type="number" className={props.errorMessages.cvv ? "form-control form-payment validation-form" : "form-control form-payment"} id="cvv" placeholder="xxx" onChange={props.handleInputChange} onKeyPress={e => event.keyCode === 13 && props.onSubmit() } />
                     <div className="text-validation">{props.errorMessages.cvv}</div>
                   </div>
                 </div>
