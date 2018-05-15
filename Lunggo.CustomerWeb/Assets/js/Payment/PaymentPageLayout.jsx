@@ -19,17 +19,17 @@ function PaymentPageLayout(props) {
     <div>
       <PopUpModal {...props} />
       {/*<!-- Navigation -->*/}
-      <nav className="mynav">
+      {/*<nav className="mynav">
         <div className="row" style={{ display: 'flex', alignTtems: 'center' }}>
           <div className="col-xs-1 no-padding-left"><i className="icon ion-android-arrow-back icon-pembayaran-tertiary"></i></div>
           <div className="col-xs-6 no-padding-left">{props.headerTitle}</div>
         </div>
-      </nav>
+      </nav>*/}
 
       {/*<!-- Page Content -->*/}
       <div className="mother-container">
 
-        <div className="row">
+        {/*<div className="row">
           <div className="col-xs-6 text-center no-padding-left">
             <a href="#" onClick={() => props.onChangedDiscountOption('creditBalance')}>
             <div className={props.chosenDiscountOption == 'creditBalance' ? `btn-potonganharga selected-discount` : `btn-potonganharga`}
@@ -53,7 +53,7 @@ function PaymentPageLayout(props) {
               </div>
               </a>
           </div>
-        </div>
+        </div>*/}
 
         <div className="section-container collapse" id="kodevoucher">
           <div className="row">

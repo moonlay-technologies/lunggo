@@ -166,3 +166,4 @@ Lunggo.Driver/Config/
 /.vs
 
 /*/node_modules
+**.bundle.js
