@@ -1340,7 +1340,7 @@
     <Content Include="Assets\js\Payment\PaymentPageStateContainer.jsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\js\Payment\paymentReact.js" />
+    <Content Include="Assets\js\Payment\paymentReact.bundle.js" />
     <Content Include="Assets\teaserpage\cssDesktop\full.css" />
     <Content Include="Assets\teaserpage\cssDesktop\style-pdf.css" />
     <Content Include="Assets\teaserpage\cssDesktop\style.css" />
