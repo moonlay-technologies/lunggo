@@ -246,6 +246,7 @@
     <Compile Include="Account\Service\GetUserIdByEmailOrPhoneNumber.cs" />
     <Compile Include="Account\Service\ModelConversion.cs" />
     <Compile Include="Account\Service\ResettingPassword.cs" />
+    <Compile Include="Activity\Constant\ActivityCancellationReason.cs" />
     <Compile Include="Activity\Constant\ActivityCdEnum.cs" />
     <Compile Include="Activity\Constant\ActivityTypeEnum.cs" />
     <Compile Include="Activity\Constant\BookingStatus.cs" />
