@@ -11,7 +11,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "UPDATE ActivityReservation SET BookingStatusCd = @bookingStatusCd WHERE RsvNo = @rsvNo";
+            return "UPDATE ActivityReservation SET BookingStatusCd = @bookingStatusCd, UpdateDate = @updateDate WHERE RsvNo = @rsvNo";
         }
     }
 }

@@ -353,6 +353,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("ActivityMedia");
 		    }
 		}
+		public Boolean? HasOperator
+		{
+		    get { return _HasOperator; }
+		    set
+		    {
+		        _HasOperator = value;
+		        IncrementLog("HasOperator");
+		    }
+		}
 
 		
 		private String _RsvNo;
@@ -393,6 +402,7 @@ namespace Lunggo.Repository.TableRecord
 		private String _ActivityDuration;
 		private long? _viewCount;
 		private String _ActivityMedia;
+		private Boolean? _HasOperator;
 
 
 		public static ActivityDetailReservationTableRecord CreateNewInstance()
@@ -462,6 +472,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("ActivityDuration", false),
 				new ColumnMetadata("viewCount", false),
 				new ColumnMetadata("ActivityMedia", false),
+				new ColumnMetadata("HasOperator", false),
 
             };
         }

@@ -40,6 +40,11 @@ namespace Lunggo.Repository.TableRepository
             return Find1(connection, record, CommandDefinition.GetDefaultDefinition());
         }
 
+		public ActivityDetailReservationTableRecord Find1OrDefault(IDbConnection connection, ActivityDetailReservationTableRecord record)
+        {
+            return Find1OrDefault(connection, record, CommandDefinition.GetDefaultDefinition());
+        }
+
 		public IEnumerable<ActivityDetailReservationTableRecord> Find(IDbConnection connection, ActivityDetailReservationTableRecord record)
         {
             return Find(connection, record, CommandDefinition.GetDefaultDefinition());
@@ -73,6 +78,11 @@ namespace Lunggo.Repository.TableRepository
 		public ActivityDetailReservationTableRecord Find1(IDbConnection connection, ActivityDetailReservationTableRecord record, CommandDefinition definition)
         {
 			return Find1Internal(connection, record, definition);
+        }
+
+		public ActivityDetailReservationTableRecord Find1OrDefault(IDbConnection connection, ActivityDetailReservationTableRecord record, CommandDefinition definition)
+        {
+			return Find1OrDefaultInternal(connection, record, definition);
         }
 
 		public IEnumerable<ActivityDetailReservationTableRecord> Find(IDbConnection connection, ActivityDetailReservationTableRecord record, CommandDefinition definition)

@@ -30,16 +30,17 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateJoinClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("FROM ((ActivityReservation AS ar ");
+            clauseBuilder.Append("FROM (((ActivityReservation AS ar ");
             clauseBuilder.Append("INNER JOIN Activity AS act ON act.Id=ar.ActivityId) ");
             clauseBuilder.Append("INNER JOIN Reservation AS r ON r.RsvNo=ar.RsvNo) ");
+            clauseBuilder.Append("INNER JOIN Payment AS p ON p.RsvNo=ar.RsvNo) ");
             return clauseBuilder.ToString();
         }
 
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ar.BookingStatusCd = 'FORW' AND ");
+            clauseBuilder.Append("WHERE ar.BookingStatusCd = 'FORW' AND p.StatusCd LIKE 'SET%' AND ");
             clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId ");
             return clauseBuilder.ToString();
         }

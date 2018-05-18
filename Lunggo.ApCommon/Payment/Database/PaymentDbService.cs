@@ -120,6 +120,10 @@ namespace Lunggo.ApCommon.Payment.Database
                 {
                     var rsv = ActivityService.GetInstance().GetReservation(payment.RsvNo);
                     var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
+                    if (rsv.ActivityDetails.HasOperator)
+                    {
+                        ActivityService.GetInstance().ForwardActivityToOperator(payment.RsvNo);
+                    }
                     ActivityService.GetInstance().DecreasePaxSlotFromDb(rsv.ActivityDetails.ActivityId, ticketCount, rsv.DateTime.Date.Value, rsv.DateTime.Session);
                 }
                 return true;

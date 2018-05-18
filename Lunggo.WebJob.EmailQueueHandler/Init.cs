@@ -76,11 +76,6 @@ namespace Lunggo.WebJob.EmailQueueHandler
             var redisService = RedisService.GetInstance();
             redisService.Init(new RedisConnectionProperty[]
             {
-                new RedisConnectionProperty
-                {
-                    ConnectionName = ApConstant.MasterDataCacheName,
-                    ConnectionString = EnvVariables.Get("redis", "searchResultCacheConnectionString")
-                },
                 
                 new RedisConnectionProperty
                 {

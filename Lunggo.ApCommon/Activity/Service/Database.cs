@@ -716,6 +716,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     SelectedSession = reservation.DateTime.Session,
                     UserId = reservation.User.Id,
                     TicketCount = null,
+                    UpdateDate = DateTime.UtcNow,
                 };
 
                 var activityDetialReservation = new ActivityDetailReservationTableRecord
@@ -757,7 +758,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     UnitDuration = activityDetailNowDb.UnitDuration,
                     viewCount = activityDetailNowDb.viewCount,
                     Warning = activityDetailNowDb.Warning,
-                    Zone = activityDetailNowDb.Zone
+                    Zone = activityDetailNowDb.Zone,
+                    HasOperator = activityDetailNowDb.HasOperator
                 };
 
                 foreach (var activityContentNow in activityContentsNowDb)
@@ -882,7 +884,7 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var bookingStatusCd = BookingStatusCd.Mnemonic(bookingStatus);
-                UpdateActivityBookingStatusQuery.GetInstance().Execute(conn, new { rsvNo, bookingStatusCd });
+                UpdateActivityBookingStatusQuery.GetInstance().Execute(conn, new { rsvNo, bookingStatusCd, updateDate = DateTime.UtcNow });
             }
         }
 
@@ -1912,6 +1914,5 @@ namespace Lunggo.ApCommon.Activity.Service
                 ActivityCustomDateTableRepo.GetInstance().Update(conn,newPaxSlotTableRecord);
             }
         }
-
     }
 }

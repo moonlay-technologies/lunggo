@@ -335,6 +335,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("viewCount");
 		    }
 		}
+		public Boolean? HasOperator
+		{
+		    get { return _HasOperator; }
+		    set
+		    {
+		        _HasOperator = value;
+		        IncrementLog("HasOperator");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -373,6 +382,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _MustPrinted;
 		private String _ActivityDuration;
 		private long? _viewCount;
+		private Boolean? _HasOperator;
 
 
 		public static ActivityTableRecord CreateNewInstance()
@@ -440,6 +450,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("MustPrinted", false),
 				new ColumnMetadata("ActivityDuration", false),
 				new ColumnMetadata("viewCount", false),
+				new ColumnMetadata("HasOperator", false),
 
             };
         }

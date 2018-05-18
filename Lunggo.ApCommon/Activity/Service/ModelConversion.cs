@@ -115,7 +115,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 MustPrinted = activityDetail.MustPrinted,
                 MinPax = activityDetail.MinPax,
                 MaxPax = activityDetail.MaxPax,
-                ViewCount = activityDetail.ViewCount
+                ViewCount = activityDetail.ViewCount,
+                HasOperator = activityDetail.HasOperator
             };
 
             return convertedActivity;

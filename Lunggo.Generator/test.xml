@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
   <!--<table name="Payment" />-->
-  <table name="TrxUser" />
+  <table name="Activity" />
   <!--<table name="Campaign" />-->
   <!--<table name="CampaignVoucher" />-->
   <!--<table name="TrxRsv" />-->

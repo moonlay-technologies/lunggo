@@ -27,19 +27,27 @@ namespace Lunggo.ApCommon.Activity.Service
                     };
                 }
                 
+      
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Confirmed);
                 UpdateTicketNumberReservationDb(input.RsvNo);
                 GeneratePayStepOperator(input.RsvNo);
                 var activityDetail = GetActivityDetailFromDb(new GetDetailActivityInput { ActivityId = bookingDetail.BookingDetail.ActivityId });
-                if(activityDetail.ActivityDetail.IsInstantConfirmation == true)
+                if(activityDetail.ActivityDetail.HasOperator)
                 {
                     var statusTicket = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
                     var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");
                     activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                     UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketed);
                     InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketed);
+                }
+                else
+                {
+                    UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketing);
+                    InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketing);
                 }      
+                var acceptanceQueue = QueueService.GetInstance().GetQueueByReference("activityacceptanceemail");
+                acceptanceQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifConfirm = PushNotificationConfirmAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             
@@ -95,6 +103,8 @@ namespace Lunggo.ApCommon.Activity.Service
                 
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Denied);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Denied);
+                var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+                rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             

@@ -156,6 +156,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Function\ActivityAcceptanceEmail.cs" />
+    <Compile Include="Function\ActivityRejectionEmail.cs" />
     <Compile Include="Function\ActivityVoucherAndInvoiceEmail.cs" />
     <Compile Include="Function\FlightDepositWarningNotifEmail.cs" />
     <Compile Include="Function\FlightIssueTimeoutNotifEmail.cs" />

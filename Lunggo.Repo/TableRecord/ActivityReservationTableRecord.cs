@@ -101,6 +101,33 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("TicketNumber");
 		    }
 		}
+		public Boolean? IsVerified
+		{
+		    get { return _IsVerified; }
+		    set
+		    {
+		        _IsVerified = value;
+		        IncrementLog("IsVerified");
+		    }
+		}
+		public DateTime? UpdateDate
+		{
+		    get { return _UpdateDate; }
+		    set
+		    {
+		        _UpdateDate = value;
+		        IncrementLog("UpdateDate");
+		    }
+		}
+		public String CancellationReason
+		{
+		    get { return _CancellationReason; }
+		    set
+		    {
+		        _CancellationReason = value;
+		        IncrementLog("CancellationReason");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -113,6 +140,9 @@ namespace Lunggo.Repository.TableRecord
 		private String _BookingStatusCd;
 		private Boolean? _IsPdfUploaded;
 		private String _TicketNumber;
+		private Boolean? _IsVerified;
+		private DateTime? _UpdateDate;
+		private String _CancellationReason;
 
 
 		public static ActivityReservationTableRecord CreateNewInstance()
@@ -154,6 +184,9 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("BookingStatusCd", false),
 				new ColumnMetadata("IsPdfUploaded", false),
 				new ColumnMetadata("TicketNumber", false),
+				new ColumnMetadata("IsVerified", false),
+				new ColumnMetadata("UpdateDate", false),
+				new ColumnMetadata("CancellationReason", false),
 
             };
         }

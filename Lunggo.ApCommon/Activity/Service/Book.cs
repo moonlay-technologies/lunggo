@@ -16,6 +16,7 @@ using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Context;
 using System.Collections.Generic;
 using Lunggo.Framework.Environment;
+using Lunggo.Repository.TableRepository;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -65,7 +66,7 @@ namespace Lunggo.ApCommon.Activity.Service
             }
 
             getDetail.ActivityDetail.BookingStatus = BookingStatus.Booked;
-            
+
             var rsvDetail = CreateActivityReservation(input, getDetail.ActivityDetail, dateAndSession, out var originalPrice);
             if (rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE" || rsvDetail.RsvNo == "ERR_INVALID_TICKET_TYPE_COUNT" || rsvDetail.RsvNo == "ERR_INVALID_ALL_TICKET_COUNT")
             {
@@ -187,5 +188,13 @@ namespace Lunggo.ApCommon.Activity.Service
             return rsvDetail;
         }
 
+        public bool CheckActivityHasOperator(string activityId)
+        {
+            var activity = GetActivityDetailFromDb(new GetDetailActivityInput
+            {
+                ActivityId = Convert.ToInt64(activityId)
+            });
+            return activity.ActivityDetail.HasOperator;
+        }
     }
 }

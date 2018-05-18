@@ -26,6 +26,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.City AS City, act.Country AS Country, ");
             clauseBuilder.Append("act.Zone AS Zone, act.Area AS Area, ");
             clauseBuilder.Append("act.HasPDFVoucher AS HasPDFVoucher, ");
+            clauseBuilder.Append("act.HasOperator AS HasOperator, ");
             clauseBuilder.Append("act.IsInstantConfirmation AS IsInstantConfirmation, ");
             clauseBuilder.Append("act.MustPrinted AS MustPrinted, ");
             clauseBuilder.Append("act.ActivityDuration AS ActivityDuration, ");
