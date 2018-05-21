@@ -31,7 +31,7 @@ namespace Lunggo.Framework.Database
         public int Delete(IDbConnection connection, TableRecord record, CommandDefinition definition)
         {
             var queryString = CreateDeleteQuery(record);
-            var queryParams = CreatePrimaryKeyQueryParamsForDelete(record);
+            var queryParams = CreateUpdateQueryParams(record);
             return SqlMapper.Execute(connection, queryString, queryParams as object, null, definition.CommandTimeout, definition.CommandType);
         }
 
@@ -124,7 +124,7 @@ namespace Lunggo.Framework.Database
         {
             var updateClause = CreateUpdateClause(record);
             var setClause = CreateSetClause(record);
-            var whereClause = CreatePrimaryKeyWhereClause(record);
+            var whereClause = CreateWhereClause(record);
             return GetAssembledUpdateQuery(updateClause, setClause, whereClause);
         }
 
@@ -154,7 +154,7 @@ namespace Lunggo.Framework.Database
         private String CreateDeleteQuery(TableRecord record)
         {
             var deleteClause = CreateDeleteClause(record);
-            var whereClause = CreatePrimaryKeyWhereClause(record);
+            var whereClause = CreateWhereClause(record);
             return GetAssembledDeleteQuery(deleteClause, whereClause);
         }
 

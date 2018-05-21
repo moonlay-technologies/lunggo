@@ -843,6 +843,7 @@
     <Compile Include="Payment\Model\AddressingDetails.cs" />
     <Compile Include="Payment\Model\AddToCartInput.cs" />
     <Compile Include="Payment\Model\AddToCartOutput.cs" />
+    <Compile Include="Payment\Model\BankAccount.cs" />
     <Compile Include="Payment\Model\BinMethodDiscount.cs" />
     <Compile Include="Payment\Model\CampaignVoucher.cs" />
     <Compile Include="Payment\Model\CheckoutInput.cs" />

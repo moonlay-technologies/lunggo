@@ -14,14 +14,7 @@ namespace Lunggo.WebAPITests.PaymentTests
     [TestClass]
     public class ViewCartTests
     {
-        [TestMethod]
-        // TESTNAME
-        public void TESTNAME()
-        {
-            HttpContext.Current = TestHelper.LoginUser("08428373826:petermort@wasasa.com");
-
-            CartLogic.ViewCart();
-        }
+        
 	
     }
 }

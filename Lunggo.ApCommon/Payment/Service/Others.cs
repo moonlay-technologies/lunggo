@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Payment.Model;
 
@@ -20,6 +21,11 @@ namespace Lunggo.ApCommon.Payment.Service
                 ? 0
                 : Math.Ceiling((payment.OriginalPriceIdr - payment.DiscountNominal) * surcharge.Percentage / 100) +
                   surcharge.Constant;
+        }
+
+        public virtual List<BankAccount> GetUserBankAccounts(string userId)
+        {
+            return _db.GetUserBankAccounts(userId);
         }
     }
 }

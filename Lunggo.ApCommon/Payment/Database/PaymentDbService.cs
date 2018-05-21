@@ -153,5 +153,22 @@ namespace Lunggo.ApCommon.Payment.Database
                 return (decimal)rate.Rate;
             }
         }
+
+        internal virtual List<BankAccount> GetUserBankAccounts(string userId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var records = UserBankAccountTableRepo.GetInstance()
+                    .Find(conn, new UserBankAccountTableRecord { UserId = userId });
+                var accounts = records.Select(r => new BankAccount
+                {
+                    AccountNumber = r.AccountNumber,
+                    BankName = r.BankName,
+                    Branch = r.Branch,
+                    OwnerName = r.OwnerName
+                }).ToList();
+                return accounts;
+            }
+        }
     }
 }
