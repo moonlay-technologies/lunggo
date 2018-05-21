@@ -158,7 +158,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
             }
         }
 
-        [HttpPost]
+        [HttpGet]
         [Level2Authorize]
         [Route("v1/payment/user/bankaccounts")]
         public ApiResponseBase GetUserBankAccounts()
