@@ -168,6 +168,7 @@
     <Compile Include="TableRecord\TrxUserTableRecord.cs" />
     <Compile Include="TableRecord\UsedDiscountTableRecord.cs" />
     <Compile Include="TableRecord\UsedMarginTableRecord.cs" />
+    <Compile Include="TableRecord\UserBankAccountTableRecord.cs" />
     <Compile Include="TableRecord\VoucherRecipientsTableRecord.cs" />
     <Compile Include="TableRecord\VoucherTableRecord.cs" />
     <Compile Include="TableRecord\MemberTableRecord.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="TableRepository\TrxUserRepository.cs" />
     <Compile Include="TableRepository\UsedDiscountRepository.cs" />
     <Compile Include="TableRepository\UsedMarginRepository.cs" />
+    <Compile Include="TableRepository\UserBankAccountRepository.cs" />
     <Compile Include="TableRepository\VoucherRecipientsRepository.cs" />
     <Compile Include="TableRepository\VoucherRepository.cs" />
     <Compile Include="TableRepository\MemberRepository.cs" />

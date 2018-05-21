@@ -100,10 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CacheServiceTests\CartAndTrxTests.cs" />
+    <Compile Include="DbServiceTests\OtherTests.cs" />
     <Compile Include="DbServiceTests\VoucherTests.cs" />
     <Compile Include="DbServiceTests\CartAndTrxTests.cs" />
     <Compile Include="DbServiceTests\TodoTests.cs" />
-    <Compile Include="PaymentServiceTests\Others.cs" />
+    <Compile Include="PaymentServiceTests\OtherTests.cs" />
     <Compile Include="PaymentServiceTests\CartTests.cs" />
     <Compile Include="PaymentServiceTests\SubmitCartPaymentTest.cs" />
     <Compile Include="PaymentServiceTests\VoucherTests.cs" />
