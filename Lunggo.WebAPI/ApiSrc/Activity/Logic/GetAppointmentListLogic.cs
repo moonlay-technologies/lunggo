@@ -103,6 +103,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
             if (!string.IsNullOrWhiteSpace(request.BookingStatusCd))
             {
+                var bookingStatusCdlowerCase = request.BookingStatusCd.ToLower();
                 var bookingStatusCdArr = request.BookingStatusCd.Split(',');
 
                 var bookingStatusCdList =
@@ -112,9 +113,9 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     return false;
                 }
                 serviceRequest.BookingStatusCdList = new List<string>(bookingStatusCdArr);
-                serviceRequest.BookingStatusCdList.Remove("ForwardedToOperator");
-                serviceRequest.BookingStatusCdList.Remove("Booked");
-                serviceRequest.BookingStatusCdList.Remove("Ticketing");
+                serviceRequest.BookingStatusCdList.Remove("forwardedtooperator");
+                serviceRequest.BookingStatusCdList.Remove("booked");
+                serviceRequest.BookingStatusCdList.Remove("ticketing");
             }
             else
             {
