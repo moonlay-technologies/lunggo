@@ -1,6 +1,7 @@
 ﻿using Lunggo.ApCommon.Product.Constant;
 using Lunggo.ApCommon.Product.Model;
 using System;
+using System.Collections.Generic;
 
 namespace Lunggo.ApCommon.Activity.Model.Logic
 {
@@ -12,6 +13,7 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
         }
 
         public bool OrderParam { get; set; }
+        public List<string> BookingStatusCdList { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Page { get; set; }

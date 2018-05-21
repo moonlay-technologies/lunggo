@@ -15,11 +15,9 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public AppointmentConfirmationOutput ConfirmAppointment(AppointmentConfirmationInput input)
         {
-            
-                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "TKTD" };
                 var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
                 var status = bookingDetail.BookingDetail.BookingStatus;
-                if(status == "CONF" || rejectStatus.Contains(status))
+                if(status != "Booked")
                 {
                     return new AppointmentConfirmationOutput
                     {
@@ -88,27 +86,20 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput DenyAppointment(AppointmentConfirmationInput input)
         {
-            
-            
-                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status == "DENY" || rejectStatus.Contains(status))
+                if (status != "Booked" || status != "ForwardedToOperator")
                 {
                     return new AppointmentConfirmationOutput
                     {
                         IsSuccess = false
                     };
                 }
-
-                
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Denied);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Denied);
                 var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
                 rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
-            
-            
         }
 
         internal bool PushNotificationDenyAppointment(string rsvNo)
@@ -129,7 +120,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput CancelAppointmentByOperator(AppointmentConfirmationInput input)
         {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
+                var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
                 {
@@ -138,15 +129,15 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsSuccess = false
                     };
                 }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelledByOperator);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByOperator);
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByOperator);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByOperator);
                 InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         public AppointmentConfirmationOutput CancelAppointmentByAdmin(AppointmentConfirmationInput input)
         {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
+                var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
                 {
@@ -155,8 +146,8 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsSuccess = false
                     };
                 }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelledByAdmin);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByAdmin);
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByAdmin);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByAdmin);
                 InsertRefundAmountOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             
@@ -165,7 +156,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput CancelAppointmentByCustomer(AppointmentConfirmationInput input)
         {
-                var cancel = new List<string> { "CAOP", "CACU", "CAAD", "DENY" };
+                var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
                 if (cancel.Contains(status))
                 {
@@ -174,17 +165,16 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsSuccess = false
                     };
                 }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelledByCustomer);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelledByCustomer);
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByCustomer);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByCustomer);
                 InsertRefundAmountOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         public AppointmentConfirmationOutput ForwardAppointment(AppointmentConfirmationInput input)
         {
-                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status == "FORW" || rejectStatus.Contains(status))
+                if (status != "Booked" || status != "Confirmed")
                 {
                     return new AppointmentConfirmationOutput
                     {

@@ -36,7 +36,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE (ar.BookingStatusCd = 'CONF' OR ar.BookingStatusCd = 'TKTD' OR ar.BookingStatusCd = 'CACU' OR ar.BookingStatusCd = 'CAAD' OR ar.BookingStatusCd = 'CAOP' OR ar.BookingStatusCd = 'DENY') AND ");
+            clauseBuilder.Append("WHERE ar.BookingStatusCd IN @BookingStatusCdList AND ");
             clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId AND ar.Date BETWEEN @StartDate AND @EndDate ");
             return clauseBuilder.ToString();
         }

@@ -6,6 +6,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     {
         [JsonProperty("type")]
         public string Type { get; set; }
+        [JsonProperty("bookingStatusCd")]
+        public string BookingStatusCd { get; set; }
         [JsonProperty("startDate")]
         public string StartDate { get; set; }
         [JsonProperty("endDate")]

@@ -442,8 +442,8 @@ namespace Lunggo.ApCommon.Activity.Service
                         var saveds = new ActivityPricePackageReservation();
                         saveds.Type = savedPaxCount.Type;
                         saveds.Count = savedPaxCount.Count;
-                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type);
-                        if (amountType.Count() != 0)
+                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type).ToList();
+                        if (amountType.Count != 0)
                         {
                             saveds.TotalPrice = savedPaxCount.Count * amountType.First().Amount;
                         }
@@ -481,7 +481,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
                 var savedBookings = GetAppointmentListQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, StartDate = input.StartDate, EndDate = input.EndDate }).ToList();
+                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage, StartDate = input.StartDate, EndDate = input.EndDate, BookingStatusCdList = input.BookingStatusCdList }).ToList();
                 var saved2 = savedBookings.Select(savedBooking => new AppointmentList { ActivityId = savedBooking.ActivityId, Date = savedBooking.Date, Name = savedBooking.Name, Session = savedBooking.Session, MediaSrc = savedBooking.MediaSrc });
                 var saved1 = saved2.GroupBy(p => new { p.ActivityId, p.Date, p.Session, p.MediaSrc, p.AppointmentReservations })
                             .Select(g => g.First());
@@ -531,7 +531,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     {
                         var paymentStepsDb = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord() { RsvNo = savedBooking.RsvNo }).ToList();
                         var paymentSteps = paymentStepsDb.Select(a => new PaymentStep { StepDescription = a.StepDescription, StepAmount = a.StepAmount ?? 0, StepDate = a.StepDate, StepStatus = (a.StepStatus.Value) ? "PAID" : "PENDING" }).ToList();
-                        if (savedBooking.RsvStatus == "CACU" || savedBooking.RsvStatus == "CAOP" || savedBooking.RsvStatus == "CAAD" || savedBooking.RsvStatus == "CANC")
+                        var cancelStatus = savedBooking.RsvStatus.Substring(0, 6);
+                        if (cancelStatus == "Cancel")
                         {
                             var newPaymentSteps = paymentSteps.Where(a => a.StepStatus == "PAID").ToList();
                             var halfStatusHistory = ReservationStatusHistoryTableRepo.GetInstance().Find(conn, new ReservationStatusHistoryTableRecord
@@ -574,10 +575,6 @@ namespace Lunggo.ApCommon.Activity.Service
                         IsVerified = appointment.IsVerified ?? false
                     }).ToList();
                     save.AppointmentReservations = appointmentReservations;
-                    if (!input.OrderParam)
-                    {
-                        save.AppointmentReservations = appointmentReservations.Where(a => a.RsvStatus == "CONF" || a.RsvStatus == "TKTD").ToList();
-                    }
                 }
 
                 
@@ -1822,7 +1819,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     savedBooking.RsvStatus = activityReservation.BookingStatusCd;
                     var paymentStepsDb = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord() { RsvNo = savedBooking.RsvNo }).ToList();
                     var paymentSteps = paymentStepsDb.Select(a => new PaymentStep { StepDescription = a.StepDescription, StepAmount = a.StepAmount ?? 0, StepDate = a.StepDate, StepStatus = (a.StepStatus.Value) ? "PAID" : "PENDING" }).ToList();
-                    if (savedBooking.RsvStatus == "CACU" || savedBooking.RsvStatus == "CAOP" || savedBooking.RsvStatus == "CAAD" || savedBooking.RsvStatus == "CANC")
+                    var cancelStatus = savedBooking.RsvStatus.Substring(0, 6);
+                    if (cancelStatus == "Cancel")
                     {
                         var newPaymentSteps = paymentSteps.Where(a => a.StepStatus == "PAID").ToList();
                         var halfStatusHistory = ReservationStatusHistoryTableRepo.GetInstance().Find(conn, new ReservationStatusHistoryTableRecord

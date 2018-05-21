@@ -2,6 +2,7 @@
 using Lunggo.ApCommon.Activity.Model.Logic;
 using System.Collections.Generic;
 using System.Linq;
+using Lunggo.ApCommon.Activity.Constant;
 
 namespace Lunggo.ApCommon.Activity.Service
 {
@@ -12,6 +13,11 @@ namespace Lunggo.ApCommon.Activity.Service
             var getMyBookingsOutput = GetMyBookingsFromDb(input);
             return getMyBookingsOutput;
         }
-        
+
+        public bool CheckBookingStatusCd(string bookingStatusCd)
+        {
+            var bookingStatus = BookingStatusCd.Mnemonic(bookingStatusCd);
+            return bookingStatus != BookingStatus.Undefined;
+        }
     }
 }

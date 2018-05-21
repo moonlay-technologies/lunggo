@@ -12,9 +12,9 @@
         ScheduleChanged = 7,
         Failed = 8,
         Denied = 9,
-        CancelledByCustomer = 10,
-        CancelledByAdmin = 11,
-        CancelledByOperator = 12
+        CancelByCustomer = 10,
+        CancelByAdmin = 11,
+        CancelByOperator = 12
     }
     internal class BookingStatusCd
     {
@@ -23,15 +23,15 @@
             switch (bookingStatus)
             {
                 case BookingStatus.Booked:
-                    return "BOOK";
+                    return "Booked";
                 case BookingStatus.ForwardedToOperator:
-                    return "FORW";
+                    return "ForwardedToOperator";
                 case BookingStatus.Confirmed:
-                    return "CONF";
+                    return "Confirmed";
                 case BookingStatus.Ticketing:
-                    return "TKTG";
+                    return "Ticketing";
                 case BookingStatus.Ticketed:
-                    return "TKTD";
+                    return "Ticketed";
                 case BookingStatus.Cancelled:
                     return "CANC";
                 case BookingStatus.ScheduleChanged:
@@ -39,13 +39,13 @@
                 case BookingStatus.Failed:
                     return "FAIL";
                 case BookingStatus.Denied:
-                    return "DENY";
-                case BookingStatus.CancelledByCustomer:
-                    return "CACU";
-                case BookingStatus.CancelledByOperator:
-                    return "CAOP";
-                case BookingStatus.CancelledByAdmin:
-                    return "CAAD";
+                    return "Denied";
+                case BookingStatus.CancelByCustomer:
+                    return "CancelByCustomer";
+                case BookingStatus.CancelByOperator:
+                    return "CancelByOperator";
+                case BookingStatus.CancelByAdmin:
+                    return "CancelByAdmin";
                 default:
                     return null;
             }
@@ -55,15 +55,15 @@
         {
             switch (bookingStatus)
             {
-                case "BOOK":
+                case "Booked":
                     return BookingStatus.Booked;
-                case "FORW":
+                case "ForwardedToOperator":
                     return BookingStatus.ForwardedToOperator;
-                case "CONF":
+                case "Confirmed":
                     return BookingStatus.Confirmed;
-                case "TKTG":
+                case "Ticketing":
                     return BookingStatus.Ticketing;
-                case "TKTD":
+                case "Ticketed":
                     return BookingStatus.Ticketed;
                 case "CANC":
                     return BookingStatus.Cancelled;
@@ -71,14 +71,14 @@
                     return BookingStatus.ScheduleChanged;
                 case "FAIL":
                     return BookingStatus.Failed;
-                case "DENY":
+                case "Denied":
                     return BookingStatus.Denied;
-                case "CACU":
-                    return BookingStatus.CancelledByCustomer;
-                case "CAOP":
-                    return BookingStatus.CancelledByOperator;
-                case "CAAD":
-                    return BookingStatus.CancelledByAdmin;
+                case "CancelByCustomer":
+                    return BookingStatus.CancelByCustomer;
+                case "CancelByOperator":
+                    return BookingStatus.CancelByOperator;
+                case "CancelByAdmin":
+                    return BookingStatus.CancelByAdmin;
                 default:
                     return BookingStatus.Undefined;
             }

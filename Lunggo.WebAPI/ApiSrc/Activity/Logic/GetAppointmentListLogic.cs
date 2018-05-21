@@ -11,6 +11,7 @@ using Lunggo.ApCommon.Product.Constant;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using Lunggo.ApCommon.Identity.Users;
+using System.Collections.Generic;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
@@ -99,6 +100,32 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 serviceRequest.OrderParam = true;
             }
+
+            if (!string.IsNullOrWhiteSpace(request.BookingStatusCd))
+            {
+                var bookingStatusCdArr = request.BookingStatusCd.Split(',');
+                var bookingStatusCdList =
+                    bookingStatusCdArr.Select(a => ActivityService.GetInstance().CheckBookingStatusCd(a)).ToList();
+                if (bookingStatusCdList.Contains(false))
+                {
+                    return false;
+                }
+                serviceRequest.BookingStatusCdList = new List<string>(bookingStatusCdArr);
+                serviceRequest.BookingStatusCdList.Remove("ForwardedToOperator");
+                serviceRequest.BookingStatusCdList.Remove("Booked");
+                serviceRequest.BookingStatusCdList.Remove("Ticketing");
+            }
+            else
+            {
+                serviceRequest.BookingStatusCdList = new List<string>();
+                serviceRequest.BookingStatusCdList.Add("Confirmed");
+                serviceRequest.BookingStatusCdList.Add("CancelByOperator");
+                serviceRequest.BookingStatusCdList.Add("CancelByAdmin");
+                serviceRequest.BookingStatusCdList.Add("CancelByCustomer");
+                serviceRequest.BookingStatusCdList.Add("Ticketed");
+                serviceRequest.BookingStatusCdList.Add("Denied");
+            }
+                     
             return true;
         }
         
