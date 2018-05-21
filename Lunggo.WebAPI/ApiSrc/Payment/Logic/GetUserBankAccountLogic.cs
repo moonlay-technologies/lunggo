@@ -3,6 +3,7 @@ using System.Net;
 using System.Security.Principal;
 using System.Web;
 using Lunggo.ApCommon.Flight.Model;
+using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -15,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
     {
         public static ApiResponseBase GetUserBankAccounts()
         {
-            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var userId = HttpContext.Current?.User?.Identity?.GetUser()?.Id;
             if (string.IsNullOrWhiteSpace(userId))
                 return ApiResponseBase.Error(HttpStatusCode.Unauthorized, "ERR_UNAUTHORIZED");
 

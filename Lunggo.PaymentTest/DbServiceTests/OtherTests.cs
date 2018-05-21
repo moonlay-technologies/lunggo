@@ -53,6 +53,8 @@ namespace Lunggo.PaymentTest.DbServiceTests
                     a.BankName == expected2.BankName &&
                     a.Branch == expected2.Branch &&
                     a.OwnerName == expected2.OwnerName));
+
+                UserBankAccountTableRepo.GetInstance().Delete(conn, new UserBankAccountTableRecord { UserId = userId });
             });
         }
 
