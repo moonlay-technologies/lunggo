@@ -103,8 +103,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 
             if (!string.IsNullOrWhiteSpace(request.BookingStatusCd))
             {
-                var bookingStatusLowerCase = request.BookingStatusCd.ToLower();
-                var bookingStatusCdArr = bookingStatusLowerCase.Split(',').Select(a => a.First().ToString().ToUpper() + a.Substring(1)).ToList();
+                var bookingStatusCdArr = request.BookingStatusCd.Split(',');
 
                 var bookingStatusCdList =
                     bookingStatusCdArr.Select(a => ActivityService.GetInstance().CheckBookingStatusCd(a)).ToList();
@@ -153,5 +152,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             return apiResponse;
 
         }
+
     }
 }

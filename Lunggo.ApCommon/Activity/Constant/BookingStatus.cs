@@ -53,31 +53,31 @@
 
         internal static BookingStatus Mnemonic(string bookingStatus)
         {
-            switch (bookingStatus)
+            switch (bookingStatus.ToLower())
             {
-                case "Booked":
+                case "booked":
                     return BookingStatus.Booked;
-                case "ForwardedToOperator":
+                case "forwardedtooperator":
                     return BookingStatus.ForwardedToOperator;
-                case "Confirmed":
+                case "confirmed":
                     return BookingStatus.Confirmed;
-                case "Ticketing":
+                case "ticketing":
                     return BookingStatus.Ticketing;
-                case "Ticketed":
+                case "ticketed":
                     return BookingStatus.Ticketed;
-                case "CANC":
+                case "canc":
                     return BookingStatus.Cancelled;
-                case "CHGD":
+                case "chgd":
                     return BookingStatus.ScheduleChanged;
-                case "FAIL":
+                case "fail":
                     return BookingStatus.Failed;
-                case "Denied":
+                case "denied":
                     return BookingStatus.Denied;
-                case "CancelByCustomer":
+                case "cancelbycustomer":
                     return BookingStatus.CancelByCustomer;
-                case "CancelByOperator":
+                case "cancelbyoperator":
                     return BookingStatus.CancelByOperator;
-                case "CancelByAdmin":
+                case "cancelbyadmin":
                     return BookingStatus.CancelByAdmin;
                 default:
                     return BookingStatus.Undefined;
