@@ -1217,7 +1217,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 decimal totalDiscount = 0;
                 decimal totalUniqueCode = 0;
                 var bookingDetails = new List<BookingDetail>();
-                var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+                var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
                 foreach (var rsvNo in rsvNoList)
                 {
                     var payment = GetReservationFromDb(rsvNo).Payment;
@@ -1245,7 +1245,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                return GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { CartId = cartId }).ToList();
+                return GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
             }
 
         }

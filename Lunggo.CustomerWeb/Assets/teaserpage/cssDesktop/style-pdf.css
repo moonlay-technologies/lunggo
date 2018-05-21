@@ -30,7 +30,7 @@ footer {padding:0 150px 0 150px; background-color: #f8f8f8; position: absolute; 
 .right-content {padding-left:70px; float:left; width: 650px;}
 .judul-activity {color:#323232; font-weight: 400; font-size: 40px; margin-top:-13px;}
 .alamat-activity {color:#7d7e7e; font-size: 19px;}
-.container-barcode {text-align: center; margin-top:30px;}
+.container-barcode {text-align: center; margin-top:60px;}
 .barcode img {width:150px;}
 .kode-barcode {color:#7d7e7e; font-size: 26px; margin-top:20px;}
 .container-detail-pesanan {margin-top:100px; border-bottom:1px solid #ececec; padding-bottom: 15px;}

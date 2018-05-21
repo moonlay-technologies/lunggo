@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @model Lunggo.ApCommon.Activity.Model.ActivityEVoucher
 @using Lunggo.ApCommon.Constant
-@using Lunggo.Framework.Environment.Variables
+@using Lunggo.Framework.Environment
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,8 +49,8 @@
                 <div class="alamat-activity">@Model.BookingDetail.Address</div>
                 <div class="container-barcode">
                     <p style="position: relative; height: 100px; ">
-                        <img style="width: 100px;/* text-align: center; */position: absolute;left: 110px;" src="@("https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + Model.BookingDetail.TicketNumber)" alt="" />
-                        <img style="width: 100px;/* text-align: center; */position: absolute;left: 110px;" src="@("https://chart.googleapis.com/chart?cht=qr&chs=100x100&chl=" + Model.BookingDetail.TicketNumber)" alt="" />
+                        <img style="width: 100px;/* text-align: center; */position: absolute;left: 250px;" src="@("https://chart.googleapis.com/chart?cht=qr&chs=100x100&chl=" + Model.BookingDetail.TicketNumber)" alt="" />
+                        <img style="width: 100px;/* text-align: center; */position: absolute;left: 250px;" src="@("https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" + Model.BookingDetail.TicketNumber)" alt="" />
                     </p>
 
                     <div class="kode-barcode">Kode voucher: @Model.BookingDetail.TicketNumber</div>

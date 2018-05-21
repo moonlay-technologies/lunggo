@@ -6,7 +6,7 @@ namespace Lunggo.ApCommon.Payment.Database.Query
     {
         protected override string GetQuery(dynamic condition = null)
         {
-            return "SELECT DISTINCT CartId FROM Carts WHERE RsvNoList = @RsvNo";
+            return "SELECT DISTINCT TrxId FROM TrxRsv WHERE RsvNo = @RsvNo";
         }
     }
 }
