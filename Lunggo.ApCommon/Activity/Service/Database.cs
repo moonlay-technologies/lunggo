@@ -408,6 +408,49 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
+        public GetMyBookingsReservationActiveOutput GetMyBookingsReservationActiveFromDb(GetMyBookingsReservationActiveInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+                var cartIdList = GetCartIdListDbQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = 1, PerPage = 1000 }).ToList();
+                var savedReservations = new List<BookingDetail>();
+                foreach (var cartId in cartIdList)
+                {
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
+                    var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail).ToList();
+                    foreach (var bookingDetail in bookingDetails)
+                    {
+                        savedReservations.Add(bookingDetail);
+                    }
+                }
+
+                var lastUpdate = savedReservations.Select(a => a.UpdateDate > input.LastUpdate ? a.UpdateDate : null)
+                    .Where(b => b != null).ToList();
+
+                if (lastUpdate.Count < 1)
+                {
+                    return new GetMyBookingsReservationActiveOutput
+                    {
+                        MyReservations = new List<BookingDetail>(),
+                        LastUpdate = input.LastUpdate,
+                        MustUpdate = false
+                    };
+                }
+
+                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).First();
+
+                var output = new GetMyBookingsReservationActiveOutput
+                {                
+                    MyReservations = savedReservations.OrderBy(a => a.Date).ToList(),
+                    LastUpdate = lastUpdateOutput.Value,
+                    MustUpdate = true
+                };
+                return output;
+            }
+        }
+
         public GetMyBookingDetailOutput GetMyBookingDetailFromDb(GetMyBookingDetailInput input)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
@@ -1439,7 +1482,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     dateCheck = date.Date.Add(time);
                 }
                 var reviews = GetReviewFromDbByRsvNoQuery.GetInstance().Execute(conn, new { RsvNo = rsvNo }).ToList();
-                if (reviews.Count() == 0 && DateTime.UtcNow > dateCheck)
+                if (reviews.Count == 0 && DateTime.UtcNow > dateCheck)
                 {
                     return true;
                 }

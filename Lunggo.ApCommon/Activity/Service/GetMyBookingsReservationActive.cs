@@ -8,10 +8,10 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public GetMyBookingsCartActiveOutput GetMyBookingsCartActive(GetMyBookingsCartActiveInput input)
+        public GetMyBookingsReservationActiveOutput GetMyBookingsReservationActive(GetMyBookingsReservationActiveInput input)
         {
-            var getMyBookingsCartActiveOutput = GetMyBookingsCartActiveFromDb(input);
-            return getMyBookingsCartActiveOutput;
+            var getMyBookingsReservationActiveOutput = GetMyBookingsReservationActiveFromDb(input);
+            return getMyBookingsReservationActiveOutput;
         }
     }
 }

@@ -101,7 +101,9 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("isPdfUploaded", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsPdfUploaded { get; set; }
         [JsonProperty("pdfUrl", NullValueHandling = NullValueHandling.Ignore)]
-        public string PdfUrl { get; set; }        
+        public string PdfUrl { get; set; }
+        [JsonProperty("udpateDate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? UpdateDate { get; set; }
     }
 
     public class ActivityPackageReservation
