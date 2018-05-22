@@ -132,6 +132,7 @@
     <Compile Include="TableRecord\ReferralHistoryTableRecord.cs" />
     <Compile Include="TableRecord\RefreshTokenTableRecord.cs" />
     <Compile Include="TableRecord\RefundHistoryTableRecord.cs" />
+    <Compile Include="TableRecord\RefundRulesCustomerTableRecord.cs" />
     <Compile Include="TableRecord\RefundRulesOperatorTableRecord.cs" />
     <Compile Include="TableRecord\RefundTableRecord.cs" />
     <Compile Include="TableRecord\ReservationStateTableRecord.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="TableRepository\RefreshTokenRepository.cs" />
     <Compile Include="TableRepository\RefundHistoryRepository.cs" />
     <Compile Include="TableRepository\RefundRepository.cs" />
+    <Compile Include="TableRepository\RefundRulesCustomerRepository.cs" />
     <Compile Include="TableRepository\RefundRulesOperatorRepository.cs" />
     <Compile Include="TableRepository\ReservationRepository.cs" />
     <Compile Include="TableRepository\ReservationStateRepository.cs" />

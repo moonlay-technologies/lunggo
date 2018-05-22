@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.OperationTime AS OperationTime, asp.Price AS Price, ");
             clauseBuilder.Append("act.OperatorName AS OperatorName, act.OperatorEmail AS OperatorEmail, act.OperatorPhone AS OperatorPhone, ");
             clauseBuilder.Append("act.ImportantNotice AS ImportantNotice, act.Warning AS Warning, act.AdditionalNotes AS AdditionalNotes, ");
-            clauseBuilder.Append("act.PriceDetail AS PriceDetail, act.Cancellation AS Cancellation, ");
+            clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
             clauseBuilder.Append("act.IsPassportNeeded AS IsPassportNeeded, act.IsPassportIssueDateNeeded AS IsPassportIssueDateNeeded, ");
             clauseBuilder.Append("act.IsDateOfBirthNeeded AS IsDateOfBirthNeeded, ");
             clauseBuilder.Append("act.AmountDuration AS Amount, act.UnitDuration AS Unit ");
