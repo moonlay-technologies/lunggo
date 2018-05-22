@@ -410,6 +410,7 @@
     <Content Include="Assets\bootstrap\bootstrap\_variables.scss" />
     <Content Include="Assets\bootstrap\bootstrap\_wells.scss" />
     <Content Include="Assets\bootstrap\bootstrap_difference.css" />
+    <Content Include="Assets\css\cancellationPolicy.css" />
     <Content Include="Assets\css\ionicons.css" />
     <Content Include="Assets\css\landingpage.css" />
     <Content Include="Assets\bootstrap\_bootstrap-compass.scss" />
@@ -470,7 +471,6 @@
     <Content Include="Assets\fonts\Gotham-Medium.svg" />
     <Content Include="Assets\fonts\Gotham-Medium.ttf" />
     <Content Include="Assets\fonts\Gotham-Medium.woff" />
-    <Content Include="Assets\fonts\ionicons.svg" />
     <Content Include="Assets\fonts\MyriadPro-BoldCond.otf" />
     <Content Include="Assets\fonts\MyriadPro-Regular.otf" />
     <Content Include="Assets\fonts\OpenSans-Bold.eot" />
@@ -1888,9 +1888,6 @@
     <Content Include="Assets\fonts\hind-light.ttf" />
     <Content Include="Assets\fonts\hind-regular.ttf" />
     <Content Include="Assets\fonts\hind-semibold.ttf" />
-    <Content Include="Assets\fonts\ionicons.eot" />
-    <Content Include="Assets\fonts\ionicons.ttf" />
-    <Content Include="Assets\fonts\ionicons.woff" />
     <Content Include="Areas\Payment_v2\Views\web.config" />
     <Content Include="webpack.config.js" />
     <None Include="Properties\PublishProfiles\prod-cw %282%29.pubxml" />
@@ -2008,7 +2005,6 @@
     <Content Include="Views\Terms\CancelationPolicy.cshtml" />
     <Content Include="Views\Promo\PromoLandingPage.cshtml" />
     <Content Include="Views\Shared\mobile\_LayoutReactWebview.cshtml" />
-    <None Include="Views\WebView\Contact.cshtml" />
     <Content Include="Views\Index\TeaserPage.cshtml" />
     <Content Include="Views\Index\TeaserPage.mobile.cshtml" />
     <Content Include="Views\LandingPage\vendor\bootstrap\css\bootstrap-grid.css" />
@@ -2023,23 +2019,7 @@
     <Content Include="Views\LandingPage\vendor\bootstrap\js\bootstrap.min.js" />
     <Content Include="Views\LandingPage\vendor\jquery\jquery.js" />
     <Content Include="Views\LandingPage\vendor\jquery\jquery.min.js" />
-    <Content Include="Views\Webview\css\style-activity-edit-detail.css" />
-    <Content Include="Views\Webview\img\chat.jpg" />
-    <Content Include="Views\Webview\img\email.jpg" />
-    <Content Include="Views\Webview\img\icon.png" />
-    <Content Include="Views\Webview\img\whatsapp.jpg" />
-    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-grid.css" />
-    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-grid.min.css" />
-    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-reboot.css" />
-    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap-reboot.min.css" />
-    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap.css" />
-    <Content Include="Views\Webview\vendor\bootstrap\css\bootstrap.min.css" />
-    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.bundle.js" />
-    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.bundle.min.js" />
-    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.js" />
-    <Content Include="Views\Webview\vendor\bootstrap\js\bootstrap.min.js" />
-    <Content Include="Views\Webview\vendor\jquery\jquery.js" />
-    <Content Include="Views\Webview\vendor\jquery\jquery.min.js" />
+    <Content Include="Views\Webview\CancellationPolicy.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -2227,9 +2207,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="Views\Webview\RedirectContact.cshtml" />
-    <Content Include="Views\Webview\fonts\hind-light.ttf" />
-    <Content Include="Views\Webview\fonts\hind-regular.ttf" />
-    <Content Include="Views\Webview\fonts\hind-semibold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Api\Views\Account\" />
