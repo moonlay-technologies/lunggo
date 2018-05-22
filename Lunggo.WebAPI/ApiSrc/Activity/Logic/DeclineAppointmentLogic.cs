@@ -47,7 +47,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             }
 
             var serviceRequest = PreprocessServiceRequest(rsvNo);
-            var serviceResponse = ActivityService.GetInstance().DenyAppointment(serviceRequest);
+            var serviceResponse = ActivityService.GetInstance().DenyAppointmentByOperator(serviceRequest);
             var apiResponse = AssembleApiResponse(serviceResponse);
 
             return apiResponse;

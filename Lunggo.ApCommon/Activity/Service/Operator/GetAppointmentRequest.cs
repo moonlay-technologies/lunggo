@@ -12,7 +12,7 @@ namespace Lunggo.ApCommon.Activity.Service
             var expiredAppointmentRequest = appointmentRequest.Appointments.Where(appointment => appointment.TimeLimit < DateTime.UtcNow).ToList();
             if(expiredAppointmentRequest.Count > 0)
             {
-                var denyAppointment = expiredAppointmentRequest.Select(a => DenyAppointment(new AppointmentConfirmationInput
+                var denyAppointment = expiredAppointmentRequest.Select(a => DenyAppointmentByOperator(new AppointmentConfirmationInput
                 {
                     RsvNo = a.RsvNo
                 })).ToList();

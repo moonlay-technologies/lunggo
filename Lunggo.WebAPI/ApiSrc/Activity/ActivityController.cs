@@ -426,7 +426,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [Level2Authorize]
         [Route("v1/operator/appointments/request")]
 
-        public ApiResponseBase AppointmentRequest(string page = "1", string perPage = "10")
+        public ApiResponseBase AppointmentRequest(string lastUpdate = "")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
@@ -437,8 +437,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             {
                 var request = new GetAppointmentRequestApiRequest()
                 {
-                    Page = page,
-                    PerPage = perPage
+                    LastUpdate = lastUpdate
                 };
                 var apiResponse = ActivityLogic.GetAppointmentRequest(request, UserManager);
                 return apiResponse;

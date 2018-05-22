@@ -61,22 +61,15 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return false;
             }
 
-            int pageValid;
-            bool isPageNumeric = int.TryParse(request.Page, out pageValid);
-            if (!isPageNumeric) { return false; }
-
-            int perPageValid;
-            bool isPerPageNumeric = int.TryParse(request.PerPage, out perPageValid);
-            if (!isPerPageNumeric) { return false; }
-
-            if (pageValid < 0 || perPageValid < 0)
+            DateTime lastUpdateValid;
+            var checkLastUpdate = DateTime.TryParse(request.LastUpdate, out lastUpdateValid);
+            
+            if (!checkLastUpdate)
             {
                 return false;
             }
 
-            
-            serviceRequest.Page = pageValid;
-            serviceRequest.PerPage = perPageValid;
+            serviceRequest.LastUpdate = lastUpdateValid;
             return true;
         }
         

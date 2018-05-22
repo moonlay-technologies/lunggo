@@ -17,7 +17,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
                 var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
                 var status = bookingDetail.BookingDetail.BookingStatus;
-                if(status != "Booked")
+                if(status != "Booked" && status != "ForwardedToOperator")
                 {
                     return new AppointmentConfirmationOutput
                     {
@@ -84,22 +84,40 @@ namespace Lunggo.ApCommon.Activity.Service
            
         }
 
-        public AppointmentConfirmationOutput DenyAppointment(AppointmentConfirmationInput input)
+        public AppointmentConfirmationOutput DenyAppointmentByOperator(AppointmentConfirmationInput input)
         {
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status != "Booked" || status != "ForwardedToOperator")
+                if (status != "Booked" && status != "ForwardedToOperator")
                 {
                     return new AppointmentConfirmationOutput
                     {
                         IsSuccess = false
                     };
                 }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Denied);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Denied);
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.DeniedByOperator);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByOperator);
                 var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
                 rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
+        }
+
+        public AppointmentConfirmationOutput DenyAppointmentByAdmin(AppointmentConfirmationInput input)
+        {
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (status != "Booked" && status != "ForwardedToOperator")
+            {
+                return new AppointmentConfirmationOutput
+                {
+                    IsSuccess = false
+                };
+            }
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.DeniedByAdmin);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByAdmin);
+            var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+            rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+            var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         internal bool PushNotificationDenyAppointment(string rsvNo)
@@ -174,7 +192,7 @@ namespace Lunggo.ApCommon.Activity.Service
         public AppointmentConfirmationOutput ForwardAppointment(AppointmentConfirmationInput input)
         {
                 var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status != "Booked" || status != "Confirmed")
+                if (status != "Booked" && status != "Confirmed")
                 {
                     return new AppointmentConfirmationOutput
                     {

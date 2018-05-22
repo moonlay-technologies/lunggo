@@ -425,7 +425,19 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
                 var savedBookings = GetAppointmentRequestQuery.GetInstance()
-                    .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage });
+                    .Execute(conn, new {UserId = userName.Id, Page = 1, PerPage = 1000}).ToList();
+
+                var lastUpdate = savedBookings.Select(a => a.UpdateDate.HasValue ? a.UpdateDate.Value > input.LastUpdate ? a.UpdateDate : null : null)
+                    .Where(b => b != null).ToList();
+
+                if (lastUpdate.Count < 1)
+                {
+                    return new GetAppointmentRequestOutput
+                    {
+                        LastUpdate = input.LastUpdate,
+                        MustUpdate = false,
+                    };
+                }
 
                 foreach (var savedBooking in savedBookings)
                 {
@@ -452,6 +464,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     savedBooking.PaxCount = savedPaxCounts;
                 }
 
+                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).ToList();               
+
                 var output = new GetAppointmentRequestOutput
                 {
                     Appointments = savedBookings.Select(a => new AppointmentDetail()
@@ -467,8 +481,9 @@ namespace Lunggo.ApCommon.Activity.Service
                         MediaSrc = a.MediaSrc,
                         ContactName = Contact.GetFromDb(a.RsvNo).Name
                     }).ToList(),
-                    Page = input.Page,
-                    PerPage = input.PerPage
+                    LastUpdate = lastUpdateOutput.First().Value,
+                    MustUpdate = true
+
                 };
                 return output;
             }

@@ -11,6 +11,7 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
             get { return ProductType.Activity; }
         }
 
+        public DateTime LastUpdate { get; set; }
         public int Page { get; set; }
         public int PerPage { get; set; }
 

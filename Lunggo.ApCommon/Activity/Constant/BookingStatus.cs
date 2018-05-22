@@ -11,10 +11,11 @@
         Cancelled = 6,
         ScheduleChanged = 7,
         Failed = 8,
-        Denied = 9,
+        DeniedByOperator = 9,
         CancelByCustomer = 10,
         CancelByAdmin = 11,
-        CancelByOperator = 12
+        CancelByOperator = 12,
+        DeniedByAdmin = 13
     }
     internal class BookingStatusCd
     {
@@ -38,14 +39,16 @@
                     return "CHGD";
                 case BookingStatus.Failed:
                     return "FAIL";
-                case BookingStatus.Denied:
-                    return "Denied";
+                case BookingStatus.DeniedByOperator:
+                    return "DeniedByOperator";
                 case BookingStatus.CancelByCustomer:
                     return "CancelByCustomer";
                 case BookingStatus.CancelByOperator:
                     return "CancelByOperator";
                 case BookingStatus.CancelByAdmin:
                     return "CancelByAdmin";
+                case BookingStatus.DeniedByAdmin:
+                    return "DeniedByAdmin";
                 default:
                     return null;
             }
@@ -71,8 +74,8 @@
                     return BookingStatus.ScheduleChanged;
                 case "fail":
                     return BookingStatus.Failed;
-                case "denied":
-                    return BookingStatus.Denied;
+                case "deniedbyoperator":
+                    return BookingStatus.DeniedByOperator;
                 case "cancelbycustomer":
                     return BookingStatus.CancelByCustomer;
                 case "cancelbyoperator":
