@@ -91,8 +91,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ContactName = appointmentList.ContactName
                     //RequestTime = DateTime.Parse(appointmentList.RequestTime).AddHours(5)
                 }).ToList(),
-                Page = serviceResponse.Page,
-                PerPage = serviceResponse.PerPage,
+                LastUpdate = serviceResponse.LastUpdate,
+                MustUpdate = serviceResponse.MustUpdate,
                 StatusCode = HttpStatusCode.OK
             };
 

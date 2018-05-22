@@ -434,6 +434,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     return new GetAppointmentRequestOutput
                     {
+                        Appointments = new List<AppointmentDetail>(),
                         LastUpdate = input.LastUpdate,
                         MustUpdate = false,
                     };

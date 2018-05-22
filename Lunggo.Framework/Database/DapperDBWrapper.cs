@@ -124,7 +124,7 @@ namespace Lunggo.Framework.Database
         {
             var updateClause = CreateUpdateClause(record);
             var setClause = CreateSetClause(record);
-            var whereClause = CreateWhereClause(record);
+            var whereClause = CreatePrimaryKeyWhereClause(record);
             return GetAssembledUpdateQuery(updateClause, setClause, whereClause);
         }
 
