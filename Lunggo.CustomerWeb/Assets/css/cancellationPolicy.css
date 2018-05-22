@@ -1,19 +1,15 @@
 
 @font-face {
     font-family: Hind;
-    src: url(fonts/hind-regular.ttf);
+    src: url(/Assets/fonts/hind-regular.ttf);
 }
 @font-face {
     font-family: Hind-Light;
-    src: url(fonts/hind-light.ttf);
+    src: url(/Assets/fonts/hind-light.ttf);
 }
 @font-face {
     font-family: Hind-SemiBold;
-    src: url(fonts/hind-semibold.ttf);
-}
-@font-face {
-    font-family: "Ionicons";
-    src: url(fonts/ionicons.ttf);
+    src: url(/Assets/fonts/hind-semibold.ttf);
 }
 
 /* ----------- Normalize ----------- */
