@@ -132,5 +132,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal TotalFinalPrice { get; set; }
         [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
         public string PaymentStatus { get; set; }
+        [JsonProperty("paymentLastUpdate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? PaymentLastUpdate { get; set; }
     }
 }

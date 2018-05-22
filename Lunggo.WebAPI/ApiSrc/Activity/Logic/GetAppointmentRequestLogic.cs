@@ -61,15 +61,23 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return false;
             }
 
-            DateTime lastUpdateValid;
-            var checkLastUpdate = DateTime.TryParse(request.LastUpdate, out lastUpdateValid);
-            
-            if (!checkLastUpdate)
+            if (string.IsNullOrWhiteSpace(request.LastUpdate))
             {
-                return false;
+                serviceRequest.LastUpdate = DateTime.MinValue;
+            }
+            else
+            {
+                DateTime lastUpdateValid;
+                var checkLastUpdate = DateTime.TryParse(request.LastUpdate, out lastUpdateValid);
+            
+                if (!checkLastUpdate)
+                {
+                    return false;
+                }
+
+                serviceRequest.LastUpdate = lastUpdateValid;
             }
 
-            serviceRequest.LastUpdate = lastUpdateValid;
             return true;
         }
         

@@ -323,6 +323,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     decimal totalDiscount = payments.Sum(payment => payment.DiscountNominal);
                     decimal totalUniqueCode = payments.Sum(payment => payment.UniqueCode);
                     PaymentStatus paymentStatusEnum = payments.First().Status;
+                    var paymentLastUpdate = payments.First().UpdateDate;
                     var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
                     var cartList = new CartList
                     {
@@ -332,16 +333,76 @@ namespace Lunggo.ApCommon.Activity.Service
                         TotalDiscount = totalDiscount,
                         TotalUniqueCode = totalUniqueCode,
                         TotalFinalPrice = totalFinalPrice,
-                        PaymentStatus = paymentStatus
+                        PaymentStatus = paymentStatus,
+                        PaymentLastUpdate = paymentLastUpdate
                     };
                     savedBookings.Add(cartList);
                 }
 
                 var output = new GetMyBookingsOutput
-                {
-                    MyBookings = savedBookings,
+                {                
+                    MyBookings = savedBookings.OrderBy(a => a.PaymentStatus).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
+                };
+                return output;
+            }
+        }
+
+        public GetMyBookingsCartActiveOutput GetMyBookingsCartActiveFromDb(GetMyBookingsCartActiveInput input)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var userName = HttpContext.Current.User.Identity.GetUser();
+                var cartIdList = GetCartIdListDbQuery.GetInstance()
+                    .Execute(conn, new { UserId = userName.Id, Page = 1, PerPage = 1000 }).ToList();
+                var savedBookings = new List<CartList>();
+                foreach (var cartId in cartIdList)
+                {
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
+                    var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail).ToList();
+                    var payments = rsvNoList.Select(rsvNo => _paymentService.GetPaymentDetails(rsvNo)).ToList();
+                    decimal totalOriginalPrice = payments.Sum(payment => payment.OriginalPriceIdr);
+                    decimal totalFinalPrice = payments.Sum(payment => payment.FinalPriceIdr);
+                    decimal totalDiscount = payments.Sum(payment => payment.DiscountNominal);
+                    decimal totalUniqueCode = payments.Sum(payment => payment.UniqueCode);
+                    PaymentStatus paymentStatusEnum = payments.First().Status;
+                    var paymentLastUpdate = payments.First().UpdateDate;
+                    var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
+                    var cartList = new CartList
+                    {
+                        CartId = cartId,
+                        Activities = bookingDetails,
+                        TotalOriginalPrice = totalOriginalPrice,
+                        TotalDiscount = totalDiscount,
+                        TotalUniqueCode = totalUniqueCode,
+                        TotalFinalPrice = totalFinalPrice,
+                        PaymentStatus = paymentStatus,
+                        PaymentLastUpdate = paymentLastUpdate
+                    };
+                    savedBookings.Add(cartList);
+                }
+
+                var lastUpdate = savedBookings.Select(a => a.PaymentLastUpdate > input.LastUpdate ? a.PaymentLastUpdate : null)
+                    .Where(b => b != null).ToList();
+
+                if (lastUpdate.Count < 1)
+                {
+                    return new GetMyBookingsCartActiveOutput
+                    {
+                        MyBookings = new List<CartList>(),
+                        LastUpdate = input.LastUpdate,
+                        MustUpdate = false
+                    };
+                }
+
+                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).First();
+
+                var output = new GetMyBookingsCartActiveOutput
+                {                
+                    MyBookings = savedBookings.OrderBy(a => a.PaymentStatus).ToList(),
+                    LastUpdate = lastUpdateOutput.Value,
+                    MustUpdate = true
                 };
                 return output;
             }

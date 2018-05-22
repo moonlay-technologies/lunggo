@@ -21,7 +21,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
                 StatusCode = HttpStatusCode.Unauthorized,
                 ErrorCode = "ERAGPR01"
             };
-            var actualResult = ActivityLogic.GetMyBookings(null);
+            var actualResult = ActivityLogic.GetMyBookingsCartActive(null);
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
         }
@@ -36,7 +36,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
                 StatusCode = HttpStatusCode.BadRequest,
                 ErrorCode = "ERASEA01"
             };
-            var actualResult = ActivityLogic.GetMyBookings(null);
+            var actualResult = ActivityLogic.GetMyBookingsCartActive(null);
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
         }
@@ -51,7 +51,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
                 Page = "1",
                 PerPage = "10"
             };
-            var actualResult = ActivityLogic.GetMyBookings(input);
+            var actualResult = ActivityLogic.GetMyBookingsCartActive(input);
 
             Assert.IsNotNull(actualResult);
         }

@@ -176,6 +176,32 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]
+        [Route("v1/activities/mybooking/cart/active")]
+        public ApiResponseBase MyBookingCartActive(string lastUpdate = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetMyBookingsCartActiveApiRequest()
+                {
+                    LastUpdate = lastUpdate
+                };
+                var apiResponse = ActivityLogic.GetMyBookingsCartActive(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
         [Route("v1/activities/mybooking/{rsvNo}")]
         
         public ApiResponseBase MyBookingDetail(string rsvNo = "")
