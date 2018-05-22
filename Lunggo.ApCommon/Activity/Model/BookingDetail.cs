@@ -101,7 +101,9 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("isPdfUploaded", NullValueHandling = NullValueHandling.Ignore)]
         public bool IsPdfUploaded { get; set; }
         [JsonProperty("pdfUrl", NullValueHandling = NullValueHandling.Ignore)]
-        public string PdfUrl { get; set; }        
+        public string PdfUrl { get; set; }
+        [JsonProperty("udpateDate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? UpdateDate { get; set; }
     }
 
     public class ActivityPackageReservation
@@ -132,5 +134,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal TotalFinalPrice { get; set; }
         [JsonProperty("paymentStatus", NullValueHandling = NullValueHandling.Ignore)]
         public string PaymentStatus { get; set; }
+        [JsonProperty("paymentLastUpdate", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? PaymentLastUpdate { get; set; }
     }
 }

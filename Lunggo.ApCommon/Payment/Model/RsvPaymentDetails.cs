@@ -79,6 +79,7 @@ namespace Lunggo.ApCommon.Payment.Model
         public string InvoiceNo { get; set; }
         public bool HasInstruction { get; set; }
         public bool HasThirdPartyPage { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 
     public class RsvPaymentDetails : PaymentDetails

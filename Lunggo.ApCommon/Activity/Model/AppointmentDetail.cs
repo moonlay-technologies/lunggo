@@ -96,6 +96,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public bool? IsVerified { get; set; }
         public decimal? RefundAmount { get; set; }
         public DateTime? RefundDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
     }
 
     public class AppointmentList

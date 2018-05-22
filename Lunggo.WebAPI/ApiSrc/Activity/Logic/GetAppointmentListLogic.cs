@@ -125,7 +125,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 serviceRequest.BookingStatusCdList.Add("CancelByAdmin");
                 serviceRequest.BookingStatusCdList.Add("CancelByCustomer");
                 serviceRequest.BookingStatusCdList.Add("Ticketed");
-                serviceRequest.BookingStatusCdList.Add("Denied");
+                serviceRequest.BookingStatusCdList.Add("DeniedByOperator");
+                serviceRequest.BookingStatusCdList.Add("DeniedByAdmin");
             }
                      
             return true;

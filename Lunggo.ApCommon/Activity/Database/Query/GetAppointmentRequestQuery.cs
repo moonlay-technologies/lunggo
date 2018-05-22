@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT act.Id AS ActivityId, ar.RsvNo AS RsvNo, act.Name AS Name, ");
-            clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ");
+            clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ar.UpdateDate AS UpdateDate, ");
             clauseBuilder.Append("ar.SelectedSession AS Session, ");
             clauseBuilder.Append("r.RsvTime AS RequestTime, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
@@ -40,7 +40,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateWhereClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("WHERE ar.BookingStatusCd = 'FORW' AND p.StatusCd LIKE 'SET%' AND ");
+            clauseBuilder.Append("WHERE ar.BookingStatusCd = 'ForwardedToOperator' AND ");
             clauseBuilder.Append("(SELECT UserId FROM Operator WHERE ActivityId = act.Id) = @UserId ");
             return clauseBuilder.ToString();
         }
@@ -48,7 +48,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateRangeClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("ORDER BY Name OFFSET @Page-1 ROWS FETCH NEXT @PerPage ROWS ONLY");
+            clauseBuilder.Append("ORDER BY ar.Date OFFSET @Page-1 ROWS FETCH NEXT @PerPage ROWS ONLY");
             return clauseBuilder.ToString();
         }
     }

@@ -4,7 +4,7 @@ using System;
 
 namespace Lunggo.ApCommon.Activity.Model.Logic
 {
-    public class GetAppointmentRequestInput : ReservationBase
+    public class GetMyBookingsCartActiveInput : ReservationBase
     {
         public override ProductType Type
         {
@@ -12,8 +12,6 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
         }
 
         public DateTime LastUpdate { get; set; }
-        public int Page { get; set; }
-        public int PerPage { get; set; }
 
         public override decimal GetTotalSupplierPrice()
         {

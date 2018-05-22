@@ -6,10 +6,10 @@ using System;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
-    public class GetAppointmentRequestApiResponse : ApiResponseBase
+    public class GetMyBookingsReservationActiveApiResponse : ApiResponseBase
     {
-        [JsonProperty("appointmentRequests", NullValueHandling = NullValueHandling.Ignore)]
-        public List<AppointmentDetailForDisplay> Appointments { get; set; }
+        [JsonProperty("myReservations", NullValueHandling = NullValueHandling.Ignore)]
+        public List<BookingDetail> MyReservations { get; set; }
         [JsonProperty("mustUpdate", NullValueHandling = NullValueHandling.Ignore)]
         public bool MustUpdate { get; set; }
         [JsonProperty("lastUpdate", NullValueHandling = NullValueHandling.Ignore)]

@@ -176,6 +176,58 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]
+        [Route("v1/activities/mybooking/cart/active")]
+        public ApiResponseBase MyBookingCartActive(string lastUpdate = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetMyBookingsCartActiveApiRequest()
+                {
+                    LastUpdate = lastUpdate
+                };
+                var apiResponse = ActivityLogic.GetMyBookingsCartActive(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/reservation/active")]
+        public ApiResponseBase MyBookingReservationActive(string lastUpdate = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetMyBookingsReservationActiveApiRequest()
+                {
+                    LastUpdate = lastUpdate
+                };
+                var apiResponse = ActivityLogic.GetMyBookingsReservationActive(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
         [Route("v1/activities/mybooking/{rsvNo}")]
         
         public ApiResponseBase MyBookingDetail(string rsvNo = "")
@@ -426,7 +478,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [Level2Authorize]
         [Route("v1/operator/appointments/request")]
 
-        public ApiResponseBase AppointmentRequest(string page = "1", string perPage = "10")
+        public ApiResponseBase AppointmentRequest(string lastUpdate = "")
         {
             var lang = ApiRequestBase.GetHeaderValue("Language");
             OnlineContext.SetActiveLanguageCode(lang);
@@ -437,8 +489,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             {
                 var request = new GetAppointmentRequestApiRequest()
                 {
-                    Page = page,
-                    PerPage = perPage
+                    LastUpdate = lastUpdate
                 };
                 var apiResponse = ActivityLogic.GetAppointmentRequest(request, UserManager);
                 return apiResponse;

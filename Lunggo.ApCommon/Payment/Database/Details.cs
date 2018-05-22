@@ -60,6 +60,7 @@ namespace Lunggo.ApCommon.Payment.Database
             record.InsertBy = "LunggoSystem";
             record.InsertDate = DateTime.UtcNow;
             record.InsertPgId = "0";
+            record.UpdateDate = DateTime.UtcNow;
             return record;
         }
 
@@ -92,6 +93,7 @@ namespace Lunggo.ApCommon.Payment.Database
             details.InvoiceNo = record.InvoiceNo;
             details.Discount = UsedDiscount.GetFromDb(record.RsvNo);
             details.Refund = Refund.GetFromDb(record.RsvNo);
+            details.UpdateDate = record.UpdateDate ?? DateTime.MinValue;
             return details;
         }
 

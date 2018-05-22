@@ -61,22 +61,23 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 return false;
             }
 
-            int pageValid;
-            bool isPageNumeric = int.TryParse(request.Page, out pageValid);
-            if (!isPageNumeric) { return false; }
-
-            int perPageValid;
-            bool isPerPageNumeric = int.TryParse(request.PerPage, out perPageValid);
-            if (!isPerPageNumeric) { return false; }
-
-            if (pageValid < 0 || perPageValid < 0)
+            if (string.IsNullOrWhiteSpace(request.LastUpdate))
             {
-                return false;
+                serviceRequest.LastUpdate = DateTime.MinValue;
+            }
+            else
+            {
+                DateTime lastUpdateValid;
+                var checkLastUpdate = DateTime.TryParse(request.LastUpdate, out lastUpdateValid);
+            
+                if (!checkLastUpdate)
+                {
+                    return false;
+                }
+
+                serviceRequest.LastUpdate = lastUpdateValid;
             }
 
-            
-            serviceRequest.Page = pageValid;
-            serviceRequest.PerPage = perPageValid;
             return true;
         }
         
@@ -98,8 +99,8 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ContactName = appointmentList.ContactName
                     //RequestTime = DateTime.Parse(appointmentList.RequestTime).AddHours(5)
                 }).ToList(),
-                Page = serviceResponse.Page,
-                PerPage = serviceResponse.PerPage,
+                LastUpdate = serviceResponse.LastUpdate,
+                MustUpdate = serviceResponse.MustUpdate,
                 StatusCode = HttpStatusCode.OK
             };
 

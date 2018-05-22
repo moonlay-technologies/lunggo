@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT ar.TicketNumber AS TicketNumber, act.Id AS ActivityId, act.Name AS Name, act.Address AS Address, ");
-            clauseBuilder.Append("ar.BookingStatusCd AS BookingStatus, rsv.RsvTime AS TimeLimit, ");
+            clauseBuilder.Append("ar.BookingStatusCd AS BookingStatus, rsv.RsvTime AS TimeLimit, ar.UpdateDate AS UpdateDate, ");
             clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS SelectedSession, ");
             clauseBuilder.Append("act.City AS City, act.Latitude AS Latitude, act.Longitude AS Longitude, ");
             clauseBuilder.Append("act.HasPDFVoucher AS HasPdfVoucher, ar.IsPdfUploaded AS IsPdfUploaded, ");

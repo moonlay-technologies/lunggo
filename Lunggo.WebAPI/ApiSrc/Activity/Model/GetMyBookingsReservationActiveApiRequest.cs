@@ -2,7 +2,7 @@
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Model
 {
-    public class GetAppointmentRequestApiRequest
+    public class GetMyBookingsReservationActiveApiRequest
     {
         [JsonProperty("lastUpdate")]
         public string LastUpdate { get; set; }
