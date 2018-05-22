@@ -16,5 +16,10 @@ namespace Lunggo.CustomerWeb.Controllers
         {
             return View(model: text);
         }
+
+        public ActionResult CancellationPolicy()
+        {
+            return View();
+        }
     }
 }
