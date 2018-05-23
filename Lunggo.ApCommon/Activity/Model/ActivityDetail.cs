@@ -45,7 +45,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("additionalContents", NullValueHandling = NullValueHandling.Ignore)]
         public AdditionalContent AdditionalContents { get; set; }
         [JsonProperty("cancellation", NullValueHandling = NullValueHandling.Ignore)]
-        public string Cancellation { get; set; }
+        public List<Cancellation> Cancellation { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? Date { get; set; }
         [JsonProperty("requiredPaxData", NullValueHandling = NullValueHandling.Ignore)]
@@ -108,7 +108,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string ImportantNotice { get; set; }
         public string Warning { get; set; }
         public string AdditionalNotes { get; set; }
-        public string Cancellation { get; set; }
+        public List<Cancellation> Cancellation { get; set; }
         public DateTime Date { get; set; }
         public bool IsPassportNeeded { get; set; }
         public bool IsPassportIssueDateNeeded { get; set; }
@@ -259,5 +259,23 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal Rate { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime Date { get; set; }
+    }
+
+    public class Cancellation
+    {
+        [JsonProperty("refundName", NullValueHandling = NullValueHandling.Ignore)]
+        public string RefundName { get; set; }
+        [JsonProperty("refundDescription", NullValueHandling = NullValueHandling.Ignore)]
+        public string RefundDescription { get; set; }
+        [JsonProperty("valuePercentage", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal ValuePercentage { get; set; }
+        [JsonProperty("valueConstant", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal ValueConstant { get; set; }
+        [JsonProperty("minValue", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal MinValue { get; set; }
+        [JsonProperty("thresholdDays", NullValueHandling = NullValueHandling.Ignore)]
+        public double DateLimit { get; set; }
+        [JsonProperty("thresholdFrom", NullValueHandling = NullValueHandling.Ignore)]
+        public string State { get; set; }
     }
 }

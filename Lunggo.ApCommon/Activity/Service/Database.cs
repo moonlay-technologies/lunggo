@@ -94,6 +94,33 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 var activityDetail = details.First();
 
+                var cancellations = RefundRulesCustomerTableRepo.GetInstance().Find(conn,
+                    new RefundRulesCustomerTableRecord
+                    {
+                        ActivityId = input.ActivityId
+                    }).ToList();
+
+                activityDetail.Cancellation = new List<Cancellation>();
+
+                if (cancellations.Count > 0)
+                {
+                    foreach (var cancellation in cancellations)
+                    {
+                        var cancel = new Cancellation
+                        {
+                            RefundName = cancellation.RuleName,
+                            RefundDescription = cancellation.Description,
+                            ValuePercentage = cancellation.ValuePercentage ?? 0,
+                            ValueConstant = cancellation.ValueConstant ?? 0,
+                            MinValue = cancellation.MinValue ?? 0,
+                            DateLimit = cancellation.PayDateLimit ?? 0,
+                            State = cancellation.PayState
+                        };
+                        activityDetail.Cancellation.Add(cancel);
+                    }
+                    
+                }
+                
                 activityDetail.BookingStatus = BookingStatus.Booked;
                 activityDetail.MediaSrc = mediaSrc;
                 activityDetail.AdditionalContents = new AdditionalContent
