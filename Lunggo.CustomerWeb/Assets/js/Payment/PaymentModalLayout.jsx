@@ -19,7 +19,7 @@ function PaymentModalLayout(props) {
             <div className="mother-container">
               <div style={{ textAlign: 'center', marginTop: '40%' }}>
                 <div className="icon-success">
-                  <img style={{width:100}} src="images/icon-error.png" />
+                  <img style={{width:100}} src="/Assets/images/icon-error.png" />
                 </div>
                 <div className="text-success">{props.paymentStepStringData}</div>
                 <div className="button-container-thankyou">
@@ -37,7 +37,7 @@ function PaymentModalLayout(props) {
               <div className="mother-container">
               <div style={{ textAlign: 'center', marginTop: '40%' }}>
                   <div className="icon-success">
-                  <img style={{width:100}} src="images/icon-success.png" />
+                  <img style={{width:100}} src="/Assets/images/icon-success.png" />
         </div>
                     <div className="text-success">Proses Pembayaran Berhasil</div>
                     <div className="button-container-thankyou">
