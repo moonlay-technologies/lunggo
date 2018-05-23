@@ -112,7 +112,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var activity in Model.ActivityETicketAndInvoice.CartList.Activities)
+                            @foreach (var activity in Model.ActivityETicketAndInvoice.TrxList.Activities)
                             {
                                 <tr>
                                     <td class="no">@activity.RsvNo</td>
@@ -136,7 +136,7 @@
                                     <td class="description">@Model.ActivityETicketAndInvoice.ActivityReservations[0].Payment.DiscountName</td>
                                     <td class="qty">1</td>
                                     <td class="price"></td>
-                                    <td class="total">@Model.ActivityETicketAndInvoice.CartList.TotalDiscount.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                    <td class="total">@Model.ActivityETicketAndInvoice.TrxList.TotalDiscount.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                                 </tr>
                             }
                             <tr>
@@ -145,14 +145,14 @@
                                 <td class="description"></td>
                                 <td class="qty">1</td>
                                 <td class="price"></td>
-                                <td class="total">@Model.ActivityETicketAndInvoice.CartList.TotalUniqueCode.ToString("Rp #,##0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td class="total">@Model.ActivityETicketAndInvoice.TrxList.TotalUniqueCode.ToString("Rp #,##0", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="3"></td>
                                 <td colspan="2"><strong>TOTAL</strong></td>
-                                <td>@Model.ActivityETicketAndInvoice.CartList.TotalFinalPrice.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>@Model.ActivityETicketAndInvoice.TrxList.TotalFinalPrice.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                             <tr>
                                 <td colspan="3"></td>
@@ -162,7 +162,7 @@
                             <tr>
                                 <td colspan="3"></td>
                                 <td colspan="2"><strong>PAYMENT AMOUNT</strong></td>
-                                <td>@Model.ActivityETicketAndInvoice.CartList.TotalFinalPrice.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
+                                <td>@Model.ActivityETicketAndInvoice.TrxList.TotalFinalPrice.ToString("Rp 0,###", CultureInfo.CreateSpecificCulture("id-ID"))</td>
                             </tr>
                         </tfoot>
                     </table>

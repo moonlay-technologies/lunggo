@@ -9,7 +9,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     public class GetMyBookingsCartActiveApiResponse : ApiResponseBase
     {
         [JsonProperty("myBookings", NullValueHandling = NullValueHandling.Ignore)]
-        public List<CartList> MyBookings { get; set; }
+        public List<TrxList> MyBookings { get; set; }
         [JsonProperty("mustUpdate", NullValueHandling = NullValueHandling.Ignore)]
         public bool MustUpdate { get; set; }
         [JsonProperty("lastUpdate", NullValueHandling = NullValueHandling.Ignore)]

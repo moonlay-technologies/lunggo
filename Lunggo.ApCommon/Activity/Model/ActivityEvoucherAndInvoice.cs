@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Activity.Model
 
     public class ActivityETicketAndInvoiceData
     {
-        public CartList CartList { get; set; }
+        public TrxList TrxList { get; set; }
         public List<ActivityReservationForDisplay> ActivityReservations { get; set; }
     }
 

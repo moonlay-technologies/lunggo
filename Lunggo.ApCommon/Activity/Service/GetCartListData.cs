@@ -9,7 +9,7 @@ namespace Lunggo.ApCommon.Activity.Service
 {
     public partial class ActivityService
     {
-        public CartList GetCartListData(string cartId)
+        public TrxList GetCartListData(string cartId)
         {
             return GetCartListDataFromDb(cartId);
         }

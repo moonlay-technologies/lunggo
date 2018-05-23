@@ -22,7 +22,7 @@ namespace Lunggo.ApCommon.Activity.Service
             }
             var invoiceData = new ActivityETicketAndInvoiceData();
             invoiceData.ActivityReservations = activityReservations;
-            invoiceData.CartList = cartList;
+            invoiceData.TrxList = cartList;
             return new ActivityETicketAndInvoiceDataForEmailAndPdf
             {
                 CartId = cartId,

@@ -56,6 +56,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Address { get; set; }
         [JsonProperty("bookingStatus", NullValueHandling = NullValueHandling.Ignore)]
         public string BookingStatus { get; set; }
+        [JsonProperty("contact", NullValueHandling = NullValueHandling.Ignore)]
+        public Contact Contact { get; set; }
         [JsonProperty("timeLimit", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? TimeLimit { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
@@ -102,8 +104,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public bool IsPdfUploaded { get; set; }
         [JsonProperty("pdfUrl", NullValueHandling = NullValueHandling.Ignore)]
         public string PdfUrl { get; set; }
-        [JsonProperty("udpateDate", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("updateDate", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? UpdateDate { get; set; }
+        [JsonProperty("cancellationReason", NullValueHandling = NullValueHandling.Ignore)]
+        public string CancellationReason { get; set; }
     }
 
     public class ActivityPackageReservation
@@ -118,10 +122,14 @@ namespace Lunggo.ApCommon.Activity.Model
         public int Count { get; set; }
     }
 
-    public class CartList
+    public class TrxList
     {
         [JsonProperty("cartId", NullValueHandling = NullValueHandling.Ignore)]
         public string CartId { get; set; }
+        [JsonProperty("trxId", NullValueHandling = NullValueHandling.Ignore)]
+        public string TrxId { get; set; }
+        [JsonProperty("trxTime", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime TrxTime { get; set; }
         [JsonProperty("activities", NullValueHandling = NullValueHandling.Ignore)]
         public List<BookingDetail> Activities { get; set; }
         [JsonProperty("totalOriginalPrice", NullValueHandling = NullValueHandling.Ignore)]

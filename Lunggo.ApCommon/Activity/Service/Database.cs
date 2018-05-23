@@ -310,12 +310,12 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userName = HttpContext.Current.User.Identity.GetUser();
-                var cartIdList = GetCartIdListDbQuery.GetInstance()
+                var trxIdList = GetCartIdListDbQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = input.Page, PerPage = input.PerPage }).ToList();
-                var savedBookings = new List<CartList>();
-                foreach (var cartId in cartIdList)
+                var savedBookings = new List<TrxList>();
+                foreach (var trxId in trxIdList)
                 {
-                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
+                    var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = trxId }).ToList();
                     var bookingDetails = rsvNoList.Select(rsvNo => GetMyBookingDetailFromDb(new GetMyBookingDetailInput { RsvNo = rsvNo }).BookingDetail).ToList();
                     var payments = rsvNoList.Select(rsvNo => _paymentService.GetPaymentDetails(rsvNo)).ToList();
                     decimal totalOriginalPrice = payments.Sum(payment => payment.OriginalPriceIdr);
@@ -325,9 +325,12 @@ namespace Lunggo.ApCommon.Activity.Service
                     PaymentStatus paymentStatusEnum = payments.First().Status;
                     var paymentLastUpdate = payments.First().UpdateDate;
                     var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
-                    var cartList = new CartList
+                    var trxTime = TrxUserTableRepo.GetInstance().Find1(conn, new TrxUserTableRecord {TrxId = trxId}).Time;
+                    var cartList = new TrxList
                     {
-                        CartId = cartId,
+                        CartId = trxId,
+                        TrxId = trxId,
+                        TrxTime = trxTime.GetValueOrDefault(),
                         Activities = bookingDetails,
                         TotalOriginalPrice = totalOriginalPrice,
                         TotalDiscount = totalDiscount,
@@ -356,7 +359,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
                 var cartIdList = GetCartIdListDbQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = 1, PerPage = 1000 }).ToList();
-                var savedBookings = new List<CartList>();
+                var savedBookings = new List<TrxList>();
                 foreach (var cartId in cartIdList)
                 {
                     var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
@@ -369,7 +372,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     PaymentStatus paymentStatusEnum = payments.First().Status;
                     var paymentLastUpdate = payments.First().UpdateDate;
                     var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
-                    var cartList = new CartList
+                    var cartList = new TrxList
                     {
                         CartId = cartId,
                         Activities = bookingDetails,
@@ -390,7 +393,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     return new GetMyBookingsCartActiveOutput
                     {
-                        MyBookings = new List<CartList>(),
+                        MyBookings = new List<TrxList>(),
                         LastUpdate = input.LastUpdate,
                         MustUpdate = false
                     };
@@ -470,6 +473,7 @@ namespace Lunggo.ApCommon.Activity.Service
                             passengers.Gender = GenderCd.Mnemonic(genderCd);
                             return passengers;
                         }, "TypeCd, TitleCd, GenderCd").ToList();
+                var savedContact = Contact.GetFromDb(input.RsvNo);
 
                 var savedPaxCountAndPackageId = GetPaxCountAndPackageIdDbQuery.GetInstance().Execute(conn, new { RsvNo = input.RsvNo }).ToList();
                 if (savedPaxCountAndPackageId.Count() != 0)
@@ -507,6 +511,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 savedBooking.RsvNo = input.RsvNo;
                 savedBooking.Price = priceBook;
                 savedBooking.Passengers = ConvertToPaxForDisplay(savedPassengers);
+                savedBooking.Contact = savedContact;
                 savedBooking.RequestReview = CheckReview(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
                 savedBooking.RequestRating = CheckRating(input.RsvNo, savedBooking.Date, savedBooking.SelectedSession);
                 if (savedBooking.HasPdfVoucher && savedBooking.IsPdfUploaded)
@@ -1325,7 +1330,7 @@ namespace Lunggo.ApCommon.Activity.Service
             }
         }
 
-        public CartList GetCartListDataFromDb(string cartId)
+        public TrxList GetCartListDataFromDb(string cartId)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -1346,7 +1351,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     totalUniqueCode += payment.UniqueCode;
                     totalFinalPrice += payment.FinalPriceIdr;
                 }
-                var cartList = new CartList
+                var cartList = new TrxList
                 {
                     CartId = cartId,
                     Activities = bookingDetails,

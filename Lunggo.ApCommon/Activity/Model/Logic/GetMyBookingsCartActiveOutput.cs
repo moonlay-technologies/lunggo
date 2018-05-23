@@ -5,7 +5,7 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
 {
     public class GetMyBookingsCartActiveOutput
     {
-        public List<CartList> MyBookings { get; set; }
+        public List<TrxList> MyBookings { get; set; }
         public bool MustUpdate { get; set; }
         public DateTime LastUpdate { get; set; }
     }

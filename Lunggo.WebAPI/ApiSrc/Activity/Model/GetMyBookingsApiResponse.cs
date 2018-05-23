@@ -8,7 +8,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
     public class GetMyBookingsApiResponse : ApiResponseBase
     {
         [JsonProperty("myBookings", NullValueHandling = NullValueHandling.Ignore)]
-        public List<CartList> MyBookings { get; set; }
+        public List<TrxList> MyBookings { get; set; }
         [JsonProperty("page", NullValueHandling = NullValueHandling.Ignore)]
         public int? Page { get; set; }
         [JsonProperty("perPage", NullValueHandling = NullValueHandling.Ignore)]
