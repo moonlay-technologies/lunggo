@@ -470,6 +470,35 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/{rsvNo}/cancel")]
+
+        public ApiResponseBase ReservationCancellation(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            //ConfirmationStatusApiRequest request = null;
+            try
+            {
+                //request = ApiRequestBase.DeserializeRequest<ConfirmationStatusApiRequest>();
+                //var a = new ConfirmationStatusApiRequest()
+                //{
+                //    RsvNo = rsvNo,
+                //    Status = request.Status
+                //};
+                var apiResponse = ActivityLogic.CancelReservation(rsvNo, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         #endregion
 
         #region Operator

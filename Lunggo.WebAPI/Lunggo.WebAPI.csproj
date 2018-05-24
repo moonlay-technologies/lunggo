@@ -275,6 +275,7 @@
     <Compile Include="ApiSrc\Account\Model\ValidateReferralApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\ActivityController.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ActivityEditSessionLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\CancelReservationLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\CancelAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\DeclineAppointmentLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\ConfirmAppointmentLogic.cs" />
