@@ -368,6 +368,7 @@
     <Compile Include="Activity\Model\TransactionStatement.cs" />
     <Compile Include="Activity\Model\Logic\WishlistAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
+    <Compile Include="Activity\Service\RsvRefund.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Admin\InsertTransactionStatement.cs" />
     <Compile Include="Activity\Service\Database.cs" />

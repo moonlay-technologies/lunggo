@@ -118,9 +118,9 @@ namespace Lunggo.ApCommon.Activity.Service
                         };
                         activityDetail.Cancellation.Add(cancel);
                     }
-                    
+
                 }
-                
+
                 activityDetail.BookingStatus = BookingStatus.Booked;
                 activityDetail.MediaSrc = mediaSrc;
                 activityDetail.AdditionalContents = new AdditionalContent
@@ -352,7 +352,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     PaymentStatus paymentStatusEnum = payments.First().Status;
                     var paymentLastUpdate = payments.First().UpdateDate;
                     var paymentStatus = PaymentStatusConversion(paymentStatusEnum);
-                    var trxTime = TrxUserTableRepo.GetInstance().Find1(conn, new TrxUserTableRecord {TrxId = trxId}).Time;
+                    var trxTime = TrxUserTableRepo.GetInstance().Find1(conn, new TrxUserTableRecord { TrxId = trxId }).Time;
                     var cartList = new TrxList
                     {
                         CartId = trxId,
@@ -370,7 +370,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
 
                 var output = new GetMyBookingsOutput
-                {                
+                {
                     MyBookings = savedBookings.OrderBy(a => a.PaymentStatus).ToList(),
                     Page = input.Page,
                     PerPage = input.PerPage
@@ -429,7 +429,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).First();
 
                 var output = new GetMyBookingsCartActiveOutput
-                {                
+                {
                     MyBookings = savedBookings.OrderBy(a => a.PaymentStatus).ToList(),
                     LastUpdate = lastUpdateOutput.Value,
                     MustUpdate = true
@@ -472,7 +472,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).First();
 
                 var output = new GetMyBookingsReservationActiveOutput
-                {                
+                {
                     MyReservations = savedReservations.OrderBy(a => a.Date).ToList(),
                     LastUpdate = lastUpdateOutput.Value,
                     MustUpdate = true
@@ -546,6 +546,17 @@ namespace Lunggo.ApCommon.Activity.Service
                     savedBooking.PdfUrl = EnvVariables.Get("azureStorage", "rootUrl") + "/eticket/" + input.RsvNo + ".pdf";
                 }
 
+                if (savedBooking.BookingStatus == "CancelByCustomer" ||
+                    savedBooking.BookingStatus == "CancelByOperator" ||
+                    savedBooking.BookingStatus == "CancelByAdmin" ||
+                    savedBooking.BookingStatus == "DeniedByOperator" ||
+                    savedBooking.BookingStatus == "DeniedByAdmin")
+                {
+                    var refundBankAccount = GetRsvRefundBankAccountFromDb(input.RsvNo);
+                    savedBooking.NeedRefundBankAccount = refundBankAccount == null;
+                    savedBooking.RefundBankAccount = refundBankAccount;
+                }
+
                 var output = new GetMyBookingDetailOutput
                 {
                     BookingDetail = savedBooking
@@ -561,7 +572,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var userName = HttpContext.Current.User.Identity.GetUser();
 
                 var savedBookings = GetAppointmentRequestQuery.GetInstance()
-                    .Execute(conn, new {UserId = userName.Id, Page = 1, PerPage = 1000}).ToList();
+                    .Execute(conn, new { UserId = userName.Id, Page = 1, PerPage = 1000 }).ToList();
 
                 if (savedBookings.Count < 1)
                 {
@@ -612,7 +623,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     savedBooking.PaxCount = savedPaxCounts;
                 }
 
-                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).ToList();               
+                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).ToList();
 
                 var output = new GetAppointmentRequestOutput
                 {
@@ -740,7 +751,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     save.AppointmentReservations = appointmentReservations;
                 }
 
-                
+
 
 
                 var output = new GetAppointmentListOutput
@@ -2159,7 +2170,7 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var operatorId = OperatorTableRepo.GetInstance()
-                    .Find1(conn, new OperatorTableRecord {ActivityId = activityId});
+                    .Find1(conn, new OperatorTableRecord { ActivityId = activityId });
                 return operatorId.UserId;
             }
         }
@@ -2174,8 +2185,8 @@ namespace Lunggo.ApCommon.Activity.Service
                     AvailableHour = session ?? "",
                     CustomDate = date
                 };
-                var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn,oldPaxSlotTableRecord).First().PaxSlot;
-               
+                var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn, oldPaxSlotTableRecord).First().PaxSlot;
+
                 var newPaxSlot = oldPaxSlot - ticketCount;
                 var newPaxSlotTableRecord = new ActivityCustomDateTableRecord
                 {
@@ -2185,7 +2196,45 @@ namespace Lunggo.ApCommon.Activity.Service
                     PaxSlot = newPaxSlot,
                     DateStatus = "whitelisted"
                 };
-                ActivityCustomDateTableRepo.GetInstance().Update(conn,newPaxSlotTableRecord);
+                ActivityCustomDateTableRepo.GetInstance().Update(conn, newPaxSlotTableRecord);
+            }
+        }
+
+        internal bool SetRsvRefundBankAccountToDb(string rsvNo, BankAccount account)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var affectedRow = RsvRefundBankAccountTableRepo.GetInstance().Insert(conn, new RsvRefundBankAccountTableRecord
+                {
+                    RsvNo = rsvNo,
+                    AccountNumber = account.AccountNumber,
+                    BankName = account.BankName,
+                    OwnerName = account.OwnerName,
+                    Branch = account.Branch
+                });
+                return affectedRow > 0;
+            }
+        }
+
+        internal BankAccount GetRsvRefundBankAccountFromDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var record = RsvRefundBankAccountTableRepo.GetInstance().Find1OrDefault(conn, new RsvRefundBankAccountTableRecord
+                {
+                    RsvNo = rsvNo
+                });
+                if (record == null)
+                    return null;
+
+                var bankAccount = new BankAccount
+                {
+                    AccountNumber = record.AccountNumber,
+                    BankName = record.BankName,
+                    OwnerName = record.OwnerName,
+                    Branch = record.Branch
+                };
+                return bankAccount;
             }
         }
     }
