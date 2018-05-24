@@ -623,6 +623,35 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
         [HttpGet]
         [LunggoCorsPolicy]
         [Level2Authorize]
+        [Route("v1/operator/appointments/active")]
+
+        public ApiResponseBase AppointmentListActive(string startDate = "", string endDate = "", string lastUpdate = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+
+            try
+            {
+                var request = new GetAppointmentListActiveApiRequest()
+                {
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    LastUpdate = lastUpdate
+                };
+                var apiResponse = ActivityLogic.GetAppointmentListActive(request, UserManager);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
         [Route("v1/operator/appointments/{activityId}/{date}")]
 
         public ApiResponseBase AppointmentDetail(string activityId = "", string date = "", string session = "")
