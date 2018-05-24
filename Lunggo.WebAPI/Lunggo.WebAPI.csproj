@@ -287,6 +287,7 @@
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsCartActiveLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetPendingRefundLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetTransactionStatementLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\SetRsvRefundBankAccountLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityRatingLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityReviewLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertTransactionStatementLogic.cs" />
@@ -323,6 +324,7 @@
     <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\SetRsvRefundBankAccountApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityReviewApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertTransactionStatementApiRequest.cs" />

@@ -499,6 +499,31 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level2Authorize]
+        [Route("v1/activities/mybooking/{rsvNo}/refund/bankaccount")]
+
+        public ApiResponseBase SetRsvRefundBankAccount(string rsvNo = "")
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            SetRsvRefundBankAccountApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<SetRsvRefundBankAccountApiRequest>();
+                request.RsvNo = rsvNo;
+                var apiResponse = ActivityLogic.SetRsvRefundBankAccount(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
         #endregion
 
         #region Operator

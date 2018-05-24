@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Lunggo.ApCommon.Product.Model;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 
 namespace Lunggo.ApCommon.Activity.Model
 {
@@ -41,6 +42,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public double Latitude { get; set; }
         [JsonProperty("longitude", NullValueHandling = NullValueHandling.Ignore)]
         public double Longitude { get; set; }
+        [JsonProperty("needRefundBankAccount", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? NeedRefundBankAccount { get; set; }
+        [JsonProperty("refundBankAccount", NullValueHandling = NullValueHandling.Ignore)]
+        public BankAccount RefundBankAccount { get; set; }
     }
     public class BookingDetail
     {
@@ -108,6 +113,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public DateTime? UpdateDate { get; set; }
         [JsonProperty("cancellationReason", NullValueHandling = NullValueHandling.Ignore)]
         public string CancellationReason { get; set; }
+        [JsonProperty("needRefundBankAccount", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? NeedRefundBankAccount { get; set; }
+        [JsonProperty("refundBankAccount", NullValueHandling = NullValueHandling.Ignore)]
+        public BankAccount RefundBankAccount { get; set; }
     }
 
     public class ActivityPackageReservation
