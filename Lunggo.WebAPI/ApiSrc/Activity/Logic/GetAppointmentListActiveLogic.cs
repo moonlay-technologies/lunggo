@@ -78,6 +78,24 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             {
                 return false;
             }
+
+            if (string.IsNullOrWhiteSpace(request.LastUpdate))
+            {
+                serviceRequest.LastUpdate = DateTime.MinValue;
+            }
+            else
+            {
+                DateTime lastUpdateValid;
+                var checkLastUpdate = DateTime.TryParse(request.LastUpdate, out lastUpdateValid);
+            
+                if (!checkLastUpdate)
+                {
+                    return false;
+                }
+
+                serviceRequest.LastUpdate = lastUpdateValid;
+            }
+
             serviceRequest.StartDate = startDate;
             serviceRequest.EndDate = endDate;            
 
