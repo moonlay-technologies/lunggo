@@ -20,7 +20,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         {
             var clauseBuilder = new StringBuilder();
             clauseBuilder.Append("SELECT DISTINCT act.Id AS ActivityId, act.Name AS Name, ar.RsvNo AS RsvNo, ar.BookingStatusCd AS RsvStatus, ");
-            clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS Session, ar.IsVerified AS IsVerified, ");
+            clauseBuilder.Append("ar.Date AS Date, ar.SelectedSession AS Session, ar.IsVerified AS IsVerified, ar.UpdateDate AS UpdateDate, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc ");
             return clauseBuilder.ToString();
         }
@@ -44,7 +44,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateRangeClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("ORDER BY Name OFFSET @Page-1 ROWS FETCH NEXT @PerPage ROWS ONLY");
+            clauseBuilder.Append("ORDER BY ar.Date OFFSET @Page-1 ROWS FETCH NEXT @PerPage ROWS ONLY");
             return clauseBuilder.ToString();
         }
     }

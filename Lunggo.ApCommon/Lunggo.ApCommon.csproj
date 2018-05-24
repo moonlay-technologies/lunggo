@@ -321,7 +321,9 @@
     <Compile Include="Activity\Model\Logic\GetActivityReviewOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityTicketDetailInput.cs" />
     <Compile Include="Activity\Model\Logic\GetActivityTicketDetailOutput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentListActiveInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListInput.cs" />
+    <Compile Include="Activity\Model\Logic\GetAppointmentListActiveOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentListOutput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentDetailInput.cs" />
     <Compile Include="Activity\Model\Logic\GetAppointmentDetailOutput.cs" />
@@ -378,6 +380,7 @@
     <Compile Include="Activity\Service\GetMyBookingsReservationActive.cs" />
     <Compile Include="Activity\Service\GetMyBookingsCartActive.cs" />
     <Compile Include="Activity\Service\GetUserById.cs" />
+    <Compile Include="Activity\Service\Operator\GetAppointmentListActive.cs" />
     <Compile Include="Activity\Service\Operator\InsertRefundAmountOperator.cs" />
     <Compile Include="Activity\Service\LandingPage.cs" />
     <Compile Include="Activity\Service\Operator\ActivityEditSession.cs" />

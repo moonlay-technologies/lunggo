@@ -283,6 +283,7 @@
     <Compile Include="ApiSrc\Activity\Logic\GenerateQuestionLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityReviewsLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetActivityTicketDetailLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListActiveLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsReservationActiveLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsCartActiveLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetPendingRefundLogic.cs" />
@@ -316,6 +317,8 @@
     <Compile Include="ApiSrc\Activity\Model\GetActivityReviewsApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetActivityTicketDetailApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentListActiveApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsReservationActiveApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsReservationActiveApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsCartActiveApiResponse.cs" />
@@ -334,7 +337,7 @@
     <Compile Include="ApiSrc\Activity\Model\ActivityUpdateApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\ActivityUpdateApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiRequest.cs" />
-    <Compile Include="ApiSrc\Activity\Model\GetAppointmentListApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetAppointmentListActiveApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentDetailApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetAppointmentDetailApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetListActivityApiRequest.cs" />
