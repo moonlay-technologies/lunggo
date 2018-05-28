@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <tables>
   <!--<table name="Payment" />-->
-  <table name="RsvRefundBankAccount" />
+  <table name="RefundRulesCustomerReservation" />
   <!--<table name="RefundRulesCustomer" />-->
   <!--<table name="TrxUser" />-->
   <!--<table name="Campaign" />-->

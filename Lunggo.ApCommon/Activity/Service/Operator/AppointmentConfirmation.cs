@@ -96,6 +96,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.DeniedByOperator);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByOperator);
+                InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
                 var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
                 rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
@@ -116,6 +117,7 @@ namespace Lunggo.ApCommon.Activity.Service
             InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByAdmin);
             var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
             rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+            InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
             var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };
         }
@@ -150,6 +152,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByOperator);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByOperator);
                 InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
+                InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
@@ -167,6 +170,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByAdmin);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByAdmin);
                 InsertRefundAmountOperator(input.RsvNo);
+                InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
             
         }
@@ -186,6 +190,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByCustomer);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByCustomer);
                 InsertRefundAmountOperator(input.RsvNo);
+                InsertRefundAmountCustomer(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 

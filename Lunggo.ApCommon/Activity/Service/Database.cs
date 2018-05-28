@@ -23,6 +23,7 @@ using System.Globalization;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.Framework.BlobStorage;
 using System.Security.Cryptography;
+using Lunggo.ApCommon.Activity.Constant;
 using Lunggo.ApCommon.Identity.Query.Record;
 using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Context;
@@ -387,6 +388,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var cartIdList = GetCartIdListDbQuery.GetInstance()
                     .Execute(conn, new { UserId = userName.Id, Page = 1, PerPage = 1000 }).ToList();
                 var savedBookings = new List<TrxList>();
+                
                 foreach (var cartId in cartIdList)
                 {
                     var rsvNoList = GetCartRsvNoListDbQuery.GetInstance().Execute(conn, new { TrxId = cartId }).ToList();
@@ -555,6 +557,16 @@ namespace Lunggo.ApCommon.Activity.Service
                     var refundBankAccount = GetRsvRefundBankAccountFromDb(input.RsvNo);
                     savedBooking.NeedRefundBankAccount = refundBankAccount == null;
                     savedBooking.RefundBankAccount = refundBankAccount;
+                    
+
+                    var refundCustomer = RefundCustomerTableRepo.GetInstance().Find1(conn, new RefundCustomerTableRecord
+                    {
+                        RsvNo = input.RsvNo
+                    });
+                    savedBooking.RefundStatus = refundCustomer.RefundStatus;
+                    savedBooking.UpdateDate = refundCustomer.UpdateDate > savedBooking.UpdateDate
+                        ? refundCustomer.UpdateDate
+                        : savedBooking.UpdateDate;
                 }
 
                 var output = new GetMyBookingDetailOutput
@@ -988,6 +1000,11 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 var activityDetailNowDb = ActivityTableRepo.GetInstance().Find1(conn, new ActivityTableRecord { Id = reservation.ActivityDetails.ActivityId });
                 var activityContentsNowDb = ActivityContentTableRepo.GetInstance().Find(conn, new ActivityContentTableRecord { ActivityId = reservation.ActivityDetails.ActivityId }).ToList();
+                var activityRefundRulesNowDb = RefundRulesCustomerTableRepo.GetInstance().Find(conn,
+                    new RefundRulesCustomerTableRecord
+                    {
+                        ActivityId = reservation.ActivityDetails.ActivityId
+                    });
 
 
                 var activityRecord = new ActivityReservationTableRecord
@@ -1003,7 +1020,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     UpdateDate = DateTime.UtcNow,
                 };
 
-                var activityDetialReservation = new ActivityDetailReservationTableRecord
+                var activityDetailReservation = new ActivityDetailReservationTableRecord
                 {
                     RsvNo = reservation.RsvNo,
                     ActivityId = activityDetailNowDb.Id,
@@ -1045,7 +1062,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Zone = activityDetailNowDb.Zone,
                     HasOperator = activityDetailNowDb.HasOperator
                 };
-
+              
                 foreach (var activityContentNow in activityContentsNowDb)
                 {
                     var activityContentRsv = new ActivityReservationContentTableRecord
@@ -1058,9 +1075,28 @@ namespace Lunggo.ApCommon.Activity.Service
                     ActivityReservationContentTableRepo.GetInstance().Insert(conn, activityContentRsv);
                 }
 
+                foreach (var refundRuleNow in activityRefundRulesNowDb)
+                {
+                    var refundRule = new RefundRulesCustomerReservationTableRecord
+                    {
+                        RsvNo = reservation.RsvNo,
+                        ActivityId = refundRuleNow.ActivityId,
+                        MinValue = refundRuleNow.MinValue,
+                        Description = refundRuleNow.Description,
+                        ValueConstant = refundRuleNow.ValueConstant,
+                        RuleName = refundRuleNow.RuleName,
+                        PayState = refundRuleNow.PayState,
+                        ValuePercentage = refundRuleNow.ValuePercentage,
+                        PayDateLimit = refundRuleNow.PayDateLimit,
+                        RuleId = refundRuleNow.RuleId
+                    };
+
+                    RefundRulesCustomerReservationTableRepo.GetInstance().Insert(conn, refundRule);
+                }
+
                 ActivityReservationTableRepo.GetInstance().Insert(conn, activityRecord);
                 ReservationTableRepo.GetInstance().Insert(conn, reservationRecord);
-                ActivityDetailReservationTableRepo.GetInstance().Insert(conn, activityDetialReservation);
+                ActivityDetailReservationTableRepo.GetInstance().Insert(conn, activityDetailReservation);
                 var package = GetPackagePriceFromDb(reservation.PackageId).ToList();
                 foreach (var ticketCount in reservation.TicketCount)
                 {
@@ -1984,7 +2020,22 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     selectedRules = rules.Where(a => a.PayState == "Treshold").ToList();
                 }
-                var selectedRule = selectedRules.First();
+
+                var selectedRule = new RefundRulesOperatorTableRecord();
+
+                if (selectedRules.Count > 0)
+                {
+                    selectedRule = selectedRules.First();
+                }
+                else
+                {
+                    selectedRule.RuleName = "No refund";
+                    selectedRule.Description = "No refund";
+                    selectedRule.ValuePercentage = 0;
+                    selectedRule.ValueConstant = 0;
+                    selectedRule.MinValue = 0;
+                }
+
                 var amountsReservation = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord
                 {
                     RsvNo = rsvNo,
@@ -2043,6 +2094,83 @@ namespace Lunggo.ApCommon.Activity.Service
                     RefundStatus = false
                 };
                 RefundHistoryTableRepo.GetInstance().Insert(conn, rule);
+            }
+        }
+
+         public void InsertRefundAmountCustomerToDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservation = GetReservationFromDb(rsvNo);
+                var rules = RefundRulesCustomerTableRepo.GetInstance().Find(conn, new RefundRulesCustomerTableRecord
+                {
+                    ActivityId = reservation.ActivityDetails.ActivityId
+                }).ToList();
+
+                if (rules.Count < 1)
+                {
+                    return;
+                }
+                var selectedRules = new List<RefundRulesCustomerTableRecord>();
+                var jalanRules = rules.Where(a => a.PayState == "Jalan" && (DateTime.UtcNow > reservation.DateTime.Date.Value.AddDays((double)a.PayDateLimit))).OrderBy(a => a.PayDateLimit).ToList();
+                
+                if (jalanRules.Count > 0)
+                {
+                    selectedRules = jalanRules;
+                }
+                else
+                {
+                    var bookRules = rules.Where(a => a.PayState == "Book" && (DateTime.UtcNow > reservation.RsvTime.AddDays((double)a.PayDateLimit))).OrderBy(a => a.PayDateLimit).ToList();
+                    selectedRules = bookRules;
+                }
+
+                var selectedRule = new RefundRulesCustomerTableRecord();
+
+                if (selectedRules.Count > 0)
+                {
+                    selectedRule = selectedRules.First();
+                }
+                else
+                {
+                    selectedRule.RuleName = "100% refund";
+                    selectedRule.Description = "100% refund";
+                    selectedRule.ValuePercentage = 100M;
+                    selectedRule.ValueConstant = 0M;
+                }
+                
+                var refundAmount = (decimal)(selectedRule.ValuePercentage * reservation.Payment.FinalPriceIdr + selectedRule.ValueConstant);
+                var refund = new RefundCustomerTableRecord
+                {
+                    RsvNo = reservation.RsvNo,
+                    UpdateDate = DateTime.UtcNow,
+                    RefundStatus = CustomerRefundStatusCd.Mnemonic(CustomerRefundStatus.WaitCustomer),
+                    RefundAmount = refundAmount
+                };
+                RefundCustomerTableRepo.GetInstance().Insert(conn, refund);
+            }
+         }
+
+        public void InsertRefundAmountCustomerCancelByOperatorToDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var reservation = GetReservation(rsvNo);
+                var amountReservations = ActivityReservationStepOperatorTableRepo.GetInstance().Find(conn, new ActivityReservationStepOperatorTableRecord
+                {
+                    RsvNo = rsvNo
+                }).ToList();
+                var amounts = amountReservations.Where(a => a.StepStatus == true).ToList();
+                decimal refundAmount = reservation.Payment.FinalPriceIdr;
+                
+
+                var refund = new RefundCustomerTableRecord
+                {
+                    RsvNo = rsvNo,
+                    RefundAmount = refundAmount,
+                    UpdateDate = DateTime.UtcNow,
+                    RefundStatus = CustomerRefundStatusCd.Mnemonic(CustomerRefundStatus.WaitCustomer),
+                };
+                RefundCustomerTableRepo.GetInstance().Insert(conn, refund);
             }
         }
 
@@ -2212,6 +2340,15 @@ namespace Lunggo.ApCommon.Activity.Service
                     OwnerName = account.OwnerName,
                     Branch = account.Branch
                 });
+                var refundCustomer = RefundCustomerTableRepo.GetInstance().Find1(conn, new RefundCustomerTableRecord
+                {
+                    RsvNo = rsvNo
+                });
+
+                refundCustomer.UpdateDate = DateTime.UtcNow;
+                refundCustomer.RefundProcessDate = DateTime.UtcNow.AddDays(2);
+                var row = RefundCustomerTableRepo.GetInstance().Update(conn, refundCustomer);
+
                 return affectedRow > 0;
             }
         }
