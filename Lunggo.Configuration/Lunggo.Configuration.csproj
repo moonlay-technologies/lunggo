@@ -1044,6 +1044,7 @@
     <Content Include="HtmlTemplate\ForgotPasswordByOtpEmail.cshtml" />
     <Content Include="HtmlTemplate\ActivityRejectionEmail.cshtml" />
     <Content Include="HtmlTemplate\ActivityAcceptanceEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityForwardToOperatorEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
     <Content Include="HtmlTemplate\ActivityEVoucher.cshtml" />
