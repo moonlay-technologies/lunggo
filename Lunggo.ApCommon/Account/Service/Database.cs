@@ -5,12 +5,15 @@ using Lunggo.Repository.TableRecord;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Lunggo.Framework.Encoder;
 using System.Text;
 using System.Threading.Tasks;
 using Lunggo.Repository.TableRepository;
 using Lunggo.ApCommon.Identity.Users;
 using Lunggo.ApCommon.Account.Model;
+using Lunggo.ApCommon.Identity.Query;
+using Lunggo.ApCommon.Identity.Query.Record;
 
 namespace Lunggo.ApCommon.Account.Service
 {
@@ -343,6 +346,26 @@ namespace Lunggo.ApCommon.Account.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 UpdateProfileToDbQuery.GetInstance().Execute(conn, user);
+            }
+        }
+
+        internal GetUserByAnyQueryRecord GetOperatorUserDataByActivityIdFromDb(long activityId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var ops = OperatorTableRepo.GetInstance().Find(conn, new OperatorTableRecord
+                {
+                    ActivityId = activityId
+                }).ToList();
+
+                if (ops.Count < 1)
+                {
+                    return null;
+                }
+
+                var op = ops.First();
+                var user = GetUserByIdQuery.GetInstance().Execute(conn, new {Id = op.UserId}).ToList();
+                return user.Count > 0 ? user.First() : null;
             }
         }
     }

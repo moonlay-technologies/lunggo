@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Lunggo.ApCommon.Account.Service;
 using Lunggo.Framework.Environment;
 
 namespace Lunggo.WebJob.EmailQueueHandler.Function
@@ -30,6 +31,8 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             sw.Start();
             var activity = ActivityService.GetInstance();
             var summary = activity.GetReservationForDisplay(rsvNo);
+            var opEmail = AccountService.GetInstance()
+                .GetOperatorUserEmailByActivityId(summary.ActivityDetail.ActivityId);
             sw.Stop();
             Console.WriteLine("Done Getting Required Files and Data from Storage. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
@@ -37,7 +40,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
             {
-                RecipientList = new[] { summary.Contact.Email },
+                RecipientList = new[] { opEmail },
                 BccList = new[] { "maillog.travorama@gmail.com" },
                 Subject = envPrefix + "[Travorama] Pesanan Baru: No. Pesanan " + summary.RsvNo,
                 FromMail = "booking@travorama.com",
