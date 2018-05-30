@@ -208,7 +208,7 @@ namespace Lunggo.ApCommon.Activity.Service
             
             UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.ForwardedToOperator);
             InsertStatusHistoryToDb(input.RsvNo, BookingStatus.ForwardedToOperator);
-            var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityforwardtooperatoremail");
+            var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityforwardemail");
             forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
             var pushNotifForward = PushNotificationForwardAppointment(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };

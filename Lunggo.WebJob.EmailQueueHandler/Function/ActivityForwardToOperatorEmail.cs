@@ -20,7 +20,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 {
     public partial class ProcessEmailQueue
     {
-        public static void ActivityForwardToOperatorEmail([QueueTrigger("activityforwardtooperatoremail")] string rsvNo)
+        public static void ActivityForwardToOperatorEmail([QueueTrigger("activityforwardemail")] string rsvNo)
         {
             var env = EnvVariables.Get("general", "environment");
             var envPrefix = env != "production" ? "[" + env.ToUpper() + "] " : "";
