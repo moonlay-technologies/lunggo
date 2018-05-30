@@ -15,39 +15,39 @@ namespace Lunggo.ApCommon.Activity.Service
     {
         public AppointmentConfirmationOutput ConfirmAppointment(AppointmentConfirmationInput input)
         {
-                var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
-                var status = bookingDetail.BookingDetail.BookingStatus;
-                if(status != "Booked" && status != "ForwardedToOperator")
+            var bookingDetail = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
+            var status = bookingDetail.BookingDetail.BookingStatus;
+            if(status != "Booked" && status != "ForwardedToOperator")
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                
+                    IsSuccess = false
+                };
+            }
+            
       
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Confirmed);
-                UpdateTicketNumberReservationDb(input.RsvNo);
-                GeneratePayStepOperator(input.RsvNo);
-                var activityDetail = GetActivityDetailFromDb(new GetDetailActivityInput { ActivityId = bookingDetail.BookingDetail.ActivityId });
-                if(activityDetail.ActivityDetail.HasOperator)
-                {
-                    var statusTicket = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
-                    var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");
-                    activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
-                    UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketed);
-                    InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketed);
-                }
-                else
-                {
-                    UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketing);
-                    InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketing);
-                }      
-                var acceptanceQueue = QueueService.GetInstance().GetQueueByReference("activityacceptanceemail");
-                acceptanceQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
-                var pushNotifConfirm = PushNotificationConfirmAppointment(input.RsvNo);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Confirmed);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Confirmed);
+            UpdateTicketNumberReservationDb(input.RsvNo);
+            GeneratePayStepOperator(input.RsvNo);
+            var activityDetail = GetActivityDetailFromDb(new GetDetailActivityInput { ActivityId = bookingDetail.BookingDetail.ActivityId });
+            if(activityDetail.ActivityDetail.HasOperator)
+            {
+                var statusTicket = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo });
+                var activityQueue = QueueService.GetInstance().GetQueueByReference("ActivityEVoucherAndInvoice");
+                activityQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketed);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketed);
+            }
+            else
+            {
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Ticketing);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Ticketing);
+            }      
+            var acceptanceQueue = QueueService.GetInstance().GetQueueByReference("activityacceptanceemail");
+            acceptanceQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+            var pushNotifConfirm = PushNotificationConfirmAppointment(input.RsvNo);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
             
         }
 
@@ -67,40 +67,38 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput DeclineAppointment(AppointmentConfirmationInput input)
         {
-            
-                var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status == "CANC" || rejectStatus.Contains(status))
+            var rejectStatus = new List<string> { "CAOP", "CACU", "CAAD", "DENY", "CONF" };
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (status == "CANC" || rejectStatus.Contains(status))
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Cancelled);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Cancelled);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
-            
-           
+                    IsSuccess = false
+                };
+            }
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.Cancelled);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.Cancelled);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         public AppointmentConfirmationOutput DenyAppointmentByOperator(AppointmentConfirmationInput input)
         {
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status != "Booked" && status != "ForwardedToOperator")
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (status != "Booked" && status != "ForwardedToOperator")
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.DeniedByOperator);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByOperator);
-                InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
-                var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
-                rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
-                var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
+                    IsSuccess = false
+                };
+            }
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.DeniedByOperator);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByOperator);
+            InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
+            InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+            rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+            var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         public AppointmentConfirmationOutput DenyAppointmentByAdmin(AppointmentConfirmationInput input)
@@ -118,6 +116,7 @@ namespace Lunggo.ApCommon.Activity.Service
             var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
             rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
             InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
+            InsertCancellationReason(input.RsvNo, input.CancellationReason);
             var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };
         }
@@ -140,75 +139,77 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public AppointmentConfirmationOutput CancelAppointmentByOperator(AppointmentConfirmationInput input)
         {
-                var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (cancel.Contains(status))
+            var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (cancel.Contains(status))
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByOperator);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByOperator);
-                InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
-                InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
+                    IsSuccess = false
+                };
+            }
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByOperator);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByOperator);
+            InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
+            InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
+            InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         public AppointmentConfirmationOutput CancelAppointmentByAdmin(AppointmentConfirmationInput input)
         {
-                var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (cancel.Contains(status))
+            var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (cancel.Contains(status))
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByAdmin);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByAdmin);
-                InsertRefundAmountOperator(input.RsvNo);
-                InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
+                    IsSuccess = false
+                };
+            }
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByAdmin);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByAdmin);
+            InsertRefundAmountOperator(input.RsvNo);
+            InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
+            InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
             
         }
 
 
         public AppointmentConfirmationOutput CancelAppointmentByCustomer(AppointmentConfirmationInput input)
         {
-                var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (cancel.Contains(status))
+            var cancel = new List<string> { "CancelByOperator", "CancelByCustomer", "CancelByAdmin", "Denied" };
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (cancel.Contains(status))
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByCustomer);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByCustomer);
-                InsertRefundAmountOperator(input.RsvNo);
-                InsertRefundAmountCustomer(input.RsvNo);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
+                    IsSuccess = false
+                };
+            }
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.CancelByCustomer);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByCustomer);
+            InsertRefundAmountOperator(input.RsvNo);
+            InsertRefundAmountCustomer(input.RsvNo);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
         public AppointmentConfirmationOutput ForwardAppointment(AppointmentConfirmationInput input)
         {
-                var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
-                if (status != "Booked" && status != "Confirmed")
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (status != "Booked" && status != "Confirmed")
+            {
+                return new AppointmentConfirmationOutput
                 {
-                    return new AppointmentConfirmationOutput
-                    {
-                        IsSuccess = false
-                    };
-                }
-                
-                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.ForwardedToOperator);
-                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.ForwardedToOperator);
-                var pushNotifForward = PushNotificationForwardAppointment(input.RsvNo);
-                return new AppointmentConfirmationOutput { IsSuccess = true };
+                    IsSuccess = false
+                };
+            }
+            
+            UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.ForwardedToOperator);
+            InsertStatusHistoryToDb(input.RsvNo, BookingStatus.ForwardedToOperator);
+            var pushNotifForward = PushNotificationForwardAppointment(input.RsvNo);
+            return new AppointmentConfirmationOutput { IsSuccess = true };
 
         }
 

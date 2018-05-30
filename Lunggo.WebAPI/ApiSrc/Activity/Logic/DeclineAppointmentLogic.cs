@@ -16,7 +16,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
     public static partial class ActivityLogic
     {
-        public static ApiResponseBase DeclineAppointment(string rsvNo, ApplicationUserManager userManager)
+        public static ApiResponseBase DeclineAppointment(ConfirmationStatusApiRequest apiRequest, ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
@@ -37,7 +37,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 };
             }
 
-            if (string.IsNullOrEmpty(rsvNo))
+            if (string.IsNullOrEmpty(apiRequest.RsvNo))
             {
                 return new ApiResponseBase
                 {
@@ -46,7 +46,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 };
             }
 
-            var serviceRequest = PreprocessServiceRequest(rsvNo);
+            var serviceRequest = PreprocessServiceRequest(apiRequest.RsvNo, apiRequest.CancellationReason);
             var serviceResponse = ActivityService.GetInstance().DenyAppointmentByOperator(serviceRequest);
             var apiResponse = AssembleApiResponse(serviceResponse);
 
