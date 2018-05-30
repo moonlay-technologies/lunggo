@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Lunggo.ApCommon.Activity.Database.Query;
+using Lunggo.ApCommon.Activity.Model.Logic;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Payment.Constant;
 using Lunggo.ApCommon.Payment.Database.Query;
@@ -122,7 +123,10 @@ namespace Lunggo.ApCommon.Payment.Database
                     var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
                     if (rsv.ActivityDetails.HasOperator)
                     {
-                        ActivityService.GetInstance().ForwardActivityToOperator(payment.RsvNo);
+                        ActivityService.GetInstance().ForwardAppointment(new AppointmentConfirmationInput
+                        {
+                            RsvNo = payment.RsvNo
+                        });
                     }
                     ActivityService.GetInstance().DecreasePaxSlotFromDb(rsv.ActivityDetails.ActivityId, ticketCount, rsv.DateTime.Date.Value, rsv.DateTime.Session);
                 }
