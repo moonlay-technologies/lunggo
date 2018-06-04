@@ -259,5 +259,19 @@ namespace Lunggo.ApCommon.Activity.Service
                     return null;
             }
         }
+
+        public PendingPaymentForDisplay ConvertToPendingPaymentForDisplay(PendingPayment pendingPayment)
+        {
+            return new PendingPaymentForDisplay
+            {
+                Date = pendingPayment.Date,
+                RsvNo = pendingPayment.RsvNo,
+                PaymentStatus = pendingPayment.PaymentStatus,
+                AccountNumber = pendingPayment.AccountNumber,
+                Amount = pendingPayment.Amount,
+                Name = pendingPayment.Name,
+                BankName = pendingPayment.BankName
+            };
+        }
     }
 }

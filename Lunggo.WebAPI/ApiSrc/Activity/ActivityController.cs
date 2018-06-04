@@ -1027,6 +1027,73 @@ namespace Lunggo.WebAPI.ApiSrc.Activity
             }
         }
 
+        [HttpGet]
+        [LunggoCorsPolicy]
+        [Level0Authorize]
+        [Route("v1/admin/pendingpayment")]
+        public ApiResponseBase GetPendingPayment()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            try
+            {
+                var apiResponse = ActivityLogic.GetPendingPayment();
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level0Authorize]
+        [Route("v1/admin/pendingpayment/done")]
+        public ApiResponseBase MarkPaymentAsDone()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            MarkPaymentAsDoneApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<MarkPaymentAsDoneApiRequest>();
+                var apiResponse = ActivityLogic.MarkPaymentAsDone(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
+        [HttpPost]
+        [LunggoCorsPolicy]
+        [Level0Authorize]
+        [Route("v1/admin/pendingpayment/failed")]
+        public ApiResponseBase MarkPaymentAsFailed()
+        {
+            var lang = ApiRequestBase.GetHeaderValue("Language");
+            OnlineContext.SetActiveLanguageCode(lang);
+            var currency = ApiRequestBase.GetHeaderValue("Currency");
+            OnlineContext.SetActiveCurrencyCode(currency);
+            MarkPaymentAsFailedApiRequest request = null;
+            try
+            {
+                request = ApiRequestBase.DeserializeRequest<MarkPaymentAsFailedApiRequest>();
+                var apiResponse = ActivityLogic.MarkPaymentAsFailed(request);
+                return apiResponse;
+            }
+            catch (Exception e)
+            {
+                return ApiResponseBase.ExceptionHandling(e);
+            }
+        }
+
 
         #endregion
 

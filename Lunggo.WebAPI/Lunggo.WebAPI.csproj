@@ -286,8 +286,11 @@
     <Compile Include="ApiSrc\Activity\Logic\GetAppointmentListActiveLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsReservationActiveLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetMyBookingsCartActiveLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\GetPendingPaymentLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetPendingRefundLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\GetTransactionStatementLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\MarkPaymentAsFailedLogic.cs" />
+    <Compile Include="ApiSrc\Activity\Logic\MarkPaymentAsDoneLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\SetRsvRefundBankAccountLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityRatingLogic.cs" />
     <Compile Include="ApiSrc\Activity\Logic\InsertActivityReviewLogic.cs" />
@@ -323,10 +326,13 @@
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsReservationActiveApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsCartActiveApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetMyBookingsCartActiveApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\GetPendingPaymentApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetPendingRefundApiResponse.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\GetTransactionStatementApiResponse.cs" />
+    <Compile Include="ApiSrc\Activity\Model\MarkPaymentAsFailedApiRequest.cs" />
+    <Compile Include="ApiSrc\Activity\Model\MarkPaymentAsDoneApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\SetRsvRefundBankAccountApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityRatingApiRequest.cs" />
     <Compile Include="ApiSrc\Activity\Model\InsertActivityReviewApiRequest.cs" />

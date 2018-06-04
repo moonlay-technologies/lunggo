@@ -269,6 +269,8 @@
     <Compile Include="Activity\Database\Query\GetActivityReviewFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetRatingFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetRefundHistoryFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetPaymentStepPendingPaymentForAdminFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetRefundPendingPaymentForAdminFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetReviewFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetTransactionMutationOutputFromDbQuery.cs" />
@@ -292,6 +294,7 @@
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateRsvNoPdfFlagQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateTicketNumberReservationDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdatePaymentStepStatus.cs" />
     <Compile Include="Activity\Database\Query\UpdateViewCountDbQuery.cs" />
     <Compile Include="Activity\Model\ActivityEvoucherAndInvoice.cs" />
     <Compile Include="Activity\Model\ActivityFilterDisplayInfo.cs" />
@@ -366,9 +369,13 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
+    <Compile Include="Activity\Model\PendingPayment.cs" />
     <Compile Include="Activity\Model\TransactionStatement.cs" />
     <Compile Include="Activity\Model\Logic\WishlistAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
+    <Compile Include="Activity\Service\Admin\GetPendingPayment.cs" />
+    <Compile Include="Activity\Service\Admin\MarkPendingPaymentAsFailed.cs" />
+    <Compile Include="Activity\Service\Admin\MarkPendingPaymentAsDone.cs" />
     <Compile Include="Activity\Service\InsertCancellationReason.cs" />
     <Compile Include="Activity\Service\InsertRefundAmountCustomer.cs" />
     <Compile Include="Activity\Service\RsvRefund.cs" />
