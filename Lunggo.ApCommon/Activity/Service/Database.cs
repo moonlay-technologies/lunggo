@@ -849,7 +849,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                 foreach (var save in saved)
                 {
-                    var appointmentDetail = savedBookings.Where(saving => save.ActivityId == saving.ActivityId && save.Date == saving.Date && save.Session == saving.Session).ToList();
+                    var appointmentDetail = savedBookingsForOutput.Where(saving => save.ActivityId == saving.ActivityId && save.Date == saving.Date && save.Session == saving.Session).ToList();
                     var appointmentReservations = appointmentDetail.Select(appointment => new AppointmentReservation
                     {
                         RsvNo = appointment.RsvNo,
