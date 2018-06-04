@@ -25,21 +25,46 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             var status = MapNicepayPaymentStatus(notif.status,notif.resultMsg);
             var method = MapNicepayPaymentMethod(notif.payMethod);
-            var paymentInfo = new RsvPaymentDetails
-            {
-                Medium = PaymentMedium.Nicepay,
-                Method = method,
-                Submethod = MappingNicepayPaymentSubMethod(notif.bankCd),
-                Status = status,
-                Time = status == PaymentStatus.Settled ? DateTime.UtcNow : (DateTime?) null,
-                ExternalId = notif.tXid,
-                TransferAccount = notif.vacctNo,
-                FinalPriceIdr = notif.amt == null ? 0 : Decimal.Parse(notif.amt),
-                LocalCurrency = new Currency("IDR")
-            };
 
-            if (paymentInfo.Status != PaymentStatus.Failed && paymentInfo.Status != PaymentStatus.Denied)
-                new PaymentService().UpdatePayment(notif.referenceNo, paymentInfo);
+            if (notif.referenceNo.StartsWith("TRX"))
+            {
+                var trxPayment = new TrxPaymentDetails
+                {
+                    TrxId = notif.referenceNo,
+                    Medium = PaymentMedium.Nicepay,
+                    Method = method,
+                    Submethod = MappingNicepayPaymentSubMethod(notif.bankCd),
+                    Status = status,
+                    Time = status == PaymentStatus.Settled ? DateTime.UtcNow : (DateTime?) null,
+                    ExternalId = notif.tXid,
+                    TransferAccount = notif.vacctNo,
+                    FinalPriceIdr = notif.amt == null ? 0 : Decimal.Parse(notif.amt),
+                    LocalCurrency = new Currency("IDR")
+                };
+
+                if (trxPayment.Status != PaymentStatus.Failed && trxPayment.Status != PaymentStatus.Denied)
+                    new PaymentService().UpdatePayment(trxPayment);
+            }
+            else
+            {
+                var rsvPayment = new RsvPaymentDetails
+                {
+                    RsvNo = notif.referenceNo,
+                    Medium = PaymentMedium.Nicepay,
+                    Method = method,
+                    Submethod = MappingNicepayPaymentSubMethod(notif.bankCd),
+                    Status = status,
+                    Time = status == PaymentStatus.Settled ? DateTime.UtcNow : (DateTime?) null,
+                    ExternalId = notif.tXid,
+                    TransferAccount = notif.vacctNo,
+                    FinalPriceIdr = notif.amt == null ? 0 : Decimal.Parse(notif.amt),
+                    LocalCurrency = new Currency("IDR")
+                };
+
+                if (rsvPayment.Status != PaymentStatus.Failed && rsvPayment.Status != PaymentStatus.Denied)
+                    new PaymentService().UpdatePayment(rsvPayment);
+            }
+
             return new ApiResponseBase();
         }
 

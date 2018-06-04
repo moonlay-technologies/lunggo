@@ -1,4 +1,6 @@
-﻿namespace Lunggo.ApCommon.Product.Constant
+﻿using System;
+
+namespace Lunggo.ApCommon.Product.Constant
 {
     public enum PlatformType
     {
@@ -7,7 +9,9 @@
         MobileWebsite = 2,
         IosApp = 3,
         AndroidApp = 4,
-        WindowsPhoneApp = 5
+        WindowsPhoneApp = 5,
+        IosAppOperator = 6,
+        AndroidAppOperator = 7,
     }
 
     public class PlatformTypeCd
@@ -17,17 +21,19 @@
             switch (platformType)
             {
                 case PlatformType.DesktopWebsite:
-                    return "DWS";
+                    return "DesktopWebsite";
                 case PlatformType.MobileWebsite:
-                    return "MWS";
+                    return "MobileWebsite";
                 case PlatformType.IosApp:
-                    return "IOA";
+                    return "IosApp";
                 case PlatformType.AndroidApp:
-                    return "ANA";
-                case PlatformType.WindowsPhoneApp:
-                    return "WPA";
+                    return "AndroidApp";
+                case PlatformType.IosAppOperator:
+                    return "IosAppOperator";
+                case PlatformType.AndroidAppOperator:
+                    return "AndroidAppOperator";
                 default:
-                    return null;
+                    throw new NotImplementedException("Platform type not implemented: " + platformType);
             }
         }
 
@@ -36,17 +42,23 @@
             switch (platformType)
             {
                 case "DWS":
+                case "DesktopWebsite":
                     return PlatformType.DesktopWebsite;
                 case "MWS":
+                case "MobileWebsite":
                     return PlatformType.MobileWebsite;
                 case "IOA":
+                case "IosApp":
                     return PlatformType.IosApp;
                 case "ANA":
+                case "AndroidApp":
                     return PlatformType.AndroidApp;
-                case "WPA":
-                    return PlatformType.WindowsPhoneApp;
+                case "IosAppOperator":
+                    return PlatformType.IosAppOperator;
+                case "AndroidAppOperator":
+                    return PlatformType.AndroidAppOperator;
                 default:
-                    return PlatformType.Undefined;
+                    throw new NotImplementedException("Platform type not implemented: " + platformType);
             }
         }
     }

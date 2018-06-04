@@ -16,6 +16,7 @@ using Lunggo.Framework.Queue;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Exception = System.Exception;
 using Lunggo.ApCommon.Account.Service;
+using Lunggo.ApCommon.Sequence;
 using Lunggo.Framework.Extension;
 
 namespace Lunggo.ApCommon.Payment.Service
@@ -62,7 +63,6 @@ namespace Lunggo.ApCommon.Payment.Service
                     RealizeVoucher(discount, accountService, cartPaymentDetails);
                 UpdateCartDb(cartPaymentDetails);
                 _cache.DeleteCart(cartId);
-                _cache.ClearUserCartId(cartId);
                 if (cartPaymentDetails.Method == PaymentMethod.BankTransfer || cartPaymentDetails.Method == PaymentMethod.VirtualAccount)
                     SendTransferInstructionToCustomer(cartPaymentDetails);
             }
@@ -111,8 +111,45 @@ namespace Lunggo.ApCommon.Payment.Service
         private void UpdateCartDb(CartPaymentDetails cartPaymentDetails)
         {
             DistributeRsvPaymentDetails(cartPaymentDetails);
-            cartPaymentDetails.CartId = GenerateCartRecordId();
-            _db.InsertTrx(cartPaymentDetails);
+            var trxDetails = GenerateTrxFromCartPaymentDetails(cartPaymentDetails);
+            _db.InsertTrx(trxDetails);
+        }
+
+        private TrxPaymentDetails GenerateTrxFromCartPaymentDetails(CartPaymentDetails cart)
+        {
+            var trx = new TrxPaymentDetails
+            {
+                TrxId = TrxIdSequence.GetInstance().GetNextTrxId(),
+                RsvPaymentDetails = cart.RsvPaymentDetails,
+                TimeLimit = cart.TimeLimit,
+                OriginalPriceIdr = cart.OriginalPriceIdr,
+                LocalCurrency = cart.LocalCurrency,
+                Status = cart.Status,
+                Time = cart.Time,
+                DiscountNominal = cart.DiscountNominal,
+                UniqueCode = cart.UniqueCode,
+                FinalPriceIdr = cart.FinalPriceIdr,
+                LocalFinalPrice = cart.LocalFinalPrice,
+                Data = cart.Data,
+                Discount = cart.Discount,
+                DiscountCode = cart.DiscountCode,
+                ExternalId = cart.ExternalId,
+                FailureReason = cart.FailureReason,
+                HasInstruction = cart.HasInstruction,
+                HasThirdPartyPage = cart.HasThirdPartyPage,
+                InvoiceNo = cart.InvoiceNo,
+                LocalPaidAmount = cart.LocalPaidAmount,
+                Medium = cart.Medium,
+                Method = cart.Method,
+                PaidAmountIdr = cart.PaidAmountIdr,
+                RedirectionUrl = cart.RedirectionUrl,
+                Refund = cart.Refund,
+                Submethod = cart.Submethod,
+                Surcharge = cart.Surcharge,
+                TransferAccount = cart.TransferAccount,
+                UpdateDate = cart.UpdateDate
+            };
+            return trx;
         }
 
         public virtual CartPaymentDetails GetCartPaymentDetails(string cartId)
@@ -194,12 +231,6 @@ namespace Lunggo.ApCommon.Payment.Service
 
                 rsvPayment.Status = cartPayment.Status;
             }
-        }
-
-        private string GenerateCartRecordId()
-        {
-            var guid = Guid.NewGuid().ToString("N");
-            return guid;
         }
     }
 }

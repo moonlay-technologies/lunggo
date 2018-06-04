@@ -134,7 +134,7 @@ namespace Lunggo.ApCommon.Activity.Model
     public class TrxList
     {
         [JsonProperty("cartId", NullValueHandling = NullValueHandling.Ignore)]
-        public string CartId { get; set; }
+        public string CartId { get; set; } // OBSOLETE
         [JsonProperty("trxId", NullValueHandling = NullValueHandling.Ignore)]
         public string TrxId { get; set; }
         [JsonProperty("trxTime", NullValueHandling = NullValueHandling.Ignore)]

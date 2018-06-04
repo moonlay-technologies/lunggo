@@ -42,14 +42,13 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
         }
 
         [TestMethod]
-        public void MyBookings_ValidInput_ReturnSomething()
+        public void MyBookingsCartActive_ValidInput_ReturnSomething()
         {
             HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
             HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("08712345678"), new string[0]);
-            var input = new GetMyBookingsApiRequest()
+            var input = new GetMyBookingsCartActiveApiRequest()
             {
-                Page = "1",
-                PerPage = "10"
+                LastUpdate = DateTime.MinValue.ToString()
             };
             var actualResult = ActivityLogic.GetMyBookingsCartActive(input);
 

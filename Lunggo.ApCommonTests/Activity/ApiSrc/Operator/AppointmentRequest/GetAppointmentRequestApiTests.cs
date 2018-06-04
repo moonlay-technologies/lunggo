@@ -73,8 +73,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLog
             var userManager = new ApplicationUserManager(new DapperUserStore<User>());
             var input = new GetAppointmentRequestApiRequest()
             {
-                Page = "1",
-                PerPage = "10"
+                LastUpdate = DateTime.MinValue.ToString()
             };
             var actualResult = ActivityLogic.GetAppointmentRequest(input, userManager);
 
@@ -101,12 +100,9 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.GetAppointmentRequestLog
             var expectedResult = new GetAppointmentRequestApiResponse()
             {
                 Appointments = new List<AppointmentDetailForDisplay>() { AppointmentListDisplay },
-                Page = 1,
-                PerPage = 10
+                LastUpdate = DateTime.MinValue
             };
 
-            Assert.AreEqual(expectedResult.Page, actualResult.Page);
-            Assert.AreEqual(expectedResult.PerPage, actualResult.PerPage);
             Assert.AreEqual(expectedResult.Appointments[0].Name, actualResult.Appointments[0].Name);
         }
     }

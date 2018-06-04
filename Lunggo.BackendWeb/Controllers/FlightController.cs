@@ -100,7 +100,7 @@ namespace Lunggo.BackendWeb.Controllers
         [ActionName("ConfirmOverridePayment")]
         public ActionResult ConfirmOverridePaymentPost(string rsvNo)
         {
-            new PaymentService().UpdatePayment(rsvNo, new RsvPaymentDetails { Status = PaymentStatus.Settled });
+            new PaymentService().UpdatePayment(new RsvPaymentDetails { RsvNo = rsvNo, Status = PaymentStatus.Settled });
             TempData["OverridePayment"] = true;
             Thread.Sleep(3000);
             return RedirectToAction("Detail", null, new { rsvNo });

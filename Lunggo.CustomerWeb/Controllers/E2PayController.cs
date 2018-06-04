@@ -35,9 +35,9 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult ResponsePage()
         {
             var TableLog = new GlobalLog();
-            
+
             TableLog.PartitionKey = "E2PAY RESPONSE PAGE LOG";
-            
+
 
             var form = Request.Form;
 
@@ -63,9 +63,9 @@ namespace Lunggo.CustomerWeb.Controllers
         public string BackendPost()
         {
             var TableLog = new GlobalLog();
-            
+
             TableLog.PartitionKey = "E2PAY RESPONSE PAGE LOG";
-            
+
             var form = Request.Form;
 
             var log = LogService.GetInstance();
@@ -95,32 +95,73 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (form["Status"] != "1")
             {
-                var payment = new RsvPaymentDetails
+                if (form["RefNo"].StartsWith("TRX"))
                 {
-                    Medium = PaymentMedium.E2Pay,
-                    Method = MapPaymentMethod(form["PaymentId"]),
-                    Status = PaymentStatus.Failed,
-                    Time = DateTime.UtcNow,
-                    ExternalId = form["TransId"],
-                    RedirectionUrl = null,
-                    FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
-                    LocalCurrency = new Currency("IDR")
-                };
-                _paymentService.UpdatePayment(form["RefNo"], payment);
+                    var trxPayment = new TrxPaymentDetails
+                    {
+                        TrxId = form["RefNo"],
+                        Medium = PaymentMedium.E2Pay,
+                        Method = MapPaymentMethod(form["PaymentId"]),
+                        Status = PaymentStatus.Failed,
+                        Time = DateTime.UtcNow,
+                        ExternalId = form["TransId"],
+                        RedirectionUrl = null,
+                        FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
+                        LocalCurrency = new Currency("IDR")
+                    };
+                    _paymentService.UpdatePayment(trxPayment);
+                }
+                else
+                {
+                    var rsvPayment = new RsvPaymentDetails
+                    {
+                        RsvNo = form["RefNo"],
+                        Medium = PaymentMedium.E2Pay,
+                        Method = MapPaymentMethod(form["PaymentId"]),
+                        Status = PaymentStatus.Failed,
+                        Time = DateTime.UtcNow,
+                        ExternalId = form["TransId"],
+                        RedirectionUrl = null,
+                        FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
+                        LocalCurrency = new Currency("IDR")
+                    };
+                    _paymentService.UpdatePayment(rsvPayment);
+                }
+
                 return false;
             }
 
-            var paymentInfo = new RsvPaymentDetails
+            if (form["RefNo"].StartsWith("TRX"))
             {
-                Medium = PaymentMedium.E2Pay,
-                Method = MapPaymentMethod(form["PaymentId"]),
-                Status = PaymentStatus.Settled,
-                Time = DateTime.UtcNow,
-                ExternalId = form["TransId"],
-                FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
-                LocalCurrency = new Currency("IDR")
-            };
-            _paymentService.UpdatePayment(form["RefNo"], paymentInfo);
+                var trxPayment = new TrxPaymentDetails
+                {
+                    TrxId = form["RefNo"],
+                    Medium = PaymentMedium.E2Pay,
+                    Method = MapPaymentMethod(form["PaymentId"]),
+                    Status = PaymentStatus.Settled,
+                    Time = DateTime.UtcNow,
+                    ExternalId = form["TransId"],
+                    FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
+                    LocalCurrency = new Currency("IDR")
+                };
+                _paymentService.UpdatePayment(trxPayment);
+            }
+            else
+            {
+                var rsvPayment = new RsvPaymentDetails
+                {
+                    RsvNo = form["RefNo"],
+                    Medium = PaymentMedium.E2Pay,
+                    Method = MapPaymentMethod(form["PaymentId"]),
+                    Status = PaymentStatus.Settled,
+                    Time = DateTime.UtcNow,
+                    ExternalId = form["TransId"],
+                    FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
+                    LocalCurrency = new Currency("IDR")
+                };
+                _paymentService.UpdatePayment(rsvPayment);
+            }
+
             return true;
         }
 

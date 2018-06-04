@@ -864,7 +864,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     save.AppointmentReservations = appointmentReservations;
                 }
 
-                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).ToList(); 
+                var lastUpdateOutput = lastUpdate.OrderByDescending(a => a.Value).ToList();
 
 
                 var output = new GetAppointmentListActiveOutput
@@ -2204,14 +2204,22 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
-                var affectedRow = RsvRefundBankAccountTableRepo.GetInstance().Insert(conn, new RsvRefundBankAccountTableRecord
+                var existing = RsvRefundBankAccountTableRepo.GetInstance().Find1OrDefault(conn,
+                    new RsvRefundBankAccountTableRecord
+                    {
+                        RsvNo = rsvNo
+                    });
+                var inserting = new RsvRefundBankAccountTableRecord
                 {
                     RsvNo = rsvNo,
                     AccountNumber = account.AccountNumber,
                     BankName = account.BankName,
                     OwnerName = account.OwnerName,
                     Branch = account.Branch
-                });
+                };
+                var affectedRow = existing == null
+                    ? RsvRefundBankAccountTableRepo.GetInstance().Insert(conn, inserting)
+                    : RsvRefundBankAccountTableRepo.GetInstance().Update(conn, inserting);
                 return affectedRow > 0;
             }
         }

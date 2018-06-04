@@ -13,12 +13,12 @@ namespace Lunggo.ApCommon.Identity.Auth
         public string AllowedOrigin { get; set; }
 
         public static (PlatformType type, string version) GetPlatform(string clientId)
-        { 
+        {
             var decodedClientId = DecodeClientId(clientId);
             var splitClientId = decodedClientId.Split(':');
             var platformType = ParsePlatformType(splitClientId[0]);
             var version = splitClientId[1];
-            return (platformType,version);
+            return (platformType, version);
         }
 
         public static string GetPlatfromVersion(string clientId)
@@ -46,12 +46,16 @@ namespace Lunggo.ApCommon.Identity.Auth
         {
             switch (platformCode)
             {
-                case "mpns":
-                    return PlatformType.WindowsPhoneApp;
                 case "gcm":
+                case "rnandroid":
                     return PlatformType.AndroidApp;
                 case "apns":
+                case "rnios":
                     return PlatformType.IosApp;
+                case "rniosop":
+                    return PlatformType.IosAppOperator;
+                case "rnandroidop":
+                    return PlatformType.AndroidAppOperator;
                 case "dws":
                     return PlatformType.DesktopWebsite;
                 case "mws":

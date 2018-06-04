@@ -24,25 +24,25 @@ namespace Lunggo.ApCommon.Payment.Database
             }
         }
 
-        internal virtual void InsertTrx(CartPaymentDetails cartDetails)
+        internal virtual void InsertTrx(TrxPaymentDetails trxDetails)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var userId = GetUserIdFromActivityReservationDbQuery.GetInstance()
-                    .Execute(conn, new { cartDetails.RsvPaymentDetails[0].RsvNo }).First();
+                    .Execute(conn, new { trxDetails.RsvPaymentDetails[0].RsvNo }).First();
                 var trxUserRecord = new TrxUserTableRecord
                 {
-                    TrxId = cartDetails.CartId,
+                    TrxId = trxDetails.TrxId,
                     UserId = userId,
                     Time = DateTime.UtcNow
                 };
                 TrxUserTableRepo.GetInstance().Insert(conn, trxUserRecord);
 
-                foreach (var rsvDetails in cartDetails.RsvPaymentDetails)
+                foreach (var rsvDetails in trxDetails.RsvPaymentDetails)
                 {
                     var trxRsvRecord = new TrxRsvTableRecord
                     {
-                        TrxId = cartDetails.CartId,
+                        TrxId = trxDetails.TrxId,
                         RsvNo = rsvDetails.RsvNo,
                     };
                     TrxRsvTableRepo.GetInstance().Insert(conn, trxRsvRecord);
