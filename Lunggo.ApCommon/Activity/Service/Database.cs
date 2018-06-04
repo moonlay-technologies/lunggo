@@ -732,18 +732,23 @@ namespace Lunggo.ApCommon.Activity.Service
                                 RsvNo = savedBooking.RsvNo
                             }).ToList();
                             var statusHistory = halfStatusHistory.Where(a => a.BookingStatusCd == savedBooking.RsvStatus).ToList();
-                            var amount = RefundHistoryTableRepo.GetInstance().Find1(conn, new RefundHistoryTableRecord
+                            var amounts = RefundHistoryTableRepo.GetInstance().Find(conn, new RefundHistoryTableRecord
                             {
                                 RsvNo = savedBooking.RsvNo
-                            }).RefundAmount;
+                            }).ToList();
 
+                            decimal amount = 0;
 
+                            if (amounts.Count > 0)
+                            {
+                                amount = amounts.First().RefundAmount ?? 0;
+                            }
 
                             newPaymentSteps.Add(new PaymentStep
                             {
                                 StepDescription = "Cancel",
                                 StepDate = statusHistory[0].TimeStamp,
-                                StepAmount = amount.HasValue ? amount.Value : 0,
+                                StepAmount = amount,
                                 StepStatus = "CANCEL",
                             });
                             paymentSteps = newPaymentSteps;
@@ -2446,6 +2451,7 @@ namespace Lunggo.ApCommon.Activity.Service
 
                     var pendingRefund = pendingRefunds.First();
                     pendingRefund.RefundStatus = CustomerRefundStatusCd.Mnemonic(CustomerRefundStatus.Completed);
+                    pendingRefund.UpdateDate = DateTime.UtcNow;
                     var refundUpdate = RefundCustomerTableRepo.GetInstance().Update(conn, pendingRefund);
                     return refundUpdate > 0;
                 }
@@ -2492,6 +2498,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         return false;
                     }
                     pendingRefund.RefundStatus = CustomerRefundStatusCd.Mnemonic(CustomerRefundStatus.Failed);
+                    pendingRefund.UpdateDate = DateTime.UtcNow;
                     var refundUpdate = RefundCustomerTableRepo.GetInstance().Update(conn, pendingRefund);
                     return refundUpdate > 0;
                 }
