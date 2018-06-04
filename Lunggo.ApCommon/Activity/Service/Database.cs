@@ -848,8 +848,8 @@ namespace Lunggo.ApCommon.Activity.Service
                         var saveds = new ActivityPricePackageReservation();
                         saveds.Type = savedPaxCount.Type;
                         saveds.Count = savedPaxCount.Count;
-                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type);
-                        if (amountType.Count() != 0)
+                        var amountType = pricePackages.Where(package => package.Type == savedPaxCount.Type).ToList();
+                        if (amountType.Count != 0)
                         {
                             saveds.TotalPrice = savedPaxCount.Count * amountType.First().Amount;
                         }

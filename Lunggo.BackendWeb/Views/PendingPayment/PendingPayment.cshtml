@@ -1,0 +1,139 @@
+﻿@using System.Globalization
+@using Lunggo.ApCommon.Flight.Constant
+@using Lunggo.ApCommon.Flight.Model
+@using Lunggo.ApCommon.Payment.Constant
+@using Lunggo.ApCommon.Activity.Model
+@model List<PendingPayment>
+
+@{
+    ViewBag.Title = "Flight Reservation List";
+}
+
+@{
+    List<PendingPayment> customerList = Model.Where(a => a.PaymentStatus == "Refund").OrderBy(a => a.Date).ToList();
+    List<PendingPayment> opList = Model.Where(a => a.PaymentStatus != "Refund").OrderBy(a => a.Date).ToList();
+}
+
+<h3><i class="fa fa-angle-right"></i> Pending Payment</h3>
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Customer Pending Payment List</h4>
+            <hr>
+            <table class="table table-hover table-flight-booking">
+                <thead>
+                    <tr>
+                        <th>No. Reservasi</th>
+                        <th>Rekening Bank</th>
+                        <th>Tanggal</th>
+                        <th>Pembayaran Untuk</th>
+                        <th>Jumlah Pembayaran</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pendingPayment in customerList)
+                    {
+                        <tr>
+                            <td>
+                                @pendingPayment.RsvNo
+                            </td>
+                            <td>
+                                @pendingPayment.Name<br />
+                                @pendingPayment.AccountNumber<br />
+                                @pendingPayment.BankName
+                            </td>
+                            <td>
+                                @pendingPayment.Date
+                            </td>
+                            <td>
+                                @pendingPayment.PaymentStatus
+                            </td>
+                            <td>
+                                @pendingPayment.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("MarkPaymentAsDone", "PendingPayment", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@pendingPayment.RsvNo" />
+                                    <input class="hidden" name='PendingPaymentStatus' value="@pendingPayment.PaymentStatus" />
+                                    <input class="btn btn-success" type="submit" value="Done">
+                                }
+                                @using (Html.BeginForm("MarkPaymentAsFailed", "PendingPayment", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@pendingPayment.RsvNo" />
+                                    <input class="hidden" name='PendingPaymentStatus' value="@pendingPayment.PaymentStatus" />
+                                    <input class="btn btn-primary" type="submit" value="Fail">
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div><!-- row -->
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> Operator Pending Payment List</h4>
+            <hr>
+            <table class="table table-hover table-flight-booking">
+                <thead>
+                    <tr>
+                        <th>No. Reservasi</th>
+                        <th>Rekening Bank</th>
+                        <th>Tanggal</th>
+                        <th>Pembayaran Untuk</th>
+                        <th>Jumlah Pembayaran</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pendingPayment in opList)
+                    {
+                        <tr>
+                            <td>
+                                @pendingPayment.RsvNo
+                            </td>
+                            <td>
+                                @pendingPayment.Name<br />
+                                @pendingPayment.AccountNumber<br />
+                                @pendingPayment.BankName
+                            </td>
+                            <td>
+                                @pendingPayment.Date
+                            </td>
+                            <td>
+                                @pendingPayment.PaymentStatus
+                            </td>
+                            <td>
+                                @pendingPayment.Amount.ToString("Rp 0,0", CultureInfo.CreateSpecificCulture("id-ID"))
+                            </td>
+                            <td>
+                                @using (Html.BeginForm("MarkPaymentAsDone", "PendingPayment", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@pendingPayment.RsvNo" />
+                                    <input class="hidden" name='PendingPaymentStatus' value="@pendingPayment.PaymentStatus" />
+                                    <input class="btn btn-success" type="submit" value="Done">
+                                }
+                                @using (Html.BeginForm("MarkPaymentAsFailed", "PendingPayment", FormMethod.Post))
+                                {
+                                    <input class="hidden" name='RsvNo' value="@pendingPayment.RsvNo" />
+                                    <input class="hidden" name='PendingPaymentStatus' value="@pendingPayment.PaymentStatus" />
+                                    <input class="btn btn-primary" type="submit" value="Fail">
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div><!--/content-panel -->
+    </div><!-- /col-md-12 -->
+
+</div>
