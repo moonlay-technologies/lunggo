@@ -249,5 +249,85 @@ namespace Lunggo.ApCommon.Activity.Service
             var notifResult = NotificationService.GetInstance().SendNotificationsOperator(notifTitle, notifBody, operatorId, notifData);
             return notifResult;
         }
+
+        public AppointmentConfirmationOutput NoResponseAppointment(AppointmentConfirmationInput input)
+        {
+            var status = GetMyBookingDetail(new GetMyBookingDetailInput { RsvNo = input.RsvNo }).BookingDetail.BookingStatus;
+            if (status != "Booked" && status != "ForwardedToOperator")
+            {
+                return new AppointmentConfirmationOutput
+                {
+                    IsSuccess = false
+                };
+            }
+
+            if (status == "ForwardedToOperator")
+            {
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.NoResponseByOperator);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.NoResponseByOperator);
+                var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+                forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                var pushNotifNoResponse = PushNotificationNoResponseAppointmentByOperator(input.RsvNo);
+                return new AppointmentConfirmationOutput { IsSuccess = true };
+            }
+            else
+            {
+                UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.NoResponseByAdmin);
+                InsertStatusHistoryToDb(input.RsvNo, BookingStatus.NoResponseByAdmin);
+                var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+                forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
+                var pushNotifNoResponse = PushNotificationNoResponseAppointmentByAdmin(input.RsvNo);
+                return new AppointmentConfirmationOutput { IsSuccess = true };
+            }
+        }
+
+        internal bool PushNotificationNoResponseAppointmentByOperator(string rsvNo)
+        {
+            var customerId = GetUserIdByRsvNo(rsvNo);
+            var reservation = GetReservation(rsvNo);
+            var customerResult = PushNotifForwardAppointmentForCustomer(customerId, reservation.ActivityDetails.Name ,reservation.DateTime.Date.Value.Date);
+            var operatorId = GetOperatorIdByActivityId(reservation.ActivityDetails.ActivityId);
+            var operatorResult = PushNotifForwardAppointmentForOperator(operatorId, reservation.ActivityDetails.Name,
+                reservation.DateTime.Date.Value.Date);
+            return operatorResult && customerResult;
+        }
+
+        internal bool PushNotifNoResponseAppointmentByOperatorForCustomer(string customerId, string activityName, DateTime activityDate)
+        {
+            var notifTitle = "Aktivitas tidak direspon oleh operator";
+            var notifBody = "Aktivitas dengan nama \"" + activityName + "\" pada tanggal " +
+                            activityDate.ToShortDateString() + " tidak direspon oleh operator";
+            var notifData = new NotificationData();
+            notifData.Function = "refreshMyBooking";
+            notifData.Status = "OK";
+            var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, customerId, notifData);
+            return notifResult;
+        }
+        
+        internal bool PushNotifNoResponseAppointmentByOperatorForOperator(string operatorId, string activityName, DateTime activityDate)
+        {
+            var notifTitle = "Anda tidak merespon pesanan aktivitas";
+            var notifBody = "Anda tidak merespon pesanan baru dengan nama aktivitas \"" + activityName + "\" pada tanggal " +
+                            activityDate.ToShortDateString();
+            var notifData = new NotificationData();
+            notifData.Function = "refreshMyBooking";
+            notifData.Status = "OK";
+            var notifResult = NotificationService.GetInstance().SendNotificationsOperator(notifTitle, notifBody, operatorId, notifData);
+            return notifResult;
+        }
+
+        internal bool PushNotificationNoResponseAppointmentByAdmin(string rsvNo)
+        {
+            var userId = GetUserIdByRsvNo(rsvNo);
+            var reservation = GetReservation(rsvNo);
+            var notifTitle = "Aktivitas tidak direspon oleh admin";       
+            var notifData = new NotificationData();
+            notifData.Function = "refreshMyBooking";
+            notifData.Status = "OK";
+            var notifBody = "Aktivitas dengan nama \"" + reservation.ActivityDetails.Name + "\" pada tanggal " +
+                            reservation.DateTime.Date.Value.Date.ToShortDateString() + " tidak direspon oleh admin";
+            var notifResult = NotificationService.GetInstance().SendNotificationsCustomer(notifTitle, notifBody, userId, notifData);
+            return notifResult;
+        }
     }
 }

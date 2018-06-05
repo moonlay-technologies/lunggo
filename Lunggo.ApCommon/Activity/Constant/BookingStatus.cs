@@ -15,7 +15,9 @@
         CancelByCustomer = 10,
         CancelByAdmin = 11,
         CancelByOperator = 12,
-        DeniedByAdmin = 13
+        DeniedByAdmin = 13,
+        NoResponseByAdmin = 14,
+        NoResponseByOperator = 15
     }
     internal class BookingStatusCd
     {
@@ -49,6 +51,10 @@
                     return "CancelByAdmin";
                 case BookingStatus.DeniedByAdmin:
                     return "DeniedByAdmin";
+                case BookingStatus.NoResponseByAdmin:
+                    return "NoResponseByAdmin";
+                case BookingStatus.NoResponseByOperator:
+                    return "NoResponseByOperator";
                 default:
                     return null;
             }
@@ -82,6 +88,12 @@
                     return BookingStatus.CancelByOperator;
                 case "cancelbyadmin":
                     return BookingStatus.CancelByAdmin;
+                case "deniedbyadmin":
+                    return BookingStatus.DeniedByAdmin;
+                case "noresponsebyadmin":
+                    return BookingStatus.NoResponseByAdmin;
+                case "noresponsebyoperator":
+                    return BookingStatus.NoResponseByOperator;
                 default:
                     return BookingStatus.Undefined;
             }

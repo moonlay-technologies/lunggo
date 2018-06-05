@@ -2342,21 +2342,23 @@ namespace Lunggo.ApCommon.Activity.Service
                     BankName = account.BankName,
                     OwnerName = account.OwnerName,
                     Branch = account.Branch
-                });
+                };
+
+                
+                var affectedRow = existing == null
+                    ? RsvRefundBankAccountTableRepo.GetInstance().Insert(conn, inserting)
+                    : RsvRefundBankAccountTableRepo.GetInstance().Update(conn, inserting);
+
                 var refundCustomer = RefundCustomerTableRepo.GetInstance().Find1(conn, new RefundCustomerTableRecord
                 {
                     RsvNo = rsvNo
                 });
-
                 refundCustomer.UpdateDate = DateTime.UtcNow;
                 refundCustomer.RefundStatus = CustomerRefundStatusCd.Mnemonic(CustomerRefundStatus.Pending);
                 refundCustomer.RefundProcessDate = DateTime.UtcNow.AddDays(2);
-                var row = RefundCustomerTableRepo.GetInstance().Update(conn, refundCustomer);
 
-                };
-                var affectedRow = existing == null
-                    ? RsvRefundBankAccountTableRepo.GetInstance().Insert(conn, inserting)
-                    : RsvRefundBankAccountTableRepo.GetInstance().Update(conn, inserting);
+                RefundCustomerTableRepo.GetInstance().Update(conn, refundCustomer);
+               
                 return affectedRow > 0;
             }
         }
@@ -2530,6 +2532,28 @@ namespace Lunggo.ApCommon.Activity.Service
                     StepStatus = false
                 });
                 return true;
+            }
+        }
+
+        internal bool SetActivityRsvTimeLimitToDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var activities = ActivityReservationTableRepo.GetInstance().Find(conn, new ActivityReservationTableRecord
+                {
+                    RsvNo = rsvNo
+                }).ToList();
+
+                if (activities.Count < 1)
+                {
+                    return false;
+                }
+
+                var activity = activities.First();
+                var limit = DateTime.UtcNow.AddDays(2);
+                activity.RsvDateLimit = limit;
+                var affectedRow = ActivityReservationTableRepo.GetInstance().Update(conn, activity);
+                return affectedRow > 0;
             }
         }
     }
