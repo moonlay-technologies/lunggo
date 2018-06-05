@@ -8,12 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using Lunggo.WebAPI.ApiSrc.Activity.Model;
 
 namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
 {
     public static partial class ActivityLogic
     {
-        public static ApiResponseBase CancelAppointment(string rsvNo, ApplicationUserManager userManager)
+        public static ApiResponseBase CancelAppointment(ConfirmationStatusApiRequest apiRequest, ApplicationUserManager userManager)
         {
             var user = HttpContext.Current.User;
             if (string.IsNullOrEmpty(user.Identity.Name))
@@ -34,7 +35,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                 };
             }
 
-            if (string.IsNullOrEmpty(rsvNo))
+            if (string.IsNullOrEmpty(apiRequest.RsvNo))
             {
                 return new ApiResponseBase
                 {
@@ -42,7 +43,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
                     ErrorCode = "ERR_INVALID_REQUEST"
                 };
             }
-            var serviceRequest = PreprocessServiceRequest(rsvNo);
+            var serviceRequest = PreprocessServiceRequest(apiRequest.RsvNo, apiRequest.CancellationReason);
             var serviceResponse = ActivityService.GetInstance().CancelAppointmentByOperator(serviceRequest);
             var apiResponse = AssembleApiResponse(serviceResponse);
 

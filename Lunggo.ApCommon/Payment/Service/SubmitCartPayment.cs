@@ -112,7 +112,17 @@ namespace Lunggo.ApCommon.Payment.Service
         {
             DistributeRsvPaymentDetails(cartPaymentDetails);
             var trxDetails = GenerateTrxFromCartPaymentDetails(cartPaymentDetails);
-            _db.InsertTrx(trxDetails);
+            InsertTrx(trxDetails);
+        }
+
+        private void InsertTrx(TrxPaymentDetails trxDetails)
+        {
+            _db.InsertTrxUser(trxDetails);
+            foreach (var rsvDetail in trxDetails.RsvPaymentDetails)
+            {
+                _db.InsertTrxRsv(rsvDetail.RsvNo, trxDetails.TrxId);
+                UpdatePayment(rsvDetail);
+            }
         }
 
         private TrxPaymentDetails GenerateTrxFromCartPaymentDetails(CartPaymentDetails cart)

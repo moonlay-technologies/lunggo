@@ -33,6 +33,7 @@ namespace Lunggo.ApCommon.Product.Model
 
         internal void InsertToDb(string rsvNo)
         {
+            GenerateNew();
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 ReservationStateTableRepo.GetInstance().Insert(conn, new ReservationStateTableRecord

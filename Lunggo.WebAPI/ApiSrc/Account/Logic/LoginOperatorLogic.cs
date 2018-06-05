@@ -54,7 +54,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_UNREGISTERED"
+                        ErrorCode = "ERR_NOT_REGISTERED"
                     };
                 }
 
@@ -64,7 +64,7 @@ namespace Lunggo.WebAPI.ApiSrc.Account.Logic
                     return new LoginApiResponse
                     {
                         StatusCode = HttpStatusCode.BadRequest,
-                        ErrorCode = "ERR_UNREGISTERED"
+                        ErrorCode = "ERR_NOT_REGISTERED"
                     };
 
             }

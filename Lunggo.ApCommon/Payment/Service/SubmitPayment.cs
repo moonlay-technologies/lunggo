@@ -18,6 +18,7 @@ using Exception = System.Exception;
 using Lunggo.ApCommon.Account.Service;
 using Lunggo.ApCommon.Payment.Cache;
 using Lunggo.Framework.Extension;
+using Lunggo.ApCommon.Activity.Model.Logic;
 
 namespace Lunggo.ApCommon.Payment.Service
 {
@@ -56,7 +57,7 @@ namespace Lunggo.ApCommon.Payment.Service
             {
                 if (!string.IsNullOrEmpty(discountCode) && isVoucherValid)
                     RealizeVoucher(discount, accountService, paymentDetails);
-                _db.UpdatePaymentToDb(paymentDetails);
+                UpdatePayment(paymentDetails);
                 if (paymentDetails.Method == PaymentMethod.BankTransfer || paymentDetails.Method == PaymentMethod.VirtualAccount)
                     SendTransferInstructionToCustomer(paymentDetails);
             }
@@ -134,6 +135,17 @@ namespace Lunggo.ApCommon.Payment.Service
                     ActivityService.GetInstance().Issue(rsvNo);
                     var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(rsvNo);
                     AccountService.GetInstance().InsertBookingReferralHistory(userId);
+                    var rsv = ActivityService.GetInstance().GetReservation(rsvNo);
+                    var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
+                    ActivityService.GetInstance().SetActivityRsvTimeLimit(rsvNo);
+                    if (rsv.ActivityDetails.HasOperator)
+                    {
+                        ActivityService.GetInstance().ForwardAppointment(new AppointmentConfirmationInput
+                        {
+                            RsvNo = payment.RsvNo
+                        });
+                    }
+                    ActivityService.GetInstance().DecreasePaxSlotFromDb(rsv.ActivityDetails.ActivityId, ticketCount, rsv.DateTime.Date.Value, rsv.DateTime.Session);
                 }
             }
         }

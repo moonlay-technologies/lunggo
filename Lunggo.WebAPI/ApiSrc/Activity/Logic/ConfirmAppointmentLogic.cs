@@ -52,11 +52,12 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             return apiResponse;
         }
 
-        public static AppointmentConfirmationInput PreprocessServiceRequest(string rsvNo)
+        public static AppointmentConfirmationInput PreprocessServiceRequest(string rsvNo, string cancellationReason = null)
         {
             return new AppointmentConfirmationInput()
             {
-                RsvNo = rsvNo
+                RsvNo = rsvNo,
+                CancellationReason = cancellationReason
             };
         }
 

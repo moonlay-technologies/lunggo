@@ -3,5 +3,6 @@
     public class AppointmentConfirmationInput
     {
         public string RsvNo { get; set; }
+        public string CancellationReason { get; set; }
     }
 }

@@ -41,19 +41,20 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.GetMyBookingsLogic.Tests
             Assert.AreEqual(expectedResult.StatusCode, actualResult.StatusCode);
         }
 
-        [TestMethod]
-        public void MyBookingsCartActive_ValidInput_ReturnSomething()
-        {
-            HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
-            HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("08712345678"), new string[0]);
-            var input = new GetMyBookingsCartActiveApiRequest()
-            {
-                LastUpdate = DateTime.MinValue.ToString()
-            };
-            var actualResult = ActivityLogic.GetMyBookingsCartActive(input);
-
-            Assert.IsNotNull(actualResult);
-        }
+        //[TestMethod]
+        //public void MyBookings_ValidInput_ReturnSomething()
+        //{
+        //    HttpContext.Current = new HttpContext(new HttpRequest("", "http://localhost.com", ""), new HttpResponse(null));
+        //    HttpContext.Current.User = new GenericPrincipal(new GenericIdentity("08712345678"), new string[0]);
+        //    var input = new GetMyBookingsApiRequest()
+        //    {
+        //        Page = "1",
+        //        PerPage = "10"
+        //    };
+        //    var actualResult = ActivityLogic.GetMyBookingsCartActive(input);
+        //
+        //    Assert.IsNotNull(actualResult);
+        //}
 
         //[TestMethod]
         //public void AssembleApiResponse_GetMyBookingsOutput_ReturnGetMyBookingsApiResponse()

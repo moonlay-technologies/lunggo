@@ -42,12 +42,14 @@ namespace Lunggo.ApCommon.Activity.Service
 
         public InsertActivityRatingOutput InsertActivityRating(InsertActivityRatingInput insertActivityRatingInput)
         {
-            return InsertActivityRatingToDb(insertActivityRatingInput);
+            var output = InsertActivityRatingToDb(insertActivityRatingInput);
+            return output;
         }
 
         public void InsertActivityReview (InsertActivityReviewInput insertActivityReviewInput)
         {
             InsertActivityReviewToDb(insertActivityReviewInput);
         }
+       
     }
 }

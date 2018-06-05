@@ -134,13 +134,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.WindowsAzure.Storage">
-      <HintPath>..\packages\WindowsAzure.Storage.8.4.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.2.0\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -241,6 +239,7 @@
     <Compile Include="Account\Service\CheckPhoneNumber.cs" />
     <Compile Include="Account\Service\Database.cs" />
     <Compile Include="Account\Service\DeleteDataOtp.cs" />
+    <Compile Include="Account\Service\GetOperatorUserDataByActivityId.cs" />
     <Compile Include="Account\Service\RegisterAnalytics.cs" />
     <Compile Include="Account\Service\RequestOtp.cs" />
     <Compile Include="Account\Service\GetUserIdByEmailOrPhoneNumber.cs" />
@@ -268,6 +267,8 @@
     <Compile Include="Activity\Database\Query\GetActivityReviewFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetRatingFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetRefundHistoryFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetPaymentStepPendingPaymentForAdminFromDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\GetRefundPendingPaymentForAdminFromDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetReviewFromDbByRsvNoQuery.cs" />
     <Compile Include="Activity\Database\Query\GetStatusDateDbQuery.cs" />
     <Compile Include="Activity\Database\Query\GetTransactionMutationOutputFromDbQuery.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Activity\Database\Query\GetSearchResultQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateRsvNoPdfFlagQuery.cs" />
     <Compile Include="Activity\Database\Query\UpdateTicketNumberReservationDbQuery.cs" />
+    <Compile Include="Activity\Database\Query\UpdatePaymentStepStatus.cs" />
     <Compile Include="Activity\Database\Query\UpdateViewCountDbQuery.cs" />
     <Compile Include="Activity\Model\ActivityEvoucherAndInvoice.cs" />
     <Compile Include="Activity\Model\ActivityFilterDisplayInfo.cs" />
@@ -365,9 +367,16 @@
     <Compile Include="Activity\Model\Logic\GetMyBookingsOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchActivityOutput.cs" />
     <Compile Include="Activity\Model\Logic\SearchAnalyticsInput.cs" />
+    <Compile Include="Activity\Model\PendingPayment.cs" />
     <Compile Include="Activity\Model\TransactionStatement.cs" />
     <Compile Include="Activity\Model\Logic\WishlistAnalyticsInput.cs" />
     <Compile Include="Activity\Model\SearchActivityResult.cs" />
+    <Compile Include="Activity\Service\Admin\GetPendingPayment.cs" />
+    <Compile Include="Activity\Service\Admin\MarkPendingPaymentAsFailed.cs" />
+    <Compile Include="Activity\Service\Admin\MarkPendingPaymentAsDone.cs" />
+    <Compile Include="Activity\Service\InsertCancellationReason.cs" />
+    <Compile Include="Activity\Service\SetActivityRsvTimeLimit.cs" />
+    <Compile Include="Activity\Service\InsertRefundAmountCustomer.cs" />
     <Compile Include="Activity\Service\RsvRefund.cs" />
     <Compile Include="Activity\Service\Administration.cs" />
     <Compile Include="Activity\Service\Admin\InsertTransactionStatement.cs" />

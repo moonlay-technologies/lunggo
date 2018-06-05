@@ -128,6 +128,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("CancellationReason");
 		    }
 		}
+		public DateTime? RsvDateLimit
+		{
+		    get { return _RsvDateLimit; }
+		    set
+		    {
+		        _RsvDateLimit = value;
+		        IncrementLog("RsvDateLimit");
+		    }
+		}
 
 		
 		private long? _Id;
@@ -143,6 +152,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _IsVerified;
 		private DateTime? _UpdateDate;
 		private String _CancellationReason;
+		private DateTime? _RsvDateLimit;
 
 
 		public static ActivityReservationTableRecord CreateNewInstance()
@@ -187,6 +197,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("IsVerified", false),
 				new ColumnMetadata("UpdateDate", false),
 				new ColumnMetadata("CancellationReason", false),
+				new ColumnMetadata("RsvDateLimit", false),
 
             };
         }

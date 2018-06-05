@@ -117,6 +117,10 @@ namespace Lunggo.ApCommon.Activity.Model
         public bool? NeedRefundBankAccount { get; set; }
         [JsonProperty("refundBankAccount", NullValueHandling = NullValueHandling.Ignore)]
         public BankAccount RefundBankAccount { get; set; }
+        [JsonProperty("refundStatus", NullValueHandling = NullValueHandling.Ignore)]
+        public string RefundStatus { get; set; }
+        [JsonProperty("refundAmount", NullValueHandling = NullValueHandling.Ignore)]
+        public decimal RefundAmount { get; set; }
     }
 
     public class ActivityPackageReservation

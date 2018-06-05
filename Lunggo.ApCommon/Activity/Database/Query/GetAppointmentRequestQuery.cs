@@ -19,7 +19,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
         private static string CreateSelectClause()
         {
             var clauseBuilder = new StringBuilder();
-            clauseBuilder.Append("SELECT act.Id AS ActivityId, ar.RsvNo AS RsvNo, act.Name AS Name, ");
+            clauseBuilder.Append("SELECT act.Id AS ActivityId, ar.RsvNo AS RsvNo, act.Name AS Name, ar.RsvDateLimit AS TimeLimit, ");
             clauseBuilder.Append("ar.TicketCount AS PaxCount, ar.Date AS Date, ar.UpdateDate AS UpdateDate, ");
             clauseBuilder.Append("ar.SelectedSession AS Session, ");
             clauseBuilder.Append("r.RsvTime AS RequestTime, ");
