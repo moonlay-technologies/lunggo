@@ -163,18 +163,56 @@ namespace Lunggo.ApCommon.Payment.Service
             return cartPayment;
         }
 
+        public virtual TrxPaymentDetails GetTrxPaymentDetails(string trxId)
+        {
+            var rsvNoList = _db.GetTrxRsvNos(trxId);
+            var trxPayment = ConstructTrxPayment(trxId, rsvNoList);
+            return trxPayment;
+        }
+
+        private TrxPaymentDetails ConstructTrxPayment(string trxId, List<string> rsvNoList)
+        {
+            var trxPayment = new TrxPaymentDetails();
+            trxPayment.TrxId = trxId;
+            trxPayment.RsvPaymentDetails = RetrieveRsvPaymentDetails(rsvNoList);
+            AggregateRsvPaymentDetails(trxPayment);
+            return trxPayment;
+        }
+
         private CartPaymentDetails GenerateCartPayment(Cart cart)
         {
             var cartPayment = new CartPaymentDetails();
             cartPayment.CartId = cart.Id;
-            cartPayment.RsvPaymentDetails = RetrieveCartRsvPaymentDetails(cart);
+            cartPayment.RsvPaymentDetails = RetrieveRsvPaymentDetails(cart.RsvNoList);
             AggregateRsvPaymentDetails(cartPayment);
             return cartPayment;
         }
 
-        private List<RsvPaymentDetails> RetrieveCartRsvPaymentDetails(Cart cart)
+        private List<RsvPaymentDetails> RetrieveRsvPaymentDetails(List<string> rsvNoList)
         {
-            return cart.RsvNoList.Select(_db.GetPaymentDetails).ToList();
+            return rsvNoList.Select(_db.GetPaymentDetails).ToList();
+        }
+
+        private static void AggregateRsvPaymentDetails(TrxPaymentDetails trxPayment)
+        {
+            trxPayment.OriginalPriceIdr = trxPayment.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr);
+            trxPayment.DiscountCode = trxPayment.DiscountCode;
+            trxPayment.DiscountNominal = trxPayment.RsvPaymentDetails.Sum(d => d.DiscountNominal);
+            trxPayment.UniqueCode = trxPayment.RsvPaymentDetails.Sum(d => d.UniqueCode);
+            trxPayment.Surcharge = trxPayment.RsvPaymentDetails.Sum(d => d.Surcharge);
+            trxPayment.FinalPriceIdr = trxPayment.RsvPaymentDetails.Sum(d => d.FinalPriceIdr);
+            trxPayment.LocalFinalPrice = trxPayment.RsvPaymentDetails.Sum(d => d.LocalFinalPrice);
+            trxPayment.PaidAmountIdr= trxPayment.RsvPaymentDetails.Sum(d => d.PaidAmountIdr);
+            trxPayment.LocalPaidAmount= trxPayment.RsvPaymentDetails.Sum(d => d.LocalPaidAmount);
+
+            var firstRsv = trxPayment.RsvPaymentDetails[0];
+            trxPayment.Status = firstRsv.Status;
+            trxPayment.Medium = firstRsv.Medium;
+            trxPayment.Method = firstRsv.Method;
+            trxPayment.Submethod = firstRsv.Submethod;
+            trxPayment.Data = firstRsv.Data;
+            trxPayment.LocalCurrency = firstRsv.LocalCurrency;
+            trxPayment.Discount = firstRsv.Discount;
         }
 
         private static void AggregateRsvPaymentDetails(CartPaymentDetails cartPayment)

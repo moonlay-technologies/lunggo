@@ -9,9 +9,8 @@ namespace Lunggo.ApCommon.Product.Constant
         MobileWebsite = 2,
         IosApp = 3,
         AndroidApp = 4,
-        WindowsPhoneApp = 5,
-        IosAppOperator = 6,
-        AndroidAppOperator = 7,
+        IosAppOperator = 5,
+        AndroidAppOperator = 6,
     }
 
     public class PlatformTypeCd
@@ -57,6 +56,8 @@ namespace Lunggo.ApCommon.Product.Constant
                     return PlatformType.IosAppOperator;
                 case "AndroidAppOperator":
                     return PlatformType.AndroidAppOperator;
+                case null:
+                    return PlatformType.Undefined;
                 default:
                     throw new NotImplementedException("Platform type not implemented: " + platformType);
             }

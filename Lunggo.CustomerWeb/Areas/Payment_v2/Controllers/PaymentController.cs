@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Lunggo.ApCommon.Activity.Service;
 using Lunggo.ApCommon.Payment.Constant;
+using Lunggo.ApCommon.Payment.Model;
 using Lunggo.ApCommon.Payment.Service;
 
 namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
@@ -22,24 +23,43 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
             _paymentService = paymentService ?? new PaymentService();
         }
 
-        public ActionResult Payment(string cartId)
+        public ActionResult Payment(string cartId, string trxId)
         {
-            var cartPayment = _paymentService.GetCartPaymentDetails(cartId);
+            PaymentDetails payment;
 
-            if (cartPayment == null)
+            if (!string.IsNullOrWhiteSpace(cartId))
+            {
+                payment = _paymentService.GetCartPaymentDetails(cartId);
+                if (payment == null)
+                    return View("Error");
+
+                var rsvList = (payment as CartPaymentDetails).RsvPaymentDetails
+                    .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
+                ViewBag.RsvList = rsvList;
+
+            }
+            else if (!string.IsNullOrWhiteSpace(trxId))
+            {
+                payment = _paymentService.GetTrxPaymentDetails(trxId);
+                if (payment == null)
+                    return View("Error");
+
+                var rsvList = (payment as TrxPaymentDetails).RsvPaymentDetails
+                    .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
+                ViewBag.RsvList = rsvList;
+            }
+            else
+            {
                 return View("Error");
 
-            var rsvList = cartPayment.RsvPaymentDetails
-                .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
+            }
 
-            ViewBag.RsvList = rsvList;
-
-            switch (cartPayment.Status)
+            switch (payment.Status)
             {
                 case PaymentStatus.Pending:
-                    if (cartPayment.HasThirdPartyPage)
+                    if (payment.HasThirdPartyPage)
                         return RedirectToAction("ThirdParty", new { cartId });
-                    if (cartPayment.HasInstruction)
+                    if (payment.HasInstruction)
                         return RedirectToAction("Instruction", new { cartId });
                     return View("Error");
                 case PaymentStatus.Settled:
@@ -50,7 +70,7 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
                 case PaymentStatus.Failed:
                 case PaymentStatus.Expired:
                 case PaymentStatus.Denied:
-                    return View("Payment", cartPayment);
+                    return View("Payment", payment);
                 default:
                     return View("Error");
             }
