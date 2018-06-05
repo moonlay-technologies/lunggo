@@ -653,7 +653,7 @@ namespace Lunggo.ApCommon.Activity.Service
                         Date = a.Date,
                         Session = a.Session,
                         RequestTime = a.RequestTime,
-                        TimeLimit = a.RequestTime.AddDays(3),
+                        TimeLimit = a.TimeLimit,
                         PaxCount = a.PaxCount,
                         MediaSrc = a.MediaSrc,
                         ContactName = Contact.GetFromDb(a.RsvNo).Name
@@ -2550,7 +2550,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
 
                 var activity = activities.First();
-                var limit = DateTime.UtcNow.AddDays(2);
+                var limit = DateTime.UtcNow.AddMinutes(10);
                 activity.RsvDateLimit = limit;
                 var affectedRow = ActivityReservationTableRepo.GetInstance().Update(conn, activity);
                 return affectedRow > 0;

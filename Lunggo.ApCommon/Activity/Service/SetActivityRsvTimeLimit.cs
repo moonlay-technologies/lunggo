@@ -14,7 +14,7 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             SetActivityRsvTimeLimitToDb(rsvNo);
             var timeLimitQueue = QueueService.GetInstance().GetQueueByReference("activityexpirereservation");
-            timeLimitQueue.AddMessage(new CloudQueueMessage(rsvNo), initialVisibilityDelay: TimeSpan.FromDays(2));
+            timeLimitQueue.AddMessage(new CloudQueueMessage(rsvNo), initialVisibilityDelay: TimeSpan.FromMinutes(10));
         }
     }
 }

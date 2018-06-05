@@ -1,4 +1,5 @@
-﻿using Lunggo.ApCommon.Product.Constant;
+﻿using System;
+using Lunggo.ApCommon.Product.Constant;
 using Lunggo.Framework.Encoder;
 
 namespace Lunggo.ApCommon.Identity.Auth
@@ -30,16 +31,9 @@ namespace Lunggo.ApCommon.Identity.Auth
 
         public static PlatformType GetPlatformType(string clientId)
         {
-            try
-            {
-                var decodedClientId = DecodeClientId(clientId);
-                var platformCode = decodedClientId.Split(':')[0];
-                return ParsePlatformType(platformCode);
-            }
-            catch
-            {
-                return PlatformType.Undefined;
-            }
+            var decodedClientId = DecodeClientId(clientId);
+            var platformCode = decodedClientId.Split(':')[0];
+            return ParsePlatformType(platformCode);
         }
 
         private static PlatformType ParsePlatformType(string platformCode)
@@ -61,7 +55,7 @@ namespace Lunggo.ApCommon.Identity.Auth
                 case "mws":
                     return PlatformType.MobileWebsite;
                 default:
-                    return PlatformType.Undefined;
+                    throw new NotImplementedException("invalid platform type, platform code: " + platformCode);
             }
         }
 
