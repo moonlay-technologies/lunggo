@@ -24,7 +24,7 @@ namespace Lunggo.ApCommon.Payment.Database
             }
         }
 
-        internal virtual void InsertTrx(TrxPaymentDetails trxDetails)
+        internal virtual void InsertTrxUser(TrxPaymentDetails trxDetails)
         {
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
@@ -37,17 +37,21 @@ namespace Lunggo.ApCommon.Payment.Database
                     Time = DateTime.UtcNow
                 };
                 TrxUserTableRepo.GetInstance().Insert(conn, trxUserRecord);
-
-                foreach (var rsvDetails in trxDetails.RsvPaymentDetails)
+            }
+        }
+        
+        internal virtual void InsertTrxRsv(string rsvNo, string trxId)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                
+                var trxRsvRecord = new TrxRsvTableRecord
                 {
-                    var trxRsvRecord = new TrxRsvTableRecord
-                    {
-                        TrxId = trxDetails.TrxId,
-                        RsvNo = rsvDetails.RsvNo,
-                    };
-                    TrxRsvTableRepo.GetInstance().Insert(conn, trxRsvRecord);
-                    UpdatePaymentToDb(rsvDetails);
-                }
+                    TrxId = trxId,
+                    RsvNo = rsvNo,
+                };
+                TrxRsvTableRepo.GetInstance().Insert(conn, trxRsvRecord);
+                
             }
         }
 
