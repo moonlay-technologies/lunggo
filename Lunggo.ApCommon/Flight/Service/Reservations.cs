@@ -78,7 +78,7 @@ namespace Lunggo.ApCommon.Flight.Service
                 payment.Status == PaymentStatus.Challenged || payment.Status == PaymentStatus.MethodNotSet)
             {
                 payment.Status = PaymentStatus.Expired;
-                _paymentService.UpdatePayment(rsvNo, payment);
+                _paymentService.UpdatePayment(payment);
             }
         }
 

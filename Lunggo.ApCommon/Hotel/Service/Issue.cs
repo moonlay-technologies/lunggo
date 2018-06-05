@@ -31,7 +31,7 @@ namespace Lunggo.ApCommon.Hotel.Service
     {
         internal override void Issue(string rsvNo)
         {
-            IssueHotel(new IssueHotelTicketInput {RsvNo = rsvNo});
+            IssueHotel(new IssueHotelTicketInput { RsvNo = rsvNo });
         }
 
         public IssueHotelTicketOutput IssueHotel(IssueHotelTicketInput input)
@@ -81,7 +81,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                     IsSuccess = false
                 };
             }
-            
+
             var oldPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             var occupancies = new List<Occupancy>();
 
@@ -120,7 +120,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Console.WriteLine("When refresh ratekeys, no hotel result");
                 return new IssueHotelTicketOutput
                 {
-                    ErrorMessages = new List<string> {"When refresh ratekeys, no hotel result"},
+                    ErrorMessages = new List<string> { "When refresh ratekeys, no hotel result" },
                     IsSuccess = false
                 };
             }
@@ -130,7 +130,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Console.WriteLine("When refresh ratekeys, there is at least a hotel without Rooms");
                 return new IssueHotelTicketOutput
                 {
-                    ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a hotel without Rooms"},
+                    ErrorMessages = new List<string> { "When refresh ratekeys, there is at least a hotel without Rooms" },
                     IsSuccess = false
                 };
             }
@@ -140,7 +140,7 @@ namespace Lunggo.ApCommon.Hotel.Service
                 Console.WriteLine("When refresh ratekeys, there is at least a room without Rates");
                 return new IssueHotelTicketOutput
                 {
-                    ErrorMessages = new List<string> {"When refresh ratekeys, there is at least a room without Rates"},
+                    ErrorMessages = new List<string> { "When refresh ratekeys, there is at least a room without Rates" },
                     IsSuccess = false
                 };
             }
@@ -204,17 +204,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
-                    ErrorMessages = new List<string> {"At least one rate can not be found in refresh ratekey"}
+                    ErrorMessages = new List<string> { "At least one rate can not be found in refresh ratekey" }
                 };
             }
 
             rsvData.HotelDetails.Rooms.ForEach(ro => ro.Rates = BundleRates(ro.Rates));
-            
+
             var newPrice = rsvData.HotelDetails.Rooms.Sum(room => room.Rates.Sum(rate => rate.Price.Supplier));
             if (newPrice != oldPrice)
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                _paymentService.UpdatePayment(input.RsvNo, new RsvPaymentDetails {Status = PaymentStatus.Cancelled});
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = input.RsvNo, Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 LogIssuanceFailure(rsvData.RsvNo, "Price Changed (" + oldPrice + " -> " + newPrice + ")");
                 return new IssueHotelTicketOutput
@@ -243,7 +243,7 @@ namespace Lunggo.ApCommon.Hotel.Service
             {
                 Console.WriteLine(e);
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                _paymentService.UpdatePayment(input.RsvNo, new RsvPaymentDetails { Status = PaymentStatus.Cancelled });
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = input.RsvNo, Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 while (e.InnerException != null)
                     e = e.InnerException;
@@ -257,17 +257,17 @@ namespace Lunggo.ApCommon.Hotel.Service
                     ErrorMessages = new List<string> { issueResult.Status }
                 };
             }
-           
+
             if (issueResult.IsSuccess == false)
             {
                 UpdateRsvDetail(rsvData.RsvNo, "FAIL", rsvData.HotelDetails);
-                _paymentService.UpdatePayment(input.RsvNo, new RsvPaymentDetails { Status = PaymentStatus.Cancelled });
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = input.RsvNo, Status = PaymentStatus.Cancelled });
                 SendFailedIssueNotifToCustomerAndInternal(rsvData.RsvNo);
                 LogIssuanceFailure(rsvData.RsvNo, "Status : " + issueResult.Status);
                 return new IssueHotelTicketOutput
                 {
                     IsSuccess = false,
-                    ErrorMessages = new List<string> {issueResult.Status}
+                    ErrorMessages = new List<string> { issueResult.Status }
                 };
             }
 

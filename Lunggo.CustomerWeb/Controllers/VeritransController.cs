@@ -19,6 +19,11 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         private PaymentService _paymentService;
 
+        public VeritransController() : this(null)
+        {
+
+        }
+
         public VeritransController(PaymentService paymentService = null)
         {
             _paymentService = paymentService ?? new PaymentService();
@@ -48,36 +53,60 @@ namespace Lunggo.CustomerWeb.Controllers
                     time = null;
 
                 var status = MapPaymentStatus(notif);
-                var paymentInfo = new RsvPaymentDetails
-                {
-                    Medium = PaymentMedium.Veritrans,
-                    Method = MapPaymentMethod(notif),
-                    Status = status,
-                    Time = status == PaymentStatus.Settled ? time : null,
-                    ExternalId = notif.approval_code,
-                    TransferAccount = notif.permata_va_number,
-                    FinalPriceIdr = notif.gross_amount,
-                    LocalCurrency = new Currency("IDR")
-                };
 
-                if (paymentInfo.Status != PaymentStatus.Failed && paymentInfo.Status != PaymentStatus.Denied)
-                    _paymentService.UpdatePayment(notif.order_id, paymentInfo);
+                if (notif.order_id.StartsWith("TRX"))
+                {
+                    var trxPayment = new TrxPaymentDetails
+                    {
+                        TrxId = notif.order_id,
+                        Medium = PaymentMedium.Veritrans,
+                        Method = MapPaymentMethod(notif),
+                        Status = status,
+                        Time = status == PaymentStatus.Settled ? time : null,
+                        ExternalId = notif.approval_code,
+                        TransferAccount = notif.permata_va_number,
+                        FinalPriceIdr = notif.gross_amount,
+                        LocalCurrency = new Currency("IDR")
+                    };
+
+                    if (trxPayment.Status != PaymentStatus.Failed && trxPayment.Status != PaymentStatus.Denied)
+                        _paymentService.UpdatePayment(trxPayment);
+                }
+                else
+                {
+                    var rsvPayment = new RsvPaymentDetails
+                    {
+                        RsvNo = notif.order_id,
+                        Medium = PaymentMedium.Veritrans,
+                        Method = MapPaymentMethod(notif),
+                        Status = status,
+                        Time = status == PaymentStatus.Settled ? time : null,
+                        ExternalId = notif.approval_code,
+                        TransferAccount = notif.permata_va_number,
+                        FinalPriceIdr = notif.gross_amount,
+                        LocalCurrency = new Currency("IDR")
+                    };
+
+                    if (rsvPayment.Status != PaymentStatus.Failed && rsvPayment.Status != PaymentStatus.Denied)
+                        _paymentService.UpdatePayment(rsvPayment);
+                }
             }
             return new EmptyResult();
         }
 
-  
+
         public ActionResult PaymentFinish(VeritransResponse response)
         {
-            var rsvNo = response.order_id;
-            var flight = FlightService.GetInstance();
             if (response.status_code == "202")
             {
-                return RedirectToAction("Payment", "Flight", new { RsvNo = rsvNo });
+                return RedirectToAction("Payment", "Flight", new { RsvNo = response.order_id });
             }
-            _paymentService.UpdatePayment(rsvNo, new RsvPaymentDetails { Status = PaymentStatus.Verifying });
-            TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+            if (response.order_id.StartsWith("TRX"))
+                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response.order_id, Status = PaymentStatus.Verifying });
+            else
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = PaymentStatus.Verifying });
+            TempData["AllowThisThankyouPage"] = response.order_id;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         [HttpPost]
@@ -85,28 +114,30 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentFinishPost(string response)
         {
             var response2 = response.Deserialize<VeritransNotification>();
-            var rsvNo = response2.order_id;
-            
-            var flight = FlightService.GetInstance();
+
             var paymentStatus = MapPaymentStatus(response2);
-            TempData["AllowThisThankyouPage"] = rsvNo;
+            TempData["AllowThisThankyouPage"] = response2.order_id;
             if (paymentStatus == PaymentStatus.Denied)
             {
-                return RedirectToAction("Payment", "Flight", new { RsvNo = rsvNo });
+                return RedirectToAction("Payment", "Flight", new { RsvNo = response2.order_id });
             }
-            _paymentService.UpdatePayment(rsvNo, new RsvPaymentDetails { Status = paymentStatus });
-            TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+            if (response2.order_id.StartsWith("TRX"))
+                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response2.order_id, Status = paymentStatus });
+            else
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response2.order_id, Status = paymentStatus });
+            TempData["AllowThisThankyouPage"] = response2.order_id;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response2.order_id });
         }
 
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
-            var rsvNo = response.order_id;
-            var flight = FlightService.GetInstance();
-            _paymentService.UpdatePayment(rsvNo, new RsvPaymentDetails { Status = PaymentStatus.Expired });
-            TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+            if (response.order_id.StartsWith("TRX"))
+                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response.order_id, Status = PaymentStatus.Expired });
+            else
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = PaymentStatus.Expired });
+            TempData["AllowThisThankyouPage"] = response.order_id;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
         [HttpPost]
@@ -118,13 +149,15 @@ namespace Lunggo.CustomerWeb.Controllers
 
         public ActionResult PaymentError(VeritransResponse response)
         {
-            var rsvNo = response.order_id;
-            var flight = FlightService.GetInstance();
-            _paymentService.UpdatePayment(rsvNo, new RsvPaymentDetails { Status = PaymentStatus.Expired });
-            TempData["AllowThisThankyouPage"] = rsvNo;
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = rsvNo });
+            if (response.order_id.StartsWith("TRX"))
+                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response.order_id, Status = PaymentStatus.Expired });
+            else
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = PaymentStatus.Expired });
+
+            TempData["AllowThisThankyouPage"] = response.order_id;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
-        
+
         [HttpPost]
         [ActionName("PaymentError")]
         public ActionResult PaymentErrorPost(string response)

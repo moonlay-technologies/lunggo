@@ -78,17 +78,8 @@ namespace Lunggo.ApCommon.Payment.Service
 
         private string GetCartId(string userId)
         {
-            var existingCartId = _cache.GetUserCartId(userId);
-            if (existingCartId == null)
-            {
-                var cartId = Guid.NewGuid().ToString("N");
-                _cache.SaveUserCartId(userId, cartId);
-                return cartId;
-            }
-            else
-            {
-                return existingCartId;
-            }
+            var cartId = userId.Base64Encode();
+            return cartId;
         }
 
         private Cart ConstructCart(string cartId, List<string> rsvNoList)

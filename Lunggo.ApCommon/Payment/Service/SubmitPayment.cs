@@ -114,14 +114,17 @@ namespace Lunggo.ApCommon.Payment.Service
             queue.AddMessage(new CloudQueueMessage(details.Serialize()));
         }
 
-        public void UpdatePayment(string rsvNo, RsvPaymentDetails payment)
+        public void UpdatePayment(TrxPaymentDetails payment)
+        {
+            payment.RsvPaymentDetails.ForEach(UpdatePayment);
+        }
+
+        public void UpdatePayment(RsvPaymentDetails payment)
         {
             var isUpdated = _db.UpdatePaymentToDb(payment);
             if (isUpdated && payment.Status == PaymentStatus.Settled)
             {
-                //var service = typeof(FlightService);
-                //var serviceInstance = service.GetMethod("GetInstance").Invoke(null, null);
-                //service.GetMethod("Issue").Invoke(serviceInstance, new object[] { rsvNo });
+                var rsvNo = payment.RsvNo;
                 if (rsvNo.StartsWith("1"))
                     FlightService.GetInstance().Issue(rsvNo);
                 if (rsvNo.StartsWith("2"))
