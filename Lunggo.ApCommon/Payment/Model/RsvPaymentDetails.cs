@@ -87,12 +87,6 @@ namespace Lunggo.ApCommon.Payment.Model
         public string RsvNo { get; set; }
     }
 
-    public class CartPaymentDetails : PaymentDetails
-    {
-        public string CartId { get; set; }
-        public List<RsvPaymentDetails> RsvPaymentDetails { get; set; }
-    }
-
     public class TrxPaymentDetails : PaymentDetails
     {
         public string TrxId { get; set; }

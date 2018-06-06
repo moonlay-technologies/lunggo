@@ -77,8 +77,8 @@ namespace Lunggo.ApCommon.Payment.Service
             paymentDetails.Submethod = submethod;
             paymentDetails.Medium = GetPaymentMedium(method, submethod);
 
-            if (paymentDetails is CartPaymentDetails cartDetails)
-                cartDetails.RsvPaymentDetails.ForEach(d => SetMethod(method, submethod, paymentData, d));
+            if (paymentDetails is TrxPaymentDetails trxPayment)
+                trxPayment.RsvPaymentDetails.ForEach(d => SetMethod(method, submethod, paymentData, d));
         }
 
 
@@ -160,7 +160,7 @@ namespace Lunggo.ApCommon.Payment.Service
             var contact = _db.GetRsvContact(payment.RsvNo);
             return new TransactionDetails
             {
-                Id = payment.RsvNo,
+                TrxId = payment.RsvNo,
                 OrderTime = DateTime.UtcNow,
                 Amount = (long)payment.FinalPriceIdr,
                 Contact = contact

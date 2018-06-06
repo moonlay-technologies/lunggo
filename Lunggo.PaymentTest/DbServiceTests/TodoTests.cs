@@ -32,7 +32,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
         [TestMethod]
         public void Should_have_sum_of_all_pricing_from_rsv_for_cart_payment_details()
         {
-            var cart = new CartPaymentDetails
+            var cart = new TrxPaymentDetails
             {
                 OriginalPriceIdr = 23456789,
                 RsvPaymentDetails = new List<RsvPaymentDetails>
@@ -52,7 +52,7 @@ namespace Lunggo.PaymentTest.DbServiceTests
         // Should distribute and clone status to every reservation payment details
         public void Should_distribute_and_clone_status_to_every_reservation_payment_details()
         {
-            var cartDetails = new CartPaymentDetails
+            var cartDetails = new TrxPaymentDetails
             {
                 DiscountCode = "ABCDE12345",
                 Discount = new UsedDiscount(),

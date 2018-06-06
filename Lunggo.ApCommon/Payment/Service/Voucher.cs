@@ -29,8 +29,8 @@ namespace Lunggo.ApCommon.Payment.Service
     {
         public VoucherDiscount GetVoucherDiscountForCart(string cartId, string voucherCode, out VoucherStatus status)
         {
-            var cartPayment = GetCartPaymentDetails(cartId);
-            return GetVoucherDiscount(cartPayment, voucherCode, out status);
+            var trxPayment = GenerateTrxPaymentDetails(cartId);
+            return GetVoucherDiscount(trxPayment, voucherCode, out status);
         }
 
         public VoucherDiscount GetVoucherDiscount(string rsvNo, string voucherCode, out VoucherStatus status)
@@ -422,15 +422,15 @@ namespace Lunggo.ApCommon.Payment.Service
             return response;
         }
 
-        private VoucherDiscount GetVoucherDiscount(CartPaymentDetails cartPayment, string voucherCode, out VoucherStatus status)
+        private VoucherDiscount GetVoucherDiscount(TrxPaymentDetails trxPayment, string voucherCode, out VoucherStatus status)
         {
             var campaign = _db.GetCampaignVoucher(voucherCode);
 
-            status = ValidateVoucher(campaign, cartPayment.OriginalPriceIdr);
+            status = ValidateVoucher(campaign, trxPayment.OriginalPriceIdr);
             if (status != VoucherStatus.Success)
                 return null;
 
-            var voucherDiscount = CalculateVoucherDiscount(campaign, voucherCode, cartPayment.OriginalPriceIdr);
+            var voucherDiscount = CalculateVoucherDiscount(campaign, voucherCode, trxPayment.OriginalPriceIdr);
             return voucherDiscount;
         }
 

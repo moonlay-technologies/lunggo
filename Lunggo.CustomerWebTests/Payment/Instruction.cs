@@ -17,7 +17,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcde12345";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
                 HasInstruction = false
             });
@@ -34,7 +34,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcde12345";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
                 HasInstruction = true
             });
@@ -51,7 +51,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns((CartPaymentDetails)null);
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns((TrxPaymentDetails)null);
             var controller = new PaymentController(mock.Object);
 
             var actual = controller.Instruction(cartId) as ViewResult;

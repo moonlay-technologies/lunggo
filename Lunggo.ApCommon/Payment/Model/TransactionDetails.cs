@@ -7,7 +7,7 @@ namespace Lunggo.ApCommon.Payment.Model
     public class TransactionDetails
     {
         [JsonProperty("order_id")]
-        public string Id { get; set; }
+        public string TrxId { get; set; }
         [JsonProperty("order_time")]
         public DateTime OrderTime { get; set; }
         [JsonProperty("gross_amount")]
