@@ -35,10 +35,10 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("Payment", actual?.ViewName);
             Assert.AreEqual(cartData, actual?.Model);
@@ -50,7 +50,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(new TrxPaymentDetails
             {
                 TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
@@ -69,19 +69,19 @@ namespace Lunggo.CustomerWebTests.Payment
             });
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as RedirectToRouteResult;
+            var actual = controller.Payment(cartId, null) as RedirectToRouteResult;
 
             Assert.AreEqual("Instruction", actual?.RouteValues["action"]);
             Assert.AreEqual(cartId, actual?.RouteValues["cartId"]);
         }
-        
+
         [TestMethod]
         // Should_redirect_to_3rd_party_page_action_when_status_is_pending_and_utilize_3rd_party_page
         public void Should_redirect_to_3rd_party_page_action_when_status_is_pending_and_utilize_3rd_party_page()
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(new TrxPaymentDetails
             {
                 TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
@@ -96,11 +96,11 @@ namespace Lunggo.CustomerWebTests.Payment
                         OriginalPriceIdr = 123456789,
                         Status = PaymentStatus.Expired
                     }
-                } 
+                }
             });
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as RedirectToRouteResult;
+            var actual = controller.Payment(cartId, null) as RedirectToRouteResult;
 
             Assert.AreEqual("ThirdParty", actual?.RouteValues["action"]);
             Assert.AreEqual(cartId, actual?.RouteValues["cartId"]);
@@ -112,10 +112,10 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns((TrxPaymentDetails)null);
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns((TrxPaymentDetails)null);
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("Error", actual?.ViewName);
         }
@@ -126,13 +126,13 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(new TrxPaymentDetails
             {
                 RsvPaymentDetails = new List<RsvPaymentDetails>()
             });
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("EmptyCart", actual?.ViewName);
         }
@@ -143,7 +143,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(new TrxPaymentDetails
             {
                 TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
@@ -160,7 +160,7 @@ namespace Lunggo.CustomerWebTests.Payment
             });
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as RedirectToRouteResult;
+            var actual = controller.Payment(cartId, null) as RedirectToRouteResult;
 
             Assert.AreEqual("ThankYou", actual?.RouteValues["action"]);
             Assert.AreEqual(cartId, actual?.RouteValues["CartId"]);
@@ -172,7 +172,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(new TrxPaymentDetails
             {
                 TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
@@ -191,7 +191,7 @@ namespace Lunggo.CustomerWebTests.Payment
             });
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("Error", actual?.ViewName);
         }
@@ -217,10 +217,10 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("Payment", actual?.ViewName);
             Assert.AreEqual(cartData, actual?.Model);
@@ -247,10 +247,10 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("Payment", actual?.ViewName);
             Assert.AreEqual(cartData, actual?.Model);
@@ -277,10 +277,10 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as ViewResult;
+            var actual = controller.Payment(cartId, null) as ViewResult;
 
             Assert.AreEqual("Payment", actual?.ViewName);
             Assert.AreEqual(cartData, actual?.Model);
@@ -292,7 +292,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetailsFromCart(cartId)).Returns(new TrxPaymentDetails
             {
                 TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
@@ -309,11 +309,11 @@ namespace Lunggo.CustomerWebTests.Payment
             });
             var controller = new PaymentController(mock.Object);
 
-            var actual = controller.Payment(cartId,null) as RedirectToRouteResult;
+            var actual = controller.Payment(cartId, null) as RedirectToRouteResult;
 
             Assert.AreEqual("Verifying", actual?.RouteValues["action"]);
             Assert.AreEqual(cartId, actual?.RouteValues["CartId"]);
         }
-	
+
     }
 }

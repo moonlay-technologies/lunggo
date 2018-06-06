@@ -25,34 +25,19 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
         public ActionResult Payment(string cartId, string trxId)
         {
-            PaymentDetails payment;
-
-            if (!string.IsNullOrWhiteSpace(cartId))
-            {
-                payment = _paymentService.GetTrxPaymentDetails(cartId);
-                if (payment == null)
-                    return View("Error");
-
-                var rsvList = (payment as TrxPaymentDetails).RsvPaymentDetails
-                    .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
-                ViewBag.RsvList = rsvList;
-
-            }
-            else if (!string.IsNullOrWhiteSpace(trxId))
-            {
-                payment = _paymentService.GetTrxPaymentDetails(trxId);
-                if (payment == null)
-                    return View("Error");
-
-                var rsvList = (payment as TrxPaymentDetails).RsvPaymentDetails
-                    .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
-                ViewBag.RsvList = rsvList;
-            }
-            else
-            {
+            if (string.IsNullOrWhiteSpace(cartId) && string.IsNullOrWhiteSpace(cartId))
                 return View("Error");
 
-            }
+            var payment = !string.IsNullOrWhiteSpace(cartId)
+                ? _paymentService.GetTrxPaymentDetailsFromCart(cartId)
+                : _paymentService.GetTrxPaymentDetails(trxId);
+
+            if (payment == null)
+                return View("Error");
+
+            var rsvList = (payment as TrxPaymentDetails).RsvPaymentDetails
+                .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
+            ViewBag.RsvList = rsvList;
 
             switch (payment.Status)
             {
@@ -79,7 +64,7 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
         public ActionResult Instruction(string cartId)
         {
-            var cartPayment = _paymentService.GetTrxPaymentDetails(cartId);
+            var cartPayment = _paymentService.GetTrxPaymentDetailsFromCart(cartId);
 
             if (cartPayment == null)
                 return View("Error");

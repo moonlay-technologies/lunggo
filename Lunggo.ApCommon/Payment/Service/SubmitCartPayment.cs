@@ -146,6 +146,16 @@ namespace Lunggo.ApCommon.Payment.Service
             return trx;
         }
 
+        public virtual TrxPaymentDetails GetTrxPaymentDetailsFromCart(string cartId)
+        {
+            var cart = GetCart(cartId);
+            if (cart?.RsvNoList == null || cart.RsvNoList.Count == 0)
+                return null;
+
+            var trxPayment = ConstructTrxPayment(null, cart.RsvNoList);
+            return trxPayment;
+        }
+
         public virtual TrxPaymentDetails GetTrxPaymentDetails(string trxId)
         {
             var rsvNoList = _db.GetTrxRsvNos(trxId);
