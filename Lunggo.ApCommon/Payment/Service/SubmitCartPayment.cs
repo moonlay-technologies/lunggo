@@ -23,7 +23,7 @@ namespace Lunggo.ApCommon.Payment.Service
 {
     public partial class PaymentService
     {
-        public CartPaymentDetails SubmitCartPayment(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
+        public TrxPaymentDetails SubmitCartPayment(string cartId, PaymentMethod method, PaymentSubmethod submethod, PaymentData paymentData, string discountCode, out bool isUpdated)
         {
             isUpdated = false;
 
@@ -31,15 +31,15 @@ namespace Lunggo.ApCommon.Payment.Service
             if (!isMethodValid)
                 throw new ArgumentException("Method not available");
 
-            var cartPaymentDetails = GetCartPaymentDetails(cartId);
-            if (cartPaymentDetails?.RsvPaymentDetails == null || cartPaymentDetails.RsvPaymentDetails.Count == 0)
+            var trxPaymentDetails = GenerateTrxPaymentDetails(cartId);
+            if (trxPaymentDetails?.RsvPaymentDetails == null || trxPaymentDetails.RsvPaymentDetails.Count == 0)
                 return null;
 
-            var isPayable = ValidatePaymentStatus(cartPaymentDetails);
+            var isPayable = ValidatePaymentStatus(trxPaymentDetails);
             if (!isPayable)
-                return cartPaymentDetails;
+                return trxPaymentDetails;
 
-            SetMethod(method, submethod, paymentData, cartPaymentDetails);
+            SetMethod(method, submethod, paymentData, trxPaymentDetails);
 
             var accountService = AccountService.GetInstance();
 
@@ -47,37 +47,37 @@ namespace Lunggo.ApCommon.Payment.Service
             var isVoucherValid = false;
             if (!string.IsNullOrEmpty(discountCode))
             {
-                isVoucherValid = TryApplyVoucher(cartId, discountCode, cartPaymentDetails, out discount);
+                isVoucherValid = TryApplyVoucher(cartId, discountCode, trxPaymentDetails, out discount);
                 if (!isVoucherValid)
                     return null;
             }
 
-            CalculateFinal(cartPaymentDetails);
+            CalculateFinal(trxPaymentDetails);
 
-            var transactionDetails = ConstructCartTransactionDetails(cartPaymentDetails);
-            var processSuccess = _processor.ProcessPayment(cartPaymentDetails, transactionDetails);
+            var transactionDetails = ConstructTrxTransactionDetails(trxPaymentDetails);
+            var processSuccess = _processor.ProcessPayment(trxPaymentDetails, transactionDetails);
 
-            if (cartPaymentDetails.Status != PaymentStatus.Failed && cartPaymentDetails.Status != PaymentStatus.Denied)
+            if (trxPaymentDetails.Status != PaymentStatus.Failed && trxPaymentDetails.Status != PaymentStatus.Denied)
             {
                 if (!string.IsNullOrEmpty(discountCode) && isVoucherValid)
-                    RealizeVoucher(discount, accountService, cartPaymentDetails);
-                UpdateCartDb(cartPaymentDetails);
+                    RealizeVoucher(discount, accountService, trxPaymentDetails);
+                UpdateTrxDb(trxPaymentDetails);
                 _cache.DeleteCart(cartId);
-                if (cartPaymentDetails.Method == PaymentMethod.BankTransfer || cartPaymentDetails.Method == PaymentMethod.VirtualAccount)
-                    SendTransferInstructionToCustomer(cartPaymentDetails);
+                if (trxPaymentDetails.Method == PaymentMethod.BankTransfer || trxPaymentDetails.Method == PaymentMethod.VirtualAccount)
+                    SendTransferInstructionToCustomer(trxPaymentDetails);
             }
             isUpdated = true;
-            return cartPaymentDetails;
+            return trxPaymentDetails;
         }
 
-        private TransactionDetails ConstructCartTransactionDetails(CartPaymentDetails payment)
+        private TransactionDetails ConstructTrxTransactionDetails(TrxPaymentDetails trxPayment)
         {
-            var contact = _db.GetRsvContact(payment.RsvPaymentDetails[0].RsvNo);
+            var contact = _db.GetRsvContact(trxPayment.RsvPaymentDetails[0].RsvNo);
             return new TransactionDetails
             {
-                Id = payment.CartId,
+                TrxId = trxPayment.TrxId,
                 OrderTime = DateTime.UtcNow,
-                Amount = (long)payment.FinalPriceIdr,
+                Amount = (long)trxPayment.FinalPriceIdr,
                 Contact = contact
             };
         }
@@ -91,8 +91,8 @@ namespace Lunggo.ApCommon.Payment.Service
 
             paymentDetails.LocalFinalPrice = paymentDetails.FinalPriceIdr * paymentDetails.LocalCurrency.Rate;
 
-            if (paymentDetails is CartPaymentDetails cartDetails)
-                cartDetails.RsvPaymentDetails.ForEach(CalculateFinal);
+            if (paymentDetails is TrxPaymentDetails trxPayment)
+                trxPayment.RsvPaymentDetails.ForEach(CalculateFinal);
         }
 
         private bool ValidatePaymentStatus(PaymentDetails paymentDetails)
@@ -108,11 +108,10 @@ namespace Lunggo.ApCommon.Payment.Service
             throw new NotImplementedException();
         }
 
-        private void UpdateCartDb(CartPaymentDetails cartPaymentDetails)
+        private void UpdateTrxDb(TrxPaymentDetails trxPaymentDetails)
         {
-            DistributeRsvPaymentDetails(cartPaymentDetails);
-            var trxDetails = GenerateTrxFromCartPaymentDetails(cartPaymentDetails);
-            InsertTrx(trxDetails);
+            DistributeRsvPaymentDetails(trxPaymentDetails);
+            InsertTrx(trxPaymentDetails);
         }
 
         private void InsertTrx(TrxPaymentDetails trxDetails)
@@ -125,52 +124,26 @@ namespace Lunggo.ApCommon.Payment.Service
             }
         }
 
-        private TrxPaymentDetails GenerateTrxFromCartPaymentDetails(CartPaymentDetails cart)
-        {
-            var trx = new TrxPaymentDetails
-            {
-                TrxId = TrxIdSequence.GetInstance().GetNextTrxId(),
-                RsvPaymentDetails = cart.RsvPaymentDetails,
-                TimeLimit = cart.TimeLimit,
-                OriginalPriceIdr = cart.OriginalPriceIdr,
-                LocalCurrency = cart.LocalCurrency,
-                Status = cart.Status,
-                Time = cart.Time,
-                DiscountNominal = cart.DiscountNominal,
-                UniqueCode = cart.UniqueCode,
-                FinalPriceIdr = cart.FinalPriceIdr,
-                LocalFinalPrice = cart.LocalFinalPrice,
-                Data = cart.Data,
-                Discount = cart.Discount,
-                DiscountCode = cart.DiscountCode,
-                ExternalId = cart.ExternalId,
-                FailureReason = cart.FailureReason,
-                HasInstruction = cart.HasInstruction,
-                HasThirdPartyPage = cart.HasThirdPartyPage,
-                InvoiceNo = cart.InvoiceNo,
-                LocalPaidAmount = cart.LocalPaidAmount,
-                Medium = cart.Medium,
-                Method = cart.Method,
-                PaidAmountIdr = cart.PaidAmountIdr,
-                RedirectionUrl = cart.RedirectionUrl,
-                Refund = cart.Refund,
-                Submethod = cart.Submethod,
-                Surcharge = cart.Surcharge,
-                TransferAccount = cart.TransferAccount,
-                UpdateDate = cart.UpdateDate
-            };
-            return trx;
-        }
-
-        public virtual CartPaymentDetails GetCartPaymentDetails(string cartId)
+        private TrxPaymentDetails GenerateTrxPaymentDetails(string cartId)
         {
             var cart = GetCart(cartId);
-            if (cart == null || cart.RsvNoList == null || cart.RsvNoList.Count == 0)
+            if (cart?.RsvNoList == null || cart.RsvNoList.Count == 0)
                 return null;
 
-            var cartPayment = GenerateCartPayment(cart);
+            return GenerateTrxPaymentDetails(cart);
+        }
 
-            return cartPayment;
+        private TrxPaymentDetails GenerateTrxPaymentDetails(Cart cart)
+        {
+            var trxId = TrxIdSequence.GetInstance().GetNextTrxId();
+            var rsvDetails = RetrieveRsvPaymentDetails(cart.RsvNoList);
+            var trx = new TrxPaymentDetails
+            {
+                TrxId = trxId,
+                RsvPaymentDetails = rsvDetails
+            };
+            AggregateRsvPaymentDetails(trx);
+            return trx;
         }
 
         public virtual TrxPaymentDetails GetTrxPaymentDetails(string trxId)
@@ -187,15 +160,6 @@ namespace Lunggo.ApCommon.Payment.Service
             trxPayment.RsvPaymentDetails = RetrieveRsvPaymentDetails(rsvNoList);
             AggregateRsvPaymentDetails(trxPayment);
             return trxPayment;
-        }
-
-        private CartPaymentDetails GenerateCartPayment(Cart cart)
-        {
-            var cartPayment = new CartPaymentDetails();
-            cartPayment.CartId = cart.Id;
-            cartPayment.RsvPaymentDetails = RetrieveRsvPaymentDetails(cart.RsvNoList);
-            AggregateRsvPaymentDetails(cartPayment);
-            return cartPayment;
         }
 
         private List<RsvPaymentDetails> RetrieveRsvPaymentDetails(List<string> rsvNoList)
@@ -225,59 +189,47 @@ namespace Lunggo.ApCommon.Payment.Service
             trxPayment.Discount = firstRsv.Discount;
         }
 
-        private static void AggregateRsvPaymentDetails(CartPaymentDetails cartPayment)
+        private void DistributeRsvPaymentDetails(TrxPaymentDetails trxPayment)
         {
-            cartPayment.OriginalPriceIdr = cartPayment.RsvPaymentDetails.Sum(d => d.OriginalPriceIdr);
-            var firstRsv = cartPayment.RsvPaymentDetails[0];
-            cartPayment.Status = firstRsv.Status;
-            cartPayment.Medium = firstRsv.Medium;
-            cartPayment.Method = firstRsv.Method;
-            cartPayment.Submethod = firstRsv.Submethod;
-            cartPayment.Data = firstRsv.Data;
-            cartPayment.LocalCurrency = firstRsv.LocalCurrency;
-        }
-
-        private void DistributeRsvPaymentDetails(CartPaymentDetails cartPayment)
-        {
-            var originalTotalPrice = cartPayment.OriginalPriceIdr;
+            var originalTotalPrice = trxPayment.OriginalPriceIdr;
             var discAccumulation = 0M;
             var uniqueAccumulation = 0M;
             var surchargeAccumulation = 0M;
-            for (var i = 0; i < cartPayment.RsvPaymentDetails.Count; i++)
+            for (var i = 0; i < trxPayment.RsvPaymentDetails.Count; i++)
             {
-                var rsvPayment = cartPayment.RsvPaymentDetails[i];
-                var isLast = i == cartPayment.RsvPaymentDetails.Count - 1;
+                var rsvPayment = trxPayment.RsvPaymentDetails[i];
+                var isLast = i == trxPayment.RsvPaymentDetails.Count - 1;
 
-                rsvPayment.Discount = cartPayment.Discount;
-                rsvPayment.DiscountCode = cartPayment.DiscountCode;
+                rsvPayment.Discount = trxPayment.Discount;
+                rsvPayment.DiscountCode = trxPayment.DiscountCode;
 
                 var discNominal = isLast
-                    ? cartPayment.DiscountNominal - discAccumulation
-                    : Math.Round(rsvPayment.OriginalPriceIdr / originalTotalPrice * cartPayment.DiscountNominal);
+                    ? trxPayment.DiscountNominal - discAccumulation
+                    : Math.Round(rsvPayment.OriginalPriceIdr / originalTotalPrice * trxPayment.DiscountNominal);
                 discAccumulation += discNominal;
                 rsvPayment.DiscountNominal = discNominal;
 
                 var uniqueCode = isLast
-                    ? cartPayment.UniqueCode - uniqueAccumulation
-                    : Math.Round(rsvPayment.OriginalPriceIdr / originalTotalPrice * cartPayment.UniqueCode);
+                    ? trxPayment.UniqueCode - uniqueAccumulation
+                    : Math.Round(rsvPayment.OriginalPriceIdr / originalTotalPrice * trxPayment.UniqueCode);
                 uniqueAccumulation += uniqueCode;
                 rsvPayment.UniqueCode = uniqueCode;
 
                 var surcharge = isLast
-                    ? cartPayment.Surcharge - surchargeAccumulation
-                    : Math.Round(rsvPayment.OriginalPriceIdr / originalTotalPrice * cartPayment.Surcharge);
+                    ? trxPayment.Surcharge - surchargeAccumulation
+                    : Math.Round(rsvPayment.OriginalPriceIdr / originalTotalPrice * trxPayment.Surcharge);
                 surchargeAccumulation += surcharge;
                 rsvPayment.Surcharge = surcharge;
 
                 rsvPayment.FinalPriceIdr = rsvPayment.OriginalPriceIdr - discNominal + uniqueCode + surcharge;
 
-                rsvPayment.LocalCurrency = cartPayment.LocalCurrency;
+                rsvPayment.LocalCurrency = trxPayment.LocalCurrency;
 
                 rsvPayment.LocalFinalPrice = rsvPayment.FinalPriceIdr * rsvPayment.LocalCurrency.Rate;
                 rsvPayment.PaidAmountIdr = rsvPayment.FinalPriceIdr;
                 rsvPayment.LocalPaidAmount = rsvPayment.LocalFinalPrice;
 
-                rsvPayment.Status = cartPayment.Status;
+                rsvPayment.Status = trxPayment.Status;
             }
         }
     }

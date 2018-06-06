@@ -42,7 +42,7 @@ namespace Lunggo.ApCommon.Payment.Processor
             {
                 var timeout = int.Parse(EnvVariables.Get("flight", "paymentTimeout"));
                 var requestHtml = GenerateRequestPageHtml(payment, transactionDetail);
-                var paymentUrl = SavePaymentHtmlToCache(requestHtml, transactionDetail.Id, timeout);
+                var paymentUrl = SavePaymentHtmlToCache(requestHtml, transactionDetail.TrxId, timeout);
                 payment.Status = PaymentStatus.Pending;
                 payment.RedirectionUrl = paymentUrl;
                 return payment;
@@ -173,9 +173,9 @@ namespace Lunggo.ApCommon.Payment.Processor
                         "<form id=\"post-redirector\" action=\"" + PaymentEndpoint + "\" method=\"post\">\n" +
                         "<input type=\"hidden\" name=\"Amount\" value=\"" + (long)payment.FinalPriceIdr * 100 +
                         "\" />\n" +
-                        "<input type=\"hidden\" name=\"RefNo\" value=\"" + transactionDetail.Id + "\" />\n" +
+                        "<input type=\"hidden\" name=\"RefNo\" value=\"" + transactionDetail.TrxId + "\" />\n" +
                         "<input type=\"hidden\" name=\"ProdDesc\" value=\"" + "Pembayaran Travorama No. Pesanan " +
-                        transactionDetail.Id + "\" />\n" +
+                        transactionDetail.TrxId + "\" />\n" +
                         "<input type=\"hidden\" name=\"UserName\" value=\"" + contact.Name + "\" />\n" +
                         "<input type=\"hidden\" name=\"UserEmail\" value=\"" + contact.Email + "\" />\n" +
                         "<input type=\"hidden\" name=\"UserContact\" value=\"" + contact.CountryCallingCode +
@@ -187,7 +187,7 @@ namespace Lunggo.ApCommon.Payment.Processor
                         "<input type=\"hidden\" name=\"MerchantCode\" value=\"" + MerchantCode + "\" />\n" +
                         "<input type=\"hidden\" name=\"Currency\" value=\"" + "IDR" + "\" />\n" +
                         "<input type=\"hidden\" name=\"Signature\" value=\"" +
-                        CreateRequestSignature(transactionDetail.Id, (long)payment.FinalPriceIdr, "IDR") +
+                        CreateRequestSignature(transactionDetail.TrxId, (long)payment.FinalPriceIdr, "IDR") +
                         "\" />\n" +
                         "</form>\n" +
                         "<script type=\"text/javascript\">\n" +

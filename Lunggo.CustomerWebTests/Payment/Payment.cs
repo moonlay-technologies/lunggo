@@ -20,9 +20,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            var cartData = new CartPaymentDetails
+            var cartData = new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<RsvPaymentDetails>
@@ -35,7 +35,7 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
             var actual = controller.Payment(cartId,null) as ViewResult;
@@ -50,9 +50,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Method = PaymentMethod.CreditCard,
                 Status = PaymentStatus.Pending,
@@ -81,9 +81,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Method = PaymentMethod.CreditCard,
                 Status = PaymentStatus.Pending,
@@ -112,7 +112,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns((CartPaymentDetails)null);
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns((TrxPaymentDetails)null);
             var controller = new PaymentController(mock.Object);
 
             var actual = controller.Payment(cartId,null) as ViewResult;
@@ -126,7 +126,7 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
                 RsvPaymentDetails = new List<RsvPaymentDetails>()
             });
@@ -143,9 +143,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.Settled,
                 RsvPaymentDetails = new List<RsvPaymentDetails>
@@ -172,9 +172,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.Pending,
                 HasInstruction = false,
@@ -202,9 +202,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            var cartData = new CartPaymentDetails
+            var cartData = new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<RsvPaymentDetails>
@@ -217,7 +217,7 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
             var actual = controller.Payment(cartId,null) as ViewResult;
@@ -232,9 +232,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            var cartData = new CartPaymentDetails
+            var cartData = new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<RsvPaymentDetails>
@@ -247,7 +247,7 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
             var actual = controller.Payment(cartId,null) as ViewResult;
@@ -262,9 +262,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            var cartData = new CartPaymentDetails
+            var cartData = new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.MethodNotSet,
                 RsvPaymentDetails = new List<RsvPaymentDetails>
@@ -277,7 +277,7 @@ namespace Lunggo.CustomerWebTests.Payment
                     }
                 }
             };
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(cartData);
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(cartData);
             var controller = new PaymentController(mock.Object);
 
             var actual = controller.Payment(cartId,null) as ViewResult;
@@ -292,9 +292,9 @@ namespace Lunggo.CustomerWebTests.Payment
         {
             var cartId = "abcjhd124";
             var mock = new Mock<PaymentService>();
-            mock.Setup(m => m.GetCartPaymentDetails(cartId)).Returns(new CartPaymentDetails
+            mock.Setup(m => m.GetTrxPaymentDetails(cartId)).Returns(new TrxPaymentDetails
             {
-                CartId = "abcj23r4",
+                TrxId = "abcj23r4",
                 OriginalPriceIdr = 123456789,
                 Status = PaymentStatus.Verifying,
                 RsvPaymentDetails = new List<RsvPaymentDetails>

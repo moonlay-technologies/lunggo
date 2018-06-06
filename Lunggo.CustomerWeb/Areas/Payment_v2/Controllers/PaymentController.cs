@@ -29,11 +29,11 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
             if (!string.IsNullOrWhiteSpace(cartId))
             {
-                payment = _paymentService.GetCartPaymentDetails(cartId);
+                payment = _paymentService.GetTrxPaymentDetails(cartId);
                 if (payment == null)
                     return View("Error");
 
-                var rsvList = (payment as CartPaymentDetails).RsvPaymentDetails
+                var rsvList = (payment as TrxPaymentDetails).RsvPaymentDetails
                     .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
                 ViewBag.RsvList = rsvList;
 
@@ -79,7 +79,7 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
 
         public ActionResult Instruction(string cartId)
         {
-            var cartPayment = _paymentService.GetCartPaymentDetails(cartId);
+            var cartPayment = _paymentService.GetTrxPaymentDetails(cartId);
 
             if (cartPayment == null)
                 return View("Error");

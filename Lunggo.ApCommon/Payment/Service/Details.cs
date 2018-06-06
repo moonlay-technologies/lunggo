@@ -35,7 +35,7 @@ namespace Lunggo.ApCommon.Payment.Service
             if (!isTrxValid)
                 throw new ArgumentException("Invalid ID");
 
-            var paymentDetails = GetCartPaymentDetails(cartId);
+            var paymentDetails = GetTrxPaymentDetails(cartId);
 
             return paymentDetails.Status;
         }
