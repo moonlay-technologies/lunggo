@@ -374,6 +374,7 @@
     <Compile Include="Activity\Service\Admin\GetPendingPayment.cs" />
     <Compile Include="Activity\Service\Admin\MarkPendingPaymentAsFailed.cs" />
     <Compile Include="Activity\Service\Admin\MarkPendingPaymentAsDone.cs" />
+    <Compile Include="Activity\Service\ReleasePaxSlots.cs" />
     <Compile Include="Activity\Service\InsertCancellationReason.cs" />
     <Compile Include="Activity\Service\SetActivityRsvTimeLimit.cs" />
     <Compile Include="Activity\Service\InsertRefundAmountCustomer.cs" />

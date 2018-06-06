@@ -95,6 +95,7 @@ namespace Lunggo.ApCommon.Activity.Service
             InsertStatusHistoryToDb(input.RsvNo, BookingStatus.DeniedByOperator);
             InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
             InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            ReleasePaxSlots(input.RsvNo);
             var rejectionQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
             rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
             var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
@@ -117,6 +118,7 @@ namespace Lunggo.ApCommon.Activity.Service
             rejectionQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
             InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
             InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            ReleasePaxSlots(input.RsvNo);
             var pushNotifDeny = PushNotificationDenyAppointment(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };
         }
@@ -153,6 +155,7 @@ namespace Lunggo.ApCommon.Activity.Service
             InsertRefundAmountCancelByOperatorToDb(input.RsvNo);
             InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
             InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            ReleasePaxSlots(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
@@ -172,6 +175,7 @@ namespace Lunggo.ApCommon.Activity.Service
             InsertRefundAmountOperator(input.RsvNo);
             InsertRefundAmountCustomerCancelByOperatorToDb(input.RsvNo);
             InsertCancellationReason(input.RsvNo, input.CancellationReason);
+            ReleasePaxSlots(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };
             
         }
@@ -192,6 +196,7 @@ namespace Lunggo.ApCommon.Activity.Service
             InsertStatusHistoryToDb(input.RsvNo, BookingStatus.CancelByCustomer);
             InsertRefundAmountOperator(input.RsvNo);
             InsertRefundAmountCustomer(input.RsvNo);
+            ReleasePaxSlots(input.RsvNo);
             return new AppointmentConfirmationOutput { IsSuccess = true };
         }
 
@@ -265,6 +270,7 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.NoResponseByOperator);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.NoResponseByOperator);
+                ReleasePaxSlots(input.RsvNo);
                 var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
                 forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifNoResponse = PushNotificationNoResponseAppointmentByOperator(input.RsvNo);
@@ -274,6 +280,7 @@ namespace Lunggo.ApCommon.Activity.Service
             {
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.NoResponseByAdmin);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.NoResponseByAdmin);
+                ReleasePaxSlots(input.RsvNo);
                 var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
                 forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifNoResponse = PushNotificationNoResponseAppointmentByAdmin(input.RsvNo);

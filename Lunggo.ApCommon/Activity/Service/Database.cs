@@ -2556,6 +2556,36 @@ namespace Lunggo.ApCommon.Activity.Service
                 return affectedRow > 0;
             }
         }
+
+        internal bool ReleasePaxSlotsDb(string rsvNo)
+        {
+            using (var conn = DbService.GetInstance().GetOpenConnection())
+            {
+                var rsv = GetReservationFromDb(rsvNo);
+                var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
+
+                var oldPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = rsv.ActivityDetails.ActivityId,
+                    AvailableHour = rsv.DateTime.Session ?? "",
+                    CustomDate = rsv.DateTime.Date
+                };
+                var oldPaxSlot = ActivityCustomDateTableRepo.GetInstance().Find(conn, oldPaxSlotTableRecord).First().PaxSlot;
+
+                var newPaxSlot = oldPaxSlot + ticketCount;
+                var newPaxSlotTableRecord = new ActivityCustomDateTableRecord
+                {
+                    ActivityId = rsv.ActivityDetails.ActivityId,
+                    AvailableHour = rsv.DateTime.Session ?? "",
+                    CustomDate = rsv.DateTime.Date,
+                    PaxSlot = newPaxSlot,
+                    DateStatus = "whitelisted"
+                };
+                ActivityCustomDateTableRepo.GetInstance().Update(conn, newPaxSlotTableRecord);
+
+                return false;
+            }
+        }
     }
 
 
