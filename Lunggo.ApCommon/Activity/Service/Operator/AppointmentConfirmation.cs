@@ -271,7 +271,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.NoResponseByOperator);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.NoResponseByOperator);
                 ReleasePaxSlots(input.RsvNo);
-                var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+                var forwardQueue = QueueService.GetInstance().GetQueueByReference("activitynoresponseemail");
                 forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifNoResponse = PushNotificationNoResponseAppointmentByOperator(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
@@ -281,7 +281,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 UpdateActivityBookingStatusInDb(input.RsvNo, BookingStatus.NoResponseByAdmin);
                 InsertStatusHistoryToDb(input.RsvNo, BookingStatus.NoResponseByAdmin);
                 ReleasePaxSlots(input.RsvNo);
-                var forwardQueue = QueueService.GetInstance().GetQueueByReference("activityrejectionemail");
+                var forwardQueue = QueueService.GetInstance().GetQueueByReference("activitynoresponseemail");
                 forwardQueue.AddMessage(new CloudQueueMessage(input.RsvNo));
                 var pushNotifNoResponse = PushNotificationNoResponseAppointmentByAdmin(input.RsvNo);
                 return new AppointmentConfirmationOutput { IsSuccess = true };
