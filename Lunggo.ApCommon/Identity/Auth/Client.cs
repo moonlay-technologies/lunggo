@@ -55,7 +55,7 @@ namespace Lunggo.ApCommon.Identity.Auth
                 case "mws":
                     return PlatformType.MobileWebsite;
                 default:
-                    throw new NotImplementedException("invalid platform type, platform code: " + platformCode);
+                    return PlatformType.Undefined;
             }
         }
 

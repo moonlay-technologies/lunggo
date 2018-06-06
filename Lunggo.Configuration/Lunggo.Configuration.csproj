@@ -1044,6 +1044,8 @@
     <Content Include="HtmlTemplate\ActivityRejectionEmail.cshtml" />
     <Content Include="HtmlTemplate\ActivityAcceptanceEmail.cshtml" />
     <Content Include="HtmlTemplate\ActivityForwardToOperatorEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityNoResponseCustomerEmail.cshtml" />
+    <Content Include="HtmlTemplate\ActivityNoResponseOperatorEmail.cshtml" />
     <None Include="Lunggo_Config.xlsx" />
     <None Include="packages.config" />
     <Content Include="HtmlTemplate\ActivityEVoucher.cshtml" />
