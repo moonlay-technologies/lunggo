@@ -134,7 +134,7 @@ namespace Lunggo.ApCommon.Payment.Service
                 {
                     ActivityService.GetInstance().Issue(rsvNo);
                     var userId = ActivityService.GetInstance().GetReservationUserIdFromDb(rsvNo);
-                    AccountService.GetInstance().InsertBookingReferralHistory(userId);
+                    //AccountService.GetInstance().InsertBookingReferralHistory(userId);
                     var rsv = ActivityService.GetInstance().GetReservation(rsvNo);
                     var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
                     ActivityService.GetInstance().SetActivityRsvTimeLimit(rsvNo);

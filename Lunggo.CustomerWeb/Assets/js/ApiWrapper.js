@@ -1,5 +1,4 @@
 import { getAuthAccess } from './Auth/AuthController';
-import { API_DOMAIN } from './env';
 export { AUTH_LEVEL } from './env';
 
 const LOGGING = true;
@@ -39,7 +38,7 @@ export async function fetchTravoramaApi(request) {
       headers: {
         "Authorization": 'Bearer ' + accessToken,
         "Accept": "application/json",
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(request.data),
     }).catch(console.error);

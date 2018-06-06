@@ -117,19 +117,6 @@ namespace Lunggo.ApCommon.Payment.Database
                     payment.Discount.InsertToDb(payment.RsvNo);
                 if (payment.Refund != null)
                     payment.Refund.InsertToDb(payment.RsvNo);
-                if (payment.RsvNo[0] == '3' && payment.Status == PaymentStatus.Settled)
-                {
-                    var rsv = ActivityService.GetInstance().GetReservation(payment.RsvNo);
-                    var ticketCount = rsv.TicketCount.Select(a => a.Count).Sum();
-                    if (rsv.ActivityDetails.HasOperator)
-                    {
-                        ActivityService.GetInstance().ForwardAppointment(new AppointmentConfirmationInput
-                        {
-                            RsvNo = payment.RsvNo
-                        });
-                    }
-                    ActivityService.GetInstance().DecreasePaxSlotFromDb(rsv.ActivityDetails.ActivityId, ticketCount, rsv.DateTime.Date.Value, rsv.DateTime.Session);
-                }
                 return true;
             }
         }

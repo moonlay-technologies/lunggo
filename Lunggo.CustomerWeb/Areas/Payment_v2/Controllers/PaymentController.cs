@@ -35,6 +35,9 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
             if (payment == null)
                 return View("Error");
 
+            if (!string.IsNullOrWhiteSpace(cartId))
+                ViewBag.CartId = cartId;
+
             var rsvList = (payment as TrxPaymentDetails).RsvPaymentDetails
                 .Select(r => ActivityService.GetInstance().GetReservationForDisplay(r.RsvNo)).ToList();
             ViewBag.RsvList = rsvList;
@@ -43,14 +46,14 @@ namespace Lunggo.CustomerWeb.Areas.Payment_v2.Controllers
             {
                 case PaymentStatus.Pending:
                     if (payment.HasThirdPartyPage)
-                        return RedirectToAction("ThirdParty", new { cartId });
+                        return RedirectToAction("ThirdParty", new { cartId, trxId });
                     if (payment.HasInstruction)
-                        return RedirectToAction("Instruction", new { cartId });
+                        return RedirectToAction("Instruction", new { cartId, trxId });
                     return View("Error");
                 case PaymentStatus.Settled:
-                    return RedirectToAction("ThankYou", new { cartId });
+                    return RedirectToAction("ThankYou", new { cartId, trxId });
                 case PaymentStatus.Verifying:
-                    return RedirectToAction("Verifying", new { cartId });
+                    return RedirectToAction("Verifying", new { cartId, trxId });
                 case PaymentStatus.MethodNotSet:
                 case PaymentStatus.Failed:
                 case PaymentStatus.Expired:
