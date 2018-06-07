@@ -64,18 +64,6 @@ namespace Lunggo.ApCommon.Payment.Service
             return _db.GetCartIdByRsvNoFromDb(rsvNo);
         }
 
-        public Cart GetTrx(string trxId)
-        {
-            var rsvNoList = _db.GetTrxRsvNos(trxId);
-
-            if (rsvNoList == null || !rsvNoList.Any())
-                return null;
-
-            var cart = ConstructCart(trxId, rsvNoList);
-
-            return cart;
-        }
-
         private string GetCartId(string userId)
         {
             var cartId = userId.Base64Encode();

@@ -25,12 +25,12 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
             Console.WriteLine("Getting Required Data...");
             sw.Start();
             var paymentService = new PaymentService();
-            var cart = paymentService.GetTrx(trxId);
+            var trxPaymentDetails = paymentService.GetTrxPaymentDetails(trxId);
             sw.Stop();
             Console.WriteLine("Done Getting Required Data. (" + sw.Elapsed.TotalSeconds + "s)");
             sw.Reset();
 
-            var contact = Contact.GetFromDb(cart.RsvNoList[0]);
+            var contact = Contact.GetFromDb(trxPaymentDetails.RsvPaymentDetails[0].RsvNo);
 
             var mailService = MailService.GetInstance();
             var mailModel = new MailModel
@@ -45,7 +45,7 @@ namespace Lunggo.WebJob.EmailQueueHandler.Function
 
             var payment = paymentService.GetPaymentDetails(trxId);
             var instruction = paymentService.GetInstruction(payment);
-            var reservations = cart.RsvNoList.Select(ActivityService.GetInstance().GetReservation).ToList();
+            var reservations = trxPaymentDetails.RsvPaymentDetails.Select(d => d.RsvNo).Select(ActivityService.GetInstance().GetReservation).ToList();
             Console.WriteLine("Sending Bank Transfer Instruction Email...");
             mailService.SendEmailWithTableTemplate(new { Payment = payment, contact, Instruction = instruction, reservations}, mailModel, "CartTransferInstructionEmail");
 

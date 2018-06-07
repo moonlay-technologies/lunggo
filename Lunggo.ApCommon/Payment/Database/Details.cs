@@ -50,9 +50,9 @@ namespace Lunggo.ApCommon.Payment.Database
             record.UniqueCode = details.UniqueCode;
             record.FinalPriceIdr = details.FinalPriceIdr;
             record.PaidAmountIdr = details.PaidAmountIdr;
-            record.LocalCurrencyCd = details.LocalCurrency.Symbol;
-            record.LocalRate = details.LocalCurrency.Rate;
-            record.LocalCurrencyRounding = details.LocalCurrency.RoundingOrder;
+            record.LocalCurrencyCd = details.LocalCurrency?.Symbol;
+            record.LocalRate = details.LocalCurrency?.Rate;
+            record.LocalCurrencyRounding = details.LocalCurrency?.RoundingOrder;
             record.LocalFinalPrice = details.LocalFinalPrice;
             record.LocalPaidAmount = details.LocalPaidAmount;
             record.Surcharge = details.Surcharge;

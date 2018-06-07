@@ -56,18 +56,15 @@ namespace Lunggo.CustomerWeb.Controllers
 
                 if (notif.order_id.StartsWith("TRX"))
                 {
-                    var trxPayment = new TrxPaymentDetails
-                    {
-                        TrxId = notif.order_id,
-                        Medium = PaymentMedium.Veritrans,
-                        Method = MapPaymentMethod(notif),
-                        Status = status,
-                        Time = status == PaymentStatus.Settled ? time : null,
-                        ExternalId = notif.approval_code,
-                        TransferAccount = notif.permata_va_number,
-                        FinalPriceIdr = notif.gross_amount,
-                        LocalCurrency = new Currency("IDR")
-                    };
+                    var trxPayment = _paymentService.GetTrxPaymentDetails(notif.order_id);
+                    trxPayment.Medium = PaymentMedium.Veritrans;
+                    trxPayment.Method = MapPaymentMethod(notif);
+                    trxPayment.Status = status;
+                    trxPayment.Time = status == PaymentStatus.Settled ? time : null;
+                    trxPayment.ExternalId = notif.approval_code;
+                    trxPayment.TransferAccount = notif.permata_va_number;
+                    trxPayment.FinalPriceIdr = notif.gross_amount;
+                    trxPayment.LocalCurrency = new Currency("IDR");
 
                     if (trxPayment.Status != PaymentStatus.Failed && trxPayment.Status != PaymentStatus.Denied)
                         _paymentService.UpdatePayment(trxPayment);
@@ -101,8 +98,13 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 return RedirectToAction("Payment", "Flight", new { RsvNo = response.order_id });
             }
+
             if (response.order_id.StartsWith("TRX"))
-                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response.order_id, Status = PaymentStatus.Verifying });
+            {
+                var trxPayment = _paymentService.GetTrxPaymentDetails(response.order_id);
+                trxPayment.Status = PaymentStatus.Verifying;
+                _paymentService.UpdatePayment(trxPayment);
+            }
             else
                 _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = PaymentStatus.Verifying });
             TempData["AllowThisThankyouPage"] = response.order_id;
@@ -111,29 +113,36 @@ namespace Lunggo.CustomerWeb.Controllers
 
         [HttpPost]
         [ActionName("PaymentFinish")]
-        public ActionResult PaymentFinishPost(string response)
+        public ActionResult PaymentFinishPost(VeritransNotification response)
         {
-            var response2 = response.Deserialize<VeritransNotification>();
-
-            var paymentStatus = MapPaymentStatus(response2);
-            TempData["AllowThisThankyouPage"] = response2.order_id;
+            var paymentStatus = MapPaymentStatus(response);
+            TempData["AllowThisThankyouPage"] = response.order_id;
             if (paymentStatus == PaymentStatus.Denied)
             {
-                return RedirectToAction("Payment", "Flight", new { RsvNo = response2.order_id });
+                return RedirectToAction("Payment", "Flight", new { RsvNo = response.order_id });
             }
-            if (response2.order_id.StartsWith("TRX"))
-                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response2.order_id, Status = paymentStatus });
+
+            if (response.order_id.StartsWith("TRX"))
+            {
+                var trxPaymentDetails = _paymentService.GetTrxPaymentDetails(response.order_id);
+                trxPaymentDetails.Status = paymentStatus;
+                _paymentService.UpdatePayment(trxPaymentDetails);
+            }
             else
-                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response2.order_id, Status = paymentStatus });
-            TempData["AllowThisThankyouPage"] = response2.order_id;
-            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response2.order_id });
+                _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = paymentStatus });
+            TempData["AllowThisThankyouPage"] = response.order_id;
+            return RedirectToAction("Thankyou", "Flight", new { RsvNo = response.order_id });
         }
 
 
         public ActionResult PaymentUnfinish(VeritransResponse response)
         {
             if (response.order_id.StartsWith("TRX"))
-                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response.order_id, Status = PaymentStatus.Expired });
+            {
+                var trxPaymentDetails = _paymentService.GetTrxPaymentDetails(response.order_id);
+                trxPaymentDetails.Status = PaymentStatus.Expired;
+                _paymentService.UpdatePayment(trxPaymentDetails);
+            }
             else
                 _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = PaymentStatus.Expired });
             TempData["AllowThisThankyouPage"] = response.order_id;
@@ -142,7 +151,7 @@ namespace Lunggo.CustomerWeb.Controllers
 
         [HttpPost]
         [ActionName("PaymentUnfinish")]
-        public ActionResult PaymentUnfinishPost(string response)
+        public ActionResult PaymentUnfinishPost(VeritransNotification response)
         {
             return PaymentFinishPost(response);
         }
@@ -150,7 +159,11 @@ namespace Lunggo.CustomerWeb.Controllers
         public ActionResult PaymentError(VeritransResponse response)
         {
             if (response.order_id.StartsWith("TRX"))
-                _paymentService.UpdatePayment(new TrxPaymentDetails { TrxId = response.order_id, Status = PaymentStatus.Expired });
+            {
+                var trxPaymentDetails = _paymentService.GetTrxPaymentDetails(response.order_id);
+                trxPaymentDetails.Status = PaymentStatus.Expired;
+                _paymentService.UpdatePayment(trxPaymentDetails);
+            }
             else
                 _paymentService.UpdatePayment(new RsvPaymentDetails { RsvNo = response.order_id, Status = PaymentStatus.Expired });
 
@@ -160,14 +173,14 @@ namespace Lunggo.CustomerWeb.Controllers
 
         [HttpPost]
         [ActionName("PaymentError")]
-        public ActionResult PaymentErrorPost(string response)
+        public ActionResult PaymentErrorPost(VeritransNotification response)
         {
             return PaymentFinishPost(response);
         }
 
         [HttpPost]
         [ActionName("PaymentComplete")]
-        public ActionResult PaymentCompletePost(string response)
+        public ActionResult PaymentCompletePost(VeritransNotification response)
         {
             return PaymentFinishPost(response);
         }
