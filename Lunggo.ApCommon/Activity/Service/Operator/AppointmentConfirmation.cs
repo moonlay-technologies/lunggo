@@ -292,9 +292,9 @@ namespace Lunggo.ApCommon.Activity.Service
         {
             var customerId = GetUserIdByRsvNo(rsvNo);
             var reservation = GetReservation(rsvNo);
-            var customerResult = PushNotifForwardAppointmentForCustomer(customerId, reservation.ActivityDetails.Name ,reservation.DateTime.Date.Value.Date);
+            var customerResult = PushNotifNoResponseAppointmentByOperatorForCustomer(customerId, reservation.ActivityDetails.Name ,reservation.DateTime.Date.Value.Date);
             var operatorId = GetOperatorIdByActivityId(reservation.ActivityDetails.ActivityId);
-            var operatorResult = PushNotifForwardAppointmentForOperator(operatorId, reservation.ActivityDetails.Name,
+            var operatorResult = PushNotifNoResponseAppointmentByOperatorForOperator(operatorId, reservation.ActivityDetails.Name,
                 reservation.DateTime.Date.Value.Date);
             return operatorResult && customerResult;
         }

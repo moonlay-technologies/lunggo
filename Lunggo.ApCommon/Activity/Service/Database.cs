@@ -484,7 +484,7 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
                 var savedBookingCheck = GetMyBookingDetailQuery.GetInstance()
-                    .Execute(conn, new { input.RsvNo });
+                    .Execute(conn, new { RsvNo = input.RsvNo });
                 if (savedBookingCheck.Count() == 0)
                 {
                     return null;
@@ -2545,8 +2545,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 }
 
                 var activity = activities.First();
-                var limit = DateTime.UtcNow.AddMinutes(10);
-                activity.RsvDateLimit = limit;
+                activity.RsvDateLimit = DateTime.UtcNow.AddMinutes(10);
                 var affectedRow = ActivityReservationTableRepo.GetInstance().Update(conn, activity);
                 return affectedRow > 0;
             }
