@@ -25,6 +25,11 @@ namespace Lunggo.CustomerWeb.Controllers
     {
         private PaymentService _paymentService;
 
+        public E2PayController() : this(null)
+        {
+            
+        }
+
         public E2PayController(PaymentService paymentService = null)
         {
             _paymentService = paymentService ?? new PaymentService();
@@ -97,18 +102,16 @@ namespace Lunggo.CustomerWeb.Controllers
             {
                 if (form["RefNo"].StartsWith("TRX"))
                 {
-                    var trxPayment = new TrxPaymentDetails
-                    {
-                        TrxId = form["RefNo"],
-                        Medium = PaymentMedium.E2Pay,
-                        Method = MapPaymentMethod(form["PaymentId"]),
-                        Status = PaymentStatus.Failed,
-                        Time = DateTime.UtcNow,
-                        ExternalId = form["TransId"],
-                        RedirectionUrl = null,
-                        FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
-                        LocalCurrency = new Currency("IDR")
-                    };
+                    var trxPayment = _paymentService.GetTrxPaymentDetails(form["RefNo"]);
+                    trxPayment.Medium = PaymentMedium.E2Pay;
+                    trxPayment.Method = MapPaymentMethod(form["PaymentId"]);
+                    trxPayment.Status = PaymentStatus.Failed;
+                    trxPayment.Time = DateTime.UtcNow;
+                    trxPayment.ExternalId = form["TransId"];
+                    trxPayment.RedirectionUrl = null;
+                    trxPayment.FinalPriceIdr = decimal.Parse(form["Amount"]) / 100;
+                    trxPayment.LocalCurrency = new Currency("IDR");
+
                     _paymentService.UpdatePayment(trxPayment);
                 }
                 else
@@ -133,17 +136,15 @@ namespace Lunggo.CustomerWeb.Controllers
 
             if (form["RefNo"].StartsWith("TRX"))
             {
-                var trxPayment = new TrxPaymentDetails
-                {
-                    TrxId = form["RefNo"],
-                    Medium = PaymentMedium.E2Pay,
-                    Method = MapPaymentMethod(form["PaymentId"]),
-                    Status = PaymentStatus.Settled,
-                    Time = DateTime.UtcNow,
-                    ExternalId = form["TransId"],
-                    FinalPriceIdr = decimal.Parse(form["Amount"]) / 100,
-                    LocalCurrency = new Currency("IDR")
-                };
+                var trxPayment = _paymentService.GetTrxPaymentDetails(form["RefNo"]);
+                trxPayment.Medium = PaymentMedium.E2Pay;
+                trxPayment.Method = MapPaymentMethod(form["PaymentId"]);
+                trxPayment.Status = PaymentStatus.Settled;
+                trxPayment.Time = DateTime.UtcNow;
+                trxPayment.ExternalId = form["TransId"];
+                trxPayment.FinalPriceIdr = decimal.Parse(form["Amount"]) / 100;
+                trxPayment.LocalCurrency = new Currency("IDR");
+
                 _paymentService.UpdatePayment(trxPayment);
             }
             else

@@ -186,8 +186,9 @@ namespace Lunggo.ApCommon.Payment.Service
             trxPayment.Surcharge = trxPayment.RsvPaymentDetails.Sum(d => d.Surcharge);
             trxPayment.FinalPriceIdr = trxPayment.RsvPaymentDetails.Sum(d => d.FinalPriceIdr);
             trxPayment.LocalFinalPrice = trxPayment.RsvPaymentDetails.Sum(d => d.LocalFinalPrice);
-            trxPayment.PaidAmountIdr= trxPayment.RsvPaymentDetails.Sum(d => d.PaidAmountIdr);
-            trxPayment.LocalPaidAmount= trxPayment.RsvPaymentDetails.Sum(d => d.LocalPaidAmount);
+            trxPayment.PaidAmountIdr = trxPayment.RsvPaymentDetails.Sum(d => d.PaidAmountIdr);
+            trxPayment.LocalPaidAmount = trxPayment.RsvPaymentDetails.Sum(d => d.LocalPaidAmount);
+            trxPayment.TimeLimit = trxPayment.RsvPaymentDetails.Min(d => d.TimeLimit);
 
             var firstRsv = trxPayment.RsvPaymentDetails[0];
             trxPayment.Status = firstRsv.Status;
@@ -197,6 +198,11 @@ namespace Lunggo.ApCommon.Payment.Service
             trxPayment.Data = firstRsv.Data;
             trxPayment.LocalCurrency = firstRsv.LocalCurrency;
             trxPayment.Discount = firstRsv.Discount;
+            trxPayment.Time= firstRsv.Time;
+            trxPayment.ExternalId = firstRsv.ExternalId;
+            trxPayment.RedirectionUrl = firstRsv.RedirectionUrl;
+            trxPayment.HasThirdPartyPage = firstRsv.HasThirdPartyPage;
+            trxPayment.HasInstruction = firstRsv.HasInstruction;
         }
 
         private void DistributeRsvPaymentDetails(TrxPaymentDetails trxPayment)
@@ -240,6 +246,18 @@ namespace Lunggo.ApCommon.Payment.Service
                 rsvPayment.LocalPaidAmount = rsvPayment.LocalFinalPrice;
 
                 rsvPayment.Status = trxPayment.Status;
+                rsvPayment.Medium = trxPayment.Medium;
+                rsvPayment.Method = trxPayment.Method;
+                rsvPayment.Submethod = trxPayment.Submethod;
+                rsvPayment.Data = trxPayment.Data;
+                rsvPayment.LocalCurrency = trxPayment.LocalCurrency;
+                rsvPayment.Discount = trxPayment.Discount;
+                rsvPayment.Time = trxPayment.Time;
+                rsvPayment.TimeLimit = trxPayment.TimeLimit;
+                rsvPayment.ExternalId = trxPayment.ExternalId;
+                rsvPayment.RedirectionUrl = trxPayment.RedirectionUrl;
+                rsvPayment.HasThirdPartyPage = trxPayment.HasThirdPartyPage;
+                rsvPayment.HasInstruction = trxPayment.HasInstruction;
             }
         }
     }

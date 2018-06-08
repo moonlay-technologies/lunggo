@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Http;
 using Lunggo.ApCommon.Identity.Auth;
+using Lunggo.ApCommon.Payment.Service;
 using Lunggo.Framework.Cors;
 using Lunggo.Framework.Extension;
 using Lunggo.WebAPI.ApiSrc.Common.Model;
@@ -11,6 +12,19 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
 {
     public class PaymentController : ApiController
     {
+        private PaymentService _paymentService;
+
+        public PaymentController() : this(null)
+        {
+
+        }
+
+        public PaymentController(PaymentService paymentService = null)
+        {
+            _paymentService = paymentService ?? new PaymentService();
+        }
+
+
         [HttpPost]
         [LunggoCorsPolicy]
         [Level0Authorize]
@@ -149,7 +163,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment
         {
             try
             {
-                var apiResponse = PaymentLogic.CheckPaymentNotification(request);
+                var apiResponse = PaymentLogic.CheckPaymentNotification(request, _paymentService);
                 return apiResponse;
             }
             catch (Exception e)

@@ -117,6 +117,7 @@ namespace Lunggo.ApCommon.Payment.Service
 
         public void UpdatePayment(TrxPaymentDetails payment)
         {
+            DistributeRsvPaymentDetails(payment);
             payment.RsvPaymentDetails.ForEach(UpdatePayment);
         }
 

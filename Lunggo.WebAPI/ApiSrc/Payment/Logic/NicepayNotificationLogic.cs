@@ -12,7 +12,7 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 {
     public static partial class PaymentLogic
     {
-        public static ApiResponseBase CheckPaymentNotification(NotificationResult notif)
+        public static ApiResponseBase CheckPaymentNotification(NotificationResult notif, PaymentService paymentService)
         {
             //if (notif.resultCd != "0000")
             //{
@@ -28,19 +28,16 @@ namespace Lunggo.WebAPI.ApiSrc.Payment.Logic
 
             if (notif.referenceNo.StartsWith("TRX"))
             {
-                var trxPayment = new TrxPaymentDetails
-                {
-                    TrxId = notif.referenceNo,
-                    Medium = PaymentMedium.Nicepay,
-                    Method = method,
-                    Submethod = MappingNicepayPaymentSubMethod(notif.bankCd),
-                    Status = status,
-                    Time = status == PaymentStatus.Settled ? DateTime.UtcNow : (DateTime?) null,
-                    ExternalId = notif.tXid,
-                    TransferAccount = notif.vacctNo,
-                    FinalPriceIdr = notif.amt == null ? 0 : Decimal.Parse(notif.amt),
-                    LocalCurrency = new Currency("IDR")
-                };
+                var trxPayment = paymentService.GetTrxPaymentDetails(notif.referenceNo);
+                trxPayment.Medium = PaymentMedium.Nicepay;
+                trxPayment.Method = method;
+                trxPayment.Submethod = MappingNicepayPaymentSubMethod(notif.bankCd);
+                trxPayment.Status = status;
+                trxPayment.Time = status == PaymentStatus.Settled ? DateTime.UtcNow : (DateTime?) null;
+                trxPayment.ExternalId = notif.tXid;
+                trxPayment.TransferAccount = notif.vacctNo;
+                trxPayment.FinalPriceIdr = notif.amt == null ? 0 : Decimal.Parse(notif.amt);
+                trxPayment.LocalCurrency = new Currency("IDR");
 
                 if (trxPayment.Status != PaymentStatus.Failed && trxPayment.Status != PaymentStatus.Denied)
                     new PaymentService().UpdatePayment(trxPayment);
