@@ -30,7 +30,7 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Model
         [JsonProperty("priceDetail", NullValueHandling = NullValueHandling.Ignore)]
         public string PriceDetail { get; set; }
         [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
-        public DurationActivity Duration { get; set; }
+        public string Duration { get; set; }
         [JsonProperty("operationTime", NullValueHandling = NullValueHandling.Ignore)]
         public string OperationTime { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]

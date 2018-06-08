@@ -55,12 +55,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     userId = HttpContext.Current == null ? null : HttpContext.Current.User.Identity.GetId()
                 };
                 var savedActivities = GetSearchResultQuery.GetInstance()
-                    .ExecuteMultiMap(conn, param, param,
-                    (activities, duration) =>
-                        {
-                            activities.Duration = duration;
-                            return activities;
-                        }, "Amount").ToList();
+                    .Execute(conn, param, param).ToList();
 
                 var output = new SearchActivityOutput
                 {
@@ -1030,11 +1025,10 @@ namespace Lunggo.ApCommon.Activity.Service
                 {
                     RsvNo = reservation.RsvNo,
                     ActivityId = activityDetailNowDb.Id,
-                    ActivityDuration = activityDetailNowDb.ActivityDuration,
+                    Duration = activityDetailNowDb.Duration,
                     ActivityMedia = reservation.ActivityDetails.MediaSrc[0],
                     AdditionalNotes = activityDetailNowDb.AdditionalNotes,
                     Address = activityDetailNowDb.Address,
-                    AmountDuration = activityDetailNowDb.AmountDuration,
                     Area = activityDetailNowDb.Area,
                     Cancellation = activityDetailNowDb.Cancellation,
                     Category = activityDetailNowDb.Category,
@@ -1062,7 +1056,6 @@ namespace Lunggo.ApCommon.Activity.Service
                     PriceDetail = activityDetailNowDb.PriceDetail,
                     Rating = activityDetailNowDb.Rating,
                     RefundRegulationId = activityDetailNowDb.RefundRegulationId,
-                    UnitDuration = activityDetailNowDb.UnitDuration,
                     viewCount = activityDetailNowDb.viewCount,
                     Warning = activityDetailNowDb.Warning,
                     Zone = activityDetailNowDb.Zone,
@@ -1190,8 +1183,7 @@ namespace Lunggo.ApCommon.Activity.Service
                     Latitude = input.Latitude,
                     Longitude = input.Longitude,
                     PriceDetail = input.PriceDetail,
-                    AmountDuration = int.Parse(input.Duration.Amount),
-                    UnitDuration = input.Duration.Unit,
+                    Duration = input.Duration,
                     OperationTime = input.OperationTime,
                     //TODO: ImportantNotices, Warning, AdditionalNotes missing
                     Cancellation = input.Cancellation,

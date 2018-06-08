@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    public class GetSearchResultQuery : DbQueryBase<GetSearchResultQuery, SearchResult, SearchResult, DurationActivity>
+    public class GetSearchResultQuery : DbQueryBase<GetSearchResultQuery, SearchResult>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -34,8 +34,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("(SELECT COUNT (DISTINCT RsvNo) FROM ActivityRating AS actr WHERE actr.ActivityId = act.Id ) AS RatingCount, ");
             clauseBuilder.Append("(SELECT TOP 1 am.MediaSrc AS MediaSrc FROM ActivityMedia AS am WHERE am.ActivityId=act.Id) AS MediaSrc, ");
             clauseBuilder.Append("(SELECT CASE WHEN (count(*) > 0) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END from wishlist where UserId=@userId and ActivityId=act.id) AS Wishlisted, ");
-            clauseBuilder.Append("act.AmountDuration AS Amount, ");
-            clauseBuilder.Append("act.UnitDuration AS Unit ");
+            clauseBuilder.Append("act.Duration AS Duration ");
             
             return clauseBuilder.ToString();
         }

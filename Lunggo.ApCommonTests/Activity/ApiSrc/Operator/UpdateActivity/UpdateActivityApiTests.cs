@@ -77,7 +77,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.UpdateActivityLogic.Test
                 ActivityId = 2,
                 Name = "abcde",
                 Price = 2000,
-                Duration = new DurationActivity() {Amount = "1", Unit = "day" },
+                Duration = "1 day",
                 RequiredPaxData = new List<string>() { "abc", "cde", "efg" }
             };
             var actualResult = ActivityLogic.UpdateActivity(input, userManager);

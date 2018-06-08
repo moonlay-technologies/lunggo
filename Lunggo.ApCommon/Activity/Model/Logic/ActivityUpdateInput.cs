@@ -16,7 +16,7 @@ namespace Lunggo.ApCommon.Activity.Model.Logic
         public decimal? Longitude { get; set; }
         public decimal? Price { get; set; }
         public string PriceDetail { get; set; }
-        public DurationActivity Duration { get; set; }
+        public string Duration { get; set; }
         public string OperationTime { get; set; }
         public List<string> MediaSrc { get; set; }
         public Content Contents { get; set; }

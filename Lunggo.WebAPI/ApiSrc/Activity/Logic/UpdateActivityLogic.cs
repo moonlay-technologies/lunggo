@@ -65,10 +65,6 @@ namespace Lunggo.WebAPI.ApiSrc.Activity.Logic
             
             if(request.Price < 0) { return false; }
 
-            int amountDuration;
-            var isNumeric = int.TryParse(request.Duration.Amount, out amountDuration);
-            if(!isNumeric) { return false; }
-
             serviceRequest.ActivityId = request.ActivityId;
             serviceRequest.Name = request.Name;
             serviceRequest.Category = request.Category;

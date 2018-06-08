@@ -71,7 +71,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.UpdateActivityLogic.Test
                 ActivityId = 1,
                 Name = "abcde",
                 Price = 2000,
-                Duration = new DurationActivity() { Amount = "abc", Unit = "days"}
+                Duration = "abc days"
             };
             var actualResult = ActivityLogic.TryPreprocess(input, out var serviceRequest);
 
@@ -86,7 +86,7 @@ namespace Lunggo.ApCommonTests.Activity.ApiSrc.Operator.UpdateActivityLogic.Test
                 ActivityId = 1,
                 Name = "abcde",
                 Price = 2000,
-                Duration = new DurationActivity() {Amount = "1", Unit = "day" },
+                Duration = "1 day",
                 RequiredPaxData = new List<string>() { "abc", "cde", "efg" }
             };
             var actualResult = ActivityLogic.TryPreprocess(input, out var serviceRequest);

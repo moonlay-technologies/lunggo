@@ -28,7 +28,7 @@ namespace Lunggo.ApCommon.Activity.Model
         [JsonProperty("priceDetail", NullValueHandling = NullValueHandling.Ignore)]
         public string PriceDetail { get; set; }
         [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
-        public DurationActivity Duration { get; set; }
+        public string Duration { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
         public string MediaSrc { get; set; }
         [JsonProperty("wishlisted", NullValueHandling = NullValueHandling.Ignore)]
@@ -52,7 +52,7 @@ namespace Lunggo.ApCommon.Activity.Model
         public string Area { get; set; }
         public decimal Price { get; set; }
         public string PriceDetail { get; set; }
-        public DurationActivity Duration { get; set; }
+        public string Duration { get; set; }
         public string MediaSrc { get; set; }
         public bool Wishlisted { get; set; }
         public decimal Rating { get; set; }

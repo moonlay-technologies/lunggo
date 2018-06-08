@@ -209,24 +209,6 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("PriceDetail");
 		    }
 		}
-		public int? AmountDuration
-		{
-		    get { return _AmountDuration; }
-		    set
-		    {
-		        _AmountDuration = value;
-		        IncrementLog("AmountDuration");
-		    }
-		}
-		public String UnitDuration
-		{
-		    get { return _UnitDuration; }
-		    set
-		    {
-		        _UnitDuration = value;
-		        IncrementLog("UnitDuration");
-		    }
-		}
 		public Boolean? IsDateOfBirthNeeded
 		{
 		    get { return _IsDateOfBirthNeeded; }
@@ -326,13 +308,13 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("MustPrinted");
 		    }
 		}
-		public String ActivityDuration
+		public String Duration
 		{
-		    get { return _ActivityDuration; }
+		    get { return _Duration; }
 		    set
 		    {
-		        _ActivityDuration = value;
-		        IncrementLog("ActivityDuration");
+		        _Duration = value;
+		        IncrementLog("Duration");
 		    }
 		}
 		public long? viewCount
@@ -395,8 +377,6 @@ namespace Lunggo.Repository.TableRecord
 		private String _Cancellation;
 		private String _Category;
 		private String _PriceDetail;
-		private int? _AmountDuration;
-		private String _UnitDuration;
 		private Boolean? _IsDateOfBirthNeeded;
 		private Boolean? _IsPassportIssueDateNeeded;
 		private String _OperatorName;
@@ -408,7 +388,7 @@ namespace Lunggo.Repository.TableRecord
 		private Boolean? _HasPDFVoucher;
 		private Boolean? _IsInstantConfirmation;
 		private Boolean? _MustPrinted;
-		private String _ActivityDuration;
+		private String _Duration;
 		private long? _viewCount;
 		private String _ActivityMedia;
 		private Boolean? _HasOperator;
@@ -466,8 +446,6 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("Cancellation", false),
 				new ColumnMetadata("Category", false),
 				new ColumnMetadata("PriceDetail", false),
-				new ColumnMetadata("AmountDuration", false),
-				new ColumnMetadata("UnitDuration", false),
 				new ColumnMetadata("IsDateOfBirthNeeded", false),
 				new ColumnMetadata("IsPassportIssueDateNeeded", false),
 				new ColumnMetadata("OperatorName", false),
@@ -479,7 +457,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("HasPDFVoucher", false),
 				new ColumnMetadata("IsInstantConfirmation", false),
 				new ColumnMetadata("MustPrinted", false),
-				new ColumnMetadata("ActivityDuration", false),
+				new ColumnMetadata("Duration", false),
 				new ColumnMetadata("viewCount", false),
 				new ColumnMetadata("ActivityMedia", false),
 				new ColumnMetadata("HasOperator", false),
