@@ -4,7 +4,7 @@ using Lunggo.Framework.Database;
 
 namespace Lunggo.ApCommon.Activity.Database.Query
 {
-    public class GetActivityDetailQuery : DbQueryBase<GetActivityDetailQuery, ActivityDetail, ActivityDetail, DurationActivity>
+    public class GetActivityDetailQuery : DbQueryBase<GetActivityDetailQuery, ActivityDetail>
     {
         protected override string GetQuery(dynamic condition = null)
         {
@@ -29,7 +29,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.HasOperator AS HasOperator, ");
             clauseBuilder.Append("act.IsInstantConfirmation AS IsInstantConfirmation, ");
             clauseBuilder.Append("act.MustPrinted AS MustPrinted, ");
-            clauseBuilder.Append("act.ActivityDuration AS ActivityDuration, ");
+            clauseBuilder.Append("act.Duration AS Duration, ");
             clauseBuilder.Append("act.ViewCount AS ViewCount, ");
             clauseBuilder.Append("act.Latitude AS Latitude, act.Longitude AS Longitude, ");
             clauseBuilder.Append("act.OperationTime AS OperationTime, asp.Price AS Price, ");
@@ -38,7 +38,7 @@ namespace Lunggo.ApCommon.Activity.Database.Query
             clauseBuilder.Append("act.PriceDetail AS PriceDetail, ");
             clauseBuilder.Append("act.IsPassportNeeded AS IsPassportNeeded, act.IsPassportIssueDateNeeded AS IsPassportIssueDateNeeded, ");
             clauseBuilder.Append("act.IsDateOfBirthNeeded AS IsDateOfBirthNeeded, ");
-            clauseBuilder.Append("act.AmountDuration AS Amount, act.UnitDuration AS Unit ");
+            clauseBuilder.Append("act.IsOpenTrip ");
             return clauseBuilder.ToString();
         }
 

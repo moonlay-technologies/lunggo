@@ -111,12 +111,12 @@ namespace Lunggo.ApCommon.Activity.Service
                 ReviewCount = activityDetail.ReviewCount,
                 Review = activityDetail.Review,
                 IsInstantConfirmation = activityDetail.IsInstantConfirmation,
-                ActivityDuration = activityDetail.ActivityDuration,
                 MustPrinted = activityDetail.MustPrinted,
                 MinPax = activityDetail.MinPax,
                 MaxPax = activityDetail.MaxPax,
                 ViewCount = activityDetail.ViewCount,
-                HasOperator = activityDetail.HasOperator
+                HasOperator = activityDetail.HasOperator,
+                IsOpenTrip = activityDetail.IsOpenTrip
             };
 
             return convertedActivity;

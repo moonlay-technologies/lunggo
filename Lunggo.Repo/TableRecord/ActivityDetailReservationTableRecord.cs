@@ -362,6 +362,15 @@ namespace Lunggo.Repository.TableRecord
 		        IncrementLog("HasOperator");
 		    }
 		}
+        public Boolean? IsOpenTrip
+        {
+            get { return _IsOpenTrip; }
+            set
+            {
+                _HasOperator = value;
+                IncrementLog("IsOpenTrip");
+            }
+        }
 
 		
 		private String _RsvNo;
@@ -403,6 +412,7 @@ namespace Lunggo.Repository.TableRecord
 		private long? _viewCount;
 		private String _ActivityMedia;
 		private Boolean? _HasOperator;
+		private Boolean? _IsOpenTrip;
 
 
 		public static ActivityDetailReservationTableRecord CreateNewInstance()
@@ -473,6 +483,7 @@ namespace Lunggo.Repository.TableRecord
 				new ColumnMetadata("viewCount", false),
 				new ColumnMetadata("ActivityMedia", false),
 				new ColumnMetadata("HasOperator", false),
+				new ColumnMetadata("IsOpenTrip", false),
 
             };
         }

@@ -34,8 +34,6 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? Price { get; set; }
         [JsonProperty("priceDetail", NullValueHandling = NullValueHandling.Ignore)]
         public string PriceDetail { get; set; }
-        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
-        public DurationActivity Duration { get; set; }
         [JsonProperty("operationTime", NullValueHandling = NullValueHandling.Ignore)]
         public string OperationTime { get; set; }
         [JsonProperty("mediaSrc", NullValueHandling = NullValueHandling.Ignore)]
@@ -74,8 +72,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public bool IsInstantConfirmation { get; set; }
         [JsonProperty("mustPrinted", NullValueHandling = NullValueHandling.Ignore)]
         public bool MustPrinted { get; set; }
-        [JsonProperty("activityDuration", NullValueHandling = NullValueHandling.Ignore)]
-        public string ActivityDuration { get; set; }
+        [JsonProperty("duration", NullValueHandling = NullValueHandling.Ignore)]
+        public string Duration { get; set; }
         [JsonProperty("minPax", NullValueHandling = NullValueHandling.Ignore)]
         public int MinPax { get; set; }
         [JsonProperty("maxPax", NullValueHandling = NullValueHandling.Ignore)]
@@ -84,6 +82,8 @@ namespace Lunggo.ApCommon.Activity.Model
         public long? ViewCount { get; set; }
         [JsonProperty("hasOperator", NullValueHandling = NullValueHandling.Ignore)]
         public bool HasOperator { get; set; }
+        [JsonProperty("isOpenTrip", NullValueHandling = NullValueHandling.Ignore)]
+        public bool? IsOpenTrip { get; set; }
     }
 
     public class ActivityDetail
@@ -102,7 +102,6 @@ namespace Lunggo.ApCommon.Activity.Model
         public decimal? Longitude { get; set; }
         public decimal Price { get; set; }
         public string PriceDetail { get; set; }
-        public DurationActivity Duration { get; set; }
         public string OperationTime { get; set; }
         public List<string> MediaSrc { get; set; }
         public string ImportantNotice { get; set; }
@@ -127,11 +126,12 @@ namespace Lunggo.ApCommon.Activity.Model
         public ActivityReview Review { get; set; } 
         public bool IsInstantConfirmation { get; set; }
         public bool MustPrinted { get; set; }
-        public string ActivityDuration { get; set; }
+        public string Duration { get; set; }
         public int MinPax { get; set; }
         public int MaxPax { get; set; }
         public long? ViewCount { get; set; }
         public bool HasOperator { get; set; }
+        public bool? IsOpenTrip { get; set; }
     }
 
     public class AdditionalContent

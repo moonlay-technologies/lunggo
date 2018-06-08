@@ -77,12 +77,7 @@ namespace Lunggo.ApCommon.Activity.Service
             using (var conn = DbService.GetInstance().GetOpenConnection())
             {
 
-                var details = GetActivityDetailQuery.GetInstance().ExecuteMultiMap(conn, new { ActivityId = input.ActivityId }, null,
-                        (detail, duration) =>
-                        {
-                            detail.Duration = duration;
-                            return detail;
-                        }, "Amount");
+                var details = GetActivityDetailQuery.GetInstance().Execute(conn, new {ActivityId = input.ActivityId}).ToList();
 
                 var mediaSrc = GetMediaActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId }).ToList();
@@ -90,7 +85,7 @@ namespace Lunggo.ApCommon.Activity.Service
                 var additionalContentsDetail = GetAdditionalContentActivityDetailQuery.GetInstance()
                     .Execute(conn, new { ActivityId = input.ActivityId });
 
-                if (details.Count() == 0)
+                if (details.Count == 0)
                 {
                     return null;
                 }
