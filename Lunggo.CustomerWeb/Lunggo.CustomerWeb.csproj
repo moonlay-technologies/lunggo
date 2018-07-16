@@ -339,8 +339,8 @@
     <Content Include="Assets\images\bank\dompet.png" />
     <Content Include="Assets\images\bank\epaybri.png" />
     <Content Include="Assets\images\bank\gopay.png" />
-    <Content Include="Assets\images\bank\icon-error.png" />
-    <Content Include="Assets\images\bank\icon-success.png" />
+    <Content Include="Assets\images\icon-error.png" />
+    <Content Include="Assets\images\icon-success.png" />
     <Content Include="Assets\images\bank\kredit.png" />
     <Content Include="Assets\images\bank\mandiriclickpay.png" />
     <Content Include="Assets\images\bank\muamalat.png" />

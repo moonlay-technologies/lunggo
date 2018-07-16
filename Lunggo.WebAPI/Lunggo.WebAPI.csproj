@@ -537,6 +537,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\PublishProfiles\travorama-local-api - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\travorama-prod-api - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %2810%29.pubxml" />
     <None Include="Properties\PublishProfiles\travorama-prod-api-staging - Web Deploy %2811%29.pubxml" />
     <None Include="Web.Debug.config">
